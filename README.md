@@ -1,6 +1,6 @@
-# aviyonikyazilim.com
+# aviyonikyazilim
 
-[www.aviyonikyazilim.com](https://www.aviyonikyazilim.com) sitesinin kaynak deposu.
+[karaman.dev/aviyonikyazilim/](https://karaman.dev/aviyonikyazilim/) sitesinin kaynak deposu.
 Türkçe aviyonik yazılım / test / sertifikasyon içerikleri: **blog yazıları** ve DO-178C
 konulu bir **kitap**. [Docusaurus 3](https://docusaurus.io) ile üretilir ve GitHub Pages
 üzerinde yayınlanır.
@@ -28,34 +28,11 @@ Aşağıdaki adımlar depo sahibi tarafından **elle** yapılmalıdır.
 ### 1. GitHub Pages'i etkinleştir
 
 Repo ayarları → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-(Bu, `gh api` ile de yapılabilir; aşağıya bakınız.)
 
-### 2. DNS kayıtları
+### 2. Yayın kökünü doğrula
 
-Alan adı sağlayıcısında (aviyonikyazilim.com):
-
-| Tür | Ad | Değer |
-|---|---|---|
-| CNAME | `www` | `mavrikant.github.io` |
-| A | `@` (apex) | `185.199.108.153` |
-| A | `@` (apex) | `185.199.109.153` |
-| A | `@` (apex) | `185.199.110.153` |
-| A | `@` (apex) | `185.199.111.153` |
-
-> Asıl site `www` alt alan adında yayınlanır; apex (aviyonikyazilim.com) için A kayıtları
-> GitHub Pages IP'lerine işaret eder ve GitHub apex → www yönlendirmesini yapar.
-
-### 3. Blogger yönlendirmesini kaldır
-
-Blogger'da aviyonikyazilim.com için tanımlı **özel alan adı (custom domain)
-yönlendirmesi kaldırılmalıdır**; aksi hâlde DNS, GitHub Pages yerine Blogger'a
-yönlenmeye devam eder.
-
-### 4. GitHub Pages'te özel alan adı ve HTTPS
-
-Repo **Settings → Pages**:
-- **Custom domain**: `www.aviyonikyazilim.com` (DNS doğrulaması bekleyin).
-- DNS yayıldıktan sonra **Enforce HTTPS** kutusunu işaretleyin.
+Docusaurus yapılandırmasındaki `url` ve `baseUrl` değerleri
+`https://karaman.dev/aviyonikyazilim/` yayınına göre ayarlanmıştır.
 
 ## Otomasyon (referans)
 
@@ -65,7 +42,7 @@ Depo oluşturma ve Pages etkinleştirme (yetkili `gh` oturumu ile):
 gh repo create aviyonikyazilim --public --source=. --push
 gh api -X POST repos/Mavrikant/aviyonikyazilim/pages \
   -f build_type=workflow -f "source[branch]=main" -f "source[path]=/"
-gh api -X PUT repos/Mavrikant/aviyonikyazilim/pages -f cname=www.aviyonikyazilim.com
+gh api -X PUT repos/Mavrikant/aviyonikyazilim/pages -f cname=karaman.dev
 ```
 
 ## Lisans
