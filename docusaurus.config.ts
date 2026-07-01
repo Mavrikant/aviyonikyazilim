@@ -34,6 +34,29 @@ const config: Config = {
 
   themes: ['@docusaurus/theme-mermaid'],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // Eski Blogger yolları → yeni Docusaurus URL'leri.
+        // Not: trailingSlash:false iken eklenti .html yolları için `foo.html.html`
+        // üretir; birebir `foo.html` isteklerini static/ altındaki stub dosyaları karşılar.
+        redirects: [
+          {from: ['/2024/03/yapsal-kapsam-analizi-structural', '/2024/03/yapsal-kapsam-analizi-structural.html'], to: '/blog/yapisal-kapsam-analizi'},
+          {from: ['/2023/11/scada-cover-edilemeyen-kodlar-olu', '/2023/11/scada-cover-edilemeyen-kodlar-olu.html'], to: '/blog/sca-cover-edilemeyen-kodlar'},
+          {from: ['/2023/08/afdx-nedir', '/2023/08/afdx-nedir.html'], to: '/blog/afdx-nedir'},
+          {from: ['/2023/08/havaclgn-kalbindeki-iletisim-arinc-429', '/2023/08/havaclgn-kalbindeki-iletisim-arinc-429.html'], to: '/blog/arinc-429'},
+          {from: ['/2023/08/aviyonik-nedir', '/2023/08/aviyonik-nedir.html'], to: '/blog/aviyonik-nedir'},
+          {from: ['/p/ksaltmalar', '/p/ksaltmalar.html'], to: '/kitap/kaynaklar/kisaltmalar'},
+          {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/kaynaklar/soi-1'},
+          {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/kaynaklar/soi-2'},
+          {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/kaynaklar/soi-3'},
+          {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/kaynaklar/soi-4'},
+        ],
+      },
+    ],
+  ],
+
   i18n: {
     defaultLocale: 'tr',
     locales: ['tr'],
