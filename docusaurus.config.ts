@@ -97,23 +97,32 @@ const config: Config = {
   ],
 
   themeConfig: {
+    image: 'img/social-card.png',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'Aviyonik Yazılım',
+      logo: {
+        alt: 'Aviyonik Yazılım — yapay ufuk logosu',
+        src: 'img/logo.svg',
+        width: 34,
+        height: 34,
+      },
       items: [
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
           type: 'docSidebar',
           sidebarId: 'kitapSidebar',
           position: 'left',
           label: 'Kitap',
         },
+        {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/kitap/kaynaklar/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
         {
           href: 'https://github.com/Mavrikant/aviyonikyazilim',
-          label: 'GitHub',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub deposu',
         },
       ],
     },
@@ -123,8 +132,17 @@ const config: Config = {
         {
           title: 'İçerik',
           items: [
-            {label: 'Blog', to: '/blog'},
             {label: 'Kitap', to: '/kitap'},
+            {label: 'Blog', to: '/blog'},
+            {label: 'Ekler', to: '/kitap/ekler/ek-a-ornek-gecis-kriterleri'},
+          ],
+        },
+        {
+          title: 'Başvuru',
+          items: [
+            {label: 'Kısaltmalar', to: '/kitap/kaynaklar/kisaltmalar'},
+            {label: 'SOI denetimleri', to: '/kitap/kaynaklar/soi-1'},
+            {label: 'Giriş bölümü', to: '/kitap/giris/giris-ve-genel-bakis'},
           ],
         },
         {
@@ -145,7 +163,7 @@ const config: Config = {
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      darkTheme: prismThemes.nightOwl,
       additionalLanguages: ['c'],
     },
   } satisfies Preset.ThemeConfig,

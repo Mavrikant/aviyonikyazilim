@@ -1,30 +1,429 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Aviyonik Yazılım — site tasarım sistemi
+ *
+ * Kimlik: "yapay ufuk" (attitude indicator) teması.
+ * Lacivert gökyüzü + amber zemin; başlıklarda Space Grotesk,
+ * metinde Inter, kodda JetBrains Mono (hepsi self-hosted).
  */
 
-/* You can override the default Infima variables here. */
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
 :root {
-  --ifm-color-primary: #2563eb;
-  --ifm-color-primary-dark: #1d4ed8;
-  --ifm-color-primary-darker: #1e40af;
-  --ifm-color-primary-darkest: #172554;
-  --ifm-color-primary-light: #3b82f6;
-  --ifm-color-primary-lighter: #60a5fa;
-  --ifm-color-primary-lightest: #93c5fd;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Marka renkleri */
+  --av-navy-950: #081524;
+  --av-navy-900: #0b1d33;
+  --av-navy-800: #0e2a47;
+  --av-navy-700: #123a61;
+  --av-navy-600: #17497a;
+  --av-navy-500: #1d5288;
+  --av-amber-600: #b97a1f;
+  --av-amber-500: #d89a3d;
+  --av-amber-400: #ffc65c;
+  --av-paper: #fbfcfe;
+  --av-ink: #16212e;
+
+  /* Infima ana renk skalası (lacivert) */
+  --ifm-color-primary: #17497a;
+  --ifm-color-primary-dark: #123a61;
+  --ifm-color-primary-darker: #103455;
+  --ifm-color-primary-darkest: #0b2440;
+  --ifm-color-primary-light: #1d5288;
+  --ifm-color-primary-lighter: #24619f;
+  --ifm-color-primary-lightest: #3c7cbd;
+
+  /* Tipografi */
+  --ifm-font-family-base: 'Inter Variable', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk Variable', 'Inter Variable', 'Segoe UI', sans-serif;
+  --ifm-font-family-monospace: 'JetBrains Mono Variable', 'Cascadia Code', Consolas, monospace;
+  --ifm-font-size-base: 16px;
+  --ifm-line-height-base: 1.75;
+  --ifm-heading-line-height: 1.25;
+  --ifm-heading-font-weight: 600;
+  --ifm-h1-font-size: 2.35rem;
+  --ifm-h2-font-size: 1.7rem;
+  --ifm-h3-font-size: 1.25rem;
+  --ifm-code-font-size: 87.5%;
+  --ifm-code-border-radius: 6px;
+
+  /* Yüzeyler */
+  --ifm-background-color: var(--av-paper);
+  --ifm-background-surface-color: #ffffff;
+  --ifm-font-color-base: var(--av-ink);
+  --ifm-toc-border-color: #e3e9f2;
+  --ifm-global-radius: 10px;
+  --ifm-global-shadow-lw: 0 1px 2px rgba(8, 21, 36, 0.05);
+  --ifm-global-shadow-md: 0 8px 28px rgba(8, 21, 36, 0.09);
+
+  --ifm-navbar-height: 4rem;
+  --ifm-navbar-background-color: rgba(251, 252, 254, 0.86);
+  --ifm-navbar-shadow: inset 0 -1px 0 #e3e9f2;
+
+  --ifm-footer-background-color: var(--av-navy-900);
+  --ifm-footer-color: #b9c9da;
+  --ifm-footer-link-color: #d6e2ee;
+  --ifm-footer-title-color: #f4f8fc;
+
+  --ifm-link-decoration: none;
+  --ifm-blockquote-border-left-width: 3px;
+  --docusaurus-highlighted-code-line-bg: rgba(23, 73, 122, 0.08);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #60a5fa;
-  --ifm-color-primary-dark: #3b82f6;
-  --ifm-color-primary-darker: #2563eb;
-  --ifm-color-primary-darkest: #1d4ed8;
-  --ifm-color-primary-light: #93c5fd;
-  --ifm-color-primary-lighter: #bfdbfe;
-  --ifm-color-primary-lightest: #dbeafe;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #85b7e6;
+  --ifm-color-primary-dark: #66a5df;
+  --ifm-color-primary-darker: #569cdb;
+  --ifm-color-primary-darkest: #2d81cd;
+  --ifm-color-primary-light: #a4c9ed;
+  --ifm-color-primary-lighter: #b4d2f0;
+  --ifm-color-primary-lightest: #e2eefa;
+
+  --ifm-background-color: #0b1220;
+  --ifm-background-surface-color: #101a2c;
+  --ifm-font-color-base: #d9e2ec;
+  --ifm-toc-border-color: #1d2a41;
+  --ifm-heading-color: #eef4fa;
+
+  --ifm-navbar-background-color: rgba(11, 18, 32, 0.85);
+  --ifm-navbar-shadow: inset 0 -1px 0 #1d2a41;
+
+  --ifm-footer-background-color: #081120;
+
+  --docusaurus-highlighted-code-line-bg: rgba(133, 183, 230, 0.1);
+}
+
+/* ---------- Genel ---------- */
+
+::selection {
+  background: rgba(216, 154, 61, 0.35);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.015em;
+}
+
+.markdown a:not(.hash-link) {
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ifm-color-primary) 35%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 120ms ease;
+}
+
+.markdown a:not(.hash-link):hover {
+  text-decoration-color: var(--ifm-color-primary);
+}
+
+/* ---------- Navbar ---------- */
+
+.navbar {
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+}
+
+.navbar__title {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.navbar__logo {
+  height: 2.1rem;
+  margin-right: 0.65rem;
+}
+
+.navbar__link {
+  font-weight: 500;
+}
+
+.navbar__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* GitHub ikonu */
+.header-github-link {
+  padding: 0.35rem;
+}
+
+.header-github-link::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: var(--ifm-navbar-link-color);
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.header-github-link:hover::before {
+  background-color: var(--ifm-color-primary);
+}
+
+/* ---------- Kenar çubuğu (kitap) ---------- */
+
+.theme-doc-sidebar-container {
+  border-right: 1px solid var(--ifm-toc-border-color) !important;
+}
+
+.menu {
+  padding: 1rem 0.75rem !important;
+  font-size: 0.92rem;
+}
+
+.menu__link {
+  border-radius: 8px;
+  line-height: 1.45;
+}
+
+.menu__link--active:not(.menu__link--sublist) {
+  position: relative;
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  font-weight: 600;
+}
+
+.menu__link--active:not(.menu__link--sublist)::before {
+  content: '';
+  position: absolute;
+  left: -0.35rem;
+  top: 20%;
+  bottom: 20%;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--av-amber-500);
+}
+
+.menu__list-item-collapsible {
+  border-radius: 8px;
+}
+
+.menu__list-item-collapsible .menu__link {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- İçerik ---------- */
+
+.markdown h1:first-child {
+  --ifm-h1-font-size: 2.2rem;
+}
+
+.markdown h2 {
+  margin-top: 2.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.theme-doc-markdown {
+  max-width: 46rem;
+}
+
+/* Tablolar */
+table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+
+table thead tr {
+  background: color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ifm-background-surface-color));
+  border-bottom: 2px solid color-mix(in srgb, var(--ifm-color-primary) 25%, transparent);
+}
+
+table th {
+  font-family: var(--ifm-heading-font-family);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+table th, table td {
+  border: none;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding: 0.6rem 0.9rem;
+}
+
+table tbody tr:last-child th,
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--ifm-color-primary) 3%, transparent);
+}
+
+/* Kod blokları */
+.theme-code-block {
+  border: 1px solid var(--ifm-toc-border-color);
+  box-shadow: none;
+}
+
+code {
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 14%, transparent);
+  background: color-mix(in srgb, var(--ifm-color-primary) 6%, var(--ifm-background-surface-color));
+}
+
+pre code {
+  border: none;
+  background: transparent;
+}
+
+/* Uyarı kutuları */
+.theme-admonition {
+  border-left-width: 3px;
+  border-top: 1px solid var(--ifm-toc-border-color);
+  border-right: 1px solid var(--ifm-toc-border-color);
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  box-shadow: none;
+}
+
+/* Alıntı */
+blockquote {
+  border-left-color: var(--av-amber-500);
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* Mermaid diyagramları */
+.docusaurus-mermaid-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-background-surface-color);
+  overflow-x: auto;
+}
+
+/* Sayfalama (önceki/sonraki) */
+.pagination-nav__link {
+  border-radius: var(--ifm-global-radius);
+  border-color: var(--ifm-toc-border-color);
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--av-amber-500);
+  transform: translateY(-2px);
+}
+
+.pagination-nav__sublabel {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* İçindekiler (sağ TOC) */
+.table-of-contents {
+  font-size: 0.82rem;
+}
+
+.table-of-contents__link--active {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+/* Ekmek kırıntısı */
+.breadcrumbs__item--active .breadcrumbs__link {
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  font-weight: 500;
+}
+
+/* ---------- Blog ---------- */
+
+article header h1,
+article header h2 {
+  letter-spacing: -0.02em;
+}
+
+/* ---------- Butonlar ---------- */
+
+.button {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.button--primary {
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--ifm-color-primary) 35%, transparent);
+}
+
+.button--primary:hover {
+  transform: translateY(-1px);
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  position: relative;
+  border-top: none;
+}
+
+/* Footer üstünde "ufuk çizgisi" */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--av-navy-500) 0%, var(--av-amber-500) 55%, var(--av-amber-400) 100%);
+}
+
+.footer__title {
+  font-family: var(--ifm-heading-font-family);
+  letter-spacing: 0.01em;
+}
+
+.footer__copyright {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #8ba1b8;
+}
+
+.footer__copyright a {
+  color: #b9c9da;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------- Kaydırma çubuğu ---------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--ifm-color-primary) 35%, transparent);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Küçük ekranlar ---------- */
+
+@media (max-width: 996px) {
+  :root {
+    --ifm-h1-font-size: 1.9rem;
+    --ifm-h2-font-size: 1.45rem;
+  }
+
+  .theme-doc-markdown {
+    max-width: none;
+  }
 }

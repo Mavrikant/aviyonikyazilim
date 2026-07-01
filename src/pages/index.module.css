@@ -1,283 +1,409 @@
-.page {
-  background:
-    radial-gradient(circle at top left, rgba(33, 150, 243, 0.12), transparent 28%),
-    radial-gradient(circle at top right, rgba(46, 133, 85, 0.1), transparent 24%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(248, 250, 252, 0.6) 100%);
-}
+/* Ana sayfa — "yapay ufuk" temalı tasarım */
+
+/* ---------- Hero ---------- */
 
 .hero {
-  padding: 5rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+  padding: 5.5rem 0 5rem;
+  background:
+    radial-gradient(1100px 500px at 85% -10%, rgba(29, 82, 136, 0.55), transparent 60%),
+    radial-gradient(900px 420px at -10% 110%, rgba(216, 154, 61, 0.16), transparent 55%),
+    linear-gradient(180deg, #081524 0%, #0b1d33 60%, #0e2a47 100%);
+  color: #e8eff6;
+}
+
+/* İnce ızgara dokusu */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(133, 183, 230, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(133, 183, 230, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 30% 20%, black 30%, transparent 75%);
+  pointer-events: none;
 }
 
 .heroInner {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.9fr);
-  gap: 2rem;
-  align-items: stretch;
-}
-
-.heroCopy {
-  padding: 1rem 0;
+  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+  gap: 3rem;
+  align-items: center;
 }
 
 .kicker {
-  margin: 0 0 1rem;
-  color: var(--ifm-color-primary-darkest);
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.3rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255, 198, 92, 0.35);
+  border-radius: 999px;
+  color: #ffc65c;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.kicker::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ffc65c;
+  box-shadow: 0 0 10px rgba(255, 198, 92, 0.9);
 }
 
 .heroTitle {
   margin: 0;
-  font-size: clamp(2.4rem, 5vw, 4.25rem);
-  line-height: 1.03;
+  font-family: var(--ifm-heading-font-family);
+  font-size: clamp(2.5rem, 5.2vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
   letter-spacing: -0.03em;
+  color: #f4f8fc;
+}
+
+.heroTitleAccent {
+  color: #ffc65c;
 }
 
 .heroSubtitle {
-  margin: 1.25rem 0 0;
-  max-width: 44rem;
-  font-size: 1.1rem;
-  line-height: 1.75;
-  color: var(--ifm-color-emphasis-800);
+  margin: 1.4rem 0 0;
+  max-width: 38rem;
+  font-size: 1.12rem;
+  line-height: 1.8;
+  color: #b9c9da;
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.85rem;
-  margin-top: 1.75rem;
+  margin-top: 2rem;
 }
 
+.actionPrimary {
+  background: linear-gradient(135deg, #ffc65c, #d89a3d) !important;
+  border: none !important;
+  color: #0b1d33 !important;
+  box-shadow: 0 8px 24px rgba(216, 154, 61, 0.35) !important;
+}
+
+.actionPrimary:hover {
+  transform: translateY(-2px);
+  color: #081524 !important;
+}
+
+.actionGhost {
+  background: rgba(244, 248, 252, 0.06) !important;
+  border: 1px solid rgba(185, 201, 218, 0.35) !important;
+  color: #e8eff6 !important;
+}
+
+.actionGhost:hover {
+  border-color: rgba(255, 198, 92, 0.6) !important;
+  color: #ffc65c !important;
+  transform: translateY(-2px);
+}
+
+/* Gösterge şeridi (metrikler) */
 .metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 2rem 0 0;
+  gap: 0.85rem;
+  margin: 2.6rem 0 0;
 }
 
 .metrics > div {
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 1rem;
-  background: var(--ifm-background-surface-color);
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  padding: 0.9rem 1.05rem;
+  border: 1px solid rgba(133, 183, 230, 0.18);
+  border-radius: 12px;
+  background: rgba(16, 26, 44, 0.65);
+  backdrop-filter: blur(4px);
 }
 
 .metrics dt {
   margin: 0;
-  color: var(--ifm-color-emphasis-600);
-  font-size: 0.82rem;
+  color: #7f97ad;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.68rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.14em;
 }
 
 .metrics dd {
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
+  color: #e8eff6;
   font-weight: 600;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
-.heroPanel {
-  display: grid;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 1.5rem;
-  background: color-mix(in srgb, var(--ifm-background-surface-color) 90%, white);
-  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+/* Hero sağ panel: gösterge */
+.heroDial {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.panelCard,
-.panelList {
-  border-radius: 1.1rem;
-  background: var(--ifm-background-surface-color);
+.heroDial svg {
+  width: min(340px, 80vw);
+  height: auto;
+  filter: drop-shadow(0 24px 60px rgba(8, 21, 36, 0.7));
 }
 
-.panelCard {
-  padding: 1.25rem;
-}
-
-.panelLabel {
-  display: inline-block;
-  margin-bottom: 0.75rem;
-  color: var(--ifm-color-primary-darkest);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.panelText {
-  margin: 0;
-  color: var(--ifm-color-emphasis-800);
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
-.panelList {
-  display: grid;
-  gap: 0.75rem;
-  padding: 0.25rem;
-}
-
-.panelList > div {
-  padding: 0.95rem 1rem;
-  border-radius: 0.95rem;
-  background: rgba(148, 163, 184, 0.08);
-}
-
-.panelList span {
-  display: block;
-  color: var(--ifm-color-emphasis-600);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.panelList strong {
-  display: block;
-  margin-top: 0.3rem;
-  line-height: 1.45;
-}
+/* ---------- Bölümler ---------- */
 
 .section {
-  padding: 3.5rem 0;
+  padding: 4rem 0;
 }
 
 .sectionMuted {
-  background: rgba(148, 163, 184, 0.07);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ifm-color-primary) 4%, transparent), transparent 70%);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.sectionIndex {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--av-amber-600);
+  letter-spacing: 0.1em;
+}
+
+[data-theme='dark'] .sectionIndex {
+  color: #ffc65c;
 }
 
 .sectionTitle {
   margin: 0;
-  font-size: clamp(1.7rem, 3vw, 2.4rem);
-  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: -0.025em;
 }
 
 .sectionLead {
-  max-width: 48rem;
-  margin: 0.85rem 0 0;
+  max-width: 46rem;
+  margin: 0.9rem 0 0;
   color: var(--ifm-color-emphasis-700);
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
+/* Kart ızgaraları */
 .cardGrid,
 .linkGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.8rem;
+  gap: 1.1rem;
+  margin-top: 2rem;
 }
 
 .card,
 .linkCard {
+  position: relative;
   border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 1.25rem;
+  border-radius: 14px;
   background: var(--ifm-background-surface-color);
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.05);
+  overflow: hidden;
 }
 
 .card {
-  padding: 1.35rem;
+  padding: 1.5rem;
+}
+
+.card::before,
+.linkCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--av-navy-500), var(--av-amber-500));
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.card:hover::before,
+.linkCard:hover::before {
+  opacity: 1;
 }
 
 .card h3,
 .linkCard h3 {
   margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.35;
+  font-size: 1.08rem;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
 }
 
 .card p,
 .linkCard p {
-  margin: 0.85rem 0 0;
+  margin: 0.8rem 0 0;
   color: var(--ifm-color-emphasis-700);
+  font-size: 0.95rem;
   line-height: 1.7;
 }
 
 .linkCard {
   display: block;
-  padding: 1.35rem;
+  padding: 1.5rem;
   color: inherit;
   text-decoration: none;
-  transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    box-shadow 160ms ease;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
 .linkCard:hover {
   color: inherit;
   text-decoration: none;
   transform: translateY(-3px);
-  border-color: var(--ifm-color-primary-light);
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.1);
+  border-color: color-mix(in srgb, var(--av-amber-500) 55%, var(--ifm-toc-border-color));
+  box-shadow: var(--ifm-global-shadow-md);
 }
 
 .linkLabel {
   display: inline-block;
-  margin-bottom: 0.85rem;
-  color: var(--ifm-color-primary-darkest);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  margin-bottom: 0.9rem;
+  color: var(--av-amber-600);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+[data-theme='dark'] .linkLabel {
+  color: #ffc65c;
+}
+
+.linkCard::after {
+  content: '→';
+  position: absolute;
+  right: 1.3rem;
+  bottom: 1.1rem;
+  color: var(--av-amber-500);
+  font-size: 1.05rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.linkCard:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Katkı bölümü */
 .splitLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2.5rem;
   align-items: start;
 }
 
 .stepList {
+  counter-reset: step;
   margin: 0;
-  padding: 1.25rem 1.35rem 1.25rem 2rem;
-  border: 1px solid var(--ifm-toc-border-color);
-  border-radius: 1.25rem;
-  background: var(--ifm-background-surface-color);
-  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.05);
-}
-
-.stepList li + li {
-  margin-top: 0.9rem;
+  padding: 0;
+  list-style: none;
 }
 
 .stepList li {
-  line-height: 1.7;
+  counter-increment: step;
+  position: relative;
+  padding: 1rem 1.2rem 1rem 3.4rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 12px;
+  background: var(--ifm-background-surface-color);
+  line-height: 1.65;
 }
 
+.stepList li + li {
+  margin-top: 0.8rem;
+}
+
+.stepList li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 1.1rem;
+  top: 1.05rem;
+  color: var(--av-amber-600);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+[data-theme='dark'] .stepList li::before {
+  color: #ffc65c;
+}
+
+/* Kapanış CTA */
 .ctaSection {
-  padding: 0 0 5rem;
+  padding: 1rem 0 5rem;
 }
 
 .ctaBox {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.75rem 2rem;
-  border-radius: 1.5rem;
+  gap: 2rem;
+  padding: 2.4rem 2.6rem;
+  border-radius: 18px;
   background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(46, 133, 85, 0.08)),
-    var(--ifm-background-surface-color);
-  border: 1px solid rgba(37, 99, 235, 0.12);
-  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.08);
+    radial-gradient(700px 300px at 90% -30%, rgba(29, 82, 136, 0.6), transparent 65%),
+    linear-gradient(135deg, #0b1d33, #0e2a47);
+  color: #e8eff6;
+}
+
+.ctaBox::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  height: 2px;
+  transform: rotate(-1.6deg);
+  background: linear-gradient(90deg, transparent, var(--av-amber-500) 40%, var(--av-amber-400));
+  opacity: 0.8;
+}
+
+.ctaKicker {
+  margin: 0;
+  color: #ffc65c;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .ctaTitle {
-  margin: 0.35rem 0 0;
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  margin: 0.5rem 0 0;
+  max-width: 34rem;
+  color: #f4f8fc;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
   letter-spacing: -0.02em;
+  line-height: 1.35;
 }
+
+/* ---------- Duyarlılık ---------- */
 
 @media screen and (max-width: 996px) {
   .hero {
-    padding-top: 3rem;
+    padding: 3.5rem 0 3rem;
   }
 
   .heroInner,
@@ -285,6 +411,14 @@
   .linkGrid,
   .splitLayout {
     grid-template-columns: 1fr;
+  }
+
+  .heroDial {
+    order: -1;
+  }
+
+  .heroDial svg {
+    width: min(220px, 60vw);
   }
 
   .metrics {
@@ -299,7 +433,7 @@
 
 @media screen and (max-width: 640px) {
   .section {
-    padding: 2.5rem 0;
+    padding: 2.75rem 0;
   }
 
   .heroSubtitle,
@@ -307,12 +441,7 @@
     font-size: 1rem;
   }
 
-  .panelCard,
-  .card,
-  .linkCard,
-  .stepList,
   .ctaBox {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding: 1.6rem 1.4rem;
   }
 }

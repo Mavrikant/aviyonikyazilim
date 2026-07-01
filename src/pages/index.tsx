@@ -70,21 +70,6 @@ const quickRoutes = [
   },
 ];
 
-const contentMap = [
-  {
-    title: 'Kitap',
-    description: 'DO-178C ekseninde düzenli okuma rotası, kavram sıralaması ve referans sayfaları.',
-  },
-  {
-    title: 'Blog',
-    description: 'Tek tek konuları hızlı açıklayan, kitapla birlikte okunabilecek teknik notlar.',
-  },
-  {
-    title: 'Kaynaklar',
-    description: 'Kısaltmalar, SOI notları ve ekler ile terimlerin ve süreçlerin kısa başvurusu.',
-  },
-];
-
 const recentPosts = [
   {
     label: 'Yeni yazı',
@@ -112,6 +97,81 @@ const contributorSteps = [
   'Güncellenen metin daha anlaşılır, daha tutarlı ve daha güvenilir hale gelsin.',
 ];
 
+/** Hero'daki büyük yapay ufuk göstergesi (dekoratif). */
+function HeroDial() {
+  return (
+    <div className={styles.heroDial} aria-hidden="true">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="heroDialClip">
+            <circle cx="100" cy="100" r="82" />
+          </clipPath>
+          <linearGradient id="heroSky" x1="100" y1="18" x2="100" y2="108" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0E2A47" />
+            <stop offset="1" stopColor="#1D5288" />
+          </linearGradient>
+          <linearGradient id="heroGround" x1="100" y1="100" x2="100" y2="182" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#D89A3D" />
+            <stop offset="1" stopColor="#8F5D1E" />
+          </linearGradient>
+        </defs>
+
+        {/* Kadran */}
+        <g clipPath="url(#heroDialClip)">
+          <rect width="200" height="200" fill="url(#heroSky)" />
+          <path d="M6 114.2 L194 87.8 L194 194 L6 194 Z" fill="url(#heroGround)" />
+          <path d="M6 114.2 L194 87.8" stroke="#F4F8FC" strokeWidth="3" strokeLinecap="round" />
+          {/* Yunuslama merdiveni */}
+          <path d="M74 76.5 L126 69.2" stroke="#F4F8FC" strokeOpacity="0.6" strokeWidth="2" strokeLinecap="round" />
+          <path d="M83 57.7 L117 52.9" stroke="#F4F8FC" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" />
+          <path d="M88 40.1 L112 36.7" stroke="#F4F8FC" strokeOpacity="0.25" strokeWidth="2" strokeLinecap="round" />
+          <path d="M74 139.4 L126 132.1" stroke="#F9EFD9" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" />
+          <path d="M83 158.9 L117 154.1" stroke="#F9EFD9" strokeOpacity="0.3" strokeWidth="2" strokeLinecap="round" />
+        </g>
+
+        {/* Yatış açısı tikleri */}
+        <g stroke="#8FB4D9" strokeWidth="2" strokeLinecap="round" opacity="0.7">
+          <path d="M100 10 L100 20" />
+          <path d="M55 22 L59.5 30.7" />
+          <path d="M145 22 L140.5 30.7" />
+          <path d="M22 55 L30.7 59.5" />
+          <path d="M178 55 L169.3 59.5" />
+        </g>
+
+        {/* Uçak sembolü */}
+        <path d="M38 108 L76 108 L85 119" stroke="#FFC65C" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M162 108 L124 108 L115 119" stroke="#FFC65C" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="100" cy="108" r="6" fill="#FFC65C" />
+
+        {/* Çerçeve */}
+        <circle cx="100" cy="100" r="82" stroke="#0B1D33" strokeWidth="8" />
+        <circle cx="100" cy="100" r="90" stroke="#24619F" strokeOpacity="0.5" strokeWidth="2" />
+        <circle cx="100" cy="100" r="97" stroke="#24619F" strokeOpacity="0.2" strokeWidth="1.5" />
+      </svg>
+    </div>
+  );
+}
+
+type SectionHeadProps = {
+  index: string;
+  title: string;
+  lead: string;
+};
+
+function SectionHead({index, title, lead}: SectionHeadProps) {
+  return (
+    <>
+      <div className={styles.sectionHead}>
+        <span className={styles.sectionIndex}>{index}</span>
+        <Heading as="h2" className={styles.sectionTitle}>
+          {title}
+        </Heading>
+      </div>
+      <p className={styles.sectionLead}>{lead}</p>
+    </>
+  );
+}
+
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
 
@@ -120,33 +180,41 @@ export default function Home(): ReactNode {
       title={`${siteConfig.title} | Açık kaynak başucu kitabı`}
       description="Aviyonik yazılım, test ve sertifikasyon için Türkçe, açık kaynak ve topluluk destekli başucu kitabı."
     >
-      <main className={styles.page}>
+      <main>
         <section className={styles.hero}>
           <div className="container">
             <div className={styles.heroInner}>
-              <div className={styles.heroCopy}>
-                <p className={styles.kicker}>Açık kaynak · Türkçe · Topluluk odaklı</p>
+              <div>
+                <p className={styles.kicker}>Açık kaynak · Türkçe · DO-178C</p>
                 <Heading as="h1" className={styles.heroTitle}>
-                  Aviyonik yazılım için profesyonel bir başucu kitabı
+                  Emniyet-kritik aviyonik yazılım için{' '}
+                  <span className={styles.heroTitleAccent}>başucu kitabı</span>
                 </Heading>
                 <p className={styles.heroSubtitle}>
-                  Bu site, aviyonik yazılım, test ve sertifikasyon dünyasında çalışan
-                  herkes için özgün, düzenli ve katkıya açık bir referans alanı
-                  oluşturmayı amaçlar.
+                  Aviyonik yazılım, test ve sertifikasyon dünyasında çalışan herkes
+                  için özgün, düzenli ve katkıya açık bir Türkçe referans:
+                  gereksinimden yapısal kapsama, araç kalifikasyonundan SOI
+                  denetimlerine.
                 </p>
 
                 <div className={styles.actions}>
-                  <Link className="button button--primary button--lg" to="/kitap">
+                  <Link
+                    className={clsx('button button--lg', styles.actionPrimary)}
+                    to="/kitap"
+                  >
                     Kitaba Başla
                   </Link>
-                  <Link className="button button--secondary button--lg" to="/blog">
-                    Blog Yazılarını Gör
+                  <Link
+                    className={clsx('button button--lg', styles.actionGhost)}
+                    to="/blog"
+                  >
+                    Blog Yazıları
                   </Link>
                   <Link
-                    className="button button--secondary button--lg"
+                    className={clsx('button button--lg', styles.actionGhost)}
                     href="https://github.com/Mavrikant/aviyonikyazilim"
                   >
-                    GitHub'da İncele
+                    GitHub
                   </Link>
                 </div>
 
@@ -156,8 +224,8 @@ export default function Home(): ReactNode {
                     <dd>DO-178C ve emniyet-kritik geliştirme</dd>
                   </div>
                   <div>
-                    <dt>İçerik biçimi</dt>
-                    <dd>Kitap, blog ve başvuru sayfaları</dd>
+                    <dt>İçerik</dt>
+                    <dd>26 bölümlük kitap, blog ve başvuru sayfaları</dd>
                   </div>
                   <div>
                     <dt>Katkı modeli</dt>
@@ -166,44 +234,18 @@ export default function Home(): ReactNode {
                 </dl>
               </div>
 
-              <aside className={styles.heroPanel} aria-label="Özet bilgi paneli">
-                <div className={styles.panelCard}>
-                  <span className={styles.panelLabel}>Bu sitenin amacı</span>
-                  <p className={styles.panelText}>
-                    Aviyonik yazılım konusunu yalnızca belge başlıklarıyla değil,
-                    mühendislik kararlarıyla birlikte ele alan bir başvuru noktası
-                    oluşturmak.
-                  </p>
-                </div>
-                <div className={styles.panelList}>
-                  <div>
-                    <span>Kitap</span>
-                    <strong>Yapılandırılmış öğrenme yolu</strong>
-                  </div>
-                  <div>
-                    <span>Blog</span>
-                    <strong>Kısa ve teknik derinlik</strong>
-                  </div>
-                  <div>
-                    <span>Kaynaklar</span>
-                    <strong>Terimler ve referanslar</strong>
-                  </div>
-                </div>
-              </aside>
+              <HeroDial />
             </div>
           </div>
         </section>
 
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.sectionTitle}>
-              Neden bu proje?
-            </Heading>
-            <p className={styles.sectionLead}>
-              İçerik, profesyonel bir teknik kaynakta beklenen netlik ile topluluk
-              katkısına açık bir açık kaynak projesinin esnekliğini bir araya getirir.
-            </p>
-
+            <SectionHead
+              index="01"
+              title="Neden bu proje?"
+              lead="İçerik, profesyonel bir teknik kaynakta beklenen netlik ile topluluk katkısına açık bir açık kaynak projesinin esnekliğini bir araya getirir."
+            />
             <div className={styles.cardGrid}>
               {highlights.map((item) => (
                 <article className={styles.card} key={item.title}>
@@ -217,14 +259,11 @@ export default function Home(): ReactNode {
 
         <section className={clsx(styles.section, styles.sectionMuted)}>
           <div className="container">
-            <Heading as="h2" className={styles.sectionTitle}>
-              Nereden başlamalı?
-            </Heading>
-            <p className={styles.sectionLead}>
-              Aşağıdaki giriş noktaları, konuyu hızlıca taramak isteyenler için
-              pratik bir başlangıç sunar.
-            </p>
-
+            <SectionHead
+              index="02"
+              title="Nereden başlamalı?"
+              lead="Aşağıdaki giriş noktaları, konuyu hızlıca taramak isteyenler için pratik bir başlangıç sunar."
+            />
             <div className={styles.linkGrid}>
               {startingPoints.map((item) => (
                 <Link className={styles.linkCard} key={item.title} to={item.href}>
@@ -239,13 +278,11 @@ export default function Home(): ReactNode {
 
         <section className={styles.section}>
           <div className="container">
-            <Heading as="h2" className={styles.sectionTitle}>
-              İlk 5 dakikada nasıl kullanmalı?
-            </Heading>
-            <p className={styles.sectionLead}>
-              Siteyi hızlı taramak isteyenler için, amaca göre seçilmiş kısa rotalar.
-            </p>
-
+            <SectionHead
+              index="03"
+              title="İlk 5 dakikada nasıl kullanmalı?"
+              lead="Siteyi hızlı taramak isteyenler için, amaca göre seçilmiş kısa rotalar."
+            />
             <div className={styles.linkGrid}>
               {quickRoutes.map((route) => (
                 <Link className={styles.linkCard} key={route.title} to={route.href}>
@@ -260,34 +297,11 @@ export default function Home(): ReactNode {
 
         <section className={clsx(styles.section, styles.sectionMuted)}>
           <div className="container">
-            <Heading as="h2" className={styles.sectionTitle}>
-              İçerik haritası
-            </Heading>
-            <p className={styles.sectionLead}>
-              Kitap, blog ve kaynaklar birbirini tamamlayan ayrı ama bağlantılı üç katman gibi
-              çalışır.
-            </p>
-
-            <div className={styles.cardGrid}>
-              {contentMap.map((item) => (
-                <article className={styles.card} key={item.title}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <div className="container">
-            <Heading as="h2" className={styles.sectionTitle}>
-              Son blog yazıları
-            </Heading>
-            <p className={styles.sectionLead}>
-              Kısa teknik notlar, kitapta ele alınan konuların pratik ve daraltılmış karşılıklarını sunar.
-            </p>
-
+            <SectionHead
+              index="04"
+              title="Son blog yazıları"
+              lead="Kısa teknik notlar, kitapta ele alınan konuların pratik ve daraltılmış karşılıklarını sunar."
+            />
             <div className={styles.linkGrid}>
               {recentPosts.map((post) => (
                 <Link className={styles.linkCard} key={post.title} to={post.href}>
@@ -304,15 +318,12 @@ export default function Home(): ReactNode {
           <div className="container">
             <div className={styles.splitLayout}>
               <div>
-                <Heading as="h2" className={styles.sectionTitle}>
-                  Nasıl katkı verilir?
-                </Heading>
-                <p className={styles.sectionLead}>
-                  Proje, okuyan kişinin sadece tüketici değil, iyileştirici olmasını
-                  hedefler. Küçük düzeltmeler bile içeriği güçlendirir.
-                </p>
+                <SectionHead
+                  index="05"
+                  title="Nasıl katkı verilir?"
+                  lead="Proje, okuyan kişinin sadece tüketici değil, iyileştirici olmasını hedefler. Küçük düzeltmeler bile içeriği güçlendirir."
+                />
               </div>
-
               <ol className={styles.stepList}>
                 {contributorSteps.map((step) => (
                   <li key={step}>{step}</li>
@@ -326,13 +337,14 @@ export default function Home(): ReactNode {
           <div className="container">
             <div className={styles.ctaBox}>
               <div>
-                <p className={styles.kicker}>Birlikte geliştirelim</p>
+                <p className={styles.ctaKicker}>Birlikte geliştirelim</p>
                 <Heading as="h2" className={styles.ctaTitle}>
-                  Türkçe, açık ve güvenilir bir aviyonik referans kaynağı oluşturalım.
+                  Türkçe, açık ve güvenilir bir aviyonik referans kaynağı
+                  oluşturalım.
                 </Heading>
               </div>
               <Link
-                className="button button--primary button--lg"
+                className={clsx('button button--lg', styles.actionPrimary)}
                 href="https://github.com/Mavrikant/aviyonikyazilim"
               >
                 Katkı Sürecini Gör
