@@ -3,18 +3,30 @@ title: "SW SOI-2"
 sidebar_position: 3
 ---
 
-SOI, "Stage of Involvement" (Katılım Aşaması) kavramı ile ilgilidir ve DO-178C kapsamında dört farklı aşama bulunmaktadır. Her bir SOI, sertifikasyon sürecinde önemli bir kontrol noktasını temsil eder ve bu aşamalarda belirli gerekliliklerin yerine getirilmesi gerekir.
+SOI, "Stage of Involvement" (Katılım Aşaması) kavramı ile ilgilidir ve DO-178C
+kapsamında dört farklı aşama bulunmaktadır. Her bir SOI, sertifikasyon sürecinde önemli
+bir kontrol noktasını temsil eder ve bu aşamalarda belirli gerekliliklerin yerine
+getirilmesi gerekir.
 
-## SOI \#2 - Geliştirme Aşaması
+## SOI #2 - Geliştirme Aşaması
 
-### Amaç: 
+### Amaç
 
 Yazılım gereksinimlerinin ve tasarımının geliştirilmesi ve gözden geçirilmesi.
 
-### Ana Aktiviteler: 
+### Ana Aktiviteler
 
-Yazılımın yüksek ve düşük seviyeli gereksinimlerinin belirlenmesi, tasarımın oluşturulması, yazılımın kodlanması ve birim testlerin yapılması.
+Yazılımın yüksek ve düşük seviyeli gereksinimlerinin belirlenmesi, tasarımın
+oluşturulması, yazılımın kodlanması ve birim testlerin yapılması.
 
-### Önemli Çıktılar: 
+### Önemli Çıktılar
 
-Gereksinimler, tasarım belgeleri, kod ve test sonuçları. Bu çıktılar, yazılımın belirlenen gereksinimleri karşıladığını kanıtlar.
+Gereksinimler, tasarım belgeleri, kod ve test sonuçları. Bu çıktılar, yazılımın
+belirlenen gereksinimleri karşıladığını kanıtlar.
+
+### Bu aşamada ne beklenir?
+
+- gereksinim-tasarım tutarlılığı,
+- izlenebilirlik zinciri,
+- kodlama standartlarına uyum,
+- birim test kapsamı.

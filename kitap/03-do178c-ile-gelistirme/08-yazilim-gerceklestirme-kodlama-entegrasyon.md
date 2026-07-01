@@ -5,8 +5,76 @@ sidebar_position: 5
 
 # 8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon
 
-:::info Bu bölüm hazırlanıyor 🚧
-Bu bölümün içeriği henüz yazılmaktadır. Yakında yayımlanacaktır.
-:::
+Bu bölümde tasarımın kaynak koda nasıl dönüştüğü ve bileşenlerin nasıl bir araya
+getirildiği anlatılır. Kodlama standartları, hata kontrolü ve tutarlı entegrasyon
+uygulamaları burada önem kazanır.
 
-Bu bölüm, kaynak kodun (source code) üretimi, kodlama standartları ile entegrasyon (integration) faaliyetlerini ele alacaktır. Kaynak koddan çalıştırılabilir nesne koduna (executable object code) geçiş süreci anlatılacaktır.
+Amaç yalnızca derlenen bir yazılım üretmek değildir; aynı zamanda okunabilir,
+test edilebilir ve sürüm değişikliklerine dayanıklı bir gerçekleştirimi sağlamaktır.
+
+## Kodlama neden denetlenir?
+
+Kod, tasarımın somut biçimidir. Eğer kodlama süreci disiplinsiz olursa, doğru tasarım
+bile beklenmeyen davranışlar üretebilir. Bu nedenle kodlama kuralları yalnızca stil
+kuralları değil, davranış güvenliği kurallarıdır.
+
+İyi bir kodlama ortamında şu konular baştan tanımlanır:
+
+- adlandırma kuralları,
+- hata dönüşleri,
+- veri tipi kullanımı,
+- sabit ve değişken ayrımı,
+- döngü ve koşul yazımı,
+- yorum ve açıklama standardı.
+
+## Kodun niteliği
+
+Emniyet-kritik kod:
+
+- anlaşılır olmalı,
+- incelemesi kolay olmalı,
+- yan etkiyi sınırlandırmalı,
+- sınır durumlarda açık davranmalı,
+- gereksiz karmaşıklık taşımamalıdır.
+
+Bir kod parçası çalışıyor olabilir; ancak okunamıyor, test edilemiyor veya bakım
+yapılamıyorsa sertifikasyon açısından zayıftır.
+
+## Entegrasyon
+
+Entegrasyon, ayrı ayrı doğrulanmış parçaların birlikte doğru davrandığını gösterir.
+Buradaki kritik soru, modüllerin kendi başlarına çalışıp çalışmadığı değil, birlikte
+çalıştıklarında beklenen davranışı sürdürüp sürdürmediğidir.
+
+Entegrasyon sırasında şunlar önemlidir:
+
+- arayüz uyumu,
+- veri sırası ve zamanlama,
+- başlatma sırası,
+- hata propagasyonu,
+- sürüm uyumu.
+
+## Uygulama örneği
+
+Bir ekibin kodlama standardı; isimlendirme, hata kontrolü ve sınır değer testleri için
+ortak kurallar koyar. Böylece:
+
+- kod incelemeleri kolaylaşır,
+- entegrasyon sürprizleri azalır,
+- hata kökeni daha hızlı bulunur.
+
+## Gerçekleştirmede tipik riskler
+
+- tasarımdan sapma,
+- arayüzü yanlış yorumlama,
+- hata durumunu eksik ele alma,
+- entegrasyon sırasını belgelemeden ilerleme,
+- gereksiz karmaşık kod üretme.
+
+Bu riskler, sonradan yapılan testlerin maliyetini artırır.
+
+## Bu bölümden akılda kalması gerekenler
+
+- Kodlama, tasarımın kontrollü ifadesidir.
+- Entegrasyon, parçaların birlikte çalıştığını gösterir.
+- Kod standartları, doğrulama kalitesini doğrudan etkiler.

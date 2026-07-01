@@ -5,8 +5,57 @@ sidebar_position: 3
 
 # 15. DO-332 ve Nesne Yönelimli Teknoloji ve İlgili Teknikler
 
-:::info Bu bölüm hazırlanıyor 🚧
-Bu bölümün içeriği henüz yazılmaktadır. Yakında yayımlanacaktır.
-:::
+Nesne yönelimli teknikler, soyutlama ve yeniden kullanım sağlasa da, kalıtım ve
+çok biçimlilik gibi özellikler doğrulama açısından yeni riskler getirir. DO-332 bu
+risklerin nasıl ele alınacağını anlatır.
 
-Bu bölüm, nesne yönelimli teknoloji (object-oriented technology) ve ilgili tekniklerin emniyet-kritik yazılımda kullanımını, DO-332 eklentisi çerçevesinde konu alacaktır.
+Bu bölümde amaç, nesne yönelimli tasarımın kendisini reddetmek değil; bu yaklaşımın
+hangi denetimlerle güvenli biçimde kullanılabileceğini özetlemektir.
+
+## Neden özel dikkat gerekir?
+
+Nesne yönelimli teknikler, kodu düzenlemeyi kolaylaştırır; ancak davranışın hangi alt
+sınıfta nasıl değiştiğini anlamayı zorlaştırabilir. Özellikle polimorfizm, görünürde aynı
+arayüzün farklı davranışlar üretmesine neden olur.
+
+## DO-332 yaklaşımı
+
+DO-332, nesne yönelimli yapıların şu yönlerini değerlendirir:
+
+- kalıtım ilişkileri,
+- arayüz sözleşmeleri,
+- çok biçimlilik etkileri,
+- tekrar kullanılabilirlik ile denetlenebilirlik dengesi.
+
+Amaç, esnekliği korurken davranış belirsizliğini artırmamaktır.
+
+## Tasarım denetimleri
+
+Güvenli kullanım için genellikle:
+
+- kalıtım derinliği sınırlandırılır,
+- temel sınıf sözleşmesi net yazılır,
+- yan etkiler görünür hale getirilir,
+- alt sınıf davranışı test edilir.
+
+### Nesne yönelimli kullanım örneği
+
+Bir uçuş modülü ortak arayüz üzerinden farklı sensör sınıflarını kullanabilir. Bu
+durumda:
+
+- arayüz davranışı sabit tutulur,
+- kalıtım zinciri sınırlandırılır,
+- testler alt sınıf etkilerini kapsar.
+
+## Riskler
+
+- gizli davranış değişimi,
+- derin kalıtım zinciri,
+- aşırı soyutlama,
+- test kapsamının yüzeysel kalması.
+
+## Bu bölümden akılda kalması gerekenler
+
+- Nesne yönelimli teknikler faydalıdır, ama denetlenmelidir.
+- Arayüz sözleşmesi açık olmazsa doğrulama zorlaşır.
+- Alt sınıf davranışı test kapsamına dahil edilmelidir.

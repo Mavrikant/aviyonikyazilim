@@ -5,8 +5,45 @@ sidebar_position: 3
 
 # 19. Kullanıcı Tarafından Değiştirilebilir Yazılım
 
-:::info Bu bölüm hazırlanıyor 🚧
-Bu bölümün içeriği henüz yazılmaktadır. Yakında yayımlanacaktır.
-:::
+Kullanıcı tarafından değiştirilebilir yazılım, genellikle parametreler, ayarlar veya
+konfigürasyon tabloları üzerinden esneklik sağlar. Bu esneklik, yazılımın kontrolsüz
+değişmesine izin vermemelidir.
 
-Bu bölüm, kullanıcı tarafından değiştirilebilir yazılım (user-modifiable software) kavramını ve değiştirilebilir/değiştirilemez bileşenlerin ayrımını konu alacaktır.
+Bu bölümde temel odak, değiştirilebilir alanların sınırlarının net tanımlanması ve
+değişikliklerin doğrulanabilir olmasıdır.
+
+## Neden özel yönetim gerekir?
+
+Parametre üzerinden davranış değiştirmek, kod değiştirmekten daha güvenli görünebilir;
+ancak sınır iyi çizilmezse aynı etkiyi daha sinsi biçimde yaratabilir. Bir limit değeri
+yanlış girildiğinde kod değişmemiş olsa da sistem davranışı değişmiş olur.
+
+## Değiştirilebilir alanlar
+
+### Değiştirilebilir alanlara örnek
+
+- Limit değerleri
+- Dil/yerelleştirme tabloları
+- Görev profilleri
+
+Bu alanlar esnek olabilir; ama hangi değişikliğin hangi sınırda kalacağı net olmalıdır.
+
+## Kontrol ilkeleri
+
+- hangi alan değiştirilebilir açık olmalı,
+- hangi aralık geçerli kabul edilecek belirtilmeli,
+- değişiklik yapan kişinin yetkisi doğrulanmalı,
+- değişiklik sonrası test veya kontrol tanımlı olmalı.
+
+## Riskler
+
+- yetkisiz değişiklik,
+- sınır dışı parametre,
+- kayıt tutulmaması,
+- sürümle uyuşmayan konfigürasyon.
+
+## Bu bölümden akılda kalması gerekenler
+
+- Değiştirilebilirlik, kontrolsüzlük anlamına gelmez.
+- Parametreler de yazılım davranışının parçasıdır.
+- Değişiklik sınırları ve doğrulama adımları açık olmalıdır.
