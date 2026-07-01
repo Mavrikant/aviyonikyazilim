@@ -1,0 +1,33 @@
+aviyonik:
+  label: aviyonik
+  permalink: /aviyonik
+aviyonik-sistemler:
+  label: aviyonik sistemler
+  permalink: /aviyonik-sistemler
+a429:
+  label: A429
+  permalink: /a429
+afdx:
+  label: AFDX
+  permalink: /afdx
+sca:
+  label: SCA
+  permalink: /sca
+do-178c:
+  label: DO-178C
+  permalink: /do-178c
+yapisal-kapsam-analizi:
+  label: Yapısal kapsam analizi
+  permalink: /yapisal-kapsam-analizi
+structural-coverage-analysis:
+  label: structural coverage analysis
+  permalink: /structural-coverage-analysis
+olu-kod:
+  label: Ölü Kod (Dead Code)
+  permalink: /olu-kod
+gereksiz-kod:
+  label: Gereksiz Kod (Extraneous Code)
+  permalink: /gereksiz-kod
+devre-disi-birakilmis-kod:
+  label: Devre Dışı Bırakılmış Kod (Deactivated Code)
+  permalink: /devre-disi-birakilmis-kod
