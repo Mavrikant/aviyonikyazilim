@@ -53,7 +53,6 @@ Devre dışı bırakılmış kodun yönetimi ve kontrolü için Plan Software As
 
 ## Kaynakça
 
-## 
 
 1.  *Developing Safety-Critical Software: A Practical Guide for Aviation Software and DO-178C Compliance*, **Leanna Rierson**, Chapter 17 Noncovered Code (Dead, Extraneous, and Deactivated Code)
 2.  [GCC, Options to Request or Suppress Warnings](https://gcc.gnu.org/onlinedocs/gcc-3.2/gcc/Warning-Options.html)

@@ -11,13 +11,13 @@ Yapısal kapsam analizi (structural coverage analysis) ya da bilindik kisa adiyl
 
 <!-- truncate -->
 
-## **Yapısal Programlama (Structured Programming) nedir? **
+## Yapısal Programlama (Structured Programming) nedir?
 
 Yapısal programlama, 1960'larda, bilgisayar biliminde programların daha anlaşılır, daha etkili ve hata yapma olasılığı daha düşük bir şekilde yazılabilmesi için geliştirilen bir programlama paradigmasıdır. Yapısal programlama, büyük ve karmaşık yazılım sistemlerinin geliştirilmesinde önemli bir dönüm noktası olmuştur. Bu yaklaşımın temelleri, Edsger W. Dijkstra'nın 1968'de yayınladığı "Go To Statement Considered Harmful" (Goto Deyimi Zararlıdır)\[1\] başlıklı makalesiyle atılmıştır. Dijkstra, bu makalesinde, program akışının kontrolünü sağlamak için "goto" deyiminin kullanımına karşı çıkarak daha düzenli ve modüler programlama tekniklerinin benimsenmesi gerektiğini savunmuştur.
 
 Yapısal programlama, programları anlaşılır bir şekilde modüllere ayırma, tekrar kullanılabilir kod blokları(fonksiyonlar) oluşturma ve program akışını kontrol etmek için sıralı, seçim (if/else) ve yineleme (döngüler) yapılarını kullanma prensiplerine dayanır. Bu yaklaşım, programların daha kolay anlaşılır, test edilir ve bakımı yapılır hale gelmesine yardımcı olmuştur.
 
-## **Yapısal kapsama analizi (structural coverage analysis) nedir?**
+## Yapısal kapsama analizi (structural coverage analysis) nedir?
 
 Yapısal kapsama analizi, özellikle havacılık ve uzay mühendisliğinde, bir yazılımın test sürecinde kullanılan bir tekniktir. Bu teknik, yazılımın test edilmesi sırasında kodun hangi bölümlerinin çalıştırıldığını ve hangi bölümlerinin çalıştırılmadığını belirlemek için kullanılır. Yapısal kapsam analizi, yazılımın farklı bölümlerinin yeterince test edilip edilmediğini kontrol etmek amacıyla kullanılan bir dizi metriği içerir. Bu analiz, yazılımın güvenilirliğini ve kalitesini artırmak için önemlidir.
 

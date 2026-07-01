@@ -7,7 +7,6 @@ tags: [aviyonik, aviyonik-sistemler]
 
 ![Photo of a modern aircraft cockpit showcasing various avionic systems.](/img/blog/aviyonik-nedir/gorsel-1.jpg "Photo of a modern aircraft cockpit showcasing various avionic systems.")
 
-###
 
 ### Terimin Kökeni
 
