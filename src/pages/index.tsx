@@ -27,18 +27,18 @@ const highlights = [
 
 const startingPoints = [
   {
-    label: 'Kitabın giriş bölümü',
+    label: 'Kitabın tamamı',
     href: '/kitap',
     title: 'Doğrudan yol haritası',
     description:
-      'Kitabın kapsamını, hedefini ve bölümler arasındaki akışı tek sayfada görün.',
+      'Kapsamı, hedefi ve bölüm akışını tek bir giriş sayfasında görün.',
   },
   {
     label: 'Başlangıç bölümü',
-    href: '/kitap',
+    href: '/kitap/giris/giris-ve-genel-bakis',
     title: 'Konuyu çerçeveleyin',
     description:
-      'Emniyet-kritik yazılımın kapsamını ve kitabın ana yapısını doğrudan görün.',
+      'Yeni başlıyorsanız önce kavramsal çerçeveyi burada kurun.',
   },
   {
     label: 'Blog yazıları',
@@ -46,6 +46,63 @@ const startingPoints = [
     title: 'Derinleşen notlar',
     description:
       'Aviyonik protokoller, yapısal kapsam ve sertifikasyon odaklı teknik yazılar.',
+  },
+];
+
+const quickRoutes = [
+  {
+    label: 'Yeniyseniz',
+    title: 'Giriş sayfasından başlayın',
+    description: 'Önce giriş sayfasını, sonra sistem bağlamı ve planlama bölümlerini okuyun.',
+    href: '/kitap/giris/giris-ve-genel-bakis',
+  },
+  {
+    label: 'Belirli bir konu arıyorsanız',
+    title: 'Doğrudan bölüme geçin',
+    description: 'Doğrudan ilgili bölüme geçin; her bölüm tek başına da okunabilecek şekilde düzenlenir.',
+    href: '/kitap',
+  },
+  {
+    label: 'Kısa teknik not istiyorsanız',
+    title: 'Blog yazılarını açın',
+    description: 'Blog yazıları, kitapta açılan başlıkların pratik tarafını öne çıkarır.',
+    href: '/blog',
+  },
+];
+
+const contentMap = [
+  {
+    title: 'Kitap',
+    description: 'DO-178C ekseninde düzenli okuma rotası, kavram sıralaması ve referans sayfaları.',
+  },
+  {
+    title: 'Blog',
+    description: 'Tek tek konuları hızlı açıklayan, kitapla birlikte okunabilecek teknik notlar.',
+  },
+  {
+    title: 'Kaynaklar',
+    description: 'Kısaltmalar, SOI notları ve ekler ile terimlerin ve süreçlerin kısa başvurusu.',
+  },
+];
+
+const recentPosts = [
+  {
+    label: 'Yeni yazı',
+    title: 'Yapısal kapsam analizi',
+    description: 'SCA türlerini, MC/DC farkını ve test kanıtı bağlamını özetleyen teknik giriş.',
+    href: '/blog/yapisal-kapsam-analizi',
+  },
+  {
+    label: 'Önerilen okuma',
+    title: 'SCA’da cover edilemeyen kodlar',
+    description: 'Ölü, gereksiz ve devre dışı bırakılmış kodun sertifikasyon açısından anlamı.',
+    href: '/blog/sca-cover-edilemeyen-kodlar',
+  },
+  {
+    label: 'Klasik konu',
+    title: 'ARINC 429',
+    description: 'Aviyonik veri iletişiminde sık karşılaşılan bir protokole kısa bakış.',
+    href: '/blog/arinc-429',
   },
 ];
 
@@ -174,6 +231,69 @@ export default function Home(): ReactNode {
                   <span className={styles.linkLabel}>{item.label}</span>
                   <h3>{item.title}</h3>
                   <p>{item.description}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <div className="container">
+            <Heading as="h2" className={styles.sectionTitle}>
+              İlk 5 dakikada nasıl kullanmalı?
+            </Heading>
+            <p className={styles.sectionLead}>
+              Siteyi hızlı taramak isteyenler için, amaca göre seçilmiş kısa rotalar.
+            </p>
+
+            <div className={styles.linkGrid}>
+              {quickRoutes.map((route) => (
+                <Link className={styles.linkCard} key={route.title} to={route.href}>
+                  <span className={styles.linkLabel}>{route.label}</span>
+                  <h3>{route.title}</h3>
+                  <p>{route.description}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={clsx(styles.section, styles.sectionMuted)}>
+          <div className="container">
+            <Heading as="h2" className={styles.sectionTitle}>
+              İçerik haritası
+            </Heading>
+            <p className={styles.sectionLead}>
+              Kitap, blog ve kaynaklar birbirini tamamlayan ayrı ama bağlantılı üç katman gibi
+              çalışır.
+            </p>
+
+            <div className={styles.cardGrid}>
+              {contentMap.map((item) => (
+                <article className={styles.card} key={item.title}>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section}>
+          <div className="container">
+            <Heading as="h2" className={styles.sectionTitle}>
+              Son blog yazıları
+            </Heading>
+            <p className={styles.sectionLead}>
+              Kısa teknik notlar, kitapta ele alınan konuların pratik ve daraltılmış karşılıklarını sunar.
+            </p>
+
+            <div className={styles.linkGrid}>
+              {recentPosts.map((post) => (
+                <Link className={styles.linkCard} key={post.title} to={post.href}>
+                  <span className={styles.linkLabel}>{post.label}</span>
+                  <h3>{post.title}</h3>
+                  <p>{post.description}</p>
                 </Link>
               ))}
             </div>

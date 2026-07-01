@@ -20,6 +20,27 @@ Bu içerik, yeni başlayan bir mühendisin konuyu sistemli biçimde öğrenmesin
 olacak kadar açıklayıcı; deneyimli bir ekip üyesinin ise kavramlar arasındaki ilişkiyi
 daha net kurmasını sağlayacak kadar ayrıntılı olacak şekilde yazılmıştır.
 
+## Bu sayfa nasıl kullanılmalı?
+
+- **Hızlı başlangıç** istiyorsanız önce [Giriş ve Genel Bakış](./01-giris/01-giris-ve-genel-bakis.md) sayfasını okuyun.
+- **Süreç akışı** görmek istiyorsanız doğrudan planlama, gereksinim, tasarım ve doğrulama
+  bölümlerine ilerleyin.
+- **Başvuru arıyorsanız** kitap sonundaki kaynaklar ve ekler bölümünü birlikte kullanın.
+- **Bir konuya takıldıysanız** blog yazılarını destekleyici kısa notlar gibi değerlendirin;
+  çoğu yazı, kitabın daha geniş akışındaki bir kavrama açıklık getirmek için yazılmıştır.
+
+```mermaid
+flowchart LR
+    A[Giriş] --> B[Bağlam]
+    B --> C[DO-178C süreci]
+    C --> D[Araç kalifikasyonu]
+    D --> E[Özel konular]
+    E --> F[Ekler ve kaynaklar]
+```
+
+Bu sıralama zorunlu bir okuma emri değil; ama ilk kez okuyan biri için en az sürtünmeli
+başlangıç rotasını verir.
+
 ## Bu kitap ne değildir?
 
 - Bir standart çevirisi değildir.

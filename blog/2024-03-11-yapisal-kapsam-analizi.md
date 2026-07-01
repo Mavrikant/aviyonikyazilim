@@ -9,6 +9,8 @@ tags: [sca, yapisal-kapsam-analizi, structural-coverage-analysis]
 
 Yapısal kapsam analizi (structural coverage analysis) ya da bilindik kisa adiyla **SCA**'yi incelemeden once yapisal programlamanin ne oldugunu tekrar hatirlayalim.  
 
+Bu yazıyı okurken, [Yazılım Doğrulama](pathname:///kitap/do178c-ile-gelistirme/yazilim-dogrulama) bölümündeki kapsam yaklaşımı ve [Kapsanmayan Kodlar](pathname:///kitap/ozel-konular/kapsanmayan-kodlar) bölümündeki kod türleriyle birlikte düşünmek faydalıdır.
+
 <!-- truncate -->
 
 ## Yapısal Programlama (Structured Programming) nedir?
@@ -32,9 +34,35 @@ Yapısal kapsam analizinin temel türleri şunlardır:
 5.  **Degistirilmis Kosul/Karar Kapsama (Modified Condition/Decision Coverage, MC/DC): **MC/DC, belirli bir kararın sonucu üzerinde her bir koşulun bağımsız etkisini doğrulamayı amaçlar. Bu, hem her giriş ve çıkış noktasının en az bir kez çağrıldığından hem de programdaki bir karardaki her koşulun en az bir kez tüm olası sonuçları aldığından emin olmayı içerir. Daha da önemlisi, her bir koşulun, diğer tüm olası koşullar sabit tutulurken, karar sonucunu bağımsız olarak etkilediği gösterilir. n+1 test senaryosu gerektirir.
 6.  **Coklu kosul kapsama:** Olasi butun kosul kombinasyonlarinin test edildigini dogrular. Gerekli senaryo sayisi: 2n
 
-TODO: Ornek kod ekle. 
+## Basit bir örnek
 
-[TABLE]
+```c
+if ((motor_calisti && yakit_basinci) || yedek_mod) {
+  ucusa_devam_et();
+} else {
+  guvenli_kapat();
+}
+```
+
+Bu küçük örnekte:
+
+- **Satır kapsama**, her iki dalın da en az bir kez çalıştırılmasını ister.
+- **Karar kapsama**, hem `true` hem `false` sonucunun görülmesini ister.
+- **Koşul kapsama**, `motor_calisti`, `yakit_basinci` ve `yedek_mod` koşullarının
+  değerlerini tek tek değiştirerek etkisini ölçer.
+- **MC/DC**, her koşulun karar sonucunu bağımsız biçimde etkilediğini gösteren en az
+  sayıda testi arar.
+
+Bu nedenle yapısal kapsam analizi, "kaç satır çalıştı" sorusundan daha fazlasını sorar;
+mantığın gerçekten kontrol edildiğini kanıtlamaya yaklaşır.
+
+| Kapsama türü | Kısa amaç | Ne zaman güçlüdür? |
+|---|---|---|
+| Satır kapsama | Kodun çalışıp çalışmadığını görmek | Temel yürütme kontrolü gerektiğinde |
+| Karar kapsama | Her karar dalını görmek | `if/else` akışları kontrol edilirken |
+| Koşul kapsama | Her koşulun değerlerini görmek | Karmaşık karar ifadeleri test edilirken |
+| Koşul/karar kapsama | Koşullar ve kararların birleşik kontrolü | Orta düzey mantık doğrulamasında |
+| MC/DC | Koşulların bağımsız etkisini göstermek | Emniyet-kritik sertifikasyon kanıtında |
 
 Uzerinde calsitiginiz projenin DAL seviyesine gore DO178C Table A7'den saglamaniz gereken SCA tipini kontrol edebirlisiniz. DAL A seviyesi aviyonik yazilimlar icin her 3 tip kapasama analizi de bagimsiz ekip tarafindan yapilmasi gerekiyor. 
 
@@ -56,8 +84,7 @@ Havacılık ve uzay alanında, başarısızlığın maliyeti olağanüstü yüks
 
 > \[2\] **A Practical Tutorial on Modified Condition/ Decision Coverage**, <https://shemesh.larc.nasa.gov/fm/papers/Hayhurst-2001-tm210876-MCDC.pdf>  
 
-> \[3\] **Comments on Modified Condition/Decision Coverage for Software Testing**, <https://sci-hub.se/https://ieeexplore.ieee.org/document/931302> 
-
-> \[4\] John Joseph Chilenski and Steven P. Miller, "**Applicability of Modified Condition/Decision Coverage to Software Testing**", Software Engineering Journal, September 1994. <https://sci-hub.se/https://digital-library.theiet.org/content/journals/10.1049/sej.1994.0025> 
+> \[3\] **Comments on Modified Condition/Decision Coverage for Software Testing**, <https://doi.org/10.1109/aero.2001.931302> 
+> \[4\] John Joseph Chilenski and Steven P. Miller, "**Applicability of Modified Condition/Decision Coverage to Software Testing**", Software Engineering Journal, September 1994. <https://doi.org/10.1049/sej.1994.0025> 
 
 > \[5\] **A PRACTICAL APPROACH TO MODIFIED CONDITION/DECISION COVERAGE,** <https://ntrs.nasa.gov/api/citations/20040086014/downloads/20040086014.pdf>

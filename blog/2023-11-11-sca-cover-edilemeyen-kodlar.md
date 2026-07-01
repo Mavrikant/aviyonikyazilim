@@ -9,13 +9,19 @@ tags: [do-178c, olu-kod, gereksiz-kod, devre-disi-birakilmis-kod]
 
 Yapısal kapsama analizi(Structural Coverage Analysis - SCA) , yazılım test süreçlerinde hayati role sahip bir yöntemdir. Bu analiz, yazılımın kod kapsamını değerlendirerek hangi kod bölümlerinin testler sırasında çalıştırıldığını veya çalıştırılmadığını belirlemeye yardımcı olur. Ana hedef, yazılımın her bir satırının (statement), dalının (branch) ve koşulunun (condition) uygun şekilde test edilip edilmediğini kontrol etmektir.
 
+Bu konu özellikle [Yazılım Doğrulama](pathname:///kitap/do178c-ile-gelistirme/yazilim-dogrulama) ve [Kapsanmayan Kodlar](pathname:///kitap/ozel-konular/kapsanmayan-kodlar) bölümleriyle birlikte okunursa, hangi kodun neden kapsanmadığı daha net görünür.
+
 <!-- truncate -->
 
 Kapsama verisi toplama sürecinde, yapısal kapsama analiz aracı önemli bir rol oynar. İlk olarak, bu araçlar kaynak koda enstrümantasyon adı verilen ek kod parçalarını ekler. Bu ekleme, gereksinim tabanlı testler sırasında hangi kod parçalarının kullanıldığını takip etmek için yapılır. Test sırasında toplanan kapsama verisi, daha sonra yapısal kapsama analiz araçları tarafından incelenir. Bu inceleme sonucunda, testlerde kullanılmayan yani 'kapsanmamış' kod satırları tespit edilir ve bir kapsama analizi raporu oluşturulur.
 
 Bu analiz sonucunda, bazı kodların kapsanmadığı görülebilir. Aşağıdaki yazılimda, bu tür kodlara ait bazı örnekler sunulmuştur. Bu kodlar üç kategoriye ayrılabilir.
 
-[TABLE]
+| Kod türü | Ne demektir? | SCA açısından ne anlatır? |
+|---|---|---|
+| Ölü kod | Hiçbir koşulda çalışmayan kod | Temizlenmesi veya gerekçelendirilmesi gerekir |
+| Gereksiz kod | Sonuç üzerinde etkisi olmayan çalışan kod | Basitleştirme ve bakım açısından risk oluşturabilir |
+| Devre dışı bırakılmış kod | Bilinçli olarak aktif olmayan kod | Tasarım niyeti ve doğrulama kanıtı ile yönetilmelidir |
 
 ## Ölü Kod (Dead Code)
 
