@@ -84,7 +84,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | önceden geliştirilmiş yazılım | previously developed software (PDS) |
 | ticari hazır yazılım | commercial off-the-shelf (COTS) |
 | ürün servis geçmişi | product service history |
-| parametre verisi öğesi | parameter data item |
+| parametre verisi öğesi | parameter data item (PDI) |
+| veri zarfı | data envelope |
 | değişiklik etki analizi | change impact analysis |
 | araç kalifikasyon seviyesi | tool qualification level (TQL) |
 | sahada yüklenebilir yazılım | field-loadable software |

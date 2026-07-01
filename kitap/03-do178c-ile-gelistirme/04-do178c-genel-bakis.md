@@ -18,10 +18,67 @@ hangi amaçların karşılanması gerektiğini tarif eder.
 
 ## DO-178'in kısa tarihçesi
 
-:::info Bu bölüm hazırlanıyor 🚧
-DO-178'in ilk sürümünden DO-178C'ye uzanan gelişim; her sürümün getirdiği ana
-değişiklikler ve DO-178C güncellemesinin gerekçeleri burada anlatılacak.
-:::
+1970'lerin sonuna gelindiğinde yazılım, uçak sistemlerinde artık yardımcı bir unsur
+olmaktan çıkıp uçuş fonksiyonlarının doğrudan parçası olmaya başlamıştı. Donanım için
+yerleşmiş güvenilirlik yöntemleri (arıza oranı hesapları, yedekleme mimarileri) yazılıma
+birebir uygulanamıyordu; çünkü yazılım "eskimez", hataları tasarım kaynaklıdır ve
+istatistiksel arıza oranı kavramı ona iyi oturmaz. Endüstri ile otoritelerin ortak bir
+dile ihtiyacı vardı. Bu ihtiyaçla RTCA (ABD tarafında) ve EUROCAE (Avrupa tarafında)
+ortak komiteler kurdu; ortaya çıkan belgeler bu yüzden çift numara taşır (örneğin
+DO-178C / ED-12C).
+
+Gelişimi dört ana durak üzerinden özetlemek mümkündür:
+
+| Sürüm | Yıl | Ana katkısı |
+|---|---|---|
+| DO-178 | 1982 | İlk ortak çerçeve; yazılımın kritikliğine göre kaba bir sınıflandırma |
+| DO-178A | 1985 | Kademeli yazılım seviyeleri ve daha belirgin süreç/faaliyet tanımları |
+| DO-178B | 1992 | Hedef tabanlı (objective-based) yaklaşım; A–E seviyeleri; amaç tabloları |
+| DO-178C | 2011 | Netleştirilmiş metin; teknoloji ekleri (DO-330/331/332/333) ile modüler yapı |
+
+**DO-178 (1982)**, konunun ilk kez ortak bir belgeye bağlanması açısından önemliydi;
+ancak içerik büyük ölçüde nitelikseldi ve "iyi mühendislik pratiği" düzeyinde kalıyordu.
+Yazılım, uçuş emniyetine etkisine göre yalnızca birkaç kaba kategoriye ayrılıyor, hangi
+kanıtın yeterli sayılacağı büyük ölçüde projeye ve otoriteye bırakılıyordu.
+
+**DO-178A (1985)**, ilk deneyimlerin ışığında yazılımı kademeli seviyelere ayırma
+fikrini belirginleştirdi ve geliştirme ile doğrulama faaliyetlerini daha somut tanımladı.
+Yine de belge, faaliyetleri belirli geliştirme yaklaşımlarına bağlı biçimde anlatıyordu;
+bu da farklı yöntem kullanan projelerde yorum farklarına yol açıyordu.
+
+**DO-178B (1992)**, bugün bildiğimiz yapının kurulduğu asıl kırılma noktasıdır. Belge,
+"şu faaliyeti şöyle yap" demek yerine "şu hedefin sağlandığını göster" diyen hedef
+tabanlı yaklaşıma geçti. Yazılım seviyeleri A'dan E'ye netleşti; her seviye için hangi
+hedeflerin geçerli olduğu ve hangilerinin bağımsız kişilerce doğrulanması gerektiği
+tablolara bağlandı. Yapısal kapsam (structural coverage) beklentileri de bu sürümle
+kademelendi: en kritik
+seviyede değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC)
+dahil olmak üzere seviyeye göre artan kapsam ölçütleri tanımlandı. DO-178B yaklaşık
+yirmi yıl boyunca fiilen tüm sivil aviyonik yazılım projelerinin ortak referansı oldu.
+
+Bu uzun kullanım süresi, güncelleme ihtiyacını da biriktirdi. **DO-178C (2011)**
+çalışmasının başlıca gerekçeleri şunlardı:
+
+- DO-178B metnindeki bazı ifadeler farklı yorumlanabiliyordu; yıllar içinde biriken
+  sık sorulan sorular ve açıklama yazıları (DO-248 serisi) bu belirsizliklerin
+  giderilmesi gerektiğini gösteriyordu.
+- Model tabanlı geliştirme (model-based development), nesne yönelimli teknoloji
+  (object-oriented technology) ve biçimsel yöntemler (formal methods) gibi teknikler
+  yaygınlaşmıştı; 1992 tarihli metin bunların nasıl ele alınacağını söylemiyordu.
+- Araç kalifikasyonu (tool qualification), DO-178B içindeki kısa bölüme sığmayacak
+  kadar büyümüştü; hem
+  yazılım hem donanım projelerinde kullanılabilecek bağımsız bir belgeye ihtiyaç vardı.
+- Amaçlar, faaliyetler ve iş ürünleri arasındaki eşleme yer yer tutarsızdı; terimlerin
+  ve tabloların hizalanması gerekiyordu.
+
+2005–2011 arasında yürütülen ortak komite çalışması (RTCA SC-205 / EUROCAE WG-71),
+bilinçli bir tercihle DO-178B'nin çekirdeğini korudu: temel süreçler, seviyeler ve hedef
+mantığı değişmedi. Yenilik, metnin netleştirilmesi ve teknolojiye özgü konuların ayrı
+eklere (DO-330, DO-331, DO-332, DO-333) taşınmasıydı. Bu modüler yapı sayesinde ana
+standart sık sık değişmek zorunda kalmadan, yeni teknikler kendi ekleri üzerinden ele
+alınabilir hale geldi. Pratik sonucu şudur: DO-178B ile deneyimi olan bir ekip DO-178C'ye
+geçerken süreçlerini baştan kurmaz; ama kullandığı teknikler bir ekin kapsamına
+giriyorsa, o ekin hedeflerini de plan setine dahil etmek zorundadır.
 
 ## DO-178C neyi kapsar?
 
@@ -125,9 +182,12 @@ açmak için seçilmiştir. Önce planları, sonra iş ürünlerini, ardından b
 doğrulanacağını ele almak, belgenin neden bu kadar sıkı bir izlenebilirlik beklediğini
 anlamayı kolaylaştırır.
 
-### Bu bölümden akılda kalması gerekenler
+## Bu bölümden akılda kalması gerekenler
 
 - DO-178C bir "nasıl kod yazılır" standardı değildir.
+- Hedef tabanlı yaklaşım ve seviye mantığı DO-178B ile kuruldu; DO-178C bu çekirdeği
+  korudu, metni netleştirdi ve teknolojiye özgü konuları ayrı eklere taşıdı.
 - Amaç, sürecin izlenebilir ve doğrulanabilir olmasıdır.
-- Ek dokümanlar, özel tekniklerin nasıl ele alınacağını tamamlar.
+- Ek dokümanlar, özel tekniklerin nasıl ele alınacağını tamamlar; kullanılan teknik bir
+  ekin kapsamına giriyorsa o ekin hedefleri de plan setine dahil edilir.
 - Kanıt üretmek, yazılım geliştirme kadar önemli bir iştir.
