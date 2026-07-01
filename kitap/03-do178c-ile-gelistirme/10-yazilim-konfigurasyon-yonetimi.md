@@ -37,6 +37,36 @@ doğrulama sonuçları da anlamını kaybeder.
 Bu soruların cevabı yoksa değişiklik teknik olarak yapılmış olsa bile yönetimsel olarak
 tamamlanmış sayılmaz.
 
+## Konfigürasyon yönetimi faaliyetleri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Konfigürasyon tanımlama, problem raporlama, arşivleme ve geri alma, sürüm teslimi,
+yükleme kontrolü ve yaşam döngüsü ortamının kontrolü gibi faaliyetler burada
+ayrıntılandırılacak.
+:::
+
+## Konfigürasyon yönetimi iş ürünleri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Yazılım konfigürasyon indeksi, yazılım yaşam döngüsü ortam konfigürasyon indeksi,
+problem raporları ve konfigürasyon yönetimi kayıtları burada anlatılacak.
+:::
+
+## Değişiklik etki analizi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Bir değişikliğin gereksinim, tasarım, kod, test ve sertifikasyon kanıtı üzerindeki
+etkisinin sistematik biçimde değerlendirilmesi (change impact analysis) burada
+anlatılacak.
+:::
+
+## Sık düşülen tuzaklar
+
+:::info Bu bölüm hazırlanıyor 🚧
+Geç kurulan konfigürasyon kontrolü, kontrolsüz geliştirme ortamları ve eksik problem
+kaydı gibi yaygın konfigürasyon yönetimi hataları burada ele alınacak.
+:::
+
 ## Konfigürasyon yönetimi örneği
 
 Bir gereksinim değiştiğinde aynı değişikliğin:

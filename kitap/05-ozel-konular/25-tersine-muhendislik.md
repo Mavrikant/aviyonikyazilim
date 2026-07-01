@@ -30,6 +30,14 @@ gerektiğini varsaymaktır. O yüzden çıkarılan bilgi, hemen doğru kabul edi
 - Bulunan yapıyı gereksinimlerle eşleştir.
 - Eksik kalan kısımlar için doğrulama yap.
 
+## Ele alınması gereken konular
+
+:::info Bu bölüm hazırlanıyor 🚧
+Tersine mühendislikte otorite beklentileri, sürecin planlarda açıkça tanımlanması,
+kaynak malzemenin konfigürasyon kontrolü ve çıkarılan gereksinimlerin geçerlenmesi
+burada ayrıntılandırılacak.
+:::
+
 ## Doğrulama ihtiyacı
 
 Çıkarılan gereksinim ve tasarım bilgisi test ve gözden geçirme ile desteklenmelidir.

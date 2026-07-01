@@ -16,6 +16,13 @@ sertifikasyon otoritesinin beklediği kanıt dilini ortaklaştırmasında yatar.
 faaliyetlerin sırasını, iş ürünlerini, gözden geçirme beklentilerini ve her seviyede
 hangi amaçların karşılanması gerektiğini tarif eder.
 
+## DO-178'in kısa tarihçesi
+
+:::info Bu bölüm hazırlanıyor 🚧
+DO-178'in ilk sürümünden DO-178C'ye uzanan gelişim; her sürümün getirdiği ana
+değişiklikler ve DO-178C güncellemesinin gerekçeleri burada anlatılacak.
+:::
+
 ## DO-178C neyi kapsar?
 
 Standart, yazılım yaşam döngüsünü şu eksenlerde ele alır:
@@ -40,6 +47,8 @@ tamamlayıcı belge vardır:
 | Belge | Rolü |
 |---|---|
 | DO-178C | Yazılım yaşam döngüsü için ana çerçeve |
+| DO-278A | Yer tabanlı CNS/ATM yazılımları için DO-178C'nin karşılığı |
+| DO-248C | Destekleyici materyal: sık sorulan sorular ve açıklama makaleleri |
 | DO-330 | Araç kalifikasyonu (tool qualification) |
 | DO-331 | Model tabanlı geliştirme ve doğrulama (model-based development and verification) |
 | DO-332 | Nesne yönelimli teknoloji ve ilgili teknikler |

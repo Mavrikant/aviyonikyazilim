@@ -69,6 +69,33 @@ Erken yazılan planlar ise şu faydaları sağlar:
 Bu soruların net olması, özellikle ekip büyüdükçe önem kazanır. Çünkü planlar sadece
 sertifikasyon için değil, ekip içi koordinasyon için de gereklidir.
 
+## Üç geliştirme standardı
+
+Planların yanında DO-178C, üç geliştirme standardının tanımlanmasını bekler:
+gereksinim standardı, tasarım standardı ve kodlama standardı. Bunlar ekibin iş
+ürünlerini hangi kurallara göre yazacağını belirler ve gözden geçirmelerin nesnel
+ölçütü haline gelir.
+
+:::info Bu bölüm hazırlanıyor 🚧
+Gereksinim, tasarım ve kodlama standartlarının her birinin içeriği, iyi örnekleri ve
+sık yapılan hatalar burada ayrıntılandırılacak.
+:::
+
+## Araç kalifikasyonu planlaması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Hangi araçların kalifikasyon gerektirdiğine planlama aşamasında nasıl karar
+verileceği ve bunun PSAC'a nasıl yansıtılacağı burada anlatılacak (ayrıntı için
+bkz. [DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+:::
+
+## Diğer planlar
+
+:::info Bu bölüm hazırlanıyor 🚧
+Beş DO-178C planının dışında kalan proje yönetim planı, gereksinim yönetim planı ve
+test planı gibi belgelerin rolü burada özetlenecek.
+:::
+
 ## Planlara kısa örnek
 
 - SDP, kodlama ve tasarım kurallarını tanımlar.

@@ -32,6 +32,28 @@ dağıtımını değiştirir.
 - Gözden geçirme ve kabul kriterleri önceden belirlenmeli.
 - Nihai sorumluluk ana yüklenicide kalmalı.
 
+## Dış kaynak kullanımının nedenleri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Maliyet, kapasite ve uzmanlık gibi dış kaynak gerekçeleri ve bu gerekçelerin
+gerçekleşmesini engelleyen gizli maliyetler burada ele alınacak.
+:::
+
+## Zorluklar ve riskler
+
+:::info Bu bölüm hazırlanıyor 🚧
+İletişim ve saat dilimi farkları, alan bilgisi eksikliği, kalite görünürlüğünün
+azalması ve sertifikasyon beklentilerinin tedarikçiye aktarılamaması gibi riskler
+burada ayrıntılandırılacak.
+:::
+
+## Önerilen önlemler
+
+:::info Bu bölüm hazırlanıyor 🚧
+Erken ve yazılı beklenti aktarımı, ortak standart seti, aşamalı kabul denetimleri ve
+tedarikçi süreçlerinin denetlenmesi gibi önlemler burada anlatılacak.
+:::
+
 ## İzlenebilirlik
 
 Tedarikçiden gelen iş ürünleri, ana projenin izlenebilirlik zincirine dahil edilmelidir.

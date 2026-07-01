@@ -43,6 +43,22 @@ Bir yükleme akışında genellikle şu kontroller vardır:
 Bir yazılım paketi önce kimlik doğrulamasından geçer, sonra uygun sürümle eşleştiği
 doğrulanır, en son kurulumdan sonra bütünlük testi yapılır.
 
+## Faydaları ve zorlukları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Sahada yüklemenin operasyonel faydaları (uçağı söküme gerek kalmadan güncelleme,
+filo yönetimi) ile getirdiği zorluklar (parça numarası yönetimi, uyumluluk matrisi,
+onaylı yükleme prosedürleri) burada karşılaştırılacak.
+:::
+
+## Sistemin sahada yüklenebilir tasarlanması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Sahada yüklenebilirliğin sistem tasarımına baştan dahil edilmesi: yükleme arayüzü,
+paket biçimi, bütünlük mekanizmaları (örneğin sağlama toplamı/CRC) ve yükleme
+sonrası kimlik raporlama burada anlatılacak.
+:::
+
 ## Güvenli durum
 
 Sahada yükleme sırasında sistemin güvenli durumda kalması gerekir. Bu nedenle yükleme

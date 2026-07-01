@@ -32,6 +32,29 @@ Bu nedenle veri, pasif bir girdi değil, emniyet zincirinin aktif parçasıdır.
 
 Bu veriler güncel değilse yazılım doğru çalışsa bile sistem yanlış sonuç üretebilir.
 
+## Havacılık verisi işleme standartları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Havacılık verisinin üretiminden kullanıcıya ulaşmasına kadar olan zincirin hangi
+standartlarla (özellikle DO-200A çerçevesi) güvence altına alındığı ve veri kalite
+gereksinimleri burada anlatılacak.
+:::
+
+## Veri işleme araçları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Havacılık verisini üreten ve dönüştüren araçların güvence ihtiyacı ve araç
+kalifikasyonu ile ilişkisi burada ele alınacak.
+:::
+
+## İlgili endüstri dokümanları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Navigasyon veritabanı biçimleri ve harita/arazi/engel verisi ile ilgili yaygın
+endüstri dokümanlarına (ör. ARINC 424 gibi standartlara) genel bakış burada
+verilecek.
+:::
+
 ## Kontrol yaklaşımı
 
 Veri setleri için genellikle:

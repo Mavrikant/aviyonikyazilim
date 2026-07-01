@@ -40,6 +40,29 @@ Emniyet-kritik kod:
 Bir kod parçası çalışıyor olabilir; ancak okunamıyor, test edilemiyor veya bakım
 yapılamıyorsa sertifikasyon açısından zayıftır.
 
+## Emniyet-kritik yazılımda diller ve derleyici seçimi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Assembly, Ada ve C dillerinin emniyet-kritik projelerdeki yeri; dil ve derleyici
+seçiminde dikkate alınacak ölçütler (belirlenimcilik, araç desteği, ekip deneyimi,
+alt küme kullanımı) burada anlatılacak.
+:::
+
+## Kodlamaya ilişkin özel konular
+
+:::info Bu bölüm hazırlanıyor 🚧
+Kodlama standartlarının uygulanması, derleyici kütüphanelerinin doğrulama kapsamına
+alınması ve otomatik kod üreticilerinin (autocode generator) getirdiği hususlar
+burada ele alınacak.
+:::
+
+## Kaynak kodun doğrulanması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Kod gözden geçirmeleri, statik analiz ve kodun düşük seviyeli gereksinimlere ve
+kodlama standardına uygunluğunun gösterilmesi burada anlatılacak.
+:::
+
 ## Entegrasyon
 
 Entegrasyon, ayrı ayrı doğrulanmış parçaların birlikte doğru davrandığını gösterir.
@@ -53,6 +76,14 @@ Entegrasyon sırasında şunlar önemlidir:
 - başlatma sırası,
 - hata propagasyonu,
 - sürüm uyumu.
+
+## Derleme ve yükleme süreci
+
+:::info Bu bölüm hazırlanıyor 🚧
+Derleme (build) sürecinin tekrarlanabilirliği, derleme betiklerinin konfigürasyon
+kontrolü, çalıştırılabilir nesne kodunun üretimi ve hedefe yükleme sürecinin
+doğrulanması burada anlatılacak.
+:::
 
 ## Uygulama örneği
 

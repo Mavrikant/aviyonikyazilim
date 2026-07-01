@@ -31,6 +31,22 @@ açıklar.
 Bu belge, testin yerine geçmeyi değil, test ve incelemeyi daha sağlam hale getirmeyi
 hedefler.
 
+## Biçimsel yöntem kategorileri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Üç ana yaklaşım — model kontrolü (model checking), teorem ispatı (theorem proving)
+ve soyut yorumlama (abstract interpretation) — güçlü ve zayıf yönleriyle burada
+karşılaştırılacak.
+:::
+
+## Zorluklar
+
+:::info Bu bölüm hazırlanıyor 🚧
+Uzmanlık gereksinimi, ölçeklenebilirlik, biçimsel modelin geçerlenmesi ve araç
+kalifikasyonu ihtiyacı gibi biçimsel yöntemlerin önündeki pratik engeller burada
+ele alınacak.
+:::
+
 ## Biçimsel yöntemlere örnek
 
 Bir kilit koşulun mümkün tüm durumlarda doğru olduğunu göstermek için model kontrolü

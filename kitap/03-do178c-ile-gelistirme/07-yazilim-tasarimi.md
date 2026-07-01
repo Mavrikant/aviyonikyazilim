@@ -22,6 +22,19 @@ Bu aşama, yalnızca mimari çizim üretmek için değil, doğrulama için uygun
 için vardır. İyi tasarım, test ekibinin hangi davranışı hangi koşul altında gözlemlemesi
 gerektiğini anlamasını sağlar.
 
+DO-178C gözüyle tasarım iki iş ürününden oluşur: **yazılım mimarisi** (bileşenler ve
+aralarındaki ilişkiler) ve **düşük seviyeli gereksinimler** (kodun doğrudan
+gerçekleştireceği davranış tanımları). İkisinin de yüksek seviyeli gereksinimlere
+izlenebilir olması beklenir.
+
+## Tasarım yaklaşımları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Yapısal (fonksiyonel ayrıştırmaya dayalı) tasarım ile nesne yönelimli tasarımın
+karşılaştırması, veri akışı/kontrol akışı görünümleri ve emniyet-kritik projelerde
+yaklaşım seçiminin ölçütleri burada anlatılacak.
+:::
+
 ## Tasarım kararları
 
 Tasarımda tipik kararlar şunlardır:
@@ -64,14 +77,25 @@ işletim hali gibi ele alır. Bu nedenle tasarımda şunlar açık olmalıdır:
 - güvenli duruma nasıl geçilecek,
 - geçiş sırasında ne tür sınırlamalar olacak.
 
-### Tasarımda tipik kararlar
+## İyi tasarımın nitelikleri
 
-- Fonksiyonları alt modüllere ayırmak.
-- Hata durumları için ortak bir geri dönüş yolu belirlemek.
-- Dış arayüzleri dar ve açık tutmak.
+:::info Bu bölüm hazırlanıyor 🚧
+Bağlaşımın (coupling) düşük, uyumun (cohesion) yüksek tutulması; kararlılık,
+değiştirilebilirlik, doğrulanabilirlik gibi nitelikler ve bunların nasıl ölçüleceği
+burada ele alınacak.
+:::
+
+## Tasarımın doğrulanması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Tasarım gözden geçirmeleri, mimari ile düşük seviyeli gereksinimlerin ayrı ayrı
+değerlendirilmesi ve tasarım-gereksinim izlenebilirlik kontrolleri burada
+anlatılacak.
+:::
 
 ## Bu bölümden akılda kalması gerekenler
 
-- Tasarım, gereksinimi uygulanabilir yapıya çevirir.
+- Tasarım, gereksinimi uygulanabilir yapıya çevirir; DO-178C gözüyle mimari ve düşük
+  seviyeli gereksinimlerden oluşur.
 - Arayüz ve hata davranışı tasarımın merkezindedir.
 - İyi tasarım, doğrulamayı kolaylaştırır.

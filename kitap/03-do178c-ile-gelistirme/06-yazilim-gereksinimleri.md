@@ -63,6 +63,36 @@ Aşağıdaki türde ifadeler sorunludur:
 Bu kelimeler iletişimde faydalı olabilir; ancak sertifikasyon ve test açısından yeterli
 değildir. Yerlerine koşul, zaman, sınır ve tepki içeren açık ifadeler gelmelidir.
 
+## Gereksinim mühendisinin rolü
+
+:::info Bu bölüm hazırlanıyor 🚧
+İyi bir gereksinim mühendisinin taşıması beklenen beceriler (alan bilgisi, yazılı
+iletişim, soyutlama, sorgulama) ve ekip içindeki konumu burada anlatılacak.
+:::
+
+## Gereksinim geliştirme süreci
+
+:::info Bu bölüm hazırlanıyor 🚧
+Girdilerin toplanması ve analizi, gereksinimlerin yazılması, belgelenmesi ve sistem
+gereksinimlerine geri bildirim verilmesi; sık düşülen tuzaklar (tasarıma erken inme,
+tek katmanlı gereksinim, doğrudan koda gitme) burada ele alınacak.
+:::
+
+## Gereksinimlerin gözden geçirilmesi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Akran gözden geçirmesi (peer review) pratikleri, kontrol listeleri ve gözden geçirme
+kayıtlarının kanıt değeri burada anlatılacak.
+:::
+
+## Gereksinim yönetimi ve prototipleme
+
+:::info Bu bölüm hazırlanıyor 🚧
+Gereksinim değişikliklerinin yönetimi, sürümleme ve temel çizgi (baseline) kavramı
+ile prototiplemenin gereksinim olgunlaştırmadaki yeri ve riskleri burada ele
+alınacak.
+:::
+
 ## İzlenebilirlik
 
 Her gereksinimin bir kaynağı olmalıdır. Kaynak çoğu zaman:

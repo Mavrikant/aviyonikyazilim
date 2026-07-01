@@ -43,6 +43,33 @@ hazırlanmış irtibat, tekrar işini azaltır.
 - kanıtla desteklenir,
 - açık soruları önceden tahmin eder.
 
+## Yazılım Başarı Özeti
+
+:::info Bu bölüm hazırlanıyor 🚧
+Projenin sonunda otoriteye sunulan ve PSAC'a göre neyin nasıl gerçekleştiğini
+özetleyen yazılım başarı özeti (Software Accomplishment Summary, SAS) burada
+anlatılacak.
+:::
+
+## Katılım aşaması denetimleri
+
+Otorite, projeyi dört katılım aşaması (Stage of Involvement, SOI) denetimiyle izler:
+planlama (SOI-1), geliştirme (SOI-2), doğrulama (SOI-3) ve nihai sertifikasyon
+(SOI-4). Her aşamanın giriş kriterleri ve tipik inceleme konuları için
+[Kaynaklar](../kaynaklar/soi-1.md) bölümüne bakınız.
+
+:::info Bu bölüm hazırlanıyor 🚧
+Her SOI denetiminin giriş kriterleri, beklentileri ve hazırlık önerileri burada
+ayrıntılandırılacak.
+:::
+
+## Sertifikasyon uçuş testlerinden önce yazılım olgunluğu
+
+:::info Bu bölüm hazırlanıyor 🚧
+Uçuş testine giren yazılımın hangi olgunluk düzeyinde olması gerektiği, kara kutu
+sürümleri ve uçuş testi konfigürasyonlarının kontrolü burada ele alınacak.
+:::
+
 ## Neden kritik?
 
 Çünkü sertifikasyon yalnızca belge teslimi değildir; ortak anlayış kurma sürecidir.

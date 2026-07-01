@@ -41,6 +41,21 @@ DO-331, modelin:
 
 odaklanır.
 
+## Model türleri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Belirtim modeli (specification model) ile tasarım modeli (design model) ayrımı; bu
+ayrımın hangi DO-178C iş ürününe karşılık geldiği ve doğrulama zincirini nasıl
+değiştirdiği burada anlatılacak.
+:::
+
+## Model simülasyonu ve kredisi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Simülasyonun hangi doğrulama hedefleri için kredi sağlayabileceği, simülasyon
+ortamının temsil yeteneği ve hedef ortam testleriyle ilişkisi burada ele alınacak.
+:::
+
 ## Model tabanlı akış örneği
 
 - Modelde davranış tanımlanır.

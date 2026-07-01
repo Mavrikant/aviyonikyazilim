@@ -74,6 +74,22 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | katılım aşaması | Stage of Involvement (SOI) |
 | etiket | label (ARINC 429) |
 | kelime | word (veri kelimesi) |
+| fonksiyonel tehlike değerlendirmesi | functional hazard assessment (FHA) |
+| ortak neden analizi | common cause analysis (CCA) |
+| geliştirme güvencesi | development assurance |
+| türetilmiş gereksinim | derived requirement |
+| gürbüzlük | robustness |
+| akran gözden geçirmesi | peer review |
+| temel çizgi | baseline |
+| önceden geliştirilmiş yazılım | previously developed software (PDS) |
+| ticari hazır yazılım | commercial off-the-shelf (COTS) |
+| ürün servis geçmişi | product service history |
+| parametre verisi öğesi | parameter data item |
+| değişiklik etki analizi | change impact analysis |
+| araç kalifikasyon seviyesi | tool qualification level (TQL) |
+| sahada yüklenebilir yazılım | field-loadable software |
+| kullanıcı tarafından değiştirilebilir yazılım | user-modifiable software |
+| yazılım başarı özeti | Software Accomplishment Summary (SAS) |
 
 ## Yeni blog yazısı ekleme
 

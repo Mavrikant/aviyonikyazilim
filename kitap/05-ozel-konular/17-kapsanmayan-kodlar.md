@@ -37,6 +37,22 @@ farklı kanıt ister.
 - kapsam hedeflerini bozma,
 - eski davranışın kazara yeniden etkinleşmesi.
 
+## Ölü ve gereksiz kodun ele alınması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Yapısal kapsam analizinde ortaya çıkan ölü ve gereksiz kodun kök neden analizi,
+kaldırma ya da gerekçelendirme kararları ve bunların kanıt dosyasına yansıtılması
+burada ayrıntılandırılacak.
+:::
+
+## Devre dışı bırakılmış kodun ele alınması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Devre dışı bırakılmış kodun meşru kullanım senaryoları (opsiyonel donanım, müşteri
+konfigürasyonları), yanlışlıkla etkinleşmeye karşı alınacak önlemler ve gereken
+doğrulama kanıtı burada anlatılacak.
+:::
+
 ## Yönetim yaklaşımı
 
 Kapsanmayan kod bulunursa önce kaynağı anlaşılmalıdır. Ardından:

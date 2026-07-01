@@ -35,6 +35,14 @@ izlenmesi ve uygun biçimde kapatılmasıdır.
 - sorumlusunu belirler,
 - kapanış kanıtı ister.
 
+## Etkili ve etkisiz kalite güvencesi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Etkili bir kalite güvencesi ekibinin özellikleri (teknik yetkinlik, bağımsızlık,
+erken katılım) ile etkisiz kalite güvencesinin belirtileri (salt evrak kontrolü, geç
+katılım, yaptırım gücü eksikliği) burada karşılaştırılacak.
+:::
+
 ## Denetim ve gözlem
 
 Kalite güvencesi, yalnızca masa başı belge kontrolü değildir. Gerekirse süreç denetimi,

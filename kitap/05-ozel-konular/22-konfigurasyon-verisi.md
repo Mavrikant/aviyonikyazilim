@@ -39,6 +39,14 @@ yüzden bu veri:
 - gözden geçirilmeli,
 - testle doğrulanmalıdır.
 
+## Parametre verisi öğeleri ve DO-178C
+
+:::info Bu bölüm hazırlanıyor 🚧
+DO-178C'nin parametre verisi öğesi (parameter data item) kavramı; verinin koddan
+ayrı sürümlenip doğrulanmasına imkân veren yaklaşım ve bunun gerektirdiği iş
+ürünleri burada ayrıntılandırılacak.
+:::
+
 ## Riskler
 
 - yanlış tablo,

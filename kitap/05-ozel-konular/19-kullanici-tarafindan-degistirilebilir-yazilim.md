@@ -35,6 +35,21 @@ Bu alanlar esnek olabilir; ama hangi değişikliğin hangi sınırda kalacağı 
 - değişiklik yapan kişinin yetkisi doğrulanmalı,
 - değişiklik sonrası test veya kontrol tanımlı olmalı.
 
+## Sistemin değiştirilebilirliğe göre tasarlanması
+
+:::info Bu bölüm hazırlanıyor 🚧
+Değiştirilebilir bölümün değiştirilemez bölümden koruma mekanizmalarıyla nasıl
+ayrılacağı, koruma sınırının doğrulanması ve onay kapsamının nasıl tanımlanacağı
+burada anlatılacak.
+:::
+
+## Değişikliklerin yönetimi ve bakımı
+
+:::info Bu bölüm hazırlanıyor 🚧
+Kullanıcı değişikliklerinin kayıt altına alınması, sürüm uyumunun izlenmesi ve
+operatör sorumlulukları burada ele alınacak.
+:::
+
 ## Riskler
 
 - yetkisiz değişiklik,

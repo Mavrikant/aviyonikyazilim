@@ -26,6 +26,21 @@ gösterilmesini gerektirir. Bölümleme tam olarak bu sınırı sağlar.
 
 Hangi türün kullanılacağı mimari ihtiyaç ve platform yeteneklerine bağlıdır.
 
+## Alan ve zaman bölümlemesi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Paylaşılan bellek üzerinde alan (spatial) bölümlemesi ile paylaşılan işlemci
+üzerinde zaman (temporal) bölümlemesinin mekanizmaları; paylaşılan giriş/çıkışın
+yönetimi burada ayrıntılandırılacak.
+:::
+
+## Bölümlemeyi zorlaştıran konular
+
+:::info Bu bölüm hazırlanıyor 🚧
+Doğrudan bellek erişimi (DMA), önbellek, kesmeler ve bölümler arası haberleşme gibi
+bölümleme analizini karmaşıklaştıran unsurlar burada ele alınacak.
+:::
+
 ## Doğrulama açısından
 
 Bölümleme yalnızca tasarım metniyle değil, test ve analiz ile gösterilmelidir. Çünkü

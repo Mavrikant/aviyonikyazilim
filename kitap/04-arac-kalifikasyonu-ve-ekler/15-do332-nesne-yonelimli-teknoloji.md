@@ -47,6 +47,22 @@ durumda:
 - kalıtım zinciri sınırlandırılır,
 - testler alt sınıf etkilerini kapsar.
 
+## Havacılıkta nesne yönelimli teknolojinin kullanımı
+
+:::info Bu bölüm hazırlanıyor 🚧
+Nesne yönelimli tekniklerin aviyonikte yaygınlaşma süreci, yaşanan doğrulama
+tartışmaları (özellikle yapısal kapsam ile ilişkisi) ve bu deneyimlerin DO-332'ye
+nasıl yansıdığı burada anlatılacak.
+:::
+
+## DO-332'nin yapısı
+
+:::info Bu bölüm hazırlanıyor 🚧
+DO-332'nin planlama, geliştirme ve doğrulama faaliyetlerine getirdiği ekler; zafiyet
+(vulnerability) analizi, tip güvenliği (type safety) ve ilgili teknikler (sanal
+makine, çöp toplama vb.) burada ayrıntılandırılacak.
+:::
+
 ## Riskler
 
 - gizli davranış değişimi,

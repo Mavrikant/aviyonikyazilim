@@ -31,6 +31,31 @@ Aynı kod, farklı donanımda, farklı RTOS altında veya farklı veri akışın
 davranış gösterebilir. Bu yüzden eski servis geçmişi ile yeni kullanım bağlamı birlikte
 değerlendirilmelidir.
 
+## Yeniden kullanılabilir bileşen tasarlamak
+
+:::info Bu bölüm hazırlanıyor 🚧
+Bir bileşenin baştan yeniden kullanılabilir olacak şekilde tasarlanması: dar ve
+belgeli arayüzler, platform bağımlılıklarının yalıtılması ve kanıt paketinin
+taşınabilirliği burada anlatılacak.
+:::
+
+## Önceden geliştirilmiş yazılımın kullanımı
+
+:::info Bu bölüm hazırlanıyor 🚧
+Önceden geliştirilmiş yazılımın (previously developed software, PDS) yeni bir
+projede değerlendirilmesi; DO-178 ailesi dışında geliştirilmiş yazılımın ve ticari
+hazır (commercial off-the-shelf, COTS) yazılımın ele alınışı burada
+ayrıntılandırılacak.
+:::
+
+## Ürün servis geçmişi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Ürün servis geçmişi (product service history) üzerinden güvence kredisi talep
+etmenin koşulları, zorlukları ve değerlendirme ölçütleri burada anlatılacak
+(soru listesi için bkz. [Ek D](../06-ekler/04-ek-d-servis-gecmisi-sorulari.md)).
+:::
+
 ## Dikkat noktaları
 
 - arayüz farkı,

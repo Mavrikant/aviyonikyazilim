@@ -40,6 +40,31 @@ DO-330, aracın sertifikasyon sürecindeki rolüne bakar:
 
 Bu sorular kalifikasyon derinliğini belirler.
 
+## Kalifikasyon ihtiyacının ve seviyesinin belirlenmesi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Bir aracın kalifikasyon gerektirip gerektirmediğine karar veren sorular (araç
+çıktısı doğrulanıyor mu, araç bir süreci otomatikleştiriyor mu?) ve araç
+kalifikasyon seviyelerinin (tool qualification level, TQL) belirlenmesi burada
+anlatılacak.
+:::
+
+## DO-330 kalifikasyon süreci
+
+:::info Bu bölüm hazırlanıyor 🚧
+DO-330'un tanımladığı araç yaşam döngüsü: araç operasyonel gereksinimleri, araç
+geliştirme ve doğrulama faaliyetleri, araç kalifikasyonu iş ürünleri ve araç
+kullanıcısı ile araç geliştiricisi arasındaki sorumluluk paylaşımı burada
+ayrıntılandırılacak.
+:::
+
+## Özel kalifikasyon konuları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Araç belirlenimciliği, önceden kalifiye edilmiş araçların yeni projede yeniden
+kullanımı ve ticari araçların kalifikasyon paketleri burada ele alınacak.
+:::
+
 ## Araç örneği
 
 Bir statik analiz aracı yanlış alarm üretiyorsa, bu aracın kullanım amacına göre ek

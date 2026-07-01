@@ -27,6 +27,30 @@ sistemi seçimi ve kullanımı emniyet mimarisinin parçasıdır.
 - Kesme gecikmesi
 - Paylaşılan kaynaklar
 
+## RTOS çekirdeği ve destek yazılımları
+
+:::info Bu bölüm hazırlanıyor 🚧
+Çekirdek, sürücüler, kart destek paketi (board support package, BSP) ve kütüphane
+katmanlarının ayrımı; her katmanın güvence kapsamına nasıl girdiği burada
+anlatılacak.
+:::
+
+## Emniyet-kritik RTOS'un nitelikleri
+
+:::info Bu bölüm hazırlanıyor 🚧
+Belirlenimci zamanlama, güvenilir bellek yönetimi, kesme işleme, gürbüz bölümleme ve
+sertifiye edilebilirlik gibi emniyet-kritik sistemlerde aranan RTOS nitelikleri
+burada ayrıntılandırılacak.
+:::
+
+## RTOS seçimi
+
+:::info Bu bölüm hazırlanıyor 🚧
+Öncelik terslenmesi, bellek sızıntısı, kaynak çekişmesi gibi teknik riskler ve
+tedarikçi/sertifikasyon paketi değerlendirmesi dahil RTOS seçim ölçütleri burada
+ele alınacak (soru listesi için bkz. [Ek C](../06-ekler/03-ek-c-rtos-secim-sorulari.md)).
+:::
+
 ## Mimari etkiler
 
 RTOS kullanımı, görevlerin nasıl ayrıldığını, hangi işlevin hangi öncelikte çalıştığını
