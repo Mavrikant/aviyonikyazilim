@@ -121,9 +121,25 @@ h1, h2, h3, h4 {
 
 /* ---------- Navbar ---------- */
 
-.navbar {
-  backdrop-filter: saturate(1.4) blur(12px);
-  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+/* Blur yalnızca masaüstünde: .navbar üzerindeki backdrop-filter, filtreli
+   öğe position:fixed torunlar için "containing block" oluşturduğundan,
+   navbar'ın İÇİNDE duran mobil kenar menüsünü navbar kutusuna hapsediyor.
+   Mobilde blur yerine opak arka plan kullanılır. */
+@media (min-width: 997px) {
+  .navbar {
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  }
+}
+
+@media (max-width: 996px) {
+  :root {
+    --ifm-navbar-background-color: #fbfcfe;
+  }
+
+  [data-theme='dark'] {
+    --ifm-navbar-background-color: #0b1220;
+  }
 }
 
 .navbar__title {
