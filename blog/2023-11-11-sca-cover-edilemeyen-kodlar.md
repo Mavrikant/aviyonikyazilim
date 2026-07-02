@@ -51,7 +51,7 @@ Devre dışı bırakılmış kodun iki temel kategorisi bulunmaktadır:
 
 Devre dışı bırakılmış kodun yönetimi ve kontrolü için Plan Software Aspects of Certification (PSAC), Software Verification Plan (SVP) ve Software Development Plan (SDP) gibi belgelerde özel hususların ele alınması gerekir.
 
-**PSAC'te; **Devre dışı bırakılmış kodun yazılım içindeki rolü, kullanım amacı ve hangi koşullar altında devre dışı kalacağı açıklanmalıdır. Bu kodun neden gerektiği ve yazılımın genel işlevselliği üzerindeki etkisi detaylandırılmalıdır.
+**PSAC'te;** Devre dışı bırakılmış kodun yazılım içindeki rolü, kullanım amacı ve hangi koşullar altında devre dışı kalacağı açıklanmalıdır. Bu kodun neden gerektiği ve yazılımın genel işlevselliği üzerindeki etkisi detaylandırılmalıdır.
 
 **SDP'de;** Devre dışı bırakılmış kodun geliştirilmesinde kullanılacak yöntemler ve teknikler detaylandırılmalıdır.
 
@@ -67,4 +67,4 @@ Devre dışı bırakılmış kodun yönetimi ve kontrolü için Plan Software As
 ## Ileri Okuma
 
 1.  *Developing Safety-Critical Software: A Practical Guide for Aviation Software and DO-178C Compliance*, **Leanna Rierson**, 
-2.  *Avionics Certification - Complete Guide to DO-178, DO-178C, DO-254*; **Vance Hilderman ve Tony Baghai **
+2.  *Avionics Certification - Complete Guide to DO-178, DO-178C, DO-254*; **Vance Hilderman ve Tony Baghai**
