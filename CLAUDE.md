@@ -150,7 +150,15 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - Her kitap sayfası: künye tablosu (yazar, yayınevi, yıl/baskı, odak, seviye,
   kimin için) + **özgün** tanıtım (kitaptan alıntı/çeviri YASAK) + sitedeki kitap
   bölümlerine bağlantı.
-- **Kapak görseli kullanılmaz** (telif + harici görsel yasağı).
+- **Kapak görseli** başlığın hemen altına eklenir; görsel *yerel* olarak
+  `static/img/kutuphane/<slug>/kapak.<ext>` altına indirilir (harici hotlink
+  YASAK — blog/kitap görsel kuralıyla aynı ilke). Kaynak yayınevi veya büyük
+  kitapçı sitesindeki ürün küçük resmidir (thumbnail boyutunda, editoryal amaçlı).
+  Kitap olmayan, fiziksel kapağı bulunmayan sayfalarda (standart/doküman aileleri)
+  kapak görseli kullanılmaz.
+- Her sayfaya bir **"Nereden edinilir"** bölümü eklenir: öncelik Türkiye'de satışta
+  olan kitapçı (Kitapyurdu, D&R, İdefix, Amazon.com.tr), yoksa yabancı mağaza
+  (Amazon.com, yayınevi sitesi).
 - Künyede emin olunmayan ayrıntı (ISBN, baskı yılı) yazılmaz.
 - Kitap önerileri `kutuphane/index.md` içindeki CTA ile e-posta üzerinden alınır
   (mailto: serdar@karaman.dev).
