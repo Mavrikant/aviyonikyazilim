@@ -44,8 +44,9 @@ ilişkisi bulunur. Telif nedeniyle kitaplardan alıntı yapılmaz; tanıtımlar 
 
 :::tip Kitap önerin 📚
 
-Listede olmasını istediğiniz bir kitap mı var? Öneri ve isteklerinizi
-[kitap öneri formu](https://forms.gle/DEGISTIRILECEK) üzerinden iletebilirsiniz.
-Formda kitabın adını, yazarını ve neden önerdiğinizi kısaca yazmanız yeterli.
+Listede olmasını istediğiniz bir kitap mı var? Önerinizi
+[serdar@karaman.dev](mailto:serdar@karaman.dev?subject=Kitap%20onerisi)
+adresine e-posta ile iletebilirsiniz. Kitabın adını, yazarını ve neden
+önerdiğinizi kısaca yazmanız yeterli.
 
 :::

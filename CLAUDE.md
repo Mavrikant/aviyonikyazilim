@@ -144,7 +144,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   bölümlerine bağlantı.
 - **Kapak görseli kullanılmaz** (telif + harici görsel yasağı).
 - Künyede emin olunmayan ayrıntı (ISBN, baskı yılı) yazılmaz.
-- Kitap öneri formu bağlantısı `kutuphane/index.md` içindedir (Google Forms).
+- Kitap önerileri `kutuphane/index.md` içindeki CTA ile e-posta üzerinden alınır
+  (mailto: serdar@karaman.dev).
 
 ## Kalite kuralları
 
