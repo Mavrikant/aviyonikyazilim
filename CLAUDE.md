@@ -91,6 +91,14 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | sahada yüklenebilir yazılım | field-loadable software |
 | kullanıcı tarafından değiştirilebilir yazılım | user-modifiable software |
 | yazılım başarı özeti | Software Accomplishment Summary (SAS) |
+| veri yükleyici | data loader |
+| yüklenebilir yazılım parçası | loadable software part (LSP) |
+| elektronik parça işaretleme | electronic part marking |
+| tekerleklerde ağırlık | weight-on-wheels |
+| istem dışı etkinleşme | inadvertent enabling |
+| uçuşa elverişlilik güvenliği | airworthiness security |
+| fabrika yüklemeli yazılım | factory-loadable software |
+| tam yetkili sayısal motor kontrolü | full authority digital engine control (FADEC) |
 
 ## Yeni blog yazısı ekleme
 
