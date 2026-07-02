@@ -39,7 +39,7 @@ Farklı sistemler ve sensörlerden gelen verileri birleştiren ve işleyen aviyo
 **Eğlence Sistemleri:\**
 Bu, genellikle ticari uçaklarda bulunan bir özelliktir. Eğlence sistemleri, film, müzik, internet bağlantısı gibi seçenekler sunar.
 
-**Atış/Mühimmat Kontrol Sistemleri: **
+**Atış/Mühimmat Kontrol Sistemleri:**
 
 Askeri uçaklarda, silah sistemlerinin etkin ve doğru bir şekilde kullanılabilmesi için elektronik sistemler kullanılır.
 
