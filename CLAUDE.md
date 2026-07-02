@@ -11,6 +11,8 @@ Türkçe bir aviyonik yazılım / test / sertifikasyon sitesi. İki ana içerik 
 1. **Blog** (`blog/`) — teknik yazılar (aviyonik protokoller, DO-178C konuları vb.).
 2. **Kitap** (`kitap/`) — DO-178C ekseninde emniyet-kritik aviyonik yazılım üzerine,
    bölümleri hâlen yazılmakta olan özgün bir kitap.
+3. **Kütüphane** (`kutuphane/`) — alandaki kitaplara/dokümanlara küratörlü öneri
+   sayfaları (ikinci docs plugin örneği, routeBasePath: /kutuphane).
 
 ## Klasör yapısı
 
@@ -20,6 +22,10 @@ kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
   index.md                Kitap giriş + içindekiler (slug: /, yani /kitap)
   01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .md dosyaları
   kaynaklar/              Başvuru sayfaları (Kısaltmalar, SOI 1-4); sidebar'da en sonda
+kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
+  index.md                Giriş + seçim ölçütleri + kitap öneri formu CTA'sı
+  01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
+sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
 src/pages/index.tsx       Özel ana sayfa (karşılama)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
 static/img/kitap/<slug>/  Kitap/kaynak görselleri
@@ -130,6 +136,15 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.
 - Placeholder bölümlerdeki `:::info Bu bölüm hazırlanıyor 🚧` kutusu, içerik yazıldığında
   kaldırılır.
+
+## Kütüphane sayfası kuralları
+
+- Her kitap sayfası: künye tablosu (yazar, yayınevi, yıl/baskı, odak, seviye,
+  kimin için) + **özgün** tanıtım (kitaptan alıntı/çeviri YASAK) + sitedeki kitap
+  bölümlerine bağlantı.
+- **Kapak görseli kullanılmaz** (telif + harici görsel yasağı).
+- Künyede emin olunmayan ayrıntı (ISBN, baskı yılı) yazılmaz.
+- Kitap öneri formu bağlantısı `kutuphane/index.md` içindedir (Google Forms).
 
 ## Kalite kuralları
 

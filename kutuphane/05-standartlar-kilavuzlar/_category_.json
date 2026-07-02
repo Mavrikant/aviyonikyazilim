@@ -1,0 +1,9 @@
+{
+  "label": "Standartlar ve Kılavuz Dokümanlar",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Standartlar ve Kılavuz Dokümanlar",
+    "description": "DO, ARP ve MISRA ailelerinin tanıtımı ve edinme yolları."
+  }
+}
