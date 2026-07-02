@@ -156,6 +156,9 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
 - İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
   React bileşeni gerekmedikçe `.mdx` kullanılmaz.
+- `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
+  `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
+  metin olarak basılır).
 - **Redirect stub'ları** (`static/2023/`, `static/2024/`, `static/p/`) ve
   `docusaurus.config.ts` içindeki `redirects` listesi eski Blogger URL'lerini korur;
   bunlar silinmez.

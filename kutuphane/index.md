@@ -42,7 +42,7 @@ ilişkisi bulunur. Telif nedeniyle kitaplardan alıntı yapılmaz; tanıtımlar 
 - **Orta:** Temel kavramları bilen mühendisler için.
 - **İleri:** Belirli bir uzmanlık alanında derinleşmek isteyenler için.
 
-:::tip Kitap önerin 📚
+:::tip[Kitap önerin 📚]
 
 Listede olmasını istediğiniz bir kitap mı var? Önerinizi
 [serdar@karaman.dev](mailto:serdar@karaman.dev?subject=Kitap%20onerisi)
