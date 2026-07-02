@@ -11,7 +11,10 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 İşte aviyonik sektöründe sıkça karşılaşılan bazı önemli kısaltmalar ve terimlerin açıklamaları:
 
-|  |  |
+
+## A
+
+| Kısaltma | Açıklama |
 |----|----|
 | A/A | Air-to-Air |
 | A/C | Aircraft |
@@ -112,6 +115,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | AVN | Office of Aviation System Standards |
 | AWACS | Advanced Warning and Control Systems |
 | AWOS | Automated Weather Observation System |
+
+## B
+
+| Kısaltma | Açıklama |
+|----|----|
 | B-RNAV | Basic Area Navigation |
 | BARO | Barometric Indication, Setting or Pressure |
 | BC | Bus Controller |
@@ -124,6 +132,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | BNR | Binary |
 | BOM | Bill of Materials |
 | BRAM | Block RAM |
+
+## C
+
+| Kısaltma | Açıklama |
+|----|----|
 | CA | Criticality Analysis |
 | CAA | Civil Aeronautics Administration |
 | CAS | Calibrated Airspeed |
@@ -185,6 +198,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | CVR | Cockpit Voice Recorder |
 | CW | Continuous Wave |
 | CWS | Control Wheel Steering |
+
+## D
+
+| Kısaltma | Açıklama |
+|----|----|
 | DA | Decision Altitude |
 | DA | Drift Angle |
 | DAC | Digital-to-Analog Converter |
@@ -231,6 +249,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | DVE | Degraded Visual Environment |
 | DVOR | Doppler VHF Omnidirectional Range |
 | DWG | Drawing |
+
+## E
+
+| Kısaltma | Açıklama |
+|----|----|
 | EADI | Electronic Attitude Director Indicator |
 | EASA | European Aviation Safety Agency |
 | EATP | Equipment Acceptance Test Procedure |
@@ -272,6 +295,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | eVTOL | Electric Vertical Take-Off & Landing |
 | EVTP | Equipment Verification Test Procedure |
 | EVTR | Equipment Verification Test Report |
+
+## F
+
+| Kısaltma | Açıklama |
+|----|----|
 | FAA | Federal Aviation Administration |
 | FADEC | Full Authority Digital Engine Control |
 | FAI | First Article Inspection |
@@ -331,6 +359,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | FW | Firmware |
 | FWS | Flight Warning System |
 | FYDS | Flight Director/ Yaw Damper System |
+
+## G
+
+| Kısaltma | Açıklama |
+|----|----|
 | G/A | Ground-to-Air |
 | G/S | Glide Slope |
 | GA | General Aviation |
@@ -358,6 +391,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | GPWS | Ground Proximity Warning System |
 | GS | Glideslope |
 | GS | Ground Speed or Ground Station |
+
+## H
+
+| Kısaltma | Açıklama |
+|----|----|
 | HAS | Hardware Accomplishment Summary |
 | HAZ | Hazard or Hazardous |
 | HBLP | Hardware Build and Load Control Procedure |
@@ -397,6 +435,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | HVVStd | Hardware Validation & Verification Standards |
 | HW | Hardware |
 | Hz | Hertz |
+
+## I
+
+| Kısaltma | Açıklama |
+|----|----|
 | I | Input |
 | I/O | Input/Output |
 | I2S | Inter-IC Sound |
@@ -442,15 +485,30 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | ITT | Interstage Turbine Temperature |
 | ITU | International Telecommunication Union |
 | IVSI | Instantaneous Vertical Speed Indicator |
+
+## J
+
+| Kısaltma | Açıklama |
+|----|----|
 | JAA | Joint Aviation Authorities |
 | JASC | Joint Aircraft System/Component Code |
 | JTAG | Joint Test Action Group |
 | JTIDS | Joint Tactical Information Distribution System |
+
+## K
+
+| Kısaltma | Açıklama |
+|----|----|
 | KB | Kilobyte |
 | kHz | Kilohertz |
 | KIAS | Knots Indicated Airspeed |
 | KT | Knot - Nautical Mile Per Hour |
 | KTAS | Knots TRUE Airspeed |
+
+## L
+
+| Kısaltma | Açıklama |
+|----|----|
 | LAAS | Local Area Augmentation System |
 | LADGPS | Local Area Differential GPS |
 | LCD | Liquid Crystal Display |
@@ -474,6 +532,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | LSP | Liskov Substitution Principle |
 | LTE | Loss Of Tail Rotor Effectiveness Helicopters |
 | LVDS | Low-Voltage Differential Signaling |
+
+## M
+
+| Kısaltma | Açıklama |
+|----|----|
 | M1553 | MIL-STD-1553 |
 | MA | Markov Analysis |
 | MAP | Manifold Absolute Pressure Or Missed Approach Point |
@@ -531,6 +594,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | MTTR | Mean Time to Repair |
 | MVA | Minimum Vectoring Altitude |
 | MVFR | Marginal Visual Flight Rules |
+
+## N
+
+| Kısaltma | Açıklama |
+|----|----|
 | NA | Not Applicable |
 | NACO | National Aeronautical Charting Office |
 | NAS | U.S. National Airspace System |
@@ -562,6 +630,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | NVG | Night Vision Goggles |
 | NVRAM | Non-Volatile Random-Access Memory |
 | NWS | National Weather Service |
+
+## O
+
+| Kısaltma | Açıklama |
+|----|----|
 | O | Output |
 | OAT | Outside Air Temperature |
 | OBS | Omnibearing Selector |
@@ -575,6 +648,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | OPR | Open Problem Report |
 | OS | Operating System |
 | OWE/OEW | Operating Weight Empty/Operating Empty Weight |
+
+## P
+
+| Kısaltma | Açıklama |
+|----|----|
 | P | Parity |
 | P-Code | GPS Precision Code |
 | P-RNAV | Precision Area Navigation |
@@ -639,6 +717,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | PTS | Purchaser Technical Specification |
 | PTT | Push-To-Talk |
 | PU | Processor Unit |
+
+## Q
+
+| Kısaltma | Açıklama |
+|----|----|
 | QA | Quality Assurance |
 | QAR | Quick Access Recorder |
 | QE | Quality Engineer |
@@ -653,6 +736,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | QSPI | Quad Serial Peripheral Interface |
 | QTP | Qualification Test Procedure |
 | QTR | Qualification Test Report |
+
+## R
+
+| Kısaltma | Açıklama |
+|----|----|
 | R-NAV | Area Navigation |
 | RA | Resolution Advisory (TCAS) |
 | Rad | Alt Radio Altitude |
@@ -702,6 +790,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | RVR | Runway Visual Range |
 | RVSM | Reduced Vertical Separation Minimum |
 | RX | Receiver |
+
+## S
+
+| Kısaltma | Açıklama |
+|----|----|
 | SAAR | Special Aircraft And Aircrew Requirements |
 | SAE | Society Of Automotive Engineers |
 | SAR | Search And Rescue, Smart ACMS Recorder |
@@ -801,6 +894,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | SW-IDD | Software Interface Design Description |
 | SWCEH | Software and Complex Electronic Hardware |
 | SYRD | System Requirements Document |
+
+## T
+
+| Kısaltma | Açıklama |
+|----|----|
 | T/R | Thrust Reverser Or Tail Rotor |
 | T/R | Transmit/Receive |
 | TA | Traffic Advisory |
@@ -868,6 +966,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | TWIP | Terminal Weather Information For Pilots |
 | TWR | Terminal Weather Radar |
 | TX | Transmit |
+
+## U
+
+| Kısaltma | Açıklama |
+|----|----|
 | UAM | Urban Air Mobility |
 | UART | Universal Asynchronous Receiver Transmitter |
 | UART | Universal Asynchronous Receiver-Transmitter |
@@ -883,6 +986,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | UTC | Universal Time Coordinate |
 | UTRX | UHF Transceiver Module |
 | UUT | Unit Under Test |
+
+## V
+
+| Kısaltma | Açıklama |
+|----|----|
 | V | Volts Or Voltage |
 | V/L | VOR/Localizer |
 | V/NAV | Vertical Navigation |
@@ -925,6 +1033,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | VSWR | Voltage Standing Wave Ratio |
 | VX | Speed For Best Angle Of Climb |
 | VY | Speed For Best Rate Of Climb |
+
+## W
+
+| Kısaltma | Açıklama |
+|----|----|
 | WAAS | Wide Area Augmentation System |
 | WBS | Work Breakdown Structure |
 | WCET | Worst-Case Execution Time |
@@ -941,6 +1054,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | WX | Weather |
 | WXR | Weather Radar System |
 | WYPT | Waypoint |
+
+## X
+
+| Kısaltma | Açıklama |
+|----|----|
 | XADC | Xilinx Analog to Digital Converter |
 | XCVR | Transceiver |
 | XFR | Transfer |
@@ -951,4 +1069,9 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | XPDR | ATCRBS Transponder |
 | XTAL | Crystal |
 | XTK | Crosstrack |
+
+## Z
+
+| Kısaltma | Açıklama |
+|----|----|
 | ZSA | Zonal Safety Analysis |
