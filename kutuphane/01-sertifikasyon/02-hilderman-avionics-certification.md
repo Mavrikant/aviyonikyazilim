@@ -5,6 +5,8 @@ sidebar_position: 2
 
 # Avionics Certification: A Complete Guide to DO-178 (Software), DO-254 (Hardware)
 
+![Avionics Certification kapak görseli](/img/kutuphane/hilderman-avionics-certification/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazarlar | Vance Hilderman, Tony Baghai |
@@ -13,6 +15,10 @@ sidebar_position: 2
 | Odak | DO-178 (yazılım) ve DO-254 (donanım) sertifikasyonuna giriş |
 | Seviye | Başlangıç–Orta |
 | Kimin için | Sertifikasyon dünyasına yeni girenler, yöneticiler, donanım-yazılım arasındaki köprüyü görmek isteyenler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Avionics-Certification-Complete-Software-Hardware/dp/1885544251)
 
 ## Neden okumalı?
 

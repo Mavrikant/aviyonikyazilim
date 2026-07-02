@@ -5,6 +5,8 @@ sidebar_position: 1
 
 # Digital Avionics Handbook
 
+![Digital Avionics Handbook kapak görseli](/img/kutuphane/spitzer-digital-avionics-handbook/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Editörler | Cary R. Spitzer, Uma Ferrell, Thomas Ferrell |
@@ -13,6 +15,11 @@ sidebar_position: 1
 | Odak | Sayısal aviyoniğin tüm alt alanlarına ansiklopedik bakış |
 | Seviye | Orta–İleri |
 | Kimin için | Belirli bir aviyonik alt alanına hızla giriş yapması gereken mühendisler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Digital-Avionics-Handbook-Cary-Spitzer/dp/1439868611)
+- [Routledge](https://www.routledge.com/Digital-Avionics-Handbook/Spitzer-Ferrell-Ferrell/p/book/9781138076983)
 
 ## Neden okumalı?
 

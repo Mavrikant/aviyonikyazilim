@@ -5,6 +5,8 @@ sidebar_position: 3
 
 # Hazard Analysis Techniques for System Safety
 
+![Hazard Analysis Techniques for System Safety kapak görseli](/img/kutuphane/ericson-hazard-analysis/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Clifton A. Ericson II |
@@ -13,6 +15,11 @@ sidebar_position: 3
 | Odak | Tehlike analizi tekniklerinin yöntem yöntem anlatımı |
 | Seviye | Orta–İleri |
 | Kimin için | Emniyet analizi fiilen yapan/yorumlayan mühendisler |
+
+## Nereden edinilir
+
+- [Wiley](https://www.wiley.com/en-us/Hazard+Analysis+Techniques+for+System+Safety,+2nd+Edition-p-9781118940389)
+- [Amazon](https://www.amazon.com/Hazard-Analysis-Techniques-System-Safety/dp/1118940385)
 
 ## Neden okumalı?
 

@@ -5,6 +5,8 @@ sidebar_position: 4
 
 # Normal Accidents: Living with High-Risk Technologies
 
+![Normal Accidents kapak görseli](/img/kutuphane/perrow-normal-accidents/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Charles Perrow |
@@ -13,6 +15,11 @@ sidebar_position: 4
 | Odak | Karmaşık sistemlerde kazaların yapısal kaçınılmazlığı (sosyolojik perspektif) |
 | Seviye | Başlangıç (teknik önkoşul yok) |
 | Kimin için | Emniyet kültürüne geniş açıdan bakmak isteyen herkes |
+
+## Nereden edinilir
+
+- [Princeton University Press](https://press.princeton.edu/books/paperback/9780691004129/normal-accidents)
+- [Amazon](https://www.amazon.com/Normal-Accidents-Living-High-Risk-Technologies/dp/0691004129)
 
 ## Neden okumalı?
 

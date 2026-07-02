@@ -5,6 +5,8 @@ sidebar_position: 3
 
 # Software Engineering for Real-Time Systems
 
+![Software Engineering for Real-Time Systems kapak görseli](/img/kutuphane/cooling-real-time-systems/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Jim Cooling |
@@ -13,6 +15,10 @@ sidebar_position: 3
 | Odak | Gerçek zamanlı sistemler için yazılım mühendisliği temelleri |
 | Seviye | Başlangıç–Orta |
 | Kimin için | Gerçek zamanlı yazılım dünyasına sistemli bir giriş isteyenler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Software-Engineering-Real-Time-Systems-Cooling/dp/0201596202)
 
 ## Neden okumalı?
 

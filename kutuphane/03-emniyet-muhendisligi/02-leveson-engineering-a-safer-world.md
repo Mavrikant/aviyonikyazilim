@@ -5,6 +5,8 @@ sidebar_position: 2
 
 # Engineering a Safer World: Systems Thinking Applied to Safety
 
+![Engineering a Safer World kapak görseli](/img/kutuphane/leveson-engineering-a-safer-world/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Nancy G. Leveson |
@@ -13,6 +15,11 @@ sidebar_position: 2
 | Odak | STAMP/STPA — sistem kuramı temelli emniyet analizi |
 | Seviye | İleri |
 | Kimin için | Klasik tehlike analizi yöntemlerinin sınırlarına toslamış emniyet ve sistem mühendisleri |
+
+## Nereden edinilir
+
+- [MIT Press](https://mitpress.mit.edu/9780262533690/engineering-a-safer-world/)
+- [Amazon](https://www.amazon.com/Engineering-Safer-World-Systems-Thinking/dp/0262533693)
 
 ## Neden okumalı?
 

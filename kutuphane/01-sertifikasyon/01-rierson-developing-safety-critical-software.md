@@ -5,6 +5,8 @@ sidebar_position: 1
 
 # Developing Safety-Critical Software
 
+![Developing Safety-Critical Software kapak görseli](/img/kutuphane/rierson-developing-safety-critical-software/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Leanna Rierson |
@@ -13,6 +15,12 @@ sidebar_position: 1
 | Odak | DO-178C uyumlu yazılım geliştirme, pratik sertifikasyon rehberi |
 | Seviye | Orta |
 | Kimin için | DO-178C projesinde çalışan mühendisler, DER/sertifikasyon uzmanları, teknik liderler |
+
+## Nereden edinilir
+
+- [Amazon.com.tr](https://www.amazon.com.tr/Developing-Safety-Critical-Software-Practical-Compliance/dp/143981368X)
+- [Amazon](https://www.amazon.com/Developing-Safety-Critical-Software-Practical-Compliance/dp/143981368X)
+- [Routledge](https://www.routledge.com/Developing-Safety-Critical-Software-A-Practical-Guide-for-Aviation-Software/Rierson/p/book/9781439813683)
 
 ## Neden okumalı?
 

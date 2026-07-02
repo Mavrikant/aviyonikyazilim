@@ -30,7 +30,8 @@ dayanak dokümanların kendisidir; hedef tablolarındaki kesin ifadeler, tanıml
 uygulanabilirlik ayrımları ancak kaynak metinden doğrulanır. Ekipte en az bir
 erişilebilir kopya bulunması pratikte zorunludur.
 
-Dokümanlar telifli olup RTCA'nın (veya EUROCAE'nin) mağazasından satın alınır;
+Dokümanlar telifli olup [RTCA'nın](https://www.rtca.org/products/do-178c-electronic/) (veya
+[EUROCAE'nin](https://www.eurocae.net/product/ed-12c-software-considerations-in-airborne-systems-and-equipment-certification/)) mağazasından satın alınır;
 kurumsal üyelikler toplu erişim sağlayabilir. Projeye başlarken hangi eklerin
 gerekli olduğuna [planlama](/kitap/do178c-ile-gelistirme/yazilim-planlama)
 aşamasında karar verilir — kullanılmayan ek satın alınmak zorunda değildir.

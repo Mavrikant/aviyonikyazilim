@@ -5,6 +5,8 @@ sidebar_position: 2
 
 # Better Embedded System Software
 
+![Better Embedded System Software kapak görseli](/img/kutuphane/koopman-better-embedded/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Philip Koopman |
@@ -13,6 +15,11 @@ sidebar_position: 2
 | Odak | Gömülü yazılımda sık yapılan hatalar ve iyi uygulamalar |
 | Seviye | Başlangıç–Orta |
 | Kimin için | Gömülü yazılım geliştiren her mühendis; kod/tasarım gözden geçirenler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Better-Embedded-System-Software-Koopman/dp/0984449000)
+- [Yazarın sitesi (e-kitap ve satın alma seçenekleri)](https://betterembsw.blogspot.com/2021/02/better-embedded-system-software-e-book.html)
 
 ## Neden okumalı?
 

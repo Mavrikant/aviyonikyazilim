@@ -5,6 +5,8 @@ sidebar_position: 5
 
 # Design Patterns for Embedded Systems in C
 
+![Design Patterns for Embedded Systems in C kapak görseli](/img/kutuphane/douglass-design-patterns-c/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Bruce Powel Douglass |
@@ -13,6 +15,11 @@ sidebar_position: 5
 | Odak | Gömülü sistemlere özgü tasarım desenlerinin C ile gerçeklenmesi |
 | Seviye | Orta |
 | Kimin için | C ile gömülü yazılım tasarlayan, desen dilini C dünyasına taşımak isteyenler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Design-Patterns-Embedded-Systems-Engineering/dp/1856177076)
+- [Elsevier (yayınevi)](https://shop.elsevier.com/books/design-patterns-for-embedded-systems-in-c/douglass/978-1-85617-707-8)
 
 ## Neden okumalı?
 

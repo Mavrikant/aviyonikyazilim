@@ -5,6 +5,8 @@ sidebar_position: 5
 
 # The Field Guide to Understanding 'Human Error'
 
+![The Field Guide to Understanding 'Human Error' kapak görseli](/img/kutuphane/dekker-field-guide-human-error/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Sidney Dekker |
@@ -13,6 +15,11 @@ sidebar_position: 5
 | Odak | "İnsan hatası" kavramına modern emniyet bilimi bakışı |
 | Seviye | Başlangıç (teknik önkoşul yok) |
 | Kimin için | Olay/kaza incelemesi yapan, problem raporu yazan ya da okuyan herkes |
+
+## Nereden edinilir
+
+- [Routledge](https://www.routledge.com/The-Field-Guide-to-Understanding-Human-Error/Dekker/p/book/9781472439055)
+- [Amazon](https://www.amazon.com/Field-Guide-Understanding-Human-Error/dp/1472439058)
 
 ## Neden okumalı?
 

@@ -5,6 +5,8 @@ sidebar_position: 4
 
 # Aircraft Digital Electronic and Computer Systems
 
+![Aircraft Digital Electronic and Computer Systems kapak görseli](/img/kutuphane/tooley-aircraft-digital-electronic/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Mike Tooley |
@@ -12,6 +14,11 @@ sidebar_position: 4
 | Odak | Uçak sayısal elektronik ve bilgisayar sistemlerine giriş |
 | Seviye | Başlangıç |
 | Kimin için | Alana yeni girenler, teknisyenlik/bakım kökenli okuyucular, öğrenciler |
+
+## Nereden edinilir
+
+- [Routledge](https://www.routledge.com/Aircraft-Digital-Electronic-and-Computer-Systems/Tooley/p/book/9781032104805)
+- [Amazon](https://www.amazon.com/Aircraft-Digital-Electronic-Computer-Systems/dp/1032104805)
 
 ## Neden okumalı?
 

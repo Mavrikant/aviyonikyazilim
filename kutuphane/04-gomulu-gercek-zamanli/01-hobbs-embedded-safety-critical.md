@@ -5,6 +5,8 @@ sidebar_position: 1
 
 # Embedded Software Development for Safety-Critical Systems
 
+![Embedded Software Development for Safety-Critical Systems kapak görseli](/img/kutuphane/hobbs-embedded-safety-critical/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Chris Hobbs |
@@ -13,6 +15,10 @@ sidebar_position: 1
 | Odak | Emniyet-kritik gömülü yazılımın pratik geliştirme teknikleri |
 | Seviye | Orta–İleri |
 | Kimin için | Emniyet-kritik gömülü yazılımı fiilen yazan mühendisler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Embedded-Software-Development-Safety-Critical-Systems/dp/0367338858)
 
 ## Neden okumalı?
 

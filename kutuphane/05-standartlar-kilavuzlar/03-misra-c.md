@@ -23,7 +23,7 @@ fiilî C kodlama standardı temelidir.
 
 Projede tipik kullanım: MISRA C temel alınır, proje kodlama standardı bunun
 üzerine hangi kuralların zorunlu olduğunu ve sapma sürecini tanımlar. Kılavuz
-MISRA'dan (misra.org.uk) ücretli PDF olarak edinilir.
+[MISRA'dan](https://misra.org.uk/product/misra-c2023/) (misra.org.uk) ücretli PDF olarak edinilir.
 
 ## Bu sitedeki kitapla ilişkisi
 

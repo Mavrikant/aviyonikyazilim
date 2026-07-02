@@ -5,6 +5,8 @@ sidebar_position: 1
 
 # Safeware: System Safety and Computers
 
+![Safeware kapak görseli](/img/kutuphane/leveson-safeware/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Nancy G. Leveson |
@@ -13,6 +15,10 @@ sidebar_position: 1
 | Odak | Bilgisayarların sistem emniyetindeki rolü, kaza analizleri |
 | Seviye | Orta |
 | Kimin için | Emniyet-kritik yazılım alanında derinleşmek isteyen herkes |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Safeware-Computers-Nancy-G-Leveson/dp/0201119722)
 
 ## Neden okumalı?
 

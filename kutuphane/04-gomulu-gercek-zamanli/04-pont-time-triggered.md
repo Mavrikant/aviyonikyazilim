@@ -5,6 +5,8 @@ sidebar_position: 4
 
 # Patterns for Time-Triggered Embedded Systems
 
+![Patterns for Time-Triggered Embedded Systems kapak görseli](/img/kutuphane/pont-time-triggered/kapak.jpg)
+
 | Künye | |
 |----|----|
 | Yazar | Michael J. Pont |
@@ -13,6 +15,11 @@ sidebar_position: 4
 | Odak | Zaman tetiklemeli mimari ile öngörülebilir gömülü yazılım |
 | Seviye | Başlangıç–Orta |
 | Kimin için | Belirlenimci yazılım mimarisi kurmak isteyen gömülü geliştiriciler |
+
+## Nereden edinilir
+
+- [Amazon](https://www.amazon.com/Patterns-Time-Triggered-Embedded-Systems-Microcontrollers/dp/0201331381)
+- [Ücretsiz PDF (SafeTTy Systems / yazarın sitesi)](https://www.safetty.net/download/pont_pttes_2001.pdf)
 
 ## Neden okumalı?
 
