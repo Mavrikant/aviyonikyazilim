@@ -418,7 +418,7 @@
   }
 
   .heroDial svg {
-    width: min(220px, 60vw);
+    width: min(190px, 52vw);
   }
 
   .metrics {
@@ -436,9 +436,24 @@
     padding: 2.75rem 0;
   }
 
+  .heroTitle {
+    font-size: clamp(2rem, 8.5vw, 2.5rem);
+  }
+
   .heroSubtitle,
   .sectionLead {
     font-size: 1rem;
+  }
+
+  .kicker {
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+  }
+
+  /* Butonlar dar ekranda tam genişlik: daha büyük dokunma hedefi */
+  .actions a {
+    flex: 1 1 100%;
+    text-align: center;
   }
 
   .ctaBox {

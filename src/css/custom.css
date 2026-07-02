@@ -165,6 +165,17 @@ h1, h2, h3, h4 {
   background-color: var(--ifm-color-primary);
 }
 
+/* Mobil menüde yalnızca ikonlu öğe boş satır gibi görünmesin */
+.navbar-sidebar .header-github-link {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-sidebar .header-github-link::after {
+  content: 'GitHub';
+  margin-left: 0.55rem;
+}
+
 /* ---------- Kenar çubuğu (kitap) ---------- */
 
 .theme-doc-sidebar-container {
@@ -425,5 +436,21 @@ article header h2 {
 
   .theme-doc-markdown {
     max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Dar ekranda tablolar daha az dolgu ve daha küçük yazıyla sığar */
+  table {
+    font-size: 0.84rem;
+  }
+
+  table th,
+  table td {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .docusaurus-mermaid-container {
+    padding: 0.5rem;
   }
 }
