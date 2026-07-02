@@ -146,6 +146,13 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
+      logo: {
+        alt: 'Aviyonik Yazılım — yapay ufuk logosu',
+        src: 'img/logo.svg',
+        href: '/',
+        width: 46,
+        height: 46,
+      },
       links: [
         {
           title: 'İçerik',
@@ -165,11 +172,15 @@ const config: Config = {
           ],
         },
         {
-          title: 'Bağlantılar',
+          title: 'Topluluk',
           items: [
             {
               label: 'GitHub',
               href: 'https://github.com/Mavrikant/aviyonikyazilim',
+            },
+            {
+              label: 'Kitap önerin',
+              href: 'mailto:serdar@karaman.dev?subject=Kitap%20onerisi',
             },
             {
               label: 'RSS',
@@ -178,7 +189,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} M. Serdar Karaman · İçerik <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.tr">CC BY-SA 4.0</a> lisansı ile lisanslanmıştır.`,
+      copyright: `Emniyet-kritik aviyonik yazılım için Türkçe, açık kaynak başucu kitabı.<br/>Copyright © ${new Date().getFullYear()} M. Serdar Karaman · İçerik <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.tr">CC BY-SA 4.0</a> lisansı ile lisanslanmıştır.`,
     },
     prism: {
       theme: prismThemes.github,

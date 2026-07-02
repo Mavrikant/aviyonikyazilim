@@ -395,7 +395,12 @@ article header h2 {
 
 .footer {
   position: relative;
+  overflow: hidden;
   border-top: none;
+  padding: 3.5rem 0 2.25rem;
+  background:
+    radial-gradient(900px 320px at 88% -25%, rgba(29, 82, 136, 0.4), transparent 62%),
+    linear-gradient(180deg, #0b1d33 0%, #081524 100%);
 }
 
 /* Footer üstünde "ufuk çizgisi" */
@@ -406,17 +411,84 @@ article header h2 {
   left: 0;
   right: 0;
   height: 3px;
+  z-index: 1;
   background: linear-gradient(90deg, var(--av-navy-500) 0%, var(--av-amber-500) 55%, var(--av-amber-400) 100%);
 }
 
+/* Hero ile aynı ince ızgara dokusu */
+.footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(133, 183, 230, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(133, 183, 230, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black 25%, transparent 80%);
+  pointer-events: none;
+}
+
+.footer > .container {
+  position: relative;
+  z-index: 2;
+}
+
+.footer__links {
+  margin-bottom: 2.25rem;
+}
+
 .footer__title {
-  font-family: var(--ifm-heading-font-family);
-  letter-spacing: 0.01em;
+  margin-bottom: 0.9rem;
+  color: var(--av-amber-400);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer__item {
+  padding: 0.12rem 0;
+}
+
+.footer__link-item {
+  color: #b9c9da;
+  line-height: 2;
+  transition: color 120ms ease;
+}
+
+.footer__link-item:hover {
+  color: var(--av-amber-400);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 198, 92, 0.5);
+}
+
+.footer__link-item svg {
+  opacity: 0.55;
+}
+
+/* Alt bant: logo + slogan + telif */
+.footer__bottom {
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(133, 183, 230, 0.14);
+}
+
+.footer__logo {
+  height: 46px;
+  width: auto;
+  filter: drop-shadow(0 6px 18px rgba(8, 21, 36, 0.6));
+  transition: transform 160ms ease;
+}
+
+.footer__logo:hover {
+  transform: rotate(-6deg);
 }
 
 .footer__copyright {
-  margin-top: 1.5rem;
-  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  line-height: 1.9;
   color: #8ba1b8;
 }
 
@@ -424,6 +496,20 @@ article header h2 {
   color: #b9c9da;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.footer__copyright a:hover {
+  color: var(--av-amber-400);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 2.5rem 0 1.75rem;
+  }
+
+  .footer__links {
+    margin-bottom: 1.25rem;
+  }
 }
 
 /* ---------- Kaydırma çubuğu ---------- */
