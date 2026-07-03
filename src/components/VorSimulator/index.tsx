@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import type {ReactNode, RefObject} from 'react';
 import clsx from 'clsx';
 
@@ -318,7 +318,7 @@ function renderReadouts(refs: ReadoutRefs, state: SimState, frame: Frame) {
   }
 }
 
-const MAP_ASPECT = 560 / 860;
+const MAP_ASPECT = 0.46; // harita artık tam genişlikte; daha "geniş radar ekranı" oranı
 const CHART_ASPECT = 150 / 320;
 
 /**
@@ -327,8 +327,7 @@ const CHART_ASPECT = 150 / 320;
  * çözünürlük (ör. 860px), dar mobil ekranlarda CSS ile küçültülüp uçak/VOR
  * simgelerini ve yazıları oransız biçimde küçültüyordu.
  */
-function sizeCanvasToContainer(canvas: HTMLCanvasElement, cssWidth: number, aspect: number) {
-  const cssHeight = cssWidth * aspect;
+function sizeCanvasToContainer(canvas: HTMLCanvasElement, cssWidth: number, cssHeight: number) {
   const dpr = window.devicePixelRatio || 1;
   const targetW = Math.max(1, Math.round(cssWidth * dpr));
   const targetH = Math.max(1, Math.round(cssHeight * dpr));
@@ -358,6 +357,7 @@ const INITIAL_STATE: SimState = {
 };
 
 export default function VorSimulator(): ReactNode {
+  const rootRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLCanvasElement>(null);
   const chartRef = useRef<HTMLCanvasElement>(null);
 
@@ -379,6 +379,21 @@ export default function VorSimulator(): ReactNode {
   const pauseBtnRef = useRef<HTMLButtonElement>(null);
 
   const stateRef = useRef<SimState>({...INITIAL_STATE});
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const onFullscreenChange = () => setIsFullscreen(document.fullscreenElement === rootRef.current);
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
+
+  const handleFullscreenToggle = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      rootRef.current?.requestFullscreen?.().catch(() => {});
+    }
+  };
 
   useEffect(() => {
     const canvas = mapRef.current;
@@ -402,18 +417,29 @@ export default function VorSimulator(): ReactNode {
 
     resetPass(stateRef.current);
 
-    const mapSize = {w: 860, h: 560};
+    const mapSize = {w: 860, h: 396};
     const chartSize = {w: 320, h: 150};
     const resizeAll = () => {
       const mapW = canvas.clientWidth;
-      if (mapW > 0) Object.assign(mapSize, sizeCanvasToContainer(canvas, mapW, MAP_ASPECT));
+      if (mapW > 0) {
+        // Tam ekranda kapsayıcı çok geniş olabilir; harita görünüm yüksekliğinin
+        // makul kalması için pencere yüksekliğine göre üst sınır konur.
+        const capH = Math.max(220, window.innerHeight * 0.55);
+        const mapH = Math.min(mapW * MAP_ASPECT, capH);
+        Object.assign(mapSize, sizeCanvasToContainer(canvas, mapW, mapH));
+      }
       const chartW = chartCanvas.clientWidth;
-      if (chartW > 0) Object.assign(chartSize, sizeCanvasToContainer(chartCanvas, chartW, CHART_ASPECT));
+      if (chartW > 0) {
+        Object.assign(chartSize, sizeCanvasToContainer(chartCanvas, chartW, chartW * CHART_ASPECT));
+      }
     };
     resizeAll();
     const ro = new ResizeObserver(resizeAll);
     ro.observe(canvas);
     ro.observe(chartCanvas);
+    // Harita yüksekliği window.innerHeight'a bağlı olduğundan (bkz. capH),
+    // yalnızca genişliği değil pencere boyunu da izlemek gerekir.
+    window.addEventListener('resize', resizeAll);
 
     let rafId = 0;
     let last = performance.now();
@@ -436,6 +462,7 @@ export default function VorSimulator(): ReactNode {
     return () => {
       cancelAnimationFrame(rafId);
       ro.disconnect();
+      window.removeEventListener('resize', resizeAll);
     };
   }, []);
 
@@ -473,141 +500,156 @@ export default function VorSimulator(): ReactNode {
   const handleResetClick = () => resetPass(stateRef.current);
 
   return (
-    <div className={styles.simulator}>
+    <div className={styles.simulator} ref={rootRef}>
+      <div className={styles.toolbar}>
+        <span className={styles.title}>VOR Yakın Geçiş Simülatörü</span>
+        <button type="button" className={styles.fullscreenBtn} onClick={handleFullscreenToggle}>
+          {isFullscreen ? '✕ Tam ekrandan çık' : '⛶ Tam ekran'}
+        </button>
+      </div>
       <div className={styles.layout}>
-        <div className={styles.panel}>
-          <canvas ref={mapRef} className={styles.mapCanvas} width={860} height={560} />
-          <div className={styles.controls}>
-            <div className={styles.ctl}>
-              <label htmlFor="vor-spd">
-                Yer hızı <b ref={vSpdRef}>{INITIAL_STATE.spd} kt</b>
-              </label>
-              <input
-                id="vor-spd"
-                type="range"
-                min={100}
-                max={1200}
-                step={10}
-                defaultValue={INITIAL_STATE.spd}
-                onChange={handleSpdChange}
-              />
+        <div className={clsx(styles.panel, styles.mapPanel)}>
+          <canvas ref={mapRef} className={styles.mapCanvas} width={860} height={396} />
+        </div>
+
+        <div className={styles.controlsRow}>
+          <div className={styles.panel}>
+            <div className={styles.sect}>Kontroller</div>
+            <div className={styles.controls}>
+              <div className={styles.ctl}>
+                <label htmlFor="vor-spd">
+                  Yer hızı <b ref={vSpdRef}>{INITIAL_STATE.spd} kt</b>
+                </label>
+                <input
+                  id="vor-spd"
+                  type="range"
+                  min={100}
+                  max={1200}
+                  step={10}
+                  defaultValue={INITIAL_STATE.spd}
+                  onChange={handleSpdChange}
+                />
+              </div>
+              <div className={styles.ctl}>
+                <label htmlFor="vor-off">
+                  Yanal mesafe (istasyona en yakın) <b ref={vOffRef}>{INITIAL_STATE.off.toFixed(1)} NM</b>
+                </label>
+                <input
+                  id="vor-off"
+                  type="range"
+                  min={0.1}
+                  max={20}
+                  step={0.1}
+                  defaultValue={INITIAL_STATE.off}
+                  onChange={handleOffChange}
+                />
+              </div>
+              <div className={styles.ctl}>
+                <label htmlFor="vor-alt">
+                  Uçak irtifası (istasyon üstü) <b ref={vAltRef}>{INITIAL_STATE.alt.toLocaleString('tr-TR')} ft</b>
+                </label>
+                <input
+                  id="vor-alt"
+                  type="range"
+                  min={0}
+                  max={45000}
+                  step={500}
+                  defaultValue={INITIAL_STATE.alt}
+                  onChange={handleAltChange}
+                />
+              </div>
+              <div className={styles.ctl}>
+                <label htmlFor="vor-ts">
+                  Zaman ölçeği <b ref={vTsRef}>{INITIAL_STATE.ts.toFixed(1)}×</b>
+                </label>
+                <input
+                  id="vor-ts"
+                  type="range"
+                  min={0.1}
+                  max={10}
+                  step={0.1}
+                  defaultValue={INITIAL_STATE.ts}
+                  onChange={handleTsChange}
+                />
+              </div>
+              <div className={styles.ctl}>
+                <label htmlFor="vor-tau">
+                  Alıcı zaman sabiti (filtre) <b ref={vTauRef}>{INITIAL_STATE.tau.toFixed(1)} s</b>
+                </label>
+                <input
+                  id="vor-tau"
+                  type="range"
+                  min={0}
+                  max={3}
+                  step={0.1}
+                  defaultValue={INITIAL_STATE.tau}
+                  onChange={handleTauChange}
+                />
+              </div>
+              <div className={styles.btns}>
+                <button ref={pauseBtnRef} type="button" onClick={handlePauseClick}>
+                  ⏸ Duraklat
+                </button>
+                <button type="button" onClick={handleResetClick}>
+                  ↺ Yeniden başlat
+                </button>
+              </div>
             </div>
-            <div className={styles.ctl}>
-              <label htmlFor="vor-off">
-                Yanal mesafe (istasyona en yakın) <b ref={vOffRef}>{INITIAL_STATE.off.toFixed(1)} NM</b>
-              </label>
-              <input
-                id="vor-off"
-                type="range"
-                min={0.1}
-                max={20}
-                step={0.1}
-                defaultValue={INITIAL_STATE.off}
-                onChange={handleOffChange}
-              />
-            </div>
-            <div className={styles.ctl}>
-              <label htmlFor="vor-alt">
-                Uçak irtifası (istasyon üstü) <b ref={vAltRef}>{INITIAL_STATE.alt.toLocaleString('tr-TR')} ft</b>
-              </label>
-              <input
-                id="vor-alt"
-                type="range"
-                min={0}
-                max={45000}
-                step={500}
-                defaultValue={INITIAL_STATE.alt}
-                onChange={handleAltChange}
-              />
-            </div>
-            <div className={styles.ctl}>
-              <label htmlFor="vor-ts">
-                Zaman ölçeği <b ref={vTsRef}>{INITIAL_STATE.ts.toFixed(1)}×</b>
-              </label>
-              <input
-                id="vor-ts"
-                type="range"
-                min={0.1}
-                max={10}
-                step={0.1}
-                defaultValue={INITIAL_STATE.ts}
-                onChange={handleTsChange}
-              />
-            </div>
-            <div className={styles.ctl}>
-              <label htmlFor="vor-tau">
-                Alıcı zaman sabiti (filtre) <b ref={vTauRef}>{INITIAL_STATE.tau.toFixed(1)} s</b>
-              </label>
-              <input
-                id="vor-tau"
-                type="range"
-                min={0}
-                max={3}
-                step={0.1}
-                defaultValue={INITIAL_STATE.tau}
-                onChange={handleTauChange}
-              />
-            </div>
-            <div className={styles.btns}>
-              <button ref={pauseBtnRef} type="button" onClick={handlePauseClick}>
-                ⏸ Duraklat
-              </button>
-              <button type="button" onClick={handleResetClick}>
-                ↺ Yeniden başlat
-              </button>
+          </div>
+
+          <div className={styles.panel}>
+            <div className={styles.sect}>Alıcı göstergeleri</div>
+            <div className={styles.readouts}>
+              <div className={clsx(styles.ro, styles.roBig)}>
+                <div className={styles.lbl}>Bearing değişim hızı (ölçülen)</div>
+                <div className={styles.val} ref={rateRef}>
+                  0.00 °/s
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Radyal (FROM)</div>
+                <div className={styles.val} ref={radialRef}>
+                  ---°
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Bearing (TO)</div>
+                <div className={styles.val} ref={brgToRef}>
+                  ---°
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Yatay mesafe</div>
+                <div className={styles.val} ref={distRef}>
+                  -- NM
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Eğik mesafe (DME)</div>
+                <div className={styles.val} ref={slantRef}>
+                  -- NM
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Yükseliş açısı</div>
+                <div className={styles.val} ref={elevRef}>
+                  --°
+                </div>
+              </div>
+              <div className={styles.ro}>
+                <div className={styles.lbl}>Bu geçişteki tepe hız</div>
+                <div className={styles.val} ref={peakRef}>
+                  0.00 °/s
+                </div>
+              </div>
+              <div className={styles.flag} ref={flagRef}>
+                NAV — SİNYAL GEÇERLİ
+              </div>
             </div>
           </div>
         </div>
 
         <div className={styles.panel}>
-          <div className={styles.sect}>Alıcı göstergeleri</div>
-          <div className={styles.readouts}>
-            <div className={clsx(styles.ro, styles.roBig)}>
-              <div className={styles.lbl}>Bearing değişim hızı (ölçülen)</div>
-              <div className={styles.val} ref={rateRef}>
-                0.00 °/s
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Radyal (FROM)</div>
-              <div className={styles.val} ref={radialRef}>
-                ---°
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Bearing (TO)</div>
-              <div className={styles.val} ref={brgToRef}>
-                ---°
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Yatay mesafe</div>
-              <div className={styles.val} ref={distRef}>
-                -- NM
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Eğik mesafe (DME)</div>
-              <div className={styles.val} ref={slantRef}>
-                -- NM
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Yükseliş açısı</div>
-              <div className={styles.val} ref={elevRef}>
-                --°
-              </div>
-            </div>
-            <div className={styles.ro}>
-              <div className={styles.lbl}>Bu geçişteki tepe hız</div>
-              <div className={styles.val} ref={peakRef}>
-                0.00 °/s
-              </div>
-            </div>
-            <div className={styles.flag} ref={flagRef}>
-              NAV — SİNYAL GEÇERLİ
-            </div>
-          </div>
           <div className={styles.sect}>Bearing değişim hızı — zaman grafiği</div>
           <canvas ref={chartRef} className={styles.chartCanvas} width={320} height={150} />
           <div className={styles.sect}>Teorik tepe değer</div>

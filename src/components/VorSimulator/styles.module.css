@@ -7,6 +7,10 @@
  * Duyarlılık, görünüm genişliğine değil `.simulator` kapsayıcısının kendi
  * genişliğine göre ayarlanır (container query): bileşen dar bir docs
  * içerik sütununa gömülü olsa bile doğru kırılma noktalarını kullanır.
+ *
+ * Yerleşim: harita her zaman tam genişlikte üstte durur (okunabilirlik
+ * için); kontroller ve alıcı göstergeleri altında yan yana / alt alta bir
+ * ızgarada, zaman grafiği ise yine tam genişlikte en altta yer alır.
  */
 
 .simulator {
@@ -23,18 +27,64 @@
   box-shadow: var(--ifm-global-shadow-md);
 }
 
-.layout {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.85rem;
+/* Tam ekranda .simulator'ın kendisi tarayıcının fullscreen elemanı olur. */
+.simulator:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-@container (min-width: 640px) {
-  .layout {
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    align-items: start;
-  }
+.simulator:fullscreen .layout {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-family: var(--ifm-heading-font-family);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #e8eff6;
+}
+
+.fullscreenBtn {
+  flex: 0 0 auto;
+  background: rgba(244, 248, 252, 0.06);
+  color: #e8eff6;
+  border: 1px solid rgba(185, 201, 218, 0.3);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.fullscreenBtn:hover {
+  border-color: rgba(255, 198, 92, 0.6);
+  color: var(--av-amber-400);
+}
+
+.layout {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
 .panel {
@@ -42,6 +92,24 @@
   border: 1px solid rgba(133, 183, 230, 0.18);
   border-radius: 12px;
   padding: clamp(0.65rem, 2vw, 0.9rem);
+}
+
+/* Harita: her zaman tam genişlik, ayrı ve baskın bir panel. */
+.mapPanel {
+  padding: clamp(0.5rem, 1.6vw, 0.75rem);
+}
+
+.controlsRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@container (min-width: 640px) {
+  .controlsRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
 }
 
 .mapCanvas,
@@ -56,7 +124,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.6rem 0.85rem;
-  margin-top: 0.65rem;
 }
 
 @container (max-width: 480px) {
