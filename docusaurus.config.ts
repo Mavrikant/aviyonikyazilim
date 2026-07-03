@@ -47,6 +47,17 @@ const config: Config = {
       },
     ],
     [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'araclar',
+        path: 'araclar',
+        routeBasePath: 'araclar',
+        breadcrumbs: true,
+        sidebarPath: './sidebarsAraclar.ts',
+        editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+      },
+    ],
+    [
       '@docusaurus/plugin-client-redirects',
       {
         // Eski Blogger yolları → yeni Docusaurus URL'leri.
@@ -135,6 +146,13 @@ const config: Config = {
           position: 'left',
           label: 'Kütüphane',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'araclarSidebar',
+          docsPluginId: 'araclar',
+          position: 'left',
+          label: 'Araçlar',
+        },
         {to: '/kitap/kaynaklar/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
         {
           href: 'https://github.com/Mavrikant/aviyonikyazilim',
@@ -160,6 +178,7 @@ const config: Config = {
             {label: 'Kitap', to: '/kitap'},
             {label: 'Blog', to: '/blog'},
             {label: 'Kütüphane', to: '/kutuphane'},
+            {label: 'Araçlar', to: '/araclar'},
             {label: 'Ekler', to: '/kitap/ekler/ek-a-ornek-gecis-kriterleri'},
           ],
         },
