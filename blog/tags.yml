@@ -31,3 +31,9 @@ gereksiz-kod:
 devre-disi-birakilmis-kod:
   label: Devre Dışı Bırakılmış Kod (Deactivated Code)
   permalink: /devre-disi-birakilmis-kod
+gercek-zamanli-sistemler:
+  label: gerçek zamanlı sistemler
+  permalink: /gercek-zamanli-sistemler
+rtos:
+  label: RTOS
+  permalink: /rtos
