@@ -1,0 +1,9 @@
+{
+  "label": "Navigasyon",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Navigasyon Araçları",
+    "description": "VOR/DME gibi seyrüsefer yardımcılarının davranışını gösteren simülatörler."
+  }
+}

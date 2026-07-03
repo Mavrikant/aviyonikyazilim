@@ -1,0 +1,155 @@
+.simulator {
+  --bg: #0d1117;
+  --panel: #161b22;
+  --border: #30363d;
+  --txt: #c9d1d9;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --cyan: #39c5cf;
+
+  background: var(--bg);
+  color: var(--txt);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 14px;
+  border-radius: 10px;
+  margin: 1.5rem 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 12px;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.mapCanvas,
+.chartCanvas {
+  display: block;
+  width: 100%;
+  border-radius: 6px;
+  background: #0a0e14;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  margin-top: 10px;
+}
+
+.ctl label {
+  font-size: 12px;
+  color: #8b949e;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ctl label b {
+  color: var(--txt);
+  font-variant-numeric: tabular-nums;
+}
+
+.ctl input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btns button {
+  background: #21262d;
+  color: var(--txt);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btns button:hover {
+  border-color: var(--accent);
+}
+
+.readouts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ro {
+  background: #0a0e14;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.lbl {
+  font-size: 10px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.val {
+  font-size: 20px;
+  font-family: Consolas, monospace;
+  margin-top: 2px;
+}
+
+.roBig {
+  grid-column: 1 / -1;
+}
+
+.roBig .val {
+  font-size: 30px;
+  color: var(--cyan);
+}
+
+.flag {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 6px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 13px;
+  background: #0a2a12;
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+
+.flagBad {
+  background: #3a0d0d;
+  color: #f85149;
+  border-color: #f85149;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.sect {
+  font-size: 11px;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 12px 0 6px;
+}

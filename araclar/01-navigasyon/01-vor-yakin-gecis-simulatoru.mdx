@@ -1,0 +1,72 @@
+---
+title: "VOR Yakın Geçiş Simülatörü"
+sidebar_position: 1
+---
+
+import VorSimulator from '@site/src/components/VorSimulator';
+
+# VOR Yakın Geçiş Simülatörü
+
+VOR (VHF omnidirectional range), bir uçağın istasyona göre hangi
+**radyal** üzerinde olduğunu 360 derecelik bir referans çemberi
+üzerinden veren, uzun yıllardır kullanılan bir kısa-menzil seyrüsefer
+yardımcısıdır. Alıcı, VOR sinyalinden sürekli bir **bearing (yön açısı)**
+türetir; uçak istasyona doğru düz bir rotada uçmuyorsa bu bearing zamanla
+değişir. Bu araç, bir uçağın VOR istasyonunun yakınından düz bir rotada
+geçişi sırasında alıcının ölçtüğü **bearing değişim hızını (°/s)** canlı
+olarak gösterir.
+
+## Neden istasyona yakınken bearing hızlı değişir?
+
+Uçak istasyona uzakken, yanal mesafe sabit kalsa bile bearing çok yavaş
+değişir; çünkü aynı yanal kaçıklık, uzak mesafede çok küçük bir açısal
+farka karşılık gelir. Uçak istasyonun **traverse (abeam) noktasına** —
+yani istasyona en yakın olduğu ana — yaklaştıkça durum tersine döner:
+aynı fiziksel hız artık çok daha büyük bir açısal hıza karşılık gelir.
+Traverse noktasında açısal hız teorik olarak
+
+```
+ω_max ≈ V / d
+```
+
+ile yaklaşık olarak ifade edilebilir (V: yer hızı, d: istasyona en yakın
+yanal mesafe, ω radyan/saniye cinsinden). Bu basit yaklaşım, düz bir
+rotada sabit hızla uçan ve istasyona hiç yaklaşmayan/uzaklaşmayan bir
+uçağın en yakın geçiş anındaki açısal hızını verir; d küçüldükçe veya V
+büyüdükçe bu değer hızla büyür. Aşağıdaki simülatörde bu değer "Teorik
+tepe değer" olarak, ölçülen (filtrelenmiş) tepe değerle birlikte
+gösterilir.
+
+## Sessiz koni (cone of confusion)
+
+Uçak tam istasyonun üzerinden ya da ona çok yakın bir yükseliş açısından
+geçerse, VOR anteninin ışıma örüntüsü nedeniyle sinyal geçici olarak
+güvenilir bir bearing üretemez hâle gelir. Bu bölgeye **sessiz koni**
+(cone of confusion / cone of silence) denir ve gerçek alıcılarda bu
+sırada NAV bayrağı (flag) devreye girer, gösterge geçersiz sayılır.
+Simülatörde bu davranış, yükseliş açısı belirli bir eşiği aştığında
+"FLAG" durumuna geçilerek yaklaşık olarak modellenmiştir.
+
+## Kontroller
+
+- **Yer hızı** ve **yanal mesafe**, teorik tepe değeri belirleyen iki ana
+  parametredir.
+- **Uçak irtifası**, sessiz koninin yerdeki izini ve ne zaman
+  tetikleneceğini belirler.
+- **Zaman ölçeği**, simülasyonu hızlandırıp yavaşlatarak geçişi daha
+  rahat incelemenizi sağlar.
+- **Alıcı zaman sabiti**, gerçek VOR alıcılarındaki filtrelemeyi taklit
+  eder; değeri düşürdükçe ölçülen hız ham (gürültülü) değere yaklaşır,
+  yükselttikçe daha yumuşak ama gecikmeli bir tepki elde edersiniz.
+
+<VorSimulator />
+
+:::info[Yatay mesafe ile eğik mesafe farkı]
+
+Sağ paneldeki "Yatay mesafe" istasyon ile uçağın yer izi arasındaki
+mesafedir; "Eğik mesafe (DME)" ise irtifayı da hesaba katan gerçek
+uzaklıktır ve genellikle bir DME (mesafe ölçme cihazı) tarafından
+ölçülen değere karşılık gelir. İki değer, uçak istasyona çok yakınken ve
+irtifa yüksekken belirgin biçimde ayrışır.
+
+:::
