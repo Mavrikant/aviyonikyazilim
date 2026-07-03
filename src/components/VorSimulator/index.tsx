@@ -9,13 +9,20 @@ const NM2M = 1852;
 const FT2M = 0.3048;
 const CONE_HALF_ANGLE = 50; // derece: bu yükseliş açısının üstü "sessiz koni"
 
+// Site marka renkleriyle uyumlu, tema bağımsız (her zaman koyu) gösterge paleti.
 const COLORS = {
-  accent: '#58a6ff',
-  green: '#3fb950',
-  amber: '#d29922',
-  red: '#f85149',
-  cyan: '#39c5cf',
+  accent: '#85b7e6', // --ifm-color-primary (koyu tema) ile aynı gök mavisi
+  amberBright: '#ffc65c', // --av-amber-400
+  green: '#4ade80',
+  red: '#ff8177',
+  textBright: '#e8eff6',
+  textMuted: '#7f97ad',
+  gridLine: 'rgba(133, 183, 230, 0.16)',
 };
+
+const MONO_FONT = "'JetBrains Mono Variable', Consolas, monospace";
+
+const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
 type HistPoint = {t: number; rate: number | null};
 
@@ -109,19 +116,20 @@ function stepUpdate(s: SimState, dt: number): Frame {
   };
 }
 
-function drawMap(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, state: SimState, frame: Frame) {
-  const W = canvas.width;
-  const H = canvas.height;
+function drawMap(ctx: CanvasRenderingContext2D, W: number, H: number, state: SimState, frame: Frame) {
+  // W/H, kapsayıcının gerçek CSS piksel boyutudur (bkz. sizeCanvasToContainer);
+  // uçak/istasyon simgeleri bu genişliğe oranla ölçeklenir ki küçük ekranlarda kaybolmasın.
+  const s = clamp(W / 860, 0.6, 1.35);
   const half = viewHalf(state.off);
   const scale = (W * 0.46) / half; // m -> px
   const cx = W / 2;
-  const cy = H / 2 - 40; // istasyon konumu (ekran)
+  const cy = H * 0.43; // istasyon konumu (ekran)
   ctx.clearRect(0, 0, W, H);
 
   // menzil halkaları
-  ctx.strokeStyle = '#1c2530';
-  ctx.fillStyle = '#3d4a5c';
-  ctx.font = '10px Consolas';
+  ctx.strokeStyle = COLORS.gridLine;
+  ctx.fillStyle = COLORS.textMuted;
+  ctx.font = `${Math.round(10 * s)}px ${MONO_FONT}`;
   ctx.textAlign = 'left';
   const ringStep = state.off >= 5 ? 5 : state.off >= 1.5 ? 2 : 1;
   for (let r = ringStep; r * NM2M * scale < W; r += ringStep) {
@@ -136,20 +144,20 @@ function drawMap(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, state
     const coneR = (frame.h / Math.tan((CONE_HALF_ANGLE * Math.PI) / 180)) * scale;
     ctx.beginPath();
     ctx.arc(cx, cy, coneR, 0, 2 * Math.PI);
-    ctx.fillStyle = 'rgba(248,81,73,0.10)';
+    ctx.fillStyle = 'rgba(255,129,119,0.12)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(248,81,73,0.5)';
+    ctx.strokeStyle = 'rgba(255,129,119,0.55)';
     ctx.setLineDash([4, 4]);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = '#f85149';
+    ctx.fillStyle = COLORS.red;
     ctx.textAlign = 'center';
-    ctx.fillText('sessiz koni', cx, cy - coneR - 5);
+    ctx.fillText('sessiz koni', cx, cy - coneR - 6 * s);
   }
 
   // uçuş yolu
   const py = cy + state.off * NM2M * scale;
-  ctx.strokeStyle = '#2d3a4d';
+  ctx.strokeStyle = 'rgba(133, 183, 230, 0.35)';
   ctx.setLineDash([8, 6]);
   ctx.beginPath();
   ctx.moveTo(0, py);
@@ -157,63 +165,68 @@ function drawMap(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, state
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // VOR istasyonu (altıgen)
+  // VOR istasyonu (altıgen) — okunaklı kalması için genişliğe oranlı büyütüldü
+  const hexR = 17 * s;
   ctx.strokeStyle = frame.inCone ? COLORS.red : COLORS.accent;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = 2.5 * s;
   ctx.beginPath();
   for (let i = 0; i < 6; i++) {
     const a = (Math.PI / 3) * i - Math.PI / 6;
-    const px = cx + 10 * Math.cos(a);
-    const pyh = cy + 10 * Math.sin(a);
+    const px = cx + hexR * Math.cos(a);
+    const pyh = cy + hexR * Math.sin(a);
     if (i) ctx.lineTo(px, pyh);
     else ctx.moveTo(px, pyh);
   }
   ctx.closePath();
   ctx.stroke();
-  ctx.fillStyle = '#8b949e';
+  ctx.fillStyle = COLORS.textMuted;
   ctx.textAlign = 'center';
-  ctx.font = '11px Consolas';
-  ctx.fillText('VOR', cx, cy + 24);
+  ctx.font = `600 ${Math.round(11 * s)}px ${MONO_FONT}`;
+  ctx.fillText('VOR', cx, cy + hexR + 15 * s);
   ctx.lineWidth = 1;
 
-  // uçak
+  // uçak — sabit 10px yerine kapsayıcı genişliğine oranlı, belirgin bir simge
   const ax = cx + state.x * scale;
   const ay = py;
+  const nose = clamp(W * 0.032, 15, 30);
   // radyal çizgisi
-  ctx.strokeStyle = frame.inCone ? 'rgba(248,81,73,0.7)' : 'rgba(63,185,80,0.7)';
+  ctx.strokeStyle = frame.inCone ? 'rgba(255,129,119,0.7)' : 'rgba(74,222,128,0.7)';
+  ctx.lineWidth = 1.5 * s;
   ctx.beginPath();
   ctx.moveTo(cx, cy);
   ctx.lineTo(ax, ay);
   ctx.stroke();
+  ctx.lineWidth = 1;
 
   ctx.save();
   ctx.translate(ax, ay);
   ctx.rotate(Math.PI / 2);
-  ctx.fillStyle = '#e6edf3';
+  ctx.fillStyle = COLORS.textBright;
   ctx.beginPath();
-  ctx.moveTo(0, -10);
-  ctx.lineTo(6, 8);
-  ctx.lineTo(0, 4);
-  ctx.lineTo(-6, 8);
+  ctx.moveTo(0, -nose);
+  ctx.lineTo(nose * 0.6, nose * 0.8);
+  ctx.lineTo(0, nose * 0.4);
+  ctx.lineTo(-nose * 0.6, nose * 0.8);
   ctx.closePath();
   ctx.fill();
   ctx.restore();
 
   // radyal etiketi
-  ctx.fillStyle = frame.inCone ? '#f85149' : '#3fb950';
+  ctx.fillStyle = frame.inCone ? COLORS.red : COLORS.green;
+  ctx.font = `600 ${Math.round(12 * s)}px ${MONO_FONT}`;
   ctx.textAlign = 'center';
-  ctx.fillText(`R-${frame.radial.toFixed(0).padStart(3, '0')}`, (cx + ax) / 2, (cy + ay) / 2 - 8);
+  ctx.fillText(`R-${frame.radial.toFixed(0).padStart(3, '0')}`, (cx + ax) / 2, (cy + ay) / 2 - nose * 0.5);
 
   // kuzey oku
-  ctx.fillStyle = '#8b949e';
-  ctx.fillText('K ↑', 20, 20);
+  ctx.fillStyle = COLORS.textMuted;
+  ctx.textAlign = 'left';
+  ctx.fillText('K ↑', 12 * s, 18 * s);
 }
 
-function drawChart(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, state: SimState) {
-  const W = canvas.width;
-  const H = canvas.height;
+function drawChart(ctx: CanvasRenderingContext2D, W: number, H: number, state: SimState) {
+  const s = clamp(W / 320, 0.7, 1.3);
   ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = '#30363d';
+  ctx.strokeStyle = COLORS.gridLine;
   ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
   const hist = state.hist;
   if (hist.length < 2) return;
@@ -226,12 +239,12 @@ function drawChart(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, sta
   const span = Math.max(1e-6, t1 - t0);
 
   // ızgara
-  ctx.fillStyle = '#8b949e';
-  ctx.font = '9px Consolas';
+  ctx.fillStyle = COLORS.textMuted;
+  ctx.font = `${Math.round(9 * s)}px ${MONO_FONT}`;
   ctx.textAlign = 'left';
   for (let i = 1; i <= 3; i++) {
     const y = H - ((H - 14) * i) / 3 - 4;
-    ctx.strokeStyle = '#1c2530';
+    ctx.strokeStyle = COLORS.gridLine;
     ctx.beginPath();
     ctx.moveTo(0, y);
     ctx.lineTo(W, y);
@@ -239,8 +252,8 @@ function drawChart(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, sta
     ctx.fillText(`${((maxR * i) / 3).toFixed(1)}°/s`, 3, y - 2);
   }
 
-  ctx.strokeStyle = COLORS.cyan;
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = COLORS.amberBright;
+  ctx.lineWidth = 1.75 * s;
   ctx.beginPath();
   let pen = false;
   for (const p of hist) {
@@ -273,11 +286,12 @@ type ReadoutRefs = {
 function renderReadouts(refs: ReadoutRefs, state: SimState, frame: Frame) {
   if (refs.rate.current) {
     refs.rate.current.textContent = frame.inCone ? '— FLAG —' : `${Math.abs(state.measRate).toFixed(2)} °/s`;
+    // yeşil: sakin/nominal, amber: hızlanan geçiş (dikkat), kırmızı: sinyal geçersiz
     refs.rate.current.style.color = frame.inCone
       ? COLORS.red
       : Math.abs(state.measRate) > 10
-        ? COLORS.amber
-        : COLORS.cyan;
+        ? COLORS.amberBright
+        : COLORS.green;
   }
   if (refs.radial.current) {
     refs.radial.current.textContent = frame.inCone ? '---°' : `${frame.radial.toFixed(0).padStart(3, '0')}°`;
@@ -302,6 +316,30 @@ function renderReadouts(refs: ReadoutRefs, state: SimState, frame: Frame) {
       refs.flag.current.className = styles.flag;
     }
   }
+}
+
+const MAP_ASPECT = 560 / 860;
+const CHART_ASPECT = 150 / 320;
+
+/**
+ * Canvas'ın piksel arabelleğini, kapsayıcının gerçekte gösterdiği CSS
+ * genişliğine (× devicePixelRatio) eşitler. Aksi halde sabit bir iç
+ * çözünürlük (ör. 860px), dar mobil ekranlarda CSS ile küçültülüp uçak/VOR
+ * simgelerini ve yazıları oransız biçimde küçültüyordu.
+ */
+function sizeCanvasToContainer(canvas: HTMLCanvasElement, cssWidth: number, aspect: number) {
+  const cssHeight = cssWidth * aspect;
+  const dpr = window.devicePixelRatio || 1;
+  const targetW = Math.max(1, Math.round(cssWidth * dpr));
+  const targetH = Math.max(1, Math.round(cssHeight * dpr));
+  if (canvas.width !== targetW || canvas.height !== targetH) {
+    canvas.width = targetW;
+    canvas.height = targetH;
+  }
+  canvas.style.height = `${cssHeight}px`;
+  const ctx = canvas.getContext('2d');
+  if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return {w: cssWidth, h: cssHeight};
 }
 
 const INITIAL_STATE: SimState = {
@@ -364,6 +402,19 @@ export default function VorSimulator(): ReactNode {
 
     resetPass(stateRef.current);
 
+    const mapSize = {w: 860, h: 560};
+    const chartSize = {w: 320, h: 150};
+    const resizeAll = () => {
+      const mapW = canvas.clientWidth;
+      if (mapW > 0) Object.assign(mapSize, sizeCanvasToContainer(canvas, mapW, MAP_ASPECT));
+      const chartW = chartCanvas.clientWidth;
+      if (chartW > 0) Object.assign(chartSize, sizeCanvasToContainer(chartCanvas, chartW, CHART_ASPECT));
+    };
+    resizeAll();
+    const ro = new ResizeObserver(resizeAll);
+    ro.observe(canvas);
+    ro.observe(chartCanvas);
+
     let rafId = 0;
     let last = performance.now();
 
@@ -374,15 +425,18 @@ export default function VorSimulator(): ReactNode {
       if (!state.paused) {
         const dt = dtReal * state.ts;
         const frame = stepUpdate(state, dt);
-        drawMap(mctx, canvas, state, frame);
-        drawChart(cctx, chartCanvas, state);
+        drawMap(mctx, mapSize.w, mapSize.h, state, frame);
+        drawChart(cctx, chartSize.w, chartSize.h, state);
         renderReadouts(readoutRefs, state, frame);
       }
       rafId = requestAnimationFrame(loop);
     };
     rafId = requestAnimationFrame(loop);
 
-    return () => cancelAnimationFrame(rafId);
+    return () => {
+      cancelAnimationFrame(rafId);
+      ro.disconnect();
+    };
   }, []);
 
   const handleSpdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -559,7 +613,7 @@ export default function VorSimulator(): ReactNode {
           <div className={styles.sect}>Teorik tepe değer</div>
           <div className={styles.ro}>
             <div className={styles.lbl}>ω_max = V / d (traverse noktasında)</div>
-            <div className={styles.val} style={{fontSize: '16px'}} ref={theoRef}>
+            <div className={clsx(styles.val, styles.valSmall)} ref={theoRef}>
               --
             </div>
           </div>
