@@ -112,6 +112,23 @@
   }
 }
 
+.chartLegend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.4rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+}
+
+.legendRate {
+  color: var(--av-amber-400);
+}
+
+.legendRadial {
+  color: #85b7e6;
+}
+
 .mapCanvas,
 .chartCanvas {
   display: block;

@@ -24,7 +24,7 @@ const MONO_FONT = "'JetBrains Mono Variable', Consolas, monospace";
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
-type HistPoint = {t: number; rate: number | null};
+type HistPoint = {t: number; rate: number | null; radial: number | null};
 
 type SimState = {
   spd: number;
@@ -100,7 +100,7 @@ function stepUpdate(s: SimState, dt: number): Frame {
   s.prevBrg = radial;
   if (!inCone) s.peak = Math.max(s.peak, Math.abs(s.measRate));
 
-  s.hist.push({t: s.t, rate: inCone ? null : Math.abs(s.measRate)});
+  s.hist.push({t: s.t, rate: inCone ? null : Math.abs(s.measRate), radial: inCone ? null : radial});
   if (s.hist.length > 600) s.hist.shift();
 
   return {
@@ -230,16 +230,33 @@ function drawChart(ctx: CanvasRenderingContext2D, W: number, H: number, state: S
   ctx.strokeRect(0.5, 0.5, W - 1, H - 1);
   const hist = state.hist;
   if (hist.length < 2) return;
-  const rates = hist
-    .filter((p): p is {t: number; rate: number} => p.rate !== null)
-    .map((p) => p.rate);
-  const maxR = Math.max(1, ...rates) * 1.15;
+
+  // sol eksen: bearing değişim hızı (°/s), her zaman 0'dan başlar
+  const ratePoints = hist.filter((p): p is HistPoint & {rate: number} => p.rate !== null);
+  const maxR = Math.max(1, ...ratePoints.map((p) => p.rate)) * 1.15;
+
+  // sağ eksen: radyal (°) — kendi geçişindeki gözlenen min/max aralığına ölçeklenir
+  const radialPoints = hist.filter((p): p is HistPoint & {radial: number} => p.radial !== null);
+  let rMin = 0;
+  let rMax = 1;
+  if (radialPoints.length > 0) {
+    const radials = radialPoints.map((p) => p.radial);
+    rMin = Math.min(...radials);
+    rMax = Math.max(...radials);
+    if (rMax - rMin < 2) {
+      // neredeyse sabitken de eksenin okunur bir aralığı olsun
+      const mid = (rMax + rMin) / 2;
+      rMin = mid - 1;
+      rMax = mid + 1;
+    }
+  }
+
   const t0 = hist[0].t;
   const t1 = hist[hist.length - 1].t;
   const span = Math.max(1e-6, t1 - t0);
 
-  // ızgara
-  ctx.fillStyle = COLORS.textMuted;
+  // ızgara + sol eksen etiketleri (hız)
+  ctx.fillStyle = COLORS.amberBright;
   ctx.font = `${Math.round(9 * s)}px ${MONO_FONT}`;
   ctx.textAlign = 'left';
   for (let i = 1; i <= 3; i++) {
@@ -252,6 +269,16 @@ function drawChart(ctx: CanvasRenderingContext2D, W: number, H: number, state: S
     ctx.fillText(`${((maxR * i) / 3).toFixed(1)}°/s`, 3, y - 2);
   }
 
+  // sağ eksen etiketleri (radyal)
+  ctx.fillStyle = COLORS.accent;
+  ctx.textAlign = 'right';
+  for (let i = 0; i <= 2; i++) {
+    const val = rMin + ((rMax - rMin) * i) / 2;
+    const y = H - 4 - ((H - 18) * (val - rMin)) / (rMax - rMin);
+    ctx.fillText(`${val.toFixed(0)}°`, W - 3, y - 2);
+  }
+
+  // bearing değişim hızı çizgisi (amber, sol eksen)
   ctx.strokeStyle = COLORS.amberBright;
   ctx.lineWidth = 1.75 * s;
   ctx.beginPath();
@@ -263,6 +290,24 @@ function drawChart(ctx: CanvasRenderingContext2D, W: number, H: number, state: S
       continue;
     }
     const y = H - 4 - ((H - 18) * p.rate) / maxR;
+    if (pen) ctx.lineTo(x, y);
+    else ctx.moveTo(x, y);
+    pen = true;
+  }
+  ctx.stroke();
+
+  // radyal çizgisi (mavi, sağ eksen)
+  ctx.strokeStyle = COLORS.accent;
+  ctx.lineWidth = 1.5 * s;
+  ctx.beginPath();
+  pen = false;
+  for (const p of hist) {
+    const x = ((p.t - t0) / span) * W;
+    if (p.radial === null) {
+      pen = false;
+      continue;
+    }
+    const y = H - 4 - ((H - 18) * (p.radial - rMin)) / (rMax - rMin);
     if (pen) ctx.lineTo(x, y);
     else ctx.moveTo(x, y);
     pen = true;
@@ -650,7 +695,11 @@ export default function VorSimulator(): ReactNode {
         </div>
 
         <div className={styles.panel}>
-          <div className={styles.sect}>Bearing değişim hızı — zaman grafiği</div>
+          <div className={styles.sect}>Bearing değişim hızı ve radyal — zaman grafiği</div>
+          <div className={styles.chartLegend}>
+            <span className={styles.legendRate}>● Hız (°/s)</span>
+            <span className={styles.legendRadial}>● Radyal (°)</span>
+          </div>
           <canvas ref={chartRef} className={styles.chartCanvas} width={320} height={150} />
           <div className={styles.sect}>Teorik tepe değer</div>
           <div className={styles.ro}>
