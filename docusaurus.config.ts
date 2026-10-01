@@ -13,8 +13,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://karaman.dev',
-  baseUrl: '/aviyonikyazilim/',
+  url: 'https://aviyonikyazilim.com',
+  baseUrl: '/',
   trailingSlash: false,
 
   // GitHub Pages deployment config.
@@ -203,7 +203,7 @@ const config: Config = {
             },
             {
               label: 'RSS',
-              href: 'https://karaman.dev/aviyonikyazilim/blog/rss.xml',
+              href: 'https://aviyonikyazilim.com/blog/rss.xml',
             },
           ],
         },
