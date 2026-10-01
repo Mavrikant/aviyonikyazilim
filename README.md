@@ -1,6 +1,6 @@
 # aviyonikyazilim
 
-[karaman.dev/aviyonikyazilim/](https://karaman.dev/aviyonikyazilim/) sitesinin kaynak deposu.
+[aviyonikyazilim.com](https://aviyonikyazilim.com/) sitesinin kaynak deposu.
 Türkçe aviyonik yazılım / test / sertifikasyon içerikleri: **blog yazıları** ve DO-178C
 konulu bir **kitap**. [Docusaurus 3](https://docusaurus.io) ile üretilir ve GitHub Pages
 üzerinde yayınlanır.
@@ -32,10 +32,19 @@ Aşağıdaki adımlar depo sahibi tarafından **elle** yapılmalıdır.
 
 Repo ayarları → **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
-### 2. Yayın kökünü doğrula
+### 2. Özel alan adını ve HTTPS'i ayarla
 
 Docusaurus yapılandırmasındaki `url` ve `baseUrl` değerleri
-`https://karaman.dev/aviyonikyazilim/` yayınına göre ayarlanmıştır.
+`https://aviyonikyazilim.com/` yayınına (alan adı kökü, `baseUrl: '/'`) göre ayarlanmıştır.
+
+- **Settings → Pages → Custom domain:** `aviyonikyazilim.com`
+- DNS: apex için GitHub Pages `A` (185.199.108–111.153) ve `AAAA` kayıtları,
+  `www` için `mavrikant.github.io` hedefli `CNAME`.
+- Sertifika üretildikten sonra **Enforce HTTPS** işaretlenir.
+
+Alan adı değişirse `url`/`baseUrl`, `static/CNAME` ve `static/` altındaki redirect
+stub'ları birlikte güncellenmelidir; aksi hâlde CSS/JS dosyaları 404 verir ve site
+"baseUrl" hata kutusuyla açılır.
 
 ## Otomasyon (referans)
 
@@ -45,7 +54,7 @@ Depo oluşturma ve Pages etkinleştirme (yetkili `gh` oturumu ile):
 gh repo create aviyonikyazilim --public --source=. --push
 gh api -X POST repos/Mavrikant/aviyonikyazilim/pages \
   -f build_type=workflow -f "source[branch]=main" -f "source[path]=/"
-gh api -X PUT repos/Mavrikant/aviyonikyazilim/pages -f cname=karaman.dev
+gh api -X PUT repos/Mavrikant/aviyonikyazilim/pages -f cname=aviyonikyazilim.com
 ```
 
 ## Lisans

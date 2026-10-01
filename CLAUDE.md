@@ -1,7 +1,8 @@
 # CLAUDE.md — aviyonikyazilim Çalışma Rehberi
 
-Bu depo, **karaman.dev/aviyonikyazilim/** sitesinin Docusaurus 3 (TypeScript) ile
-üretilen kaynağıdır. Site GitHub Pages üzerinde bu yayın köküne göre hazırlanır.
+Bu depo, **aviyonikyazilim.com** sitesinin Docusaurus 3 (TypeScript) ile
+üretilen kaynağıdır. Site GitHub Pages üzerinde alan adı köküne (`baseUrl: '/'`)
+göre hazırlanır.
 Gelecekteki tüm AI oturumları bu rehbere uymalıdır.
 
 ## Proje tanımı
@@ -30,7 +31,7 @@ src/pages/index.tsx       Özel ana sayfa (karşılama)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
 static/img/kitap/<slug>/  Kitap/kaynak görselleri
 static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — SİLME
-static/CNAME              Yayın alan adı (karaman.dev)
+static/CNAME              Yayın alan adı (aviyonikyazilim.com)
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım
