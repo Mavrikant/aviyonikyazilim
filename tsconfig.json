@@ -4,8 +4,12 @@
 {
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
+    // TypeScript 7 'baseUrl' seçeneğini kaldırdı; @docusaurus/tsconfig'ten
+    // gelen değer sıfırlanır ve '@site/*' takma adı bu dizine göre tanımlanır.
+    "baseUrl": null,
+    "paths": {
+      "@site/*": ["./*"]
+    },
     "strict": true
   },
   "exclude": [".docusaurus", "build"]
