@@ -97,56 +97,164 @@ const contributorSteps = [
   'Güncellenen metin daha anlaşılır, daha tutarlı ve daha güvenilir hale gelsin.',
 ];
 
-/** Hero'daki büyük yapay ufuk göstergesi (dekoratif). */
+/*
+ * Hero'daki yapay ufuk göstergesi (attitude indicator) — klasik analog
+ * göstergenin işaretlemeleri: düz uçuş (0° yatış, 0° yunuslama).
+ * Merkez (100, 100); yunuslama ölçeği 2,5 birim/derece.
+ */
+const PITCH_SCALE = 2.5;
+// Yunuslama merdiveni: 5° ve 15° kısa, 10° ve 20° uzun ve numaralı.
+const pitchRungs = [5, 10, 15, 20].flatMap((deg) => [deg, -deg]);
+// Yatış skalası: 10° ve 20° kısa, 30° ve 60° uzun çizgi; 45° üçgen.
+const bankTicks = [
+  {angle: 10, inner: 72.5, width: 1.8},
+  {angle: 20, inner: 72.5, width: 1.8},
+  {angle: 30, inner: 67.5, width: 2.8},
+  {angle: 60, inner: 67.5, width: 2.8},
+].flatMap((tick) => [tick, {...tick, angle: -tick.angle}]);
+// Çerçeve vidaları: 45° köşegenlerde, vida yarıklarının açıları farklı.
+const bezelScrews = [
+  {x: 35.12, y: 35.12, slot: 20},
+  {x: 164.88, y: 35.12, slot: -25},
+  {x: 164.88, y: 164.88, slot: 65},
+  {x: 35.12, y: 164.88, slot: 5},
+];
+
 function HeroDial() {
   return (
     <div className={styles.heroDial} aria-hidden="true">
       <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id="heroDialClip">
+          <clipPath id="aiFace">
             <circle cx="100" cy="100" r="82" />
           </clipPath>
-          <linearGradient id="heroSky" x1="100" y1="18" x2="100" y2="108" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#0E2A47" />
-            <stop offset="1" stopColor="#1D5288" />
+          <clipPath id="aiCard">
+            <circle cx="100" cy="100" r="66" />
+          </clipPath>
+          <linearGradient id="aiBezel" x1="100" y1="2" x2="100" y2="198" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#454B54" />
+            <stop offset="0.5" stopColor="#262A30" />
+            <stop offset="1" stopColor="#121417" />
           </linearGradient>
-          <linearGradient id="heroGround" x1="100" y1="100" x2="100" y2="182" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#D89A3D" />
-            <stop offset="1" stopColor="#8F5D1E" />
+          <linearGradient id="aiLip" x1="100" y1="14" x2="100" y2="186" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#07090B" />
+            <stop offset="1" stopColor="#30363E" />
           </linearGradient>
+          <linearGradient id="aiSky" x1="100" y1="34" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#2A7BCF" />
+            <stop offset="1" stopColor="#3D93E2" />
+          </linearGradient>
+          <linearGradient id="aiGround" x1="100" y1="100" x2="100" y2="166" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#93602F" />
+            <stop offset="1" stopColor="#6A421F" />
+          </linearGradient>
+          <linearGradient id="aiBar" x1="0" y1="98" x2="0" y2="102" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#FFD978" />
+            <stop offset="1" stopColor="#E9A832" />
+          </linearGradient>
+          <radialGradient id="aiScrew" cx="0.38" cy="0.32" r="0.8">
+            <stop stopColor="#6A717B" />
+            <stop offset="1" stopColor="#1A1D21" />
+          </radialGradient>
+          <radialGradient id="aiVignette" cx="100" cy="100" r="82" gradientUnits="userSpaceOnUse">
+            <stop offset="0.82" stopColor="#000" stopOpacity="0" />
+            <stop offset="1" stopColor="#000" stopOpacity="0.45" />
+          </radialGradient>
+          <linearGradient id="aiGlare" x1="100" y1="18" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#fff" stopOpacity="0.16" />
+            <stop offset="0.75" stopColor="#fff" stopOpacity="0" />
+          </linearGradient>
+          <filter id="aiShadow" x="-20%" y="-20%" width="140%" height="160%">
+            <feDropShadow dx="0" dy="1.4" stdDeviation="1.3" floodColor="#000" floodOpacity="0.5" />
+          </filter>
         </defs>
 
-        {/* Kadran */}
-        <g clipPath="url(#heroDialClip)">
-          <rect width="200" height="200" fill="url(#heroSky)" />
-          <path d="M6 114.2 L194 87.8 L194 194 L6 194 Z" fill="url(#heroGround)" />
-          <path d="M6 114.2 L194 87.8" stroke="#F4F8FC" strokeWidth="3" strokeLinecap="round" />
-          {/* Yunuslama merdiveni */}
-          <path d="M74 76.5 L126 69.2" stroke="#F4F8FC" strokeOpacity="0.6" strokeWidth="2" strokeLinecap="round" />
-          <path d="M83 57.7 L117 52.9" stroke="#F4F8FC" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" />
-          <path d="M88 40.1 L112 36.7" stroke="#F4F8FC" strokeOpacity="0.25" strokeWidth="2" strokeLinecap="round" />
-          <path d="M74 139.4 L126 132.1" stroke="#F9EFD9" strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" />
-          <path d="M83 158.9 L117 154.1" stroke="#F9EFD9" strokeOpacity="0.3" strokeWidth="2" strokeLinecap="round" />
+        {/* Gösterge gövdesi: çerçeve (bezel), iç dudak ve vidalar */}
+        <circle cx="100" cy="100" r="98" fill="url(#aiBezel)" />
+        <circle cx="100" cy="100" r="97.2" stroke="#fff" strokeOpacity="0.1" strokeWidth="1.2" />
+        <circle cx="100" cy="100" r="85.5" fill="url(#aiLip)" />
+        {bezelScrews.map(({x, y, slot}) => (
+          <g key={`${x}-${y}`} transform={`translate(${x} ${y}) rotate(${slot})`}>
+            <circle r="4.2" fill="url(#aiScrew)" stroke="#0A0B0D" strokeWidth="0.8" />
+            <path d="M-2.6 0 H2.6 M0 -2.6 V2.6" stroke="#0A0B0D" strokeWidth="1.3" strokeLinecap="round" />
+          </g>
+        ))}
+
+        <g clipPath="url(#aiFace)">
+          {/* Yatış halkası: üst yarı gökyüzü, alt yarı yer */}
+          <rect width="200" height="100" fill="#1B5AA6" />
+          <rect y="100" width="200" height="100" fill="#583619" />
+
+          {/* Ufuk kartı ve yunuslama merdiveni */}
+          <g clipPath="url(#aiCard)">
+            <rect width="200" height="100" fill="url(#aiSky)" />
+            <rect y="100" width="200" height="100" fill="url(#aiGround)" />
+            {pitchRungs.map((deg) => {
+              const y = 100 - deg * PITCH_SCALE;
+              const major = deg % 10 === 0;
+              const half = major ? 17 : 8.5;
+              return (
+                <g key={deg}>
+                  <path
+                    d={`M${100 - half} ${y} H${100 + half}`}
+                    stroke="#F4F8FC"
+                    strokeWidth={major ? 1.6 : 1.3}
+                    strokeLinecap="round"
+                  />
+                  {major &&
+                    [75, 125].map((x) => (
+                      <text
+                        key={x}
+                        x={x}
+                        y={y}
+                        fill="#F4F8FC"
+                        fontSize="8"
+                        fontWeight="600"
+                        textAnchor="middle"
+                        dominantBaseline="central"
+                      >
+                        {Math.abs(deg)}
+                      </text>
+                    ))}
+                </g>
+              );
+            })}
+          </g>
+          <circle cx="100" cy="100" r="66" stroke="#000" strokeOpacity="0.3" strokeWidth="1.2" />
+
+          {/* Ufuk çizgisi */}
+          <path d="M0 100 H200" stroke="#F4F8FC" strokeWidth="2.2" />
+
+          {/* Yatış skalası */}
+          {bankTicks.map(({angle, inner, width}) => (
+            <path
+              key={angle}
+              d={`M100 ${100 - inner} V19`}
+              transform={`rotate(${angle} 100 100)`}
+              stroke="#F4F8FC"
+              strokeWidth={width}
+            />
+          ))}
+          {[45, -45].map((angle) => (
+            <path key={angle} d="M97.2 19.5 H102.8 L100 26 Z" transform={`rotate(${angle} 100 100)`} fill="#F4F8FC" />
+          ))}
+
+          {/* Kenar gölgesi ve cam yansıması */}
+          <circle cx="100" cy="100" r="82" fill="url(#aiVignette)" />
+          <path d="M18 100 A82 82 0 0 1 182 100 Z" fill="url(#aiGlare)" />
         </g>
 
-        {/* Yatış açısı tikleri */}
-        <g stroke="#8FB4D9" strokeWidth="2" strokeLinecap="round" opacity="0.7">
-          <path d="M100 10 L100 20" />
-          <path d="M55 22 L59.5 30.7" />
-          <path d="M145 22 L140.5 30.7" />
-          <path d="M22 55 L30.7 59.5" />
-          <path d="M178 55 L169.3 59.5" />
+        {/* Sabit semboller: yatış göstergesi üçgeni, ufuk referans çubukları, minyatür uçak */}
+        <g filter="url(#aiShadow)">
+          <path d="M94 18.5 H106 L100 32 Z" fill="#F4F8FC" />
+          <rect x="49" y="98.2" width="29" height="3.6" rx="0.9" fill="url(#aiBar)" stroke="#1E1404" strokeWidth="0.8" />
+          <rect x="122" y="98.2" width="29" height="3.6" rx="0.9" fill="url(#aiBar)" stroke="#1E1404" strokeWidth="0.8" />
+          <path d="M78 100 L95 98.4 H105 L122 100 L105 101.6 H95 Z" fill="#FFFFFF" />
+          <rect x="98.9" y="90" width="2.2" height="10" rx="1.1" fill="#FFFFFF" />
+          <path d="M96.6 101.5 L100 110 L103.4 101.5 Z" fill="#FFFFFF" />
+          <circle cx="100" cy="100" r="4.4" fill="#FFFFFF" />
         </g>
-
-        {/* Uçak sembolü */}
-        <path d="M38 108 L76 108 L85 119" stroke="#FFC65C" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M162 108 L124 108 L115 119" stroke="#FFC65C" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="100" cy="108" r="6" fill="#FFC65C" />
-
-        {/* Çerçeve */}
-        <circle cx="100" cy="100" r="82" stroke="#0B1D33" strokeWidth="8" />
-        <circle cx="100" cy="100" r="90" stroke="#24619F" strokeOpacity="0.5" strokeWidth="2" />
-        <circle cx="100" cy="100" r="97" stroke="#24619F" strokeOpacity="0.2" strokeWidth="1.5" />
+        <circle cx="100" cy="100" r="82" stroke="#05070A" strokeWidth="1.6" />
       </svg>
     </div>
   );
