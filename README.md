@@ -7,6 +7,9 @@ konulu bir **kitap**. [Docusaurus 3](https://docusaurus.io) ile üretilir ve Git
 
 ## Geliştirme
 
+Node.js 22 veya üzeri gerekir; önerilen ve CI'da kullanılan sürüm `.nvmrc` dosyasındadır
+(`nvm use` ile seçilebilir).
+
 ```bash
 npm install       # bağımlılıkları yükle
 npm start         # geliştirme sunucusu (http://localhost:3000)
