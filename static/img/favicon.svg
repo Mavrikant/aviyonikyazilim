@@ -1,16 +1,60 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="64" height="64" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Küçük boyutlar için sadeleştirilmiş yapay ufuk göstergesi (vidasız, yunuslama merdivensiz) -->
   <defs>
-    <clipPath id="d">
-      <circle cx="32" cy="32" r="28"/>
+    <clipPath id="face">
+      <circle cx="100" cy="100" r="82"/>
     </clipPath>
+    <clipPath id="card">
+      <circle cx="100" cy="100" r="66"/>
+    </clipPath>
+    <linearGradient id="bezel" x1="100" y1="2" x2="100" y2="198" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#454B54"/>
+      <stop offset="0.5" stop-color="#262A30"/>
+      <stop offset="1" stop-color="#121417"/>
+    </linearGradient>
+    <linearGradient id="sky" x1="100" y1="34" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2A7BCF"/>
+      <stop offset="1" stop-color="#3D93E2"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="100" y1="100" x2="100" y2="166" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93602F"/>
+      <stop offset="1" stop-color="#6A421F"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="95.5" x2="0" y2="104.5" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD978"/>
+      <stop offset="1" stop-color="#E9A832"/>
+    </linearGradient>
   </defs>
-  <g clip-path="url(#d)">
-    <rect width="64" height="64" fill="#123A61"/>
-    <path d="M0 37.5 L64 27.5 L64 64 L0 64 Z" fill="#C58A32"/>
-    <path d="M0 37.5 L64 27.5" stroke="#F4F8FC" stroke-width="3.4" stroke-linecap="round"/>
+
+  <!-- Çerçeve -->
+  <circle cx="100" cy="100" r="98" fill="url(#bezel)"/>
+  <circle cx="100" cy="100" r="85.5" fill="#0B0D10"/>
+
+  <g clip-path="url(#face)">
+    <!-- Yatış halkası ve ufuk kartı -->
+    <rect width="200" height="100" fill="#1B5AA6"/>
+    <rect y="100" width="200" height="100" fill="#583619"/>
+    <g clip-path="url(#card)">
+      <rect width="200" height="100" fill="url(#sky)"/>
+      <rect y="100" width="200" height="100" fill="url(#ground)"/>
+    </g>
+    <!-- Ufuk çizgisi -->
+    <path d="M0 100 H200" stroke="#F4F8FC" stroke-width="4"/>
+    <!-- Yatış skalası: 30° ve 60° -->
+    <g stroke="#F4F8FC" stroke-width="5.3" stroke-linecap="round">
+      <path d="M100 32.5 V19" transform="rotate(-30 100 100)"/>
+      <path d="M100 32.5 V19" transform="rotate(30 100 100)"/>
+      <path d="M100 32.5 V19" transform="rotate(-60 100 100)"/>
+      <path d="M100 32.5 V19" transform="rotate(60 100 100)"/>
+    </g>
   </g>
-  <path d="M10 35.5 L23 35.5 L26.5 39.5" stroke="#FFC65C" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M54 35.5 L41 35.5 L37.5 39.5" stroke="#FFC65C" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <circle cx="32" cy="35.5" r="3.4" fill="#FFC65C"/>
-  <circle cx="32" cy="32" r="28" stroke="#0B1D33" stroke-width="4"/>
+
+  <!-- Yatış göstergesi üçgeni, ufuk referans çubukları, minyatür uçak -->
+  <path d="M90 18.5 H110 L100 35 Z" fill="#F4F8FC"/>
+  <rect x="34" y="95.5" width="42" height="9" rx="2.25" fill="url(#bar)" stroke="#1E1404" stroke-width="1.2"/>
+  <rect x="124" y="95.5" width="42" height="9" rx="2.25" fill="url(#bar)" stroke="#1E1404" stroke-width="1.2"/>
+  <path d="M76 100 L95 97 H105 L124 100 L105 103 H95 Z" fill="#FFFFFF"/>
+  <rect x="97" y="80" width="6" height="20" rx="3" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="9" fill="#FFFFFF"/>
+  <circle cx="100" cy="100" r="82" stroke="#05070A" stroke-width="1.6"/>
 </svg>
