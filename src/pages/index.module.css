@@ -47,11 +47,6 @@
   scroll-margin-top: 0.5rem;
 }
 
-/* "DO-330" gibi standart adları tireden bölünmesin */
-.nowrap {
-  white-space: nowrap;
-}
-
 /* Yalnızca ekran okuyucular için metin */
 .srOnly {
   position: absolute;

@@ -220,10 +220,7 @@ export default function Home(): ReactNode {
               <GostergePaneli />
               <figcaption>
                 Canlı: hafif S dönüşleri yapan bir uçağın birincil uçuş ekranı (primary flight
-                display, PFD). Değerler bir göz kırpma:{' '}
-                <span className={styles.nowrap}>hız 178 knot (DO-178C)</span>,{' '}
-                <span className={styles.nowrap}>irtifa 4754 ft (ARP4754A)</span>,{' '}
-                <span className={styles.nowrap}>yön 330° (DO-330)</span>.
+                display, PFD).
               </figcaption>
             </figure>
           </div>
