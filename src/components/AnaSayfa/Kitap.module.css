@@ -1,0 +1,298 @@
+/* Ana sayfa — "editoryal kitap" düzeni: basılı bir kitabın iç kapağı ve içindekiler.
+   Tek, dar bir metin sütunu; serif başlıklar; süsleme yerine boşluk ve hiyerarşi. */
+
+.page {
+  --serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+  --muted: color-mix(in srgb, var(--ifm-font-color-base) 64%, var(--ifm-background-color));
+  --hair: color-mix(in srgb, var(--ifm-font-color-base) 15%, var(--ifm-background-color));
+  --underline: color-mix(in srgb, var(--ifm-font-color-base) 35%, var(--ifm-background-color));
+  --rubric: #9a3a1c;
+
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.25rem 5rem;
+}
+
+[data-theme='dark'] .page {
+  --rubric: #e79a73;
+}
+
+.page a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.page a:hover {
+  color: var(--ifm-color-primary);
+  text-decoration-color: currentColor;
+}
+
+.page a:focus-visible {
+  outline: 2px solid var(--rubric);
+  outline-offset: 3px;
+}
+
+/* ---------- İç kapak ---------- */
+
+.titlePage {
+  text-align: center;
+}
+
+.emblem {
+  display: block;
+  width: 4.25rem;
+  height: auto;
+  margin: 0 auto;
+}
+
+.overline {
+  margin: 1.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 1.25rem auto 0;
+  max-width: 34rem;
+  font-family: var(--serif);
+  font-size: clamp(2.3rem, 5.6vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.author {
+  margin: 1.5rem 0 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.08em;
+}
+
+.epigraph {
+  max-width: 26rem;
+  margin: 3rem auto 0;
+  padding: 0;
+  border: none;
+  color: var(--ifm-font-color-base);
+  font-family: var(--serif);
+}
+
+.epigraph p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.epigraph footer {
+  margin-top: 0.6rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.start {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  margin: 3rem 0 0;
+  font-size: 0.95rem;
+}
+
+.page .startLink {
+  color: var(--rubric);
+  font-weight: 600;
+  text-decoration-color: currentColor;
+}
+
+.imprint {
+  margin: 4rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ---------- Bölümler ---------- */
+
+.section {
+  margin-top: 5rem;
+}
+
+.sectionTitle {
+  margin: 0 0 2rem;
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.sectionTitle :global(.hash-link) {
+  display: none;
+}
+
+.part + .part {
+  margin-top: 1.75rem;
+}
+
+.partTitle {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1rem;
+  margin: 0 0 0.4rem;
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.roman {
+  color: var(--rubric);
+  font-family: var(--serif);
+  font-size: 0.9rem;
+  font-style: normal;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.06em;
+}
+
+.chapters {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page .row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.22rem 0;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.page .row:hover .rowTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--rubric);
+}
+
+.num {
+  color: var(--muted);
+  font-variant-numeric: oldstyle-nums tabular-nums;
+}
+
+.time {
+  color: var(--muted);
+  font-family: var(--ifm-font-family-base);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.refs {
+  margin: 2rem 0 0 3rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.posts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.posts li {
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--hair);
+  text-align: center;
+}
+
+.posts li:last-child {
+  border-bottom: 1px solid var(--hair);
+}
+
+.posts time {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.posts a {
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  text-decoration: none !important;
+}
+
+.more {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.92rem;
+}
+
+.prose {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.08rem;
+  line-height: 1.75;
+  hyphens: auto;
+}
+
+.colophon {
+  margin-top: 5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--hair);
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.colophonTitle {
+  margin: 0 0 0.4rem;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-variant-caps: small-caps;
+  letter-spacing: 0.08em;
+}
+
+.colophon p {
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .page {
+    padding-top: 3rem;
+  }
+
+  .partTitle,
+  .page .row {
+    grid-template-columns: 2.1rem minmax(0, 1fr) auto;
+    gap: 0.6rem;
+  }
+
+  .partTitle {
+    grid-template-columns: 2.1rem minmax(0, 1fr);
+  }
+
+  .refs {
+    margin-left: 0;
+  }
+}
