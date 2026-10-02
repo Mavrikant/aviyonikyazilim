@@ -27,7 +27,12 @@ kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.md                Giriş + seçim ölçütleri + kitap öneri formu CTA'sı
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
-src/pages/index.tsx       Özel ana sayfa (karşılama)
+araclar/                  Tarayıcıda çalışan simülatörler (routeBasePath: /araclar)
+src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
+                          son yazılar, kütüphane ve araçlar
+plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
+src/components/GostergePaneli/  Ana sayfadaki canlı PFD + yedek yapay ufuk (uçuş modeli)
+src/components/YapayUfuk/ Logo ile aynı analog yapay ufuk çizimi (React bileşeni)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
 static/img/kitap/<slug>/  Kitap/kaynak görselleri
 static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — SİLME
@@ -163,6 +168,27 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - Künyede emin olunmayan ayrıntı (ISBN, baskı yılı) yazılmaz.
 - Kitap önerileri `kutuphane/index.md` içindeki CTA ile e-posta üzerinden alınır
   (mailto: serdar@karaman.dev).
+
+## Ana sayfa
+
+- Ana sayfadaki listeler (kitap içindekiler ve okuma süreleri, son 5 blog yazısı,
+  kütüphane rafları ve kapakları, araçlar, sayılar) **elle yazılmaz**;
+  `plugins/homepage-data.ts` bunları build sırasında `kitapSidebar`,
+  `kutuphaneSidebar`, `araclarSidebar` ve blog içeriğinden üretir. Yeni bölüm, yazı,
+  kitap veya araç eklemek için ana sayfayı düzenlemek gerekmez.
+- Bölüm başlıkları `"N. Başlık"`, ekler `"Ek X: Başlık"`, kısım etiketleri
+  `"Kısım N — Başlık"` biçimini korumalıdır; eklenti numarayı bu kalıplardan ayırır.
+- Araç sayfalarının frontmatter'ında kısa bir `description` bulunur; ana sayfa onu gösterir.
+- Ana sayfanın önceliği **katkıya davettir**; katkı bölümü ve kapanış çağrısı korunur.
+
+## Görsel kimlik
+
+- Yazı tipleri: metin ve başlıklarda **IBM Plex Sans**, kod ve etiketlerde
+  **IBM Plex Mono** (self-hosted, Türkçe latin-ext dahil). Türkçe karakter
+  (Ğ, İ, Ş, ı) içermeyen yazı tipleri kullanılmaz.
+- Gradyan, ışıma, ızgara dokusu, buzlu cam/blur ve hover'da yükselen kart gibi
+  şablon kalıpları yerine düz renk alanları, çizgiler ve alana özgü öğeler
+  (gösterge, kontrol listesi, şekil altyazısı) tercih edilir.
 
 ## Kalite kuralları
 

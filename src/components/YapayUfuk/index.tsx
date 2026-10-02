@@ -1,11 +1,15 @@
-import type {ReactNode} from 'react';
+import type {ReactNode, Ref} from 'react';
 
 /*
  * Yapay ufuk göstergesi (attitude indicator) — klasik analog göstergenin
  * işaretlemeleri: düz uçuş (0° yatış, 0° yunuslama). Site logosuyla aynı çizim.
  * Merkez (100, 100); yunuslama ölçeği 2,5 birim/derece.
+ *
+ * Canlandırma için `rollRef` (yatış halkası, merkez etrafında döner) ve
+ * `pitchRef` (ufuk kartı, dikeyde kayar) grupları dışarıya verilir.
  */
-const PITCH_SCALE = 2.5;
+export const YAPAY_UFUK_PITCH_SCALE = 2.5;
+const PITCH_SCALE = YAPAY_UFUK_PITCH_SCALE;
 // Yunuslama merdiveni: 5° ve 15° kısa, 10° ve 20° uzun ve numaralı.
 const pitchRungs = [5, 10, 15, 20].flatMap((deg) => [deg, -deg]);
 // Yatış skalası: 10° ve 20° kısa, 30° ve 60° uzun çizgi; 45° üçgen.
@@ -25,9 +29,11 @@ const bezelScrews = [
 
 type Props = {
   className?: string;
+  rollRef?: Ref<SVGGElement>;
+  pitchRef?: Ref<SVGGElement>;
 };
 
-export default function YapayUfuk({className}: Props): ReactNode {
+export default function YapayUfuk({className, rollRef, pitchRef}: Props): ReactNode {
   return (
     <svg
       className={className}
@@ -93,62 +99,66 @@ export default function YapayUfuk({className}: Props): ReactNode {
       ))}
 
       <g clipPath="url(#aiFace)">
-        {/* Yatış halkası: üst yarı gökyüzü, alt yarı yer */}
-        <rect width="200" height="100" fill="#1B5AA6" />
-        <rect y="100" width="200" height="100" fill="#583619" />
+        <g ref={rollRef}>
+          {/* Yatış halkası: üst yarı gökyüzü, alt yarı yer (dönünce boşluk kalmasın diye taşkın) */}
+          <rect x="-60" y="-60" width="320" height="160" fill="#1B5AA6" />
+          <rect x="-60" y="100" width="320" height="160" fill="#583619" />
 
-        {/* Ufuk kartı ve yunuslama merdiveni */}
-        <g clipPath="url(#aiCard)">
-          <rect width="200" height="100" fill="url(#aiSky)" />
-          <rect y="100" width="200" height="100" fill="url(#aiGround)" />
-          {pitchRungs.map((deg) => {
-            const y = 100 - deg * PITCH_SCALE;
-            const major = deg % 10 === 0;
-            const half = major ? 17 : 8.5;
-            return (
-              <g key={deg}>
-                <path
-                  d={`M${100 - half} ${y} H${100 + half}`}
-                  stroke="#F4F8FC"
-                  strokeWidth={major ? 1.6 : 1.3}
-                  strokeLinecap="round"
-                />
-                {major &&
-                  [75, 125].map((x) => (
-                    <text
-                      key={x}
-                      x={x}
-                      y={y}
-                      fill="#F4F8FC"
-                      fontSize="8"
-                      fontWeight="600"
-                      textAnchor="middle"
-                      dominantBaseline="central">
-                      {Math.abs(deg)}
-                    </text>
-                  ))}
-              </g>
-            );
-          })}
+          {/* Ufuk kartı ve yunuslama merdiveni */}
+          <g clipPath="url(#aiCard)">
+            <g ref={pitchRef}>
+              <rect x="0" y="-100" width="200" height="200" fill="url(#aiSky)" />
+              <rect y="100" width="200" height="200" fill="url(#aiGround)" />
+              {pitchRungs.map((deg) => {
+                const y = 100 - deg * PITCH_SCALE;
+                const major = deg % 10 === 0;
+                const half = major ? 17 : 8.5;
+                return (
+                  <g key={deg}>
+                    <path
+                      d={`M${100 - half} ${y} H${100 + half}`}
+                      stroke="#F4F8FC"
+                      strokeWidth={major ? 1.6 : 1.3}
+                      strokeLinecap="round"
+                    />
+                    {major &&
+                      [75, 125].map((x) => (
+                        <text
+                          key={x}
+                          x={x}
+                          y={y}
+                          fill="#F4F8FC"
+                          fontSize="8"
+                          fontWeight="600"
+                          textAnchor="middle"
+                          dominantBaseline="central">
+                          {Math.abs(deg)}
+                        </text>
+                      ))}
+                  </g>
+                );
+              })}
+            </g>
+          </g>
+          <circle cx="100" cy="100" r="66" stroke="#000" strokeOpacity="0.3" strokeWidth="1.2" />
+
+          {/* Ufuk çizgisi */}
+          <path d="M-60 100 H260" stroke="#F4F8FC" strokeWidth="2.2" />
+
+          {/* Yatış skalası */}
+          {bankTicks.map(({angle, inner, width}) => (
+            <path
+              key={angle}
+              d={`M100 ${100 - inner} V19`}
+              transform={`rotate(${angle} 100 100)`}
+              stroke="#F4F8FC"
+              strokeWidth={width}
+            />
+          ))}
+          {[45, -45].map((angle) => (
+            <path key={angle} d="M97.2 19.5 H102.8 L100 26 Z" transform={`rotate(${angle} 100 100)`} fill="#F4F8FC" />
+          ))}
         </g>
-        <circle cx="100" cy="100" r="66" stroke="#000" strokeOpacity="0.3" strokeWidth="1.2" />
-
-        {/* Ufuk çizgisi */}
-        <path d="M0 100 H200" stroke="#F4F8FC" strokeWidth="2.2" />
-
-        {/* Yatış skalası */}
-        {bankTicks.map(({angle, inner, width}) => (
-          <path
-            key={angle}
-            d={`M100 ${100 - inner} V19`}
-            transform={`rotate(${angle} 100 100)`}
-            stroke="#F4F8FC"
-            strokeWidth={width}
-          />
-        ))}
-        {[45, -45].map((angle) => (
-          <path key={angle} d="M97.2 19.5 H102.8 L100 26 Z" transform={`rotate(${angle} 100 100)`} fill="#F4F8FC" />
-        ))}
 
         {/* Kenar gölgesi ve cam yansıması */}
         <circle cx="100" cy="100" r="82" fill="url(#aiVignette)" />

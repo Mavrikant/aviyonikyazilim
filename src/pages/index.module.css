@@ -1,0 +1,826 @@
+/* Ana sayfa: canlı gösterge panelli hero, katkı daveti (kontrol listesi),
+   içindekiler, blog / kütüphane / araçlar ve kısa kapanış.
+   Düz renk alanları ve çizgiler; gradyan, ışıma, bulanıklık kullanılmaz. */
+
+.hero,
+.contribute,
+.section,
+.closing {
+  --ink: var(--ifm-font-color-base);
+  --muted: color-mix(in srgb, var(--ifm-font-color-base) 66%, var(--ifm-background-color));
+  --hair: color-mix(in srgb, var(--ifm-font-color-base) 16%, var(--ifm-background-color));
+  --dots: color-mix(in srgb, var(--ifm-font-color-base) 35%, var(--ifm-background-color));
+  --accent: var(--av-amber-600);
+}
+
+[data-theme='dark'] .hero,
+[data-theme='dark'] .contribute,
+[data-theme='dark'] .section,
+[data-theme='dark'] .closing {
+  --accent: var(--av-amber-400);
+}
+
+main a:focus-visible {
+  outline: 2px solid var(--av-amber-400);
+  outline-offset: 3px;
+}
+
+/* ---------- Butonlar ---------- */
+
+.btnPrimary,
+.btnOutline,
+.btnDark {
+  display: inline-block;
+  padding: 0.75rem 1.3rem;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.btnPrimary {
+  border-color: var(--av-amber-400);
+  background: var(--av-amber-400);
+  color: var(--av-navy-950);
+}
+
+.btnPrimary:hover {
+  border-color: #ffd68a;
+  background: #ffd68a;
+  color: var(--av-navy-950);
+  text-decoration: none;
+}
+
+.btnOutline {
+  border-color: rgba(214, 226, 238, 0.55);
+  color: #f4f8fc;
+}
+
+.btnOutline:hover {
+  border-color: var(--av-amber-400);
+  color: var(--av-amber-400);
+  text-decoration: none;
+}
+
+.btnDark {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--ifm-background-color);
+}
+
+.btnDark:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+  text-decoration: none;
+}
+
+.textLink {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.textLink:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 4.5rem 0 4rem;
+  background: var(--av-navy-950);
+  color: #d6e2ee;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.kicker {
+  margin: 0 0 1.1rem;
+  color: var(--av-amber-400);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.heroTitle {
+  margin: 0;
+  color: #f4f8fc;
+  font-size: clamp(2.3rem, 4.4vw, 3.6rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.heroLede {
+  max-width: 34rem;
+  margin: 1.4rem 0 0;
+  color: #b9c9da;
+  font-size: 1.13rem;
+  line-height: 1.7;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin: 2.2rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(185, 201, 218, 0.18);
+  color: #8ba1b8;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+}
+
+.stats b {
+  color: #46d3f2;
+  font-weight: 600;
+}
+
+.heroFigure {
+  margin: 0;
+}
+
+.heroFigure figcaption {
+  margin-top: 0.8rem;
+  color: #8ba1b8;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+/* ---------- Katkı daveti ---------- */
+
+.contribute {
+  padding: 4.5rem 0;
+  border-bottom: 1px solid var(--hair);
+  background: color-mix(in srgb, var(--av-amber-400) 9%, var(--ifm-background-color));
+}
+
+[data-theme='dark'] .contribute {
+  background: color-mix(in srgb, var(--av-amber-400) 5%, var(--ifm-background-color));
+}
+
+.contributeInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 3.5rem;
+}
+
+.contributeTitle {
+  margin: 0;
+  font-size: clamp(2rem, 3.6vw, 2.9rem);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.contributeTitle :global(.hash-link),
+.sectionTitle :global(.hash-link) {
+  display: none;
+}
+
+.contributeLede {
+  max-width: 36rem;
+  margin: 1.2rem 0 0;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.steps {
+  counter-reset: adim;
+  max-width: 36rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  counter-increment: adim;
+  position: relative;
+  padding: 0.5rem 0 0.5rem 2.6rem;
+  border-top: 1px solid var(--hair);
+  line-height: 1.55;
+}
+
+.steps li:last-child {
+  border-bottom: 1px solid var(--hair);
+}
+
+.steps li::before {
+  content: counter(adim);
+  position: absolute;
+  top: 0.5rem;
+  left: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.45rem;
+  text-align: center;
+}
+
+.contributeActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.6rem;
+  margin-top: 2rem;
+}
+
+/* Kontrol listesi kartı (QRH sayfası gibi) */
+.qrh {
+  border: 2px solid var(--ink);
+  background: var(--ifm-background-surface-color);
+}
+
+.qrhHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--ifm-background-color);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.qrhItems {
+  margin: 0;
+  padding: 0.4rem 1rem 0;
+  list-style: none;
+}
+
+.qrhItems li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.qrhLine {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.86rem;
+  text-transform: uppercase;
+}
+
+.qrhChallenge {
+  flex: 0 1 auto;
+}
+
+.qrhDots {
+  flex: 1 1 1.5rem;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted var(--dots);
+  transform: translateY(-0.3em);
+}
+
+.qrhResponse {
+  flex: none;
+  font-weight: 600;
+}
+
+a.qrhResponse {
+  color: var(--ifm-color-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+a.qrhResponse:hover {
+  color: var(--ink);
+}
+
+.qrhDetail {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.qrhEnd {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.8rem 1rem 0.2rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.qrhEnd::before,
+.qrhEnd::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid var(--ink);
+}
+
+.qrhNote {
+  margin: 0;
+  padding: 0.6rem 1rem 0.9rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.qrhNote a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* ---------- Bölümler ---------- */
+
+.section {
+  margin-top: 4rem;
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.legend {
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+}
+
+.headLink {
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.headLink:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* İçindekiler */
+.toc {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 3.5rem;
+}
+
+.part + .part {
+  margin-top: 1.6rem;
+}
+
+.partTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 0 0 0.3rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.partNo {
+  flex: none;
+  color: var(--accent);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.chapters {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.28rem 0;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.rowNo {
+  flex: none;
+  width: 1.75rem;
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.rowTitle {
+  flex: 0 1 auto;
+}
+
+.leader {
+  flex: 1 1 1.5rem;
+  min-width: 1.5rem;
+  border-bottom: 2px dotted var(--dots);
+  transform: translateY(-0.3em);
+}
+
+.rowTime {
+  flex: none;
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.row:hover {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.row:hover .rowTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.references {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1.1rem;
+  margin: 1.75rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--hair);
+  font-size: 0.92rem;
+}
+
+.refLabel {
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.references a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--hair);
+  text-underline-offset: 3px;
+}
+
+.references a:hover {
+  color: var(--ifm-color-primary);
+  text-decoration-color: currentColor;
+}
+
+/* Blog | Kütüphane + Araçlar */
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 0 3.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log li {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.log li:first-child {
+  padding-top: 0.35rem;
+}
+
+.logDate {
+  padding-top: 0.15rem;
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.logTitle {
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.logTitle:hover {
+  color: var(--ifm-color-primary);
+}
+
+.logMeta {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.sideText {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.covers {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.covers a {
+  display: block;
+}
+
+.covers img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  outline: 1px solid var(--hair);
+}
+
+.covers a:hover img {
+  outline: 2px solid var(--accent);
+}
+
+.shelves {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+}
+
+.shelves li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.shelves a {
+  color: var(--ink);
+}
+
+.shelves a:hover {
+  color: var(--ifm-color-primary);
+}
+
+.shelves span {
+  color: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+}
+
+.vorFigure {
+  margin: 0;
+  padding: 0.75rem 0 0.25rem;
+}
+
+.vorFigure figcaption {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.vorSvg {
+  display: block;
+  width: 100%;
+  max-width: 21rem;
+  height: auto;
+  color: var(--ink);
+}
+
+.vorRadial {
+  fill: none;
+  stroke: var(--dots);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 2;
+}
+
+.vorTrack {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+}
+
+.vorMark {
+  fill: currentColor;
+}
+
+.vorFix {
+  fill: var(--ifm-background-color);
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.vorAircraft {
+  fill: var(--accent);
+}
+
+.vorRose {
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 0.9;
+}
+
+.vorStation {
+  fill: var(--ifm-background-color);
+  stroke: currentColor;
+  stroke-width: 1.3;
+}
+
+.vorDim {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.9;
+}
+
+.vorLabel {
+  fill: var(--muted);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 8px;
+}
+
+.tool {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.tool a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+.tool a:hover {
+  color: var(--ifm-color-primary);
+}
+
+/* ---------- Kapanış ---------- */
+
+.closing {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid rgba(185, 201, 218, 0.14);
+  background: var(--av-navy-800);
+  color: #d6e2ee;
+}
+
+.closingInner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 2.5rem;
+}
+
+.closingTitle {
+  margin: 0;
+  color: #f4f8fc;
+  font-size: 1.5rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.closingText {
+  max-width: 40rem;
+  margin: 0.4rem 0 0;
+  color: #b9c9da;
+  font-size: 0.95rem;
+}
+
+.closingActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* ---------- Duyarlılık ---------- */
+
+@media screen and (max-width: 996px) {
+  .hero {
+    padding: 3rem 0 2.75rem;
+  }
+
+  .heroInner,
+  .contributeInner,
+  .toc,
+  .lower {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .heroInner,
+  .contributeInner {
+    gap: 2.5rem;
+  }
+
+  .heroFigure {
+    max-width: 38rem;
+  }
+
+  .contribute {
+    padding: 3.5rem 0;
+  }
+
+  .tocColumn + .tocColumn {
+    margin-top: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .heroLede,
+  .contributeLede {
+    font-size: 1.02rem;
+  }
+
+  .heroActions a,
+  .closingActions a {
+    flex: 1 1 auto;
+  }
+
+  .covers {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .log li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .qrhLine {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  .qrhDots {
+    display: none;
+  }
+
+  .qrhResponse {
+    flex-basis: 100%;
+  }
+}
