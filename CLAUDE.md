@@ -31,8 +31,7 @@ araclar/                  Tarayıcıda çalışan simülatörler (routeBasePath:
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
-src/components/GostergePaneli/  Ana sayfadaki canlı PFD + yedek yapay ufuk (uçuş modeli)
-src/components/YapayUfuk/ Logo ile aynı analog yapay ufuk çizimi (React bileşeni)
+src/components/GostergePaneli/  Ana sayfadaki canlı PFD (uçuş modeli, duraklat/oynat tuşu)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
 static/img/kitap/<slug>/  Kitap/kaynak görselleri
 static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — SİLME

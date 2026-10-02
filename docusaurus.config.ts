@@ -211,7 +211,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Emniyet-kritik aviyonik yazılım için Türkçe, açık kaynak başucu kitabı.<br/>Copyright © ${new Date().getFullYear()} M. Serdar Karaman · İçerik <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.tr">CC BY-SA 4.0</a> lisansı ile lisanslanmıştır.`,
+      copyright: `Emniyet-kritik aviyonik yazılım için Türkçe, açık kaynak başucu kitabı.<br/>İçerik <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.tr">CC BY-SA 4.0</a> lisansı ile lisanslanmıştır.`,
     },
     prism: {
       theme: prismThemes.github,

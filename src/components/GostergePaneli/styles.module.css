@@ -1,4 +1,4 @@
-/* Gösterge paneli: koyu gri panel üzerinde PFD ekranı ve analog yedek gösterge.
+/* Gösterge paneli: koyu gri panel üzerinde PFD ekranı ve duraklat/oynat tuşu.
    Ekran renkleri kokpit kurallarını izler: beyaz ölçek, yeşil mod,
    macenta seçili değer, camgöbeği yardımcı bilgi. */
 
@@ -10,7 +10,7 @@
 
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 8.5rem;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 1.25rem;
   padding: 1.6rem 1.5rem;
@@ -91,26 +91,6 @@
 .fma text { fill: var(--mfd-green); font-size: 9px; font-weight: 600; dominant-baseline: central; }
 .fmaRule { stroke: #26303a; stroke-width: 1; }
 
-.standby {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.standbyDial {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.placard {
-  color: #aab2bb;
-  font-family: var(--ifm-font-family-monospace);
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-}
-
 /* Duraklat / Oynat: panel üzerinde donanım tuşu (WCAG 2.2.2) */
 .controls {
   grid-column: 1 / -1;
@@ -159,16 +139,10 @@
   fill: currentColor;
 }
 
-/* Dar ekranda PFD tam genişlik kullanır; yedek gösterge gizlenir. */
 @media screen and (max-width: 600px) {
   .panel {
-    grid-template-columns: minmax(0, 1fr);
     padding: 1.1rem 0.8rem;
     border-radius: 10px;
-  }
-
-  .standby {
-    display: none;
   }
 
   .screen {

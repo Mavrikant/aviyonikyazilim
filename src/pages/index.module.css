@@ -47,6 +47,11 @@
   scroll-margin-top: 0.5rem;
 }
 
+/* "DO-330" gibi standart adları tireden bölünmesin */
+.nowrap {
+  white-space: nowrap;
+}
+
 /* Yalnızca ekran okuyucular için metin */
 .srOnly {
   position: absolute;
@@ -133,9 +138,10 @@
   color: #d6e2ee;
 }
 
+/* Gösterge sütunu PFD'yi okunur boyutta tutacak kadar; kalan genişlik metne. */
 .heroInner {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 33rem);
   align-items: center;
   gap: 3.5rem;
 }
@@ -849,7 +855,7 @@ a.qrhResponse:hover {
   }
 
   .heroFigure {
-    max-width: 38rem;
+    max-width: 33rem;
   }
 
   .contribute {

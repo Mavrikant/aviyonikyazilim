@@ -1,14 +1,12 @@
 import {useEffect, useRef, useState, type ReactNode, type RefObject} from 'react';
-import YapayUfuk, {YAPAY_UFUK_PITCH_SCALE} from '@site/src/components/YapayUfuk';
 
 import styles from './styles.module.css';
 
 /*
- * Canlı gösterge paneli: birincil uçuş ekranı (PFD) + analog yedek yapay ufuk.
+ * Canlı gösterge paneli: birincil uçuş ekranı (PFD).
  *
- * Basit bir uçuş modeli hafif S dönüşleri üretir; iki gösterge aynı veriyi
- * gösterir. Yatıştan dönüş hızı (koordineli dönüş: ψ' = g·tanφ / V), yunuslamadan
- * dikey hız ve irtifa türetilir. Nominal okumalar küçük bir göz kırpmadır:
+ * Basit bir uçuş modeli hafif S dönüşleri üretir. Yatıştan dönüş hızı
+ * (koordineli dönüş: ψ' = g·tanφ / V), yunuslamadan dikey hız ve irtifa türetilir. Nominal okumalar küçük bir göz kırpmadır:
  * IAS 178 (DO-178C), ALT 4754 (ARP4754A), seçili irtifa 4761 (ARP4761), HDG 330 (DO-330).
  *
  * Sunucuda düz uçuş çizilir; canlandırma yalnızca tarayıcıda ve panel görünürken
@@ -61,8 +59,6 @@ type Refs = {
   altText: SVGTextElement | null;
   hdgText: SVGTextElement | null;
   vsText: SVGTextElement | null;
-  stbyRoll: SVGGElement | null;
-  stbyPitch: SVGGElement | null;
 };
 
 type FlightState = {t: number; heading: number; altitude: number};
@@ -121,8 +117,6 @@ function useFlightModel(
         const vs = Math.round(verticalSpeed / 50) * 50;
         r.vsText.textContent = vs === 0 ? '' : `${vs > 0 ? '+' : '−'}${Math.abs(vs)}`;
       }
-      r.stbyRoll?.setAttribute('transform', `rotate(${-bank} 100 100)`);
-      r.stbyPitch?.setAttribute('transform', `translate(0 ${pitch * YAPAY_UFUK_PITCH_SCALE})`);
 
       frame = requestAnimationFrame(step);
     };
@@ -340,8 +334,6 @@ export default function GostergePaneli({className}: Props): ReactNode {
     altText: null,
     hdgText: null,
     vsText: null,
-    stbyRoll: null,
-    stbyPitch: null,
   });
   // null: tercih henüz okunmadı (sunucu ve ilk istemci çizimi); bu sırada canlandırma çalışmaz.
   const [paused, setPaused] = useState<boolean | null>(null);
@@ -375,20 +367,6 @@ export default function GostergePaneli({className}: Props): ReactNode {
       <span className={styles.screw} aria-hidden="true" />
       <div className={styles.screen}>
         <Pfd refs={refs} />
-      </div>
-      <div className={styles.standby}>
-        <YapayUfuk
-          className={styles.standbyDial}
-          rollRef={(el) => {
-            refs.current.stbyRoll = el;
-          }}
-          pitchRef={(el) => {
-            refs.current.stbyPitch = el;
-          }}
-        />
-        <span className={styles.placard} aria-hidden="true">
-          STBY
-        </span>
       </div>
       <div className={styles.controls}>
         <button
