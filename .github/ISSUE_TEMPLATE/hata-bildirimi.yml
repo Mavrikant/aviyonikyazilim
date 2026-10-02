@@ -1,0 +1,37 @@
+name: Hata bildirimi
+description: Yazım hatası, yanlış bilgi, kırık bağlantı ya da görüntüleme sorunu bildirin.
+title: "[Hata] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bildiriminiz için teşekkürler! Küçük düzeltmeleri, ilgili sayfanın en altındaki
+        **“Bu sayfayı düzenle”** bağlantısıyla doğrudan da önerebilirsiniz.
+  - type: input
+    id: sayfa
+    attributes:
+      label: Sayfa adresi
+      description: Sorunun bulunduğu sayfanın bağlantısı.
+      placeholder: https://aviyonikyazilim.com/kitap/...
+    validations:
+      required: true
+  - type: dropdown
+    id: tur
+    attributes:
+      label: Sorun türü
+      options:
+        - Yazım ya da dil hatası
+        - Teknik olarak yanlış ya da eksik bilgi
+        - Kırık bağlantı ya da görsel
+        - Sayfa düzgün görüntülenmiyor
+        - Diğer
+    validations:
+      required: true
+  - type: textarea
+    id: aciklama
+    attributes:
+      label: Açıklama
+      description: Ne yanlış, doğrusu ne olmalı? Varsa kaynak belirtin (standart metninden alıntı yapmadan).
+    validations:
+      required: true

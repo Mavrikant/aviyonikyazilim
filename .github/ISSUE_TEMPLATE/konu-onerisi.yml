@@ -1,0 +1,31 @@
+name: Konu ya da içerik önerisi
+description: Kitapta ya da blogda eksik gördüğünüz, açıklanmasını istediğiniz bir konuyu önerin.
+title: "[Öneri] "
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: konu
+    attributes:
+      label: Önerdiğiniz konu
+      description: Hangi konu eksik ya da yeterince açık değil?
+    validations:
+      required: true
+  - type: input
+    id: ilgili
+    attributes:
+      label: İlgili bölüm ya da sayfa
+      description: Varsa konunun bağlanabileceği bölüm ya da yazı.
+      placeholder: "Örn. 9. Yazılım Doğrulama"
+  - type: textarea
+    id: neden
+    attributes:
+      label: Neden önemli?
+      description: Sahada nerede karşınıza çıkıyor? Örnek bir durum varsa paylaşın.
+  - type: dropdown
+    id: katki
+    attributes:
+      label: Bu konuda katkı verebilir misiniz?
+      options:
+        - Evet, metin ya da örnek yazabilirim
+        - Yazılanı gözden geçirebilirim
+        - Şimdilik hayır

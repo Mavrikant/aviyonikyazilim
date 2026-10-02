@@ -1,0 +1,151 @@
+/* Gösterge paneli: koyu gri panel üzerinde PFD ekranı ve duraklat/oynat tuşu.
+   Ekran renkleri kokpit kurallarını izler: beyaz ölçek, yeşil mod,
+   macenta seçili değer, camgöbeği yardımcı bilgi. */
+
+.panel {
+  --mfd-white: #eef1f3;
+  --mfd-cyan: #46d3f2;
+  --mfd-green: #4be07e;
+  --mfd-magenta: #f262dc;
+
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.6rem 1.5rem;
+  border: 1px solid #0c0d0f;
+  border-top-color: #464b52;
+  border-radius: 14px;
+  background: #2a2e33;
+}
+
+.screw {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #0b0c0e;
+  border-radius: 50%;
+  background: #50565e;
+}
+
+.screw::after {
+  content: '';
+  position: absolute;
+  top: 3.5px;
+  left: 1px;
+  width: 6px;
+  height: 1.5px;
+  background: #15171a;
+  transform: rotate(35deg);
+}
+
+.screw:nth-of-type(1) { top: 8px; left: 8px; }
+.screw:nth-of-type(2) { top: 8px; right: 8px; }
+.screw:nth-of-type(3) { bottom: 8px; left: 8px; }
+.screw:nth-of-type(4) { bottom: 8px; right: 8px; }
+
+.screen {
+  padding: 0.6rem 0.4rem 0.2rem;
+  border: 3px solid #0d0f11;
+  border-radius: 6px;
+  background: #040506;
+}
+
+.pfd {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.sky { fill: #1f78d8; }
+.ground { fill: #8a5527; }
+.line { stroke: var(--mfd-white); fill: none; }
+.fill { fill: var(--mfd-white); }
+.frame { fill: none; stroke: #000; stroke-width: 1.5; }
+.small { fill: var(--mfd-white); font-size: 7px; dominant-baseline: central; }
+
+.aircraft path,
+.aircraft rect {
+  fill: #000;
+  stroke: var(--mfd-white);
+  stroke-width: 1.4;
+}
+
+.tape { fill: #2c3238; }
+.tapeText { fill: var(--mfd-white); font-size: 8px; dominant-baseline: central; }
+.readout { fill: #000; stroke: var(--mfd-white); stroke-width: 1.2; }
+.readoutText {
+  fill: var(--mfd-white);
+  font-size: 11px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  dominant-baseline: central;
+}
+.selected { fill: var(--mfd-magenta); font-size: 9px; font-weight: 600; dominant-baseline: central; }
+.bug { fill: none; stroke: var(--mfd-magenta); stroke-width: 1.6; }
+.vs { fill: var(--mfd-cyan); font-size: 8px; font-variant-numeric: tabular-nums; }
+.compass { fill: #2c3238; stroke: var(--mfd-white); stroke-width: 1; }
+
+.fma text { fill: var(--mfd-green); font-size: 9px; font-weight: 600; dominant-baseline: central; }
+.fmaRule { stroke: #26303a; stroke-width: 1; }
+
+/* Duraklat / Oynat: panel üzerinde donanım tuşu (WCAG 2.2.2) */
+.controls {
+  grid-column: 1 / -1;
+  display: flex;
+  margin-top: -0.4rem;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #0e1012;
+  border-top-color: #555b63;
+  border-bottom-width: 3px;
+  border-radius: 4px;
+  background: #383d43;
+  color: #e6e9ec;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.key:hover {
+  background: #42484f;
+  color: #ffffff;
+}
+
+.key:active {
+  border-bottom-width: 1px;
+  transform: translateY(2px);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--av-amber-400);
+  outline-offset: 2px;
+}
+
+.keyIcon {
+  width: 0.6rem;
+  height: 0.6rem;
+  fill: currentColor;
+}
+
+@media screen and (max-width: 600px) {
+  .panel {
+    padding: 1.1rem 0.8rem;
+    border-radius: 10px;
+  }
+
+  .screen {
+    padding: 0.35rem 0.2rem 0.1rem;
+  }
+}

@@ -1,461 +1,431 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
+import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
+import GostergePaneli from '@site/src/components/GostergePaneli';
+import useHomepageData, {
+  formatLongDate,
+  splitParts,
+  type Part,
+} from '@site/src/components/AnaSayfa/useHomepageData';
 
 import styles from './index.module.css';
 
-const highlights = [
+const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
+const ISSUES_URL = `${REPO_URL}/issues`;
+const NEW_ISSUE_URL = `${REPO_URL}/issues/new/choose`;
+const GUIDE_URL = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
+const EMAIL = 'serdar@karaman.dev';
+const FIX_MAIL = `mailto:${EMAIL}?subject=Duzeltme%20onerisi`;
+const BOOK_MAIL = `mailto:${EMAIL}?subject=Kitap%20onerisi`;
+const TOOL_MAIL = `mailto:${EMAIL}?subject=Arac%20onerisi`;
+
+/* Katkı kontrol listesi: havacılık kontrol listelerindeki "durum ..... eylem" düzeni */
+const checklist: {challenge: string; detail: string; response: string; href?: string}[] = [
   {
-    title: 'Türkçe ve özgün içerik',
-    description:
-      'DO-178C, test ve sertifikasyon konularını kendi cümlelerimizle, anlaşılır ve doğrudan uygulanabilir biçimde anlatır.',
+    challenge: 'Yazım hatası ya da yanlış bilgi',
+    detail: 'İlgili kitap ya da blog sayfasının en altındaki “Bu sayfayı düzenle” bağlantısını kullanın.',
+    response: 'Sayfanın altından düzenle',
   },
   {
-    title: 'Açık kaynak yaklaşımı',
-    description:
-      'İçerik, iyileştirme önerilerine ve topluluk katkısına açık bir başucu kitabı olarak gelişir.',
+    challenge: 'Eksik ya da belirsiz bir konu',
+    detail: 'GitHub’da yeni bir konu (issue) açın; ne eksik ya da nerede kafa karıştırıyor, kısa bir not yeterli.',
+    response: 'Konu aç',
+    href: NEW_ISSUE_URL,
   },
   {
-    title: 'Mühendislik odağı',
-    description:
-      'Konu başlıkları teoride kalmaz; proje planlama, doğrulama, konfigürasyon ve araç kalifikasyonu ile ilişkilendirilir.',
+    challenge: 'Örnek, C kodu ya da diyagram',
+    detail: 'GitHub’da değişiklik önerisi (pull request) açın; diyagramlar Mermaid ile metin olarak yazılır.',
+    response: 'Değişiklik öner',
+    href: GUIDE_URL,
+  },
+  {
+    challenge: 'Okunmaya değer bir kitap',
+    detail: `Kütüphane önerileri e-postayla alınır: ${EMAIL}`,
+    response: 'Kitap öner',
+    href: BOOK_MAIL,
+  },
+  {
+    challenge: 'Simülatör ya da araç fikri',
+    detail: `Tarayıcıda denenebilecek her kavram aday; öneriler: ${EMAIL}`,
+    response: 'Fikir öner',
+    href: TOOL_MAIL,
   },
 ];
 
-const startingPoints = [
-  {
-    label: 'Kitabın tamamı',
-    href: '/kitap',
-    title: 'Doğrudan yol haritası',
-    description:
-      'Kapsamı, hedefi ve bölüm akışını tek bir giriş sayfasında görün.',
-  },
-  {
-    label: 'Başlangıç bölümü',
-    href: '/kitap/giris/giris-ve-genel-bakis',
-    title: 'Konuyu çerçeveleyin',
-    description:
-      'Yeni başlıyorsanız önce kavramsal çerçeveyi burada kurun.',
-  },
-  {
-    label: 'Blog yazıları',
-    href: '/blog',
-    title: 'Derinleşen notlar',
-    description:
-      'Aviyonik protokoller, yapısal kapsam ve sertifikasyon odaklı teknik yazılar.',
-  },
+const steps = [
+  'Düzeltmek istediğiniz kitap ya da blog sayfasını açın; en alttaki “Bu sayfayı düzenle” bağlantısına tıklayın.',
+  'Değişikliği GitHub’ın web düzenleyicisinde yapıp kısa bir açıklamayla önerin.',
+  'Öneriniz gözden geçirilir; uygunsa siteye alınır.',
+  'Birkaç dakika içinde sitede yayında.',
 ];
 
-const quickRoutes = [
-  {
-    label: 'Yeniyseniz',
-    title: 'Giriş sayfasından başlayın',
-    description: 'Önce giriş sayfasını, sonra sistem bağlamı ve planlama bölümlerini okuyun.',
-    href: '/kitap/giris/giris-ve-genel-bakis',
-  },
-  {
-    label: 'Belirli bir konu arıyorsanız',
-    title: 'Doğrudan bölüme geçin',
-    description: 'Doğrudan ilgili bölüme geçin; her bölüm tek başına da okunabilecek şekilde düzenlenir.',
-    href: '/kitap',
-  },
-  {
-    label: 'Kısa teknik not istiyorsanız',
-    title: 'Blog yazılarını açın',
-    description: 'Blog yazıları, kitapta açılan başlıkların pratik tarafını öne çıkarır.',
-    href: '/blog',
-  },
-];
+/* VOR istasyonu yakınından düz rotada geçiş (çizgisel şema) */
+const VOR = {x: 120, y: 100, rose: 28};
+const TRACK_Y = 44;
+const FIXES = [24, 64, 100, 140, 176, 216];
+const HEXAGON = Array.from({length: 6}, (_, i) => {
+  const a = (Math.PI / 3) * i;
+  return `${(VOR.x + 6 * Math.cos(a)).toFixed(2)} ${(VOR.y + 6 * Math.sin(a)).toFixed(2)}`;
+}).join(' L');
 
-const recentPosts = [
-  {
-    label: 'Yeni yazı',
-    title: 'Yapısal kapsam analizi',
-    description: 'SCA türlerini, MC/DC farkını ve test kanıtı bağlamını özetleyen teknik giriş.',
-    href: '/blog/yapisal-kapsam-analizi',
-  },
-  {
-    label: 'Önerilen okuma',
-    title: 'SCA’da cover edilemeyen kodlar',
-    description: 'Ölü, gereksiz ve devre dışı bırakılmış kodun sertifikasyon açısından anlamı.',
-    href: '/blog/sca-cover-edilemeyen-kodlar',
-  },
-  {
-    label: 'Klasik konu',
-    title: 'ARINC 429',
-    description: 'Aviyonik veri iletişiminde sık karşılaşılan bir protokole kısa bakış.',
-    href: '/blog/arinc-429',
-  },
-];
-
-const contributorSteps = [
-  'İçeriği okuyun, eksik veya belirsiz gördüğünüz noktaları işaretleyin.',
-  'GitHub üzerinden düzeltme, ek açıklama veya yeni örnek önerisi gönderin.',
-  'Güncellenen metin daha anlaşılır, daha tutarlı ve daha güvenilir hale gelsin.',
-];
-
-/*
- * Hero'daki yapay ufuk göstergesi (attitude indicator) — klasik analog
- * göstergenin işaretlemeleri: düz uçuş (0° yatış, 0° yunuslama).
- * Merkez (100, 100); yunuslama ölçeği 2,5 birim/derece.
- */
-const PITCH_SCALE = 2.5;
-// Yunuslama merdiveni: 5° ve 15° kısa, 10° ve 20° uzun ve numaralı.
-const pitchRungs = [5, 10, 15, 20].flatMap((deg) => [deg, -deg]);
-// Yatış skalası: 10° ve 20° kısa, 30° ve 60° uzun çizgi; 45° üçgen.
-const bankTicks = [
-  {angle: 10, inner: 72.5, width: 1.8},
-  {angle: 20, inner: 72.5, width: 1.8},
-  {angle: 30, inner: 67.5, width: 2.8},
-  {angle: 60, inner: 67.5, width: 2.8},
-].flatMap((tick) => [tick, {...tick, angle: -tick.angle}]);
-// Çerçeve vidaları: 45° köşegenlerde, vida yarıklarının açıları farklı.
-const bezelScrews = [
-  {x: 35.12, y: 35.12, slot: 20},
-  {x: 164.88, y: 35.12, slot: -25},
-  {x: 164.88, y: 164.88, slot: 65},
-  {x: 35.12, y: 164.88, slot: 5},
-];
-
-function HeroDial() {
+function VorSemasi(): ReactNode {
   return (
-    <div className={styles.heroDial} aria-hidden="true">
-      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <clipPath id="aiFace">
-            <circle cx="100" cy="100" r="82" />
-          </clipPath>
-          <clipPath id="aiCard">
-            <circle cx="100" cy="100" r="66" />
-          </clipPath>
-          <linearGradient id="aiBezel" x1="100" y1="2" x2="100" y2="198" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#454B54" />
-            <stop offset="0.5" stopColor="#262A30" />
-            <stop offset="1" stopColor="#121417" />
-          </linearGradient>
-          <linearGradient id="aiLip" x1="100" y1="14" x2="100" y2="186" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#07090B" />
-            <stop offset="1" stopColor="#30363E" />
-          </linearGradient>
-          <linearGradient id="aiSky" x1="100" y1="34" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#2A7BCF" />
-            <stop offset="1" stopColor="#3D93E2" />
-          </linearGradient>
-          <linearGradient id="aiGround" x1="100" y1="100" x2="100" y2="166" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#93602F" />
-            <stop offset="1" stopColor="#6A421F" />
-          </linearGradient>
-          <linearGradient id="aiBar" x1="0" y1="98" x2="0" y2="102" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#FFD978" />
-            <stop offset="1" stopColor="#E9A832" />
-          </linearGradient>
-          <radialGradient id="aiScrew" cx="0.38" cy="0.32" r="0.8">
-            <stop stopColor="#6A717B" />
-            <stop offset="1" stopColor="#1A1D21" />
-          </radialGradient>
-          <radialGradient id="aiVignette" cx="100" cy="100" r="82" gradientUnits="userSpaceOnUse">
-            <stop offset="0.82" stopColor="#000" stopOpacity="0" />
-            <stop offset="1" stopColor="#000" stopOpacity="0.45" />
-          </radialGradient>
-          <linearGradient id="aiGlare" x1="100" y1="18" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#fff" stopOpacity="0.16" />
-            <stop offset="0.75" stopColor="#fff" stopOpacity="0" />
-          </linearGradient>
-          <filter id="aiShadow" x="-20%" y="-20%" width="140%" height="160%">
-            <feDropShadow dx="0" dy="1.4" stdDeviation="1.3" floodColor="#000" floodOpacity="0.5" />
-          </filter>
-        </defs>
-
-        {/* Gösterge gövdesi: çerçeve (bezel), iç dudak ve vidalar */}
-        <circle cx="100" cy="100" r="98" fill="url(#aiBezel)" />
-        <circle cx="100" cy="100" r="97.2" stroke="#fff" strokeOpacity="0.1" strokeWidth="1.2" />
-        <circle cx="100" cy="100" r="85.5" fill="url(#aiLip)" />
-        {bezelScrews.map(({x, y, slot}) => (
-          <g key={`${x}-${y}`} transform={`translate(${x} ${y}) rotate(${slot})`}>
-            <circle r="4.2" fill="url(#aiScrew)" stroke="#0A0B0D" strokeWidth="0.8" />
-            <path d="M-2.6 0 H2.6 M0 -2.6 V2.6" stroke="#0A0B0D" strokeWidth="1.3" strokeLinecap="round" />
-          </g>
-        ))}
-
-        <g clipPath="url(#aiFace)">
-          {/* Yatış halkası: üst yarı gökyüzü, alt yarı yer */}
-          <rect width="200" height="100" fill="#1B5AA6" />
-          <rect y="100" width="200" height="100" fill="#583619" />
-
-          {/* Ufuk kartı ve yunuslama merdiveni */}
-          <g clipPath="url(#aiCard)">
-            <rect width="200" height="100" fill="url(#aiSky)" />
-            <rect y="100" width="200" height="100" fill="url(#aiGround)" />
-            {pitchRungs.map((deg) => {
-              const y = 100 - deg * PITCH_SCALE;
-              const major = deg % 10 === 0;
-              const half = major ? 17 : 8.5;
-              return (
-                <g key={deg}>
-                  <path
-                    d={`M${100 - half} ${y} H${100 + half}`}
-                    stroke="#F4F8FC"
-                    strokeWidth={major ? 1.6 : 1.3}
-                    strokeLinecap="round"
-                  />
-                  {major &&
-                    [75, 125].map((x) => (
-                      <text
-                        key={x}
-                        x={x}
-                        y={y}
-                        fill="#F4F8FC"
-                        fontSize="8"
-                        fontWeight="600"
-                        textAnchor="middle"
-                        dominantBaseline="central"
-                      >
-                        {Math.abs(deg)}
-                      </text>
-                    ))}
-                </g>
-              );
-            })}
-          </g>
-          <circle cx="100" cy="100" r="66" stroke="#000" strokeOpacity="0.3" strokeWidth="1.2" />
-
-          {/* Ufuk çizgisi */}
-          <path d="M0 100 H200" stroke="#F4F8FC" strokeWidth="2.2" />
-
-          {/* Yatış skalası */}
-          {bankTicks.map(({angle, inner, width}) => (
-            <path
-              key={angle}
-              d={`M100 ${100 - inner} V19`}
-              transform={`rotate(${angle} 100 100)`}
-              stroke="#F4F8FC"
-              strokeWidth={width}
-            />
-          ))}
-          {[45, -45].map((angle) => (
-            <path key={angle} d="M97.2 19.5 H102.8 L100 26 Z" transform={`rotate(${angle} 100 100)`} fill="#F4F8FC" />
-          ))}
-
-          {/* Kenar gölgesi ve cam yansıması */}
-          <circle cx="100" cy="100" r="82" fill="url(#aiVignette)" />
-          <path d="M18 100 A82 82 0 0 1 182 100 Z" fill="url(#aiGlare)" />
-        </g>
-
-        {/* Sabit semboller: yatış göstergesi üçgeni, ufuk referans çubukları, minyatür uçak */}
-        <g filter="url(#aiShadow)">
-          <path d="M94 18.5 H106 L100 32 Z" fill="#F4F8FC" />
-          <rect x="49" y="98.2" width="29" height="3.6" rx="0.9" fill="url(#aiBar)" stroke="#1E1404" strokeWidth="0.8" />
-          <rect x="122" y="98.2" width="29" height="3.6" rx="0.9" fill="url(#aiBar)" stroke="#1E1404" strokeWidth="0.8" />
-          <path d="M78 100 L95 98.4 H105 L122 100 L105 101.6 H95 Z" fill="#FFFFFF" />
-          <rect x="98.9" y="90" width="2.2" height="10" rx="1.1" fill="#FFFFFF" />
-          <path d="M96.6 101.5 L100 110 L103.4 101.5 Z" fill="#FFFFFF" />
-          <circle cx="100" cy="100" r="4.4" fill="#FFFFFF" />
-        </g>
-        <circle cx="100" cy="100" r="82" stroke="#05070A" strokeWidth="1.6" />
-      </svg>
-    </div>
+    <svg className={styles.vorSvg} viewBox="0 0 240 146" aria-hidden="true" focusable="false">
+      {FIXES.map((x) => (
+        <path key={x} className={styles.vorRadial} d={`M${VOR.x} ${VOR.y} L${x} ${TRACK_Y}`} />
+      ))}
+      <path className={styles.vorTrack} d={`M8 ${TRACK_Y} H224`} />
+      <path className={styles.vorMark} d={`M224 ${TRACK_Y - 4} L233 ${TRACK_Y} L224 ${TRACK_Y + 4} Z`} />
+      {FIXES.map((x) => (
+        <circle key={x} className={styles.vorFix} cx={x} cy={TRACK_Y} r="1.8" />
+      ))}
+      <path
+        className={styles.vorAircraft}
+        d={`M170 ${TRACK_Y - 5} L184 ${TRACK_Y} L170 ${TRACK_Y + 5} L173 ${TRACK_Y} Z`}
+      />
+      <circle className={styles.vorRose} cx={VOR.x} cy={VOR.y} r={VOR.rose} />
+      {Array.from({length: 12}, (_, i) => i * 30).map((angle) => (
+        <path
+          key={angle}
+          className={styles.vorRose}
+          d={`M${VOR.x} ${VOR.y - VOR.rose} V${VOR.y - VOR.rose + (angle % 90 === 0 ? 7 : 4)}`}
+          transform={`rotate(${angle} ${VOR.x} ${VOR.y})`}
+        />
+      ))}
+      <path className={styles.vorStation} d={`M${HEXAGON} Z`} />
+      <circle className={styles.vorMark} cx={VOR.x} cy={VOR.y} r="1.6" />
+      {/* En yakın geçiş mesafesi d */}
+      <path className={styles.vorDim} d={`M${VOR.x} ${TRACK_Y + 3} V${VOR.y - 9}`} />
+      <path
+        className={styles.vorMark}
+        d={`M${VOR.x - 2.5} ${TRACK_Y + 7} L${VOR.x} ${TRACK_Y + 2} L${VOR.x + 2.5} ${TRACK_Y + 7} Z`}
+      />
+      <text className={styles.vorLabel} x={VOR.x + 5} y={TRACK_Y + 18}>
+        d
+      </text>
+      <text className={styles.vorLabel} x={VOR.x} y={142} textAnchor="middle">
+        VOR
+      </text>
+      <text className={styles.vorLabel} x="8" y={TRACK_Y - 8}>
+        rota
+      </text>
+    </svg>
   );
 }
 
-type SectionHeadProps = {
-  index: string;
-  title: string;
-  lead: string;
-};
+/** Bağlantı sonundaki ok; ekran okuyucu "sağ ok" diye okumasın. */
+function Arrow(): ReactNode {
+  return <span aria-hidden="true">→</span>;
+}
 
-function SectionHead({index, title, lead}: SectionHeadProps) {
+/** Görselde "9 dk", ekran okuyucuda "9 dakika okuma". */
+function ReadingTime({minutes}: {minutes: number}): ReactNode {
   return (
     <>
-      <div className={styles.sectionHead}>
-        <span className={styles.sectionIndex}>{index}</span>
-        <Heading as="h2" className={styles.sectionTitle}>
-          {title}
-        </Heading>
-      </div>
-      <p className={styles.sectionLead}>{lead}</p>
+      <span aria-hidden="true">{minutes} dk</span>
+      <span className={styles.srOnly}>{minutes} dakika okuma</span>
     </>
   );
 }
 
+function TocColumn({parts}: {parts: Part[]}): ReactNode {
+  return (
+    <div className={styles.tocColumn}>
+      {parts.map((part) => (
+        <div className={styles.part} key={part.title}>
+          <h3 className={styles.partTitle}>
+            {part.no && <span className={styles.partNo}>Kısım {part.no}</span>}
+            <span>{part.title}</span>
+          </h3>
+          <ol className={styles.chapters}>
+            {part.chapters.map((chapter) => (
+              <li key={chapter.permalink}>
+                <Link className={styles.row} to={chapter.permalink}>
+                  <span className={styles.rowNo}>{chapter.no}</span>
+                  <span className={styles.rowTitle}>{chapter.title}</span>
+                  <span className={styles.leader} aria-hidden="true" />
+                  <span className={styles.rowTime}>
+                    <ReadingTime minutes={chapter.minutes} />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+  const {buildDate, book, posts, postCount, library, tools} = useHomepageData();
+  const {withBaseUrl} = useBaseUrlUtils();
+  const [left, right] = splitParts(book.parts);
 
   return (
     <Layout
-      title={`${siteConfig.title} | Açık kaynak başucu kitabı`}
-      description="Aviyonik yazılım, test ve sertifikasyon için Türkçe, açık kaynak ve topluluk destekli başucu kitabı."
-    >
-      <main>
+      title="Aviyonik yazılımın Türkçe kitabı"
+      description="DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe bir kitap, teknik yazılar ve tarayıcıda çalışan araçlar.">
+      <main className={styles.page}>
+        {/* ---------- Hero: başlık + canlı gösterge paneli ---------- */}
         <section className={styles.hero}>
-          <div className="container">
-            <div className={styles.heroInner}>
-              <div>
-                <p className={styles.kicker}>Açık kaynak · Türkçe · DO-178C</p>
-                <Heading as="h1" className={styles.heroTitle}>
-                  Emniyet-kritik aviyonik yazılım için{' '}
-                  <span className={styles.heroTitleAccent}>başucu kitabı</span>
-                </Heading>
-                <p className={styles.heroSubtitle}>
-                  Aviyonik yazılım, test ve sertifikasyon dünyasında çalışan herkes
-                  için özgün, düzenli ve katkıya açık bir Türkçe referans:
-                  gereksinimden yapısal kapsama, araç kalifikasyonundan SOI
-                  denetimlerine.
-                </p>
-
-                <div className={styles.actions}>
-                  <Link
-                    className={clsx('button button--lg', styles.actionPrimary)}
-                    to="/kitap"
-                  >
-                    Kitaba Başla
-                  </Link>
-                  <Link
-                    className={clsx('button button--lg', styles.actionGhost)}
-                    to="/blog"
-                  >
-                    Blog Yazıları
-                  </Link>
-                  <Link
-                    className={clsx('button button--lg', styles.actionGhost)}
-                    href="https://github.com/Mavrikant/aviyonikyazilim"
-                  >
-                    GitHub
-                  </Link>
-                </div>
-
-                <dl className={styles.metrics}>
-                  <div>
-                    <dt>Odak</dt>
-                    <dd>DO-178C ve emniyet-kritik geliştirme</dd>
-                  </div>
-                  <div>
-                    <dt>İçerik</dt>
-                    <dd>26 bölümlük kitap, blog ve başvuru sayfaları</dd>
-                  </div>
-                  <div>
-                    <dt>Katkı modeli</dt>
-                    <dd>Açık, izlenebilir ve topluluk destekli</dd>
-                  </div>
-                </dl>
+          <div className={clsx('container', styles.heroInner)}>
+            <div>
+              <p className={styles.kicker}>Açık kaynak · Türkçe · DO-178C</p>
+              <Heading as="h1" className={styles.heroTitle}>
+                Aviyonik yazılımın Türkçe kitabını birlikte yazıyoruz.
+              </Heading>
+              <p className={styles.heroLede}>
+                Emniyet-kritik yazılım geliştirme, doğrulama ve sertifikasyon üzerine{' '}
+                {book.chapterCount} bölümlük bir kitap, teknik yazılar ve tarayıcıda çalışan
+                araçlar. Her sayfası açık: bir yazım hatasını düzeltmek de, yeni bir bölüm yazmak
+                da katkıdır.
+              </p>
+              <div className={styles.heroActions}>
+                <Link className={styles.btnPrimary} to={book.firstChapter.permalink}>
+                  Okumaya başla
+                </Link>
+                <Link className={styles.btnOutline} to="#katki">
+                  Katkıda bulun
+                </Link>
               </div>
-
-              <HeroDial />
+              <ul className={styles.stats}>
+                <li>
+                  <Link to="#icindekiler">
+                    <b>{book.chapterCount}</b> bölüm, <b>{book.appendixCount}</b> ek
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/blog">
+                    <b>{postCount}</b> yazı
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/kutuphane">
+                    <b>{library.pageCount}</b> kütüphane sayfası
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/araclar">
+                    <b>{tools.length}</b> simülatör
+                  </Link>
+                </li>
+              </ul>
             </div>
+
+            <figure className={styles.heroFigure}>
+              <GostergePaneli />
+              <figcaption>
+                Canlı: hafif S dönüşleri yapan bir uçağın birincil uçuş ekranı (primary flight
+                display, PFD). Değerler bir göz kırpma:{' '}
+                <span className={styles.nowrap}>hız 178 knot (DO-178C)</span>,{' '}
+                <span className={styles.nowrap}>irtifa 4754 ft (ARP4754A)</span>,{' '}
+                <span className={styles.nowrap}>yön 330° (DO-330)</span>.
+              </figcaption>
+            </figure>
           </div>
         </section>
 
-        <section className={styles.section}>
-          <div className="container">
-            <SectionHead
-              index="01"
-              title="Neden bu proje?"
-              lead="İçerik, profesyonel bir teknik kaynakta beklenen netlik ile topluluk katkısına açık bir açık kaynak projesinin esnekliğini bir araya getirir."
-            />
-            <div className={styles.cardGrid}>
-              {highlights.map((item) => (
-                <article className={styles.card} key={item.title}>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={clsx(styles.section, styles.sectionMuted)}>
-          <div className="container">
-            <SectionHead
-              index="02"
-              title="Nereden başlamalı?"
-              lead="Aşağıdaki giriş noktaları, konuyu hızlıca taramak isteyenler için pratik bir başlangıç sunar."
-            />
-            <div className={styles.linkGrid}>
-              {startingPoints.map((item) => (
-                <Link className={styles.linkCard} key={item.title} to={item.href}>
-                  <span className={styles.linkLabel}>{item.label}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <div className="container">
-            <SectionHead
-              index="03"
-              title="İlk 5 dakikada nasıl kullanmalı?"
-              lead="Siteyi hızlı taramak isteyenler için, amaca göre seçilmiş kısa rotalar."
-            />
-            <div className={styles.linkGrid}>
-              {quickRoutes.map((route) => (
-                <Link className={styles.linkCard} key={route.title} to={route.href}>
-                  <span className={styles.linkLabel}>{route.label}</span>
-                  <h3>{route.title}</h3>
-                  <p>{route.description}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={clsx(styles.section, styles.sectionMuted)}>
-          <div className="container">
-            <SectionHead
-              index="04"
-              title="Son blog yazıları"
-              lead="Kısa teknik notlar, kitapta ele alınan konuların pratik ve daraltılmış karşılıklarını sunar."
-            />
-            <div className={styles.linkGrid}>
-              {recentPosts.map((post) => (
-                <Link className={styles.linkCard} key={post.title} to={post.href}>
-                  <span className={styles.linkLabel}>{post.label}</span>
-                  <h3>{post.title}</h3>
-                  <p>{post.description}</p>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.section}>
-          <div className="container">
-            <div className={styles.splitLayout}>
-              <div>
-                <SectionHead
-                  index="05"
-                  title="Nasıl katkı verilir?"
-                  lead="Proje, okuyan kişinin sadece tüketici değil, iyileştirici olmasını hedefler. Küçük düzeltmeler bile içeriği güçlendirir."
-                />
-              </div>
-              <ol className={styles.stepList}>
-                {contributorSteps.map((step) => (
+        {/* ---------- Katkı daveti ---------- */}
+        <section className={styles.contribute}>
+          <div className={clsx('container', styles.contributeInner)}>
+            <div>
+              <Heading as="h2" id="katki" className={styles.contributeTitle}>
+                Kokpitte boş koltuk var.
+              </Heading>
+              <p className={styles.contributeLede}>
+                Bu kitap tek pilotla uçmuyor. Sahada DO-178C ile çalışan, test yazan, denetime
+                giren herkesin deneyimi metni daha doğru ve daha kullanışlı yapar. Katkı için Git
+                bilmeniz gerekmez; ücretsiz bir GitHub hesabı ve tarayıcınız yeterli.
+              </p>
+              <ol className={styles.steps}>
+                {steps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
               </ol>
+              <p className={styles.altPath}>
+                GitHub kullanmıyor musunuz? Düzeltme ve önerilerinizi{' '}
+                <Link href={FIX_MAIL}>{EMAIL}</Link> adresine e-postayla gönderebilirsiniz.
+              </p>
+              <div className={styles.contributeActions}>
+                <Link className={styles.btnDark} href={GUIDE_URL}>
+                  Katkı rehberi
+                </Link>
+                <Link className={styles.textLink} href={ISSUES_URL}>
+                  GitHub’daki açık konular (issues) <Arrow />
+                </Link>
+              </div>
+            </div>
+
+            <div className={styles.qrh}>
+              <h3 className={styles.qrhHead}>
+                <span>Katkı</span> <span>Kontrol listesi</span>
+              </h3>
+              <ol className={styles.qrhItems}>
+                {checklist.map((item) => (
+                  <li key={item.challenge}>
+                    <div className={styles.qrhLine}>
+                      <span className={styles.qrhChallenge}>{item.challenge}</span>
+                      <span className={styles.qrhDots} aria-hidden="true" />
+                      {item.href ? (
+                        <Link className={styles.qrhResponse} href={item.href}>
+                          {item.response}
+                        </Link>
+                      ) : (
+                        <span className={styles.qrhResponse}>{item.response}</span>
+                      )}
+                    </div>
+                    <p className={styles.qrhDetail}>{item.detail}</p>
+                  </li>
+                ))}
+              </ol>
+              <p className={styles.qrhEnd}>Kontrol listesi tamam</p>
+              <p className={styles.qrhNote}>
+                Terminoloji sözlüğü ve yazım ilkeleri: <Link href={GUIDE_URL}>katkı rehberi</Link>
+              </p>
             </div>
           </div>
         </section>
 
-        <section className={styles.ctaSection}>
-          <div className="container">
-            <div className={styles.ctaBox}>
-              <div>
-                <p className={styles.ctaKicker}>Birlikte geliştirelim</p>
-                <Heading as="h2" className={styles.ctaTitle}>
-                  Türkçe, açık ve güvenilir bir aviyonik referans kaynağı
-                  oluşturalım.
+        <div className="container">
+          {/* ---------- İçindekiler ---------- */}
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <Heading as="h2" id="icindekiler" className={styles.sectionTitle}>
+                İçindekiler
+              </Heading>
+              <p className={styles.legend}>sağdaki sayı: tahmini okuma süresi</p>
+            </div>
+            <nav className={styles.toc} aria-label="Kitap içindekiler">
+              <TocColumn parts={left} />
+              <TocColumn parts={right} />
+            </nav>
+            <p className={styles.references}>
+              <span className={styles.refLabel}>Kaynaklar</span>
+              {book.references.map((ref) => (
+                <Link key={ref.permalink} to={ref.permalink}>
+                  {ref.title}
+                </Link>
+              ))}
+              <Link to={book.about.permalink}>Kitap hakkında</Link>
+            </p>
+          </section>
+
+          {/* ---------- Blog | Kütüphane + Araçlar ---------- */}
+          <div className={styles.lower}>
+            <section className={styles.section}>
+              <div className={styles.sectionHead}>
+                <Heading as="h2" id="blog" className={styles.sectionTitle}>
+                  Blog
                 </Heading>
+                <Link className={styles.headLink} to="/blog">
+                  Tüm yazılar ({postCount}) <Arrow />
+                </Link>
               </div>
-              <Link
-                className={clsx('button button--lg', styles.actionPrimary)}
-                href="https://github.com/Mavrikant/aviyonikyazilim"
-              >
-                Katkı Sürecini Gör
+              <ol className={styles.log}>
+                {posts.map((post) => (
+                  <li key={post.permalink}>
+                    <time className={styles.logDate} dateTime={post.date}>
+                      {post.date}
+                    </time>
+                    <div>
+                      <Link className={styles.logTitle} to={post.permalink}>
+                        {post.title}
+                      </Link>
+                      <p className={styles.logMeta}>
+                        {post.tags.slice(0, 3).join(' · ')} — <ReadingTime minutes={post.minutes} />
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <div>
+              <section className={styles.section}>
+                <div className={styles.sectionHead}>
+                  <Heading as="h2" id="kutuphane" className={styles.sectionTitle}>
+                    Kütüphane
+                  </Heading>
+                  <Link className={styles.headLink} to="/kutuphane">
+                    Tüm kitaplar <Arrow />
+                  </Link>
+                </div>
+                <p className={styles.sideText}>
+                  Alanda okumaya değer kitaplar ve standart aileleri; künye ve özgün tanıtımlarıyla.
+                </p>
+                <ul className={styles.covers}>
+                  {library.covers.map((cover) => (
+                    <li key={cover.permalink}>
+                      <Link to={cover.permalink} title={cover.title}>
+                        <img
+                          src={withBaseUrl(cover.image)}
+                          alt={cover.title}
+                          width={64}
+                          height={96}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <ul className={styles.shelves}>
+                  {library.shelves.map((shelf) => (
+                    <li key={shelf.permalink}>
+                      <Link to={shelf.permalink}>{shelf.title}</Link>
+                      <span>{shelf.count}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className={styles.section}>
+                <div className={styles.sectionHead}>
+                  <Heading as="h2" id="araclar" className={styles.sectionTitle}>
+                    Araçlar
+                  </Heading>
+                  <Link className={styles.headLink} to="/araclar">
+                    Tüm araçlar <Arrow />
+                  </Link>
+                </div>
+                <figure className={styles.vorFigure}>
+                  <VorSemasi />
+                  <figcaption>
+                    VOR istasyonu yakınından düz rotada geçiş: yön açısı (bearing), en yakın
+                    noktada (d) en hızlı değişir.
+                  </figcaption>
+                </figure>
+                {tools.map((tool) => (
+                  <p className={styles.tool} key={tool.permalink}>
+                    <Link to={tool.permalink}>{tool.title}</Link> — {tool.description}
+                  </p>
+                ))}
+              </section>
+            </div>
+          </div>
+        </div>
+
+        {/* ---------- Kapanış: kısa katkı hatırlatması ---------- */}
+        <section className={styles.closing}>
+          <div className={clsx('container', styles.closingInner)}>
+            <div>
+              <p className={styles.closingTitle}>Bir sonraki bölümü siz yazabilirsiniz.</p>
+              <p className={styles.closingText}>
+                Düzeltme, örnek, diyagram ya da yepyeni bir başlık: her katkı kitabı biraz daha
+                iyi yapar. Son güncelleme:{' '}
+                <time dateTime={buildDate}>{formatLongDate(buildDate)}</time>.
+              </p>
+            </div>
+            <div className={styles.closingActions}>
+              <Link className={styles.btnPrimary} href={REPO_URL}>
+                GitHub’da katkıda bulun
+              </Link>
+              <Link className={styles.btnOutline} to="#katki">
+                Nasıl katkıda bulunurum?
               </Link>
             </div>
           </div>

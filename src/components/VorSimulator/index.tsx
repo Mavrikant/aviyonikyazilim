@@ -20,7 +20,7 @@ const COLORS = {
   gridLine: 'rgba(133, 183, 230, 0.16)',
 };
 
-const MONO_FONT = "'JetBrains Mono Variable', Consolas, monospace";
+const MONO_FONT = "'IBM Plex Mono', Consolas, monospace";
 
 const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(min, v));
 
