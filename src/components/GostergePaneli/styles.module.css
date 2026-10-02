@@ -111,6 +111,54 @@
   letter-spacing: 0.1em;
 }
 
+/* Duraklat / Oynat: panel üzerinde donanım tuşu (WCAG 2.2.2) */
+.controls {
+  grid-column: 1 / -1;
+  display: flex;
+  margin-top: -0.4rem;
+}
+
+.key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid #0e1012;
+  border-top-color: #555b63;
+  border-bottom-width: 3px;
+  border-radius: 4px;
+  background: #383d43;
+  color: #e6e9ec;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.key:hover {
+  background: #42484f;
+  color: #ffffff;
+}
+
+.key:active {
+  border-bottom-width: 1px;
+  transform: translateY(2px);
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--av-amber-400);
+  outline-offset: 2px;
+}
+
+.keyIcon {
+  width: 0.6rem;
+  height: 0.6rem;
+  fill: currentColor;
+}
+
 /* Dar ekranda PFD tam genişlik kullanır; yedek gösterge gizlenir. */
 @media screen and (max-width: 600px) {
   .panel {

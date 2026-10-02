@@ -1,4 +1,4 @@
-import {useEffect, useRef, type ReactNode, type RefObject} from 'react';
+import {useEffect, useRef, useState, type ReactNode, type RefObject} from 'react';
 import YapayUfuk, {YAPAY_UFUK_PITCH_SCALE} from '@site/src/components/YapayUfuk';
 
 import styles from './styles.module.css';
@@ -11,9 +11,12 @@ import styles from './styles.module.css';
  * dikey hız ve irtifa türetilir. Nominal okumalar küçük bir göz kırpmadır:
  * IAS 178 (DO-178C), ALT 4754 (ARP4754A), seçili irtifa 4761 (ARP4761), HDG 330 (DO-330).
  *
- * Sunucuda düz uçuş çizilir; canlandırma yalnızca tarayıcıda, panel görünürken
- * ve kullanıcı azaltılmış hareket tercih etmiyorsa çalışır.
+ * Sunucuda düz uçuş çizilir; canlandırma yalnızca tarayıcıda ve panel görünürken
+ * çalışır. Panelin altındaki tuşla durdurulabilir (WCAG 2.2.2); tercih tarayıcıda
+ * saklanır, azaltılmış hareket tercih eden kullanıcıda gösterge duraklatılmış başlar.
  */
+
+const STORAGE_KEY = 'aviyonik.gosterge';
 
 const IAS = 178;
 const ALT = 4754;
@@ -62,18 +65,25 @@ type Refs = {
   stbyPitch: SVGGElement | null;
 };
 
-function useFlightModel(rootRef: RefObject<HTMLElement | null>, refs: RefObject<Refs>) {
+type FlightState = {t: number; heading: number; altitude: number};
+
+function useFlightModel(
+  rootRef: RefObject<HTMLElement | null>,
+  refs: RefObject<Refs>,
+  running: boolean,
+) {
+  // Uçuş durumu duraklatma boyunca korunur; devam edince göstergeler sıçramaz.
+  const state = useRef<FlightState>({t: 0, heading: HDG, altitude: ALT});
+
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!root || !running) {
       return undefined;
     }
 
+    const s = state.current;
     let frame = 0;
     let last = 0;
-    let t = 0;
-    let heading = HDG;
-    let altitude = ALT;
     let visible = false;
 
     const step = (now: number) => {
@@ -83,7 +93,8 @@ function useFlightModel(rootRef: RefObject<HTMLElement | null>, refs: RefObject<
       }
       const dt = last ? Math.min(0.1, (now - last) / 1000) : 0;
       last = now;
-      t += dt;
+      s.t += dt;
+      const {t} = s;
 
       // İlk saniyelerde düz uçuştan yumuşakça S dönüşüne geç.
       const ease = Math.min(1, t / 5);
@@ -91,21 +102,21 @@ function useFlightModel(rootRef: RefObject<HTMLElement | null>, refs: RefObject<
       const bank = 17 * env * Math.sin((2 * Math.PI * t) / 28);
       const pitch = 2.2 * env * Math.sin((2 * Math.PI * t) / 13);
       const ias = IAS - 3 * env * Math.sin((2 * Math.PI * t) / 13 + 0.5);
-      heading = (heading + ((G * Math.tan(bank * RAD)) / TAS / RAD) * dt + 360) % 360;
+      s.heading = (s.heading + ((G * Math.tan(bank * RAD)) / TAS / RAD) * dt + 360) % 360;
       const verticalSpeed = TAS * Math.sin(pitch * RAD) * 196.85; // fit/dk
-      altitude += (verticalSpeed / 60) * dt;
+      s.altitude += (verticalSpeed / 60) * dt;
 
       const r = refs.current;
       r.roll?.setAttribute('transform', `rotate(${-bank} ${C.x} ${C.y})`);
       r.pitch?.setAttribute('transform', `translate(0 ${pitch * PITCH_SCALE})`);
       r.speed?.setAttribute('transform', `translate(0 ${(ias - IAS) * SPEED_SCALE})`);
-      r.alt?.setAttribute('transform', `translate(0 ${(altitude - ALT) * ALT_SCALE})`);
-      let rel = heading - HDG;
+      r.alt?.setAttribute('transform', `translate(0 ${(s.altitude - ALT) * ALT_SCALE})`);
+      let rel = s.heading - HDG;
       rel = ((rel + 540) % 360) - 180;
       r.compass?.setAttribute('transform', `rotate(${-rel} ${HDG_CENTER.x} ${HDG_CENTER.y})`);
       if (r.iasText) r.iasText.textContent = String(Math.round(ias));
-      if (r.altText) r.altText.textContent = String(Math.round(altitude));
-      if (r.hdgText) r.hdgText.textContent = String(Math.round(heading) % 360 || 360).padStart(3, '0');
+      if (r.altText) r.altText.textContent = String(Math.round(s.altitude));
+      if (r.hdgText) r.hdgText.textContent = String(Math.round(s.heading) % 360 || 360).padStart(3, '0');
       if (r.vsText) {
         const vs = Math.round(verticalSpeed / 50) * 50;
         r.vsText.textContent = vs === 0 ? '' : `${vs > 0 ? '+' : '−'}${Math.abs(vs)}`;
@@ -129,7 +140,7 @@ function useFlightModel(rootRef: RefObject<HTMLElement | null>, refs: RefObject<
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, [rootRef, refs]);
+  }, [rootRef, refs, running]);
 }
 
 function Pfd({refs}: {refs: RefObject<Refs>}): ReactNode {
@@ -332,7 +343,29 @@ export default function GostergePaneli({className}: Props): ReactNode {
     stbyRoll: null,
     stbyPitch: null,
   });
-  useFlightModel(rootRef, refs);
+  // null: tercih henüz okunmadı (sunucu ve ilk istemci çizimi); bu sırada canlandırma çalışmaz.
+  const [paused, setPaused] = useState<boolean | null>(null);
+  useEffect(() => {
+    let stored: string | null = null;
+    try {
+      stored = window.localStorage.getItem(STORAGE_KEY);
+    } catch {
+      // Depolama kapalıysa (gizli pencere vb.) sistem tercihine bakılır.
+    }
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setPaused(stored === 'duraklat' || (stored !== 'oynat' && reduce));
+  }, []);
+  useFlightModel(rootRef, refs, paused === false);
+
+  const toggle = () => {
+    const next = !paused;
+    setPaused(next);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, next ? 'duraklat' : 'oynat');
+    } catch {
+      // Tercih saklanamasa da tuş bu sayfa için çalışır.
+    }
+  };
 
   return (
     <div ref={rootRef} className={`${styles.panel} ${className ?? ''}`}>
@@ -356,6 +389,18 @@ export default function GostergePaneli({className}: Props): ReactNode {
         <span className={styles.placard} aria-hidden="true">
           STBY
         </span>
+      </div>
+      <div className={styles.controls}>
+        <button
+          type="button"
+          className={styles.key}
+          onClick={toggle}
+          aria-label={paused ? 'Gösterge animasyonunu oynat' : 'Gösterge animasyonunu duraklat'}>
+          <svg className={styles.keyIcon} viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+            {paused ? <path d="M2 1 L9 5 L2 9 Z" /> : <path d="M2 1 H4 V9 H2 Z M6 1 H8 V9 H6 Z" />}
+          </svg>
+          {paused ? 'Oynat' : 'Duraklat'}
+        </button>
       </div>
     </div>
   );

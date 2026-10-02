@@ -17,7 +17,8 @@ npm run build     # üretim derlemesi (uyarısız geçmeli)
 npm run serve     # build çıktısını yerelde sun
 ```
 
-İçerik ve katkı kuralları için [CLAUDE.md](CLAUDE.md) dosyasına bakınız.
+Katkı yolları için [CONTRIBUTING.md](CONTRIBUTING.md), ayrıntılı içerik kuralları ve
+terminoloji sözlüğü için [CLAUDE.md](CLAUDE.md) dosyasına bakınız.
 
 ## Dağıtım
 

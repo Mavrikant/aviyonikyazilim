@@ -39,6 +39,8 @@ static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — S�
 static/CNAME              Yayın alan adı (aviyonikyazilim.com)
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
+CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
+.github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım
 ```
 
@@ -180,6 +182,12 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   `"Kısım N — Başlık"` biçimini korumalıdır; eklenti numarayı bu kalıplardan ayırır.
 - Araç sayfalarının frontmatter'ında kısa bir `description` bulunur; ana sayfa onu gösterir.
 - Ana sayfanın önceliği **katkıya davettir**; katkı bölümü ve kapanış çağrısı korunur.
+  Katkı metinleri GitHub kullanmayanlar için e-posta yolunu da gösterir; katkı akışı
+  değişirse `CONTRIBUTING.md` de birlikte güncellenir.
+- Hero'daki gösterge animasyonu **durdurulabilir kalmalıdır** (WCAG 2.2.2): duraklat/oynat
+  tuşu kaldırılmaz; azaltılmış hareket tercihinde gösterge duraklatılmış başlar.
+- Ana sayfa CSS modülünde eleman seçicisi (`main a` gibi) kullanılmaz; modül CSS'i başka
+  sayfalara geçildiğinde de yüklü kaldığı için kurallar sınıfa bağlanır.
 
 ## Görsel kimlik
 

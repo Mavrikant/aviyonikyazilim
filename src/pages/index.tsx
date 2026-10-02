@@ -5,55 +5,60 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
 import GostergePaneli from '@site/src/components/GostergePaneli';
-import useHomepageData, {splitParts, type Part} from '@site/src/components/AnaSayfa/useHomepageData';
+import useHomepageData, {
+  formatLongDate,
+  splitParts,
+  type Part,
+} from '@site/src/components/AnaSayfa/useHomepageData';
 
 import styles from './index.module.css';
 
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
 const ISSUES_URL = `${REPO_URL}/issues`;
-const NEW_ISSUE_URL = `${REPO_URL}/issues/new`;
-const PULLS_URL = `${REPO_URL}/pulls`;
-const RULES_URL = `${REPO_URL}/blob/main/CLAUDE.md`;
-const BOOK_MAIL = 'mailto:serdar@karaman.dev?subject=Kitap%20onerisi';
-const TOOL_MAIL = 'mailto:serdar@karaman.dev?subject=Arac%20onerisi';
+const NEW_ISSUE_URL = `${REPO_URL}/issues/new/choose`;
+const GUIDE_URL = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
+const EMAIL = 'serdar@karaman.dev';
+const FIX_MAIL = `mailto:${EMAIL}?subject=Duzeltme%20onerisi`;
+const BOOK_MAIL = `mailto:${EMAIL}?subject=Kitap%20onerisi`;
+const TOOL_MAIL = `mailto:${EMAIL}?subject=Arac%20onerisi`;
 
 /* Katkı kontrol listesi: havacılık kontrol listelerindeki "durum ..... eylem" düzeni */
 const checklist: {challenge: string; detail: string; response: string; href?: string}[] = [
   {
     challenge: 'Yazım hatası ya da yanlış bilgi',
-    detail: 'Her kitap ve blog sayfasının altındaki “Bu sayfayı düzenle” bağlantısı.',
-    response: 'Sayfayı düzenle',
+    detail: 'İlgili kitap ya da blog sayfasının en altındaki “Bu sayfayı düzenle” bağlantısını kullanın.',
+    response: 'Sayfanın altından düzenle',
   },
   {
     challenge: 'Eksik ya da belirsiz bir konu',
-    detail: 'Ne eksik, nerede kafa karıştırıyor; kısa bir not yeterli.',
+    detail: 'GitHub’da yeni bir konu (issue) açın; ne eksik ya da nerede kafa karıştırıyor, kısa bir not yeterli.',
     response: 'Konu aç',
     href: NEW_ISSUE_URL,
   },
   {
     challenge: 'Örnek, C kodu ya da diyagram',
-    detail: 'Diyagramlar Mermaid ile metin olarak yazılır, görsel gerekmez.',
-    response: 'Pull request gönder',
-    href: PULLS_URL,
+    detail: 'GitHub’da değişiklik önerisi (pull request) açın; diyagramlar Mermaid ile metin olarak yazılır.',
+    response: 'Değişiklik öner',
+    href: GUIDE_URL,
   },
   {
     challenge: 'Okunmaya değer bir kitap',
-    detail: 'Kütüphane rafları için öneriler e-postayla alınır.',
+    detail: `Kütüphane önerileri e-postayla alınır: ${EMAIL}`,
     response: 'Kitap öner',
     href: BOOK_MAIL,
   },
   {
     challenge: 'Simülatör ya da araç fikri',
-    detail: 'Tarayıcıda denenebilecek her kavram aday.',
-    response: 'Fikrini yaz',
+    detail: `Tarayıcıda denenebilecek her kavram aday; öneriler: ${EMAIL}`,
+    response: 'Fikir öner',
     href: TOOL_MAIL,
   },
 ];
 
 const steps = [
-  'Sayfanın altındaki “Bu sayfayı düzenle” bağlantısına tıklayın.',
+  'Düzeltmek istediğiniz kitap ya da blog sayfasını açın; en alttaki “Bu sayfayı düzenle” bağlantısına tıklayın.',
   'Değişikliği GitHub’ın web düzenleyicisinde yapıp kısa bir açıklamayla önerin.',
-  'Öneri gözden geçirilir ve ana dala birleştirilir.',
+  'Öneriniz gözden geçirilir; uygunsa siteye alınır.',
   'Birkaç dakika içinde sitede yayında.',
 ];
 
@@ -111,6 +116,21 @@ function VorSemasi(): ReactNode {
   );
 }
 
+/** Bağlantı sonundaki ok; ekran okuyucu "sağ ok" diye okumasın. */
+function Arrow(): ReactNode {
+  return <span aria-hidden="true">→</span>;
+}
+
+/** Görselde "9 dk", ekran okuyucuda "9 dakika okuma". */
+function ReadingTime({minutes}: {minutes: number}): ReactNode {
+  return (
+    <>
+      <span aria-hidden="true">{minutes} dk</span>
+      <span className={styles.srOnly}>{minutes} dakika okuma</span>
+    </>
+  );
+}
+
 function TocColumn({parts}: {parts: Part[]}): ReactNode {
   return (
     <div className={styles.tocColumn}>
@@ -127,7 +147,9 @@ function TocColumn({parts}: {parts: Part[]}): ReactNode {
                   <span className={styles.rowNo}>{chapter.no}</span>
                   <span className={styles.rowTitle}>{chapter.title}</span>
                   <span className={styles.leader} aria-hidden="true" />
-                  <span className={styles.rowTime}>{chapter.minutes} dk</span>
+                  <span className={styles.rowTime}>
+                    <ReadingTime minutes={chapter.minutes} />
+                  </span>
                 </Link>
               </li>
             ))}
@@ -147,7 +169,7 @@ export default function Home(): ReactNode {
     <Layout
       title="Aviyonik yazılımın Türkçe kitabı"
       description="DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe bir kitap, teknik yazılar ve tarayıcıda çalışan araçlar.">
-      <main>
+      <main className={styles.page}>
         {/* ---------- Hero: başlık + canlı gösterge paneli ---------- */}
         <section className={styles.hero}>
           <div className={clsx('container', styles.heroInner)}>
@@ -170,31 +192,36 @@ export default function Home(): ReactNode {
                   Katkıda bulun
                 </Link>
               </div>
-              <p className={styles.stats}>
-                <span>
-                  <b>{book.chapterCount}</b> bölüm
-                </span>
-                <span>
-                  <b>{book.appendixCount}</b> ek
-                </span>
-                <span>
-                  <b>{postCount}</b> yazı
-                </span>
-                <span>
-                  <b>{library.pageCount}</b> kütüphane sayfası
-                </span>
-                <span>
-                  <b>{tools.length}</b> simülatör
-                </span>
-              </p>
+              <ul className={styles.stats}>
+                <li>
+                  <Link to="#icindekiler">
+                    <b>{book.chapterCount}</b> bölüm, <b>{book.appendixCount}</b> ek
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/blog">
+                    <b>{postCount}</b> yazı
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/kutuphane">
+                    <b>{library.pageCount}</b> kütüphane sayfası
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/araclar">
+                    <b>{tools.length}</b> simülatör
+                  </Link>
+                </li>
+              </ul>
             </div>
 
             <figure className={styles.heroFigure}>
               <GostergePaneli />
               <figcaption>
-                Canlı: hafif S dönüşleri yapan bir uçağın birincil uçuş ekranı ve yedek yapay
-                ufku. Nominal değerler bir göz kırpma: IAS 178 (DO-178C), ALT 4754 (ARP4754A),
-                HDG 330 (DO-330).
+                Canlı: hafif S dönüşleri yapan bir uçağın birincil uçuş ekranı (primary flight
+                display, PFD) ve yedek yapay ufku. Değerler bir göz kırpma: hız 178 knot
+                (DO-178C), irtifa 4754 ft (ARP4754A), yön 330° (DO-330).
               </figcaption>
             </figure>
           </div>
@@ -210,28 +237,31 @@ export default function Home(): ReactNode {
               <p className={styles.contributeLede}>
                 Bu kitap tek pilotla uçmuyor. Sahada DO-178C ile çalışan, test yazan, denetime
                 giren herkesin deneyimi metni daha doğru ve daha kullanışlı yapar. Katkı için Git
-                bilmeniz gerekmez; GitHub’ın web düzenleyicisi yeterli.
+                bilmeniz gerekmez; ücretsiz bir GitHub hesabı ve tarayıcınız yeterli.
               </p>
               <ol className={styles.steps}>
                 {steps.map((step) => (
                   <li key={step}>{step}</li>
                 ))}
               </ol>
+              <p className={styles.altPath}>
+                GitHub kullanmıyor musunuz? Düzeltme ve önerilerinizi{' '}
+                <Link href={FIX_MAIL}>{EMAIL}</Link> adresine e-postayla gönderebilirsiniz.
+              </p>
               <div className={styles.contributeActions}>
-                <Link className={styles.btnDark} href={REPO_URL}>
-                  GitHub’da projeyi aç
+                <Link className={styles.btnDark} href={GUIDE_URL}>
+                  Katkı rehberi
                 </Link>
                 <Link className={styles.textLink} href={ISSUES_URL}>
-                  Açık konulara bak →
+                  GitHub’daki açık konular (issues) <Arrow />
                 </Link>
               </div>
             </div>
 
             <div className={styles.qrh}>
-              <div className={styles.qrhHead}>
-                <span>Katkı</span>
-                <span>Kontrol listesi</span>
-              </div>
+              <h3 className={styles.qrhHead}>
+                <span>Katkı</span> <span>Kontrol listesi</span>
+              </h3>
               <ol className={styles.qrhItems}>
                 {checklist.map((item) => (
                   <li key={item.challenge}>
@@ -252,7 +282,7 @@ export default function Home(): ReactNode {
               </ol>
               <p className={styles.qrhEnd}>Kontrol listesi tamam</p>
               <p className={styles.qrhNote}>
-                Terminoloji sözlüğü ve yazım ilkeleri: <Link href={RULES_URL}>depodaki kurallar</Link>
+                Terminoloji sözlüğü ve yazım ilkeleri: <Link href={GUIDE_URL}>katkı rehberi</Link>
               </p>
             </div>
           </div>
@@ -290,7 +320,7 @@ export default function Home(): ReactNode {
                   Blog
                 </Heading>
                 <Link className={styles.headLink} to="/blog">
-                  Tüm yazılar ({postCount}) →
+                  Tüm yazılar ({postCount}) <Arrow />
                 </Link>
               </div>
               <ol className={styles.log}>
@@ -304,7 +334,7 @@ export default function Home(): ReactNode {
                         {post.title}
                       </Link>
                       <p className={styles.logMeta}>
-                        {post.tags.slice(0, 3).join(' · ')} — {post.minutes} dk
+                        {post.tags.slice(0, 3).join(' · ')} — <ReadingTime minutes={post.minutes} />
                       </p>
                     </div>
                   </li>
@@ -319,7 +349,7 @@ export default function Home(): ReactNode {
                     Kütüphane
                   </Heading>
                   <Link className={styles.headLink} to="/kutuphane">
-                    Tümü →
+                    Tüm kitaplar <Arrow />
                   </Link>
                 </div>
                 <p className={styles.sideText}>
@@ -357,14 +387,14 @@ export default function Home(): ReactNode {
                     Araçlar
                   </Heading>
                   <Link className={styles.headLink} to="/araclar">
-                    Tümü →
+                    Tüm araçlar <Arrow />
                   </Link>
                 </div>
                 <figure className={styles.vorFigure}>
                   <VorSemasi />
                   <figcaption>
-                    VOR istasyonu yakınından düz rotada geçiş: bearing, en yakın noktada (d) en
-                    hızlı değişir.
+                    VOR istasyonu yakınından düz rotada geçiş: yön açısı (bearing), en yakın
+                    noktada (d) en hızlı değişir.
                   </figcaption>
                 </figure>
                 {tools.map((tool) => (
@@ -384,7 +414,8 @@ export default function Home(): ReactNode {
               <p className={styles.closingTitle}>Bir sonraki bölümü siz yazabilirsiniz.</p>
               <p className={styles.closingText}>
                 Düzeltme, örnek, diyagram ya da yepyeni bir başlık: her katkı kitabı biraz daha
-                iyi yapar. Son derleme: <time dateTime={buildDate}>{buildDate}</time>
+                iyi yapar. Son güncelleme:{' '}
+                <time dateTime={buildDate}>{formatLongDate(buildDate)}</time>.
               </p>
             </div>
             <div className={styles.closingActions}>
@@ -392,7 +423,7 @@ export default function Home(): ReactNode {
                 GitHub’da katkıda bulun
               </Link>
               <Link className={styles.btnOutline} to="#katki">
-                Nasıl?
+                Nasıl katkıda bulunurum?
               </Link>
             </div>
           </div>

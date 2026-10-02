@@ -28,3 +28,13 @@ export function splitParts(parts: Part[]): [Part[], Part[]] {
   });
   return [parts.slice(0, best), parts.slice(best)];
 }
+
+/** "2026-10-02" → "2 Ekim 2026" (sunucu ve istemcide aynı çıktı için UTC). */
+export function formatLongDate(isoDate: string): string {
+  return new Intl.DateTimeFormat('tr-TR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${isoDate}T00:00:00Z`));
+}
