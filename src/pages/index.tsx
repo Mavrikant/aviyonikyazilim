@@ -1,6 +1,8 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
@@ -13,6 +15,8 @@ import useHomepageData, {
 
 import styles from './index.module.css';
 
+const DESCRIPTION =
+  'DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe bir kitap, teknik yazılar ve tarayıcıda çalışan araçlar.';
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
 const ISSUES_URL = `${REPO_URL}/issues`;
 const NEW_ISSUE_URL = `${REPO_URL}/issues/new/choose`;
@@ -160,15 +164,35 @@ function TocColumn({parts}: {parts: Part[]}): ReactNode {
   );
 }
 
+/** Arama motorları için site kimliği (schema.org WebSite); Google bunu sonuçlarda site adı olarak kullanır. */
+function SiteStructuredData(): ReactNode {
+  const {siteConfig} = useDocusaurusContext();
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteConfig.title,
+    alternateName: 'aviyonikyazilim.com',
+    url: `${siteConfig.url}${siteConfig.baseUrl}`,
+    description: DESCRIPTION,
+    inLanguage: 'tr',
+    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    author: {'@type': 'Person', name: 'M. Serdar Karaman', url: 'https://github.com/Mavrikant'},
+  };
+  return (
+    <Head>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+    </Head>
+  );
+}
+
 export default function Home(): ReactNode {
   const {buildDate, book, posts, postCount, library, tools} = useHomepageData();
   const {withBaseUrl} = useBaseUrlUtils();
   const [left, right] = splitParts(book.parts);
 
   return (
-    <Layout
-      title="Aviyonik yazılımın Türkçe kitabı"
-      description="DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe bir kitap, teknik yazılar ve tarayıcıda çalışan araçlar.">
+    <Layout title="Aviyonik yazılımın Türkçe kitabı" description={DESCRIPTION}>
+      <SiteStructuredData />
       <main className={styles.page}>
         {/* ---------- Hero: başlık + canlı gösterge paneli ---------- */}
         <section className={styles.hero}>

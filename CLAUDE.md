@@ -31,11 +31,16 @@ araclar/                  Tarayıcıda çalışan simülatörler (routeBasePath:
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
+plugins/meta-description.ts  description yoksa ilk paragraftan meta açıklaması üretir
+plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriority=high yapar
+plugins/font-preload.ts   Build sonrası IBM Plex Sans dosyalarını her sayfaya preload ekler
+src/css/fonts.css         @font-face tanımları (yalnızca latin + latin-ext alt kümeleri)
 src/components/GostergePaneli/  Ana sayfadaki canlı PFD (uçuş modeli, duraklat/oynat tuşu)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
 static/img/kitap/<slug>/  Kitap/kaynak görselleri
 static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — SİLME
 static/CNAME              Yayın alan adı (aviyonikyazilim.com)
+static/robots.txt         Tarayıcı kuralları + sitemap adresi
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
@@ -120,6 +125,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
    ```md
    ---
    title: "Yazının Başlığı"
+   description: "Arama sonucunda görünecek, 160 karakteri aşmayan özet."
    slug: kisa-slug
    authors: [serdar]
    tags: [aviyonik, do-178c]
@@ -137,7 +143,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
    eklenir; `onInlineTags: 'throw'`).
 5. Görseller `static/img/blog/<slug>/` altına indirilir ve `/img/blog/<slug>/dosya.png`
    yoluyla bağlanır. **Harici (googleusercontent, blogspot, wikimedia vb.) görsel
-   bağlantısı bırakılmaz.**
+   bağlantısı bırakılmaz.** Görsel kuralları için "Performans ve arama motoru"
+   bölümüne bakınız (boyut, biçim, Türkçe alt metin).
 
 ## Kitap bölümlerini doldurma kuralları
 
@@ -193,6 +200,12 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - Yazı tipleri: metin ve başlıklarda **IBM Plex Sans**, kod ve etiketlerde
   **IBM Plex Mono** (self-hosted, Türkçe latin-ext dahil). Türkçe karakter
   (Ğ, İ, Ş, ı) içermeyen yazı tipleri kullanılmaz.
+- `@font-face` tanımları `src/css/fonts.css` içindedir ve yalnızca **latin + latin-ext**
+  dosyalarını bağlar. Fontsource'un hazır CSS'i (`wght.css`, `400.css` …) **import
+  edilmez**: kiril/yunan/vietnam alt kümelerini de içerir ve Docusaurus 10 KB'tan
+  küçük dosyaları base64 olarak gömdüğü için render'ı bloklayan `styles.css`'i
+  ~385 KB'a şişirir. Yeni ağırlık/stil gerekiyorsa aynı kalıpla iki kural (latin-ext
+  ve latin) eklenir. Sans dosya adları değişirse `plugins/font-preload.ts` güncellenir.
 - Gradyan, ışıma, ızgara dokusu, buzlu cam/blur ve hover'da yükselen kart gibi
   şablon kalıpları yerine düz renk alanları, çizgiler ve alana özgü öğeler
   (gösterge, kontrol listesi, şekil altyazısı) tercih edilir.
@@ -212,6 +225,30 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - **Redirect stub'ları** (`static/2023/`, `static/2024/`, `static/p/`) ve
   `docusaurus.config.ts` içindeki `redirects` listesi eski Blogger URL'lerini korur;
   bunlar silinmez.
+
+## Performans ve arama motoru
+
+- **Meta açıklaması:** `description` frontmatter'ı yoksa `plugins/meta-description.ts`
+  sayfanın ilk düz metin paragrafını (satırlarını birleştirip ~160 karaktere kısaltarak)
+  kullanır. Bu yüzden bölümlerin ilk paragrafı konuyu özetleyen bir giriş olmalıdır.
+  Sayfa görsel/tablo/listeyle başlıyorsa, ilk paragraf özet değilse ya da birden çok
+  sayfada aynı giriş varsa (SOI sayfaları gibi) `description` elle yazılır
+  (Türkçe, en çok 160 karakter, sayfaya özgü). Blog yazılarında elle yazmak tercih edilir.
+- **Görseller:** fotoğraf/illüstrasyonlar en fazla ~800 px genişliğe küçültülüp WebP
+  (kalite ~78) olarak kaydedilir; diyagram ve ekran görüntüleri PNG kalabilir.
+  Yüzlerce KB'lık görsel eklenmez. Her görselin **Türkçe alt metni** vardır
+  (`![](...)` biçiminde boş alt metin bırakılmaz).
+- Sayfanın ilk üç bloğundaki ilk görsel (blog kapağı, kütüphane kapağı) LCP adayıdır;
+  `plugins/remark-lcp-image.ts` onu `loading="eager"` + `fetchpriority="high"` yapar,
+  diğer görseller tembel yüklenir. Büyük bir kapak görseli bu yüzden doğrudan sayfa
+  açılışını yavaşlatır.
+- **Sitemap:** `<lastmod>` her dosyanın son git commit tarihinden üretilir; bunun için
+  `showLastUpdateTime: true` ve `deploy.yml`'deki `fetch-depth: 0` korunur. Etiket,
+  arşiv ve yazar listeleri sitemap'e alınmaz. `static/robots.txt` sitemap'i gösterir.
+- Ana sayfada schema.org `WebSite` yapılandırılmış verisi (JSON-LD) bulunur; Google
+  bunu arama sonuçlarında site adı olarak kullanır.
+- GitHub Pages tüm dosyaları `Cache-Control: max-age=600` ile sunar ve bu depodan
+  değiştirilemez (ayrıntı: README, "Uzun önbellek süresi").
 
 ## Yayın akışı
 

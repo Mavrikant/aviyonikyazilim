@@ -1,11 +1,12 @@
 ---
 title: "SCA'da cover edilemeyen kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar"
+description: "Yapısal kapsam analizinde (SCA) kapsanamayan kodlar: ölü kod, gereksiz kod ve devre dışı bırakılmış kod arasındaki farklar ve DO-178C'de nasıl ele alındıkları."
 slug: sca-cover-edilemeyen-kodlar
 authors: [serdar]
 tags: [do-178c, olu-kod, gereksiz-kod, devre-disi-birakilmis-kod]
 ---
 
-!["yazılım geliştirmede 'ölü kod' konsepti" konusunu mizahi bir şekilde tasvir eden resim. Bu tasvir, bilgisayar kodlarından oluşan mezarlık sahnesi, farklı yazılarla süslenmiş mezar taşları ve hayaletimsi kod figürleri içermekte. Sahne aydınlık ve çizgi film tarzında tasarlanmış.](/img/blog/sca-cover-edilemeyen-kodlar/gorsel-1.png "Olu kodlar mezarligi")
+!["yazılım geliştirmede 'ölü kod' konsepti" konusunu mizahi bir şekilde tasvir eden resim. Bu tasvir, bilgisayar kodlarından oluşan mezarlık sahnesi, farklı yazılarla süslenmiş mezar taşları ve hayaletimsi kod figürleri içermekte. Sahne aydınlık ve çizgi film tarzında tasarlanmış.](/img/blog/sca-cover-edilemeyen-kodlar/gorsel-1.webp "Ölü kodlar mezarlığı")
 
 Yapısal kapsama analizi(Structural Coverage Analysis - SCA) , yazılım test süreçlerinde hayati role sahip bir yöntemdir. Bu analiz, yazılımın kod kapsamını değerlendirerek hangi kod bölümlerinin testler sırasında çalıştırıldığını veya çalıştırılmadığını belirlemeye yardımcı olur. Ana hedef, yazılımın her bir satırının (statement), dalının (branch) ve koşulunun (condition) uygun şekilde test edilip edilmediğini kontrol etmektir.
 

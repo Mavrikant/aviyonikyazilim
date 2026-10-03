@@ -1,5 +1,6 @@
 ---
 title: "MISRA C"
+description: "MISRA C kılavuzları: C dilinin tehlikeli özelliklerini kısıtlayan kodlama kuralları, emniyet-kritik projelerde nasıl kullanıldıkları ve nereden edinilecekleri."
 sidebar_position: 3
 ---
 

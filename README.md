@@ -47,6 +47,27 @@ Alan adı değişirse `url`/`baseUrl`, `static/CNAME` ve `static/` altındaki re
 stub'ları birlikte güncellenmelidir; aksi hâlde CSS/JS dosyaları 404 verir ve site
 "baseUrl" hata kutusuyla açılır.
 
+### 3. Google Search Console
+
+- [Search Console](https://search.google.com/search-console)'da `aviyonikyazilim.com`
+  **Alan adı** mülkü olarak eklenir; istenen `TXT` kaydı DNS'e girilerek doğrulanır.
+- **Site haritaları** bölümünden `https://aviyonikyazilim.com/sitemap.xml` gönderilir
+  (`robots.txt` de bu adresi gösterir).
+- Bing Webmaster Tools, Search Console'dan içe aktarılarak eklenebilir.
+
+### 4. (İsteğe bağlı) Uzun önbellek süresi
+
+GitHub Pages her dosyayı `Cache-Control: max-age=600` (10 dakika) ile sunar ve bu
+depodan değiştirilemez; Lighthouse'un "Use efficient cache lifetimes" uyarısının
+kaynağı budur. Gidermek için alan adı Cloudflare (ücretsiz plan) üzerinden proxy'lenir
+ve bir **Cache Rule** yazılır:
+
+- Koşul: URI yolu `/assets/` ile başlar → Edge TTL ve Browser TTL: 1 yıl
+  (kaynak başlığını geçersiz kıl). Bu yoldaki CSS/JS/font/görsel dosya adları içerik
+  hash'i taşıdığı için uzun önbellek güvenlidir; içerik değişince adı da değişir.
+- HTML sayfalarına dokunulmaz (kısa TTL kalmalı ki yeni yayın hemen görünsün).
+- SSL/TLS modu **Full** seçilir.
+
 ## Otomasyon (referans)
 
 Depo oluşturma ve Pages etkinleştirme (yetkili `gh` oturumu ile):

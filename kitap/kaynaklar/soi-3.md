@@ -1,5 +1,6 @@
 ---
 title: "SW SOI-3"
+description: "SOI #3 test denetimi: doğrulama ve entegrasyon testlerinin incelendiği aşamada test kanıtları, açık anormallikler ve kapsam ilişkisinde otoritenin beklentileri."
 sidebar_position: 4
 ---
 

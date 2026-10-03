@@ -1,5 +1,6 @@
 ---
 title: "SW SOI-2"
+description: "SOI #2 geliştirme denetimi: gereksinim, tasarım ve kodun gözden geçirildiği aşamada izlenebilirlik, kodlama standardına uyum ve otoritenin beklentileri."
 sidebar_position: 3
 ---
 

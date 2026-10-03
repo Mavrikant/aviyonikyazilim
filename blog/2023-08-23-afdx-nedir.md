@@ -1,11 +1,12 @@
 ---
 title: "AFDX Nedir?"
+description: "AFDX (Avionics Full-Duplex Switched Ethernet) nedir? Deterministik iletişim, yedeklilik ve QoS özellikleriyle aviyonik Ethernet'e ve A380 ağ topolojisine giriş."
 slug: afdx-nedir
 authors: [serdar]
 tags: [afdx]
 ---
 
-![AFDX](/img/blog/afdx-nedir/gorsel-1.jpg)
+![AFDX](/img/blog/afdx-nedir/gorsel-1.webp)
 
 Havacılık endüstrisi, günümüzde giderek artan talepler ve karmaşık sistemlerle karşı karşıyadır. Bu sistemlerin etkin ve güvenilir bir şekilde iletişim kurması, uçuş güvenliği ve operasyonel verimlilik açısından kritik önem taşır. AFDX (Avionics Full-Duplex Switched Ethernet), havacılık endüstrisinde veri iletişimini iyileştirmek ve karmaşık sistemler arasında güvenilir bağlantılar sağlamak için kullanılan bir teknolojidir. Bu yazıda, AFDX'in ne olduğunu, nasıl çalıştığını, havacılık endüstrisindeki kullanım alanlarını, sağladığı avantajları ve teknik özelliklerini detaylı bir şekilde inceleyeceğiz.
 
@@ -33,7 +34,7 @@ Deterministik İletişim: AFDX, belirli bir zaman diliminde veri iletimini garan
 
 **Etkin Bant Genişliği Kullanımı:** AFDX, veri paketlerini düşük gecikme süreleriyle birleştirerek bant genişliğini daha etkili kullanır.
 
-![](/img/blog/afdx-nedir/gorsel-2.png)
+![Airbus A380'deki AFDX ağ topolojisi: uçuş kontrol, kokpit, motor, enerji, yakıt ve kabin bölgelerini bağlayan yedekli anahtarlar](/img/blog/afdx-nedir/gorsel-2.png)
 
 **Airbus A380 ucaginda AFDX topolojisi**
 

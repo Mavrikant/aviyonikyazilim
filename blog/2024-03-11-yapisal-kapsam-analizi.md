@@ -1,11 +1,12 @@
 ---
 title: "Yapısal kapsam analizi (structural coverage analysis)"
+description: "Yapısal kapsam analizi (SCA) nedir? Yapısal programlamadan başlayarak satır, karar, koşul ve MC/DC kapsama türlerinin basit bir C örneği üzerinden anlatımı."
 slug: yapisal-kapsam-analizi
 authors: [serdar]
 tags: [sca, yapisal-kapsam-analizi, structural-coverage-analysis]
 ---
 
-![](/img/blog/yapisal-kapsam-analizi/gorsel-1.jpg)
+![Kodun yazılması, testlerin koşturulması ve kod kapsama analizi arasındaki akışı gösteren illüstrasyon](/img/blog/yapisal-kapsam-analizi/gorsel-1.webp)
 
 Yapısal kapsam analizi (structural coverage analysis) ya da bilindik kisa adiyla **SCA**'yi incelemeden once yapisal programlamanin ne oldugunu tekrar hatirlayalim.  
 

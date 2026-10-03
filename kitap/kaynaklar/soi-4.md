@@ -1,5 +1,6 @@
 ---
 title: "SW SOI-4"
+description: "SOI #4 final denetimi: sertifikasyon öncesi son gözden geçirmede açık noktaların kapatılması, final temel çizgi ve sunum paketinde otoritenin beklentileri."
 sidebar_position: 5
 ---
 
