@@ -7,6 +7,7 @@ import type * as Leaflet from 'leaflet';
 
 import {playMorse} from './mors-ses';
 import {airportSymbol, NAVAID_SYMBOLS} from './semboller';
+import useGeometri from './useGeometri';
 import {
   AIP_ENR41,
   AIP_HOME,
@@ -170,6 +171,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
   const embedUrl = `${siteConfig.url}${EMBED_PATH}`;
 
   const rootRef = useRef<HTMLDivElement>(null);
+  const geo = useGeometri(rootRef);
   const mapEl = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const LRef = useRef<typeof Leaflet | null>(null);
@@ -268,10 +270,11 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
         ],
         worldCopyJump: false,
       });
-      L.control.zoom({position: 'bottomright', zoomInTitle: 'Yakınlaştır', zoomOutTitle: 'Uzaklaştır'}).addTo(map);
+      // Alt köşede ilk eklenen kontrol en altta durur: atıf haritanın alt kenarında, düğmeler üstünde
       attributionRef.current = L.control
         .attribution({position: 'bottomright', prefix: '<a href="https://leafletjs.com">Leaflet</a>'})
         .addTo(map);
+      L.control.zoom({position: 'bottomright', zoomInTitle: 'Yakınlaştır', zoomOutTitle: 'Uzaklaştır'}).addTo(map);
       L.control.scale({position: 'bottomleft', imperial: false}).addTo(map);
 
       if (initial.center) map.setView(initial.center, initial.zoom ?? 9);
@@ -280,7 +283,8 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
       // Kapsayıcı boyutu değişince (yerleşim oturması, tam ekran, panel) haritayı yeniden ölç.
       let firstResize = true;
       resizeObserver = new ResizeObserver(() => {
-        map.invalidateSize({pan: false});
+        // Boyut değişince (panel açılıp kapanması, döndürme, tam ekran) merkez korunur
+        map.invalidateSize({pan: true, animate: false});
         if (firstResize && !initial.center && !viewSetRef.current) map.fitBounds(TURKEY_BOUNDS);
         firstResize = false;
       });
@@ -715,6 +719,9 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
   return (
     <div
       ref={rootRef}
+      data-boyut={geo.boyut}
+      data-basik={geo.basik || undefined}
+      data-dokunmatik={geo.dokunmatik || undefined}
       className={clsx(
         styles.harita,
         gomulu && styles.gomulu,
@@ -903,7 +910,8 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
 
       {/* ---------- Durum çubuğu ---------- */}
       <div className={styles.durum}>
-        <span className={styles.koordinat}>{cursor ? formatDms(cursor[0], cursor[1]) : '—'}</span>
+        {/* Fare konumu yalnızca fareli cihazlarda anlamlı */}
+        {!geo.dokunmatik && <span className={styles.koordinat}>{cursor ? formatDms(cursor[0], cursor[1]) : '—'}</span>}
         <span>
           {visibleCount} öğe gösteriliyor
           {data && (
