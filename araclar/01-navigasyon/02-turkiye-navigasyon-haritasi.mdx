@@ -40,7 +40,14 @@ alınır.
   gider, oklar ve `Enter` ile sonuç seçilir.
 - **Katmanlar:** üstteki düğmeler istasyon türlerini, ILS'leri,
   havalimanlarını, pistleri, heliportları ve kapatılmış tesisleri açıp
-  kapatır. İstasyon kodları haritayı yakınlaştırdıkça görünür.
+  kapatır. İstasyon kodları haritayı yakınlaştırdıkça görünür. Bir istasyon,
+  bileşenlerinden herhangi birinin katmanı açıksa görünür: örneğin "DME"
+  katmanı mesafe veren bütün istasyonları (DME, VOR/DME, VORTAC, TACAN,
+  NDB/DME), "VOR" katmanı da VOR/DME ve VORTAC'ları kapsar.
+- **Semboller** FAA havacılık haritası lejantındaki çizimleri izler: VOR
+  ortası noktalı altıgen, VOR/DME dikdörtgen içinde altıgen, DME boş
+  dikdörtgen, VORTAC üç dolu çıkıntılı altıgen, TACAN aynı silüetin yalnızca
+  dış çizgisi, NDB noktalı halkalar içinde halkalı nokta.
 - **ILS:** her ILS, eşikten yaklaşma yönünde uzanan dar bir "tüy" ile
   çizilir; süzülüş yolu (GP) olmayan, yalnızca yön veren LOC yaklaşmaları
   kesik çizgilidir. Panelde LLZ ve GP frekansı, DME kanalı, kategori,

@@ -22,7 +22,9 @@ import {
   distanceNm,
   featureKey,
   featureLayer,
+  featureLayers,
   featureTitle,
+  featureVisible,
   formatDecimal,
   formatDms,
   formatElevation,
@@ -37,6 +39,7 @@ import {
   ilsLabel,
   morse,
   navaidLayer,
+  navaidLayers,
   normalize,
   pad3,
   powerLabel,
@@ -173,6 +176,9 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
   const mapRef = useRef<Leaflet.Map | null>(null);
   const tileRef = useRef<Leaflet.TileLayer | null>(null);
   const groupsRef = useRef<Partial<Record<LayerKey, Leaflet.LayerGroup>>>({});
+  // İstasyonlar birden çok katmana ait olabildiğinden ayrı tutulur; görünürlük katman kümesinden hesaplanır.
+  const navaidGroupRef = useRef<Leaflet.LayerGroup | null>(null);
+  const navaidMarkersRef = useRef<{marker: Leaflet.Marker; layers: LayerKey[]}[]>([]);
   const markersRef = useRef(new Map<string, Leaflet.Marker>());
   const highlightRef = useRef<Leaflet.CircleMarker | null>(null);
   const coverageRef = useRef<Leaflet.Circle | null>(null);
@@ -231,7 +237,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
     const c = {} as Record<LayerKey, number>;
     for (const l of LAYERS) c[l.key] = 0;
     for (const f of features) {
-      c[featureLayer(f)]++;
+      for (const l of featureLayers(f)) c[l]++;
       if (f.kind === 'airport' && airportLayer(f.item) === 'havalimani') {
         c.pist += (f.item.rwy ?? []).filter((r) => r.ends).length;
       }
@@ -340,7 +346,17 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
     const groups: Partial<Record<LayerKey, Leaflet.LayerGroup>> = {};
     for (const l of LAYERS) groups[l.key] = L.layerGroup();
 
-    const addMarker = (f: Feature, html: string, size: number, layer: LayerKey, zIndexOffset: number, big = false) => {
+    const navaidGroup = L.layerGroup().addTo(map);
+    const navaidMarkers: {marker: Leaflet.Marker; layers: LayerKey[]}[] = [];
+
+    const addMarker = (
+      f: Feature,
+      html: string,
+      size: number,
+      layer: LayerKey,
+      zIndexOffset: number,
+      big = false,
+    ): Leaflet.Marker => {
       const label = featureTitle(f);
       const icon = L.divIcon({
         html: `${html}<span class="${styles.etiket}">${escapeHtml(label)}</span>`,
@@ -354,8 +370,9 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
         if (measuringRef.current) setMeasurePts((pts) => [...pts, position(f)]);
         else select(f);
       });
-      marker.addTo(groups[layer]!);
+      if (f.kind !== 'navaid') marker.addTo(groups[layer]!);
       markersRef.current.set(featureKey(f), marker);
+      return marker;
     };
 
     for (const a of data.airports) {
@@ -376,7 +393,8 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
       }
     }
     for (const n of data.navaids) {
-      addMarker({kind: 'navaid', item: n}, NAVAID_SYMBOLS[n.type] ?? NAVAID_SYMBOLS.VOR, 20, navaidLayer(n), 400);
+      const marker = addMarker({kind: 'navaid', item: n}, NAVAID_SYMBOLS[n.type] ?? NAVAID_SYMBOLS.VOR, 20, navaidLayer(n), 400);
+      navaidMarkers.push({marker, layers: navaidLayers(n)});
     }
     // ILS: eşikten dışarı doğru uzanan "tüy" (yaklaşma rotası boyunca) + LLZ anteni işareti
     for (const f of features) {
@@ -403,6 +421,8 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
     }
 
     groupsRef.current = groups;
+    navaidGroupRef.current = navaidGroup;
+    navaidMarkersRef.current = navaidMarkers;
 
     // DHMİ izninin koşulu: seyrüsefer verisinin kaynağı haritada görünür biçimde belirtilir.
     const aipAttribution = `Seyrüsefer ve pist verisi: <a href="${data.aip.url}">AIP Türkiye</a> © DHMİ${
@@ -438,6 +458,8 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
 
     return () => {
       for (const g of Object.values(groups)) g?.remove();
+      navaidGroup.remove();
+      navaidMarkersRef.current = [];
       markersRef.current.clear();
       attributionRef.current?.removeAttribution(aipAttribution);
     };
@@ -452,6 +474,12 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
       if (!g) continue;
       if (layers.has(l.key)) g.addTo(map);
       else g.remove();
+    }
+    const navaidGroup = navaidGroupRef.current;
+    for (const {marker, layers: own} of navaidMarkersRef.current) {
+      const visible = own.some((l) => layers.has(l));
+      if (visible && !navaidGroup?.hasLayer(marker)) navaidGroup?.addLayer(marker);
+      if (!visible && navaidGroup?.hasLayer(marker)) navaidGroup.removeLayer(marker);
     }
   }, [layers, mapReady, data]);
 
@@ -561,8 +589,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
   }, [query, searchIndex]);
 
   const choose = (f: Feature) => {
-    const layer = featureLayer(f);
-    if (!layers.has(layer)) setLayers((prev) => new Set(prev).add(layer));
+    if (!featureVisible(f, layers)) setLayers((prev) => new Set(prev).add(featureLayer(f)));
     select(f, true);
     setQuery('');
     setResultsOpen(false);
@@ -683,7 +710,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
     return apt ? [{kind: 'airport', item: apt} as Feature] : [];
   }, [selected, data, features]);
 
-  const visibleCount = features.filter((f) => layers.has(featureLayer(f))).length;
+  const visibleCount = features.filter((f) => featureVisible(f, layers)).length;
 
   return (
     <div

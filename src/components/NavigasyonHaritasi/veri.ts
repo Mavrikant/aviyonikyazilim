@@ -93,10 +93,10 @@ export type Feature =
 
 /** Haritadaki açılıp kapatılabilen katmanlar (URL'deki `katman` parametresi bu anahtarları kullanır). */
 export const LAYERS = [
-  {key: 'vor', label: 'VOR', hint: 'VOR, VOR/DME ve VORTAC'},
-  {key: 'tacan', label: 'TACAN', hint: 'Askerî TACAN istasyonları'},
-  {key: 'dme', label: 'DME', hint: 'Bağımsız DME istasyonları'},
-  {key: 'ndb', label: 'NDB', hint: 'NDB, NDB/DME ve locator'},
+  {key: 'vor', label: 'VOR', hint: 'VOR bileşeni olan istasyonlar: VOR, VOR/DME, VORTAC'},
+  {key: 'tacan', label: 'TACAN', hint: 'TACAN bileşeni olan istasyonlar: TACAN, VORTAC'},
+  {key: 'dme', label: 'DME', hint: 'Mesafe veren tüm istasyonlar: DME, VOR/DME, VORTAC, TACAN, NDB/DME'},
+  {key: 'ndb', label: 'NDB', hint: 'NDB bileşeni olan istasyonlar: NDB, NDB/DME, locator'},
   {key: 'ils', label: 'ILS', hint: 'ILS ve LOC yaklaşmaları (AIP AD 2.19)'},
   {key: 'havalimani', label: 'Havalimanı', hint: 'Büyük, orta ve küçük havalimanları'},
   {key: 'pist', label: 'Pist', hint: 'Pist çizgileri (koordinatı bilinenler)'},
@@ -109,12 +109,28 @@ export type LayerKey = (typeof LAYERS)[number]['key'];
 
 export const DEFAULT_LAYERS: LayerKey[] = ['vor', 'tacan', 'dme', 'ndb', 'ils', 'havalimani', 'pist'];
 
+// İstasyon türünün içerdiği bileşenler: bir istasyon, bileşenlerinden herhangi birinin
+// katmanı açıksa görünür (ör. VOR/DME hem "VOR" hem "DME" katmanında). TACAN, sivil
+// alıcılara DME olarak da mesafe verdiği için DME katmanında yer alır.
+const NAVAID_COMPONENTS: Record<string, LayerKey[]> = {
+  VOR: ['vor'],
+  'VOR-DME': ['vor', 'dme'],
+  VORTAC: ['vor', 'tacan', 'dme'],
+  TACAN: ['tacan', 'dme'],
+  DME: ['dme'],
+  NDB: ['ndb'],
+  'NDB-DME': ['ndb', 'dme'],
+};
+
+/** İstasyonun ait olduğu katmanlar (AIP dışı istasyonlar yalnızca kendi katmanında) */
+export function navaidLayers(n: Navaid): LayerKey[] {
+  if (n.src === 'oa') return ['aipdisi'];
+  return NAVAID_COMPONENTS[n.type] ?? ['vor'];
+}
+
+/** Ana katman: işaretin rengi ve aramada açılacak katman */
 export function navaidLayer(n: Navaid): LayerKey {
-  if (n.src === 'oa') return 'aipdisi';
-  if (n.type.startsWith('NDB')) return 'ndb';
-  if (n.type === 'TACAN') return 'tacan';
-  if (n.type === 'DME') return 'dme';
-  return 'vor';
+  return navaidLayers(n)[0];
 }
 
 export function airportLayer(a: Airport): LayerKey {
@@ -325,6 +341,13 @@ export function featureLayer(f: Feature): LayerKey {
   if (f.kind === 'ils') return 'ils';
   return airportLayer(f.item);
 }
+
+export function featureLayers(f: Feature): LayerKey[] {
+  return f.kind === 'navaid' ? navaidLayers(f.item) : [featureLayer(f)];
+}
+
+/** Öğe, ait olduğu katmanlardan biri açıksa görünür */
+export const featureVisible = (f: Feature, layers: Set<LayerKey>) => featureLayers(f).some((l) => layers.has(l));
 
 /** ILS türü: kategori yoksa ve GP yoksa yalnızca LOC */
 export const ilsLabel = (x: Ils) => (x.gp ? `ILS${x.cat ? ` CAT ${x.cat}` : ''}` : 'LOC');
