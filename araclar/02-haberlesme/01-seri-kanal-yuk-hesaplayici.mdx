@@ -1,0 +1,100 @@
+---
+title: "Seri Kanal Yük Hesaplayıcı"
+description: "RS-232, RS-422 ve RS-485 seri kanallarında mesaj tablosundan hat yükünü, faydalı veri hızını, en kötü gecikmeyi ve zaman çizelgesini hesaplayan araç."
+sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: seri
+  ozellikler: [RS-232/422/485, Yakınlaştırılabilir zaman çizelgesi, En kötü gecikme, Tam ekran, CSV, Paylaşılabilir]
+keywords: ["seri kanal yükü", "bus utilization", "RS-485", "RS-422", "UART baud hesabı", "Modbus RTU"]
+---
+
+import SeriKanalHesaplayici from '@site/src/components/SeriKanalHesaplayici';
+
+# Seri Kanal Yük Hesaplayıcı
+
+Bir seri kanalın (RS-232, RS-422, RS-485) ne kadar dolu olduğunu — veri yolu
+yükünü (bus utilization) — mesaj tablosundan hesaplar. Baud hızını, karakter
+çerçevesini ve mesajları girin; araç her yön ya da ortak hat için yükü, faydalı
+veri hızını, boş kapasiteyi ve her mesajın en kötü gecikmesini anında
+gösterir.
+
+<SeriKanalHesaplayici />
+
+## Nasıl hesaplanır?
+
+RS-232, RS-422 ve RS-485 elektriksel katmanı tanımlar; üçünde de karakterler
+aynı UART çerçevesiyle gönderilir:
+
+```
+bit/karakter    = 1 başlangıç + veri bitleri
+                  + eşlik (0 / 1) + durdurma (1 / 1,5 / 2)
+karakter süresi = bit/karakter ÷ baud
+```
+
+Örneğin 8N1 çerçeve 10 bit, 8E1 çerçeve 11 bittir; 115 200 baud'da 8N1 ile bir
+karakter yaklaşık 86,8 µs sürer. Bir mesajın hatta kaldığı süre, toplam bayt
+sayısı (faydalı yük + protokol ek yükü) ile mesaj sonundaki boşluğun karakter
+süresiyle çarpımıdır. Kanal yükü, hattın meşgul olduğu sürenin toplam süreye
+oranıdır:
+
+```
+yük = Σ (mesaj süresi × saniyedeki mesaj sayısı)
+```
+
+Araç bu toplamı bir benzetimle bulur: her mesaj kendi periyodunda hazır olur,
+aynı anda hazır olanlar tablodaki sırayla ve birbirini kesmeden gönderilir.
+Benzetim, periyotların ortak katı kadar iki tur sürer ve yük ikinci turda ölçülür;
+böylece tablodan her mesajın **en kötü gecikmesi** (hazır olduğu andan
+gönderiminin bittiği ana kadar geçen en uzun süre) de çıkar. En kötü gecikmesi
+kendi periyodunu aşan mesaj, bir sonraki örneği hazır olduğunda henüz
+gönderilmemiş demektir; tabloda kırmızıyla işaretlenir.
+
+## Arayüzler arasındaki fark
+
+| | RS-232 | RS-422 | RS-485 |
+|---|---|---|---|
+| Topoloji | Noktadan noktaya | Tek verici, çok alıcı | Çok noktalı ortak hat |
+| Yön | Tam çift yönlü | Tam çift yönlü | 2 telli: yarı çift yönlü · 4 telli: tam çift yönlü |
+| Yük | Her yön ayrı | Her yön ayrı | 2 telli: iki yön **toplanır** |
+
+İki telli RS-485'te bütün düğümler aynı hattı paylaşır: gidiş ve dönüş trafiği
+aynı kapasiteden yer, üstelik hat yön her değiştirdiğinde sürücülerin açılıp
+kapanması için bir süre (turnaround) geçer. Araç bu süreyi, benzetimde yönün
+değiştiği her geçişe ekler ve kanal yükü içindeki payını ayrıca gösterir.
+
+## Kullanım
+
+- **Örnek senaryolar** gerçekçi başlangıç noktaları sunar: 4800 baud'da NMEA
+  0183 yayınlayan bir GPS alıcısı (kanalın ne kadar dolduğuna dikkat edin), iki
+  telli RS-485 üzerinde Modbus RTU yoklaması ve RS-422 ile bağlı bir görev
+  bilgisayarı–ekran çifti.
+- **Ek yük** sütununa protokolün başlık, adres, CRC ve ayraç baytlarını yazın;
+  **mesaj sonu boşluk**, mesajlar arasında beklenen sessizliktir (Modbus RTU'da
+  3,5 karakter).
+- Tablodaki **sıra** öncelik gibi davranır: aynı anda hazır olan mesajlardan
+  üstteki önce gönderilir. Okla sırayı değiştirerek en kötü gecikmelerin nasıl
+  değiştiğini görebilirsiniz.
+- **Durum**: talep kanal kapasitesini aşarsa "aşırı yük", kapasite yetse de
+  periyodu içinde gönderilemeyen mesaj varsa "gecikme aşımı" gösterilir.
+- **Zaman çizelgesi** yakınlaştırılabilir: çizelgede sürükleyerek bir aralık
+  seçin, Ctrl/⌘ + tekerlekle imlecin olduğu yere yakınlaşın ya da +/− düğmelerini
+  kullanın; alttaki genel bakış şeridinde görünüm kutusunu sürükleyerek
+  gezinin, "Tümü" ile başa dönün. Yakınlaşınca kısa mesajlar ve yön değiştirme
+  süreleri ayrı ayrı görünür; bir bloğun üzerine gelince adı ve süresi çıkar.
+- **Tam ekran** düğmesi aracı ekranın tamamına yayar; Esc ile çıkılır.
+- **Bağlantıyı kopyala** tüm ayarları ve mesajları adrese yazar; **CSV indir**
+  tabloyu hesap sonuçlarıyla birlikte dışa aktarır.
+
+## Varsayımlar ve sınırlar
+
+- Karakterler arasında boşluk olmadığı (UART'ın karakterleri art arda
+  gönderdiği) varsayılır; yazılımın ya da donanım tamponunun yarattığı ek
+  boşluklar hesaba katılmaz.
+- Gönderim sırası basit bir modeldir: aynı anda hazır olanlar tablo sırasıyla,
+  kesintisiz gönderilir. Gerçek sistemdeki zamanlayıcı, kesme gecikmeleri ve
+  yeniden gönderimler farklı sonuç verebilir.
+- Elektriksel sınırlar (kablo uzunluğu–hız ilişkisi, düğüm sayısı, sonlandırma)
+  bu aracın kapsamında değildir.
+- Sonuçlar tasarım aşamasındaki tahminler içindir; yük ve zamanlama
+  gereksinimleri, hedef donanım üzerinde ölçümle doğrulanmalıdır.

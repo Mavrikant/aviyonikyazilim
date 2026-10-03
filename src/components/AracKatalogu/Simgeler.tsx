@@ -29,6 +29,16 @@ const SIMGELER: Record<string, ReactNode> = {
       <circle cx="18" cy="46" r="1" />
     </>
   ),
+  // Seri kanal: UART karakter çerçevesi (boşta 1, başlangıç biti 0, veri bitleri, durdurma 1) ve iki uç
+  seri: (
+    <>
+      <path d="M6 22h8v12h6v-12h6v12h6v-12h6v12h6v-12h14" />
+      <path d="M14 22v12" data-vurgu="" />
+      <rect x="6" y="44" width="14" height="10" rx="2" />
+      <rect x="44" y="44" width="14" height="10" rx="2" />
+      <path d="M20 47h24M20 51h24" strokeDasharray="2 2.5" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (
