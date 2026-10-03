@@ -1,5 +1,7 @@
 /**
- * Yazı tipi ön yüklemesi — build sonrası her sayfanın <head>'ine, metnin
+ * Build sonrası HTML geçişi: yazı tipi ön yüklemesi + gizli SVG deposunun sınıfı.
+ *
+ * (1) Yazı tipi ön yüklemesi — build sonrası her sayfanın <head>'ine, metnin
  * büyük kısmını çizen IBM Plex Sans (normal; latin + latin-ext) dosyaları için
  * <link rel="preload"> ekler.
  *
@@ -14,6 +16,18 @@
  * bilinemez; bu yüzden etiketler injectHtmlTags yerine postBuild'de üretilmiş
  * HTML dosyalarına yazılır. Yalnızca Docusaurus sayfalarına (styles.css'i
  * bağlayanlara) eklenir; redirect stub'larına dokunulmaz.
+ *
+ * (2) Gizli SVG ikon deposu — Docusaurus teması her sayfanın <body> başına
+ * `<svg style="display: none;">` ekler. Bu tek satır içi stil (style="…") SEO
+ * denetimlerinde "satır içi stil kullanılıyor" uyarısına yol açar; burada
+ * `class="svg-sprite"` ile değiştirilir (kural `src/css/custom.css` içindedir).
+ * İşaretleme React ağacının dışındadır, hydration etkilenmez; Docusaurus
+ * işaretlemeyi değiştirirse eşleşme olmaz ve sayfa olduğu gibi kalır.
+ *
+ * Neden aynı eklentide: Docusaurus tüm eklentilerin postBuild kancalarını
+ * PARALEL çalıştırır. HTML dosyalarını okuyup yeniden yazan ikinci bir eklenti,
+ * bu eklentiyle yarışır ve değişikliklerden biri sessizce kaybolur. HTML'i
+ * yeniden yazan her yeni düzenleme bu geçişe eklenmelidir.
  */
 
 import fs from 'node:fs/promises';
@@ -26,6 +40,8 @@ const FONT_DIR = 'assets/fonts';
 const PRELOAD_FONTS = ['ibm-plex-sans-latin-wght-normal', 'ibm-plex-sans-latin-ext-wght-normal'];
 
 const STYLESHEET_LINK = /<link rel="?stylesheet"?/;
+const INLINE_SPRITE = /<svg style="display: ?none;?">/;
+const CLASSED_SPRITE = '<svg class="svg-sprite">';
 
 export default function fontPreload(context: LoadContext): Plugin {
   return {
@@ -56,7 +72,8 @@ export default function fontPreload(context: LoadContext): Plugin {
           const html = await fs.readFile(file, 'utf8');
           const match = STYLESHEET_LINK.exec(html);
           if (!match) return;
-          await fs.writeFile(file, html.slice(0, match.index) + tags + html.slice(match.index));
+          const withTags = html.slice(0, match.index) + tags + html.slice(match.index);
+          await fs.writeFile(file, withTags.replace(INLINE_SPRITE, CLASSED_SPRITE));
         }),
       );
     },

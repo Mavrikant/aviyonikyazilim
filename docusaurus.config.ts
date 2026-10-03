@@ -5,8 +5,61 @@ import homepageData from './plugins/homepage-data';
 import fontPreload from './plugins/font-preload';
 import {parseFrontMatter} from './plugins/meta-description';
 import remarkLcpImage from './plugins/remark-lcp-image';
+import llmsTxt from './plugins/llms-txt';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+const SITE_URL = 'https://aviyonikyazilim.com';
+const SITE_DESCRIPTION =
+  'DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe kitap, teknik yazılar, kütüphane ve tarayıcıda çalışan araçlar.';
+
+// Analitik ve arama konsolu doğrulaması, depo değişkenlerinden (GitHub: Settings →
+// Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez. Ayrıntı: SEO.md
+const GA_MEASUREMENT_ID = /^G-[A-Z0-9]{4,}$/.test(process.env.GA_MEASUREMENT_ID ?? '')
+  ? process.env.GA_MEASUREMENT_ID
+  : undefined;
+const GOOGLE_SITE_VERIFICATION = /^[\w-]{20,}$/.test(process.env.GOOGLE_SITE_VERIFICATION ?? '')
+  ? process.env.GOOGLE_SITE_VERIFICATION
+  : undefined;
+
+// Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
+// kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
+const identityGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'Aviyonik Yazılım',
+      alternateName: 'aviyonikyazilim.com',
+      url: `${SITE_URL}/`,
+      logo: {'@type': 'ImageObject', url: `${SITE_URL}/img/logo.svg`},
+      description: SITE_DESCRIPTION,
+      founder: {'@id': `${SITE_URL}/#person`},
+      sameAs: ['https://github.com/Mavrikant/aviyonikyazilim'],
+    },
+    {
+      '@type': 'Person',
+      '@id': `${SITE_URL}/#person`,
+      name: 'M. Serdar Karaman',
+      jobTitle: 'Aviyonik Yazılım Mühendisi',
+      url: `${SITE_URL}/blog/authors/serdar`,
+      sameAs: ['https://github.com/Mavrikant'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      name: 'Aviyonik Yazılım',
+      alternateName: 'aviyonikyazilim.com',
+      url: `${SITE_URL}/`,
+      description: SITE_DESCRIPTION,
+      inLanguage: 'tr',
+      license: 'https://creativecommons.org/licenses/by-sa/4.0/',
+      publisher: {'@id': `${SITE_URL}/#organization`},
+      author: {'@id': `${SITE_URL}/#person`},
+    },
+  ],
+};
 
 const config: Config = {
   title: 'Aviyonik Yazılım',
@@ -17,9 +70,20 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://aviyonikyazilim.com',
+  url: SITE_URL,
   baseUrl: '/',
   trailingSlash: false,
+  // baseUrl uyarı kutusu her sayfaya satır içi stil (style="…") ekler; baseUrl '/' ve
+  // alan adı kökünde yayın yapıldığı için gereksizdir.
+  baseUrlIssueBanner: false,
+
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify(identityGraph),
+    },
+  ],
 
   // GitHub Pages deployment config.
   organizationName: 'mavrikant',
@@ -43,8 +107,11 @@ const config: Config = {
   plugins: [
     // Ana sayfa listelerini (kitap, son yazılar, kütüphane, araçlar) build sırasında üretir.
     homepageData,
-    // IBM Plex Sans dosyalarını build sonrası her sayfaya preload olarak ekler.
+    // Build sonrası her sayfaya IBM Plex Sans preload ekler ve gizli SVG ikon deposunun
+    // satır içi stilini CSS sınıfına çevirir (aynı HTML geçişi).
     fontPreload,
+    // Build sonrası llms.txt üretir (yapay zekâ tarayıcıları için site haritası).
+    llmsTxt,
     [
       '@docusaurus/plugin-content-docs',
       {
@@ -88,6 +155,10 @@ const config: Config = {
           {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/kaynaklar/soi-2'},
           {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/kaynaklar/soi-3'},
           {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/kaynaklar/soi-4'},
+          // Kütüphane kategori sayfalarının Türkçe karakter içeren eski adresleri (ASCII'ye taşındı).
+          {from: '/kutuphane/category/emniyet-mühendisliği', to: '/kutuphane/category/emniyet-muhendisligi'},
+          {from: '/kutuphane/category/gömülü-ve-gerçek-zamanlı-yazılım', to: '/kutuphane/category/gomulu-ve-gercek-zamanli-yazilim'},
+          {from: '/kutuphane/category/standartlar-ve-kılavuz-dokümanlar', to: '/kutuphane/category/standartlar-ve-kilavuz-dokumanlar'},
         ],
       },
     ],
@@ -134,6 +205,8 @@ const config: Config = {
         theme: {
           customCss: ['./src/css/fonts.css', './src/css/custom.css'],
         },
+        // Google Analytics 4: yalnızca GA_MEASUREMENT_ID tanımlıysa eklenir.
+        ...(GA_MEASUREMENT_ID ? {gtag: {trackingID: GA_MEASUREMENT_ID, anonymizeIP: true}} : {}),
         sitemap: {
           // Son değişiklik tarihi git geçmişinden okunur (showLastUpdateTime +
           // deploy.yml'deki fetch-depth: 0 gerektirir).
@@ -150,6 +223,17 @@ const config: Config = {
 
   themeConfig: {
     image: 'img/social-card.png',
+    metadata: [
+      {
+        name: 'keywords',
+        content:
+          'aviyonik yazılım, DO-178C, emniyet-kritik yazılım, yazılım sertifikasyonu, yazılım doğrulama, yapısal kapsam analizi, MC/DC, ARINC 429, AFDX, gerçek zamanlı işletim sistemi',
+      },
+      {name: 'author', content: 'M. Serdar Karaman'},
+      ...(GOOGLE_SITE_VERIFICATION
+        ? [{name: 'google-site-verification', content: GOOGLE_SITE_VERIFICATION}]
+        : []),
+    ],
     colorMode: {
       respectPrefersColorScheme: true,
     },
@@ -229,7 +313,7 @@ const config: Config = {
             },
             {
               label: 'Kitap önerin',
-              href: 'mailto:serdar@karaman.dev?subject=Kitap%20onerisi',
+              to: '/#katki',
             },
             {
               label: 'RSS',

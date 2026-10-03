@@ -3,7 +3,8 @@
   "position": 1,
   "link": {
     "type": "generated-index",
+    "slug": "/category/sertifikasyon-ve-do-178c",
     "title": "Sertifikasyon ve DO-178C",
-    "description": "Aviyonik yazılım sertifikasyonu ve DO-178C uyumu üzerine kitaplar."
+    "description": "Aviyonik yazılım sertifikasyonu ve DO-178C uyumu üzerine seçme kitaplar: süreç, kanıt üretimi ve otorite ile çalışma pratiği."
   }
 }

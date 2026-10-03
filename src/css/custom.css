@@ -7,6 +7,11 @@
  * @font-face tanımları src/css/fonts.css içindedir.
  */
 
+/* Docusaurus'un gizli SVG ikon deposu (plugins/font-preload.ts satır içi stilin yerine bu sınıfı koyar) */
+.svg-sprite {
+  display: none;
+}
+
 :root {
   /* Marka renkleri */
   --av-navy-950: #081524;

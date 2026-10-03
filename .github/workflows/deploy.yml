@@ -33,6 +33,11 @@ jobs:
         run: npm ci
       - name: Siteyi derle
         run: npm run build
+        env:
+          # İsteğe bağlı: Settings → Secrets and variables → Actions → Variables.
+          # Tanımlı değilse build'e analitik ya da doğrulama etiketi eklenmez (bkz. SEO.md).
+          GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
       - name: Pages yapılandır
         uses: actions/configure-pages@v6
       - name: Yapıyı yükle
