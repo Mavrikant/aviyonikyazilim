@@ -79,6 +79,7 @@ function toPlainText(markdown: string): string {
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // bağlantı
     .replace(/\[([^\]]+)\]\[[^\]]*\]/g, '$1') // referans bağlantı
     .replace(/<[^>]+>/g, '') // HTML
+    .replace(/[<>]/g, '') // tek geçişte kalan parçalar (<scr<b>ipt> → <script>)
     .replace(/`([^`]+)`/g, '$1') // satır içi kod
     .replace(/(\*\*|__)(.+?)\1/g, '$2') // kalın
     .replace(/\*(\S(?:.*?\S)?)\*/g, '$1') // italik (*)
