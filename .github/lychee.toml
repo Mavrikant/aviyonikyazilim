@@ -1,0 +1,25 @@
+# Dış bağlantı denetimi (lychee); .github/workflows/link-check.yml kullanır.
+# Yalnızca http/https bağlantıları denetlenir. İç bağlantıları Docusaurus build'i zaten
+# denetler (onBrokenLinks, onBrokenAnchors, onBrokenMarkdownLinks: 'throw').
+scheme = ["https", "http"]
+
+# 403: bot korumalı yayınevi ve vakıf siteleri (Cloudflare vb.) tarayıcı olmayan isteklere,
+# sayfa yerinde olsa da 403 döner; kabul edilmezse her ay aynı yanlış alarmlar gelir.
+# 429: hız sınırı. Gerçek kırık bağlantılar 404/410, 5xx, DNS hatası ya da zaman aşımı
+# olarak raporlanır.
+accept = ["200..=299", "403", "429"]
+
+max_retries = 3
+retry_wait_time = 5
+timeout = 30
+max_concurrency = 8
+user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+
+exclude = [
+  # Sitenin kendi adresleri: iç bağlantılar build sırasında denetlenir.
+  '^https?://(www\.)?aviyonikyazilim\.com',
+]
+
+# Kök-göreli bağlantılar (/kitap/…, /img/…) site adresine çevrilir ve yukarıdaki
+# exclude kuralıyla atlanır; bunları build denetler.
+base_url = "https://aviyonikyazilim.com"

@@ -1,0 +1,67 @@
+name: Dış Bağlantı Denetimi
+
+# Kitap, blog, kütüphane ve araç sayfalarındaki dış (http/https) bağlantıları ayda bir
+# denetler. Kırık bağlantı varsa "Kırık dış bağlantılar" başlıklı bir issue açar; açık
+# bir issue zaten varsa ona yorum olarak ekler. Ayarlar: .github/lychee.toml
+on:
+  schedule:
+    # Her ayın 1'i, 06:23 UTC (09:23 TSİ).
+    - cron: '23 6 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: link-check
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: Bağlantıları denetle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v7
+
+      - name: Dış bağlantıları denetle
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --config .github/lychee.toml
+            --no-progress
+            'kitap/**/*.md'
+            'blog/**/*.md'
+            'kutuphane/**/*.md'
+            'kutuphane/**/*.mdx'
+            'araclar/**/*.mdx'
+            'src/**/*.tsx'
+          output: lychee/out.md
+          format: markdown
+          jobSummary: true
+          fail: false
+
+      - name: Kırık bağlantı varsa issue aç veya güncelle
+        if: steps.lychee.outputs.exit_code != 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: Kırık dış bağlantılar
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "Aylık dış bağlantı denetimi sorunlu bağlantılar buldu ([çalıştırma]($RUN_URL))."
+            echo
+            echo "Bağlantı yerindeyse ve yalnızca bot koruması nedeniyle hata veriyorsa"
+            echo "\`.github/lychee.toml\` içindeki \`exclude\` listesine eklenebilir."
+            echo
+            cat lychee/out.md
+          } > issue.md
+          number=$(gh issue list --state open --search "in:title \"$TITLE\"" \
+            --json number,title --jq '.[] | select(.title == env.TITLE) | .number' | head -n 1)
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --body-file issue.md
+          else
+            gh issue create --title "$TITLE" --body-file issue.md
+          fi

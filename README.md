@@ -25,6 +25,18 @@ terminoloji sözlüğü için [CLAUDE.md](CLAUDE.md) dosyasına bakınız.
 `main` dalına yapılan her push, [GitHub Actions workflow'u](.github/workflows/deploy.yml)
 ile otomatik olarak siteyi derler ve GitHub Pages'e yayınlar. Elle müdahale gerekmez.
 
+Diğer otomasyonlar:
+
+- **Dış bağlantı denetimi:** [link-check.yml](.github/workflows/link-check.yml) her ayın
+  1'inde içerikteki dış bağlantıları [lychee](https://lychee.cli.rs/) ile denetler;
+  kırık bağlantı varsa "Kırık dış bağlantılar" başlıklı bir issue açar ya da açık olana
+  yorum ekler. *Actions* sekmesinden elle de çalıştırılabilir. Ayarlar:
+  [.github/lychee.toml](.github/lychee.toml).
+- **Bağımlılık güncellemeleri:** [Dependabot](.github/dependabot.yml) her pazartesi npm
+  paketleri ve GitHub Actions için gruplanmış PR'lar açar. Docusaurus PR'ları
+  birleştirilmeden önce `npm run build` uyarısız geçmeli ve eject edilmiş tema dosyaları
+  upstream ile karşılaştırılmalıdır (bkz. [SEO.md](SEO.md), "Bilinen sınırlar").
+
 ## Manuel kurulum adımları (bir kez yapılır)
 
 Aşağıdaki adımlar depo sahibi tarafından **elle** yapılmalıdır.

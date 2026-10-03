@@ -1,0 +1,42 @@
+{
+  "theme.SearchBar.label": {
+    "message": "Ara",
+    "description": "Arama kutusunun yer tutucu metni (@easyops-cn/docusaurus-search-local)"
+  },
+  "theme.SearchBar.seeAll": {
+    "message": "Tüm sonuçları gör",
+    "description": "Arama önerilerinin altındaki bağlantı"
+  },
+  "theme.SearchBar.noResultsText": {
+    "message": "Sonuç bulunamadı",
+    "description": "Arama kutusunda sonuç yokken gösterilen metin"
+  },
+  "theme.SearchBar.searchInContext": {
+    "message": "\"{context}\" içindeki tüm sonuçları gör",
+    "description": "Arama bağlamı içinde tüm sonuçlar bağlantısı"
+  },
+  "theme.SearchBar.seeAllOutsideContext": {
+    "message": "\"{context}\" dışındaki tüm sonuçları gör",
+    "description": "Arama bağlamı dışında tüm sonuçlar bağlantısı"
+  },
+  "theme.SearchPage.existingResultsTitle": {
+    "message": "\"{query}\" için arama sonuçları",
+    "description": "Arama sayfasının sonuç başlığı"
+  },
+  "theme.SearchPage.emptyResultsTitle": {
+    "message": "Sitede ara",
+    "description": "Arama sayfasının boş durumdaki başlığı"
+  },
+  "theme.SearchPage.documentsFound.plurals": {
+    "message": "1 sayfa bulundu|{count} sayfa bulundu",
+    "description": "Arama sayfasında bulunan sayfa sayısı (tekil|çoğul)"
+  },
+  "theme.SearchPage.noResultsText": {
+    "message": "Hiçbir sayfa bulunamadı",
+    "description": "Arama sayfasında sonuç yokken gösterilen metin"
+  },
+  "theme.SearchPage.searchContext.everywhere": {
+    "message": "Her yerde",
+    "description": "Arama sayfasındaki bağlam seçicisinin 'tümü' seçeneği"
+  }
+}
