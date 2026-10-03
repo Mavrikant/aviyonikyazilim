@@ -36,8 +36,8 @@ plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriorit
 plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
-src/theme/                Tema özelleştirmeleri: DocItem/Metadata ve Blog/Pages/BlogAuthorsPostsPage
-                          (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage ve
+                          SearchPage (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
                           kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
 src/css/fonts.css         @font-face tanımları (yalnızca latin + latin-ext alt kümeleri)
@@ -49,9 +49,12 @@ static/CNAME              Yayın alan adı (aviyonikyazilim.com)
 static/robots.txt         Tarayıcı kuralları + sitemap adresi
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
+i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
 .github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım
+.github/workflows/link-check.yml  Aylık dış bağlantı denetimi (lychee); ayarı .github/lychee.toml
+.github/dependabot.yml    Haftalık, gruplanmış bağımlılık güncellemeleri
 ```
 
 ## Dil kuralı
@@ -236,6 +239,13 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - **Redirect stub'ları** (`static/2023/`, `static/2024/`, `static/p/`) ve
   `docusaurus.config.ts` içindeki `redirects` listesi eski Blogger URL'lerini korur;
   bunlar silinmez.
+- **Dış bağlantılar** build'de denetlenmez; `.github/workflows/link-check.yml` ayda bir
+  lychee ile denetler ve kırık bağlantı varsa "Kırık dış bağlantılar" issue'sunu açar
+  ya da günceller. Bağlantı yerinde olduğu hâlde sürekli hata veriyorsa (bot koruması)
+  `.github/lychee.toml` içindeki `exclude` listesine eklenir.
+- **Bağımlılıklar:** Dependabot haftalık PR açar (`.github/dependabot.yml`); tüm
+  `@docusaurus/*` paketleri tek grupta ve aynı sürümde kalır. Docusaurus güncellemesinde
+  eject edilmiş tema dosyaları upstream ile karşılaştırılır (bkz. `src/theme/` satırı).
 
 ## Performans ve arama motoru
 
@@ -281,6 +291,15 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   için aynı dosyaları okuyup yazan ikinci bir eklenti değişikliği sessizce kaybeder.
 - **`llms.txt`** `plugins/llms-txt.ts` ile build sırasında üretilir; elle düzenlenmez.
   Kitap/blog/kütüphane/araç eklendikçe kendiliğinden güncellenir.
+- **Site içi arama** `@easyops-cn/docusaurus-search-local` ile yapılır: dizin build
+  sırasında üretilir (`build/search-index.json`), harici servis yoktur; dil `tr`
+  (Türkçe kök ayırıcı). Kitap, kütüphane, araçlar ve blog dizinlenir; ana sayfa
+  dizinlenmez. Arayüz metinleri `i18n/tr/code.json` içindedir. Eklenti her sayfanın
+  başlığını, başlıklarını, `description` ve `keywords` meta etiketlerini ayrı sonuç
+  olarak dizinler; bu yüzden **site geneli `keywords` etiketi yalnızca ana sayfadadır**
+  (`src/pages/index.tsx`). Tüm sayfalara ortak bir `keywords`/`description` eklenmez,
+  yoksa aramalar ilgisiz sayfalarla dolar. Yeni docs eklentisi eklenirse
+  `docsRouteBasePath` ve `docsDir` listelerine de eklenir.
 - **Adresler ASCII:** üretilen dizin sayfalarının adresi etiketten türetilir; Türkçe
   karakterli bir `label` için `_category_.json` içinde `link.slug` (ör.
   `/category/emniyet-muhendisligi`) verilir. Adres değişirse `redirects` listesine eklenir.

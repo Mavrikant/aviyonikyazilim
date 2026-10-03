@@ -121,7 +121,25 @@ const config: Config = {
     },
   },
 
-  themes: ['@docusaurus/theme-mermaid'],
+  themes: [
+    '@docusaurus/theme-mermaid',
+    // Site içi arama: dizin build sırasında üretilir, tarayıcıda çalışır (harici servis yok).
+    // Arayüz metinlerinin Türkçesi i18n/tr/code.json içindedir.
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        // lunr-languages Türkçe kök ayırıcısı: "gereksinimlerin" araması "gereksinim"i bulur.
+        language: 'tr',
+        hashed: true,
+        docsRouteBasePath: ['kitap', 'kutuphane', 'araclar'],
+        docsDir: ['kitap', 'kutuphane', 'araclar'],
+        blogRouteBasePath: 'blog',
+        blogDir: 'blog',
+        explicitSearchResultPath: true,
+        highlightSearchTermsOnTargetPage: true,
+      },
+    ],
+  ],
 
   plugins: [
     // Ana sayfa listelerini (kitap, son yazılar, kütüphane, araçlar) build sırasında üretir.
@@ -243,12 +261,11 @@ const config: Config = {
 
   themeConfig: {
     image: 'img/social-card.png',
+    // Genel `keywords` etiketi yalnızca ana sayfadadır (src/pages/index.tsx): site içi arama
+    // her sayfanın keywords etiketini ayrı bir sonuç olarak dizinler; tüm sayfalarda aynı
+    // etiket bulunursa "ARINC 429" gibi aramalar ilgisiz sayfalarla dolar. Blog yazıları
+    // kendi `keywords` frontmatter'ını kullanır.
     metadata: [
-      {
-        name: 'keywords',
-        content:
-          'aviyonik yazılım, DO-178C, emniyet-kritik yazılım, yazılım sertifikasyonu, yazılım doğrulama, yapısal kapsam analizi, MC/DC, ARINC 429, AFDX, gerçek zamanlı işletim sistemi',
-      },
       {name: 'author', content: 'M. Serdar Karaman'},
       ...(GOOGLE_SITE_VERIFICATION
         ? [{name: 'google-site-verification', content: GOOGLE_SITE_VERIFICATION}]

@@ -1,0 +1,46 @@
+# Haftalık, gruplanmış sürüm güncellemeleri. Güvenlik güncellemeleri ayrıca ve hemen gelir
+# (Settings → Code security → Dependabot security updates).
+#
+# Docusaurus güncellemesinde elle yapılacaklar (PR'ı birleştirmeden önce):
+#   - npm run build uyarısız geçmeli (yapılandırma katı; bkz. CLAUDE.md "Kalite kuralları").
+#   - Eject edilmiş tema dosyaları upstream ile karşılaştırılmalı:
+#       src/theme/BlogListPage/ ve src/theme/DocBreadcrumbs/StructuredData/
+#     ↔ node_modules/@docusaurus/theme-classic/src/theme/ altındaki özgün dosyalar (bkz. SEO.md).
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Istanbul
+    open-pull-requests-limit: 5
+    groups:
+      # Tüm @docusaurus/* paketleri aynı sürümde kalmalıdır; tek PR'da birlikte yükselir.
+      docusaurus:
+        patterns:
+          - '@docusaurus/*'
+      react:
+        patterns:
+          - 'react'
+          - 'react-dom'
+          - '@types/react'
+      # Geri kalan her şeyin küçük sürüm ve yamaları tek PR'da toplanır; büyük sürümler
+      # ayrı PR olarak gelir, çünkü çoğu zaman elle uyarlama gerektirir.
+      diger:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: Europe/Istanbul
+    groups:
+      actions:
+        patterns:
+          - '*'

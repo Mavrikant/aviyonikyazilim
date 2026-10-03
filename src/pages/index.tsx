@@ -1,5 +1,6 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
+import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
@@ -17,6 +18,9 @@ import styles from './index.module.css';
 const TITLE = 'DO-178C, Test ve Sertifikasyon Kitabı';
 const DESCRIPTION =
   'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
+// Yalnızca ana sayfada: bkz. docusaurus.config.ts → themeConfig.metadata açıklaması.
+const KEYWORDS =
+  'aviyonik yazılım, DO-178C, emniyet-kritik yazılım, yazılım sertifikasyonu, yazılım doğrulama, yapısal kapsam analizi, MC/DC, ARINC 429, AFDX, gerçek zamanlı işletim sistemi';
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
 const ISSUES_URL = `${REPO_URL}/issues`;
 const NEW_ISSUE_URL = `${REPO_URL}/issues/new/choose`;
@@ -174,6 +178,9 @@ export default function Home(): ReactNode {
 
   return (
     <Layout title={TITLE} description={DESCRIPTION}>
+      <Head>
+        <meta name="keywords" content={KEYWORDS} />
+      </Head>
       <main className={styles.page}>
         {/* ---------- Hero: başlık + canlı gösterge paneli ---------- */}
         <section className={styles.hero}>

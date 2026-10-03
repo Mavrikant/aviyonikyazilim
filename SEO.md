@@ -16,7 +16,7 @@ edileceğini toplar. Kod kuralları için [CLAUDE.md](CLAUDE.md), katkı yollar�
 | Kitap şeması | `/kitap` sayfasında `Book` + `TechArticle`, diğer bölümlerde `TechArticle` | `src/theme/DocItem/Metadata/` |
 | Gezinti yolu şeması | `BreadcrumbList` en az iki öğeli (ana sayfa dahil) ve adresler kanonik biçimde | `src/theme/DocBreadcrumbs/StructuredData/` |
 | `llms.txt` | Build sırasında kitap, blog, kütüphane ve araçlardan üretilir; elle bakım gerekmez | `plugins/llms-txt.ts` |
-| Anahtar kelime tutarlılığı | Başlık, açıklama, H1 ve H2'lerde "aviyonik yazılım" / DO-178C; genel `keywords` meta etiketi (Google bu etiketi kullanmaz; yalnızca bazı denetim araçları sayar) | `src/pages/index.tsx`, `docusaurus.config.ts` (`metadata`) |
+| Anahtar kelime tutarlılığı | Başlık, açıklama, H1 ve H2'lerde "aviyonik yazılım" / DO-178C; genel `keywords` meta etiketi yalnızca ana sayfada (Google bu etiketi kullanmaz; yalnızca bazı denetim araçları sayar). Site içi arama her sayfanın `keywords` etiketini dizinlediği için ortak etiket tüm sayfalara konmaz; blog yazıları kendi `keywords` frontmatter'ını kullanır | `src/pages/index.tsx`, `docusaurus.config.ts` (`metadata` açıklaması) |
 | E-posta gizliliği | Adres HTML'e ve bileşenin JS parçasına bütün yazılmaz; düğmeye tıklanınca tarayıcıda birleştirilir | `src/components/Eposta/` |
 | Satır içi stil | `baseUrlIssueBanner` kapalı (yalnızca ana sayfadaki betik metnini kaldırır); her sayfadaki gizli SVG deposunun `style`'ı sınıfa çevrilir. Ana sayfada `style="…"` yok | `docusaurus.config.ts`, `plugins/font-preload.ts` |
 | URL hijyeni | Kütüphane kategori adresleri ASCII (`link.slug`); eski adresler yönlendirilir | `kutuphane/*/_category_.json`, `redirects` |
