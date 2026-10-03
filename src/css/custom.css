@@ -522,8 +522,11 @@ article header h2 {
 }
 
 @media (max-width: 768px) {
-  /* Dar ekranda tablolar daha az dolgu ve daha küçük yazıyla sığar */
+  /* Dar ekranda tablolar daha az dolgu ve daha küçük yazıyla sığar; yine de
+     sığmayan (uzun kod değerli) tablolar sayfayı yana taşırmak yerine kendi içinde kayar. */
   table {
+    display: block;
+    overflow-x: auto;
     font-size: 0.84rem;
   }
 
