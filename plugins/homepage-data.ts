@@ -45,7 +45,15 @@ export type Shelf = PageLink & {count: number};
 
 export type Cover = PageLink & {image: string};
 
-export type Tool = PageLink & {description: string};
+export type Tool = PageLink & {
+  description: string;
+  /** Kenar çubuğundaki kategori etiketi (ör. "Navigasyon") */
+  category: string;
+  /** Araç sayfasındaki `sidebar_custom_props.simge`: katalogdaki şema (ör. "vor", "harita") */
+  icon?: string;
+  /** Araç sayfasındaki `sidebar_custom_props.ozellikler`: katalogda etiket olarak gösterilir */
+  features: string[];
+};
 
 export type HomepageData = {
   /** Build tarihi (Europe/Istanbul), YYYY-MM-DD */
@@ -248,16 +256,25 @@ async function loadLibrary(siteDir: string, version: LoadedVersion): Promise<Hom
 
 function loadTools(version: LoadedVersion): Tool[] {
   const byId = docsById(version);
-  return getSidebar(version, 'araclarSidebar')
-    .filter((item) => item.type === 'category')
-    .flatMap((item) => (item.type === 'category' ? docItemIds(item.items) : []))
-    .map((id) => byId.get(id))
-    .filter((doc): doc is DocMetadata => doc !== undefined)
-    .map((doc) => ({
-      title: doc.title,
-      permalink: doc.permalink,
-      description: firstSentence(doc.description),
-    }));
+  return getSidebar(version, 'araclarSidebar').flatMap((item) => {
+    if (item.type !== 'category') {
+      return [];
+    }
+    return docItemIds(item.items)
+      .map((id) => byId.get(id))
+      .filter((doc): doc is DocMetadata => doc !== undefined)
+      .map((doc) => {
+        const props = (doc.frontMatter.sidebar_custom_props ?? {}) as {simge?: string; ozellikler?: string[]};
+        return {
+          title: doc.title,
+          permalink: doc.permalink,
+          description: firstSentence(doc.description),
+          category: item.label,
+          icon: props.simge,
+          features: props.ozellikler ?? [],
+        };
+      });
+  });
 }
 
 function loadPosts(blog: BlogContent): Pick<HomepageData, 'posts' | 'postCount'> {

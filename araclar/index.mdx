@@ -1,28 +1,27 @@
 ---
 title: Araçlar
+description: "Aviyonik yazılım kavramlarını tarayıcıda deneyebileceğiniz simülatörler ve Türkiye navigasyon haritası: VOR, DME, TACAN, NDB istasyonları ve havalimanları."
 sidebar_position: 0
+hide_table_of_contents: true
 slug: /
 ---
 
 import Eposta from '@site/src/components/Eposta';
+import AracKatalogu from '@site/src/components/AracKatalogu';
 
 # Araçlar
 
-Bu bölüm, kitapta ve blogda anlatılan kavramları etkileşimli olarak
-denemenizi sağlayan küçük, tarayıcıda çalışan simülatörleri bir araya
-getirir. Amaç, teoriyi elle parametre değiştirerek somutlaştırmaktır:
-örneğin bir VOR istasyonunun yanından geçerken alıcının ölçtüğü bearing
-değişim hızının hız, yanal mesafe ve irtifaya göre nasıl değiştiğini
-görmek, metinde okumaktan çok daha hızlı bir sezgi kazandırır.
+Kitapta ve blogda anlatılan kavramları elle deneyebileceğiniz, tarayıcıda
+çalışan simülatörler ve başvuru araçları. Bir VOR istasyonunun yanından
+geçerken bearing değişim hızının nasıl tırmandığını görmek ya da bir
+yaklaşmadan önce bölgedeki seyrüsefer yardımcılarını haritada bulmak,
+metinde okumaktan çok daha hızlı bir sezgi kazandırır.
 
-Araçlar sunucu tarafında herhangi bir veri işlemez; tüm hesaplama
-tarayıcınızda, JavaScript ile yapılır.
+<AracKatalogu />
 
-## Kategoriler
-
-| Kategori | İçerik |
-|----|----|
-| Navigasyon | VOR/DME gibi seyrüsefer yardımcılarının davranışını gösteren simülatörler |
+Araçlar sunucu tarafında veri işlemez; tüm hesaplama tarayıcınızda,
+JavaScript ile yapılır. Harita gibi bazı araçlar başka sitelere
+`<iframe>` ile gömülebilir; ayrıntı aracın kendi sayfasındadır.
 
 :::tip[Yeni bir araç mı önerirsiniz?]
 

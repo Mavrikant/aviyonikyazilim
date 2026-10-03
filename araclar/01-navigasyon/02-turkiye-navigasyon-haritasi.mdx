@@ -1,0 +1,114 @@
+---
+title: "Türkiye Navigasyon Haritası"
+description: "AIP Türkiye verisiyle VOR, DME, TACAN, NDB istasyonları, ILS yaklaşmaları, havalimanları ve pistler tek haritada: arama, ölçüm, tam ekran, gömme."
+sidebar_position: 2
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: harita
+  ozellikler: [AIP Türkiye verisi, ILS, Arama, Mesafe/yön ölçümü, Tam ekran, Gömülebilir]
+keywords: ["VOR haritası", "ILS frekansları", "NDB", "TACAN", "AIP Türkiye", "Türkiye havalimanları", "seyrüsefer yardımcıları"]
+---
+
+import NavigasyonHaritasi from '@site/src/components/NavigasyonHaritasi';
+
+# Türkiye Navigasyon Haritası
+
+Türkiye'deki radyo seyrüsefer yardımcılarını (radio navigation aids) —
+VOR, VOR/DME, VORTAC, TACAN, DME ve NDB istasyonlarını — ve ILS
+yaklaşmalarını, havalimanları ve pistlerle birlikte tek haritada gösterir.
+İstasyon ve ILS verisi AIP Türkiye'den (DHMİ) alınır. Bir istasyona
+tıklayarak frekansını, DME kanalını, tanıtım kodunun Mors karşılığını ve
+çevresindeki en yakın istasyonlara olan mesafe ve radyalleri görebilirsiniz.
+
+<NavigasyonHaritasi />
+
+:::warning[Seyrüsefer amaçlı kullanılmaz]
+
+Bu harita eğitim ve genel bilgi amaçlıdır. Veri, AIP Türkiye'nin
+(Aeronautical Information Publication) belirli bir değişikliğinden
+otomatik olarak ayrıştırılır; arada yayımlanan değişiklikler, AIP SUP'lar
+ve NOTAM'lar haritaya yansımaz, ayrıştırmada hata olabilir. Uçuş
+planlaması ve uçuş için yalnızca yürürlükteki resmî AIP ve NOTAM'lar esas
+alınır.
+
+:::
+
+## Kullanım
+
+- **Arama:** kutuya tanıtım kodu (`ESB`), ICAO/IATA kodu (`LTAC`, `SAW`),
+  ad, şehir ya da frekans (`112.7`) yazın. Klavyeden `/` tuşu aramaya
+  gider, oklar ve `Enter` ile sonuç seçilir.
+- **Katmanlar:** üstteki düğmeler istasyon türlerini, ILS'leri,
+  havalimanlarını, pistleri, heliportları ve kapatılmış tesisleri açıp
+  kapatır. İstasyon kodları haritayı yakınlaştırdıkça görünür.
+- **ILS:** her ILS, eşikten yaklaşma yönünde uzanan dar bir "tüy" ile
+  çizilir; süzülüş yolu (GP) olmayan, yalnızca yön veren LOC yaklaşmaları
+  kesik çizgilidir. Panelde LLZ ve GP frekansı, DME kanalı, kategori,
+  süzülüş açısı ve RDH (eşik üzeri referans yüksekliği) yer alır.
+- **AIP dışı:** açık veri setinde bulunup AIP'de karşılığı olmayan
+  istasyonlar (kapatılmış ya da askerî olabilir) varsayılan olarak gizlidir;
+  bu katmanla soluk olarak gösterilebilir.
+- **Ayrıntı paneli:** bir işarete tıklayınca açılır. VOR türü bir
+  istasyonda "En yakınlar" listesi, diğer noktaların o istasyondan hangi
+  **radyal** (manyetik) üzerinde olduğunu gösterir; diğer türlerde gerçek
+  yön verilir. Koordinata tıklamak onu panoya kopyalar. **Dinle** düğmesi
+  istasyonun tanıtım kodunu, alıcıda duyulduğu gibi 1020 Hz'lik Mors tonu
+  olarak çalar; çalınan harf panelde vurgulanır.
+- **Kapsama halkası:** bir istasyon seçildiğinde kapsama alanı halka
+  olarak çizilir; paneldeki kapsama değerine tıklamak halkayı ekrana
+  sığdırır. AIP'de yayımlanmış kapsama düz çizgiyle, yayımlanmamışsa VOR/DME
+  ve TACAN'larda sınıfına göre standart hizmet hacmi (terminal 25, alçak
+  irtifa 40, yüksek irtifa 130 NM) kesik çizgiyle gösterilir.
+- **Telsiz frekansları:** havalimanı panelinde meydanın kule, yer, trafik
+  izni, yaklaşma ve ATIS frekansları (AIP AD 2.18) listelenir.
+- **Ölç:** haritada art arda noktalara (ya da istasyonlara) tıklayarak
+  toplam mesafeyi deniz mili (NM) ve kilometre olarak, son bacağın gerçek
+  yönünü derece olarak ölçer. `Esc` ölçümü bitirir.
+- **Tam ekran** ve **altlık** seçimi (sade, OpenStreetMap, arazi)
+  sağ üstte ve katman satırının sonundadır.
+
+## Haritayı sitenize gömün
+
+**Paylaş / Göm** düğmesi, haritanın o anki görünümünü (konum,
+yakınlaştırma, açık katmanlar, seçili istasyon) koruyan bir bağlantı ve
+`<iframe>` kodu üretir. Gömülü harita arama, ölçüm ve tam ekran dahil
+bütün özellikleri taşır. Adres parametreleri elle de verilebilir:
+
+| Parametre | Örnek | Anlamı |
+|----|----|----|
+| `lat`, `lon`, `z` | `lat=39.95&lon=32.69&z=9` | Harita merkezi ve yakınlaştırma düzeyi |
+| `katman` | `katman=vor,ils,havalimani` | Açık katmanlar: `vor`, `tacan`, `dme`, `ndb`, `ils`, `havalimani`, `pist`, `heliport`, `kapali`, `aipdisi` |
+| `secili` | `secili=LTAC` | Açılışta seçili gelen havalimanı, istasyon ya da ILS kodu (`IANK`) |
+| `altlik` | `altlik=topo` | Altlık: `osm` veya `topo` (verilmezse sade altlık) |
+| `tema` | `tema=koyu` | Yalnızca gömülü sürümde: `acik` veya `koyu` |
+
+## Veri ve kaynaklar
+
+- **Seyrüsefer yardımcıları ve ILS:** [AIP Türkiye](https://dhmi.gov.tr/Sayfalar/aipturkey.aspx)
+  © DHMİ. Yol üstü istasyonlar ENR 4.1'den, terminal istasyonlar ve ILS'ler
+  her meydanın AD 2.19 bölümünden alınır; haritanın altında verinin hangi
+  AIRAC değişikliğinden (AMDT) üretildiği yazar. Veri, DHMİ'nin ticari
+  olmayan kullanım ve kaynak gösterme koşuluyla verdiği izinle kullanılır.
+- **Meydanlar ve heliportlar:** AIP'de yer alan 79 meydanın ve 7 heliportun
+  adı, referans noktası (ARP), rakımı ve manyetik sapması AD 2.1–2.2 ve
+  AD 3.1–3.2 bölümlerinden alınır. Bölümü yayımlanmamış Samsun / Ondokuz
+  Mayıs (LTFI) iniş alanı AIP dizininde adıyla yer alır; konumu açık
+  veridendir.
+- **Pistler:** AIP'deki meydanlarda AD 2.12'den (pist tanımı, gerçek yön,
+  boyut ve eşik koordinatları), ışıkları AD 2.14'ten (yaklaşma ışığı türü,
+  PAPI/VASIS ve açısı) alınır; eşik koordinatı yayımlanmamış birkaç pistin
+  çizgisi açık veriden tamamlanır.
+- **Manyetik sapma:** AIP istasyon bazında sapma yayımlamaz. İstasyonlarda,
+  bağlı olduğu (yoksa en yakın) meydanın AD 2.2'deki güncel değeri kullanılır
+  ve panelde kaynağıyla (ör. "LTAC 2025") gösterilir; VOR radyalleri bu
+  değerle hesaplanır.
+- **AIP'de yer almayan havalimanları, heliportlar ve pistleri:**
+  [OurAirports](https://ourairports.com/data/) (kamu malı). AIP tablosunda
+  bulunmayan istasyon gücü ve kullanım bilgisi de buradan eşlenir.
+- **ILS yaklaşma rotası** AIP'de yayımlanan bir değer değildir; eşik ile
+  LLZ anteni koordinatlarından hesaplanır.
+
+Depodaki `scripts/navigasyon-verisi.mjs` betiği AIP bölümlerini ve açık veriyi
+indirip ayrıştırarak sitenin kullandığı JSON dosyasını üretir; harita sunucuya
+istek atmadan, tamamen tarayıcınızda çalışır. Altlık karoları OpenStreetMap
+ve OpenTopoMap sunucularından yüklenir.
