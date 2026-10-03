@@ -72,13 +72,24 @@ function firstParagraph(content: string): string[] {
   return paragraph;
 }
 
+function stripHtmlTags(input: string): string {
+  let sanitized = input;
+  let previous: string;
+  do {
+    previous = sanitized;
+    sanitized = sanitized.replace(/<[^>]+>/g, '');
+  } while (sanitized !== previous);
+  return sanitized;
+}
+
 function toPlainText(markdown: string): string {
-  return markdown
+  const partiallySanitized = markdown
     .replace(/!\[[^\]]*\]\([^)]*\)/g, '') // görsel
     .replace(/\[\^[^\]]+\]/g, '') // dipnot
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1') // bağlantı
-    .replace(/\[([^\]]+)\]\[[^\]]*\]/g, '$1') // referans bağlantı
-    .replace(/<[^>]+>/g, '') // HTML
+    .replace(/\[([^\]]+)\]\[[^\]]*\]/g, '$1'); // referans bağlantı
+
+  return stripHtmlTags(partiallySanitized)
     .replace(/[<>]/g, '') // tek geçişte kalan parçalar (<scr<b>ipt> → <script>)
     .replace(/`([^`]+)`/g, '$1') // satır içi kod
     .replace(/(\*\*|__)(.+?)\1/g, '$2') // kalın
