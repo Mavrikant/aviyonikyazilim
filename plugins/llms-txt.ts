@@ -237,7 +237,7 @@ export default function llmsTxt(context: LoadContext): Plugin {
       bullet(
         'Site haritası (sitemap.xml)',
         `${siteUrl}/sitemap.xml`,
-        'Sitedeki tüm sayfaların listesi ve son değişiklik tarihleri',
+        'Dizine alınabilir sayfaların listesi ve son değişiklik tarihleri',
       ),
       bullet('Blog RSS akışı', `${siteUrl}/blog/rss.xml`, 'Blog yazılarının RSS akışı'),
       bullet(

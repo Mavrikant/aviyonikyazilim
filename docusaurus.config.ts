@@ -16,12 +16,22 @@ const SITE_DESCRIPTION =
 
 // Analitik ve arama konsolu doğrulaması, depo değişkenlerinden (GitHub: Settings →
 // Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez. Ayrıntı: SEO.md
-const GA_MEASUREMENT_ID = /^G-[A-Z0-9]{4,}$/.test(process.env.GA_MEASUREMENT_ID ?? '')
-  ? process.env.GA_MEASUREMENT_ID
-  : undefined;
-const GOOGLE_SITE_VERIFICATION = /^[\w-]{20,}$/.test(process.env.GOOGLE_SITE_VERIFICATION ?? '')
-  ? process.env.GOOGLE_SITE_VERIFICATION
-  : undefined;
+// Boş değer "tanımlı değil" demektir; dolu ama biçimi geçersiz bir değer (yazım hatası,
+// fazladan boşluk) build'i durdurmaz ama uyarıyla yok sayılır.
+function envValue(name: string, pattern: RegExp): string | undefined {
+  const value = (process.env[name] ?? '').trim();
+  if (!value) {
+    return undefined;
+  }
+  if (!pattern.test(value)) {
+    console.warn(`[config] ${name} geçersiz biçimde, yok sayıldı.`);
+    return undefined;
+  }
+  return value;
+}
+
+const GA_MEASUREMENT_ID = envValue('GA_MEASUREMENT_ID', /^G-[A-Z0-9]{4,}$/);
+const GOOGLE_SITE_VERIFICATION = envValue('GOOGLE_SITE_VERIFICATION', /^[\w-]{20,}$/);
 
 // Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
 // kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
@@ -34,7 +44,14 @@ const identityGraph = {
       name: 'Aviyonik Yazılım',
       alternateName: 'aviyonikyazilim.com',
       url: `${SITE_URL}/`,
-      logo: {'@type': 'ImageObject', url: `${SITE_URL}/img/logo.svg`},
+      // Google, kuruluş logosu için en az 112x112 px istiyor; SVG'nin bildirilen boyutu 64 px.
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}/img/logo-256.png`,
+        contentUrl: `${SITE_URL}/img/logo-256.png`,
+        width: 256,
+        height: 256,
+      },
       description: SITE_DESCRIPTION,
       founder: {'@id': `${SITE_URL}/#person`},
       sameAs: ['https://github.com/Mavrikant/aviyonikyazilim'],
@@ -74,8 +91,9 @@ const config: Config = {
   url: SITE_URL,
   baseUrl: '/',
   trailingSlash: false,
-  // baseUrl uyarı kutusu her sayfaya satır içi stil (style="…") ekler; baseUrl '/' ve
-  // alan adı kökünde yayın yapıldığı için gereksizdir.
+  // baseUrl uyarı kutusu yalnızca ana sayfaya, içinde style="…" dizgeleri bulunan bir betik
+  // metni olarak eklenir; SEO denetim araçları bunu "satır içi stil" sayabilir. baseUrl '/'
+  // ve alan adı kökünde yayın yapıldığı için gereksizdir (hata ayıklarken geçici olarak true yapın).
   baseUrlIssueBanner: false,
 
   headTags: [

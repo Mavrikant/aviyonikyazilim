@@ -144,4 +144,4 @@ Kitaptan yararlanıyorsanız kaynağı aşağıdaki biçimde gösterebilirsiniz;
 
 Bir web sayfasından ya da dokümandan bağlantı vermek için şu satırı kullanabilirsiniz: `<a href="https://aviyonikyazilim.com/kitap">DO-178C ile Emniyet-Kritik Aviyonik Yazılım</a>`
 
-Yeni blog yazılarını RSS ile takip etmek için akış adresi `https://aviyonikyazilim.com/blog/rss.xml` şeklindedir. Düzeltme ve katkı önerileri için [GitHub deposunu](https://github.com/Mavrikant/aviyonikyazilim) kullanabilirsiniz.
+Yeni blog yazılarını RSS ile takip etmek için akış adresi `https://aviyonikyazilim.com/blog/rss.xml` şeklindedir. Düzeltme ve katkı önerileri için [GitHub deposunu](https://github.com/Mavrikant/aviyonikyazilim) ya da GitHub kullanmayanlar için e-posta yolunu da gösteren [ana sayfadaki katkı bölümünü](/#katki) kullanabilirsiniz.

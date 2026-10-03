@@ -38,6 +38,17 @@
   overflow-wrap: anywhere;
 }
 
+/* Gösterilen adres de bağlantı olduğu anlaşılsın: yalnızca renkle ayırt edilmez. */
+.adresBaglanti {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentcolor 35%, transparent);
+  text-underline-offset: 3px;
+}
+
+.adresBaglanti:hover {
+  text-decoration-color: currentcolor;
+}
+
 .noscript {
   font-size: 0.95em;
 }

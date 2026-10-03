@@ -4,9 +4,10 @@ import clsx from 'clsx';
 import styles from './styles.module.css';
 
 /*
- * E-posta düğmesi: adres ve "mailto:" şeması sayfa kaynağında (HTML ve JS dosyalarında)
- * düz metin olarak bulunmaz; adres toplayan botlar bunları tarar. Parçalar yalnızca
- * kullanıcı düğmeye bastığında tarayıcıda birleştirilir.
+ * E-posta düğmesi: adres ve "mailto:" şeması sayfa kaynağında (HTML ve bu bileşenin kendi
+ * JS parçasında) düz metin olarak bulunmaz; adres toplayan botlar bunları tarar. Parçalar
+ * yalnızca kullanıcı düğmeye bastığında tarayıcıda birleştirilir. (Üçüncü taraf JS paketleri
+ * — Docusaurus yazar kartı, Markdown kütüphanesi — "mailto:" dizgisini kendileri taşır.)
  *
  * Basılınca iki şey olur: e-posta uygulaması açılır (mailto) ve adres görünür,
  * seçilebilir metin olarak ve gerçek bir bağlantıyla gösterilir; böylece web
@@ -43,9 +44,21 @@ type Props = {
   adresClassName?: string;
   /** Düğme etiketi, örn. "Kitap öner". */
   children: ReactNode;
+  /**
+   * JavaScript kapalıyken düğme çalışmaz; true ise cümlenin sonuna GitHub konu formunu
+   * gösteren kısa bir <noscript> notu eklenir. Aynı sayfada tekrar etmemesi için yalnızca
+   * sayfadaki tek bir kullanımda verilir.
+   */
+  noscriptHint?: boolean;
 };
 
-export default function Eposta({subject, className, adresClassName, children}: Props): ReactNode {
+export default function Eposta({
+  subject,
+  className,
+  adresClassName,
+  children,
+  noscriptHint = false,
+}: Props): ReactNode {
   const [adres, setAdres] = useState<string | null>(null);
   const baglanti = useRef<HTMLAnchorElement>(null);
 
@@ -71,16 +84,21 @@ export default function Eposta({subject, className, adresClassName, children}: P
       {adres && (
         <span className={clsx(styles.adres, adresClassName)}>
           {' '}
-          (<a ref={baglanti} href={postaBaglantisi(adres, subject)}>{adres}</a>)
+          (
+          <a ref={baglanti} className={styles.adresBaglanti} href={postaBaglantisi(adres, subject)}>
+            {adres}
+          </a>
+          )
         </span>
       )}
-      <noscript>
-        <span className={styles.noscript}>
-          {' '}
-          E-posta düğmesi JavaScript gerektirir; bunun yerine{' '}
-          <a href={ISSUES_URL}>GitHub konu formunu</a> kullanabilirsiniz.
-        </span>
-      </noscript>
+      {noscriptHint && (
+        <noscript>
+          <span className={styles.noscript}>
+            {' '}
+            (JavaScript gerekir; bunun yerine <a href={ISSUES_URL}>GitHub konu formunu</a> kullanın)
+          </span>
+        </noscript>
+      )}
     </>
   );
 }

@@ -45,7 +45,9 @@ Docusaurus yapılandırmasındaki `url` ve `baseUrl` değerleri
 
 Alan adı değişirse `url`/`baseUrl`, `static/CNAME` ve `static/` altındaki redirect
 stub'ları birlikte güncellenmelidir; aksi hâlde CSS/JS dosyaları 404 verir ve site
-"baseUrl" hata kutusuyla açılır.
+stilsiz/bozuk açılır. `docusaurus.config.ts` içinde `baseUrlIssueBanner: false`
+olduğundan Docusaurus'un "baseUrl" hata kutusu gösterilmez; hata ayıklarken bu seçeneği
+geçici olarak `true` yapın.
 
 ### 3. Google Search Console
 

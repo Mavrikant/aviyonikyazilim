@@ -13,19 +13,19 @@ a429:
 afdx:
   label: AFDX
   permalink: /afdx
-  description: AFDX (ARINC 664) yazıları; aviyonik tam çift yönlü anahtarlamalı Ethernet, deterministik iletişim, yedeklilik, hizmet kalitesi ve uçak ağ topolojileri.
+  description: AFDX (ARINC 664 Bölüm 7) yazıları; aviyonik tam çift yönlü anahtarlamalı Ethernet, deterministik iletişim, yedeklilik, hizmet kalitesi ve uçak ağ topolojileri.
 sca:
   label: SCA
   permalink: /sca
-  description: SCA (yapısal kapsam analizi) yazıları; satır, karar, koşul ve MC/DC kapsama türleri ile testlerde çalışmayan kodların nasıl değerlendirildiği.
+  description: SCA (yapısal kapsam analizi) yazıları; yapısal programlamadan satır, karar, koşul ve MC/DC kapsama ölçütlerine ve hangi kodun çalıştığının ölçülmesine.
 do-178c:
   label: DO-178C
   permalink: /do-178c
-  description: DO-178C ile aviyonik yazılım sertifikasyonu üzerine yazılar; doğrulama beklentileri, yapısal kapsam analizi ve kapsanmayan kodların yönetimi.
+  description: DO-178C bağlamında aviyonik yazılım yazıları; yapısal kapsam analizinde kapsanmayan kodlar ve ölü, gereksiz ile devre dışı bırakılmış kodun nasıl ele alındığı.
 yapisal-kapsam-analizi:
   label: Yapısal kapsam analizi
   permalink: /yapisal-kapsam-analizi
-  description: Yapısal kapsam analizi nedir, hangi ölçütlerle yapılır? Yapısal programlamadan MC/DC'ye uzanan kapsama türlerini C örnekleriyle anlatan yazılar.
+  description: Yapısal kapsam analizi nedir, hangi ölçütlerle yapılır? Yapısal programlamadan MC/DC'ye uzanan kapsama türlerini bir C örneği üzerinden anlatan yazılar.
 structural-coverage-analysis:
   label: structural coverage analysis
   permalink: /structural-coverage-analysis
@@ -33,11 +33,11 @@ structural-coverage-analysis:
 olu-kod:
   label: Ölü Kod (Dead Code)
   permalink: /olu-kod
-  description: Ölü kod (dead code) nedir? Hiçbir koşulda çalışmayan kodun yapısal kapsam analizinde nasıl ortaya çıktığı, nasıl tespit edildiği ve DO-178C'deki yeri.
+  description: Ölü kod (dead code) nedir? Hiçbir koşulda çalışmayan kodun yapısal kapsam analizinde nasıl ortaya çıktığı ve derleyici ile statik analiz araçlarıyla tespiti.
 gereksiz-kod:
   label: Gereksiz Kod (Extraneous Code)
   permalink: /gereksiz-kod
-  description: Gereksiz kod (extraneous code) nedir? Çalışan ama sonuca etkisi olmayan kodun yapısal kapsam analizindeki görünümü ve bakım açısından taşıdığı riskler.
+  description: Gereksiz kod (extraneous code) nedir? İşlevsellik için zorunlu olmayan ama çalıştırılabilen kodun yapısal kapsam analizindeki görünümü ve bakım riskleri.
 devre-disi-birakilmis-kod:
   label: Devre Dışı Bırakılmış Kod (Deactivated Code)
   permalink: /devre-disi-birakilmis-kod

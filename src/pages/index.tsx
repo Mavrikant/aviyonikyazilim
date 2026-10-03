@@ -14,7 +14,7 @@ import useHomepageData, {
 
 import styles from './index.module.css';
 
-const TITLE = 'DO-178C, Test ve Sertifikasyon: Türkçe Kitap';
+const TITLE = 'DO-178C, Test ve Sertifikasyon Kitabı';
 const DESCRIPTION =
   'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
@@ -250,7 +250,7 @@ export default function Home(): ReactNode {
               </ol>
               <p className={styles.altPath}>
                 GitHub kullanmıyor musunuz? Düzeltme ve önerilerinizi{' '}
-                <Eposta subject="Düzeltme önerisi" className={styles.altMail}>
+                <Eposta subject="Düzeltme önerisi" className={styles.altMail} noscriptHint>
                   e-postayla gönderebilirsiniz
                 </Eposta>
                 .

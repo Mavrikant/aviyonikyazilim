@@ -398,15 +398,22 @@
   color: var(--ink);
 }
 
-/* E-posta düğmesine basılınca gösterilen adres: satırın altında kendi sırasına geçer. */
-.qrhLine:has(.qrhAddress) {
-  flex-wrap: wrap;
-}
-
+/* E-posta düğmesine basılınca gösterilen adres. :has() destekleyen tarayıcılarda satırın
+   altında kendi sırasına geçer; desteklemeyenlerde düğmenin yanında satır içi kalır
+   (taşma olmaz). */
 .qrhAddress {
-  flex: 1 0 100%;
   text-align: right;
   text-transform: none;
+}
+
+@supports selector(:has(*)) {
+  .qrhLine:has(.qrhAddress) {
+    flex-wrap: wrap;
+  }
+
+  .qrhAddress {
+    flex: 1 0 100%;
+  }
 }
 
 .qrhDetail {
@@ -471,6 +478,14 @@
   font-size: 1.5rem;
   font-weight: 650;
   letter-spacing: -0.02em;
+}
+
+/* İki sütunlu düzenin dar aralığında ("Aviyonik yazılım kütüphanesi" + bağlantı) başlık
+   tek satırda kalsın; yoksa kütüphane başlığı iki satıra çıkıp blog sütunuyla hizasını bozar. */
+@media (min-width: 997px) and (max-width: 1119px) {
+  .lower .sectionTitle {
+    font-size: 1.2rem;
+  }
 }
 
 .legend {

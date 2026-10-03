@@ -36,7 +36,9 @@ plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriorit
 plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
-src/theme/                Docusaurus tema sarmalayıcıları (kitap JSON-LD, blog listesi H1)
+src/theme/                Tema özelleştirmeleri: DocItem/Metadata ve Blog/Pages/BlogAuthorsPostsPage
+                          (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+                          kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
 src/css/fonts.css         @font-face tanımları (yalnızca latin + latin-ext alt kümeleri)
 src/components/GostergePaneli/  Ana sayfadaki canlı PFD (uçuş modeli, duraklat/oynat tuşu)
@@ -144,7 +146,10 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 3. `<!-- truncate -->` işareti **zorunludur**; `onUntruncatedBlogPosts: 'throw'` olduğu
    için işareti olmayan yazı build'i kırar.
 4. `tags` değerleri `blog/tags.yml` içinde tanımlı olmalıdır (yeni etiket önce oraya
-   eklenir; `onInlineTags: 'throw'`).
+   eklenir; `onInlineTags: 'throw'`). Her etikete 160 karakteri aşmayan, o etiketli
+   yazıların gerçekten kapsadığı konuyu anlatan bir `description` yazılır (etiket
+   sayfasının meta açıklaması ve görünen girişi olur). YAML'da düz metin içinde `: `
+   bulunmamalıdır. Yazıya isteğe bağlı `keywords: ["…"]` eklenebilir.
 5. Görseller `static/img/blog/<slug>/` altına indirilir ve `/img/blog/<slug>/dosya.png`
    yoluyla bağlanır. **Harici (googleusercontent, blogspot, wikimedia vb.) görsel
    bağlantısı bırakılmaz.** Görsel kuralları için "Performans ve arama motoru"
@@ -253,18 +258,25 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   arşiv ve yazar listeleri sitemap'e alınmaz. `static/robots.txt` sitemap'i gösterir.
 - **Site kimliği:** her sayfada `docusaurus.config.ts` içindeki `identityGraph`
   (schema.org `Organization` + `Person` + `WebSite`, `@id` ile bağlı) bulunur; Google
-  bunu site adı ve yayıncı bilgisi için kullanır. Yalnızca depoda doğrulanabilen alanlar
-  yazılır (uydurma profil, adres, puan eklenmez). Kitap sayfaları `src/theme/DocItem/Metadata/`
-  ile `Book`/`TechArticle` verisi taşır; kütüphane önerileri `Review`/`Book` olarak
-  işaretlenmez.
-- **Anahtar kelime:** ana ifade "aviyonik yazılım" başlıkta, açıklamada ve H1'de **yalın
-  hâliyle** geçer (Türkçe ekler basit tarayıcıları şaşırtır); ikincil ifadeler DO-178C,
-  emniyet-kritik, sertifikasyon, test. Doldurma yapılmaz; ayrıntı: `SEO.md`.
+  bunu site adı ve kimlik bilgisi için kullanabilir. Yalnızca depoda doğrulanabilen
+  alanlar yazılır (uydurma profil, adres, puan eklenmez). `/kitap` sayfası `Book` ve
+  `TechArticle`, diğer kitap sayfaları `TechArticle` taşır (`src/theme/DocItem/Metadata/`);
+  kütüphane önerileri `Review`/`Book` olarak işaretlenmez. `BreadcrumbList`
+  (`src/theme/DocBreadcrumbs/StructuredData/`) en az iki öğe içerir ve adresleri
+  `trailingSlash: false` ayarına uyar.
+- **Anahtar kelime:** ana ifade "aviyonik yazılım" başlıkta (site adı eki), açıklamada ve
+  H1'de **yalın hâliyle** geçer (Türkçe ekler basit tarayıcıları şaşırtır); ikincil
+  ifadeler DO-178C, emniyet-kritik, sertifikasyon, test. Doldurma yapılmaz. Başlık +
+  site adı eki ~60 karakteri aşmamalıdır; ayrıntı: `SEO.md`.
 - **E-posta:** adres düz metin olarak yazılmaz (botlar toplar). `<Eposta subject="…">`
-  bileşeni adresi yalnızca tıklamada tarayıcıda birleştirir; `grep -r "mailto:" build`
-  boş dönmelidir. Footer ve `.md` içeriğinde `mailto:` bağlantısı bırakılmaz.
+  bileşeni adresi yalnızca tıklamada tarayıcıda birleştirir. Denetim:
+  `grep -rIlE "serdar@|karaman\.dev" build` ve `grep -rIl "mailto:" build --include='*.html'`
+  boş dönmelidir (JS paketlerindeki üçüncü taraf `mailto:` dizgeleri — Docusaurus yazar
+  kartı, Markdown kütüphanesi — sayılmaz). Footer ve `.md` içeriğinde `mailto:`
+  bağlantısı bırakılmaz.
 - **Satır içi stil yok:** `style="…"`/`style={{…}}` kullanılmaz; kural CSS sınıfıyla
-  yazılır. Build çıktısındaki HTML'i yeniden yazan her düzenleme `plugins/font-preload.ts`
+  yazılır (tek bilinen istisna: kod bloklarındaki Prism renk öznitelikleri — `socials`
+  ile yazar sosyal simgesi de `style` ekler, bu yüzden `authors.yml`'ye eklenmez). Build çıktısındaki HTML'i yeniden yazan her düzenleme `plugins/font-preload.ts`
   içindeki tek geçişe eklenir: Docusaurus `postBuild` kancalarını **paralel** çalıştırdığı
   için aynı dosyaları okuyup yazan ikinci bir eklenti değişikliği sessizce kaybeder.
 - **`llms.txt`** `plugins/llms-txt.ts` ile build sırasında üretilir; elle düzenlenmez.
