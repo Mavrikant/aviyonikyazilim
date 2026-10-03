@@ -27,7 +27,11 @@ kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni için .mdx)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
-araclar/                  Tarayıcıda çalışan simülatörler (routeBasePath: /araclar)
+araclar/                  Tarayıcıda çalışan araçlar (routeBasePath: /araclar); giriş sayfası katalogdur
+src/components/AracKatalogu/  Araçlar giriş sayfasındaki katalog (araclarSidebar'dan üretilir)
+src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/DME/TACAN/NDB, havalimanı, pist)
+src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
+scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
@@ -126,6 +130,9 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | uçuşa elverişlilik güvenliği | airworthiness security |
 | fabrika yüklemeli yazılım | factory-loadable software |
 | tam yetkili sayısal motor kontrolü | full authority digital engine control (FADEC) |
+| radyo seyrüsefer yardımcısı | radio navigation aid (navaid) |
+| tanıtım kodu | identifier (ident) |
+| manyetik sapma | magnetic variation |
 
 ## Yeni blog yazısı ekleme
 
@@ -208,6 +215,47 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - Ana sayfa CSS modülünde eleman seçicisi (`main a` gibi) kullanılmaz; modül CSS'i başka
   sayfalara geçildiğinde de yüklü kaldığı için kurallar sınıfa bağlanır.
 
+## Araçlar bölümü
+
+- Giriş sayfası (`araclar/index.mdx`) araçları **elle listelemez**; `<AracKatalogu />`
+  `plugins/homepage-data.ts`'in `araclarSidebar`'dan ürettiği listeyi kategoriye göre
+  gösterir. Araç sayfasının frontmatter'ı katalog şemasını ve özellik etiketlerini verir:
+  ```yaml
+  hide_table_of_contents: true
+  sidebar_custom_props:
+    simge: harita            # src/components/AracKatalogu/Simgeler.tsx içindeki anahtar
+    ozellikler: [Arama, Tam ekran, Gömülebilir]
+  ```
+- Araç sayfalarında **araç önce gelir**: başlık + kısa giriş paragrafının hemen
+  ardından bileşen, açıklamalar altta. İçerik sütunu bu sayfalarda geniştir
+  (`.plugin-id-araclar`), düz metin blokları okunur genişlikte kalır.
+- Kategoriler ayrı dizin sayfası üretmez (`_category_.json` içinde `link` yok);
+  eski `/araclar/category/...` adresleri `redirects` ile `/araclar`'a yönlenir.
+- **Navigasyon haritası verisi** elle düzenlenmez: `node scripts/navigasyon-verisi.mjs`
+  (poppler'ın `pdftotext` aracı gerekir) AIP Türkiye'nin meydan listesini (AD 0.6, AD 1.3),
+  ENR 4.1'i ve her meydanın AD 2 (2.1–2.2 genel bilgi, 2.12 pistler, 2.14 ışıklar, 2.18 frekanslar,
+  2.19 yardımcılar) ile
+  heliportların AD 3 bölümlerini indirip `scripts/aip-ayristir.mjs` ile ayrıştırır; AIP'de
+  olmayan tesisleri OurAirports'tan ekler ve `static/data/turkiye-navigasyon.json`'u yeniden
+  yazar. OurAirports'ta farklı kodla kayıtlı AIP meydanları betikteki `ICAO_ALIASES`
+  tablosuyla eşlenir. AIP istasyon bazında manyetik sapma yayımlamadığından istasyonlara
+  bağlı/en yakın meydanın AD 2.2 değeri verilir (kaynağı `varSrc` alanında). Her AIRAC
+  döngüsünde (28 gün) yeniden çalıştırılması önerilir. Ayrıştırıcı değişirse çıktı,
+  AIP'deki birkaç meydanla (ör. LTAC'ın altı ILS'i) elle karşılaştırılır.
+- **AIP Türkiye kullanım izni:** AIP telifle korunur (GEN 0.1, madde 5). DHMİ, Ekim
+  2026'da **ticari olmayan kullanımda kaynak gösterilmesi** koşuluyla izin vermiştir
+  (izin yazısı depo sahibindedir). Bu yüzden: site ticari hâle getirilmez/reklam
+  almaz; haritada "AIP Türkiye © DHMİ (AMDT nn/yy)" atfı (harita köşesi + durum
+  çubuğu) ve araç sayfasındaki kaynak bölümü kaldırılmaz; AIP PDF'leri depoya ya da
+  siteye konmaz, yalnızca ayrıştırılmış olgusal alanlar kullanılır. Sayfadaki
+  "seyrüsefer amaçlı kullanılmaz" uyarısı korunur.
+- Leaflet'in `leaflet.css` dosyası **import edilmez** (tüm CSS tek `styles.css`'e
+  girer); gereken çekirdek kurallar harita CSS modülünde `.harita` kapsamındadır.
+  Altlık karoları harici servislerden (OpenStreetMap, OpenTopoMap) gelir ve atıf
+  satırı korunur; API anahtarı isteyen servis kullanılmaz.
+- Gömme sayfaları (`src/pages/gom/`) `Layout` kullanmaz, `noindex` taşır ve
+  sitemap'ten `'/gom/**'` ile dışlanır.
+
 ## Görsel kimlik
 
 - Yazı tipleri: metin ve başlıklarda **IBM Plex Sans**, kod ve etiketlerde
@@ -232,7 +280,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
 - İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
   React bileşeni gerekmedikçe `.mdx` kullanılmaz (şu an yalnızca `<Eposta>` kullanan
-  `kutuphane/index.mdx` ve `araclar/index.mdx` ile VOR simülatörü sayfası).
+  `kutuphane/index.mdx` ve `araclar/index.mdx` ile araç sayfaları).
 - `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
   `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
   metin olarak basılır).

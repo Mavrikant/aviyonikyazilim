@@ -370,6 +370,18 @@ blockquote {
   font-weight: 500;
 }
 
+/* ---------- Araçlar ---------- */
+
+/* Araç sayfalarında içerik sütunu genişler (simülatör/harita paneli için);
+   düz metin blokları okunur genişlikte kalır. */
+.plugin-id-araclar .theme-doc-markdown {
+  max-width: 68rem;
+}
+
+.plugin-id-araclar .theme-doc-markdown > :is(p, ul, ol, h2, h3, blockquote, .theme-admonition, .theme-code-block, table) {
+  max-width: 46rem;
+}
+
 /* ---------- Blog ---------- */
 
 article header h1,

@@ -2,6 +2,10 @@
 title: "VOR Yakın Geçiş Simülatörü"
 description: "Bir VOR istasyonunun yakınından düz rotada geçerken alıcının ölçtüğü bearing değişim hızını; hız, yanal mesafe ve irtifaya göre canlı gösteren simülatör."
 sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: vor
+  ozellikler: [Simülasyon, Tam ekran, Canlı grafik]
 ---
 
 import VorSimulator from '@site/src/components/VorSimulator';
@@ -16,6 +20,8 @@ türetir; uçak istasyona doğru düz bir rotada uçmuyorsa bu bearing zamanla
 değişir. Bu araç, bir uçağın VOR istasyonunun yakınından düz bir rotada
 geçişi sırasında alıcının ölçtüğü **bearing değişim hızını (°/s)** canlı
 olarak gösterir.
+
+<VorSimulator />
 
 ## Neden istasyona yakınken bearing hızlı değişir?
 
@@ -60,7 +66,6 @@ Simülatörde bu davranış, yükseliş açısı belirli bir eşiği aştığın
   eder; değeri düşürdükçe ölçülen hız ham (gürültülü) değere yaklaşır,
   yükselttikçe daha yumuşak ama gecikmeli bir tepki elde edersiniz.
 
-<VorSimulator />
 
 :::info[Yatay mesafe ile eğik mesafe farkı]
 

@@ -194,6 +194,8 @@ const config: Config = {
           {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/kaynaklar/soi-4'},
           // Kütüphane kategori sayfalarının Türkçe karakter içeren eski adresleri (ASCII'ye taşındı).
           {from: '/kutuphane/category/emniyet-mühendisliği', to: '/kutuphane/category/emniyet-muhendisligi'},
+          // Araçlar kategorileri ayrı dizin sayfası yerine giriş sayfasındaki katalogda listelenir.
+          {from: '/araclar/category/navigasyon', to: '/araclar'},
           {from: '/kutuphane/category/gömülü-ve-gerçek-zamanlı-yazılım', to: '/kutuphane/category/gomulu-ve-gercek-zamanli-yazilim'},
           {from: '/kutuphane/category/standartlar-ve-kılavuz-dokümanlar', to: '/kutuphane/category/standartlar-ve-kilavuz-dokumanlar'},
         ],
@@ -253,7 +255,7 @@ const config: Config = {
           changefreq: null,
           priority: null,
           // Yalnızca liste işlevi gören, özgün içeriği olmayan sayfalar.
-          ignorePatterns: ['/blog/tags/**', '/blog/archive', '/blog/authors/**', '/blog/page/**'],
+          ignorePatterns: ['/blog/tags/**', '/blog/archive', '/blog/authors/**', '/blog/page/**', '/gom/**'],
         },
       } satisfies Preset.Options,
     ],
