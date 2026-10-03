@@ -1,5 +1,6 @@
 ---
 title: "Gerçek Zamanlı Sistemler: Hız Değil, Garanti"
+description: "Gerçek zamanlılık hız değil, zaman sınırına her koşulda uyma garantisidir. Mutlak, katı ve esnek gerçek zamanlı sistemler; WCET, RTOS ve zamanlama algoritmaları."
 slug: gercek-zamanli-sistemler
 authors: [serdar]
 tags: [gercek-zamanli-sistemler, rtos, aviyonik]

@@ -1,11 +1,12 @@
 ---
 title: "Aviyonik, aviyonik sistemler nedir?"
+description: "Aviyonik nedir? Terimin kökeni ile iletişim, seyrüsefer, uçuş kontrol, gözetim ve gösterim gibi uçağın elektronik sistemlerine kısa bir giriş."
 slug: aviyonik-nedir
 authors: [serdar]
 tags: [aviyonik, aviyonik-sistemler]
 ---
 
-![Photo of a modern aircraft cockpit showcasing various avionic systems.](/img/blog/aviyonik-nedir/gorsel-1.jpg "Photo of a modern aircraft cockpit showcasing various avionic systems.")
+![Çeşitli aviyonik sistemlerin yer aldığı modern bir uçak kokpiti](/img/blog/aviyonik-nedir/gorsel-1.webp "Modern bir uçak kokpiti")
 
 
 ### Terimin Kökeni

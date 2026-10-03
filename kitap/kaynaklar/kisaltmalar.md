@@ -1,9 +1,10 @@
 ---
 title: "Kısaltmalar"
+description: "Aviyonik ve DO-178C kısaltmaları sözlüğü: havacılıkta sık karşılaşılan kısaltmaların A'dan Z'ye İngilizce açılımları."
 sidebar_position: 1
 ---
 
-![an illustration that shows a person in the cockpit, looking puzzled with avionics acronyms floating around them. This image captures the feeling of being overwhelmed by the complexity of avionics terminology in a humorous and relatable way.](/img/kitap/kisaltmalar/gorsel-1.jpg "an illustration that shows a person in the cockpit, looking puzzled with avionics acronyms floating around them. This image captures the feeling of being overwhelmed by the complexity of avionics terminology in a humorous and relatable way.")
+![Kokpitte, etrafında uçuşan aviyonik kısaltmaları karşısında şaşkın bakan bir kişiyi gösteren mizahi illüstrasyon](/img/kitap/kisaltmalar/gorsel-1.webp "Aviyonik kısaltmalar karşısında şaşkınlık")
 
 Aviyonik sektörü, hava taşıtlarının elektronik sistemlerinin tasarımı, üretimi ve bakımı ile ilgili bir alandır. Bu sektörde, karmaşık sistemlerin ve işlemlerin anlaşılmasını kolaylaştırmak amacıyla çeşitli kısaltmalar yaygın olarak kullanılmaktadır. Bu kısaltmalar, sektör profesyonelleri arasında hızlı ve etkili iletişim sağlamak için büyük önem taşır. Ancak, sektöre yeni başlayanlar veya dışarıdan bakanlar için bu kısaltmalar, anlaşılması güç bir dil gibi görünebilir. Bu nedenle, aviyonik terimlerini ve kısaltmalarını detaylı bir şekilde açıklamak, bu karmaşık alanın daha iyi anlaşılmasına yardımcı olacaktır.
 

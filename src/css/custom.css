@@ -4,15 +4,8 @@
  * Kimlik: "yapay ufuk" (attitude indicator) teması.
  * Lacivert gökyüzü + amber zemin; metin ve başlıklarda IBM Plex Sans,
  * kodda ve etiketlerde IBM Plex Mono (hepsi self-hosted, Türkçe latin-ext dahil).
+ * @font-face tanımları src/css/fonts.css içindedir.
  */
-
-@import '@fontsource-variable/ibm-plex-sans/wght.css';
-@import '@fontsource-variable/ibm-plex-sans/wght-italic.css';
-@import '@fontsource/ibm-plex-mono/400.css';
-@import '@fontsource/ibm-plex-mono/400-italic.css';
-@import '@fontsource/ibm-plex-mono/500.css';
-@import '@fontsource/ibm-plex-mono/600.css';
-@import '@fontsource/ibm-plex-mono/700.css';
 
 :root {
   /* Marka renkleri */

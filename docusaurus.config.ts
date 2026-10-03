@@ -2,6 +2,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import homepageData from './plugins/homepage-data';
+import fontPreload from './plugins/font-preload';
+import {parseFrontMatter} from './plugins/meta-description';
+import remarkLcpImage from './plugins/remark-lcp-image';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -28,6 +31,8 @@ const config: Config = {
   markdown: {
     format: 'detect',
     mermaid: true,
+    // description frontmatter'ı yoksa ilk paragraftan meta açıklaması üretir.
+    parseFrontMatter,
     hooks: {
       onBrokenMarkdownLinks: 'throw',
     },
@@ -38,6 +43,8 @@ const config: Config = {
   plugins: [
     // Ana sayfa listelerini (kitap, son yazılar, kütüphane, araçlar) build sırasında üretir.
     homepageData,
+    // IBM Plex Sans dosyalarını build sonrası her sayfaya preload olarak ekler.
+    fontPreload,
     [
       '@docusaurus/plugin-content-docs',
       {
@@ -47,6 +54,8 @@ const config: Config = {
         breadcrumbs: true,
         sidebarPath: './sidebarsKutuphane.ts',
         editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+        showLastUpdateTime: true,
+        remarkPlugins: [remarkLcpImage],
       },
     ],
     [
@@ -58,6 +67,8 @@ const config: Config = {
         breadcrumbs: true,
         sidebarPath: './sidebarsAraclar.ts',
         editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+        showLastUpdateTime: true,
+        remarkPlugins: [remarkLcpImage],
       },
     ],
     [
@@ -97,6 +108,10 @@ const config: Config = {
           breadcrumbs: true,
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+          // Sayfada "Son güncelleme" tarihi; sitemap <lastmod> da bu veriden beslenir.
+          showLastUpdateTime: true,
+          // Sayfa başındaki görsel (LCP adayı) tembel yüklenmesin.
+          remarkPlugins: [remarkLcpImage],
         },
         blog: {
           routeBasePath: 'blog',
@@ -110,12 +125,24 @@ const config: Config = {
             description: 'Aviyonik yazılım, test ve sertifikasyon üzerine yazılar',
           },
           editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+          showLastUpdateTime: true,
+          remarkPlugins: [remarkLcpImage],
           onInlineTags: 'throw',
           onInlineAuthors: 'throw',
           onUntruncatedBlogPosts: 'throw',
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: ['./src/css/fonts.css', './src/css/custom.css'],
+        },
+        sitemap: {
+          // Son değişiklik tarihi git geçmişinden okunur (showLastUpdateTime +
+          // deploy.yml'deki fetch-depth: 0 gerektirir).
+          // Google changefreq/priority alanlarını yok sayar.
+          lastmod: 'date',
+          changefreq: null,
+          priority: null,
+          // Yalnızca liste işlevi gören, özgün içeriği olmayan sayfalar.
+          ignorePatterns: ['/blog/tags/**', '/blog/archive', '/blog/authors/**', '/blog/page/**'],
         },
       } satisfies Preset.Options,
     ],

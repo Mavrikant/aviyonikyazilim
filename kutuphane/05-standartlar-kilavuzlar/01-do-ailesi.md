@@ -1,5 +1,6 @@
 ---
 title: "DO-178C ve Ekleri"
+description: "DO-178C ve ekleri DO-330, DO-331, DO-332, DO-333 ile DO-248C: RTCA doküman ailesinin tanıtımı, hangisinin ne işe yaradığı ve nereden edinileceği."
 sidebar_position: 1
 ---
 

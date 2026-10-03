@@ -1,5 +1,6 @@
 ---
 title: "SW SOI-1"
+description: "SOI #1 planlama denetimi: yazılım planları ve standartların otoriteyle ilk resmî gözden geçirmesinde amaç, ana faaliyetler ve otoritenin beklentileri."
 sidebar_position: 2
 ---
 
