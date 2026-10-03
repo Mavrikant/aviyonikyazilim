@@ -4,6 +4,7 @@ description: "Aviyonik nedir? Terimin kökeni ile iletişim, seyrüsefer, uçuş
 slug: aviyonik-nedir
 authors: [serdar]
 tags: [aviyonik, aviyonik-sistemler]
+keywords: ["aviyonik nedir", "aviyonik sistemler", "avionics", "uçak elektronik sistemleri", "seyrüsefer (navigasyon) sistemleri"]
 ---
 
 ![Çeşitli aviyonik sistemlerin yer aldığı modern bir uçak kokpiti](/img/blog/aviyonik-nedir/gorsel-1.webp "Modern bir uçak kokpiti")
@@ -23,7 +24,7 @@ Aviyonik, hava taşıtlarında kullanılan elektronik sistemleri genel bir terim
 Bu sistemler, VHF radyoları, uydu iletişim sistemleri ve transponderlar gibi ekipmanları içerir. Özellikle, uydu iletişimi sayesinde, uçaklar okyanuslar üzerindeyken bile sürekli iletişimde kalabilirler.
 
 **Seyrüsefer (Navigasyon) Sistemleri:\**
-Küresel Konumlama Sistemi (GPS) bu kategorinin en bilinen örneğidir. Ancak, inertial navigasyon sistemleri (INS) ve VOR/DME gibi radyo frekansı tabanlı sistemler de önemlidir. Bu sistemler, uçağın konumunu hassas bir şekilde belirlemesini sağlar.
+Küresel Konumlama Sistemi (GPS) bu kategorinin en bilinen örneğidir. Ancak, inertial navigasyon sistemleri (INS) ve VOR/DME gibi radyo frekansı tabanlı sistemler de önemlidir. Bu sistemler, uçağın konumunu hassas bir şekilde belirlemesini sağlar. VOR istasyonunun yakınından geçerken yön açısının nasıl değiştiğini [VOR yakın geçiş simülatöründe](/araclar/navigasyon/vor-yakin-gecis-simulatoru) canlı olarak görebilirsiniz.
 
 **Uçuş Kontrol Sistemleri:\**
 Bu kategoride otomatik pilotlar, uçuş yönetim sistemleri (FMS) ve fly-by-wire kontrol sistemleri yer alır. Özellikle fly-by-wire sistemleri, pilot komutlarını elektronik sinyallere dönüştürerek hidrolik sistemler yerine uçağın kontrolünü sağlar.
@@ -45,3 +46,5 @@ Bu, genellikle ticari uçaklarda bulunan bir özelliktir. Eğlence sistemleri, f
 Askeri uçaklarda, silah sistemlerinin etkin ve doğru bir şekilde kullanılabilmesi için elektronik sistemler kullanılır.
 
 Aviyonik sistemleri, modern havacılığın vazgeçilmez bir parçasıdır. Uçakların güvenli, verimli ve etkili bir şekilde işlemesini sağlayan bu sistemler, giderek daha karmaşık ve ileri teknoloji ürünü hale gelmektedir.
+
+Aviyonik sistemler arasındaki veri iletişimini [ARINC 429](2023-08-21-arinc-429.md) ve [AFDX](2023-08-23-afdx-nedir.md) yazılarında, bu sistemlerdeki yazılımın uçak sistemleriyle ilişkisini ise kitaptaki [Sistem Bağlamında Yazılım](/kitap/baglam/sistem-baglaminda-yazilim) bölümünde bulabilirsiniz.

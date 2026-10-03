@@ -1,0 +1,43 @@
+/* E-posta düğmesi: davranışı düğme, görünümü site bağlantılarıyla aynı.
+   Yazı tipi, harf aralığı ve büyük/küçük harf ayarı çevreden miras alınır;
+   böylece paragrafta, kontrol listesinde ve uyarı kutularında uyumlu görünür. */
+
+.dugme {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ifm-link-color);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  /* Metin içinde yalnızca renkle ayırt edilmesin: belge bağlantılarındaki soluk alt çizgi */
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ifm-link-color) 35%, transparent);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.dugme:hover {
+  color: var(--ifm-link-hover-color);
+  text-decoration-color: currentcolor;
+}
+
+.dugme:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.adres {
+  overflow-wrap: anywhere;
+}
+
+.noscript {
+  font-size: 0.95em;
+}

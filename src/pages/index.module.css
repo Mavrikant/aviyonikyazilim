@@ -300,15 +300,21 @@
   line-height: 1.6;
 }
 
-.altPath a {
+.altPath a,
+.altPath .altMail {
   color: var(--ink);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.altPath a:hover {
+.altPath a:hover,
+.altPath .altMail:hover {
   color: var(--ifm-color-primary);
+}
+
+.altPath .altMail {
+  text-decoration-color: currentcolor;
 }
 
 .contributeActions {
@@ -377,16 +383,30 @@
   font-weight: 600;
 }
 
-a.qrhResponse {
+/* Bağlantı ya da e-posta düğmesi olan yanıtlar; iki sınıf, bileşenin kendi
+   düğme stilinden bağımsız olarak üstün gelir. */
+.qrhLine .qrhAction {
   color: var(--ifm-color-primary);
+  font-weight: 600;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-decoration-color: var(--accent);
   text-underline-offset: 3px;
 }
 
-a.qrhResponse:hover {
+.qrhLine .qrhAction:hover {
   color: var(--ink);
+}
+
+/* E-posta düğmesine basılınca gösterilen adres: satırın altında kendi sırasına geçer. */
+.qrhLine:has(.qrhAddress) {
+  flex-wrap: wrap;
+}
+
+.qrhAddress {
+  flex: 1 0 100%;
+  text-align: right;
+  text-transform: none;
 }
 
 .qrhDetail {
@@ -893,5 +913,9 @@ a.qrhResponse:hover {
 
   .qrhResponse {
     flex-basis: 100%;
+  }
+
+  .qrhAddress {
+    text-align: left;
   }
 }

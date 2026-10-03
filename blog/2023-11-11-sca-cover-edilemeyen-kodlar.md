@@ -4,13 +4,14 @@ description: "Yapısal kapsam analizinde (SCA) kapsanamayan kodlar: ölü kod, g
 slug: sca-cover-edilemeyen-kodlar
 authors: [serdar]
 tags: [do-178c, olu-kod, gereksiz-kod, devre-disi-birakilmis-kod]
+keywords: ["ölü kod (dead code)", "gereksiz kod (extraneous code)", "devre dışı bırakılmış kod (deactivated code)", "kapsanmayan kod", "yapısal kapsam analizi", "DO-178C"]
 ---
 
-!["yazılım geliştirmede 'ölü kod' konsepti" konusunu mizahi bir şekilde tasvir eden resim. Bu tasvir, bilgisayar kodlarından oluşan mezarlık sahnesi, farklı yazılarla süslenmiş mezar taşları ve hayaletimsi kod figürleri içermekte. Sahne aydınlık ve çizgi film tarzında tasarlanmış.](/img/blog/sca-cover-edilemeyen-kodlar/gorsel-1.webp "Ölü kodlar mezarlığı")
+![Ölü kod kavramını mizahi biçimde anlatan, kod yazılı mezar taşları ve hayaletlerle dolu çizgi film tarzında bir mezarlık sahnesi](/img/blog/sca-cover-edilemeyen-kodlar/gorsel-1.webp "Ölü kodlar mezarlığı")
 
 Yapısal kapsama analizi(Structural Coverage Analysis - SCA) , yazılım test süreçlerinde hayati role sahip bir yöntemdir. Bu analiz, yazılımın kod kapsamını değerlendirerek hangi kod bölümlerinin testler sırasında çalıştırıldığını veya çalıştırılmadığını belirlemeye yardımcı olur. Ana hedef, yazılımın her bir satırının (statement), dalının (branch) ve koşulunun (condition) uygun şekilde test edilip edilmediğini kontrol etmektir.
 
-Bu konu özellikle [Yazılım Doğrulama](pathname:///kitap/do178c-ile-gelistirme/yazilim-dogrulama) ve [Kapsanmayan Kodlar](pathname:///kitap/ozel-konular/kapsanmayan-kodlar) bölümleriyle birlikte okunursa, hangi kodun neden kapsanmadığı daha net görünür.
+Bu konu özellikle [Yazılım Doğrulama](/kitap/do178c-ile-gelistirme/yazilim-dogrulama) ve [Kapsanmayan Kodlar](/kitap/ozel-konular/kapsanmayan-kodlar) bölümleriyle birlikte okunursa, hangi kodun neden kapsanmadığı daha net görünür. SCA'nın kendisini ve kapsama türlerini ise [Yapısal kapsam analizi](2024-03-11-yapisal-kapsam-analizi.md) yazısında bulabilirsiniz.
 
 <!-- truncate -->
 

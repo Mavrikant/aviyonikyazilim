@@ -1,5 +1,8 @@
 serdar:
   name: M. Serdar Karaman
   title: Aviyonik Yazılım Mühendisi
+  description: M. Serdar Karaman, aviyonik yazılım mühendisi. Aviyonik yazılım, DO-178C, yapısal kapsam analizi, ARINC 429, AFDX ve gerçek zamanlı sistemler üzerine yazıyor.
   url: https://github.com/Mavrikant
+  socials:
+    github: Mavrikant
   page: true

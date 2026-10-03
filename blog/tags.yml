@@ -1,39 +1,52 @@
 aviyonik:
   label: aviyonik
   permalink: /aviyonik
+  description: Aviyonik sistemler ve aviyonik yazılım üzerine blog yazıları; veri yolları, temel kavramlar ve gerçek zamanlı yazılım konularını bir arada bulabilirsiniz.
 aviyonik-sistemler:
   label: aviyonik sistemler
   permalink: /aviyonik-sistemler
+  description: Uçaklardaki iletişim, seyrüsefer, uçuş kontrol, gözetim ve gösterim sistemlerini tanıtan, aviyoniğe yeni başlayanlara yönelik temel düzey yazılar.
 a429:
   label: A429
   permalink: /a429
+  description: ARINC 429 seri veri yolu yazıları; 32 bitlik kelime yapısı, etiket, SDI, SSM ve parity alanları ile aviyonik sistemler arasındaki veri iletimi.
 afdx:
   label: AFDX
   permalink: /afdx
+  description: AFDX (ARINC 664) yazıları; aviyonik tam çift yönlü anahtarlamalı Ethernet, deterministik iletişim, yedeklilik, hizmet kalitesi ve uçak ağ topolojileri.
 sca:
   label: SCA
   permalink: /sca
+  description: SCA (yapısal kapsam analizi) yazıları; satır, karar, koşul ve MC/DC kapsama türleri ile testlerde çalışmayan kodların nasıl değerlendirildiği.
 do-178c:
   label: DO-178C
   permalink: /do-178c
+  description: DO-178C ile aviyonik yazılım sertifikasyonu üzerine yazılar; doğrulama beklentileri, yapısal kapsam analizi ve kapsanmayan kodların yönetimi.
 yapisal-kapsam-analizi:
   label: Yapısal kapsam analizi
   permalink: /yapisal-kapsam-analizi
+  description: Yapısal kapsam analizi nedir, hangi ölçütlerle yapılır? Yapısal programlamadan MC/DC'ye uzanan kapsama türlerini C örnekleriyle anlatan yazılar.
 structural-coverage-analysis:
   label: structural coverage analysis
   permalink: /structural-coverage-analysis
+  description: Structural coverage analysis (yapısal kapsam analizi) üzerine yazılar; kapsama ölçütlerinin DO-178C doğrulama sürecindeki yeri ve MC/DC yaklaşımı.
 olu-kod:
   label: Ölü Kod (Dead Code)
   permalink: /olu-kod
+  description: Ölü kod (dead code) nedir? Hiçbir koşulda çalışmayan kodun yapısal kapsam analizinde nasıl ortaya çıktığı, nasıl tespit edildiği ve DO-178C'deki yeri.
 gereksiz-kod:
   label: Gereksiz Kod (Extraneous Code)
   permalink: /gereksiz-kod
+  description: Gereksiz kod (extraneous code) nedir? Çalışan ama sonuca etkisi olmayan kodun yapısal kapsam analizindeki görünümü ve bakım açısından taşıdığı riskler.
 devre-disi-birakilmis-kod:
   label: Devre Dışı Bırakılmış Kod (Deactivated Code)
   permalink: /devre-disi-birakilmis-kod
+  description: Devre dışı bırakılmış kod (deactivated code) nedir? Ön işlemci ve konfigürasyon örnekleriyle bilinçli olarak etkin olmayan kodun yönetimi ve doğrulanması.
 gercek-zamanli-sistemler:
   label: gerçek zamanlı sistemler
   permalink: /gercek-zamanli-sistemler
+  description: Gerçek zamanlı sistemler (real-time systems) yazıları; zaman sınırı, determinizm, mutlak, katı ve esnek sınıflar, WCET ve zamanlama algoritmaları.
 rtos:
   label: RTOS
   permalink: /rtos
+  description: RTOS (gerçek zamanlı işletim sistemi) yazıları; öngörülebilir zamanlama, öncelik tersinmesi ve RTOS'un emniyet-kritik aviyonik projelerdeki yeri.

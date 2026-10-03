@@ -10,8 +10,9 @@ import llmsTxt from './plugins/llms-txt';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const SITE_URL = 'https://aviyonikyazilim.com';
+// Ana sayfanın meta açıklamasıyla (src/pages/index.tsx, DESCRIPTION) aynı metin.
 const SITE_DESCRIPTION =
-  'DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe kitap, teknik yazılar, kütüphane ve tarayıcıda çalışan araçlar.';
+  'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 
 // Analitik ve arama konsolu doğrulaması, depo değişkenlerinden (GitHub: Settings →
 // Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez. Ayrıntı: SEO.md
@@ -188,6 +189,7 @@ const config: Config = {
           routeBasePath: 'blog',
           blogTitle: 'Blog',
           blogDescription: 'Aviyonik yazılım, test ve sertifikasyon üzerine yazılar',
+          blogSidebarTitle: 'Son yazılar',
           showReadingTime: true,
           feedOptions: {
             type: ['rss', 'atom'],

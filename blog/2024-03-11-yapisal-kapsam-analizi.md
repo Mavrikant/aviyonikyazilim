@@ -4,13 +4,14 @@ description: "Yapısal kapsam analizi (SCA) nedir? Yapısal programlamadan başl
 slug: yapisal-kapsam-analizi
 authors: [serdar]
 tags: [sca, yapisal-kapsam-analizi, structural-coverage-analysis]
+keywords: ["yapısal kapsam analizi", "structural coverage analysis", "MC/DC", "karar kapsama", "satır kapsama", "DO-178C"]
 ---
 
 ![Kodun yazılması, testlerin koşturulması ve kod kapsama analizi arasındaki akışı gösteren illüstrasyon](/img/blog/yapisal-kapsam-analizi/gorsel-1.webp)
 
 Yapısal kapsam analizi (structural coverage analysis) ya da bilindik kisa adiyla **SCA**'yi incelemeden once yapisal programlamanin ne oldugunu tekrar hatirlayalim.  
 
-Bu yazıyı okurken, [Yazılım Doğrulama](pathname:///kitap/do178c-ile-gelistirme/yazilim-dogrulama) bölümündeki kapsam yaklaşımı ve [Kapsanmayan Kodlar](pathname:///kitap/ozel-konular/kapsanmayan-kodlar) bölümündeki kod türleriyle birlikte düşünmek faydalıdır.
+Bu yazıyı okurken, [Yazılım Doğrulama](/kitap/do178c-ile-gelistirme/yazilim-dogrulama) bölümündeki kapsam yaklaşımı ve [Kapsanmayan Kodlar](/kitap/ozel-konular/kapsanmayan-kodlar) bölümündeki kod türleriyle birlikte düşünmek faydalıdır.
 
 <!-- truncate -->
 
@@ -71,7 +72,7 @@ Yapisal kapsama analizinin yazilim dogrulamasina sagladiklari:
 
 1.  **Tüm kodun en az bir kez çalıştırıldığını garanti eder:** Yapısal kapsam, test sırasında kod tabanının her satırının çalıştırılmasını gerektirerek, kodun hiçbir bölümünün test edilmemiş bırakılmadığını sağlar. Bu, her kod satırının sistem operasyonunun güvenliğini etkileyebileceği güvenlik kritik sistemlerde hayati öneme sahiptir.
 2.  **İstenmeyen işlevselliği ve test edilmemiş işlevselliği bulur:** Kod tabanının kapsamlı bir şekilde çalıştırılmasıyla, testçiler başlangıçta amaçlanmayan veya yetersiz test nedeniyle önceden tanımlanamayan işlevselliği ortaya çıkarabilir. Bu, farklı operasyonel senaryolar altında sistem davranışı ile ilgili beklenmeyen riskleri azaltmaya yardımcı olur.
-3.  **Ölü kodu veya gereksiz kodu tanımlar:** Ölü kod, herhangi bir operasyonel senaryoda çalıştırılmayan kod segmentlerini ifade eder. Bu tür kodu tanımlamak önemlidir çünkü yazılımın verimliliğini düşürebilir, boyutunu gereksiz yere artırabilir ve tespit edilmemiş güvenlik açıklarına yol açabilir.
+3.  **Ölü kodu veya gereksiz kodu tanımlar:** Ölü kod, herhangi bir operasyonel senaryoda çalıştırılmayan kod segmentlerini ifade eder. Bu tür kodu tanımlamak önemlidir çünkü yazılımın verimliliğini düşürebilir, boyutunu gereksiz yere artırabilir ve tespit edilmemiş güvenlik açıklarına yol açabilir. Ölü, gereksiz ve devre dışı bırakılmış kodun farkları için [SCA'da cover edilemeyen kodlar](2023-11-11-sca-cover-edilemeyen-kodlar.md) yazısına bakabilirsiniz.
 4.  **Devre dışı bırakılan kodun gerçekten devre dışı bırakıldığını doğrular:** Bazen, çeşitli nedenlerle kod devre dışı bırakılır ancak kaldırılmaz. Yapısal kapsam, bu kodun mevcut yazılım yapılandırmasında çalıştırılamayacağını doğrulayarak, varlığının sistemin operasyonunu etkilemediğinden emin olmamıza yardımcı olur.
 5.  **Test için minimal kombinasyon setini tanımlar (yani, exhaustive test gerektirmez):** Yapısal kapsam, tüm kodu kapsayan ancak kaynak ve zaman kısıtlamaları nedeniyle tüm olası girdi kombinasyonlarının tüketici testinin pratik olmadığı karmaşık sistemlerde, yeterli ancak minimal bir test vakası seti belirlemeye yardımcı olur.
 6.  **Yanlış mantığı belirler:** Kodun her parçasının çalıştırılmasını sağlayarak, testçiler yazılımın çeşitli koşullar ve girdiler altında beklenen gibi davrandığını doğrulayabilir. Bu, yazılımın mantıksal doğruluğunu kontrol etmeyi içerir.
