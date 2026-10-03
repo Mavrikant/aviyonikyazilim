@@ -2,8 +2,12 @@ import {morse} from './veri';
 
 /** VOR/DME tanıtım tonu 1020 Hz'dir; NDB'lerde de yaygın olarak bu ton kullanılır. */
 const TONE_HZ = 1020;
-/** Bir "nokta" süresi (s): ~10 kelime/dakika. Çizgi 3, harf içi boşluk 1, harfler arası 3 birimdir. */
-const UNIT = 0.12;
+/**
+ * Bir "nokta" süresi (s). ICAO Annex 10 Cilt I (3.1.3.9.4, 3.5.3.6.3): nokta 0,1–0,160 s,
+ * çizgi tipik olarak 3 nokta, nokta/çizgi arası 1 nokta ±%10, harfler arası en az 3 nokta;
+ * hız "yaklaşık 7 kelime/dakika". 0,15 s aralık içinde kalır ve ~8 kelime/dakikaya karşılık gelir.
+ */
+const UNIT = 0.15;
 const RAMP = 0.005; // tıkırtıyı önlemek için ses açılış/kapanış rampası
 
 let ctx: AudioContext | null = null;
