@@ -1,11 +1,10 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
+import Eposta from '@site/src/components/Eposta';
 import GostergePaneli from '@site/src/components/GostergePaneli';
 import useHomepageData, {
   formatLongDate,
@@ -15,19 +14,23 @@ import useHomepageData, {
 
 import styles from './index.module.css';
 
+const TITLE = 'DO-178C, Test ve Sertifikasyon Kitabı';
 const DESCRIPTION =
-  'DO-178C ekseninde emniyet-kritik aviyonik yazılım: açık kaynak ve katkıya açık Türkçe bir kitap, teknik yazılar ve tarayıcıda çalışan araçlar.';
+  'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';
 const ISSUES_URL = `${REPO_URL}/issues`;
 const NEW_ISSUE_URL = `${REPO_URL}/issues/new/choose`;
 const GUIDE_URL = `${REPO_URL}/blob/main/CONTRIBUTING.md`;
-const EMAIL = 'serdar@karaman.dev';
-const FIX_MAIL = `mailto:${EMAIL}?subject=Duzeltme%20onerisi`;
-const BOOK_MAIL = `mailto:${EMAIL}?subject=Kitap%20onerisi`;
-const TOOL_MAIL = `mailto:${EMAIL}?subject=Arac%20onerisi`;
 
-/* Katkı kontrol listesi: havacılık kontrol listelerindeki "durum ..... eylem" düzeni */
-const checklist: {challenge: string; detail: string; response: string; href?: string}[] = [
+/* Katkı kontrol listesi: havacılık kontrol listelerindeki "durum ..... eylem" düzeni.
+   `href` olan satırlar bağlantı, `subject` olan satırlar e-posta düğmesi olur. */
+const checklist: {
+  challenge: string;
+  detail: string;
+  response: string;
+  href?: string;
+  subject?: string;
+}[] = [
   {
     challenge: 'Yazım hatası ya da yanlış bilgi',
     detail: 'İlgili kitap ya da blog sayfasının en altındaki “Bu sayfayı düzenle” bağlantısını kullanın.',
@@ -47,15 +50,15 @@ const checklist: {challenge: string; detail: string; response: string; href?: st
   },
   {
     challenge: 'Okunmaya değer bir kitap',
-    detail: `Kütüphane önerileri e-postayla alınır: ${EMAIL}`,
+    detail: 'Kütüphane önerileri e-postayla alınır; düğme adresi gösterir.',
     response: 'Kitap öner',
-    href: BOOK_MAIL,
+    subject: 'Kitap önerisi',
   },
   {
     challenge: 'Simülatör ya da araç fikri',
-    detail: `Tarayıcıda denenebilecek her kavram aday; öneriler: ${EMAIL}`,
+    detail: 'Tarayıcıda denenebilecek her kavram aday; öneriler e-postayla alınır.',
     response: 'Fikir öner',
-    href: TOOL_MAIL,
+    subject: 'Araç önerisi',
   },
 ];
 
@@ -164,35 +167,13 @@ function TocColumn({parts}: {parts: Part[]}): ReactNode {
   );
 }
 
-/** Arama motorları için site kimliği (schema.org WebSite); Google bunu sonuçlarda site adı olarak kullanır. */
-function SiteStructuredData(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteConfig.title,
-    alternateName: 'aviyonikyazilim.com',
-    url: `${siteConfig.url}${siteConfig.baseUrl}`,
-    description: DESCRIPTION,
-    inLanguage: 'tr',
-    license: 'https://creativecommons.org/licenses/by-sa/4.0/',
-    author: {'@type': 'Person', name: 'M. Serdar Karaman', url: 'https://github.com/Mavrikant'},
-  };
-  return (
-    <Head>
-      <script type="application/ld+json">{JSON.stringify(data)}</script>
-    </Head>
-  );
-}
-
 export default function Home(): ReactNode {
   const {buildDate, book, posts, postCount, library, tools} = useHomepageData();
   const {withBaseUrl} = useBaseUrlUtils();
   const [left, right] = splitParts(book.parts);
 
   return (
-    <Layout title="Aviyonik yazılımın Türkçe kitabı" description={DESCRIPTION}>
-      <SiteStructuredData />
+    <Layout title={TITLE} description={DESCRIPTION}>
       <main className={styles.page}>
         {/* ---------- Hero: başlık + canlı gösterge paneli ---------- */}
         <section className={styles.hero}>
@@ -200,7 +181,7 @@ export default function Home(): ReactNode {
             <div>
               <p className={styles.kicker}>Açık kaynak · Türkçe · DO-178C</p>
               <Heading as="h1" className={styles.heroTitle}>
-                Aviyonik yazılımın Türkçe kitabını birlikte yazıyoruz.
+                Türkçe aviyonik yazılım kitabını birlikte yazıyoruz.
               </Heading>
               <p className={styles.heroLede}>
                 Emniyet-kritik yazılım geliştirme, doğrulama ve sertifikasyon üzerine{' '}
@@ -269,7 +250,10 @@ export default function Home(): ReactNode {
               </ol>
               <p className={styles.altPath}>
                 GitHub kullanmıyor musunuz? Düzeltme ve önerilerinizi{' '}
-                <Link href={FIX_MAIL}>{EMAIL}</Link> adresine e-postayla gönderebilirsiniz.
+                <Eposta subject="Düzeltme önerisi" className={styles.altMail} noscriptHint>
+                  e-postayla gönderebilirsiniz
+                </Eposta>
+                .
               </p>
               <div className={styles.contributeActions}>
                 <Link className={styles.btnDark} href={GUIDE_URL}>
@@ -292,9 +276,20 @@ export default function Home(): ReactNode {
                       <span className={styles.qrhChallenge}>{item.challenge}</span>
                       <span className={styles.qrhDots} aria-hidden="true" />
                       {item.href ? (
-                        <Link className={styles.qrhResponse} href={item.href}>
+                        <Link
+                          className={clsx(styles.qrhResponse, styles.qrhAction)}
+                          href={item.href}
+                        >
                           {item.response}
                         </Link>
+                      ) : item.subject ? (
+                        <Eposta
+                          subject={item.subject}
+                          className={clsx(styles.qrhResponse, styles.qrhAction)}
+                          adresClassName={styles.qrhAddress}
+                        >
+                          {item.response}
+                        </Eposta>
                       ) : (
                         <span className={styles.qrhResponse}>{item.response}</span>
                       )}
@@ -316,7 +311,7 @@ export default function Home(): ReactNode {
           <section className={styles.section}>
             <div className={styles.sectionHead}>
               <Heading as="h2" id="icindekiler" className={styles.sectionTitle}>
-                İçindekiler
+                Aviyonik yazılım kitabı: içindekiler
               </Heading>
               <p className={styles.legend}>sağdaki sayı: tahmini okuma süresi</p>
             </div>
@@ -340,7 +335,7 @@ export default function Home(): ReactNode {
             <section className={styles.section}>
               <div className={styles.sectionHead}>
                 <Heading as="h2" id="blog" className={styles.sectionTitle}>
-                  Blog
+                  Aviyonik yazılım blogu
                 </Heading>
                 <Link className={styles.headLink} to="/blog">
                   Tüm yazılar ({postCount}) <Arrow />
@@ -369,7 +364,7 @@ export default function Home(): ReactNode {
               <section className={styles.section}>
                 <div className={styles.sectionHead}>
                   <Heading as="h2" id="kutuphane" className={styles.sectionTitle}>
-                    Kütüphane
+                    Aviyonik yazılım kütüphanesi
                   </Heading>
                   <Link className={styles.headLink} to="/kutuphane">
                     Tüm kitaplar <Arrow />

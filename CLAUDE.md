@@ -24,7 +24,7 @@ kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
   01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .md dosyaları
   kaynaklar/              Başvuru sayfaları (Kısaltmalar, SOI 1-4); sidebar'da en sonda
 kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
-  index.md                Giriş + seçim ölçütleri + kitap öneri formu CTA'sı
+  index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni için .mdx)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
 araclar/                  Tarayıcıda çalışan simülatörler (routeBasePath: /araclar)
@@ -33,7 +33,13 @@ src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı davet
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
 plugins/meta-description.ts  description yoksa ilk paragraftan meta açıklaması üretir
 plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriority=high yapar
-plugins/font-preload.ts   Build sonrası IBM Plex Sans dosyalarını her sayfaya preload ekler
+plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı
+plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
+src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
+src/theme/                Tema özelleştirmeleri: DocItem/Metadata ve Blog/Pages/BlogAuthorsPostsPage
+                          (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+                          kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır)
+SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
 src/css/fonts.css         @font-face tanımları (yalnızca latin + latin-ext alt kümeleri)
 src/components/GostergePaneli/  Ana sayfadaki canlı PFD (uçuş modeli, duraklat/oynat tuşu)
 static/img/blog/<slug>/   Blog görselleri (yereldir, harici bağlantı YASAK)
@@ -140,7 +146,10 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 3. `<!-- truncate -->` işareti **zorunludur**; `onUntruncatedBlogPosts: 'throw'` olduğu
    için işareti olmayan yazı build'i kırar.
 4. `tags` değerleri `blog/tags.yml` içinde tanımlı olmalıdır (yeni etiket önce oraya
-   eklenir; `onInlineTags: 'throw'`).
+   eklenir; `onInlineTags: 'throw'`). Her etikete 160 karakteri aşmayan, o etiketli
+   yazıların gerçekten kapsadığı konuyu anlatan bir `description` yazılır (etiket
+   sayfasının meta açıklaması ve görünen girişi olur). YAML'da düz metin içinde `: `
+   bulunmamalıdır. Yazıya isteğe bağlı `keywords: ["…"]` eklenebilir.
 5. Görseller `static/img/blog/<slug>/` altına indirilir ve `/img/blog/<slug>/dosya.png`
    yoluyla bağlanır. **Harici (googleusercontent, blogspot, wikimedia vb.) görsel
    bağlantısı bırakılmaz.** Görsel kuralları için "Performans ve arama motoru"
@@ -174,8 +183,9 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   olan kitapçı (Kitapyurdu, D&R, İdefix, Amazon.com.tr), yoksa yabancı mağaza
   (Amazon.com, yayınevi sitesi).
 - Künyede emin olunmayan ayrıntı (ISBN, baskı yılı) yazılmaz.
-- Kitap önerileri `kutuphane/index.md` içindeki CTA ile e-posta üzerinden alınır
-  (mailto: serdar@karaman.dev).
+- Kitap önerileri `kutuphane/index.mdx` içindeki CTA ile e-posta üzerinden alınır.
+  E-posta adresi sayfaya **düz metin ya da `mailto:` olarak yazılmaz**; `<Eposta>`
+  bileşeni kullanılır (bkz. "Performans ve arama motoru").
 
 ## Ana sayfa
 
@@ -218,7 +228,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   `onUntruncatedBlogPosts` hepsi `'throw'`.
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
 - İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
-  React bileşeni gerekmedikçe `.mdx` kullanılmaz.
+  React bileşeni gerekmedikçe `.mdx` kullanılmaz (şu an yalnızca `<Eposta>` kullanan
+  `kutuphane/index.mdx` ve `araclar/index.mdx` ile VOR simülatörü sayfası).
 - `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
   `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
   metin olarak basılır).
@@ -245,8 +256,36 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 - **Sitemap:** `<lastmod>` her dosyanın son git commit tarihinden üretilir; bunun için
   `showLastUpdateTime: true` ve `deploy.yml`'deki `fetch-depth: 0` korunur. Etiket,
   arşiv ve yazar listeleri sitemap'e alınmaz. `static/robots.txt` sitemap'i gösterir.
-- Ana sayfada schema.org `WebSite` yapılandırılmış verisi (JSON-LD) bulunur; Google
-  bunu arama sonuçlarında site adı olarak kullanır.
+- **Site kimliği:** her sayfada `docusaurus.config.ts` içindeki `identityGraph`
+  (schema.org `Organization` + `Person` + `WebSite`, `@id` ile bağlı) bulunur; Google
+  bunu site adı ve kimlik bilgisi için kullanabilir. Yalnızca depoda doğrulanabilen
+  alanlar yazılır (uydurma profil, adres, puan eklenmez). `/kitap` sayfası `Book` ve
+  `TechArticle`, diğer kitap sayfaları `TechArticle` taşır (`src/theme/DocItem/Metadata/`);
+  kütüphane önerileri `Review`/`Book` olarak işaretlenmez. `BreadcrumbList`
+  (`src/theme/DocBreadcrumbs/StructuredData/`) en az iki öğe içerir ve adresleri
+  `trailingSlash: false` ayarına uyar.
+- **Anahtar kelime:** ana ifade "aviyonik yazılım" başlıkta (site adı eki), açıklamada ve
+  H1'de **yalın hâliyle** geçer (Türkçe ekler basit tarayıcıları şaşırtır); ikincil
+  ifadeler DO-178C, emniyet-kritik, sertifikasyon, test. Doldurma yapılmaz. Başlık +
+  site adı eki ~60 karakteri aşmamalıdır; ayrıntı: `SEO.md`.
+- **E-posta:** adres düz metin olarak yazılmaz (botlar toplar). `<Eposta subject="…">`
+  bileşeni adresi yalnızca tıklamada tarayıcıda birleştirir. Denetim:
+  `grep -rIlE "serdar@|karaman\.dev" build` ve `grep -rIl "mailto:" build --include='*.html'`
+  boş dönmelidir (JS paketlerindeki üçüncü taraf `mailto:` dizgeleri — Docusaurus yazar
+  kartı, Markdown kütüphanesi — sayılmaz). Footer ve `.md` içeriğinde `mailto:`
+  bağlantısı bırakılmaz.
+- **Satır içi stil yok:** `style="…"`/`style={{…}}` kullanılmaz; kural CSS sınıfıyla
+  yazılır (tek bilinen istisna: kod bloklarındaki Prism renk öznitelikleri — `socials`
+  ile yazar sosyal simgesi de `style` ekler, bu yüzden `authors.yml`'ye eklenmez). Build çıktısındaki HTML'i yeniden yazan her düzenleme `plugins/font-preload.ts`
+  içindeki tek geçişe eklenir: Docusaurus `postBuild` kancalarını **paralel** çalıştırdığı
+  için aynı dosyaları okuyup yazan ikinci bir eklenti değişikliği sessizce kaybeder.
+- **`llms.txt`** `plugins/llms-txt.ts` ile build sırasında üretilir; elle düzenlenmez.
+  Kitap/blog/kütüphane/araç eklendikçe kendiliğinden güncellenir.
+- **Adresler ASCII:** üretilen dizin sayfalarının adresi etiketten türetilir; Türkçe
+  karakterli bir `label` için `_category_.json` içinde `link.slug` (ör.
+  `/category/emniyet-muhendisligi`) verilir. Adres değişirse `redirects` listesine eklenir.
+- **Analitik ve Search Console** yalnızca `GA_MEASUREMENT_ID` / `GOOGLE_SITE_VERIFICATION`
+  depo değişkenleri tanımlıysa eklenir; kodda kimlik tutulmaz (bkz. `SEO.md`).
 - GitHub Pages tüm dosyaları `Cache-Control: max-age=600` ile sunar ve bu depodan
   değiştirilemez (ayrıntı: README, "Uzun önbellek süresi").
 

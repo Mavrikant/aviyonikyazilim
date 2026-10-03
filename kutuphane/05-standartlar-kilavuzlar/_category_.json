@@ -3,7 +3,8 @@
   "position": 5,
   "link": {
     "type": "generated-index",
+    "slug": "/category/standartlar-ve-kilavuz-dokumanlar",
     "title": "Standartlar ve Kılavuz Dokümanlar",
-    "description": "DO, ARP ve MISRA ailelerinin tanıtımı ve edinme yolları."
+    "description": "DO-178C ailesi, ARP4754A/ARP4761 ve MISRA C: standart ve kılavuz dokümanların kısa tanıtımı, kitapla ilişkisi ve edinme yolları."
   }
 }

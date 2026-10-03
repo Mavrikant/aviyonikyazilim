@@ -4,9 +4,10 @@ description: "AFDX (Avionics Full-Duplex Switched Ethernet) nedir? Deterministik
 slug: afdx-nedir
 authors: [serdar]
 tags: [afdx]
+keywords: ["AFDX", "AFDX nedir", "ARINC 664", "Avionics Full-Duplex Switched Ethernet", "aviyonik Ethernet"]
 ---
 
-![AFDX](/img/blog/afdx-nedir/gorsel-1.webp)
+![AFDX anahtarlarını, Ethernet kablolarını ve ağ cihazlarını gösteren aviyonik ağ illüstrasyonu](/img/blog/afdx-nedir/gorsel-1.webp)
 
 Havacılık endüstrisi, günümüzde giderek artan talepler ve karmaşık sistemlerle karşı karşıyadır. Bu sistemlerin etkin ve güvenilir bir şekilde iletişim kurması, uçuş güvenliği ve operasyonel verimlilik açısından kritik önem taşır. AFDX (Avionics Full-Duplex Switched Ethernet), havacılık endüstrisinde veri iletişimini iyileştirmek ve karmaşık sistemler arasında güvenilir bağlantılar sağlamak için kullanılan bir teknolojidir. Bu yazıda, AFDX'in ne olduğunu, nasıl çalıştığını, havacılık endüstrisindeki kullanım alanlarını, sağladığı avantajları ve teknik özelliklerini detaylı bir şekilde inceleyeceğiz.
 
@@ -34,7 +35,7 @@ Deterministik İletişim: AFDX, belirli bir zaman diliminde veri iletimini garan
 
 **Etkin Bant Genişliği Kullanımı:** AFDX, veri paketlerini düşük gecikme süreleriyle birleştirerek bant genişliğini daha etkili kullanır.
 
-![Airbus A380'deki AFDX ağ topolojisi: uçuş kontrol, kokpit, motor, enerji, yakıt ve kabin bölgelerini bağlayan yedekli anahtarlar](/img/blog/afdx-nedir/gorsel-2.png)
+![Airbus A380 uçağındaki AFDX ağ topolojisi: uçuş kontrol, kokpit, motor, enerji, yakıt ve kabin bölgelerini bağlayan yedekli anahtarlar](/img/blog/afdx-nedir/gorsel-2.png)
 
 **Airbus A380 ucaginda AFDX topolojisi**
 
@@ -57,3 +58,5 @@ AFDX teknolojisi, özellikle büyük ticari yolcu uçaklarında ve askeri uçakl
 **Sonuç**
 
 AFDX teknolojisi, havacılık endüstrisinde veri iletişimini güvenilir, hızlı ve etkili bir şekilde sağlayarak uçuş güvenliği ve operasyonel verimliliği artırır. Kullanıldığı uçaklarda, uçuş kontrolünden yolcu eğlence sistemlerine kadar geniş bir yelpazede kritik roller üstlenir. Havacılık endüstrisi, AFDX sayesinde daha güvenli ve entegre bir şekilde faaliyet gösterebilirken, yolcular da daha keyifli ve konforlu bir uçuş deneyimi yaşayabilirler. Bu teknolojinin gelecekteki gelişmeleri ve daha fazla uygulama alanıyla havacılık sektöründe daha da büyük bir rol oynaması beklenmektedir.
+
+Aviyonikte uzun yıllardır yaygın olan noktadan-noktaya seri veri yolunu merak ediyorsanız [ARINC 429](2023-08-21-arinc-429.md) yazısına göz atabilirsiniz.

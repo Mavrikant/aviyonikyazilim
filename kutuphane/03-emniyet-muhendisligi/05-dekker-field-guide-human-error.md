@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # The Field Guide to Understanding 'Human Error'
 
-![The Field Guide to Understanding 'Human Error' kapak görseli](/img/kutuphane/dekker-field-guide-human-error/kapak.jpg)
+![The Field Guide to Understanding Human Error kapak görseli](/img/kutuphane/dekker-field-guide-human-error/kapak.jpg)
 
 | Künye | |
 |----|----|

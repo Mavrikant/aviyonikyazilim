@@ -45,7 +45,9 @@ Docusaurus yapılandırmasındaki `url` ve `baseUrl` değerleri
 
 Alan adı değişirse `url`/`baseUrl`, `static/CNAME` ve `static/` altındaki redirect
 stub'ları birlikte güncellenmelidir; aksi hâlde CSS/JS dosyaları 404 verir ve site
-"baseUrl" hata kutusuyla açılır.
+stilsiz/bozuk açılır. `docusaurus.config.ts` içinde `baseUrlIssueBanner: false`
+olduğundan Docusaurus'un "baseUrl" hata kutusu gösterilmez; hata ayıklarken bu seçeneği
+geçici olarak `true` yapın.
 
 ### 3. Google Search Console
 
@@ -54,6 +56,10 @@ stub'ları birlikte güncellenmelidir; aksi hâlde CSS/JS dosyaları 404 verir v
 - **Site haritaları** bölümünden `https://aviyonikyazilim.com/sitemap.xml` gönderilir
   (`robots.txt` de bu adresi gösterir).
 - Bing Webmaster Tools, Search Console'dan içe aktarılarak eklenebilir.
+- İsteğe bağlı olarak **Settings → Secrets and variables → Actions → Variables** altına
+  `GA_MEASUREMENT_ID` (Google Analytics 4) ve `GOOGLE_SITE_VERIFICATION` (HTML etiketi
+  doğrulaması) eklenebilir; tanımlı değilse build'e hiçbir şey eklenmez.
+- Arama motoru çalışmasının tamamı, elle yapılacaklar ve backlink planı: [SEO.md](SEO.md).
 
 ### 4. (İsteğe bağlı) Uzun önbellek süresi
 

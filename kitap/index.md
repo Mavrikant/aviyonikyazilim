@@ -133,3 +133,15 @@ konfigürasyon yönetimi ise tüm çıktılar arasındaki tutarlılığı korur.
 - [SW SOI-2](./kaynaklar/soi-2.md)
 - [SW SOI-3](./kaynaklar/soi-3.md)
 - [SW SOI-4](./kaynaklar/soi-4.md)
+
+## Bu kitaba atıf ve bağlantı
+
+Kitaptan yararlanıyorsanız kaynağı aşağıdaki biçimde gösterebilirsiniz; erişim tarihini kendiniz yazın:
+
+> Karaman, M. S. ve katkıda bulunanlar. DO-178C ile Emniyet-Kritik Aviyonik Yazılım. Aviyonik Yazılım. https://aviyonikyazilim.com/kitap. Erişim tarihi: GG.AA.YYYY
+
+İçerik [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.tr) lisanslıdır: kitaba bağlantı verebilir, kaynağı belirterek alıntı yapabilir ve aynı lisansla paylaşabilirsiniz.
+
+Bir web sayfasından ya da dokümandan bağlantı vermek için şu satırı kullanabilirsiniz: `<a href="https://aviyonikyazilim.com/kitap">DO-178C ile Emniyet-Kritik Aviyonik Yazılım</a>`
+
+Yeni blog yazılarını RSS ile takip etmek için akış adresi `https://aviyonikyazilim.com/blog/rss.xml` şeklindedir. Düzeltme ve katkı önerileri için [GitHub deposunu](https://github.com/Mavrikant/aviyonikyazilim) ya da GitHub kullanmayanlar için e-posta yolunu da gösteren [ana sayfadaki katkı bölümünü](/#katki) kullanabilirsiniz.
