@@ -39,6 +39,21 @@ const SIMGELER: Record<string, ReactNode> = {
       <path d="M20 47h24M20 51h24" strokeDasharray="2 2.5" data-vurgu="" />
     </>
   ),
+  // Dairesel konnektör yüzü: üstte ana kama, kontaklar; seçili pin ve sinyal adı çizgisi
+  konnektor: (
+    <>
+      <circle cx="30" cy="35" r="20" />
+      <path d="M27 13.5h6v4.5h-6z" />
+      <circle cx="30" cy="25" r="3" />
+      <circle cx="21" cy="31" r="3" />
+      <circle cx="39" cy="31" r="3" />
+      <circle cx="30" cy="35" r="3" />
+      <circle cx="21" cy="42" r="3" />
+      <circle cx="39" cy="42" r="3" data-vurgu="" />
+      <circle cx="30" cy="46" r="3" />
+      <path d="M42 42h16" strokeDasharray="2 2.5" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (
