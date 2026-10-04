@@ -54,6 +54,15 @@ const SIMGELER: Record<string, ReactNode> = {
       <path d="M42 42h16" strokeDasharray="2 2.5" data-vurgu="" />
     </>
   ),
+  // MC/DC: doğruluk tablosu; yalnızca bir koşulu farklı iki satır bir yayla eşleşmiş
+  mcdc: (
+    <>
+      <rect x="6" y="10" width="44" height="44" rx="4" />
+      <path d="M6 21h44M6 32h44M6 43h44M17 10v44M28 10v44M39 10v44" />
+      <path d="M11.5 26.5h0M11.5 37.5h0" strokeWidth="4" data-vurgu="" />
+      <path d="M52 26.5c8 0 8 11 0 11" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (

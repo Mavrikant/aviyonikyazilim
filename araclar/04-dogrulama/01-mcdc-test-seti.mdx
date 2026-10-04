@@ -1,0 +1,115 @@
+---
+title: "MC/DC Test Seti Üretici"
+sidebar_label: "MC/DC Test Seti"
+description: "Değiştirilmiş koşul/karar kapsama (MC/DC) için C karar ifadesinden bağımsızlık çiftlerini ve en küçük test setini bulan, test setinizi denetleyen araç."
+sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: mcdc
+  ozellikler: [Benzersiz neden, Maskeleme, En küçük test seti, Kısa devre (C), CSV, Paylaşılabilir]
+keywords: ["MC/DC", "modified condition/decision coverage", "değiştirilmiş koşul/karar kapsama", "MC/DC test seti", "unique-cause", "masking MC/DC", "DO-178C yapısal kapsam"]
+---
+
+import McdcAraci from '@site/src/components/McdcAraci';
+
+# MC/DC Test Seti Üretici
+
+Bir karar ifadesindeki her koşulun sonucu tek başına etkilediğini gösteren
+değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC)
+test setini bulur. C sözdiziminde kararı yazın; araç bağımsızlık çiftlerini, en
+az testten oluşan seti ve kendi seçtiğiniz testlerin MC/DC'yi sağlayıp
+sağlamadığını gösterir.
+
+<McdcAraci />
+
+## Nasıl kullanılır?
+
+1. **Kararı yazın** ya da bir örnek seçin. `&&`, `||` ve `!` işleçleri, parantezler,
+   `hiz > 250` gibi karşılaştırmalar ve `sensor_gecerli(2)` gibi çağrılar
+   kullanılabilir; her karşılaştırma ve çağrı tek bir koşuldur.
+2. **Ölçütü seçin:** benzersiz neden (unique-cause) ya da maskeleme (masking).
+3. **Önerilen seti inceleyin.** "Test seti" tablosu en küçük seti, "Gösterdiği"
+   sütunu her testin hangi koşulun bağımsız etkisini gösteren çiftte yer aldığını
+   verir. Koşul listesindeki "tabloda göster" çifti doğruluk tablosunda vurgular.
+4. **Kendi testlerinizi denetleyin.** Doğruluk tablosunda satırlara tıklayarak
+   test ekleyip çıkarın; eksik kalan koşul için araç hangi satırın eklenmesi
+   gerektiğini söyler.
+5. **Paylaşın ya da dışa aktarın:** CSV, test vektörlerini gereksinim tabanlı
+   test prosedürüne aktarmak içindir; bağlantı, ifadeyi ve seçimi taşır.
+
+## MC/DC neyi ister?
+
+DO-178C'de Seviye A yazılım için yapısal kapsam ölçütü MC/DC'dir. Testler
+koşturulduğunda şunların görülmesi beklenir:
+
+- her giriş ve çıkış noktası en az bir kez çalışmıştır,
+- her karar hem doğru hem yanlış sonuçlanmıştır (karar kapsama),
+- her koşul iki değeri de almıştır (koşul kapsama),
+- her koşulun, kararın sonucunu **tek başına** değiştirebildiği gösterilmiştir.
+
+Son madde MC/DC'yi karar kapsamadan ayırır. Kitaptaki
+`(basinc_dusuk && motor_calisiyor) || bakim_kipi` örneğinde karar kapsama iki
+testle sağlanır, ama bu iki test `bakim_kipi` koşulunun kararı hiç etkilemediği bir
+hatayı gizleyebilir. MC/DC her koşul için bir test çifti ister: koşul değişir,
+karar da değişir. Ayrıntı için kitabın
+[yapısal kapsam analizi](/kitap/do178c-ile-gelistirme/yazilim-dogrulama#yapısal-kapsam-analizi)
+bölümüne ve [yapısal kapsam türleri](/blog/yapisal-kapsam-analizi) yazısına
+bakabilirsiniz.
+
+## Benzersiz neden ve maskeleme
+
+- **Benzersiz neden (unique-cause) MC/DC:** Çiftteki iki test yalnızca incelenen
+  koşulda ayrılır; diğer bütün koşullar aynı kalır. Her koşulu bir kez geçen bir
+  kararda n koşul için en az n+1 test gerekir ve bu sayıya her zaman ulaşılabilir.
+- **Maskeleme (masking) MC/DC:** Diğer koşullar da değişebilir, yeter ki iki
+  testte de kararı etkilemesinler. VE işlecinde yanlış olan bir koşul, VEYA
+  işlecinde doğru olan bir koşul diğerlerini **maskeler**: karar artık onlara
+  bakmaz. Bir koşulun kararı tek başına belirlediği satırlardan birinde koşul 1,
+  diğerinde 0 ise bağımsızlık gösterilmiştir. Maskeleme daha esnektir: aynı
+  değişkeni birden çok yerde kullanan kararlarda tek yol odur ve bazı kararlarda
+  n+1'den az testle yetinir. Sertifikasyon otoritelerinin ortak bildirisi CAST-6,
+  maskeleme MC/DC'nin kabul edilebileceğini gerekçelendirir; hangi biçimin
+  kullanılacağı yazılım doğrulama planında belirtilir.
+
+## Kısa devre değerlendirmesi
+
+C'de `&&` ve `||` soldan sağa değerlendirilir ve sonuç belli olunca durur:
+`A && B` ifadesinde A yanlışsa B hiç okunmaz. Araç, bu yüzden hiç
+değerlendirilmeyen değerleri tablolarda soluk gösterir; bu değerler test
+sırasında ne verilirse verilsin sonucu değiştirmez. `&` ve `|` ise iki tarafı da
+her zaman hesaplar. Maskeleme ölçütü kısa devre mantığıyla doğal olarak uyumludur:
+okunmayan koşul zaten maskelenmiştir.
+
+## Bağlı koşullar ve gereksiz mantık
+
+Aynı koşul kararda birden çok kez geçerse bu geçişler **bağlıdır** (coupled):
+`(A && B) || (A && C)` ifadesinde A'nın bir geçişi değiştirilirken diğeri sabit
+tutulamaz, bu yüzden benzersiz neden ölçütü bu geçişler için gösterilemez;
+maskeleme gösterir. Hiçbir girdide kararı tek başına belirlemeyen bir koşul ise
+**gereksiz mantık** işaretidir: `A && (A || B)` yalnızca A'ya eşittir ve B'nin
+etkisi hiçbir testle gösterilemez. MC/DC'nin değerli yanlarından biri bu tür
+fazlalıkları kod gözden geçirmesinde gözden kaçsa bile ortaya çıkarmasıdır.
+
+## En küçük set nasıl bulunur?
+
+Her koşulun bir kez geçtiği kararlarda benzersiz neden seti doğrudan kurulur: VE
+düğümünde bir alt ifadenin testleri, diğerinin kararı doğru yapan bir testiyle,
+VEYA düğümünde yanlış yapan bir testiyle birleştirilir. Ortak test bir kez
+sayıldığı için sonuç n+1 testtir. Maskeleme ve bağlı koşullu kararlarda araç,
+her koşulun gereksinimini karşılayan en az satırı arar; çok büyük kararlarda
+arama bir sınırda durursa bulunan set gösterilir ve daha küçüğünün olabileceği
+belirtilir.
+
+## Sınırlamalar
+
+- Karşılaştırmalar birbirinden bağımsız koşul sayılır: `hiz > 100` ve
+  `hiz > 200` gerçekte aynı anda her değeri alamaz (zayıf bağlı koşullar). Araç
+  bu kombinasyonları ayıklamaz; tablodan seçerken gerçekleşebilir olmalarına
+  dikkat edin.
+- Desteklenen işleçler `&&`, `||`, `!`, `&` ve `|`'dir; `^` (özel veya) ve
+  `?:` desteklenmez. En çok 12 farklı koşul ve 15 koşul geçişi çözümlenir;
+  doğruluk tablosu 8 koşula kadar gösterilir.
+- Araç test **vektörlerini** tasarlar; kapsam ölçmez. DO-178C'de kapsam
+  verisi gereksinim tabanlı testlerin koşusundan toplanır: önerilen vektörler,
+  gereksinimlerden türetilen test vakalarının hangi girdileri kapsaması
+  gerektiğini görmeye yardım eder.

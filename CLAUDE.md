@@ -33,6 +33,7 @@ src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/
 src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
 src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
+src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
@@ -141,6 +142,11 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | kontak boyutu | contact size |
 | ön (geçme) yüz / arka yüz | mating face / rear face |
 | ana kama | master key |
+| benzersiz neden MC/DC | unique-cause MC/DC |
+| maskeleme MC/DC | masking MC/DC |
+| bağlı koşul | coupled condition |
+| bağımsızlık çifti | independence pair |
+| kısa devre değerlendirmesi | short-circuit evaluation |
 
 ## Yeni blog yazısı ekleme
 
