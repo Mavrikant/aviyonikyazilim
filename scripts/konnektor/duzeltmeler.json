@@ -1,0 +1,80 @@
+{
+  "_aciklama": "MIL-STD-1560C (Change 3, 3 Şubat 2021) tablolarının otomatik ayrıştırmada çözülemeyen ya da standardın kendisinde yazım hatası bulunan yerleşimleri. Her kayıt şekille karşılaştırılarak yazıldı; 'sayfa' PDF sayfa numarasıdır. boyut: kontak boyutu → kimlik listesi ya da 'diger' (geri kalanlar). konum: [x, y] inç. birim: mm değeri yazım hatası olan, inç değeri şekille doğrulanmış kontaklar.",
+  "1560": {
+    "15-21": {
+      "boyut": {"12 Coax": ["X"], "20": ["D", "J", "N"], "22D": "diger"},
+      "birim": ["M", "C"],
+      "neden": "Özet tablosu sonraki sayfada (s. 47). M ve C'nin mm değerleri hatalı; inç değerleri şekille ve A/K simetrisiyle tutarlı.",
+      "sayfa": [46, 47]
+    },
+    "16-35": {
+      "konum": {"53": [0.312, 0.086]},
+      "neden": "Tabloda 53'ün X değeri -.312 yazılmış (1 ile aynı konum); şekilde 53 sağ sütunun üstünde, 54 ve 55'in üzerinde.",
+      "sayfa": [201, 202]
+    },
+    "25-37": {
+      "konum": {"H": [0.333, -0.382]},
+      "neden": "Tabloda H'nin Y değeri +.382 yazılmış (C ile aynı konum); şekilde H sağ altta, M'nin (-.333, -.382) aynası.",
+      "sayfa": [161, 162]
+    },
+    "21-29": {
+      "konum": {"26": [0.088, -0.003]},
+      "boyut": {"12": ["20", "22", "23", "25"], "16": ["21", "24", "26", "27"], "20": "diger"},
+      "neden": "Tabloda 26'nın satırı '.088 (2.24) -.003 0.08)' biçiminde bozuk; 16 boyutlu kontaklar standardın notuna göre merkez çizgisinin .003 altında. Özet tablosu s. 98'de.",
+      "sayfa": [97, 98]
+    },
+    "17-2": {"boyut": {"8 Twinax": ["39"], "22D": "diger"}, "sayfa": [55, 56]},
+    "17-3": {"boyut": {"8 Twinax": ["39"], "22D": "diger"}, "sayfa": [57, 58]},
+    "17-11": {
+      "boyut": {"12 Coax": ["J"], "12 Twinax": ["B", "L"], "20": "diger"},
+      "sayfa": [61]
+    },
+    "19-18": {"boyut": {"8 Twinax": ["B", "F", "K", "P"], "22D": "diger"}, "sayfa": [71]},
+    "19-19": {"boyut": {"8 Twinax": ["B", "F", "K", "P"], "22D": "diger"}, "sayfa": [72]},
+    "21-75": {"boyut": {"8 Twinax": "diger"}, "sayfa": [105]},
+    "21-76": {"boyut": {"8 Twinax": "diger"}, "sayfa": [106]},
+    "25-4": {"boyut": {"16": ["y", "z", "AA", "DD", "EE", "FF", "LL", "JJ"], "20": "diger"}, "sayfa": [136, 137]},
+    "24-4": {"boyut": {"16": ["y", "z", "AA", "DD", "EE", "FF", "LL", "JJ"], "20": "diger"}, "sayfa": [265, 266]},
+    "25-7": {"boyut": {"8 Twinax": ["25", "75"], "22D": "diger"}, "sayfa": [138, 139, 140]},
+    "25-9": {"boyut": {"8 Twinax": ["25", "75"], "22D": "diger"}, "sayfa": [142, 143, 144]},
+    "25-11": {"boyut": {"10": ["A", "B", "C", "D", "E", "F", "G", "H", "J"], "20": "diger"}, "sayfa": [146]},
+    "25-20": {
+      "boyut": {
+        "8 Twinax": ["A", "H", "K"],
+        "12 Coax": ["2", "3", "W", "5"],
+        "16": ["C", "D", "E", "F", "J", "M", "N", "P", "R", "T", "U", "Y", "Z"],
+        "20": "diger"
+      },
+      "sayfa": [148, 149]
+    },
+    "25-21": {
+      "boyut": {
+        "8 Twinax": ["A", "H", "K"],
+        "12 Coax": ["2", "3", "W", "5"],
+        "16": ["C", "D", "E", "F", "J", "M", "N", "P", "R", "T", "U", "Y", "Z"],
+        "20": "diger"
+      },
+      "sayfa": [150, 151]
+    },
+    "25-24": {"boyut": {"12": ["A", "B", "D", "E", "L", "M", "P", "R", "S", "T", "X", "Y"], "16": "diger"}, "sayfa": [157]},
+    "24-24": {"boyut": {"12": ["A", "B", "D", "E", "L", "M", "P", "R", "S", "T", "X", "Y"], "16": "diger"}, "sayfa": [268]},
+    "25-43": {
+      "boyut": {"16": ["a", "b", "c", "d", "e", "f", "g", "h", "k", "m", "n", "p", "q", "r", "s", "t", "u", "v", "w", "x"], "20": "diger"},
+      "sayfa": [164, 165]
+    },
+    "25-46": {"boyut": {"8 Coax": ["z", "w"], "16": ["AA", "v", "x", "y"], "20": "diger"}, "sayfa": [166, 167]},
+    "25-47": {"boyut": {"8 Coax": ["z", "w"], "16": ["AA", "v", "x", "y"], "20": "diger"}, "sayfa": [168, 169]},
+    "25-90": {"boyut": {"8 Twinax": ["w", "z"], "16": ["v", "x", "y", "AA"], "20": "diger"}, "sayfa": [172, 173]},
+    "25-91": {"boyut": {"8 Twinax": ["w", "z"], "16": ["v", "x", "y", "AA"], "20": "diger"}, "sayfa": [174, 175]},
+    "14-15": {
+      "boyut": {"16": ["P"], "20": "diger"},
+      "birim": ["G"],
+      "neden": "G'nin mm değeri hatalı; inç değeri 15-15'teki aynı kontakla tutarlı.",
+      "sayfa": [193]
+    },
+    "14-97": {"boyut": {"16": ["C", "M", "G", "L"], "20": "diger"}, "sayfa": [197]},
+    "21-39": {"birim": ["r"], "neden": "r'nin mm değeri hatalı; inç değeri 20-39'daki aynı kontakla tutarlı.", "sayfa": [101, 102]},
+    "12-35": {"birim": ["21"], "neden": "21'in mm değeri hatalı; inç değeri şekille tutarlı.", "sayfa": [190]},
+    "20-41": {"cikar": "Konum tablosu yok; kontak konumları yalnızca çizimde verilmiş.", "sayfa": [237, 238]}
+  }
+}

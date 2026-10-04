@@ -1,0 +1,88 @@
+---
+title: "Konnektör Pin Yerleşimi Tasarımcısı"
+sidebar_label: "Konnektör Pin Yerleşimi"
+description: "MIL-DTL-38999, D-sub, JTAG ve pin başlıkları için pin yerleşimi (pinout) tasarım aracı: ön/arka yüz, pin/soket görünümü, sinyal tablosu, SVG/PNG/CSV."
+sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: konnektor
+  ozellikler: [MIL-DTL-38999, D-sub, JTAG/SWD, Ön/arka yüz, SVG/PNG/CSV, Paylaşılabilir]
+keywords: ["pinout", "konnektör pin yerleşimi", "MIL-DTL-38999", "MIL-STD-1560", "insert arrangement", "D-sub pinout", "JTAG pinout"]
+---
+
+import KonnektorTasarim from '@site/src/components/KonnektorTasarim';
+
+# Konnektör Pin Yerleşimi Tasarımcısı
+
+Bir konnektörün hangi pininde hangi sinyalin bulunacağını — pin yerleşimini
+(pinout) — konnektörün yüzü üzerinde tasarlar. MIL-DTL-38999 dairesel
+konnektörlerin standarttaki yerleşimlerinden, D-sub'lardan, JTAG/SWD
+başlıklarından ya da genel pin başlıklarından birini seçin; pinlere sinyal adı
+ve türü verin, konnektöre önden ya da arkadan, pin ya da soket tarafından bakın.
+
+<KonnektorTasarim />
+
+## Nasıl kullanılır?
+
+1. **Konnektörü seçin.** JTAG/SWD başlıkları ARM'ın ve TI'ın yayımladığı pin
+   yerleşimleriyle dolu gelir; D-sub için RS-232 ve CAN şablonları
+   uygulanabilir.
+2. **Pine sinyal verin.** Yüzde bir pine dokunun ya da tablodan seçin ve
+   sinyal adını yazın. Tür addan tahmin edilir: `GND` toprak, `+28V` güç,
+   `CAN_H`/`CAN_L` ya da `TX+`/`TX-` diferansiyel olur; tahmin yanlışsa türü
+   elle değiştirin. Tabloda <kbd>Enter</kbd> sonraki pine,
+   <kbd>Shift</kbd>+<kbd>Enter</kbd> önceki pine geçer.
+3. **Yoğun yerleşimde yakınlaştırın.** Yüzün köşesindeki düğmelerle,
+   <kbd>Ctrl</kbd> + tekerlekle ya da dokunmatik ekranda iki parmakla
+   yakınlaştırın; yakınken sürükleyerek kaydırın.
+4. **Paylaşın ya da dışa aktarın.** "Bağlantıyı kopyala" tasarımı adrese
+   yazar; CSV tüm pin tablosunu, SVG ve PNG ise çizimi pin listesi ve
+   lejantla birlikte verir. Tasarımlarınız ayrıca bu tarayıcıda saklanır.
+
+Denetim kutusu, aynı sinyalin birden fazla pine verilmesini (güç, toprak,
+ekran ve yedek hariç) ve eşi bulunmayan diferansiyel sinyalleri gösterir.
+
+## Ön yüz, arka yüz; pin ve soket
+
+Standartlar yerleşimi **pin (erkek) kontaklı yüzün ön (geçme) yüzünden**
+(mating face) çizer. İki konnektör yüz yüze geçtiği için soket (dişi) yüz, aynı
+yönden bakıldığında bunun yatay aynasıdır. Arka yüz (kablo tarafı, rear face)
+de ön yüzün aynasıdır:
+
+| Kontak | Ön yüz | Arka yüz |
+|---|---|---|
+| Pin (erkek) | standart çizim | ayna |
+| Soket (dişi) | ayna | standart çizim |
+
+Kablo bağlanırken konnektöre arkadan bakılır; bu yüzden krimp ya da lehim
+sırasında arka yüz görünümünü kullanın. Dairesel konnektörlerde üçgen, ana
+kamayı (master key, +Y) gösterir; aynalama yatay olduğu için kama hep üstte
+kalır.
+
+## Kaynaklar
+
+- **MIL-DTL-38999:** kontak konumları ve boyutları MIL-STD-1560C w/Change 3
+  (3 Şubat 2021) tablolarından alınmıştır: 160 yerleşim, 6015 kontak. Seri I,
+  III ve IV tek sayılı (9–25), Seri II çift sayılı (8–24) gövde boyutlarını
+  (shell size) kullanır. Yerleşim (insert arrangement) kodu gövde boyutu ile
+  yerleşim numarasıdır; örneğin 25-35, 25 gövdede 128 kontaklı yerleşimdir.
+  Kontak, soket boşluğu çapıyla çizilir ve okunurluk için büyütülür. Standartta
+  küçük harf kimlikler altı çizili büyük harfle yazılır (J̲ = j); araç bunları
+  küçük harfle gösterir.
+- **D-sub:** MIL-DTL-24308 Ek A'daki standart yoğunluklu yerleşimler (yerleşim
+  1): 2,77 mm adım, 2,84 mm sıra aralığı.
+- **JTAG/SWD:** ARM JTAG 20 (2,54 mm), ARM Cortex Debug 10 (1,27 mm) ve TI 14
+  pinli JTAG (2,54 mm) başlıklarının üretici pin yerleşimleri.
+
+Standart tablolarındaki birkaç yazım hatası şekillerle karşılaştırılarak
+düzeltildi (16-35'te 53, 25-37'de H, 21-29'da 26 numaralı kontak ve birkaç
+milimetre değeri). Yalnızca MIL-DTL-27599 için geçerli yerleşimler ile kontak
+konumları yalnızca çizimde verilen 20-41 listede yoktur.
+
+:::caution[Sertifikalı bir araç değildir]
+
+Araç tasarım ve belgeleme kolaylığı içindir. Üretim, test ya da sertifikasyon
+belgelerinde yerleşim kodunu ve kontak konumlarını standardın güncel
+sürümünden doğrulayın.
+
+:::

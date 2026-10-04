@@ -32,6 +32,8 @@ src/components/AracKatalogu/  Araçlar giriş sayfasındaki katalog (araclarSide
 src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/DME/TACAN/NDB, havalimanı, pist)
 src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
+src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
+scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
@@ -133,6 +135,12 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | radyo seyrüsefer yardımcısı | radio navigation aid (navaid) |
 | tanıtım kodu | identifier (ident) |
 | manyetik sapma | magnetic variation |
+| pin yerleşimi | pinout |
+| yerleşim (insert yerleşimi) | insert arrangement |
+| gövde boyutu | shell size |
+| kontak boyutu | contact size |
+| ön (geçme) yüz / arka yüz | mating face / rear face |
+| ana kama | master key |
 
 ## Yeni blog yazısı ekleme
 
@@ -255,6 +263,17 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
   satırı korunur; API anahtarı isteyen servis kullanılmaz.
 - Gömme sayfaları (`src/pages/gom/`) `Layout` kullanmaz, `noindex` taşır ve
   sitemap'ten `'/gom/**'` ile dışlanır.
+- **Konnektör yerleşim verisi** (`static/data/konnektor/mil-dtl-38999.json`) elle
+  düzenlenmez: `python3 scripts/konnektor/veri_uret.py std1560.txt` MIL-STD-1560C'nin
+  `pdftotext -layout` çıktısını `yerlesim_ayristir.py` ile ayrıştırır. Ayrıştırıcının
+  çözemediği ya da standardın kendisinde yazım hatası olan yerleşimler, şekille
+  karşılaştırılıp `scripts/konnektor/duzeltmeler.json`'a PDF sayfa numarası ve gerekçesiyle
+  yazılır; doğrulamadan geçemeyen yerleşim çıktıya alınmaz. Standart PDF'leri (ASSIST)
+  depoya konmaz. Konumlar pin yerleşiminin ön yüzü içindir; soket ve arka yüz aynadır.
+- Konnektör aracında sinyal türü renkleri CSS değişkenleridir (açık/koyu tema); sunucuda
+  üretilen HTML temadan bağımsız kalsın diye renk bileşende seçilmez. Dışa aktarım paleti
+  (`veri.ts`, `ACIK`) CSS'teki açık tema değerleriyle aynı tutulur. Paylaşım bağlantısı
+  adresin `#d=` kısmındadır (sunucuya gitmez) ve uygulandıktan sonra adresten silinir.
 
 ## Görsel kimlik
 

@@ -1,0 +1,799 @@
+/*
+ * Konnektör pin yerleşimi aracı. Yerleşim, useGeometri'nin köke yazdığı data-boyut
+ * (kucuk | orta | genis) ve data-dokunmatik özniteliklerine göre ayarlanır.
+ * Sinyal türü renkleri burada, tema değişkenleriyle tanımlıdır; sunucuda üretilen HTML
+ * temadan bağımsız kalır. Dışa aktarımın paleti (veri.ts, ACIK) açık tema değerleriyle aynıdır.
+ */
+
+.arac {
+  --kp-cizgi: var(--ifm-toc-border-color);
+  --kp-zemin: var(--ifm-background-surface-color);
+  --kp-iyi: #2f7d4f;
+  --kp-uyari: var(--av-amber-700);
+  --kp-vurgu: var(--av-amber-500);
+  --kp-sinyal: #2563a6;
+  --kp-ayrik: #0f7c80;
+  --kp-diferansiyel: #7a3fa6;
+  --kp-analog: #a8660b;
+  --kp-guc: #c0392b;
+  --kp-toprak: #2f3337;
+  --kp-ekran: #2e7d4f;
+  --kp-yedek: #cfd4db;
+  --kp-dolu-yazi: #ffffff;
+  --kp-yedek-yazi: #1c1e21;
+  --kp-kenar: #5f6b78;
+  --kp-soluk: #8a929c;
+
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: var(--ifm-global-radius);
+  background: var(--kp-zemin);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+[data-theme='dark'] .arac {
+  --kp-iyi: #6fd39a;
+  --kp-uyari: var(--av-amber-400);
+  --kp-vurgu: var(--av-amber-400);
+  --kp-sinyal: #5b9be0;
+  --kp-ayrik: #34b8bd;
+  --kp-diferansiyel: #b48ae0;
+  --kp-analog: #e3a447;
+  --kp-guc: #f07468;
+  --kp-toprak: #d5d9de;
+  --kp-ekran: #58c487;
+  --kp-yedek: #555d67;
+  --kp-dolu-yazi: #0d1014;
+  --kp-yedek-yazi: #f1f3f5;
+  --kp-kenar: #9aa4b0;
+  --kp-soluk: #6b7380;
+}
+
+/* Sinyal türü: kontak, tablo ve lejant kareleri aynı değişkenleri kullanır */
+.tur_bos,
+.tur_nc,
+.anahtarKontak {
+  --kp-d: var(--ifm-background-color);
+  --kp-k: var(--kp-kenar);
+  --kp-y: var(--ifm-font-color-base);
+}
+
+.tur_nc,
+.anahtarKontak {
+  --kp-y: var(--kp-soluk);
+}
+
+.tur_sinyal { --kp-d: var(--kp-sinyal); }
+.tur_ayrik { --kp-d: var(--kp-ayrik); }
+.tur_diferansiyel { --kp-d: var(--kp-diferansiyel); }
+.tur_analog { --kp-d: var(--kp-analog); }
+.tur_guc { --kp-d: var(--kp-guc); }
+.tur_toprak { --kp-d: var(--kp-toprak); }
+.tur_ekran { --kp-d: var(--kp-ekran); }
+
+.tur_sinyal,
+.tur_ayrik,
+.tur_diferansiyel,
+.tur_analog,
+.tur_guc,
+.tur_toprak,
+.tur_ekran {
+  --kp-k: var(--kp-d);
+  --kp-y: var(--kp-dolu-yazi);
+}
+
+.tur_yedek {
+  --kp-d: var(--kp-yedek);
+  --kp-k: var(--kp-yedek);
+  --kp-y: var(--kp-yedek-yazi);
+}
+
+/* Tam ekran: tarayıcı tam ekranı ya da (desteklenmiyorsa) ekranı kaplayan katman */
+.tamEkran,
+.arac:fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.kaydirmaKilidi {
+  overflow: hidden;
+}
+
+.ustSerit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.ustBaslik {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tamEkranDugme {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tamEkranDugme svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arac :is(input, select, button) {
+  font: inherit;
+  color: inherit;
+}
+
+.arac :is(input, select) {
+  height: 2.2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.arac :is(input, select):focus-visible,
+.arac button:focus-visible {
+  outline: 2px solid var(--kp-vurgu);
+  outline-offset: 1px;
+}
+
+/* iOS, 16 px'ten küçük giriş kutusuna dokununca sayfayı yakınlaştırır */
+.arac[data-dokunmatik] :is(input, select) {
+  height: 2.75rem;
+  font-size: 16px;
+}
+
+.gizli {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.dugme {
+  min-height: 2.2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.arac[data-dokunmatik] .dugme {
+  min-height: 2.75rem;
+}
+
+.dugme:hover:not(:disabled),
+.kucukDugme:hover:not(:disabled),
+.yakinlastirma button:hover:not(:disabled) {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+/* ---------- Ayarlar ---------- */
+
+.ayarlar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.aileAlani {
+  grid-column: 1 / -1;
+}
+
+.genisAlan {
+  grid-column: span 2;
+}
+
+.etiket {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.secici {
+  display: flex;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.secici button {
+  flex: 1;
+  min-height: 2.2rem;
+  padding: 0 0.4rem;
+  border: 0;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.secici button + button {
+  border-left: 1px solid var(--kp-cizgi);
+}
+
+.arac[data-dokunmatik] .secici button {
+  min-height: 2.75rem;
+}
+
+/* Aile seçici: ızgara; dar kapsayıcıda 2×2 */
+.aileSecici {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--kp-cizgi);
+}
+
+.aileSecici button,
+.aileSecici button + button {
+  border: 0;
+  background: var(--kp-zemin);
+}
+
+.secici .secili {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+}
+
+.arac[data-boyut='kucuk'] .ayarlar {
+  grid-template-columns: 1fr;
+}
+
+.arac[data-boyut='kucuk'] .genisAlan {
+  grid-column: auto;
+}
+
+.arac[data-boyut='kucuk'] .aileSecici {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.yukleniyor {
+  margin-top: 1rem;
+  padding: 2.5rem 1rem;
+  border-top: 1px solid var(--kp-cizgi);
+  color: var(--ifm-color-emphasis-700);
+  text-align: center;
+}
+
+/* ---------- Çalışma alanı ---------- */
+
+/* Konnektör adı ve paylaşım/dışa aktarma: çalışma alanının üstünde, uzun tablonun altında kalmaz */
+.aracCubugu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 0.6rem 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--kp-cizgi);
+}
+
+.aracCubugu h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.calisma {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.yuzBolumu,
+.tabloBolumu {
+  min-width: 0;
+}
+
+.arac[data-boyut='genis'] .calisma {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.ipucu {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+}
+
+/* ---------- Konnektör yüzü ---------- */
+
+.yuzKutu {
+  position: relative;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 8px;
+  background: var(--ifm-background-color);
+  overflow: hidden;
+}
+
+.yuzSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* Yatay telefonda da yüzün tamamı ekrana sığar */
+  max-height: min(34rem, calc(100dvh - 7rem));
+  cursor: pointer;
+  /* Yakın değilken dikey kaydırma sayfaya kalır */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.yakin {
+  cursor: grab;
+  touch-action: none;
+}
+
+.tamEkran .yuzSvg,
+.arac:fullscreen .yuzSvg {
+  max-height: calc(100dvh - 16rem);
+}
+
+.govdeCizgi {
+  fill: var(--ifm-background-color);
+  stroke: var(--kp-kenar);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+}
+
+.isaret {
+  fill: var(--kp-kenar);
+}
+
+.eksen {
+  fill: none;
+  stroke: var(--kp-soluk);
+  stroke-width: 0.6px;
+  stroke-dasharray: 4 3;
+  vector-effect: non-scaling-stroke;
+}
+
+.kontakSekil {
+  fill: var(--kp-d);
+  stroke: var(--kp-k);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.tur_nc .kontakSekil,
+.anahtarKontak .kontakSekil {
+  stroke-dasharray: 3 2;
+}
+
+.kontak:hover .kontakSekil {
+  stroke: var(--kp-vurgu);
+  stroke-width: 2px;
+}
+
+.kontakYazi,
+.adYazi {
+  font-family: var(--ifm-font-family-monospace);
+  pointer-events: none;
+}
+
+.kontakYazi {
+  fill: var(--kp-y);
+  font-weight: 600;
+}
+
+.adYazi {
+  fill: var(--ifm-font-color-base);
+}
+
+.seciliAd {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.seciliHalka {
+  fill: none;
+  stroke: var(--kp-vurgu);
+  stroke-width: 2.5px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+/* Yakınlaştırma düğmeleri çizimin altında bir şerit: küçük ekranda kontakların üstüne binmez */
+.yakinlastirma {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-top: 1px solid var(--kp-cizgi);
+}
+
+.yakinlastirmaIpucu {
+  margin-right: auto;
+  padding-left: 0.4rem;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.72rem;
+}
+
+.arac[data-boyut='kucuk'] .yakinlastirmaIpucu,
+.arac[data-dokunmatik] .ipucuFare,
+.arac:not([data-dokunmatik]) .ipucuDokunma {
+  display: none;
+}
+
+.yakinlastirma button {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 6px;
+  background: var(--kp-zemin);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.yakinlastirma button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.yakinlastirma svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arac[data-dokunmatik] .yakinlastirma button {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.yuzNotu {
+  margin: 0.45rem 0 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+}
+
+.notlar {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.8rem;
+}
+
+/* ---------- Seçili pin ---------- */
+
+.seciliPin {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--kp-cizgi);
+  border-left: 3px solid var(--kp-vurgu);
+  border-radius: 8px;
+}
+
+.seciliBaslik {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+}
+
+.kucukDugme {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.arac[data-dokunmatik] .kucukDugme {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.seciliAlanlar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 0.5rem 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.notAlani {
+  grid-column: 1 / -1;
+}
+
+/* ---------- Lejant ve denetim ---------- */
+
+.lejant {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+}
+
+.lejant li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.renkKare {
+  flex: none;
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.renkKare rect {
+  fill: var(--kp-d);
+  stroke: var(--kp-k);
+}
+
+.renkKare:is(.tur_nc, .anahtarKontak) rect {
+  stroke-dasharray: 2 1.5;
+}
+
+.sayi {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.denetim {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8rem;
+}
+
+.denetim li {
+  margin-top: 0.25rem;
+  padding: 0.3rem 0.55rem;
+  border-left: 3px solid;
+}
+
+.uyari {
+  border-color: var(--kp-uyari);
+  background: color-mix(in srgb, var(--kp-uyari) 9%, transparent);
+}
+
+.iyi {
+  border-color: var(--kp-iyi);
+  color: var(--ifm-color-emphasis-800);
+}
+
+/* ---------- Pin tablosu ---------- */
+
+.bolumBaslik {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bolumBaslik h3 {
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.araclar,
+.disaAktar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.arac[data-boyut='kucuk'] .disaAktar {
+  width: 100%;
+}
+
+.arac[data-boyut='kucuk'] .disaAktar .dugme {
+  flex: 1 1 auto;
+}
+
+.sablon select {
+  max-width: 100%;
+}
+
+.tabloKutu {
+  overflow-x: auto;
+}
+
+.arac[data-boyut='genis'] .tabloKutu {
+  max-height: 38rem;
+  overflow-y: auto;
+  border: 1px solid var(--kp-cizgi);
+  border-radius: 8px;
+}
+
+.tamEkran[data-boyut='genis'] .tabloKutu,
+.arac:fullscreen[data-boyut='genis'] .tabloKutu {
+  max-height: calc(100dvh - 12rem);
+}
+
+.tablo {
+  display: table;
+  width: 100%;
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.arac[data-boyut='genis'] .tablo {
+  border: 0;
+}
+
+.tablo th,
+.tablo td {
+  padding: 0.25rem 0.4rem !important;
+  vertical-align: middle;
+}
+
+.tablo th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--kp-zemin);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.tablo tr {
+  cursor: pointer;
+}
+
+.tablo td input,
+.tablo td select {
+  width: 100%;
+  min-width: 0;
+  height: 1.95rem;
+}
+
+.tablo td[data-baslik='Sinyal'] input {
+  min-width: 7rem;
+}
+
+.tablo td[data-baslik='Tür'] select {
+  min-width: 7.5rem;
+}
+
+.tablo td[data-baslik='Not'] input {
+  min-width: 6rem;
+}
+
+.pinHucre {
+  white-space: nowrap;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.pinHucre b {
+  margin-left: 0.35rem;
+  font-weight: 600;
+}
+
+.boyutHucre {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.seciliSatir {
+  background: color-mix(in srgb, var(--kp-vurgu) 16%, transparent) !important;
+}
+
+.anahtarNot {
+  color: var(--ifm-color-emphasis-600);
+  font-style: italic;
+}
+
+/* Küçük kapsayıcıda her satır iki satırlı ızgara: pin | sinyal | tür, altında not */
+.arac[data-boyut='kucuk'] .tablo,
+.arac[data-boyut='kucuk'] .tablo tbody {
+  display: block;
+  border: 0;
+}
+
+.arac[data-boyut='kucuk'] .tablo thead {
+  display: none;
+}
+
+.arac[data-boyut='kucuk'] .tablo tr {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'pin sinyal sinyal'
+    'boyut tur not';
+  gap: 0.3rem 0.4rem;
+  padding: 0.45rem 0.2rem;
+  border: 0;
+  border-bottom: 1px solid var(--kp-cizgi);
+  background: none;
+}
+
+.arac[data-boyut='kucuk'] .tablo td {
+  display: block;
+  padding: 0 !important;
+  border: 0;
+}
+
+.arac[data-boyut='kucuk'] .tablo td[data-baslik='Pin'] {
+  grid-area: pin;
+  align-self: center;
+}
+
+.arac[data-boyut='kucuk'] .tablo td[data-baslik='Boyut'] {
+  grid-area: boyut;
+  align-self: center;
+}
+
+.arac[data-boyut='kucuk'] .tablo td[data-baslik='Sinyal'] {
+  grid-area: sinyal;
+}
+
+.arac[data-boyut='kucuk'] .tablo td.anahtarNot {
+  grid-column: 2 / -1;
+  align-self: center;
+}
+
+.arac[data-boyut='kucuk'] .tablo td[data-baslik='Tür'] {
+  grid-area: tur;
+}
+
+.arac[data-boyut='kucuk'] .tablo td[data-baslik='Not'] {
+  grid-area: not;
+}
+
+.arac[data-boyut='kucuk'] .tablo td :is(input, select) {
+  min-width: 0;
+}
