@@ -147,6 +147,65 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | bağlı koşul | coupled condition |
 | bağımsızlık çifti | independence pair |
 | kısa devre değerlendirmesi | short-circuit evaluation |
+| yazılım seviyesi | software level (Seviye A–E) |
+| geliştirme güvence seviyesi | development assurance level (DAL; fonksiyon için FDAL, öğe için IDAL) |
+| hedef | objective (DO-178C) |
+| arıza durumu | failure condition |
+| sistem emniyet değerlendirme süreci | system safety assessment process |
+| bütünleyici süreçler | integral processes |
+| sertifikasyon irtibatı | certification liaison |
+| sertifikasyon otoritesi (kısaca otorite) | certification authority |
+| başvuru sahibi | applicant |
+| kabul edilebilir uyum yöntemi | acceptable means of compliance |
+| teknoloji eki (kısaca ek) | supplement (DO-331/332/333; DO-330 ek değildir) |
+| ek hususlar | additional considerations |
+| yazılım yaşam döngüsü verisi (gündelik: iş ürünü) | software life cycle data |
+| iz verisi | trace data |
+| kontrol kategorisi | control category (CC1/CC2) |
+| konfigürasyon öğesi | configuration item |
+| konfigürasyon durum muhasebesi | configuration status accounting |
+| geçiş kriteri | transition criteria |
+| gözden geçirme | review |
+| yazılım uygunluk gözden geçirmesi | software conformity review |
+| uyum / uygunluk | compliance / conformity |
+| problem raporu | problem report |
+| düzeltici faaliyet | corrective action |
+| gereksinim tabanlı test | requirements-based testing |
+| test durumu / test prosedürü | test case / test procedure |
+| veri ve kontrol bağlaşımı | data and control coupling |
+| en kötü durum yürütme süresi | worst-case execution time (WCET) |
+| çizelgeleme / çizelgeleyici | scheduling / scheduler |
+| çizelgelenebilirlik analizi | schedulability analysis |
+| zamanlayıcı | timer |
+| kesme servis rutini | interrupt service routine (ISR) |
+| belirlenimci | deterministic |
+| alan bölümlemesi / zaman bölümlemesi | spatial / temporal partitioning |
+| bölüm (bölümleme bağlamında) | partition |
+| tümleşik modüler aviyonik | integrated modular avionics (IMA) |
+| çok çekirdekli işlemci | multi-core processor |
+| kod üreteci | code generator |
+| kodlama standardı | software code standards |
+| derleme | build |
+| imaj | image (executable image) |
+| sağlama toplamı | checksum |
+| döngüsel artıklık denetimi | cyclic redundancy check (CRC) |
+| çevrimsel karmaşıklık | cyclomatic complexity |
+| güvenli durum | safe state |
+| emniyet / güvenlik | safety / security |
+| uçuşa elverişlilik | airworthiness |
+| mürettebat | flight crew |
+| seçenekle seçilebilir yazılım | option-selectable software |
+| yeniden kullanılabilir yazılım bileşeni | reusable software component (RSC) |
+| yazılım sertifikasyon planı | Plan for Software Aspects of Certification (PSAC) |
+| yazılım konfigürasyon indeksi | Software Configuration Index (SCI) |
+| yazılım yaşam döngüsü ortam konfigürasyon indeksi | Software Life Cycle Environment Configuration Index (SECI) |
+| araç başarı özeti | Tool Accomplishment Summary (TAS) |
+
+Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgisi", "temel hat"
+(temel çizgi); objective anlamında "amaç" (hedef); review anlamında "inceleme" (gözden
+geçirme); DO-178C yazılım seviyesi anlamında "güvence seviyesi/düzeyi"; "sertifikasyon
+makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partition anlamında
+"bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4).
 
 ## Yeni blog yazısı ekleme
 
