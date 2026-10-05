@@ -1,6 +1,6 @@
 ---
 title: "SW SOI-1"
-description: "SOI #1 planlama denetimi kontrol listesi: giriş kriterleri, planlarda otoritenin baktığı noktalar, veri paketi ve sık görülen bulgular."
+description: "SOI-1 planlama denetimi kontrol listesi: giriş kriterleri, planlarda otoritenin baktığı noktalar, veri paketi ve sık görülen bulgular."
 sidebar_position: 2
 ---
 
@@ -31,18 +31,28 @@ yapılmalıdır. Çok erken çağrılırsa planlar henüz olgunlaşmamıştır; 
 çağrılırsa otoritenin isteyeceği değişiklikler, planlara göre zaten üretilmiş
 gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 
-- [ ] Beş plan ve üç geliştirme standardı (gereksinim, tasarım, kodlama) yazılmış,
-      gözden geçirilmiş ve konfigürasyon yönetimi altına alınmıştır.
-- [ ] Planların gözden geçirme kayıtları ve kalite güvencesinin plan incelemesi
-      kayıtları hazırdır.
+- [ ] Yazılım seviyesinin gerektirdiği planlar ve geliştirme standartları (Seviye A, B
+      ve C'de beş plan ile gereksinim, tasarım ve kodlama standartları; Seviye D'de beş
+      plan) yazılmış, gözden geçirilmiş ve konfigürasyon yönetimi altına alınmıştır.
+      Planların tek belgede birleştirilmesi ya da standartların yazılım geliştirme
+      planıyla (Software Development Plan, SDP) aynı belgede paketlenmesi engel değildir;
+      önemli olan içeriğin eksiksiz olmasıdır. Yalnız, bazı otoriteler yazılım
+      sertifikasyon planını (Plan for Software Aspects of Certification, PSAC) ayrı belge
+      olarak ister.
+- [ ] Planların gözden geçirme kayıtları ve kalite güvencesinin planlara ilişkin
+      gözden geçirme kayıtları hazırdır.
 - [ ] Sistem tarafından atanan yazılım seviyesi ve dayandığı emniyet değerlendirmesi
       çıktıları (fonksiyonel tehlike değerlendirmesi (functional hazard assessment,
       FHA) ve ön sistem emniyet değerlendirmesi (preliminary system safety assessment,
       PSSA)) gösterilebilir durumdadır.
 - [ ] Araç kalifikasyonu (tool qualification) gerektiren araçlar belirlenmiş, varsa
       araç kalifikasyon planları yazılmıştır.
-- [ ] Yazılım sertifikasyon planı (Plan for Software Aspects of Certification, PSAC)
-      otoriteye denetimden önce, okunmaya yetecek süre bırakılarak gönderilmiştir.
+- [ ] PSAC otoriteye denetimden önce, okunmaya yetecek süre bırakılarak gönderilmiştir.
+
+Seviye D'de kapsam daralır: planlama hedeflerinden yalnızca yaşam döngüsü faaliyetlerinin
+tanımlanması ile ek hususların ele alınması aranır. Beş plan yine beklenir; geliştirme
+standartlarının tanımlanması, planların DO-178C'ye uyumunun gözden geçirilmesi ve kalite
+güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değildir.
 
 ## Planlar: otoritenin baktığı noktalar
 
@@ -50,14 +60,23 @@ gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 
 - [ ] Sistem ve yazılım kısa ama anlaşılır biçimde tanıtılmış mı; yazılımın hangi
       işlevi yerine getirdiği ve hangi arıza durumlarına katkı verebileceği açık mı?
-- [ ] Yazılım seviyesi ve gerekçesi, sistem emniyet değerlendirmesiyle tutarlı mı?
+- [ ] Yazılım seviyesi ve gerekçesi, sistem emniyet değerlendirme sürecinin çıktılarıyla
+      tutarlı mı?
+- [ ] Uyumun neye göre gösterileceği açık mı: DO-178C'yi kabul edilebilir uyum yöntemi
+      olarak tanıyan otorite dokümanı (FAA için AC 20-115D, EASA için AMC 20-115D) ve
+      varsa projeye özgü ek otorite beklentileri yazılmış mı?
 - [ ] Ek değerlendirme gerektiren durumlar listelenmiş mi: önceden geliştirilmiş
       yazılım (previously developed software, PDS), ticari hazır yazılım (commercial
       off-the-shelf, COTS), kalifiye edilecek araçlar, sahada yüklenebilir yazılım,
-      kullanıcı tarafından değiştirilebilir yazılım, devre dışı bırakılmış kod
-      (deactivated code), bölümleme iddiaları, alternatif yöntemler?
-- [ ] DO-330, DO-331, DO-332 ya da DO-333 eklerinden hangilerinin uygulanacağı ve
-      neden uygulanacağı yazılmış mı?
+      kullanıcı tarafından değiştirilebilir yazılım, parametre verisi öğeleri
+      (parameter data item, PDI), devre dışı bırakılmış kod (deactivated code),
+      bölümleme iddiaları, çok çekirdekli işlemci (multi-core processor) kullanımı
+      (AC 20-193 / AMC 20-193), alternatif yöntemler?
+- [ ] DO-331, DO-332 ya da DO-333 eklerinden (supplement) hangilerinin neden
+      uygulanacağı ve hangi araçların DO-330'a göre kalifiye edileceği yazılmış mı?
+- [ ] Sertifikasyon anında açık kalabilecek problem raporlarının nasıl sınıflandırılıp
+      yönetileceği (AC 20-189 / AMC 20-189 doğrultusunda) planlarda tanımlı mı?
+      Sınıflar 9. bölümün problem raporlama kısmında anlatılır.
 - [ ] Hangi yaşam döngüsü verisinin otoriteye sunulacağı, hangisinin yalnızca talep
       üzerine gösterileceği belli mi?
 - [ ] Takvim, SOI denetimlerinin yaklaşık zamanlarını içeriyor mu?
@@ -67,18 +86,26 @@ gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 
 - [ ] Yaşam döngüsü modeli ve her sürecin geçiş kriterleri (transition criteria)
       ölçülebilir biçimde tanımlı mı? ([Ek A](../06-ekler/01-ek-a-ornek-gecis-kriterleri.md))
-- [ ] Yazılım geliştirme planı (Software Development Plan, SDP), kullanılan dili,
-      derleyiciyi, bağlayıcıyı ve geliştirme ortamını sürümleriyle belirtiyor mu?
+- [ ] SDP, kullanılan dili, derleyiciyi, bağlayıcıyı ve geliştirme ortamını
+      sürümleriyle belirtiyor; gereksinim, tasarım ve kodlama kuralları için ilgili
+      standartlara atıf yapıyor mu?
 - [ ] Yazılım doğrulama planı (Software Verification Plan, SVP), yazılım seviyesinin
       gerektirdiği bağımsızlığı (independence) kimin, hangi faaliyette sağlayacağını
-      söylüyor mu?
-- [ ] Gereksinime dayalı test, gürbüzlük (robustness) testi, hedef donanımda test ve
-      yapısal kapsam analizi (structural coverage analysis) yaklaşımı tanımlı mı?
+      söylüyor mu? Bağımsızlık her hedefte değil, seviyeye göre belirli hedeflerde
+      aranır ([9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)).
+- [ ] Gereksinim tabanlı test (requirements-based testing), gürbüzlük (robustness)
+      testi, hedef donanımda test ve yapısal kapsam analizi (structural coverage
+      analysis) yaklaşımı tanımlı mı?
 - [ ] Kapsam boşluklarının, ölü kodun (dead code) ve devre dışı bırakılmış kodun nasıl
       ele alınacağı planlanmış mı?
 - [ ] Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan,
       SCMP), konfigürasyon öğelerini, temel çizgi (baseline) kurallarını, değişiklik
       kontrolünü ve problem raporlama (problem reporting) akışını tanımlıyor mu?
+- [ ] SCMP, hangi yaşam döngüsü verisinin hangi kontrol kategorisinde (control
+      category; CC1 ya da CC2) yönetileceğini, arşivleme ve geri getirme yöntemini ve
+      yaşam döngüsü ortamının (derleyici, araçlar, test düzeneği) nasıl kontrol altında
+      tutulacağını söylüyor mu?
+      ([10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md))
 - [ ] Yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP), kalite
       güvencesinin bağımsızlığını, denetim sıklığını ve uygunsuzluk kayıtlarının nasıl
       kapatılacağını açıklıyor mu?
@@ -88,7 +115,8 @@ gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 ### Standartlar
 
 - [ ] Gereksinim standardı, iyi bir gereksinimin ölçütlerini ve türetilmiş gereksinimin
-      (derived requirement) nasıl işaretleneceğini tanımlıyor mu?
+      (derived requirement) nasıl işaretlenip sistem süreçlerine iletileceğini
+      tanımlıyor mu?
 - [ ] Tasarım standardı karmaşıklık, kesme kullanımı, dinamik bellek ve özyineleme gibi
       konularda kısıt koyuyor mu?
 - [ ] Kodlama standardı dil alt kümesini (örneğin MISRA C tabanlı bir kural seti),
@@ -107,15 +135,25 @@ gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 
 ## Hazırlanacak veri paketi
 
-| Veri | Neden istenir |
-|---|---|
-| PSAC, SDP, SVP, SCMP, SQAP | Denetimin asıl konusu; hedeflerin nasıl karşılanacağını gösterir |
-| Gereksinim, tasarım ve kodlama standartları | Geliştirme verisinin hangi kurallarla üretileceğini gösterir |
-| Planların gözden geçirme kayıtları | Planların kendisinin de doğrulandığının kanıtı |
-| Kalite güvencesi kayıtları | Kalite güvencesinin planlama sürecine katıldığının kanıtı |
-| Araç kalifikasyon planları (varsa) | Araç kredisinin baştan doğru kurgulandığını gösterir |
-| Emniyet değerlendirmesinden ilgili çıktılar | Yazılım seviyesinin gerekçesi |
-| Konfigürasyon kayıtları | Planların hangi sürümünün denetlendiği |
+DO-178C'nin otoriteye sunulmasını asgari olarak beklediği veri PSAC, yazılım
+konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım başarı özetidir
+(Software Accomplishment Summary, SAS); bu aşamada bunlardan yalnızca PSAC vardır.
+Kalifikasyon gerektiren araç varsa DO-330, TQL-1 ile TQL-4 arasındaki araçlar için araç
+kalifikasyon planının da PSAC ile birlikte sunulmasını bekler. Geri kalan veri denetimde
+gösterilir ve talep edildiğinde erişime açılır. Otorite başka planların da önceden
+gönderilmesini isteyebilir; bu yüzden aşağıdaki ayrım bir alt sınırdır, kesin liste
+PSAC'ta otoriteyle kararlaştırılır.
+
+| Veri | Otoriteye | Neden istenir |
+|---|---|---|
+| PSAC | Sunulur | Sertifikasyon yaklaşımının otoriteyle üzerinde anlaşılan özeti; denetimin çıkış noktası |
+| SDP, SVP, SCMP, SQAP | Denetimde gösterilir | Hedeflerin hangi süreç, yöntem ve ortamla karşılanacağını gösterir |
+| Gereksinim, tasarım ve kodlama standartları | Denetimde gösterilir | Geliştirme verisinin hangi kurallarla üretileceğini gösterir |
+| Planların gözden geçirme kayıtları | Denetimde gösterilir | Planların kendisinin de doğrulandığının kanıtı |
+| Kalite güvencesi kayıtları | Denetimde gösterilir | Kalite güvencesinin plan ve standartları gözden geçirdiğinin, bulduğu uygunsuzlukları izleyip kapattığının kanıtı |
+| Araç kalifikasyon planları (varsa) | Sunulur (TQL-1 – TQL-4); TQL-5'te ayrı plan beklenmez, yaklaşım PSAC'ta anlatılır | Araç kredisinin baştan doğru kurgulandığını gösterir; kalifikasyon yaklaşımı üzerindeki mutabakatın dayanağıdır |
+| Emniyet değerlendirmesinden ilgili çıktılar | Denetimde gösterilir | Yazılım seviyesinin gerekçesi |
+| Konfigürasyon kayıtları | Denetimde gösterilir | Denetlenen plan ve standartların hangi sürüm olduğunu, temel çizgiye alındığını ve sonraki değişikliklerin kontrol altında olduğunu gösterir |
 
 ## Sık görülen bulgular
 
@@ -124,7 +162,7 @@ gereksinim, tasarım ve kodu da etkiler. Tipik giriş kriterleri şunlardır:
 | Planlar başka bir projeden kopyalanmış, proje adı dışında farkı yok | Takvim baskısı, "şablon yeter" varsayımı | Planı projeye özgü kararlarla (araçlar, ortam, ekip yapısı) doldurmak |
 | Geçiş kriterleri "tamamlandığında" gibi ölçülemez ifadeler | Kriterin kim tarafından nasıl kontrol edileceği düşünülmemiş | Her kriteri bir kayıt ya da ölçümle ilişkilendirmek |
 | Planlar arasında çelişki (araç, sürüm, sorumluluk) | Planların farklı kişilerce, birbirinden habersiz yazılması | Planları birlikte gözden geçirmek; tek bir terim ve araç listesi tutmak |
-| Bağımsızlık gerekliliği planda yok ya da belirsiz | Ekip yapısının sonradan belirlenmesi | Seviyeye göre bağımsızlık tablosunu SVP'ye koymak |
+| Bağımsızlık gerekliliği planda yok ya da belirsiz | Ekip yapısının sonradan belirlenmesi | Bağımsızlığın arandığı hedefleri seviyeye göre çıkarıp her biri için kimin sağlayacağını SVP'ye yazmak |
 | Kalifikasyon gerektiren bir araç hiç anılmamış | Araç envanterinin çıkarılmaması | Geliştirme ve doğrulama zincirindeki her aracı listeleyip tek tek değerlendirmek |
 | Planlar konfigürasyon yönetimi altında değil | Planların "belge" değil "taslak" gibi görülmesi | Planları ilk temel çizginin parçası yapmak |
 
@@ -134,10 +172,14 @@ Otorite bulgularını ve gözlemlerini yazılı olarak iletir. Her bulgu için b
 düzeltici faaliyet planı, sorumlu ve tarih belirlenir; planlarda yapılan değişiklikler
 yeni sürümle yeniden yayımlanır ve kayda bağlanır. SOI-1 bulguları açıkken
 geliştirmeye hız vermek, düzeltilmiş planlara göre yeniden iş yapma riskini büyütür.
+Bulgular kapatılmadan ya da en azından kapanış planında otoriteyle mutabık kalınmadan
+SOI-2'ye girilmez.
 
 ## İlgili bölümler
 
 - [5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
+- [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
 - [11. Yazılım Kalite Güvencesi](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
 - [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 - [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
