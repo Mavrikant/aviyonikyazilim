@@ -6,12 +6,62 @@ sidebar_position: 1
 
 ![Kokpitte, etrafında uçuşan aviyonik kısaltmaları karşısında şaşkın bakan bir kişiyi gösteren mizahi illüstrasyon](/img/kitap/kisaltmalar/gorsel-1.webp "Aviyonik kısaltmalar karşısında şaşkınlık")
 
-Aviyonik sektörü, hava taşıtlarının elektronik sistemlerinin tasarımı, üretimi ve bakımı ile ilgili bir alandır. Bu sektörde, karmaşık sistemlerin ve işlemlerin anlaşılmasını kolaylaştırmak amacıyla çeşitli kısaltmalar yaygın olarak kullanılmaktadır. Bu kısaltmalar, sektör profesyonelleri arasında hızlı ve etkili iletişim sağlamak için büyük önem taşır. Ancak, sektöre yeni başlayanlar veya dışarıdan bakanlar için bu kısaltmalar, anlaşılması güç bir dil gibi görünebilir. Bu nedenle, aviyonik terimlerini ve kısaltmalarını detaylı bir şekilde açıklamak, bu karmaşık alanın daha iyi anlaşılmasına yardımcı olacaktır.
+Bu sayfa, kitapta ve aviyonik yazılım projelerinde karşılaşacağınız kısaltmaların başvuru sözlüğüdür. İlk tablo, kitabın DO-178C çekirdeğinde sık kullanılan kısaltmaları Türkçe karşılıkları ve ele alındıkları bölümle birlikte verir; ardından gelen A'dan Z'ye liste, havacılık elektroniğinin daha geniş alanındaki kısaltmaların İngilizce açılımlarını içerir.
 
-Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavramları ve teknik dili anlamalarına yardımcı olmak için tasarlanmıştır. Aradığınız kısaltmayı bulamadıysanız ya da açıklamadan emin değilseniz bizimle iletişime geçmekten çekinmeyiniz.
+Her kısaltma tek satırdadır. Birden çok anlamı olan kısaltmalarda anlamlar noktalı virgülle ayrılır, kitapta geçen anlam başa yazılır ve gerekiyorsa bağlam parantez içinde belirtilir; "bkz." notu aynı kavramın daha yaygın kısaltmasına yönlendirir. Eksik ya da hatalı bir girdi görürseniz [ana sayfadaki katkı bölümü](/#katki) üzerinden bildirebilirsiniz.
 
-İşte aviyonik sektöründe sıkça karşılaşılan bazı önemli kısaltmalar ve terimlerin açıklamaları:
+## Kitapta kullanılan temel kısaltmalar
 
+Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmiştir; Türkçe karşılıklar bölümlerde kullanılan terimlerdir.
+
+| Kısaltma | İngilizce açılım | Türkçe karşılık | Bölüm |
+|----|----|----|----|
+| IMA | Integrated Modular Avionics | tümleşik modüler aviyonik | [Bölüm 2](../02-baglam/02-sistem-baglaminda-yazilim.md) |
+| DAL | Development Assurance Level | geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| FDAL | Function Development Assurance Level | fonksiyon geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| IDAL | Item Development Assurance Level | öğe geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| FHA | Functional Hazard Assessment | fonksiyonel tehlike değerlendirmesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| PASA | Preliminary Aircraft Safety Assessment | ön uçak emniyet değerlendirmesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| PSSA | Preliminary System Safety Assessment | ön sistem emniyet değerlendirmesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| SSA | System Safety Assessment | sistem emniyet değerlendirmesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| ASA | Aircraft Safety Assessment | uçak emniyet değerlendirmesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| CCA | Common Cause Analysis | ortak neden analizi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
+| PSAC | Plan for Software Aspects of Certification | yazılım sertifikasyon planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SDP | Software Development Plan | yazılım geliştirme planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SVP | Software Verification Plan | yazılım doğrulama planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SCMP | Software Configuration Management Plan | yazılım konfigürasyon yönetimi planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SQAP | Software Quality Assurance Plan | yazılım kalite güvencesi planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| HLR | High-Level Requirements | yüksek seviyeli gereksinimler | [Bölüm 6](../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md) |
+| LLR | Low-Level Requirements | düşük seviyeli gereksinimler | [Bölüm 7](../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md) |
+| EOC | Executable Object Code | çalıştırılabilir nesne kodu | [Bölüm 8](../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md) |
+| SVCP | Software Verification Cases and Procedures | yazılım doğrulama durumları ve prosedürleri | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| SVR | Software Verification Results | yazılım doğrulama sonuçları | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| SCA | Structural Coverage Analysis | yapısal kapsam analizi | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| MC/DC | Modified Condition/Decision Coverage | değiştirilmiş koşul/karar kapsama | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| WCET | Worst-Case Execution Time | en kötü durum yürütme süresi | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| PR | Problem Report | problem raporu | [Bölüm 9](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) |
+| CC1 | Control Category 1 | kontrol kategorisi 1 | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
+| CC2 | Control Category 2 | kontrol kategorisi 2 | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
+| SCI | Software Configuration Index | yazılım konfigürasyon indeksi | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
+| SECI | Software Life Cycle Environment Configuration Index | yazılım yaşam döngüsü ortam konfigürasyon indeksi | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
+| QA | Quality Assurance | kalite güvencesi | [Bölüm 11](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md) |
+| SAS | Software Accomplishment Summary | yazılım başarı özeti | [Bölüm 12](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md) |
+| SOI | Stage of Involvement | katılım aşaması | [Bölüm 12](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md) |
+| TQL | Tool Qualification Level | araç kalifikasyon seviyesi | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| TOR | Tool Operational Requirements | araç operasyonel gereksinimleri | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| TQP | Tool Qualification Plan | araç kalifikasyon planı | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| TAS | Tool Accomplishment Summary | araç başarı özeti | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| FLS | Field-Loadable Software | sahada yüklenebilir yazılım | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |
+| LSP | Loadable Software Part | yüklenebilir yazılım parçası | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |
+| UMS | User-Modifiable Software | kullanıcı tarafından değiştirilebilir yazılım | [Bölüm 19](../05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.md) |
+| RTOS | Real-Time Operating System | gerçek zamanlı işletim sistemi | [Bölüm 20](../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md) |
+| MMU | Memory Management Unit | bellek yönetim birimi | [Bölüm 21](../05-ozel-konular/21-yazilim-bolumlemesi.md) |
+| MPU | Memory Protection Unit | bellek koruma birimi | [Bölüm 21](../05-ozel-konular/21-yazilim-bolumlemesi.md) |
+| PDI | Parameter Data Item | parametre verisi öğesi | [Bölüm 22](../05-ozel-konular/22-konfigurasyon-verisi.md) |
+| DQR | Data Quality Requirements | veri kalite gereksinimleri | [Bölüm 23](../05-ozel-konular/23-havacilik-verileri.md) |
+| DPAL | Data Process Assurance Level | veri süreci güvence seviyesi | [Bölüm 23](../05-ozel-konular/23-havacilik-verileri.md) |
+| PDS | Previously Developed Software | önceden geliştirilmiş yazılım | [Bölüm 24](../05-ozel-konular/24-yazilim-yeniden-kullanimi.md) |
+| COTS | Commercial Off-The-Shelf | ticari hazır yazılım | [Bölüm 24](../05-ozel-konular/24-yazilim-yeniden-kullanimi.md) |
 
 ## A
 
@@ -19,7 +69,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 |----|----|
 | A/A | Air-to-Air |
 | A/C | Aircraft |
-| A/D | Analog To Digital |
+| A/D | Analog to Digital |
 | A/G | Air-to-Ground |
 | A/P | Autopilot |
 | A429 | ARINC 429 |
@@ -31,21 +81,21 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | ACC | Area Control Center |
 | ACE | Actuator Control Electronics |
 | ACMS | Aircraft Condition Monitoring System |
-| ACO | Aircraft Certification Office (FAA) (Reorganized as Certification Branches as of 2023) |
+| ACO | Aircraft Certification Office (FAA; 2023 yeniden yapılanmasıyla Certification Branch) |
 | ACP | Audio Control Panel |
 | ACS | Audio Control System |
+| ACSL | ANSI/ISO C Specification Language (C için biçimsel belirtim dili) |
 | AD | Airworthiness Directive |
 | ADAHRS | Air Data and Attitude Heading Reference System |
-| ADC | Air Data Computer, or Analog-To-Digital Converter |
-| ADC | Analog-to-Digital Converter |
+| ADC | Air Data Computer; Analog-to-Digital Converter |
 | ADF | Automatic Direction Finder |
 | ADI | Attitude Director Indicator |
 | ADIRS | Air Data Inertial Reference System |
 | ADIRU | Air Data Inertial Reference Unit |
 | ADM | Air Data Module |
-| ADR | Airborne Data Reception |
+| ADR | Air Data Reference (ADIRU'nun hava verisi kısmı) |
 | ADS | Automatic Dependent Surveillance |
-| ADS-A | Automatic Dependent Surveillance-Address |
+| ADS-A | Automatic Dependent Surveillance-Addressed (güncel adı ADS-C) |
 | ADS-B | Automatic Dependent Surveillance-Broadcast |
 | ADS-C | Automatic Dependent Surveillance-Contract |
 | ADSB | Alternating Double Sideband |
@@ -56,22 +106,24 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | AFDC | Autopilot Flight Director Computer |
 | AFDS | Autopilot Flight Director System |
 | AFDX | Avionics Full-Duplex Switched Ethernet |
+| AFHA | Aircraft Functional Hazard Assessment (uçak seviyesi FHA) |
 | AGACS | Automatic Ground-Air Communication System |
 | AGC | Automatic Gain Control |
 | AGDL | Air-Ground Data Link |
-| AHC | Attitude Heading Control |
+| AHC | Attitude Heading Computer |
 | AHRS | Attitude Heading Reference System |
 | AI | Action Item |
-| AIDS | Aircraft Integrated Data |
+| AIDS | Aircraft Integrated Data System |
 | AIM | Aeronautical Information Manual |
 | AIP | Aeronautical Information Publication |
 | AIR | Aerospace Information Report |
-| AIS | Airmen’s Information System |
+| AIRAC | Aeronautical Information Regulation and Control |
+| AIS | Aeronautical Information Service |
 | AL | Assurance Level |
 | ALT | Altitude |
 | ALU | Arithmetic Logic Unit |
 | AM | Amplitude Modulation |
-| AMC | Acceptable Means of Compliance, or Alternative Means of Compliance |
+| AMC | Acceptable Means of Compliance (EASA); Alternative Means of Compliance |
 | AMS | Air Management System |
 | ANC | Active Noise Cancellation |
 | ANN | Annunciator |
@@ -82,30 +134,32 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | AOP | Airport Operating Plan |
 | AOPA | Aircraft Owners and Pilots Association |
 | APARS | Automatic Pressure Altitude Reporting System |
+| APEX | Application/Executive (ARINC 653 uygulama arayüzü) |
+| API | Application Programming Interface |
 | APS | Auto Pilot System |
 | APU | Auxiliary Power Unit |
 | APV | Approach with Vertical Guidance |
 | ARINC | Aeronautical Radio, Incorporated |
 | ARM | Advanced RISC Machine |
-| ARP | Aerospace Recommended Practice (via Society of Automotive & Aerospace Engineers) |
+| ARP | Aerospace Recommended Practice (SAE International) |
 | ARW | Airborne Rotary Winged |
 | ASA | Aircraft Safety Assessment |
-| ASCII | American Standard Code for Information |
+| ASCII | American Standard Code for Information Interchange |
 | ASD | Aircraft Situation Display |
 | ASDL | Aeronautical Satellite Data Link |
 | ASIC | Application Specific Integrated Circuit |
+| ASIL | Automotive Safety Integrity Level (ISO 26262) |
 | ASR | Airport Surveillance Radar |
 | ASSP | Application Specific Standard Product |
 | ASTERIX | All Purpose Structured Eurocontrol Surveillance Information Exchange |
 | ASU | Avionics Switching Unit |
 | AT | Auto Throttle |
-| ATC | Amended Type Certificate |
-| ATC | Air Traffic Control |
+| ATC | Air Traffic Control; Amended Type Certificate |
 | ATCRBS | Air Traffic Control Radar Beacon System |
 | ATCSS | Air Traffic Control Signaling System |
 | ATCT | Airport Traffic Control Tower |
 | ATE | Automatic Test Equipment |
-| ATIS | Automated Terminal Information Service |
+| ATIS | Automatic Terminal Information Service |
 | ATM | Air Traffic Management |
 | ATP | Acceptance Test Procedure |
 | ATS | Air Traffic Service |
@@ -113,9 +167,9 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | ATSU | Air Traffic Services Unit |
 | ATT | Attitude |
 | Avionics | Aviation Electronics |
-| AVN | Office of Aviation System Standards |
-| AWACS | Advanced Warning and Control Systems |
-| AWOS | Automated Weather Observation System |
+| AVN | Office of Aviation System Standards (FAA; eski birim adı) |
+| AWACS | Airborne Warning and Control System |
+| AWOS | Automated Weather Observing System |
 
 ## B
 
@@ -127,40 +181,41 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | BCD | Binary Coded Decimal |
 | BDI | Bearing Distance Indicator |
 | BFO | Beat Frequency Oscillator |
-| BGAN | Broadcast Global Area Network |
+| BGAN | Broadband Global Area Network |
 | BIT | Built-In Test |
 | BITE | Built-In Test Equipment |
 | BNR | Binary |
 | BOM | Bill of Materials |
 | BRAM | Block RAM |
+| BSP | Board Support Package |
 
 ## C
 
 | Kısaltma | Açıklama |
 |----|----|
 | CA | Criticality Analysis |
-| CAA | Civil Aeronautics Administration |
+| CAA | Civil Aviation Authority; Civil Aeronautics Administration (ABD, tarihsel; FAA'nın öncülü) |
 | CAS | Calibrated Airspeed |
-| CAST | Certification Authorities Software Team |
-| CAT | Catastrophic (when referring to a “Safety” aspect; otherwise may refer to “Category”) |
-| CAT I | Operational Performance Category 1 |
+| CAST | Certification Authorities Software Team (artık etkin değil) |
+| CAT | Catastrophic (emniyet bağlamında); Category |
+| CAT I | Operational Performance Category I |
 | CAT II | Operational Performance Category II |
 | CAT IIIa | Operational Performance Category IIIa |
 | CAT IIIb | Operational Performance Category IIIb |
 | CAT IIIc | Operational Performance Category IIIc |
 | CBIT | Continuous Built-In Test |
-| CC | Change Control or Control Category |
+| CC | Control Category (DO-178C; bkz. CC1, CC2); Change Control |
 | CC1 | Control Category 1 |
 | CC2 | Control Category 2 |
-| CCA | Common Cause Analysis or Circuit Card Assembly |
+| CCA | Common Cause Analysis (ARP4761A); Circuit Card Assembly |
 | CCB | Change Control Board |
 | CDA | Continuous Descent Approach |
 | CDI | Course Deviation Indicator |
 | CDR | Critical Design Review |
-| CDR | System Critical Design Review |
 | CDRL | Contract Data Requirements List |
-| CDTI | Common Cause Analysis, or Circuit Card Assembly |
+| CDTI | Cockpit Display of Traffic Information |
 | CDU | Control Display Unit |
+| CEA | Cascading Effects Analysis (ARP4761A) |
 | CEH | Complex Electronic Hardware |
 | CFIT | Controlled Flight Into Terrain |
 | CFR | Code of Federal Regulations |
@@ -176,26 +231,26 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | CMR | Certification Maintenance Requirement |
 | CMS | Configuration Management Specialist |
 | CNS | Communication, Navigation, Surveillance |
+| CNS/ATM | Communication, Navigation, Surveillance / Air Traffic Management |
 | CoC | Certificate of Conformity |
 | CODEC | Coder/Decoder |
 | COM | Communication |
+| COM/MON | Command/Monitor (komut/izleme mimarisi) |
 | COMM | Communications Receiver |
 | COTS | Commercial Off-The-Shelf |
-| COTS | Commercial Off the Shelf |
-| CPDLC | Controller |
-| CPS | Cycles Per Second |
+| CPDLC | Controller-Pilot Data Link Communications |
+| CPS | Cycles per Second |
 | CPU | Central Processing Unit |
 | CR | Change Request |
-| CRC | Cyclic Redundancy Check |
-| CRC | Cyclic Redundancy Check, or Cyclic Redundancy Code |
+| CRC | Cyclic Redundancy Check; Cyclic Redundancy Code |
 | CRI | Certification Review Item |
 | CRT | Cathode Ray Tube |
 | CS | Certification Specification |
 | CSCI | Computer Software Configuration Item |
 | CSV | Comma Separated Values |
 | CTAF | Common Traffic Advisory Frequency |
-| CV/DFDR | Cockpit Voice And Digital Flight Data Recorder |
-| CVE | Certification Verification Engineer |
+| CV/DFDR | Cockpit Voice and Digital Flight Data Recorder |
+| CVE | Compliance Verification Engineer |
 | CVR | Cockpit Voice Recorder |
 | CW | Continuous Wave |
 | CWS | Control Wheel Steering |
@@ -204,24 +259,19 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| DA | Decision Altitude |
-| DA | Drift Angle |
+| DA | Decision Altitude; Drift Angle |
 | DAC | Digital-to-Analog Converter |
-| DAC | Digital to Analog Conversion |
-| DAL | Design Assurance Level |
-| DAL | Development Assurance Level |
-| DAPs | Downlink Of Aircraft Parameters |
+| DAL | Development Assurance Level (ARP4754B; fonksiyon için FDAL, öğe için IDAL); Design Assurance Level (DO-254) |
+| DAPs | Downlink of Aircraft Parameters |
 | DAR | Designated Airworthiness Representative |
+| DAT | Data Services (EASA Part-DAT; veri hizmetleri sağlayıcıları) |
 | DB | Database |
-| DC | Direct Current, or Decision Coverage |
-| DC | Direct Current |
-| DCDU | Data Link Control And Display Unit |
+| DC | Direct Current; Decision Coverage |
+| DCDU | Data Link Control and Display Unit |
 | DCN | Document Change Notice |
 | DCP | Display Control Panel |
-| DD | Dependence Diagram |
-| DD | Digital Design |
+| DD | Dependence Diagram (ARP4761A); Digital Design |
 | DDC | Digital Down Conversion |
-| DDM | Difference in the Depth of Modulation |
 | DDM | Difference in Depth of Modulation |
 | DDP | Declaration of Design and Performance |
 | DDR | Double Data Rate |
@@ -236,17 +286,21 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | DITS | Digital Information Transfer System |
 | DL | Data Link |
 | DLR | Data Link Recorder |
+| DMA | Direct Memory Access |
 | DME | Distance Measuring Equipment |
 | DMIR | Designated Manufacturing Inspection Representative |
 | DNC | Direct Noise Canceling |
-| DO | RTCA Document (“Document Order”) |
-| DOD | Department Of Defense |
+| DO | RTCA Document (RTCA belge numarası öneki, ör. DO-178C; "Document Order" açılımı da anılır) |
+| DOA | Design Organisation Approval (EASA) |
+| DOD | Department of Defense |
 | DOID | Design Organisation Interface Document |
 | DP | Departure Procedures |
+| DPAL | Data Process Assurance Level (DO-200B) |
+| DQR | Data Quality Requirements |
 | DRAM | Dynamic Random Access Memory |
 | DRFS | Direct RF Sampling |
 | DSP | Digital Signal Processor |
-| DUAT | Direct User Access Terminal |
+| DUAT | Direct User Access Terminal (FAA; hizmet 2018'de sonlandırıldı) |
 | DVE | Degraded Visual Environment |
 | DVOR | Doppler VHF Omnidirectional Range |
 | DWG | Drawing |
@@ -256,25 +310,25 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | Kısaltma | Açıklama |
 |----|----|
 | EADI | Electronic Attitude Director Indicator |
-| EASA | European Aviation Safety Agency |
+| EASA | European Union Aviation Safety Agency (2018'e kadar European Aviation Safety Agency) |
 | EATP | Equipment Acceptance Test Procedure |
 | EATR | Equipment Acceptance Test Report |
 | ECN | Engineering Change Notice |
-| ECU | Engine Control Unit (=EEC) |
+| ECU | Engine Control Unit (bkz. EEC) |
+| ED | EUROCAE Document (EUROCAE belge numarası öneki; ör. ED-12C) |
 | EDD | Equipment Design Description |
 | EDL | Equipment Development Laboratory |
 | EEC | Electronic Engine Control |
-| EEPROM | Electrically Erasable Programmable Read Only Memory |
+| EEPROM | Electrically Erasable Programmable Read-Only Memory |
 | EFB | Electronic Flight Bag |
 | EFD | Electronic Flight Display |
-| EFIS | Electronic Flight Information System |
 | EFIS | Electronic Flight Instrument System |
 | EGPWS | Enhanced Ground Proximity Warning System |
 | EGT | Exhaust Gas Temperature |
 | EHS | Enhanced Surveillance |
 | EHSI | Electronic Horizontal Situation Indicator |
-| EIA | Electronics Industry Association |
-| EICAS | Engine Indicating And Crew Alerting System |
+| EIA | Electronic Industries Alliance (eski adı Electronic Industries Association; kurum kapanmıştır) |
+| EICAS | Engine Indicating and Crew Alerting System |
 | EIRD | Equipment Installation Requirement Document |
 | EIRP | Equivalent Isotropically Radiated Power |
 | ELT | Emergency Locator Transmitter |
@@ -289,11 +343,11 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | EPR | Engine Pressure Ratio |
 | EPROM | Erasable Programmable Read-Only Memory |
 | ESD | Electrostatic Discharge |
-| ETOP(S) | Extended-Range Twin-Engine Operation(S) |
+| ETOPS | Extended-range Twin-engine Operational Performance Standards (güncel kullanım: Extended Operations) |
 | ETSO | European Technical Standard Order |
-| EUROCAE | European Organization for Civil Aviation Equipment |
+| EUROCAE | European Organisation for Civil Aviation Equipment |
 | EUT | Equipment Under Test |
-| eVTOL | Electric Vertical Take-Off & Landing |
+| eVTOL | Electric Vertical Take-Off and Landing |
 | EVTP | Equipment Verification Test Procedure |
 | EVTR | Equipment Verification Test Report |
 
@@ -309,14 +363,13 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | FAS | Final Approach Segment |
 | FBW | Fly-By-Wire |
 | FC | Failure Condition |
-| FCC | Failure Condition Classification |
-| FCC | Flight Control Computer |
+| FCC | Flight Control Computer; Failure Condition Classification |
 | FCR | Final Certification Review |
 | FCS | Flight Control System |
 | FD | Flight Director |
 | FDAL | Function Development Assurance Level |
-| FDE | Fault Detection And Exclusion |
-| FDPS | Flight Plan Data Processing System |
+| FDE | Fault Detection and Exclusion |
+| FDPS | Flight Data Processing System |
 | FDR | Flight Data Recorder |
 | FDRS | Flight Data Recorder System |
 | FDU | Flux Detector Unit |
@@ -326,27 +379,25 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | FFS | Functional Failure Set |
 | FG | Flight Guidance |
 | FHA | Functional Hazard Assessment |
-| FHA | Functional Hazard Analysis |
 | FIC | Flight Information Centre |
 | FIFO | First In, First Out |
 | FIS | Flight Information Service |
-| FIS-B | Flight Information Services |
+| FIS-B | Flight Information Service - Broadcast |
 | FL | Flight Level |
 | FLIR | Forward-Looking Infra-Red |
+| FLS | Field-Loadable Software |
 | FLTA | Forward Looking Terrain Awareness |
-| FM | Formal Methods |
-| FM | Frequency Modulation |
+| FM | Frequency Modulation; Formal Methods (DO-333) |
 | FMA | Flight Mode Annunciator |
-| FMEA | Failure Mode & Effects Analysis |
+| FMEA | Failure Modes and Effects Analysis |
 | FMECA | Failure Mode, Effects and Criticality Analysis |
 | FMES | Failure Modes and Effects Summary |
-| FMGS | Flight Management & Guidance System |
+| FMGS | Flight Management and Guidance System |
 | FMS | Flight Management System |
 | FOB | Fuel On-Board |
 | FPA | Front Panel Assembly |
 | FPE | Floating Point Emulation |
 | FPGA | Field Programmable Gate Array |
-| FPU | Floating Point Unit |
 | FPU | Floating-Point Unit |
 | FRACAS | Failure Reporting and Corrective Action System |
 | FREQ | Frequency |
@@ -354,44 +405,40 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | FSS | Flight Service Station |
 | FT | Functional Test |
 | FTA | Fault Tree Analysis |
-| FTP | File Transfer Protocol |
-| FTP | Firmware Test Procedure |
-| FW | Failure Warning |
-| FW | Firmware |
+| FTP | File Transfer Protocol; Firmware Test Procedure |
+| FW | Firmware; Failure Warning |
 | FWS | Flight Warning System |
-| FYDS | Flight Director/ Yaw Damper System |
+| FYDS | Flight Director/Yaw Damper System |
 
 ## G
 
 | Kısaltma | Açıklama |
 |----|----|
 | G/A | Ground-to-Air |
-| G/S | Glide Slope |
-| GA | General Aviation |
-| GA | Go Around |
+| G/S | Glideslope (bkz. GS) |
+| GA | General Aviation; Go-Around |
 | GAST | GBAS Approach Service Type |
 | GB | Gigabyte |
 | GBAS | Ground Based Augmentation System |
 | GCAS | Ground Collision Avoidance System |
 | GCU | Generator Control Unit |
-| GDOP | Geometric Dilution Of Precision |
+| GDOP | Geometric Dilution of Precision |
 | GGS | Global Positioning System Ground Station |
 | GHz | Gigahertz |
-| GLNS | GPS Landing And Navigation System |
-| GLNU | GPS Landing And Navigation Unit |
-| GLONASS | Global Navigation Satellite System |
+| GLNS | GPS Landing and Navigation System |
+| GLNU | GPS Landing and Navigation Unit |
+| GLONASS | Global Navigation Satellite System (Rusya'nın uydu seyrüsefer sistemi) |
 | GLS | GNSS Landing System |
 | GLU | GPS Landing Unit |
 | GMT | Greenwich Mean Time |
 | GND | Ground |
 | GNSS | Global Navigation Satellite System |
-| GO | Go Around |
+| GO | Go-Around (bkz. GA) |
 | GPIO | General Purpose Input/Output |
 | GPS | Global Positioning System |
 | GPWC | Ground Proximity Warning Computer |
 | GPWS | Ground Proximity Warning System |
-| GS | Glideslope |
-| GS | Ground Speed or Ground Station |
+| GS | Ground Speed; Glideslope (G/S olarak da yazılır); Ground Station |
 
 ## H
 
@@ -406,12 +453,10 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | HCMP | Hardware Configuration Management Plan |
 | HDDD | Hardware Detailed Design Data |
 | HDG | Heading |
-| HDG | SEL Heading Select |
-| HDL | Hardware Design Language |
+| HDG SEL | Heading Select |
 | HDL | Hardware Description Language |
-| HDOP | Horizontal Dilution Of Precision |
-| HDP | Hardware Development Plan |
-| HDP | Hardware Design Plan |
+| HDOP | Horizontal Dilution of Precision |
+| HDP | Hardware Design Plan; Hardware Development Plan |
 | HDStd | Hardware Design Standards |
 | HF | High Frequency |
 | HHLD | Heading Hold |
@@ -431,9 +476,9 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | HTP | Hardware Test Procedure |
 | HTR | Hardware Test Results |
 | HUD | Head-Up Display |
-| HUMS | Health And Usage Monitoring Systems |
-| HVVP | Hardware Validation & Verification Plan |
-| HVVStd | Hardware Validation & Verification Standards |
+| HUMS | Health and Usage Monitoring Systems |
+| HVVP | Hardware Validation and Verification Plan |
+| HVVStd | Hardware Validation and Verification Standards |
 | HW | Hardware |
 | Hz | Hertz |
 
@@ -458,31 +503,30 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | IDD | Interface Design Description |
 | IDE | Integrated Development Environment |
 | IDENT | Identify, Identifier, or Identification |
-| IDS | Information Display System, or Integrated Display System |
+| IDS | Information Display System; Integrated Display System |
 | IFE | In-Flight Entertainment |
-| IFF | Identification Friend Or Foe |
-| IFICS | Integrated Flight Instrument And Control System |
+| IFF | Identification Friend or Foe |
+| IFICS | Integrated Flight Instrument and Control System |
 | IFR | Instrument Flight Rules |
 | IHA | Intrinsic Hazard Analysis |
-| ILS | Instrument Landing System |
-| ILS | Integrated Logistics Support |
+| ILS | Instrument Landing System; Integrated Logistics Support |
 | ILSP | Integrated Logistics Support Plan |
 | IMA | Integrated Modular Avionics |
 | IMC | Instrument Meteorological Conditions |
 | IND | Indicator |
 | INS | Inertial Navigation System |
 | IOC | Initial Operational Capability |
-| IP | Internet Protocol |
-| IP | Intellectual Property |
-| IPV | Instrument Procedure With Vertical Guidance (Renamed to APV) |
+| IOMMU | Input/Output Memory Management Unit |
+| IP | Internet Protocol; Intellectual Property (ör. FPGA IP çekirdeği); Issue Paper (FAA) |
+| IPV | Instrument Procedure with Vertical Guidance (güncel adı APV) |
 | IQ | In-phase/Quadrature |
-| IRS | Inertial Reference System, or Interface Requirements Specification |
+| IRS | Inertial Reference System; Interface Requirements Specification |
 | ISA | International Standard Atmosphere |
 | ISIS | Integrated Standby Instrument System |
 | ISO | International Organization for Standardization |
 | ISP | Integrated Switching Panel |
 | ISR | Interrupt Service Routine |
-| IT | Information Technologies |
+| IT | Information Technology |
 | ITT | Interstage Turbine Temperature |
 | ITU | International Telecommunication Union |
 | IVSI | Instantaneous Vertical Speed Indicator |
@@ -491,8 +535,9 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| JAA | Joint Aviation Authorities |
+| JAA | Joint Aviation Authorities (2009'da kapandı; görevlerini EASA devraldı) |
 | JASC | Joint Aircraft System/Component Code |
+| JSF | Joint Strike Fighter (JSF AV C++: Joint Strike Fighter Air Vehicle C++ Coding Standards) |
 | JTAG | Joint Test Action Group |
 | JTIDS | Joint Tactical Information Distribution System |
 
@@ -503,35 +548,36 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | KB | Kilobyte |
 | kHz | Kilohertz |
 | KIAS | Knots Indicated Airspeed |
-| KT | Knot - Nautical Mile Per Hour |
-| KTAS | Knots TRUE Airspeed |
+| KT | Knot (saatte bir deniz mili) |
+| KTAS | Knots True Airspeed |
 
 ## L
 
 | Kısaltma | Açıklama |
 |----|----|
-| LAAS | Local Area Augmentation System |
+| LAAS | Local Area Augmentation System (FAA terimi; güncel uluslararası terim GBAS) |
 | LADGPS | Local Area Differential GPS |
 | LCD | Liquid Crystal Display |
-| LDGPS | Local Area Differential Global Positioning Satellite |
+| LDGPS | Local Area Differential Global Positioning System (bkz. LADGPS) |
 | LED | Light-Emitting Diode |
 | LF | Low Frequency |
 | LLR | Low-Level Requirements |
 | LMM | Locator Middle Marker |
 | LO | Local Oscillator |
-| LOA | Letter Of Agreement, or Letter Of Authorization |
+| LOA | Letter of Acceptance (FAA AC 20-153B; havacılık verisi süreçleri); Letter of Agreement; Letter of Authorization |
 | LOC | Localizer |
-| LODA | Letter of Design Approval |
+| LODA | Letter of Design Approval (FAA; TSO tasarım onay mektubu); Letter of Deviation Authority |
 | LOI | Level of Involvement |
 | LOM | Locator Outer Marker |
 | LORAN | Long-Range Navigation |
 | LPR | Low Pressure Rotor |
-| LPV | Localizer Performance With Vertical Guidance |
+| LPV | Localizer Performance with Vertical Guidance |
 | LRM | Line Replaceable Module |
 | LRU | Line Replaceable Unit |
-| LSB | Least Significant bit |
-| LSP | Liskov Substitution Principle |
-| LTE | Loss Of Tail Rotor Effectiveness Helicopters |
+| LSB | Least Significant Bit |
+| LSP | Loadable Software Part (ARINC 665); Liskov Substitution Principle (DO-332) |
+| LTE | Loss of Tail Rotor Effectiveness (helikopter) |
+| LTL | Linear Temporal Logic |
 | LVDS | Low-Voltage Differential Signaling |
 
 ## M
@@ -540,58 +586,60 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 |----|----|
 | M1553 | MIL-STD-1553 |
 | MA | Markov Analysis |
-| MAP | Manifold Absolute Pressure Or Missed Approach Point |
+| MAP | Manifold Absolute Pressure; Missed Approach Point |
 | MAPS | Minimum Aviation Performance Standards |
 | MASPS | Minimum Aviation System Performance Standard |
-| MB | Marker Beacon |
-| MB | Megabyte |
+| MB | Marker Beacon; Megabyte |
 | MBD | Model-Based Development |
+| MBSA | Model-Based Safety Analysis |
 | MC/DC | Modified Condition/Decision Coverage |
 | MCBF | Mean Cycles Between Failures |
-| MCDU | Multi-Purpose/Multi-Function Control And Display Unit |
+| MCDU | Multi-Purpose/Multi-Function Control and Display Unit |
 | MCW | Modulated Continuous Wave |
-| MDA | Minimum Decent Altitude |
+| MDA | Minimum Descent Altitude |
 | MEL | Minimum Equipment List |
 | MF | Medium Frequency |
 | MFD | Multi-Function Display |
 | MFDS | Multi-Function Display System |
 | MFR | Manufacturer |
 | MIC | Microphone |
-| MIDO | Manufacturing Inspection District Office |
+| MIDO | Manufacturing Inspection District Office (FAA; 2023 yeniden yapılanmasıyla Certificate Management Section) |
 | MIDS | Multifunctional Information Distribution System |
+| MIL-STD | Military Standard |
 | MILSPEC | Military Specification |
-| MilStd | Military Standard |
 | MIO | Multiplexed I/O |
+| MISRA | Motor Industry Software Reliability Association (MISRA C kodlama kılavuzu) |
 | MKP | Multi-Function Keypad |
-| MKR | Marker Beacon |
+| MKR | Marker Beacon (bkz. MB) |
 | MLS | Microwave Landing System |
 | MM | Middle Marker |
 | MMD | Moving Map Display |
 | MMEL | Master Minimum Equipment List |
-| MMH | Mean Man-hours |
+| MMH | Maintenance Man-Hours |
 | MMR | Multi-Mode Receiver |
+| MMU | Memory Management Unit |
 | MNPS | Minimum Navigation Performance Specifications |
 | MntR | Maintainability Report |
 | MOA | Military Operations Area |
 | MoC | Means of Compliance |
-| Mode | A Transponder Pulse-Code Reporting |
-| Mode | C Transponder Code And Altitude Reporting |
-| Mode | S Transponder Code, Altitude, And TCAS Reporting |
+| Mode A | Transponder Pulse-Code Reporting |
+| Mode C | Transponder Code and Altitude Reporting |
+| Mode S | Transponder Code, Altitude, and TCAS Reporting |
 | MOPS | Minimum Operational Performance Standards |
-| MOPS | Minimum Operational Performance Standard |
 | MOSArt | Modular Open System Architecture |
 | MPE | Minimum Processing Environment |
 | MPS | Minimum Performance Standard |
+| MPU | Memory Protection Unit |
 | MRAM | Magnetoresistive Random Access Memory |
 | MSA | Minimum Safe Altitude |
 | MSB | Most Significant Bit |
 | MSG | Message |
 | MSG-3 | Maintenance Steering Group-3 |
-| MSP | Modes S-Specific Protocol |
+| MSP | Mode S Specific Protocol |
 | MSSS | Mode S-Specific Services |
 | MTBF | Mean Time Between Failures |
 | MTBUR | Mean Time Between Unscheduled Removals |
-| MTTF | Mean Time To Failure |
+| MTTF | Mean Time to Failure |
 | MTTR | Mean Time to Repair |
 | MVA | Minimum Vectoring Altitude |
 | MVFR | Marginal Visual Flight Rules |
@@ -601,31 +649,28 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | Kısaltma | Açıklama |
 |----|----|
 | NA | Not Applicable |
-| NACO | National Aeronautical Charting Office |
+| NACO | National Aeronautical Charting Office (FAA; eski birim adı) |
 | NAS | U.S. National Airspace System |
-| NASA | National Aeronautics And Space Administration |
+| NASA | National Aeronautics and Space Administration |
 | NATO | North Atlantic Treaty Organization |
-| NAV | Navigation Receiver |
-| NAV | Navigation |
+| NAV | Navigation; Navigation Receiver |
 | NAVAID | Navigational Aid |
-| NAVCOMM | Navigation And Communications Equipment Or Receiver |
-| NAVSTARGPS | Navigation Satellite Timing And Ranging |
-| NCATT | National Center For Aircraft Technician Training |
+| NAVCOMM | Navigation and Communications Equipment or Receiver |
+| NAVSTAR GPS | Navigation Satellite Timing and Ranging Global Positioning System |
+| NCATT | National Center for Aircraft Technician Training |
 | NCD | No Computed Data |
-| ND | Not Defined |
-| ND | Navigation Display |
+| ND | Navigation Display; Not Defined |
 | NDB | Non-Directional Beacon |
 | NFF | No Fault Found |
-| NFPO | National Flight Procedures Office |
-| NIMA | National Imagery And Mapping Agency |
-| NM | or NMI Nautical Mile |
-| NM | Nautical Mile(s) |
+| NFPO | National Flight Procedures Office (FAA; eski birim adı) |
+| NIMA | National Imagery and Mapping Agency (eski ad; 2003'ten beri NGA, National Geospatial-Intelligence Agency) |
+| NM (NMI) | Nautical Mile(s) |
 | NO | Normal Operation |
-| NOAA | National Oceanic And Atmospheric Administration |
-| NoTAM | Notice To Airmen |
+| NOAA | National Oceanic and Atmospheric Administration |
+| NOTAM | Notice to Airmen |
 | NPA | Non-Precision Approach |
-| NPRM | Notice Of Proposed Rulemaking |
-| NTAP | Notice To Airmen Publication |
+| NPRM | Notice of Proposed Rulemaking |
+| NTAP | Notice to Airmen Publication |
 | NTSB | National Transportation Safety Board |
 | NVD | Night Vision Device |
 | NVG | Night Vision Goggles |
@@ -645,7 +690,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | OM | Outer Marker |
 | OMP | Obsolescence Management Plan |
 | OOT | Object-Oriented Technology |
-| OOTIA | Object Oriented Technology In Aviation |
+| OOTiA | Object-Oriented Technology in Aviation (FAA el kitabı) |
 | OPR | Open Problem Report |
 | OS | Operating System |
 | OWE/OEW | Operating Weight Empty/Operating Empty Weight |
@@ -657,61 +702,55 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | P | Parity |
 | P-Code | GPS Precision Code |
 | P-RNAV | Precision Area Navigation |
-| PA | Process Assurance |
-| PA | Public Address System |
+| PA | Public Address (System); Process Assurance (DO-254) |
 | PAC | Process Asset Checklist |
 | PAL | Pilot Activated Lighting |
-| PAM | Power Amplifier Module |
-| PAM | Pulse Amplitude Modulation |
+| PAM | Pulse Amplitude Modulation; Power Amplifier Module |
 | PAPI | Precision Approach Path Indicator |
 | PAR | Precision Approach Radar |
 | PASA | Preliminary Aircraft Safety Assessment |
-| PBIT | Power-On BIT |
-| PBIT | Powerup Built-In-Test |
-| PBIT | Power-up Built-In Test |
+| PBIT | Power-up (Power-on) Built-In Test |
 | PC | Personal Computer |
 | PCAP | Processor Configuration Access Port |
 | PCB | Printed Circuit Board |
 | PCL | Pilot Controlled Lighting |
 | PCN | Product Change Notice |
-| PD | Process Definition |
-| PD | Profile Descent |
+| PD | Profile Descent; Process Definition |
 | PDI | Parameter Data Item |
 | PDL | Product Development Leader |
-| PDOP | Position Dilution Of Precision |
+| PDOP | Position Dilution of Precision |
 | PDR | Preliminary Design Review |
+| PDS | Previously Developed Software |
 | PESA | Passive Electronically Scanned Array |
-| PFD | Primary Flight Display Or Primary Flight Director |
-| PFDE | Predicted Fault Detection And Exclusion |
-| PHAC | Plan For Hardware Aspects Of Certification |
+| PFD | Primary Flight Display |
+| PFDE | Predicted Fault Detection and Exclusion |
+| PHAC | Plan for Hardware Aspects of Certification |
 | PIDS | Prime Item Development Specification |
 | PL | Programmable Logic |
 | PLD | Programmable Logic Device |
 | PLL | Phase Locked Loop |
-| PMA | Parts Manufacturing Approval |
+| PMA | Parts Manufacturer Approval |
 | PMG | Permanent Magnet Generator |
 | PMP | Project Management Plan |
 | PMU | Power Management Unit |
 | PND | Primary Navigation Display |
 | PNR | Passive Noise Reduction |
 | POA | Production Organization Approval |
-| POF | Phase Of Flight |
-| POH | Pilot’s Operating Handbook |
+| POF | Phase of Flight |
+| POH | Pilot's Operating Handbook |
 | POS | Position |
+| POSIX | Portable Operating System Interface |
 | PPS | Pulse Pair Spacing |
-| PR | Peer Review |
-| PR | Problem Report (may also be “CR = Change Request”) |
-| PRA | Pre-Recorded Announcement |
-| PRA | Particular Risk Analysis |
+| PR | Problem Report (DO-178C); Peer Review |
+| PRA | Particular Risk Analysis (ARP4761A); Pre-Recorded Announcement |
 | PRF | Pulse Repetition Frequency |
 | PS | Processing System |
-| PSAA | Plan for Software Aspects of Approval |
+| PSAA | Plan for Software Aspects of Approval (DO-278A) |
 | PSAC | Plan for Software Aspects of Certification |
 | PSCP | Project Specific Certification Plan |
-| PSP | Partnership For Safety Plan |
+| PSP | Partnership for Safety Plan |
 | PSR | Primary Surveillance Radar |
 | PSSA | Preliminary System Safety Assessment |
-| PSSA | Preliminary Subsystem Safety Assessment |
 | PSU | Passenger Service Unit |
 | PTN | Problem Tracking Number |
 | PTR | Program Trouble Report |
@@ -730,7 +769,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | QM | Quality Management |
 | QMP | Quality Management Plan |
 | QMS | Quality Management System |
-| QNH | Barometric Pressure Adjusted To Sea Level |
+| QNH | Deniz seviyesine indirgenmiş barometrik basınç (Q kodu; altimetre ayarı) |
 | QP | Qualification Plan |
 | QPL | Qualified Product List |
 | QRH | Quick Reference Handbook |
@@ -742,12 +781,12 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| R-NAV | Area Navigation |
+| R-NAV | Area Navigation (bkz. RNAV) |
 | RA | Resolution Advisory (TCAS) |
-| Rad | Alt Radio Altitude |
+| Rad Alt | Radio Altitude (Radio Altimeter) |
 | RAI | Radio Altimeter Indicator |
 | RAIM | Receiver-Autonomous Integrity Monitoring |
-| RALT | Radar Or Radio Altimeter |
+| RALT | Radar or Radio Altimeter |
 | RAM | Random-Access Memory |
 | RAT | Ram Air Turbine |
 | RCR | Reverse Current Relay |
@@ -755,7 +794,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | RDMI | Radio Distance Magnetic Indicator |
 | RDP | Radar Data Processing System |
 | RDR | Radar |
-| RDU | Remote Display Unite |
+| RDU | Remote Display Unit |
 | REC | Receive |
 | REF | Reference |
 | REIL | Runway End Identifier Lights |
@@ -764,7 +803,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | RF | Radio Frequency |
 | RFCU | Radio Frequency Control Unit |
 | RFI | Radio Frequency Interference |
-| RHSM | Reduced Horizontal Separation Minimal |
+| RHSM | Reduced Horizontal Separation Minimum |
 | RISC | Reduced Instruction Set Computer |
 | RJ | Regional Jet |
 | RLG | Ring Laser Gyroscope |
@@ -775,16 +814,16 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | RNAV | Area Navigation |
 | RNG | Range |
 | RNP | Required Navigation Performance |
-| ROC | Rate Of Climb |
-| ROD | Rate Of Descent |
+| ROC | Rate of Climb |
+| ROD | Rate of Descent |
 | ROM | Read-Only Memory |
-| ROM | Read Only Memory |
-| RPA | Remotely Piloted Aircraft (Unmanned Aerial Vehicle) |
-| RPM | Revolutions Per Minute |
+| RPA | Remotely Piloted Aircraft (bkz. UAV) |
+| RPM | Revolutions per Minute |
+| RSC | Reusable Software Component (FAA AC 20-148) |
 | RSP | Reversion Switch Panel |
 | RSS | Root Sum Square |
 | RT | Remote Terminal |
-| RTCA | Radio Technical Commission for Aeronautics |
+| RTCA | RTCA, Inc. (eski adı Radio Technical Commission for Aeronautics) |
 | RTE | Route |
 | RTL | Run Time Library |
 | RTOS | Real-Time Operating System |
@@ -796,59 +835,57 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| SAAR | Special Aircraft And Aircrew Requirements |
-| SAE | Society Of Automotive Engineers |
-| SAR | Search And Rescue, Smart ACMS Recorder |
+| SAAAR | Special Aircraft and Aircrew Authorization Required (güncel adı RNP AR) |
+| SAE | SAE International (eski adı Society of Automotive Engineers) |
+| SAR | Search and Rescue; Smart ACMS Recorder |
 | SAS | Software Accomplishment Summary |
 | SAT | Static Air Temperature |
 | SATCOM | Satellite Communication |
 | SATNAV | Satellite Navigation |
 | SBLI | Software Build and Load Instructions |
 | SBLP | Software Build and Load Control Procedure |
-| SC | System Control Category |
+| SC | Special Committee (RTCA özel komitesi; ör. SC-205) |
 | SCA | Structural Coverage Analysis |
-| SCA | Software Coverage Analysis |
 | SCCB | Software Configuration Control Board |
-| SCI | Software Configuration Index (or “Item”) |
+| SCI | Software Configuration Index |
 | SCInd | Source Code Indices |
 | SCM | Software Configuration Management |
 | SCMP | Software Configuration Management Plan |
 | SCR | Software Conformity Review |
-| SCS | Software Coding Standard |
-| SCStd | Software Code Standards |
-| SCStd | Software Coding Standards |
+| SCS | Software Coding Standard (bkz. SCStd) |
+| SCStd | Software Code Standards (DO-178C veri adı; "coding standards" olarak da anılır) |
 | SD | Secure Digital |
-| SDD | System Design Description |
-| SDD | Software Design Description |
-| SDDD | Software Design Description Document |
+| SDD | Software Design Description; System Design Description |
+| SDDD | Software Design Description Document (bkz. SDD) |
 | SDF | Simplified Directional Facility |
 | SDI | Source Destination Identifier |
 | SDK | Software Development Kit |
 | SDP | Software Development Plan |
 | SDR | Software Defined Radio |
 | SDRAM | Synchronous Dynamic Random-Access Memory |
-| SDRL | Supplier Deliverables |
-| SDS | Software Design Standard |
+| SDRL | Supplier (Subcontractor) Data Requirements List |
+| SDS | Software Design Standard (bkz. SDStd) |
 | SDStd | Software Design Standards |
-| SECI | Software lifecycle Environment Configuration Index |
+| SECI | Software Life Cycle Environment Configuration Index |
 | SELCAL | Selective Calling |
 | SEMP | System Engineering Management Plan |
 | SES | Supplier Equipment Specification |
+| SFHA | System Functional Hazard Assessment (sistem seviyesi FHA) |
+| SHGM | Sivil Havacılık Genel Müdürlüğü (Türkiye'nin sivil havacılık otoritesi) |
 | SID | Standard Instrument Departure |
 | SIRD | Software Interface Requirement Document |
 | SIU | Satellite Interface Unit |
 | SLA | Software Load Application |
-| SLECI | Software Lifecycle Environment Configuration Index |
+| SLECI | Software Life Cycle Environment Configuration Index (yaygın kısaltması SECI) |
 | SMA | Sub-Miniature Version A |
-| SMP | Sub-Miniature Push-on |
-| SMP | Supplier Management Plan |
+| SMP | Sub-Miniature Push-on (RF konnektör); Supplier Management Plan |
 | SMS | Short Messaging Service |
 | SNR | Signal-To-Noise Ratio |
 | SoC | System on a Chip |
 | SOI | Stage of Involvement |
 | SOP | Standard Operating Procedure |
-| SOUP | Software of Unknown Pedigree (sometimes used with humor …) |
-| SOW | Statement Of Work |
+| SOUP | Software of Unknown Pedigree (kökeni belgelenmemiş yazılım) |
+| SOW | Statement of Work |
 | SP | Safety Plan |
 | SPI | Serial Peripheral Interface |
 | SPL | Spare Parts List |
@@ -858,32 +895,26 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | SQAP | Software Quality Assurance Plan |
 | SQAR | Software Quality Assurance Representative |
 | SRATS | System Requirements Allocated to Software |
-| SRD | Software Requirements Data |
-| SRD | Source Requirement Document |
+| SRD | Software Requirements Data (DO-178C); Source Requirement Document |
 | SRMT | Safety Reliability Maintainability Testability |
 | SRMTP | Safety Reliability Maintainability Testability Plan |
 | SRR | System Requirement Review |
-| SRS | Software Requirement Specification |
-| SRS | Speed Reference System |
+| SRS | Software Requirements Specification; Speed Reference System |
 | SRStd | Software Requirements Standards |
 | SRU | Shop Replaceable Unit |
 | SSA | System Safety Assessment |
-| SSA | Subsystem Safety Assessment |
 | SSCV/DR | Solid-State Cockpit Voice/Data Recorder |
 | SSCVR | Solid-State Cockpit Voice Recorder |
 | SSFDR | Solid-State Flight Data Recorder |
 | SSM | Sign/Status Matrix |
 | SSPP | System Safety Program Plan |
-| SSR | Secondary Surveillance Radar |
-| SSR | System Specification Review; alternatively: Software Specification Review |
+| SSR | Secondary Surveillance Radar; System Specification Review; Software Specification Review |
 | SSS | System Segment Specification |
 | STAR | Standard Terminal Arrival Route |
 | STARS | Standard Terminal Automation Replacement System |
 | STC | Supplemental Type Certificate |
 | STCA | Short-Term Conflict Alert |
-| STP | Software Test Protocol |
-| STP | Standard Temperature And Pressure |
-| STP | Software Test Procedure |
+| STP | Software Test Procedure; Software Test Plan; Standard Temperature and Pressure |
 | STR | Software Test Results |
 | STS | Software Test Specification |
 | SUA | Special Use Airspace |
@@ -891,7 +922,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | SVCP | Software Verification Cases and Procedures |
 | SVP | Software Verification Plan |
 | SVR | Software Verification Results |
-| SW or S/W | Software |
+| SW (S/W) | Software |
 | SW-IDD | Software Interface Design Description |
 | SWCEH | Software and Complex Electronic Hardware |
 | SYRD | System Requirements Document |
@@ -900,71 +931,64 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| T/R | Thrust Reverser Or Tail Rotor |
-| T/R | Transmit/Receive |
+| T/R (TR) | Transmit/Receive; Transmitter-Receiver (Transceiver); Thrust Reverser; Tail Rotor |
 | TA | Traffic Advisory |
 | TACAN | Tactical Air Navigation System |
 | Tach | Tachometer |
 | TAD | Terrain Awareness Display |
-| TAF | Terminal Area Forecast |
-| TAS | Tool Accomplishment Summary |
-| TAS | TRUE Airspeed or Tool Accomplishment Summary |
-| TAT | TRUE Air Temperature, Or Total Air Temperature |
+| TAF | Terminal Aerodrome Forecast |
+| TAS | Tool Accomplishment Summary (DO-330); True Airspeed |
+| TAT | Total Air Temperature |
 | TAWS | Terrain Awareness and Warning System |
-| TBD | To Be Defined (or Determined; interchangeable) |
-| TBO | Time Before Overhaul, Or Time Between Overhaul |
-| TC | Test Case |
-| TC | Type Certificate |
-| TCA | Throttle Control Assembly, Or Terminal Control Area |
+| TBD | To Be Defined; To Be Determined (eş anlamlı kullanılır) |
+| TBO | Time Between Overhauls; Time Before Overhaul |
+| TC | Type Certificate; Test Case |
+| TCA | Throttle Control Assembly; Terminal Control Area |
 | TCAD | Traffic Collision Alert Device |
-| TCAS | Traffic Collision Alert System |
-| TCAS | Traffic Collision Avoidance System |
+| TCAS | Traffic Alert and Collision Avoidance System |
 | TCF | Terrain Clearance Floor |
 | TCI | Tool Configuration Index |
 | TCN | TACAN |
 | TCR | Test Completeness Review |
 | TCU | TACAN Control Unit |
-| TDOP | Time Dilution Of Precision |
-| TDR | Transponder |
+| TDOP | Time Dilution of Precision |
+| TDR | Transponder (bkz. XPDR) |
+| TDWR | Terminal Doppler Weather Radar |
 | TEMP | Test and Evaluation Master Plan |
 | TEP | Test and Evaluation Plan |
-| TERPS | Terminal En-Route Procedures |
+| TERPS | Terminal Instrument Procedures (United States Standard for Terminal Instrument Procedures) |
 | TFR | Temporary Flight Restrictions |
 | TFT | Thin-Film Transistor |
-| TGT | Turbine Gas Temperature, Or Target |
+| TGT | Turbine Gas Temperature; Target |
 | THD | Total Harmonic Distortion |
 | THD+N | Total Harmonic Distortion Plus Noise |
-| THDG | TRUE Heading |
-| TIA | Telecommunications Industry Association |
+| THDG | True Heading |
+| TIA | Type Inspection Authorization (FAA); Telecommunications Industry Association |
 | TIS | Traffic Information Service |
 | TK | Track Angle |
 | TKE | Track-Angle Error |
 | TLA | Thrust Lever Angle |
-| TNC | Threaded Neill-Concelman |
-| TNC | Threaded Neill–Concelman |
-| TOD | Top Of Descent Point |
+| TNC | Threaded Neill-Concelman (RF konnektör) |
+| TOD | Top of Descent Point |
 | TOR | Tool Operational Requirements |
 | TQ | Tool Qualification |
 | TQL | Tool Qualification Level |
 | TQP | Tool Qualification Plan |
-| TR or T/R | Transmitter Receiver Or Transceiver |
 | TRACON | Terminal Radar Approach Control |
-| TRANS | Transmit, Transmission, Or Transition |
+| TRANS | Transmit, Transmission, or Transition |
 | TRK | Track |
 | TrnP | Training Plan |
-| TRP | Mode S Transponder |
+| TRP | Mode S Transponder (bkz. XPDR) |
 | TRR | Test Readiness Review |
 | TRX | Transceiver |
-| TSO | Technical Standard Orders |
+| TSO | Technical Standard Order |
 | TstbR | Testability Report |
-| TTL | Tuned To Localizer |
-| TTL | Transistor-Transistor Logic |
-| TTR | TCAS Ii Transmitter/Receiver |
-| TTS | Time To Station |
+| TTL | Transistor-Transistor Logic; Tuned to Localizer |
+| TTR | TCAS II Transmitter/Receiver |
+| TTS | Time to Station |
 | TVE | Total Vertical Error |
-| TWDL | Two-Way Data Link, Or Terminal Weather Data Link |
-| TWDR | Terminal Doppler Weather Radar |
-| TWIP | Terminal Weather Information For Pilots |
+| TWDL | Two-Way Data Link; Terminal Weather Data Link |
+| TWIP | Terminal Weather Information for Pilots |
 | TWR | Terminal Weather Radar |
 | TX | Transmit |
 
@@ -973,18 +997,17 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | Kısaltma | Açıklama |
 |----|----|
 | UAM | Urban Air Mobility |
-| UART | Universal Asynchronous Receiver Transmitter |
 | UART | Universal Asynchronous Receiver-Transmitter |
-| UAS | Unmanned Aerial System |
+| UAS | Unmanned Aircraft System |
 | UAV | Unmanned Aerial Vehicle |
 | UHF | Ultra High Frequency |
-| UHF | Ultra-High Frequency |
 | ULB | Underwater Locator Beacon |
-| UML | Unified Modified Language |
+| UML | Unified Modeling Language |
+| UMS | User-Modifiable Software |
 | USAF | United States Air Force |
 | USB | Universal Serial Bus |
 | USGS | United States Geological Survey |
-| UTC | Universal Time Coordinate |
+| UTC | Coordinated Universal Time |
 | UTRX | UHF Transceiver Module |
 | UUT | Unit Under Test |
 
@@ -992,21 +1015,21 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 
 | Kısaltma | Açıklama |
 |----|----|
-| V | Volts Or Voltage |
+| V | Volts or Voltage |
+| V&V | Verification and Validation |
 | V/L | VOR/Localizer |
 | V/NAV | Vertical Navigation |
 | V/R | Voltage Regulator |
 | V/REF | Reference Velocity |
 | V/S | Vertical Speed |
 | V/TRK | Vertical Track |
-| V&V | Validation and Verification |
 | VAR | Variable |
 | VASI | Visual Approach Slope Indicator |
 | VASIS | Visual Approach Slope Indicator (System) |
 | VDB | VHF Data Broadcast |
 | VDF | VHF Direction Finding |
 | VDL | VHF Data Link |
-| VDR | VHF Digital Radio |
+| VDR | VHF Data Radio (VHF Digital Radio olarak da anılır) |
 | VFO | Variable Frequency Oscillator |
 | VFR | Visual Flight Rules |
 | VG/DG | Vertical Gyroscope/Directional Gyroscope |
@@ -1018,22 +1041,22 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | VNO | Maximum Structural Cruising Speed |
 | VNR | VHF Navigation Receiver |
 | VOR | VHF Omnidirectional Range |
-| VOR/DME | VOR With Distance Measuring Equipment |
+| VOR/DME | VOR with Distance Measuring Equipment |
 | VOR/MB | VOR Marker Beacon |
 | VORILS | VHF Omnidirectional Range and Instrument Landing System |
-| VORTAC | VOR And TACAN Combination |
-| VOX | Voice Transmission |
-| VPA | Vertical Path Approach |
+| VORTAC | VOR and TACAN Combination |
+| VOX | Voice-Operated Exchange (sesle tetiklenen gönderme) |
+| VPA | Vertical Path Angle |
 | VPATH | Vertical Path |
-| VRP | Visual Point Of Reference |
+| VRP | Visual Reference Point; Visual Reporting Point |
 | VRX | VHF Receiver Module |
 | VSG | Vector Signal Generator |
 | VSI | Vertical Speed Indicator |
-| VSM | Vertical Separation Limit |
-| VSO | Stall Speed In Landing Configuration |
+| VSM | Vertical Separation Minimum |
+| VSO | Stall Speed in Landing Configuration |
 | VSWR | Voltage Standing Wave Ratio |
-| VX | Speed For Best Angle Of Climb |
-| VY | Speed For Best Rate Of Climb |
+| VX | Speed for Best Angle of Climb |
+| VY | Speed for Best Rate of Climb |
 
 ## W
 
@@ -1043,7 +1066,8 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | WBS | Work Breakdown Structure |
 | WCET | Worst-Case Execution Time |
 | WD | Wind Direction |
-| WINDR | Wind Direction |
+| WG | Working Group (EUROCAE çalışma grubu; ör. WG-71) |
+| WINDR | Wind Direction (bkz. WD) |
 | WMA | WXR Waveguide Adapter |
 | WMI | WXR Indicator Mount |
 | WMS | Wide-Area Master Station |
@@ -1054,7 +1078,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | WS | Wind Shear |
 | WX | Weather |
 | WXR | Weather Radar System |
-| WYPT | Waypoint |
+| WYPT | Waypoint (bkz. WPT) |
 
 ## X
 
@@ -1066,8 +1090,7 @@ Bu amaçla hazırlanan liste, okuyucuların aviyonik sektöründeki temel kavram
 | XMIT | Transmit |
 | XMSN | Transmission |
 | XMTR | Transmitter |
-| XPDR | Transponder |
-| XPDR | ATCRBS Transponder |
+| XPDR | Transponder (bkz. TDR, TRP) |
 | XTAL | Crystal |
 | XTK | Crosstrack |
 
