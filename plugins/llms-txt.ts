@@ -250,6 +250,11 @@ export default function llmsTxt(context: LoadContext): Plugin {
         `${REPO_URL}/blob/main/CONTRIBUTING.md`,
         'Düzeltme ve içerik katkısının adımları',
       ),
+      bullet(
+        'İletişim',
+        pageUrl('/iletisim'),
+        'Siteye ulaşma yolları: e-posta düğmesi ve GitHub konu formları',
+      ),
       bullet('CC BY-SA 4.0 lisansı', LICENSE_URL, 'İçeriğin yeniden kullanım koşulları'),
     ];
     lines.push('', '## Optional', '', ...optionalLines);

@@ -1,0 +1,161 @@
+/* İletişim sayfası: kart yerine çizgilerle ayrılmış satırlar (araç kataloğuyla aynı dil). */
+
+/* Tek sütun, kitap sayfalarıyla aynı okuma genişliği */
+.sayfa {
+  max-width: 46rem;
+  margin: 0 auto;
+}
+
+.kanallar {
+  margin: 1.5rem 0 2.5rem;
+  border-top: 2px solid var(--ifm-color-emphasis-800);
+}
+
+.liste {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* İki sınıflı seçici: .markdown li + li kuralının üst boşluğunu geçersiz kılar. */
+.liste > .kanal {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1.1rem;
+  align-items: start;
+  margin: 0;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.simgeKutusu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-color-primary);
+}
+
+.simge {
+  width: 1.6rem;
+  height: 1.6rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.govde {
+  min-width: 0;
+}
+
+.baslik {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.konular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.konular > .konu {
+  margin: 0;
+  padding: 0.05rem 0.45rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 4px;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.aciklama {
+  margin: 0.6rem 0 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.eylem {
+  margin: 0.6rem 0 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+/* Sohbet düğmesi: davranışı düğme, görünümü e-posta düğmesi ve bağlantılarla aynı. */
+.sohbetDugme {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ifm-link-color);
+  font: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--ifm-link-color) 35%, transparent);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.sohbetDugme:hover {
+  color: var(--ifm-link-hover-color);
+  text-decoration-color: currentcolor;
+}
+
+.sohbetDugme:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.sohbetDugme[aria-busy='true'] {
+  cursor: progress;
+}
+
+.hata {
+  margin: 0.6rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-left: 3px solid var(--av-amber-600);
+  border-radius: 6px;
+  background: var(--ifm-background-surface-color);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.not {
+  margin: 0.6rem 0 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 576px) {
+  .liste > .kanal {
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.9rem;
+  }
+
+  .simgeKutusu {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .simge {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+}

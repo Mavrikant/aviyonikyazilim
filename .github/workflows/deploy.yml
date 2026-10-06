@@ -35,9 +35,11 @@ jobs:
         run: npm run build
         env:
           # İsteğe bağlı: Settings → Secrets and variables → Actions → Variables.
-          # Tanımlı değilse build'e analitik ya da doğrulama etiketi eklenmez (bkz. SEO.md).
+          # Tanımlı değilse build'e analitik, doğrulama etiketi ya da canlı sohbet düğmesi
+          # eklenmez (bkz. SEO.md, "Depo değişkenleri").
           GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          TAWK_TO_ID: ${{ vars.TAWK_TO_ID }}
       - name: PDF için Chromium'u kur
         # Sürüm, package-lock.json'daki playwright-core ile sabittir; --with-deps sistem
         # kitaplıklarını ve yedek yazı tiplerini de kurar.

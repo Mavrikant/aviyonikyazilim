@@ -34,6 +34,8 @@ düşünüyorsanız [yeni bir konu açın](https://github.com/Mavrikant/aviyonik
 
 Düzeltme ve önerilerinizi **serdar@karaman.dev** adresine e-postayla gönderebilirsiniz.
 Kütüphane için kitap, site için araç (simülatör) önerileri de bu adresten alınır.
+Tüm iletişim yolları ve hangi konu için hangisinin uygun olduğu sitedeki
+[İletişim](https://aviyonikyazilim.com/iletisim) sayfasındadır.
 
 ## Yerelde çalışmak
 

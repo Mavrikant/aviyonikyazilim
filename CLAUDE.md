@@ -46,9 +46,13 @@ plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüph
 plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
 scripts/kitap-pdf.mjs     Derlenmiş siteden kitabın PDF'ini üretir (`npm run pdf`); düzeni kitap-pdf.css
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
+src/pages/iletisim.mdx    İletişim sayfası (e-posta, GitHub; canlı sohbet yalnızca yapılandırılmışsa)
+src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` sarmalayıcısı
+src/components/CanliSohbet/  İsteğe bağlı Tawk.to sohbeti: betiği tembel yükleyen kanca ve yüzen düğme
 src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage ve
                           SearchPage (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
-                          kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır)
+                          kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır), Root.tsx
+                          (resmi Root genişletme noktası, eject değildir: yüzen sohbet düğmesini ekler)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
 src/css/fonts.css         @font-face tanımları (yalnızca latin + latin-ext alt kümeleri)
 src/components/GostergePaneli/  Ana sayfadaki canlı PFD (uçuş modeli, duraklat/oynat tuşu)
@@ -372,6 +376,24 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   (`veri.ts`, `ACIK`) CSS'teki açık tema değerleriyle aynı tutulur. Paylaşım bağlantısı
   adresin `#d=` kısmındadır (sunucuya gitmez) ve uygulandıktan sonra adresten silinir.
 
+## İletişim ve canlı sohbet
+
+- `/iletisim` sayfası e-posta ve GitHub yollarını her zaman gösterir. E-posta `<Eposta>`
+  ile verilir (`noscriptHint` sayfada tek yerde); yanıt süresi sözü verilmez.
+- **Canlı sohbet isteğe bağlıdır:** yalnızca `TAWK_TO_ID` depo değişkeni
+  (`<propertyId>/<widgetId>`) tanımlıysa görünür; değer `customFields.tawkToId` ile
+  tarayıcıya geçer. Tawk.to hesabını ve değişkeni depo sahibi açar. Sohbetle ilgili metin
+  MDX'e değil `useSohbet().yapilandirildi` koşuluna bağlı bileşene yazılır; yoksa
+  yapılandırılmamış sitede de görünür.
+- Tawk betiği sayfa açılışında **yüklenmez**; yalnızca ziyaretçi sohbet düğmesine bastığında
+  yüklenir (performans ve çerez). Açılışta yüklemeye çevrilirse çerez onayı gerekir.
+- Yüzen düğme düz laciverttir, z-index'i 150'dir (navbar 200'ün ve tam ekran araçların
+  altında), `/gom/` sayfalarında ve yazdırmada görünmez. Sağ alt köşeye başka sabit öğe
+  eklenirse `custom.css`'teki `html[data-canli-sohbet] .theme-back-to-top-button` kuralı
+  birlikte düşünülür.
+- Tema, bağımsız MDX sayfalarına (`src/pages/*.mdx`) `.markdown` sınıfını vermez; içerik
+  `<IletisimSayfasi>` gibi `markdown` sınıflı bir sarmalayıcıya alınır.
+
 ## Görsel kimlik
 
 - Yazı tipleri: metin ve başlıklarda **IBM Plex Sans**, kod ve etiketlerde
@@ -396,7 +418,7 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
 - İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
   React bileşeni gerekmedikçe `.mdx` kullanılmaz (şu an yalnızca `<Eposta>` kullanan
-  `kutuphane/index.mdx` ve `araclar/index.mdx` ile araç sayfaları).
+  `kutuphane/index.mdx` ve `araclar/index.mdx`, araç sayfaları ve `src/pages/iletisim.mdx`).
 - `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
   `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
   metin olarak basılır).
@@ -467,8 +489,9 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 - **Adresler ASCII:** üretilen dizin sayfalarının adresi etiketten türetilir; Türkçe
   karakterli bir `label` için `_category_.json` içinde `link.slug` (ör.
   `/category/emniyet-muhendisligi`) verilir. Adres değişirse `redirects` listesine eklenir.
-- **Analitik ve Search Console** yalnızca `GA_MEASUREMENT_ID` / `GOOGLE_SITE_VERIFICATION`
-  depo değişkenleri tanımlıysa eklenir; kodda kimlik tutulmaz (bkz. `SEO.md`).
+- **Analitik, Search Console ve canlı sohbet** yalnızca `GA_MEASUREMENT_ID` /
+  `GOOGLE_SITE_VERIFICATION` / `TAWK_TO_ID` depo değişkenleri tanımlıysa eklenir; kodda
+  kimlik tutulmaz (bkz. `SEO.md`). Yeni değişken `deploy.yml`'deki `env` bloğuna da eklenir.
 - GitHub Pages tüm dosyaları `Cache-Control: max-age=600` ile sunar ve bu depodan
   değiştirilemez (ayrıntı: README, "Uzun önbellek süresi").
 
