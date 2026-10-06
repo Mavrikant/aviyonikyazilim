@@ -35,6 +35,8 @@ scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.js
 src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
 src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set)
 src/components/HedefGezgini/  DO-178C Ek A hedef gezgini (veri.ts: 71 hedef × seviye; araç + seviye özeti şekilleri)
+src/components/GorevCizelgeleme/  Görev çizelgeleme analiz aracı (tepki süresi analizi, EDF talep ölçütü,
+                          benzetim, döngüsel yürütücü çerçeve tasarımı)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
@@ -183,6 +185,21 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | zamanlayıcı | timer |
 | kesme servis rutini | interrupt service routine (ISR) |
 | belirlenimci | deterministic |
+| iş (bir görevin tek çalışması) | job |
+| zaman sınırı | deadline |
+| kullanım | utilization |
+| hiperperiyot | hyperperiod |
+| hız-monoton / zaman sınırı-monoton | rate-monotonic (RM) / deadline-monotonic (DM) |
+| kesintili / kesintisiz | preemptive / non-preemptive |
+| en kötü tepki süresi | worst-case response time |
+| tepki süresi analizi | response-time analysis |
+| işlemci talep ölçütü | processor demand criterion |
+| engellenme süresi | blocking time |
+| kritik kesit | critical section |
+| bağlam değiştirme | context switch |
+| titreşim | jitter |
+| döngüsel yürütücü | cyclic executive |
+| ana çerçeve / küçük çerçeve | major frame / minor frame |
 | alan bölümlemesi / zaman bölümlemesi | spatial / temporal partitioning |
 | bölüm (bölümleme bağlamında) | partition |
 | tümleşik modüler aviyonik | integrated modular avionics (IMA) |
@@ -209,7 +226,8 @@ Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgis
 (temel çizgi); objective anlamında "amaç" (hedef); review anlamında "inceleme" (gözden
 geçirme); DO-178C yazılım seviyesi anlamında "güvence seviyesi/düzeyi"; "sertifikasyon
 makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partition anlamında
-"bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4).
+"bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4); scheduling anlamında "zamanlama"
+(çizelgeleme; "zamanlama" timing içindir); deadline anlamında "son tarih" ya da "termin".
 
 ## Yeni blog yazısı ekleme
 
@@ -367,6 +385,14 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   derlemeyi durdurur. Araç sayfasındaki şekiller ve tablo (`SeviyeOzeti.tsx`) sayıları bu
   veriden hesaplar; sayfa metnindeki adım farkları (+36, +7, +2 …) veri değişirse elle
   güncellenir. Teknoloji eklerinin (DO-331/332/333) ve DO-330'un tabloları kapsam dışıdır.
+- **Görev çizelgeleme aracında** hesap tam sayı mikrosaniyeyle yapılır
+  (`src/components/GorevCizelgeleme/cizelgeleme.ts`; kayan nokta tavan/taban işlemlerini
+  bozar). Analiz (fazdan bağımsız en kötü durum) ile benzetim (girilen fazlarla tek çizelge)
+  ayrı sütunlardır ve biri diğerinin yerine gösterilmez; biçimsel testi olmayan kip
+  (kesintisiz EDF) "karar benzetime dayanır" diye işaretlenir. Sabit nokta yinelemeleri
+  adım bütçesiyle sınırlıdır; bütçe biterse sonuç "sınırsız" değil "belirsiz" sayılır.
+  Çekirdek değişirse bilinen bir örnekle karşılaştırılır (tablo sırası, kesintili:
+  T=70/C=26 ve T=100/C=62 → ikinci görevin en kötü tepki süresi 118 ms).
 - Konnektör aracında sinyal türü renkleri CSS değişkenleridir (açık/koyu tema); sunucuda
   üretilen HTML temadan bağımsız kalsın diye renk bileşende seçilmez. Dışa aktarım paleti
   (`veri.ts`, `ACIK`) CSS'teki açık tema değerleriyle aynı tutulur. Paylaşım bağlantısı

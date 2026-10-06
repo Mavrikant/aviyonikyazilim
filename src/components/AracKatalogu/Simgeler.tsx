@@ -71,6 +71,18 @@ const SIMGELER: Record<string, ReactNode> = {
       <path d="M10 13h44" strokeWidth="4" strokeLinecap="butt" data-vurgu="" />
     </>
   ),
+  // Görev çizelgesi: zaman ekseni, üç şeritte yürütme blokları ve bir zaman sınırı çizgisi
+  cizelge: (
+    <>
+      <path d="M8 10v44h50" />
+      <rect x="12" y="14" width="9" height="8" rx="1" />
+      <rect x="33" y="14" width="9" height="8" rx="1" />
+      <rect x="21" y="27" width="12" height="8" rx="1" />
+      <rect x="42" y="27" width="6" height="8" rx="1" />
+      <rect x="48" y="40" width="6" height="8" rx="1" data-vurgu="" />
+      <path d="M54 10v44M51 14l3-4 3 4" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (
