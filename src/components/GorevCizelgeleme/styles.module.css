@@ -1,0 +1,806 @@
+/*
+ * Görev çizelgeleme aracı. Yerleşim, useGeometri'nin köke yazdığı data-boyut
+ * (kucuk | orta | genis) ve data-dokunmatik özniteliklerine göre ayarlanır.
+ * Kabuk (ayarlar, kartlar, tablo, zaman çizelgesi) seri kanal hesaplayıcısıyla aynı düzendedir.
+ */
+
+.arac {
+  --gc-cizgi: var(--ifm-toc-border-color);
+  --gc-zemin: var(--ifm-background-surface-color);
+  --gc-iyi: #2f7d4f;
+  --gc-uyari: var(--av-amber-700);
+  --gc-asiri: #b4232a;
+
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: var(--ifm-global-radius);
+  background: var(--gc-zemin);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+/* Tam ekran: tarayıcı tam ekranı ya da (desteklenmiyorsa) ekranı kaplayan katman */
+.tamEkran,
+.arac:fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.kaydirmaKilidi {
+  overflow: hidden;
+}
+
+.ustSerit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.ustBaslik {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tamEkranDugme {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tamEkranDugme svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-theme='dark'] .arac {
+  --gc-iyi: #6fd39a;
+  --gc-uyari: var(--av-amber-400);
+  --gc-asiri: #ff8a8f;
+}
+
+.arac :is(input, select, button) {
+  font: inherit;
+  color: inherit;
+}
+
+.arac :is(input, select) {
+  height: 2.2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.arac :is(input, select):focus-visible,
+.arac button:focus-visible {
+  outline: 2px solid var(--av-amber-500);
+  outline-offset: 1px;
+}
+
+/* iOS, 16 px'ten küçük giriş kutusuna dokununca sayfayı yakınlaştırır */
+.arac[data-dokunmatik] :is(input, select) {
+  height: 2.75rem;
+  font-size: 16px;
+}
+
+.gizli {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Ayarlar ---------- */
+
+.ayarlar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.etiket {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.secici {
+  display: flex;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.secici button {
+  flex: 1;
+  min-height: 2.2rem;
+  padding: 0 0.4rem;
+  border: 0;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.secici button + button {
+  border-left: 1px solid var(--gc-cizgi);
+}
+
+.genisAlan {
+  grid-column: span 2;
+}
+
+.arac[data-boyut='kucuk'] .ayarlar {
+  grid-template-columns: 1fr;
+}
+
+.arac[data-boyut='kucuk'] .genisAlan {
+  grid-column: auto;
+}
+
+.secici .secili {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+}
+
+.arac[data-dokunmatik] .secici button {
+  min-height: 2.75rem;
+}
+
+.ozet {
+  margin: 0.9rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--gc-cizgi);
+  color: var(--ifm-color-emphasis-800);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+}
+
+/* ---------- Sonuç kartları ---------- */
+
+.sonuclar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.kart {
+  --gc-durum: var(--ifm-color-emphasis-500);
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--gc-cizgi);
+  border-left: 4px solid var(--gc-durum);
+  border-radius: 8px;
+}
+
+.iyi {
+  --gc-durum: var(--gc-iyi);
+}
+
+.uyari {
+  --gc-durum: var(--gc-uyari);
+}
+
+.asiri {
+  --gc-durum: var(--gc-asiri);
+}
+
+.kartBaslik {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.rozet {
+  color: var(--gc-durum);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.buyukSayi {
+  margin-top: 0.2rem;
+  color: var(--gc-durum);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.gosterge {
+  display: block;
+  width: 100%;
+  height: 0.75rem;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.gostergeZemin {
+  fill: color-mix(in srgb, var(--ifm-color-emphasis-500) 18%, transparent);
+}
+
+.gostergeDolu {
+  fill: var(--gc-durum);
+}
+
+.kartDetay {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.8rem;
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.kartDetay dt {
+  color: var(--ifm-color-emphasis-700);
+  font-weight: 400;
+}
+
+.kartDetay dd {
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+}
+
+.kirmizi {
+  color: var(--gc-asiri);
+}
+
+.kartNot {
+  margin: 0.6rem 0 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.8rem;
+}
+
+/* Test listesi: her satırda durum imi, test adı ve tek cümlelik gerekçe */
+.testler {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.testler li {
+  display: grid;
+  grid-template-columns: 1.3rem 1fr;
+  gap: 0.4rem;
+  align-items: start;
+  font-size: 0.82rem;
+}
+
+.testImi {
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid currentcolor;
+  border-radius: 4px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.gecti .testImi {
+  color: var(--gc-iyi);
+}
+
+.kaldi .testImi {
+  color: var(--gc-asiri);
+}
+
+.belirsiz .testImi {
+  color: var(--ifm-color-emphasis-600);
+}
+
+.testAciklama {
+  display: block;
+  color: var(--ifm-color-emphasis-800);
+}
+
+/* ---------- Görev tablosu ---------- */
+
+.gorevler,
+.cerceveler,
+.cizelge {
+  margin-top: 1.25rem;
+}
+
+.bolumBaslik {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.bolumBaslik h3 {
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.araclar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* Uzun senaryo adları açılır listeyi kutudan taşırmasın */
+.senaryo {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.senaryo select {
+  max-width: 100%;
+}
+
+.arac[data-boyut='kucuk'] .araclar,
+.arac[data-boyut='kucuk'] .senaryo,
+.arac[data-boyut='kucuk'] .senaryo select {
+  width: 100%;
+}
+
+.arac[data-boyut='kucuk'] .araclar .dugme {
+  flex: 1 1 auto;
+}
+
+.dugme {
+  min-height: 2.2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.arac[data-dokunmatik] .dugme {
+  min-height: 2.75rem;
+}
+
+.senaryoNot {
+  margin: 0 0 0.6rem;
+  padding: 0.45rem 0.65rem;
+  border-left: 3px solid var(--av-amber-500);
+  background: color-mix(in srgb, var(--av-amber-500) 9%, transparent);
+  font-size: 0.82rem;
+}
+
+.tablo {
+  display: table;
+  width: 100%;
+  margin: 0;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+.tablo th,
+.tablo td {
+  padding: 0.35rem 0.4rem !important;
+  vertical-align: middle;
+}
+
+.tablo th {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.tablo td input,
+.tablo td select {
+  width: 100%;
+  min-width: 3.5rem;
+}
+
+.tablo td[data-baslik='Görev'] input {
+  min-width: 8rem;
+}
+
+/* Renk noktası ile sıra okları dar sütunda alt alta düşmesin */
+.tablo td[data-baslik='Sıra'] {
+  white-space: nowrap;
+}
+
+.sayi {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
+.asimSatir {
+  background: color-mix(in srgb, var(--gc-asiri) 8%, transparent) !important;
+}
+
+.renkNokta {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-right: 0.35rem;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.siraDugmeler {
+  display: inline-flex;
+  gap: 2px;
+  vertical-align: middle;
+}
+
+.siraDugmeler button,
+.sil {
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 5px;
+  background: none;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.siraDugmeler button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.arac[data-dokunmatik] :is(.siraDugmeler button, .sil) {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.sil:hover {
+  border-color: var(--gc-asiri);
+  color: var(--gc-asiri);
+}
+
+.ekle {
+  margin-top: 0.5rem;
+}
+
+/* Tablo geniş kapsayıcıda bile sığmazsa sayfayı değil kendi kutusunu kaydırır */
+.tabloKutu {
+  overflow-x: auto;
+}
+
+/* Geniş olmayan kapsayıcıda her görev bir kart: sütun adları alanların önüne yazılır */
+.arac:not([data-boyut='genis']) .tablo,
+.arac:not([data-boyut='genis']) .tablo tbody {
+  display: block;
+  border: 0;
+}
+
+.arac:not([data-boyut='genis']) .tablo thead {
+  display: none;
+}
+
+.arac:not([data-boyut='genis']) .tablo tr {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: 0.4rem 0.6rem;
+  margin-bottom: 0.6rem;
+  padding: 0.6rem;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 8px;
+  background: none !important;
+}
+
+.arac[data-boyut='kucuk'] .tablo tr {
+  grid-template-columns: 1fr 1fr;
+}
+
+.arac:not([data-boyut='genis']) .tablo tr.asimSatir {
+  border-color: var(--gc-asiri);
+}
+
+.arac:not([data-boyut='genis']) .tablo td {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.15rem;
+  padding: 0 !important;
+  border: 0;
+}
+
+.arac:not([data-boyut='genis']) .tablo td::before {
+  content: attr(data-baslik);
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+}
+
+/* Kartın üst satırı: solda renk + sıra okları, sağda silme; ad alanı altlarında tam satır */
+.arac:not([data-boyut='genis']) .tablo tr {
+  position: relative;
+  padding-top: 2.6rem;
+}
+
+.arac[data-dokunmatik]:not([data-boyut='genis']) .tablo tr {
+  padding-top: 3.6rem;
+}
+
+.arac:not([data-boyut='genis']) .tablo td[data-baslik='Sıra'] {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  flex-direction: row;
+  align-items: center;
+}
+
+.arac:not([data-boyut='genis']) .tablo td[data-baslik=''] {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+}
+
+.arac:not([data-boyut='genis']) .tablo td:is([data-baslik='Sıra'], [data-baslik=''])::before {
+  display: none;
+}
+
+.arac:not([data-boyut='genis']) .tablo td[data-baslik='Görev'] {
+  grid-column: 1 / -1;
+}
+
+.arac:not([data-boyut='genis']) .tablo td[data-baslik='Görev'] input {
+  min-width: 0;
+}
+
+/* ---------- Zaman çizelgesi ---------- */
+
+.cizelgeAraclar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.kucukDugme {
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.arac[data-dokunmatik] .kucukDugme {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.kucukDugme:hover:not(:disabled),
+.dugme:hover:not(:disabled) {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+:is(.kucukDugme, .dugme):disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.cizelgeKutu {
+  width: 100%;
+}
+
+.cizelgeSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  /* Dikey kaydırma sayfaya kalır; yatay sürükleme aralık seçimi içindir */
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.seritAdi {
+  fill: currentColor;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 11px;
+}
+
+.seritZemin {
+  fill: color-mix(in srgb, var(--ifm-color-emphasis-500) 10%, transparent);
+}
+
+/* Çıkış anı: şeridi kesen ince çizgi ve yukarı ok */
+.cikis {
+  fill: none;
+  stroke: var(--ifm-color-emphasis-700);
+  stroke-width: 1;
+}
+
+/* Periyottan farklı zaman sınırı: kesikli çizgi ve aşağı ok */
+.sinir {
+  fill: none;
+  stroke: var(--gc-uyari);
+  stroke-width: 1.25;
+  stroke-dasharray: 3 2;
+}
+
+.kacan {
+  fill: none;
+  stroke: var(--gc-asiri);
+  stroke-width: 2.5;
+}
+
+.kacanGenel {
+  fill: var(--gc-asiri);
+}
+
+/* Zaman sınırından sonra süren yürütme */
+.gec {
+  fill: var(--gc-asiri);
+  opacity: 0.75;
+}
+
+.mesgul {
+  fill: var(--ifm-color-emphasis-600);
+}
+
+.cerceveCizgi {
+  stroke: var(--av-amber-500);
+  stroke-width: 1;
+  opacity: 0.8;
+}
+
+.eksen text {
+  fill: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 10.5px;
+}
+
+.eksenCizgi {
+  stroke: var(--ifm-color-emphasis-400);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: 0.6;
+}
+
+.secimKutusu {
+  fill: color-mix(in srgb, var(--av-amber-500) 22%, transparent);
+  stroke: var(--av-amber-500);
+  stroke-width: 1;
+}
+
+.gorunumKutusu {
+  fill: color-mix(in srgb, var(--av-amber-500) 18%, transparent);
+  stroke: var(--av-amber-500);
+  stroke-width: 1.5;
+  cursor: grab;
+}
+
+.ipucu {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+}
+
+/* Görev renkleri (çizelge ve tablo noktaları) */
+.renk0 { fill: #17497a; background: #17497a; }
+.renk1 { fill: #d89a3d; background: #d89a3d; }
+.renk2 { fill: #1f6f5c; background: #1f6f5c; }
+.renk3 { fill: #9a3a73; background: #9a3a73; }
+.renk4 { fill: #4f7cad; background: #4f7cad; }
+.renk5 { fill: #8a5a12; background: #8a5a12; }
+.renk6 { fill: #5fa58d; background: #5fa58d; }
+.renk7 { fill: #6b7a8a; background: #6b7a8a; }
+
+[data-theme='dark'] .renk0 { fill: #85b7e6; background: #85b7e6; }
+[data-theme='dark'] .renk1 { fill: #ffc65c; background: #ffc65c; }
+[data-theme='dark'] .renk2 { fill: #5fd0b0; background: #5fd0b0; }
+[data-theme='dark'] .renk3 { fill: #e59bc6; background: #e59bc6; }
+[data-theme='dark'] .renk4 { fill: #a4c9ed; background: #a4c9ed; }
+[data-theme='dark'] .renk5 { fill: #d89a3d; background: #d89a3d; }
+[data-theme='dark'] .renk6 { fill: #9ee3c8; background: #9ee3c8; }
+[data-theme='dark'] .renk7 { fill: #8193a6; background: #8193a6; }
+
+/* ---------- Çerçeve tasarımı (döngüsel yürütücü) ---------- */
+
+.adaylar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none;
+}
+
+.aday {
+  min-height: 2rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--gc-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.aday:disabled {
+  border-style: dashed;
+  color: var(--ifm-color-emphasis-600);
+  text-decoration: line-through;
+  cursor: default;
+}
+
+.aday.secili {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+}
+
+.arac[data-dokunmatik] .aday {
+  min-height: 2.75rem;
+}
+
+.cerceveTablo {
+  display: table;
+  width: 100%;
+  margin: 0;
+  font-size: 0.82rem;
+}
+
+.cerceveTablo th,
+.cerceveTablo td {
+  padding: 0.35rem 0.5rem !important;
+  vertical-align: middle;
+}
+
+.cerceveTablo th {
+  font-size: 0.75rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.isEtiketi {
+  display: inline-flex;
+  align-items: center;
+  margin: 0.1rem 0.8rem 0.1rem 0;
+  white-space: nowrap;
+}
+
+.isEtiketi .ipucu {
+  margin-left: 0.35rem;
+  font-family: var(--ifm-font-family-monospace);
+}

@@ -1,0 +1,169 @@
+---
+title: "Görev Çizelgeleme Analiz Aracı"
+sidebar_label: "Görev Çizelgeleme"
+description: "Periyodik görev kümesi için çizelgelenebilirlik analizi: hız-monoton, DM, EDF ve döngüsel yürütücü; en kötü tepki süresi, pay ve zaman çizelgesi."
+sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: cizelge
+  ozellikler: [RM / DM / EDF, Tepki süresi analizi, Döngüsel yürütücü, Zaman çizelgesi, CSV, Paylaşılabilir]
+keywords: ["görev çizelgeleme", "çizelgelenebilirlik analizi", "schedulability analysis", "rate monotonic", "EDF", "tepki süresi analizi", "cyclic executive", "WCET"]
+---
+
+import GorevCizelgeleme from '@site/src/components/GorevCizelgeleme';
+
+# Görev Çizelgeleme Analiz Aracı
+
+Bir görev çizelgeleyicisinin (task scheduler) yöneteceği periyodik görev kümesinin
+zaman sınırlarını tutturup tutturamayacağını hesaplar. Görevlerin periyodunu, en
+kötü durum yürütme süresini ve zaman sınırını girin; araç çizelgelenebilirlik
+analizini (schedulability analysis) yapar, her görevin en kötü tepki süresini ve
+kalan payını verir, çizelgeyi zaman ekseninde çizer.
+
+<GorevCizelgeleme />
+
+## Nasıl kullanılır?
+
+1. **Görevleri girin** ya da bir örnek senaryo seçin. Her görev için periyot (T),
+   en kötü durum yürütme süresi (C) ve göreli zaman sınırı (D) milisaniye olarak
+   yazılır; ondalık değer girilebilir.
+2. **Politikayı seçin:** sabit öncelik (hız-monoton, zaman sınırı-monoton ya da
+   tablo sırası), EDF ya da döngüsel yürütücü. Sabit öncelik ve EDF için kesintili
+   ya da kesintisiz çalışma ayrıca seçilir.
+3. **Kararı ve testleri okuyun.** Soldaki kart kümenin çizelgelenebilir olup
+   olmadığını, sağdaki liste bu karara hangi testlerle varıldığını gösterir.
+4. **Tabloyu inceleyin.** "Tepki (analiz)" en kötü durumu, "Tepki (benzetim)"
+   girdiğiniz fazlarla gözlenen değeri verir. "Pay" zaman sınırına kalan süredir;
+   "En fazla C", diğer görevler değişmeden o görevin süresinin nereye kadar
+   büyüyebileceğini söyler.
+5. **Zaman çizelgesinde** hangi işin ne zaman çalıştığını, kesintileri ve kaçırılan
+   zaman sınırlarını izleyin; sürükleyerek yakınlaşabilirsiniz.
+6. **Paylaşın ya da dışa aktarın:** bağlantı tüm görev kümesini taşır, CSV tabloyu
+   sonuçlarıyla birlikte verir.
+
+## Görev modeli
+
+Araç, tek bir işlemci çekirdeğinde çalışan periyodik görevleri ele alır. Bir görev
+her periyotta bir **iş** (job) çıkarır; iş, çıkışından itibaren zaman sınırı
+(deadline) dolmadan bitmelidir.
+
+| Simge | Anlamı |
+|---|---|
+| T | Periyot: iki çıkış arasındaki süre |
+| C | En kötü durum yürütme süresi (worst-case execution time, WCET) |
+| D | Göreli zaman sınırı; çoğu görevde periyoda eşittir |
+| Faz | İlk işin çıkış anı; yalnızca benzetimi etkiler |
+| B | Engellenme süresi: daha düşük öncelikli bir görevin kritik kesiti (critical section) yüzünden beklenen en uzun süre |
+| U | Kullanım (utilization): C / T; küme için toplamı alınır |
+
+Toplam kullanım %100'ü aşıyorsa hiçbir politika işe yaramaz: işlemci istenen işi
+yapacak zamana sahip değildir. %100'ün altında kalmak ise tek başına yeterli
+değildir; sonucu politika belirler.
+
+## Politikalar
+
+| Politika | Öncelik nasıl belirlenir? | Not |
+|---|---|---|
+| Hız-monoton (rate-monotonic, RM) | Periyodu kısa olan önce | D = T olan kümelerde en iyi sabit öncelik ataması |
+| Zaman sınırı-monoton (deadline-monotonic, DM) | Zaman sınırı kısa olan önce | D ≤ T olan kümelerde en iyi sabit öncelik ataması |
+| Tablo sırası | Tablodaki sıra | Kendi atamanızı denemek için |
+| EDF (earliest deadline first) | Çalışma anında: zaman sınırı en yakın iş | Tek çekirdekte %100 kullanıma kadar çizelgeler |
+| Döngüsel yürütücü (cyclic executive) | Öncelik yok; işler sabit bir tablodan çalışır | Zaman tetiklemeli (time-triggered) mimariler |
+
+Sabit öncelikte öncelik bir önem sıralaması değil, zaman sınırlarını tutturma
+aracıdır; ayrıntısı kitabın
+[görev modeli ve öncelik atama](/kitap/ozel-konular/gercek-zamanli-isletim-sistemleri#görev-modeli-ve-öncelik-atama)
+başlığındadır.
+
+**Kesintili** (preemptive) çalışmada daha öncelikli bir iş hazır olduğunda çalışan
+iş durdurulur. **Kesintisiz** (non-preemptive) çalışmada başlayan iş bitene kadar
+sürer; bağlam değiştirme azalır, paylaşılan veri kendiliğinden korunur, ama uzun bir
+iş kendinden öncelikli herkesi bekletir.
+
+## Analiz nasıl yapılır?
+
+**Tepki süresi analizi** (response-time analysis), sabit öncelikli bir görevin en
+kötü tepki süresini, kendisinden öncelikli görevlerin araya girmesini hesaba katarak
+bulur. Kesintili çalışmada en kötü durum, görevin kendinden öncelikli bütün
+görevlerle aynı anda çıktığı andır:
+
+```
+R = C + B + Σ ⌈R / Tj⌉ · Cj        (j: daha yüksek öncelikli görevler)
+```
+
+R iki yanda da bulunduğu için değer yinelemeyle aranır: R = C + B ile başlanır,
+sağ taraf değişmeyene kadar yeniden hesaplanır. R ≤ D ise görev zaman sınırını her
+koşulda tutturur. Zaman sınırı periyottan uzun olan görevlerde aynı meşgul dönem
+içindeki ardışık işler tek tek incelenir.
+
+**Kesintisiz** çalışmada engelleme, daha düşük öncelikli görevlerin en uzununun
+süresidir: o iş başladıysa bitmesi beklenir. Araç bu kipte B sütununu kullanmaz,
+engellemeyi görev kümesinden kendisi çıkarır.
+
+**EDF** için zaman sınırı periyottan kısa değilse toplam kullanımın %100'ü
+aşmaması yeterli ve gereklidir. Kısa zaman sınırı varsa **işlemci talep ölçütü**
+(processor demand criterion) sınanır: her mutlak zaman sınırına kadar bitmesi
+gereken iş, o ana kadar geçen süreyi aşmamalıdır.
+
+**Liu–Layland ve hiperbolik sınırlar** yalnızca kullanım değerlerine bakan hızlı
+testlerdir ve yalnızca hız-monoton, kesintili ve D = T olan kümelere uygulanır.
+İkisi de *yeterli* koşuldur: sınırın altında kalan küme kesin çizelgelenebilir,
+üstünde kalan küme için bir şey söylenemez. Araç bu durumda testi "sonuç vermedi"
+diye işaretler ve kararı tepki süresi analizine bırakır.
+
+## Analiz ile benzetim neden farklı çıkar?
+
+Analiz, işlerin en elverişsiz anda çıktığı durumu ve girilen engellenme sürelerini
+hesaba katar; fazlardan bağımsızdır. Benzetim ise yalnızca girdiğiniz fazlarla
+oluşan tek bir çizelgeyi çalıştırır ve engellenmeyi modellemez. Bu yüzden
+benzetimdeki tepki süresi analizdekinden kısa çıkabilir, uzun çıkamaz.
+
+Fark en çok kesintisiz çalışmada görülür: bütün görevler aynı anda çıkarsa önce en
+öncelikli çalışır ve engelleme hiç yaşanmaz; en kötü durum, düşük öncelikli uzun
+işin öncelikli işten hemen önce başlamasıdır. "Kesintisiz çizelgeleme" örneği bunu
+gösterir. Kanıt olarak analiz kullanılır; benzetim çizelgeyi anlamaya ve analizin
+beklenen yönde olduğunu görmeye yarar.
+
+## Döngüsel yürütücü ve çerçeve seçimi
+
+Döngüsel yürütücüde çizelge çalışma anında hesaplanmaz: zaman, eşit uzunlukta
+**küçük çerçevelere** (minor frame) bölünür ve hangi işin hangi çerçevede çalışacağı
+önceden bir tabloya yazılır. Tablo **ana çerçeve** (major frame) boyunca sürer ve
+başa döner; ana çerçeve, periyotların en küçük ortak katıdır. Araç küçük çerçeve
+adaylarını üç koşulla sınar:
+
+1. Çerçeve en uzun görevin süresinden kısa olamaz (iş çerçeve içinde bitmelidir).
+2. Çerçeve ana çerçeveyi tam bölmelidir.
+3. Her görev için çıkış ile zaman sınırı arasına en az bir tam çerçeve sığmalıdır:
+   2f − obeb(T, f) ≤ D.
+
+Koşulları sağlayan adaylardan biri seçildiğinde işler çerçevelere bölünmeden,
+zaman sınırı en yakın olandan başlanarak yerleştirilir. Yerleştirme sezgiseldir:
+bir çözüm bulamaması çözüm olmadığını göstermez; başka bir çerçeve denemek ya da
+uzun görevi parçalara bölmek gerekebilir. Aynı fikrin bölümler arasındaki karşılığı
+için kitabın
+[zaman bölümlemesi](/kitap/ozel-konular/yazilim-bolumlemesi#zaman-bölümlemesi)
+başlığına bakabilirsiniz.
+
+## Varsayımlar ve sınırlar
+
+- Tek işlemci çekirdeği varsayılır. Çok çekirdekli işlemcilerde çekirdekler arası
+  girişim ayrı bir analiz konusudur.
+- C değerleri doğru kabul edilir. Araç WCET hesaplamaz; analiz ancak süreler birer
+  üst sınırsa geçerlidir.
+- Bağlam değiştirme, çizelgeleyicinin kendi süresi, kesme yükü ve çıkış titreşimi
+  (jitter) modellenmez. Bu etkileri süreye ya da engellenmeye pay ekleyerek kaba
+  biçimde hesaba katabilirsiniz.
+- Görevler bağımsız sayılır; paylaşılan kaynaklar yalnızca B sütunuyla temsil
+  edilir. B sütunu sabit öncelikli kesintili çalışmada kullanılır.
+- Kesintisiz EDF için kapalı biçimli test uygulanmaz; karar benzetime dayanır ve
+  bu yüzden kanıt değeri taşımaz.
+- Döngüsel yürütücüde faz kullanılmaz ve zaman sınırı periyottan uzun alınmaz.
+- En çok 16 görev çözümlenir. Periyotların ortak katı çok uzunsa benzetim
+  sınırlandırılır ve bu, çizelgenin altında belirtilir.
+- Sonuçlar tasarım aşamasındaki değerlendirme içindir. DO-178C kapsamında
+  zamanlama kanıtı; ölçülmüş ya da analizle bulunmuş WCET değerlerine, hedef
+  donanımdaki ölçümlere ve projenin doğrulama planına dayanır. Bu konu kitabın
+  [gerçek zamanlı işletim sistemleri](/kitap/ozel-konular/gercek-zamanli-isletim-sistemleri#doğrulama-açısından-bakış)
+  bölümünde, kavramların girişi ise
+  [Gerçek Zamanlı Sistemler](/blog/gercek-zamanli-sistemler) yazısında anlatılır.
