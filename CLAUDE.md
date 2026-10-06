@@ -42,6 +42,8 @@ plugins/meta-description.ts  description yoksa ilk paragraftan meta açıklamas�
 plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriority=high yapar
 plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
+plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
+scripts/kitap-pdf.mjs     Derlenmiş siteden kitabın PDF'ini üretir (`npm run pdf`); düzeni kitap-pdf.css
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
 src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage ve
                           SearchPage (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
@@ -59,8 +61,8 @@ sidebars.ts               kitapSidebar (otomatik üretilir)
 i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
 .github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
-.github/workflows/deploy.yml  GitHub Pages otomatik dağıtım
-.github/workflows/pr-build.yml  PR'larda derleme denetimi (dağıtım yapmaz)
+.github/workflows/deploy.yml  GitHub Pages otomatik dağıtım (site + kitap PDF'i)
+.github/workflows/pr-build.yml  PR'larda derleme ve PDF denetimi (dağıtım yapmaz)
 .github/workflows/link-check.yml  Aylık dış bağlantı denetimi (lychee); ayarı .github/lychee.toml
 .github/dependabot.yml    Haftalık, gruplanmış bağımlılık güncellemeleri
 ```
@@ -251,6 +253,26 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.
 - Placeholder bölümlerdeki `:::info Bu bölüm hazırlanıyor 🚧` kutusu, içerik yazıldığında
   kaldırılır.
+
+## Kitap PDF'i
+
+- Kitabın PDF sürümü **elle üretilmez ve depoya konmaz.** `npm run build && npm run pdf`
+  (`scripts/kitap-pdf.mjs`) derlenmiş kitap sayfalarını başsız Chromium'da açar, kapak ve
+  sayfa numaralı içindekilerle tek belgede birleştirip `build/` altına yazar. `deploy.yml`
+  her yayında, `pr-build.yml` her PR'da çalıştırır; adım başarısız olursa site yayımlanmaz.
+- Sayfa sırası ve kısımlar `kitapSidebar`'dan gelir (`plugins/kitap-pdf.ts`); yeni bölüm
+  PDF'e kendiliğinden girer. PDF'in adresi aynı dosyadaki `KITAP_PDF_PATH` sabitidir; ana
+  sayfadaki "PDF indir" düğmesi de onu kullanır.
+- `kitap/index.md` içindeki "İçindekiler" bölümü PDF'e alınmaz (PDF'in kendi içindekiler
+  sayfası vardır); başlığın adı değişirse betikteki `WEB_ONLY_HEADING` güncellenir.
+- Baskı düzeni `scripts/kitap-pdf.css` içindedir. PDF'te sitedeki değişken yazı tipi
+  yerine `@ibm/plex-sans` paketinin statik dosyaları kullanılır: değişken yazı tipi PDF'e
+  harf harf konumlanan Type 3 olarak gömülür, dosyayı büyütür ve metin seçimini bozar.
+- Kitap sayfalarındaki WebP görseller PDF'te JPEG'e çevrilir (PDF'te WebP yoktur);
+  saydamlık ya da keskin kenar gerektiren görsel PNG olmalıdır.
+- Tarayıcı sürümü `playwright-core` ile sabittir; yerelde kurulu değilse betik makinedeki
+  Google Chrome'u kullanır (`npx playwright-core install chromium-headless-shell` ile
+  CI'dakiyle aynı sürüm kurulabilir).
 
 ## Kütüphane sayfası kuralları
 
@@ -454,5 +476,6 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 ```bash
 npm start        # geliştirme sunucusu (canlı önizleme)
 npm run build    # üretim derlemesi (uyarısız geçmeli)
+npm run pdf      # build çıktısından kitabın PDF'ini üretir (build/ altına)
 npm run serve    # build çıktısını yerelde sunar
 ```

@@ -12,6 +12,7 @@ import path from 'node:path';
 import type {LoadContext, Plugin} from '@docusaurus/types';
 import type {LoadedContent as DocsContent} from '@docusaurus/plugin-content-docs';
 import type {BlogContent} from '@docusaurus/plugin-content-blog';
+import {KITAP_PDF_PATH} from './kitap-pdf';
 
 export type Chapter = {
   /** "9" ya da ekler için "A" */
@@ -65,6 +66,8 @@ export type HomepageData = {
     references: PageLink[];
     chapterCount: number;
     appendixCount: number;
+    /** Kitabın PDF sürümünün adresi (`npm run pdf` üretir; bkz. plugins/kitap-pdf.ts) */
+    pdf: string;
   };
   posts: Post[];
   postCount: number;
@@ -216,6 +219,7 @@ async function loadBook(siteDir: string, version: LoadedVersion): Promise<Homepa
     references,
     chapterCount: numbered.length,
     appendixCount: appendices.length,
+    pdf: KITAP_PDF_PATH,
   };
 }
 

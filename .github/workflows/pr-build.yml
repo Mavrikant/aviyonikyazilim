@@ -3,7 +3,8 @@ name: PR Derleme Denetimi
 # main'e açılan her PR'da siteyi derler; dağıtım yapmaz (dağıtım: deploy.yml).
 # Yapılandırma katı olduğu için kırık iç bağlantı, kırık çapa, tanımsız etiket ya da
 # yazar ve "truncate" işareti olmayan blog yazısı build'i durdurur; bu denetim sayesinde
-# böyle bir hata main'e birleşmeden önce PR üzerinde görünür.
+# böyle bir hata main'e birleşmeden önce PR üzerinde görünür. Kitap PDF'i de üretilir:
+# deploy.yml'de PDF adımı başarısız olursa site yayımlanmaz, hata burada yakalanmalıdır.
 on:
   pull_request:
     branches: [main]
@@ -34,3 +35,9 @@ jobs:
         run: npm ci
       - name: Siteyi derle
         run: npm run build
+      - name: PDF için Chromium'u kur
+        # Sürüm, package-lock.json'daki playwright-core ile sabittir; --with-deps sistem
+        # kitaplıklarını ve yedek yazı tiplerini de kurar.
+        run: npx playwright-core install --with-deps chromium-headless-shell
+      - name: Kitap PDF'ini üret
+        run: npm run pdf

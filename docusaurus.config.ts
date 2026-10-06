@@ -6,6 +6,7 @@ import fontPreload from './plugins/font-preload';
 import {parseFrontMatter} from './plugins/meta-description';
 import remarkLcpImage from './plugins/remark-lcp-image';
 import llmsTxt from './plugins/llms-txt';
+import kitapPdf from './plugins/kitap-pdf';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -149,6 +150,8 @@ const config: Config = {
     fontPreload,
     // Build sonrası llms.txt üretir (yapay zekâ tarayıcıları için site haritası).
     llmsTxt,
+    // Kitabın PDF'e girecek sayfa listesini üretir; PDF'i `npm run pdf` yazar.
+    kitapPdf,
     [
       '@docusaurus/plugin-content-docs',
       {
