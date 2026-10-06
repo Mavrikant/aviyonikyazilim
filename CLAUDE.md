@@ -34,6 +34,7 @@ src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
 src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
 src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set)
+src/components/HedefGezgini/  DO-178C Ek A hedef gezgini (veri.ts: 71 hedef × seviye; araç + seviye özeti şekilleri)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
                           son yazılar, kütüphane ve araçlar
@@ -358,6 +359,14 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   karşılaştırılıp `scripts/konnektor/duzeltmeler.json`'a PDF sayfa numarası ve gerekçesiyle
   yazılır; doğrulamadan geçemeyen yerleşim çıktıya alınmaz. Standart PDF'leri (ASSIST)
   depoya konmaz. Konumlar pin yerleşiminin ön yüzü içindir; soket ve arka yüz aynadır.
+- **DO-178C hedef verisi** (`src/components/HedefGezgini/veri.ts`) standardın Ek A
+  tablolarıyla karşılaştırılarak girilmiştir: geçerlilik (seviye başına bağımsızlıkla /
+  gerekli / aranmaz), bölüm atfı, çıktı verisi ve kontrol kategorisi. Hedef başlıkları ve
+  açıklamaları **özgün özettir**; standardın cümlesi ya da çevirisi yazılmaz. Dosyanın
+  sonundaki sağlama, toplamlar 71/69/62/26 hedef ve 30/18/5/2 bağımsızlıktan saparsa
+  derlemeyi durdurur. Araç sayfasındaki şekiller ve tablo (`SeviyeOzeti.tsx`) sayıları bu
+  veriden hesaplar; sayfa metnindeki adım farkları (+36, +7, +2 …) veri değişirse elle
+  güncellenir. Teknoloji eklerinin (DO-331/332/333) ve DO-330'un tabloları kapsam dışıdır.
 - Konnektör aracında sinyal türü renkleri CSS değişkenleridir (açık/koyu tema); sunucuda
   üretilen HTML temadan bağımsız kalsın diye renk bileşende seçilmez. Dışa aktarım paleti
   (`veri.ts`, `ACIK`) CSS'teki açık tema değerleriyle aynı tutulur. Paylaşım bağlantısı

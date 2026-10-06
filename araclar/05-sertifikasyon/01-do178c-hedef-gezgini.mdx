@@ -1,0 +1,149 @@
+---
+title: "DO-178C Hedef Gezgini"
+sidebar_label: "DO-178C Hedefleri"
+description: "DO-178C Ek A'daki 71 hedefi yazılım seviyesine (DAL A–D) göre süzen, bağımsızlığı, çıktı verisini ve iki seviye arasındaki farkı gösteren araç."
+sidebar_position: 1
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: hedef
+  ozellikler: [Seviye A–E, Bağımsızlık, Seviye karşılaştırma, Kontrol kategorisi, CSV, Paylaşılabilir]
+keywords: ["DO-178C hedefleri", "DO-178C objectives", "DO-178C objektifleri", "DAL A B C D", "yazılım seviyesi", "DO-178C Ek A tabloları", "bağımsızlık", "kontrol kategorisi CC1 CC2"]
+---
+
+import HedefGezgini from '@site/src/components/HedefGezgini';
+import {SeviyeCubuklari, HedefHaritasi, SurecTablosu} from '@site/src/components/HedefGezgini/SeviyeOzeti';
+
+# DO-178C Hedef Gezgini
+
+DO-178C'nin Ek A tablolarındaki 71 hedefi (objective) yazılım seviyesine
+(software level) göre süzer. Sahada çoğunlukla DAL diye anılan seviyeyi seçin;
+araç o seviyede hangi hedeflerin arandığını, hangilerinin bağımsızlıkla
+(independence) karşılanması gerektiğini ve kanıtın hangi yaşam döngüsü verisinde
+(software life cycle data) duracağını listeler.
+
+<HedefGezgini />
+
+## Nasıl kullanılır?
+
+1. **Seviyeyi seçin.** A'dan E'ye beş düğme vardır; altlarında seviyenin bağlı olduğu
+   en ağır arıza durumu (failure condition) sınıfı yazar. Sayaçlar o seviyedeki hedef
+   sayısını, bağımsızlıkla karşılanacak hedefleri ve üretilecek veri öğelerini verir.
+2. **Listeyi daraltın.** Süreç düğmeleri Ek A'nın on tablosudur (A-1 … A-10);
+   yanlarındaki sayı o tabloda seçili seviyede kaç hedefin arandığını gösterir.
+   "Yalnızca bağımsızlık isteyenler" doğrulama ekibinin kimin neye bakamayacağını
+   planlarken, arama kutusu belirli bir konuyu (izlenebilirlik, kapsam, PDI) ararken
+   işe yarar.
+3. **İki seviyeyi karşılaştırın.** "Karşılaştır" listesinden ikinci bir seviye
+   seçildiğinde her hedef, o seviyeye göre *yeni hedef*, *bağımsızlık eklenir*,
+   *düşer* ya da *bağımsızlık kalkar* diye etiketlenir. "Yalnızca farklar" ile bir
+   seviye değişikliğinin getirdiği ya da götürdüğü iş tek listede kalır.
+4. **Satırı okuyun.** `A-3.1`, Tablo A-3'ün birinci hedefidir. Kalın satır hedefin
+   özeti, altındaki cümle neyin gösterilmesi gerektiğidir. Onun altında hedefin
+   tanımlandığı DO-178C bölümü, kanıtın yazıldığı veri ve o verinin seçili
+   seviyedeki kontrol kategorisi (control category, CC1 ya da CC2) yer alır. Sağdaki
+   dört hücre hedefin her seviyedeki durumudur.
+5. **Dışa aktarın.** CSV, listelenen hedefleri boş "Uyum kanıtı" ve "Durum"
+   sütunlarıyla verir; uyum matrisinin iskeleti olarak kullanılabilir. Bağlantı,
+   seçili seviyeyi ve süzgeçleri taşır.
+
+## Seviye arttıkça hedefler nasıl artar?
+
+Yazılım seviyesini yazılım ekibi seçmez; yazılımın katkıda bulunabileceği en ağır
+arıza durumuna göre
+[sistem emniyet değerlendirmesinde](/kitap/baglam/sistem-emniyet-degerlendirmesi-baglaminda-yazilim)
+belirlenir. Seviye yükseldikçe iki şey birlikte büyür: gösterilmesi gereken hedeflerin
+sayısı ve bunlardan, ürünü geliştiren kişiden başka birinin bakması gerekenlerin
+sayısı.
+
+<SeviyeCubuklari />
+
+Artış düzgün değildir; her basamakta başka bir şey eklenir:
+
+- **Seviye D (26 hedef): yazılım dışarıdan görülür.** Yüksek seviyeli gereksinimler
+  yazılır ve gözden geçirilir, çalıştırılabilir nesne kodu bu gereksinimlere göre
+  test edilir, her gereksinimin test edildiği gösterilir. Konfigürasyon yönetimi ve
+  sertifikasyon irtibatı hedeflerinin tamamı, kalite güvencesinin iki hedefi bu
+  seviyede de aranır. Düşük seviyeli gereksinimler, kaynak kod ve bunların
+  doğrulanması hedef olarak yer almaz; yapısal kapsam istenmez.
+- **D'den C'ye (+36 hedef): yazılımın içi açılır.** En büyük sıçrama buradadır.
+  Düşük seviyeli gereksinimler ve kaynak kod geliştirme hedefi olur; tasarımın ve
+  kodun gözden geçirilmesi, düşük seviyeli gereksinimlere dayalı test, satır kapsama
+  ile veri ve kontrol bağlaşımı analizi eklenir. Planlama ve kalite güvencesi
+  tabloları tamamlanır: standartlar, geçiş kriterleri, planların uyumu.
+- **C'den B'ye (+7 hedef, +13 bağımsızlık): ikinci göz gelir.** Hedef sayısı az
+  artar: gereksinimlerin ve mimarinin hedef bilgisayarla uyumu, düşük seviyeli
+  gereksinimlerin, mimarinin ve kodun doğrulanabilirliği ve karar kapsama. Asıl
+  değişiklik bağımsızlıktadır: doğrulama hedeflerinde ilk kez burada aranır.
+  Gereksinimlerin bir üst seviyeye uygunluğu ve doğruluğu, algoritmalar, kodun
+  düşük seviyeli gereksinimlere uygunluğu, parametre verisinin doğrulanması, düşük
+  seviyeli gereksinim testleri ve yapısal kapsam artık yazarın kendisine bırakılmaz.
+- **B'den A'ya (+2 hedef, +12 bağımsızlık): en ince elek.** Eklenen iki hedef
+  değiştirilmiş koşul/karar kapsama (MC/DC) ile kaynak koda izlenemeyen nesne
+  kodunun doğrulanmasıdır. Bağımsızlık mimariye, kodun mimariye uygunluğuna ve
+  doğruluğuna, gürbüzlük testine, test prosedürlerine, test sonuçlarına ve
+  gereksinim test kapsamına yayılır.
+
+Aynı örüntü hedef hedef aşağıdadır. Seviye D satırı seyrektir; C'de çoğu sütun
+dolar, B ve A'da halkalar dolu daireye döner.
+
+<HedefHaritasi />
+
+<SurecTablosu />
+
+### Sayılar neyi söylemez?
+
+- **Hedef sayısı iş yükünün ölçüsü değildir.** B ile A arasında yalnızca iki hedef
+  vardır, ama biri MC/DC'dir ve tek başına aylar tutabilir. Karar yapılarında ne
+  istediğini görmek için [MC/DC test seti aracına](/araclar/dogrulama/mcdc-test-seti)
+  bakabilirsiniz.
+- **Bağımsızlık kişi düzeyindedir, bölüm düzeyinde değil.** Doğrulayanın, doğruladığı
+  ürünün yazarı olmaması yeter; ayrı bir şirket ya da ekip gerekmez. Ayrıntı kitabın
+  [bağımsızlık](/kitap/do178c-ile-gelistirme/yazilim-dogrulama#bağımsızlık)
+  bölümündedir.
+- **Konfigürasyon yönetiminde hedefler değil, sıkılık değişir.** Tablo A-8'in altı
+  hedefi her seviyede aynıdır; seviye düştükçe gevşeyen şey, verinin hangi
+  [kontrol kategorisinde](/kitap/do178c-ile-gelistirme/yazilim-konfigurasyon-yonetimi)
+  yönetildiğidir. Araçtaki "beklenen yaşam döngüsü verisi" listesi bunu seviyeye göre
+  gösterir.
+- **Hedef olmaması, işin yapılmadığı anlamına gelmez.** Seviye D'de kaynak kod
+  elbette yazılır; standart yalnızca kodun ve tasarımın ayrıntısına ilişkin kanıt
+  istemez. Seviye E de bir muafiyet değil, emniyet değerlendirmesiyle gösterilmesi
+  ve otoritece teyit edilmesi gereken bir sonuçtur.
+
+## Simgeler ve terimler
+
+- **Dolu daire** hedefin bağımsızlıkla karşılanması gerektiğini, **halka** hedefin
+  arandığını ama bağımsızlık istenmediğini, **kısa çizgi** hedefin o seviyede
+  aranmadığını gösterir. İşaretler standardın tablolarındaki dolu ve boş dairelerin
+  karşılığıdır.
+- **CC1 ve CC2**, verinin konfigürasyon yönetiminde ne kadar sıkı kontrol edileceğini
+  söyler. CC1 veride değişiklik kontrolü ve problem raporlama dahil bütün faaliyetler
+  uygulanır; CC2 veri de kimliklendirilir, korunur ve saklanır, ama her düzeltmesi
+  için resmî değişiklik süreci aranmaz.
+- **DAL** sistem tarafının terimidir. Geliştirme güvence seviyesi (development
+  assurance level) fonksiyona ve öğeye atanır; yazılım öğesine atanan seviye
+  DO-178C'de [yazılım seviyesi](/kitap/do178c-ile-gelistirme/do178c-genel-bakis#yazılım-seviyesi)
+  adını alır. Araçtaki A–E harfleri bu seviyedir.
+
+## Kapsam ve sınırlamalar
+
+- Hedef özetleri ve açıklamalar bu site için yazılmıştır; standardın metni ya da
+  çevirisi değildir. Hangi hedefin hangi seviyede arandığı, bağımsızlık, bölüm
+  atıfları ve kontrol kategorileri Ek A tablolarıyla karşılaştırılmıştır; yine de
+  bağlayıcı olan DO-178C / ED-12C metnidir.
+- Araç yalnızca DO-178C'nin kendi tablolarını kapsar. Model tabanlı geliştirme
+  ([DO-331](/kitap/arac-kalifikasyonu-ve-ekler/do331-model-tabanli-gelistirme)),
+  nesne yönelimli teknoloji
+  ([DO-332](/kitap/arac-kalifikasyonu-ve-ekler/do332-nesne-yonelimli-teknoloji)) ve
+  biçimsel yöntemler
+  ([DO-333](/kitap/arac-kalifikasyonu-ve-ekler/do333-bicimsel-yontemler)) kullanan
+  projelerde ilgili ek, bu tablolara hedef ekler ya da bazılarını değiştirir. Araç
+  kalifikasyonunun hedefleri de ayrıdır ve
+  [DO-330](/kitap/arac-kalifikasyonu-ve-ekler/do330-arac-kalifikasyonu)'da araç
+  kalifikasyon seviyesine göre düzenlenmiştir.
+- Liste neyin gösterileceğini söyler, nasıl gösterileceğini değil. Hedeflere götüren
+  faaliyetler projenin planlarında tanımlanır ve
+  [sertifikasyon otoritesiyle](/kitap/do178c-ile-gelistirme/sertifikasyon-irtibati)
+  yazılım sertifikasyon planı üzerinden kararlaştırılır.
+- Tablolardaki kontrol kategorileri asgaridir; proje bir veriyi daha sıkı yönetmeyi
+  seçebilir, daha gevşek yönetemez.

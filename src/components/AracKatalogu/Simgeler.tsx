@@ -63,6 +63,14 @@ const SIMGELER: Record<string, ReactNode> = {
       <path d="M52 26.5c8 0 8 11 0 11" data-vurgu="" />
     </>
   ),
+  // DO-178C hedefleri: seviye yükseldikçe uzayan hedef çubukları; en üstteki (Seviye A) vurgulu
+  hedef: (
+    <>
+      <path d="M10 8v48" />
+      <path d="M10 49h14M10 37h30M10 25h38" strokeWidth="4" strokeLinecap="butt" />
+      <path d="M10 13h44" strokeWidth="4" strokeLinecap="butt" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (
