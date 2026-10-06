@@ -3,3 +3,6 @@ contact_links:
   - name: Kitap ya da araç önerisi (e-posta)
     url: https://aviyonikyazilim.com/#katki
     about: Kütüphane için kitap, site için simülatör önerileri e-postayla alınır (serdar@karaman.dev).
+  - name: İletişim
+    url: https://aviyonikyazilim.com/iletisim
+    about: Soru sormak ya da GitHub dışındaki iletişim yollarını görmek için sitedeki İletişim sayfası.

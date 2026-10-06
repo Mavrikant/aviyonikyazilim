@@ -382,6 +382,15 @@ blockquote {
   max-width: 46rem;
 }
 
+/* ---------- Canlı sohbet ---------- */
+
+/* Sohbet yapılandırılmışsa (TAWK_TO_ID; bkz. src/components/CanliSohbet) sağ alt köşeyi
+   sohbet düğmesi, yüklendikten sonra da Tawk balonu kullanır. Temanın "başa dön" düğmesi
+   onların üstüne binmesin diye yukarı alınır. */
+html[data-canli-sohbet] .theme-back-to-top-button {
+  bottom: 5.75rem;
+}
+
 /* ---------- Blog ---------- */
 
 article header h1,

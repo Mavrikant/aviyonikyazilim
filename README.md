@@ -98,6 +98,25 @@ ve bir **Cache Rule** yazılır:
 - HTML sayfalarına dokunulmaz (kısa TTL kalmalı ki yeni yayın hemen görünsün).
 - SSL/TLS modu **Full** seçilir.
 
+### 5. (İsteğe bağlı) Canlı sohbet
+
+[İletişim](https://aviyonikyazilim.com/iletisim) sayfası e-posta ve GitHub yollarını her
+zaman gösterir. Canlı sohbet ise yalnızca `TAWK_TO_ID` depo değişkeni tanımlıysa açılır;
+tanımlı değilse sitede sohbet düğmesi de üçüncü taraf betiği de bulunmaz.
+
+- [Tawk.to](https://www.tawk.to/) üzerinde (ücretsiz) bir hesap ve site için bir *property*
+  açılır. Bu adımı depo sahibi yapar; kodda kimlik tutulmaz.
+- Tawk panelinde **Administration → Channels → Chat Widget** altındaki *Widget Code*,
+  `https://embed.tawk.to/<propertyId>/<widgetId>` adresini içerir.
+- **Settings → Secrets and variables → Actions → Variables** altına `TAWK_TO_ID` adıyla
+  `<propertyId>/<widgetId>` değeri (24 haneli onaltılık kimlik, eğik çizgi, widget kimliği;
+  örn. `0123456789abcdef01234567/default`) eklenir ve site yeniden dağıtılır.
+- Yerelde denemek için: `TAWK_TO_ID=<propertyId>/<widgetId> npm start`.
+
+Tawk betiği sayfa açılışında yüklenmez; ziyaretçi sağ alttaki “Canlı sohbet” düğmesine ya da
+İletişim sayfasındaki “Sohbeti aç” düğmesine bastığında yüklenir. Çerez ve gizlilik notu:
+[SEO.md](SEO.md), “Depo değişkenleri”.
+
 ## Otomasyon (referans)
 
 Depo oluşturma ve Pages etkinleştirme (yetkili `gh` oturumu ile):

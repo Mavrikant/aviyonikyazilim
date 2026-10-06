@@ -1,0 +1,122 @@
+/* Yüzen "Canlı sohbet" düğmesi: düz lacivert zemin; gradyan, ışıma, gölge ve blur yok. */
+
+.yuva {
+  position: fixed;
+  right: 1.25rem;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  /* Navbar ve içindeki mobil kenar menüsünün (--ifm-z-index-fixed: 200) ve tam ekran
+     araçların (1100) altında kalır. */
+  z-index: 150;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: calc(100vw - 2.5rem);
+}
+
+/* Sunucuda üretilen HTML'de düğme vardır ama JavaScript yüklenene dek (ya da kapalıysa)
+   çalışmaz. Docusaurus hydration bitince <html data-has-hydrated="true"> yapar. */
+:global([data-has-hydrated='false']) .yuva {
+  visibility: hidden;
+}
+
+.dugme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0 1rem 0 0.85rem;
+  border: 1px solid var(--av-navy-500);
+  border-radius: 8px;
+  background: var(--av-navy-700);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.dugme:hover {
+  background: var(--av-navy-600);
+}
+
+.dugme:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+.dugme[aria-busy='true'] {
+  cursor: progress;
+}
+
+/* Koyu zeminde lacivert düğme kaybolmasın: açık renkli kenar çizgisi */
+[data-theme='dark'] .dugme {
+  border-color: var(--ifm-color-primary);
+  background: var(--av-navy-800);
+}
+
+[data-theme='dark'] .dugme:hover {
+  background: var(--av-navy-700);
+}
+
+.simge {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.durum {
+  max-width: 17rem;
+}
+
+.hata {
+  margin: 0 0 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-left: 3px solid var(--av-amber-600);
+  border-radius: 6px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .dugme {
+    transition: background-color 140ms ease;
+  }
+}
+
+/* Dar ekranda yalnızca simge (erişilebilir ad aria-label'dadır); yüklenirken
+   "Açılıyor…" metni görünür kalır. */
+@media (max-width: 576px) {
+  .yuva {
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 2rem);
+  }
+
+  .dugme {
+    min-width: 3rem;
+    min-height: 3rem;
+    padding: 0 0.8rem;
+  }
+
+  .dugme[aria-busy='false'] .etiket {
+    display: none;
+  }
+}
+
+@media print {
+  .yuva {
+    display: none;
+  }
+}

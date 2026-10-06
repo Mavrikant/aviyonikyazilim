@@ -15,8 +15,9 @@ const SITE_URL = 'https://aviyonikyazilim.com';
 const SITE_DESCRIPTION =
   'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 
-// Analitik ve arama konsolu doğrulaması, depo değişkenlerinden (GitHub: Settings →
-// Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez. Ayrıntı: SEO.md
+// Analitik, arama konsolu doğrulaması ve canlı sohbet kimliği depo değişkenlerinden
+// (GitHub: Settings → Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez.
+// Ayrıntı: SEO.md
 // Boş değer "tanımlı değil" demektir; dolu ama biçimi geçersiz bir değer (yazım hatası,
 // fazladan boşluk) build'i durdurmaz ama uyarıyla yok sayılır.
 function envValue(name: string, pattern: RegExp): string | undefined {
@@ -33,6 +34,9 @@ function envValue(name: string, pattern: RegExp): string | undefined {
 
 const GA_MEASUREMENT_ID = envValue('GA_MEASUREMENT_ID', /^G-[A-Z0-9]{4,}$/);
 const GOOGLE_SITE_VERIFICATION = envValue('GOOGLE_SITE_VERIFICATION', /^[\w-]{20,}$/);
+// Canlı sohbet (Tawk.to) widget kimliği: "<propertyId>/<widgetId>". Tanımlı değilse sitede
+// sohbet düğmesi de Tawk betiği de bulunmaz (bkz. src/components/CanliSohbet).
+const TAWK_TO_ID = envValue('TAWK_TO_ID', /^[a-f0-9]{24}\/[a-z0-9]{1,32}$/i);
 
 // Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
 // kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
@@ -96,6 +100,12 @@ const config: Config = {
   // metni olarak eklenir; SEO denetim araçları bunu "satır içi stil" sayabilir. baseUrl '/'
   // ve alan adı kökünde yayın yapıldığı için gereksizdir (hata ayıklarken geçici olarak true yapın).
   baseUrlIssueBanner: false,
+
+  // Tarayıcıdaki bileşenlerin okuduğu alanlar (useDocusaurusContext → siteConfig.customFields).
+  // Tanımsız değer `undefined` değil `null` verilir: yapılandırma JSON olarak serileştirilir.
+  customFields: {
+    tawkToId: TAWK_TO_ID ?? null,
+  },
 
   headTags: [
     {
@@ -310,6 +320,7 @@ const config: Config = {
           label: 'Araçlar',
         },
         {to: '/kitap/kaynaklar/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
+        {to: '/iletisim', label: 'İletişim', position: 'right'},
         {
           href: 'https://github.com/Mavrikant/aviyonikyazilim',
           position: 'right',
@@ -356,6 +367,10 @@ const config: Config = {
             {
               label: 'Kitap önerin',
               to: '/#katki',
+            },
+            {
+              label: 'İletişim',
+              to: '/iletisim',
             },
             {
               label: 'RSS',

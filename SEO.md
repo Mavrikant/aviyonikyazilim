@@ -48,18 +48,25 @@ edileceğini toplar. Kod kuralları için [CLAUDE.md](CLAUDE.md), katkı yollar�
 
 GitHub → **Settings → Secrets and variables → Actions → Variables** (*Repository variables*)
 altında tanımlanır. Tanımlı değilse build'e hiçbir şey eklenmez. Biçimi geçersiz bir değer
-(yazım hatası, `G-` ile başlamayan kimlik) build'i durdurmaz; build günlüğünde
-`[config] … geçersiz biçimde, yok sayıldı` uyarısı çıkar.
+(yazım hatası, `G-` ile başlamayan kimlik, eğik çizgisi eksik sohbet kimliği) build'i
+durdurmaz; build günlüğünde `[config] … geçersiz biçimde, yok sayıldı` uyarısı çıkar.
 
 | Değişken | Anlamı |
 |---|---|
 | `GA_MEASUREMENT_ID` | Google Analytics 4 ölçüm kimliği (`G-XXXXXXXXXX`). `anonymizeIP` seçeneği açık bırakılmıştır ancak GA4'te etkisizdir (GA4 IP adreslerini zaten kaydetmez); çerez ve onay konusu için aşağıdaki nota bakın. |
 | `GOOGLE_SITE_VERIFICATION` | Search Console "HTML etiketi" doğrulamasındaki `content` değeri. DNS doğrulaması yeterliyse gerekmez. |
+| `TAWK_TO_ID` | Canlı sohbet ([Tawk.to](https://www.tawk.to/)) widget kimliği, `<propertyId>/<widgetId>` biçiminde (24 haneli onaltılık kimlik, eğik çizgi, widget kimliği; örn. `0123456789abcdef01234567/default`). Tawk panelindeki *Widget Code* içinde `https://embed.tawk.to/…/…` adresinin son iki parçasıdır. Tawk.to hesabını ve bu değişkeni depo sahibi açar. Tanımlıysa her sayfanın sağ altında "Canlı sohbet" düğmesi ve [İletişim](https://aviyonikyazilim.com/iletisim) sayfasında sohbet kanalı görünür; tanımlı değilse sitede sohbetten hiç söz edilmez. Arama motoru görünürlüğüne etkisi yoktur; depo değişkenleri tek yerde dursun diye buradadır. |
 
 > **KVKK / GDPR:** GA4 çerez kullanır; Türkiye ve AB ziyaretçileri için aydınlatma ve
 > onay (çerez bildirimi) gerekir. Çerezsiz bir ölçüm tercih edilirse Cloudflare Web
 > Analytics, GoatCounter ya da Umami gibi seçenekler değerlendirilebilir; bunlar için
 > ek bir eklenti ya da `headTags` girdisi gerekir. Onay penceresi bu depoda yoktur.
+>
+> Tawk.to da çerez kullanabilen bir üçüncü taraf hizmetidir ve ziyaretçinin yazdıklarını
+> kendi sunucularında işler. Bu yüzden betiği sayfa açılışında **yüklenmez**; yalnızca
+> ziyaretçi sohbet düğmesine bastığında yüklenir (`src/components/CanliSohbet/`) ve İletişim
+> sayfasındaki düğmenin yanında bunu söyleyen bir not bulunur. Betik açılışta yüklenecek
+> biçimde değiştirilirse aynı aydınlatma ve onay yükümlülüğü doğar; Lighthouse puanı da düşer.
 
 ## 3. Elle yapılacaklar (sırayla)
 
