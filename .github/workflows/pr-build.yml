@@ -1,0 +1,36 @@
+name: PR Derleme Denetimi
+
+# main'e açılan her PR'da siteyi derler; dağıtım yapmaz (dağıtım: deploy.yml).
+# Yapılandırma katı olduğu için kırık iç bağlantı, kırık çapa, tanımsız etiket ya da
+# yazar ve "truncate" işareti olmayan blog yazısı build'i durdurur; bu denetim sayesinde
+# böyle bir hata main'e birleşmeden önce PR üzerinde görünür.
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Derle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v7
+        with:
+          # deploy.yml ile aynı: "son güncelleme" ve sitemap tarihleri git geçmişinden okunur.
+          fetch-depth: 0
+      - name: Node.js kur
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Bağımlılıkları yükle
+        run: npm ci
+      - name: Siteyi derle
+        run: npm run build
