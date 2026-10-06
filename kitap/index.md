@@ -77,7 +77,7 @@ Anlatım sivil havacılık sertifikasyonu bağlamındadır ve şu dokümanları 
 Belge ailesinin tamamı, EUROCAE karşılıkları ve kullanım yerleriyle Bölüm 4'teki tabloda
 verilir. Otorite dokümanları zamanla yenilenir; bir projede hangi sürümün geçerli olduğu
 sertifikasyon otoritesiyle varılan mutabakata bağlıdır. Kitap yaşayan bir çalışmadır:
-her sayfanın altındaki son güncelleme tarihi, o sayfanın en son ne zaman elden
+sitede her sayfanın altındaki son güncelleme tarihi, o sayfanın en son ne zaman elden
 geçirildiğini gösterir.
 
 ## Kavramsal akış

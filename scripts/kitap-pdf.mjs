@@ -36,7 +36,9 @@ const PRINT_CSS = path.join(ROOT, 'scripts/kitap-pdf.css');
 /** Birleştirilmiş belgenin ve PDF yazı tiplerinin geçici sunucudaki adresleri. */
 const BOOK_ROUTE = '/__kitap-pdf/kitap.html';
 const FONT_ROUTE = '/__kitap-pdf/fonts';
-const FONT_DIR = path.join(ROOT, 'node_modules/@ibm/plex-sans/fonts/complete/woff2');
+const FONT_DIR = path.join(ROOT, 'node_modules/@fontsource/ibm-plex-sans');
+/** PDF'te kullanılan statik IBM Plex Sans ağırlıkları (paketin kendi @font-face dosyaları). */
+const FONT_STYLESHEETS = ['400', '400-italic', '500', '600', '600-italic', '700', '700-italic'];
 
 const AUTHOR = 'M. Serdar Karaman ve katkıda bulunanlar';
 const SUBTITLE = 'Emniyet-kritik aviyonik yazılım geliştirme, doğrulama ve sertifikasyon';
@@ -191,7 +193,17 @@ function extractInPage({key, title, grouped, isAbout, keys, siteUrl, webOnlyHead
 
   // Yalnızca ekranda anlamlı olan öğeler: başlık çapaları, kod bloğu düğmeleri.
   root.querySelectorAll('.hash-link, button').forEach((el) => el.remove());
-  root.querySelectorAll('details').forEach((el) => el.setAttribute('open', ''));
+  // Docusaurus'un Details bileşeni kapalı içeriğe satır içi `display: none` yazar;
+  // `open` tek başına içeriği göstermez.
+  for (const details of root.querySelectorAll('details')) {
+    details.setAttribute('open', '');
+    details.setAttribute('data-collapsed', 'false');
+    for (const child of details.children) {
+      if (child.tagName !== 'SUMMARY') {
+        child.removeAttribute('style');
+      }
+    }
+  }
 
   let bookTitle = '';
   if (isAbout) {
@@ -375,6 +387,7 @@ function buildBookHtml({chapters, revision, siteUrl, printCss, pageNumbers}) {
 <title>${escapeHtml(bookTitle)}</title>
 <meta name="author" content="${escapeHtml(AUTHOR)}">
 <meta name="description" content="${escapeHtml(SUBTITLE)}">
+${FONT_STYLESHEETS.map((name) => `<link rel="stylesheet" href="${FONT_ROUTE}/${name}.css">`).join('\n')}
 ${stylesheets.map((href) => `<link rel="stylesheet" href="${escapeHtml(href)}">`).join('\n')}
 <style>
 ${printCss}
@@ -549,7 +562,8 @@ async function finalizePdf(pdfBytes, {title, revision, siteUrl, headings}) {
   doc.setTitle(title, {showInWindowTitleBar: true});
   doc.setAuthor(AUTHOR);
   doc.setSubject(SUBTITLE);
-  doc.setKeywords(KEYWORDS);
+  // pdf-lib diziyi boşlukla birleştirir; çok sözcüklü ifadeler ayırt edilsin diye virgülle.
+  doc.setKeywords([KEYWORDS.join(', ')]);
   doc.setLanguage('tr');
   // Chromium buraya üretildiği makinenin tarayıcı kimliğini (user agent) yazar.
   doc.setCreator(`${siteUrl}/kitap${revision.commit ? ` (${revision.commit})` : ''}`);
@@ -569,9 +583,12 @@ async function main() {
   const revision = bookRevision();
   const virtualPages = new Map();
   const server = await startServer(BUILD_DIR, virtualPages, {[FONT_ROUTE]: FONT_DIR});
-  const browser = await launchBrowser();
+  // Tarayıcı açılamazsa da sunucu kapanmalı; yoksa dinleyen sunucu süreci canlı tutar ve
+  // komut hata iletisini yazdıktan sonra çıkmadan asılı kalır.
+  let browser;
 
   try {
+    browser = await launchBrowser();
     const context = await browser.newContext({
       colorScheme: 'light',
       viewport: {width: 1280, height: 900},
@@ -615,7 +632,7 @@ async function main() {
         `${chapters.length} bölüm, ${sizeMb} MB (${browser.version()})`,
     );
   } finally {
-    await browser.close();
+    await browser?.close();
     await server.close();
   }
 }

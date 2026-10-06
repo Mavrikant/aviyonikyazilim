@@ -20,6 +20,8 @@ jobs:
   build:
     name: Derle
     runs-on: ubuntu-latest
+    # Olağan süre birkaç dakikadır; asılı kalan bir adım yayın kuyruğunu saatlerce tutmasın.
+    timeout-minutes: 15
     steps:
       - name: Depoyu al
         uses: actions/checkout@v7

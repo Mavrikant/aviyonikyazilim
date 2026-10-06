@@ -266,8 +266,9 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 - `kitap/index.md` içindeki "İçindekiler" bölümü PDF'e alınmaz (PDF'in kendi içindekiler
   sayfası vardır); başlığın adı değişirse betikteki `WEB_ONLY_HEADING` güncellenir.
 - Baskı düzeni `scripts/kitap-pdf.css` içindedir. PDF'te sitedeki değişken yazı tipi
-  yerine `@ibm/plex-sans` paketinin statik dosyaları kullanılır: değişken yazı tipi PDF'e
-  harf harf konumlanan Type 3 olarak gömülür, dosyayı büyütür ve metin seçimini bozar.
+  yerine `@fontsource/ibm-plex-sans` paketinin statik dosyaları kullanılır: değişken yazı
+  tipi PDF'e harf harf konumlanan Type 3 olarak gömülür, dosyayı büyütür ve metin seçimini
+  bozar. PDF için eklenen paketlerde kurulum betiği (postinstall) bulunmamalıdır.
 - Kitap sayfalarındaki WebP görseller PDF'te JPEG'e çevrilir (PDF'te WebP yoktur);
   saydamlık ya da keskin kenar gerektiren görsel PNG olmalıdır.
 - Tarayıcı sürümü `playwright-core` ile sabittir; yerelde kurulu değilse betik makinedeki
