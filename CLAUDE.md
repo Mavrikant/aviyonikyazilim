@@ -60,6 +60,7 @@ i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinler
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
 .github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım
+.github/workflows/pr-build.yml  PR'larda derleme denetimi (dağıtım yapmaz)
 .github/workflows/link-check.yml  Aylık dış bağlantı denetimi (lychee); ayarı .github/lychee.toml
 .github/dependabot.yml    Haftalık, gruplanmış bağımlılık güncellemeleri
 ```
@@ -443,7 +444,8 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 ## Yayın akışı
 
 1. Değişiklikler bir **dal** üzerinde yapılır.
-2. **PR** açılır, gözden geçirilir.
+2. **PR** açılır, gözden geçirilir. `.github/workflows/pr-build.yml` PR'da siteyi derler;
+   kırık bağlantı ya da çapa gibi build'i durduran hatalar merge'den önce görünür.
 3. `main`'e **merge** edilince `.github/workflows/deploy.yml` otomatik olarak build alıp
    GitHub Pages'e dağıtır.
 

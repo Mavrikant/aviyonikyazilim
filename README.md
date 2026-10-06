@@ -27,6 +27,9 @@ ile otomatik olarak siteyi derler ve GitHub Pages'e yayınlar. Elle müdahale ge
 
 Diğer otomasyonlar:
 
+- **PR derleme denetimi:** [pr-build.yml](.github/workflows/pr-build.yml) `main`'e açılan
+  her PR'da siteyi derler; kırık iç bağlantı, kırık çapa ya da tanımsız etiket gibi
+  build'i durduran hatalar birleştirmeden önce PR üzerinde görünür. Dağıtım yapmaz.
 - **Dış bağlantı denetimi:** [link-check.yml](.github/workflows/link-check.yml) her ayın
   1'inde içerikteki dış bağlantıları [lychee](https://lychee.cli.rs/) ile denetler;
   kırık bağlantı varsa "Kırık dış bağlantılar" başlıklı bir issue açar ya da açık olana
