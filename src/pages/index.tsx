@@ -203,6 +203,11 @@ export default function Home(): ReactNode {
                 <Link className={styles.btnOutline} to="#katki">
                   Katkıda bulun
                 </Link>
+                {/* Dosya build'den sonra `npm run pdf` ile üretilir; rota olmadığı için
+                    Link yerine düz bağlantı (kırık bağlantı denetimine girmez). */}
+                <a className={styles.btnOutline} href={withBaseUrl(book.pdf)} download>
+                  PDF indir
+                </a>
               </div>
               <ul className={styles.stats}>
                 <li>

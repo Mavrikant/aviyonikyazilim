@@ -1,0 +1,386 @@
+/* Kitap PDF'inin baskı düzeni (scripts/kitap-pdf.mjs belgeye gömer).
+   Sitenin derlenmiş stil dosyası da yüklenir; buradaki kurallar yalnızca kâğıda özgü
+   farkları tanımlar. Üst bilgideki kitap ve bölüm adlarını betik ekler. */
+
+/* Sitedeki değişken (variable) IBM Plex Sans PDF'e Type 3 olarak, harf harf konumlanarak
+   gömülür: dosya büyür, metin seçimi ve ekran okuyucular zorlanır. PDF'te aynı ailenin
+   statik, tam glif kümeli dosyaları kullanılır (@ibm/plex-sans; betik /__kitap-pdf/fonts
+   altında sunar). Ağırlıklar sitenin kullandıklarıyla aynıdır. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 400;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 500;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 600;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 600;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-SemiBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-weight: 700;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: url('/__kitap-pdf/fonts/IBMPlexSans-BoldItalic.woff2') format('woff2');
+}
+
+@page {
+  size: A4;
+  margin: 25mm 24mm 24mm;
+
+  @top-left {
+    padding-bottom: 7mm;
+    color: #5b6878;
+    font: 400 8pt/1.2 'IBM Plex Sans', sans-serif;
+    vertical-align: bottom;
+  }
+
+  @top-right {
+    padding-bottom: 7mm;
+    color: #5b6878;
+    font: 400 8pt/1.2 'IBM Plex Sans', sans-serif;
+    vertical-align: bottom;
+  }
+
+  @bottom-center {
+    padding-top: 8mm;
+    color: #5b6878;
+    content: counter(page);
+    font: 500 8.5pt/1 'IBM Plex Mono', monospace;
+    vertical-align: top;
+  }
+}
+
+/* Kapak, künye, içindekiler ve kısım sayfalarında üst bilgi yok. */
+@page kapak {
+  margin: 0;
+
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+
+  @bottom-center {
+    content: none;
+  }
+}
+
+@page on {
+  @top-left {
+    content: none;
+  }
+
+  @top-right {
+    content: none;
+  }
+}
+
+:root {
+  --ifm-font-family-base: 'IBM Plex Sans', sans-serif;
+  --ifm-font-size-base: 10.5pt;
+  --ifm-line-height-base: 1.5;
+  --ifm-code-font-size: 88%;
+  --ifm-background-color: #fff;
+  /* 8 pt kodla satıra ~90 karakter sığar (kitaptaki kod satırlarının %99'u). */
+  --ifm-pre-padding: 3mm;
+}
+
+html,
+body {
+  margin: 0;
+  background: #fff;
+}
+
+/* ---------- Kapak ---------- */
+
+.kapak {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 296.5mm;
+  padding: 34mm 26mm 26mm;
+  overflow: hidden;
+  background: var(--av-navy-950);
+  color: #d6e2ee;
+  page: kapak;
+}
+
+.kapak p {
+  margin: 0;
+}
+
+.kapak-logo {
+  width: 22mm;
+  height: 22mm;
+  margin-bottom: 48mm;
+}
+
+.kapak-ust {
+  padding-bottom: 5mm;
+  color: var(--av-amber-400);
+  font: 500 10pt/1.4 var(--ifm-font-family-monospace);
+  letter-spacing: 0.04em;
+}
+
+.kapak-baslik {
+  color: #f4f8fc;
+  font-size: 37pt;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.kapak-alt {
+  max-width: 120mm;
+  padding-top: 8mm;
+  color: #b9c9da;
+  font-size: 14pt;
+  line-height: 1.5;
+}
+
+.kapak-yazar {
+  padding-top: 14mm;
+  color: #f4f8fc;
+  font-size: 12pt;
+  font-weight: 500;
+}
+
+.kapak .kapak-surum {
+  margin-top: auto;
+  padding-top: 5mm;
+  border-top: 1px solid rgba(185, 201, 218, 0.3);
+  color: #8ba1b8;
+  font: 400 9pt/1.7 var(--ifm-font-family-monospace);
+}
+
+/* ---------- Künye ve içindekiler ---------- */
+
+.kunye {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  height: 240mm;
+  color: #3b4654;
+  font-size: 9.5pt;
+  page: on;
+}
+
+.kunye p {
+  max-width: 120mm;
+  margin: 0 0 4mm;
+}
+
+.icindekiler {
+  break-before: page;
+  page: on;
+}
+
+.icindekiler h1 {
+  margin: 0 0 8mm;
+  font-size: 22pt;
+  letter-spacing: -0.02em;
+}
+
+.ic-liste {
+  margin: 0 0 5mm;
+  padding: 0;
+  list-style: none;
+}
+
+.ic-satir {
+  break-inside: avoid;
+}
+
+.ic-satir a {
+  display: flex;
+  align-items: baseline;
+  gap: 2mm;
+  padding: 0.9mm 0 0.9mm 5mm;
+  color: var(--av-ink);
+  text-decoration: none;
+}
+
+.ic-kisim {
+  break-after: avoid;
+}
+
+.ic-kisim a {
+  padding-left: 0;
+  font-weight: 600;
+}
+
+.ic-nokta {
+  flex: 1;
+  min-width: 8mm;
+  border-bottom: 1px dotted #9aa6b4;
+}
+
+/* Sabit genişlik: numaralar ikinci baskıda yazılınca satır düzeni değişmesin. */
+.ic-sayfa {
+  flex: 0 0 9mm;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 9pt;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+/* ---------- Kısım sayfaları ---------- */
+
+.kisim {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 200mm;
+  break-before: page;
+  page: on;
+}
+
+.kisim h1 {
+  margin: 0;
+  padding-top: 6mm;
+  border-top: 2px solid var(--av-ink);
+  font-size: 28pt;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.kisim-no {
+  display: block;
+  margin-bottom: 3mm;
+  color: var(--av-amber-700);
+  font: 500 11pt/1.2 var(--ifm-font-family-monospace);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Bölümler ---------- */
+
+.bolum {
+  break-before: page;
+}
+
+.bolum h1 {
+  margin-bottom: 7mm;
+  font-size: 24pt;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+.bolum h1,
+.bolum h2,
+.bolum h3,
+.bolum h4 {
+  break-after: avoid;
+  break-inside: avoid;
+}
+
+.bolum p,
+.bolum li {
+  orphans: 3;
+  widows: 3;
+}
+
+.bolum a {
+  text-decoration: none;
+}
+
+.bolum img {
+  display: block;
+  max-width: 100%;
+  max-height: 150mm;
+  margin: 0 auto;
+}
+
+/* Tablolar: sayfa genişliğine yayılır, satırlar bölünmez, başlık her sayfada yinelenir. */
+.bolum table {
+  display: table;
+  width: 100%;
+  overflow: visible;
+  font-size: 8.8pt;
+  line-height: 1.45;
+}
+
+.bolum thead {
+  display: table-header-group;
+}
+
+.bolum tr {
+  break-inside: avoid;
+}
+
+.bolum th,
+.bolum td {
+  padding: 1.6mm 2.2mm;
+  overflow-wrap: break-word;
+}
+
+/* Kod: ekrandaki yatay kaydırma kâğıtta yok; uzun satırlar kırılır. Kaydırma kutusu
+   sayfalar arasında bölünemediği için `pre` taşmayı serbest bırakır; tema `code`'u sola
+   yüzdürdüğünden (float) burada blok yapılır, yoksa kutunun yüksekliği sıfıra iner. */
+.bolum pre {
+  overflow: visible;
+  font-size: 8pt;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bolum pre code {
+  display: block;
+  float: none;
+  white-space: inherit;
+}
+
+.bolum .theme-code-block {
+  border: 1px solid #dfe5ec;
+  box-shadow: none;
+  break-inside: avoid;
+}
+
+.bolum .theme-admonition,
+.bolum blockquote,
+.bolum .docusaurus-mermaid-container {
+  break-inside: avoid;
+}
+
+.bolum .docusaurus-mermaid-container {
+  margin: 0 0 var(--ifm-leading);
+  text-align: center;
+}
+
+.bolum .docusaurus-mermaid-container > svg {
+  max-height: 225mm;
+}

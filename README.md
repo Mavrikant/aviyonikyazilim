@@ -14,8 +14,14 @@ Node.js 22 veya üzeri gerekir; önerilen ve CI'da kullanılan sürüm `.nvmrc` 
 npm install       # bağımlılıkları yükle
 npm start         # geliştirme sunucusu (http://localhost:3000)
 npm run build     # üretim derlemesi (uyarısız geçmeli)
+npm run pdf       # build çıktısından kitabın PDF'ini üret (build/ altına)
 npm run serve     # build çıktısını yerelde sun
 ```
+
+`npm run pdf` başsız bir Chromium ister: Playwright'inki kurulu değilse
+(`npx playwright-core install chromium-headless-shell`) makinedeki Google Chrome'u
+kullanır. `npm start` PDF üretmez; ana sayfadaki "PDF indir" düğmesi yalnızca
+`npm run build && npm run pdf && npm run serve` sonrasında çalışır.
 
 Katkı yolları için [CONTRIBUTING.md](CONTRIBUTING.md), ayrıntılı içerik kuralları ve
 terminoloji sözlüğü için [CLAUDE.md](CLAUDE.md) dosyasına bakınız.
@@ -23,13 +29,16 @@ terminoloji sözlüğü için [CLAUDE.md](CLAUDE.md) dosyasına bakınız.
 ## Dağıtım
 
 `main` dalına yapılan her push, [GitHub Actions workflow'u](.github/workflows/deploy.yml)
-ile otomatik olarak siteyi derler ve GitHub Pages'e yayınlar. Elle müdahale gerekmez.
+ile otomatik olarak siteyi derler, kitabın PDF sürümünü üretir
+([scripts/kitap-pdf.mjs](scripts/kitap-pdf.mjs)) ve ikisini birlikte GitHub Pages'e
+yayınlar. Elle müdahale gerekmez.
 
 Diğer otomasyonlar:
 
 - **PR derleme denetimi:** [pr-build.yml](.github/workflows/pr-build.yml) `main`'e açılan
-  her PR'da siteyi derler; kırık iç bağlantı, kırık çapa ya da tanımsız etiket gibi
-  build'i durduran hatalar birleştirmeden önce PR üzerinde görünür. Dağıtım yapmaz.
+  her PR'da siteyi derler ve kitap PDF'ini üretir; kırık iç bağlantı, kırık çapa, tanımsız
+  etiket ya da PDF üretimini bozan bir değişiklik birleştirmeden önce PR üzerinde görünür.
+  Dağıtım yapmaz.
 - **Dış bağlantı denetimi:** [link-check.yml](.github/workflows/link-check.yml) her ayın
   1'inde içerikteki dış bağlantıları [lychee](https://lychee.cli.rs/) ile denetler;
   kırık bağlantı varsa "Kırık dış bağlantılar" başlıklı bir issue açar ya da açık olana

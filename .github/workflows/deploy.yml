@@ -38,6 +38,13 @@ jobs:
           # Tanımlı değilse build'e analitik ya da doğrulama etiketi eklenmez (bkz. SEO.md).
           GA_MEASUREMENT_ID: ${{ vars.GA_MEASUREMENT_ID }}
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+      - name: PDF için Chromium'u kur
+        # Sürüm, package-lock.json'daki playwright-core ile sabittir; --with-deps sistem
+        # kitaplıklarını ve yedek yazı tiplerini de kurar.
+        run: npx playwright-core install --with-deps chromium-headless-shell
+      - name: Kitap PDF'ini üret
+        # build/ altına yazar; ana sayfadaki "PDF indir" düğmesi bu dosyaya bağlanır.
+        run: npm run pdf
       - name: Pages yapılandır
         uses: actions/configure-pages@v6
       - name: Yapıyı yükle
