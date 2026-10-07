@@ -4,52 +4,8 @@
 
 /* Sitedeki değişken (variable) IBM Plex Sans PDF'e Type 3 olarak, harf harf konumlanarak
    gömülür: dosya büyür, metin seçimi ve ekran okuyucular zorlanır. PDF'te aynı ailenin
-   statik, tam glif kümeli dosyaları kullanılır (@ibm/plex-sans; betik /__kitap-pdf/fonts
-   altında sunar). Ağırlıklar sitenin kullandıklarıyla aynıdır. */
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-weight: 400;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-Regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-style: italic;
-  font-weight: 400;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-Italic.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-weight: 500;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-Medium.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-weight: 600;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-SemiBold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-style: italic;
-  font-weight: 600;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-SemiBoldItalic.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-weight: 700;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-Bold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans';
-  font-style: italic;
-  font-weight: 700;
-  src: url('/__kitap-pdf/fonts/IBMPlexSans-BoldItalic.woff2') format('woff2');
-}
+   statik dosyaları kullanılır: betik @fontsource/ibm-plex-sans paketinin 'IBM Plex Sans'
+   adlı @font-face dosyalarını belgeye bağlar; aşağıda yalnızca aile adı değiştirilir. */
 
 @page {
   size: A4;
@@ -127,10 +83,13 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  /* Sayfadan (297 mm) biraz kısa: yuvarlama farkı kapağı ikinci sayfaya taşırmasın.
+     Altta kalan ince şeridi gölge aynı renkle kapatır (düzeni etkilemez). */
   height: 296.5mm;
   padding: 34mm 26mm 26mm;
   overflow: hidden;
   background: var(--av-navy-950);
+  box-shadow: 0 2mm 0 var(--av-navy-950);
   color: #d6e2ee;
   page: kapak;
 }
@@ -314,13 +273,13 @@ body {
   widows: 3;
 }
 
-.bolum a {
-  text-decoration: none;
-}
-
+/* width/height öznitelikleri yalnızca en-boy oranını versin; iki sınır birlikte uygulanınca
+   görsel basılmasın diye boyutların ikisi de auto. */
 .bolum img {
   display: block;
+  width: auto;
   max-width: 100%;
+  height: auto;
   max-height: 150mm;
   margin: 0 auto;
 }
@@ -381,6 +340,8 @@ body {
   text-align: center;
 }
 
+/* Sayfa alanı 248 mm: kutunun dolgusu ve önündeki (iki satıra kırılabilen) başlık da aynı
+   sayfaya sığmalı; yoksa başlık bir önceki sayfada tek başına kalır. */
 .bolum .docusaurus-mermaid-container > svg {
-  max-height: 225mm;
+  max-height: 215mm;
 }

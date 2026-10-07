@@ -48,14 +48,20 @@ function docItemIds(items: SidebarItem[]): string[] {
       return [item.id];
     }
     if (item.type === 'category') {
-      return docItemIds(item.items);
+      // Kategorinin kendi giriş sayfası `items` içinde değil, `link` alanındadır.
+      const own = item.link?.type === 'doc' ? [item.link.id] : [];
+      return [...own, ...docItemIds(item.items)];
     }
     return [];
   });
 }
 
+/**
+ * Dili `mermaid` olan kod çitlerini sayar (Docusaurus bunların hepsini diyagrama çevirir):
+ * ters tırnak ya da tilde, üç ya da daha uzun çit, alıntı ve liste içi, çit sonrası öznitelik.
+ */
 function countDiagrams(source: string): number {
-  return source.match(/^[ \t]*```mermaid[ \t]*$/gm)?.length ?? 0;
+  return source.match(/^[ \t>]*(?:`{3,}|~{3,})[ \t]*mermaid(?=[ \t]|$)/gm)?.length ?? 0;
 }
 
 export default function kitapPdf(context: LoadContext): Plugin {
