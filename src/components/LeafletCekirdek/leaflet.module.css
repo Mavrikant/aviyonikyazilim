@@ -1,0 +1,289 @@
+/*
+ * Leaflet haritalarının ortak çekirdeği (navigasyon haritası, radyo kapsama aracı).
+ *
+ * Leaflet'in kendi leaflet.css dosyası import EDİLMEZ: Docusaurus tüm CSS'i
+ * render'ı bloklayan tek styles.css'te birleştirdiği için 15 KB'lık dosya her
+ * sayfaya yüklenirdi. Burada yalnızca haritanın çalışması için gereken çekirdek
+ * kurallar, .leaflet kapsamına alınmış olarak bulunur (Leaflet 1.9, BSD-2-Clause).
+ * Haritayı saran kök öğeye .leaflet sınıfı verilir.
+ *
+ * Bu modül bileşenin kendi CSS modülünden SONRA import edilir: eşit özgüllükteki
+ * kurallarda çekirdek sonda kalır.
+ */
+
+.leaflet {
+  --lf-cizgi: var(--ifm-toc-border-color);
+  --lf-zemin: var(--ifm-background-surface-color);
+}
+
+/* "Sade" altlık: OpenStreetMap karolarının renkleri bastırılır (koyu temada ters çevrilir) */
+.sade {
+  filter: grayscale(1) contrast(0.85) brightness(1.06);
+}
+
+[data-theme='dark'] .sade {
+  filter: grayscale(1) invert(1) contrast(0.82) brightness(0.78);
+}
+
+.leaflet :global(.leaflet-container) {
+  overflow: hidden;
+  background: var(--ifm-background-color);
+  font-family: inherit;
+  font-size: 0.75rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.leaflet :global(.leaflet-pane),
+.leaflet :global(.leaflet-tile),
+.leaflet :global(.leaflet-marker-icon),
+.leaflet :global(.leaflet-tile-container),
+.leaflet :global(.leaflet-pane > svg),
+.leaflet :global(.leaflet-pane > canvas),
+.leaflet :global(.leaflet-zoom-box),
+.leaflet :global(.leaflet-layer) {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.leaflet :global(.leaflet-tile),
+.leaflet :global(.leaflet-marker-icon) {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.leaflet :global(.leaflet-tile::selection) {
+  background: transparent;
+}
+
+.leaflet :global(.leaflet-marker-icon) {
+  display: block;
+}
+
+.leaflet :global(.leaflet-container .leaflet-overlay-pane svg) {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.leaflet :global(.leaflet-container img.leaflet-tile) {
+  max-width: none !important;
+  max-height: none !important;
+  width: auto;
+  padding: 0;
+  mix-blend-mode: plus-lighter;
+}
+
+.leaflet :global(.leaflet-container.leaflet-touch-zoom) {
+  touch-action: pan-x pan-y;
+}
+
+.leaflet :global(.leaflet-container.leaflet-touch-drag) {
+  touch-action: pinch-zoom;
+}
+
+.leaflet :global(.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom) {
+  touch-action: none;
+}
+
+.leaflet :global(.leaflet-tile) {
+  filter: inherit;
+  visibility: hidden;
+}
+
+.leaflet :global(.leaflet-tile-loaded) {
+  visibility: inherit;
+}
+
+.leaflet :global(.leaflet-zoom-box) {
+  z-index: 800;
+  width: 0;
+  height: 0;
+  box-sizing: border-box;
+  border: 2px dotted var(--ifm-color-primary);
+}
+
+.leaflet :global(.leaflet-pane) {
+  z-index: 400;
+}
+
+.leaflet :global(.leaflet-tile-pane) {
+  z-index: 200;
+}
+
+.leaflet :global(.leaflet-overlay-pane) {
+  z-index: 400;
+}
+
+.leaflet :global(.leaflet-shadow-pane) {
+  z-index: 500;
+}
+
+.leaflet :global(.leaflet-marker-pane) {
+  z-index: 600;
+}
+
+.leaflet :global(.leaflet-tooltip-pane) {
+  z-index: 650;
+}
+
+.leaflet :global(.leaflet-popup-pane) {
+  z-index: 700;
+}
+
+.leaflet :global(.leaflet-map-pane canvas) {
+  z-index: 100;
+}
+
+.leaflet :global(.leaflet-map-pane svg) {
+  z-index: 200;
+}
+
+.leaflet :global(.leaflet-control) {
+  position: relative;
+  z-index: 800;
+  float: left;
+  clear: both;
+  pointer-events: auto;
+}
+
+.leaflet :global(.leaflet-top),
+.leaflet :global(.leaflet-bottom) {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.leaflet :global(.leaflet-top) {
+  top: 0;
+}
+
+.leaflet :global(.leaflet-right) {
+  right: 0;
+}
+
+.leaflet :global(.leaflet-bottom) {
+  bottom: 0;
+}
+
+.leaflet :global(.leaflet-left) {
+  left: 0;
+}
+
+.leaflet :global(.leaflet-right .leaflet-control) {
+  float: right;
+  margin-right: 10px;
+}
+
+.leaflet :global(.leaflet-left .leaflet-control) {
+  margin-left: 10px;
+}
+
+.leaflet :global(.leaflet-bottom .leaflet-control) {
+  margin-bottom: 10px;
+}
+
+.leaflet :global(.leaflet-zoom-animated) {
+  transform-origin: 0 0;
+}
+
+.leaflet :global(svg.leaflet-zoom-animated) {
+  will-change: transform;
+}
+
+.leaflet :global(.leaflet-zoom-anim .leaflet-zoom-animated) {
+  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+}
+
+.leaflet :global(.leaflet-zoom-anim .leaflet-tile),
+.leaflet :global(.leaflet-pan-anim .leaflet-tile) {
+  transition: none;
+}
+
+.leaflet :global(.leaflet-zoom-anim .leaflet-zoom-hide) {
+  visibility: hidden;
+}
+
+.leaflet :global(.leaflet-interactive) {
+  cursor: pointer;
+}
+
+.leaflet :global(.leaflet-grab) {
+  cursor: grab;
+}
+
+.leaflet :global(.leaflet-dragging .leaflet-grab),
+.leaflet :global(.leaflet-dragging .leaflet-grab .leaflet-interactive) {
+  cursor: grabbing;
+}
+
+.leaflet :global(.leaflet-marker-icon),
+.leaflet :global(.leaflet-pane > svg path),
+.leaflet :global(.leaflet-tile-container) {
+  pointer-events: none;
+}
+
+.leaflet :global(.leaflet-marker-icon.leaflet-interactive),
+.leaflet :global(.leaflet-pane > svg path.leaflet-interactive) {
+  pointer-events: auto;
+}
+
+/* Kontroller: site düğmeleriyle aynı dil */
+.leaflet :global(.leaflet-control-zoom) {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--lf-cizgi);
+  border-radius: 8px;
+  background: var(--lf-zemin);
+  overflow: hidden;
+}
+
+.leaflet :global(.leaflet-control-zoom a) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  color: var(--ifm-font-color-base);
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.leaflet :global(.leaflet-control-zoom a + a) {
+  border-top: 1px solid var(--lf-cizgi);
+}
+
+.leaflet :global(.leaflet-control-zoom a:hover) {
+  color: var(--ifm-color-primary);
+}
+
+.leaflet :global(.leaflet-disabled) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.leaflet :global(.leaflet-control-attribution) {
+  margin: 0 !important;
+  padding: 0 0.4rem;
+  background: color-mix(in srgb, var(--lf-zemin) 82%, transparent);
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.68rem;
+  line-height: 1.6;
+}
+
+.leaflet :global(.leaflet-control-attribution a) {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.leaflet :global(.leaflet-control-scale-line) {
+  padding: 0 0.3rem;
+  border: 1.5px solid var(--ifm-color-emphasis-700);
+  border-top: 0;
+  background: color-mix(in srgb, var(--lf-zemin) 75%, transparent);
+  color: var(--ifm-color-emphasis-800);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-sizing: content-box;
+}

@@ -58,6 +58,7 @@ import {
 } from './veri';
 import type {Airport, Feature, IlsItem, LayerKey, NavData, Navaid} from './veri';
 import styles from './styles.module.css';
+import leafletStyles from '../LeafletCekirdek/leaflet.module.css';
 
 /** Gömme sayfasının yolu (src/pages/gom/navigasyon-haritasi.tsx) */
 export const EMBED_PATH = '/gom/navigasyon-haritasi';
@@ -91,7 +92,7 @@ function tileConfig(basemap: Basemap): {url: string; options: Leaflet.TileLayerO
   // bastırılır (koyu temada ters çevrilir), böylece anahtar gerektiren ek bir servis kullanılmaz.
   return {
     url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    options: {maxZoom: 19, attribution: OSM_ATTR, className: basemap === 'oto' ? styles.sade : undefined},
+    options: {maxZoom: 19, attribution: OSM_ATTR, className: basemap === 'oto' ? leafletStyles.sade : undefined},
   };
 }
 
@@ -742,6 +743,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
       data-dokunmatik={geo.dokunmatik || undefined}
       className={clsx(
         styles.harita,
+        leafletStyles.leaflet,
         gomulu && styles.gomulu,
         (fullscreen || fallbackFullscreen) && styles.tamEkran,
         selected && styles.panelAcik,

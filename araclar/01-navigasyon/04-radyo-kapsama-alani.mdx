@@ -1,0 +1,147 @@
+---
+title: "Radyo Kapsama Alanı Aracı"
+sidebar_label: "Radyo Kapsama Alanı"
+description: "Türkiye'deki VOR, DME ve TACAN istasyonlarının kapsama alanını gerçek arazi verisi, uçak irtifası, verici gücü ve alıcı hassasiyetine göre haritada çizen araç."
+sidebar_position: 4
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: kapsama
+  ozellikler: [Gerçek arazi verisi, VOR / DME / TACAN, Bağlantı bütçesi, Arazi kesiti, Tam ekran, Paylaşılabilir]
+keywords: ["VOR kapsama alanı", "DME menzili", "radyo ufku", "line of sight", "bağlantı bütçesi", "link budget", "kırınım kaybı", "arazi profili"]
+---
+
+import RadyoKapsama from '@site/src/components/RadyoKapsama';
+
+# Radyo Kapsama Alanı Aracı
+
+Bir VOR, DME ya da TACAN istasyonunun sinyalinin, seçilen uçak irtifasında
+nerelerde alınabileceğini gerçek arazi verisiyle hesaplayıp haritada gösterir.
+İstasyonu ve irtifayı seçin; araç istasyon çevresindeki araziyi indirir, her
+yöndeki yol kaybını hesaplar ve verici gücü ile eşiğe göre kapsama alanını
+(coverage) boyar.
+
+<RadyoKapsama />
+
+:::warning[Seyrüsefer amaçlı kullanılmaz]
+
+Sonuç bir **model tahminidir**, ölçüm değildir. Gerçek kapsama, istasyonun
+uçuş kontrolüyle (flight inspection) belirlenir ve AIP'de yayımlanır. Verici
+gücü ve anten diyagramı AIP'de yer almaz; buradaki değerler tipik
+varsayımlardır. Uçuş planlaması ve uçuş için yalnızca yürürlükteki resmî AIP
+ve NOTAM'lar esas alınır.
+
+:::
+
+## Nasıl kullanılır?
+
+1. **İstasyonu seçin.** Listeden ya da haritadaki işaretine tıklayarak. VOR/DME
+   ve VORTAC istasyonlarında hangi bileşenin hesaplanacağı "Bileşen"
+   düğmeleriyle seçilir; VOR ile DME farklı frekans bandında çalıştığı için
+   kapsamaları da farklıdır.
+2. **Uçak irtifasını girin.** Değer deniz seviyesinden feet'tir. Kapsama, o
+   irtifadaki yatay bir kesit olarak çizilir; arazinin bu irtifanın üstüne
+   çıktığı yerler gri gösterilir.
+3. **Verici ve eşik değerlerini ayarlayın.** Güç ve anten kazancı bileşenin
+   tipik değerleriyle gelir. Eşik olarak ICAO Ek 10'un istediği en az sinyal ya
+   da kendi alıcınızın hassasiyeti seçilebilir.
+4. **Haritayı okuyun.** Renkler payı (margin), yani sinyalin eşiği kaç dB
+   aştığını gösterir. Kesikli gri daire hesabın sınırıdır; AIP'de bir kapsama
+   değeri yayımlanmışsa kesikli sarı daireyle karşılaştırma için çizilir.
+5. **Bir noktaya tıklayın.** İstasyonla o nokta arasındaki arazi kesiti, yol
+   kaybının bileşenleri ve sinyalin alınmaya başladığı en düşük irtifa haritanın
+   altında gösterilir.
+
+"Bağlantıyı kopyala" istasyonu, bileşeni, irtifayı ve seçilen noktayı adrese
+yazar.
+
+## Hesap nasıl yapılır?
+
+VHF ve UHF dalgaları yaklaşık olarak görüş hattı (line of sight) boyunca
+yayılır. Bu yüzden kapsamayı çoğunlukla verici gücü değil, **dünya eğriliği ve
+arazi** belirler. Atmosferin kırılması dalgayı hafifçe aşağı büktüğü için
+hesapta dünya yarıçapı 4/3 ile çarpılır; arazisiz bir dünyada iki yüksekliğin
+birbirini gördüğü en büyük mesafeye radyo ufku (radio horizon) denir:
+
+```
+radyo ufku (NM) ≈ 1,23 × (√h_istasyon + √h_uçak)        yükseklikler feet
+```
+
+Araç her hesapta şu adımları izler:
+
+1. **Arazi.** İstasyon çevresindeki yükseklik karoları indirilir ve istasyondan
+   0,5° aralıklı 720 yöne arazi profili çıkarılır.
+2. **Serbest uzay kaybı (free-space path loss).** Mesafeyle ve frekansla artan,
+   engelden bağımsız kayıp:
+
+   ```
+   L_serbest (dB) = 32,45 + 20 log f(MHz) + 20 log d(km)
+   ```
+
+3. **Kırınım kaybı (diffraction loss).** Arazi görüş hattını kesiyor ya da ona
+   yaklaşıyorsa sinyal engelin üstünden kırınarak zayıflamış hâlde geçer. Bu
+   kayıp ITU-R P.526 tavsiyesindeki Bullington yöntemiyle hesaplanır: profilin
+   tamamı, vericiden ve alıcıdan araziye çizilen en dik iki doğrunun kesiştiği
+   noktadaki tek bir eşdeğer bıçak sırtı (knife-edge) engele indirgenir.
+4. **Bağlantı bütçesi (link budget).** Verici gücü ile anten kazancının toplamı
+   eşdeğer izotropik yayılan gücü (EIRP) verir. Pay, bundan yol kaybı ve eşik
+   çıkarılarak bulunur; sıfırın üstündeyse sinyal alınır:
+
+   ```
+   pay (dB) = EIRP − L_serbest − L_kırınım − eşik
+   ```
+
+Görüş hattının açık olması tek başına yetmez: dalga, hattın çevresindeki
+Fresnel bölgesi (Fresnel zone) içinde de yol alır. Arazi birinci Fresnel
+bölgesinin içine girdiğinde, hattı kesmese bile kayıp başlar. Kesit şeklindeki
+kesikli çizgi bu bölgenin %60'ının alt sınırıdır.
+
+### Eşik: Ek 10 mu, alıcı hassasiyeti mi?
+
+- **ICAO Ek 10 en az sinyal:** kapsama içinde uzayda bulunması gereken en az
+  güç yoğunluğu (power density) ölçüt alınır: VOR için −107 dBW/m² (90 µV/m),
+  DME için −89 dBW/m². Ölçüt uçağın antenine ulaşan sinyal olduğundan uçak
+  anteni ve kablosu hesaba girmez. TACAN'da mesafe işlevi için DME değeri
+  kullanılır.
+- **Alıcı hassasiyeti:** eşik, alıcının girişinde gereken güçtür (dBm); uçak
+  anteninin kazancı ve kablo kaybı ayrıca girilir. Alıcılar çoğunlukla Ek 10
+  eşiğinden daha zayıf sinyalle de çalışır, bu yüzden bu seçenek daha geniş bir
+  alan verir.
+
+### Güç neden az şey değiştirir?
+
+100 W'lık bir VOR'un sinyali, serbest uzayda yüzlerce deniz mili ötede bile Ek
+10 eşiğinin üstündedir; oysa 10 000 ft'teki bir uçak için radyo ufku 130 NM
+dolayındadır. Gücü on katına çıkarmak kapsamayı ancak ufkun hemen ötesindeki
+ve dağların arkasındaki kırınım bölgesinde birkaç mil genişletir. Kapsamayı
+asıl büyüten, uçağın irtifası ile antenin yüksekliğidir.
+
+## Veride olanlar ve varsayımlar
+
+| Girdi | Kaynak |
+|---|---|
+| İstasyon konumu, frekansı, kanalı | [AIP Türkiye](https://dhmi.gov.tr/Sayfalar/aipturkey.aspx) © DHMİ (navigasyon haritasıyla aynı veri dosyası) |
+| Anten rakımı | AIP'de DME anteni rakımı yayımlanmışsa o değer; yoksa arazi + "anten direği" yüksekliği |
+| DME/TACAN frekansı | Kanalın cevap (yer → uçak) frekansı; [kanal tablosundaki](./03-vor-ils-dme-kanal-tablosu.mdx) eşlemeden |
+| Verici gücü, anten kazancı | AIP'de yoktur. Tipik değerle başlar (VOR 100 W, DME 1 kW, TACAN 3 kW tepe gücü); gerçek değeri biliyorsanız girin |
+| Arazi | [Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) (Mapzen; SRTM, GMTED2010, ETOPO1), AWS Open Data üzerinden |
+
+## Sınırlar
+
+- **Anten diyagramı modellenmez.** İstasyonun her yöne ve her yükseliş açısına
+  eşit ışıdığı varsayılır. Gerçek antenlerde düşey loblar, yer yansımasından
+  doğan sinyal boşlukları ve istasyonun tam üstündeki sessiz koni (cone of
+  confusion) vardır.
+- **Arazi kabadır.** Hesap yarıçapına göre arazi 100 m ile 1 km arasında bir
+  çözünürlükle örneklenir; sivri tepeler yumuşar, istasyonun yakınındaki bina,
+  ağaç ve hangar gibi engeller hiç yoktur. Sonuç bu yüzden iyimser olabilir.
+- **Kırınım yaklaşık bir yöntemle hesaplanır.** Bullington yöntemi birden çok
+  sırtı tek engele indirger; ardışık sıradağlarda kaybı olduğundan az gösterir.
+  Çok yollu yayılım (multipath), troposferik saçılma ve kanallanma (ducting)
+  hesaba katılmaz.
+- **Kapsama yalnızca sinyal düzeyidir.** VOR'da bearing doğruluğu, DME'de cevap
+  verimi ve komşu kanal girişimi ayrı konulardır; sinyalin eşiği aşması
+  kullanılabilir olduğu anlamına gelmez.
+- **NDB ve ILS kapsam dışıdır.** NDB yer dalgasıyla yayılır, görüş hattı modeli
+  ona uymaz; yön verici ve süzülüş yolu antenleri yönlüdür.
+- AIP'de yayımlanan kapsama değeri bulunan istasyonlarda model sonucunu o
+  değerle karşılaştırın; ikisi ayrışıyorsa geçerli olan AIP'dir.
