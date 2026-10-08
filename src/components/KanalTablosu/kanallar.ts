@@ -1,8 +1,8 @@
 /**
  * VOR, ILS (LOC + GS) ve DME kanal planı. Tablo elle yazılmaz, ICAO Ek 10 Cilt I'deki
  * eşleme kuralından hesaplanır; yalnızca LOC → GS eşlemesi kurala bağlı olmadığı için
- * listeyle verilir. Frekanslar tam sayı kHz tutulur (kayan nokta 108,05 gibi değerlerde
- * yuvarlama hatası verir).
+ * listeyle verilir (gs-eslemesi.mjs; AIP verisi üreticisi de denetimde kullanır). Frekanslar
+ * tam sayı kHz tutulur (kayan nokta 108,05 gibi değerlerde yuvarlama hatası verir).
  *
  * - DME kanalı 1–126, X ya da Y; sorgu frekansı (uçak → yer) 1024 + n MHz.
  * - Cevap (yer → uçak): X kanallarında 1–63 için sorgu − 63, 64–126 için sorgu + 63 MHz;
@@ -12,6 +12,8 @@
  * - 108,00–111,95 MHz'te onda birler basamağı tek olan frekanslar LOC, çift olanlar VOR'dur;
  *   112,00–117,95 MHz'in tamamı VOR'dur.
  */
+
+import {gsOf} from './gs-eslemesi.mjs';
 
 export type Mod = 'X' | 'Y';
 export type Tur = 'VOR' | 'ILS' | 'DME';
@@ -40,30 +42,6 @@ export const TUR_ADI: Record<Tur, string> = {
   DME: 'Yalnız DME/TACAN',
 };
 
-/** LOC frekansı (kHz) → GS frekansı (kHz). Y kanalının GS'i, X eşinin 150 kHz altıdır. */
-const GS_X: Record<number, number> = {
-  108100: 334700,
-  108300: 334100,
-  108500: 329900,
-  108700: 330500,
-  108900: 329300,
-  109100: 331400,
-  109300: 332000,
-  109500: 332600,
-  109700: 333200,
-  109900: 333800,
-  110100: 334400,
-  110300: 335000,
-  110500: 329600,
-  110700: 330200,
-  110900: 330800,
-  111100: 331700,
-  111300: 332300,
-  111500: 332900,
-  111700: 333500,
-  111900: 331100,
-};
-
 function vhfOf(no: number, mod: Mod): number | undefined {
   let khz: number;
   if (no >= 17 && no <= 59) khz = 108000 + (no - 17) * 100;
@@ -81,7 +59,7 @@ function kanalOf(no: number, mod: Mod): Kanal {
   const alt = no <= 63;
   const cevap = (mod === 'X') === alt ? sorgu - 63 : sorgu + 63;
   let gs: number | undefined;
-  if (vhf !== undefined && locMu(vhf)) gs = mod === 'X' ? GS_X[vhf] : GS_X[vhf - 50] - 150;
+  if (vhf !== undefined && locMu(vhf)) gs = gsOf(vhf);
   return {
     ad: `${no}${mod}`,
     no,

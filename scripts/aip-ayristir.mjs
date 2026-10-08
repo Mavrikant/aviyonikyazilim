@@ -100,9 +100,10 @@ function parseRecord(r) {
   const type = classify(left);
   if (!type) return undefined;
   // Frekans ve birimi bazen ayrı satırlara bölünür ("108.350" … "MHz"): birimsiz ondalık
-  // değer VHF (108–118) ya da UHF GP (328–336) aralığındaysa MHz kabul edilir.
+  // değer VHF (108–118) ya da UHF GP (328–336) aralığındaysa MHz kabul edilir. Sayının önünde
+  // \b şarttır: yoksa "H24" çalışma saatinin "24"ü alt satırdaki "MHz" ile birleşip 24 MHz okunur.
   const freq =
-    /(\d{2,4}(?:\.\d+)?)\s*(MHz|KHz)\b/i.exec(left) ?? /\b(1[01]\d\.\d{1,3}|3[23]\d\.\d{1,3})()(?=\s)/.exec(left);
+    /\b(\d{2,4}(?:\.\d+)?)\s*(MHz|KHz)\b/i.exec(left) ?? /\b(1[01]\d\.\d{1,3}|3[23]\d\.\d{1,3})()(?=\s)/.exec(left);
   const ch = /\bCH\s?(\d{1,3}[XY])\b/i.exec(left);
   // Kod önce ortadaki satır(lar)da aranır: ENR 4.1'de üst satır istasyon adıdır.
   const idIn = (s) =>
@@ -394,7 +395,7 @@ export function parseAd214(text, ids) {
   const lines = text.split('\n');
   const rows = [];
   lines.forEach((line, i) => {
-    const m = /^\s{0,6}\*?(\d{2}[LRC]?)(?=\s)/.exec(line);
+    const m = /^\s{0,6}\*?(\d{2}[LRC]?)(?=\s|$)/.exec(line); // tanım satırın sonunda da olabilir
     if (m && ids.includes(m[1])) rows.push({id: m[1], i});
   });
   const out = {};

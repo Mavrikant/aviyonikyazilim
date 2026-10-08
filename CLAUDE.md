@@ -369,6 +369,9 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   bağlı/en yakın meydanın AD 2.2 değeri verilir (kaynağı `varSrc` alanında). Her AIRAC
   döngüsünde (28 gün) yeniden çalıştırılması önerilir. Ayrıştırıcı değişirse çıktı,
   AIP'deki birkaç meydanla (ör. LTAC'ın altı ILS'i) elle karşılaştırılır.
+  ILS'lerin GP frekansı, LOC frekansının ICAO eşiyle (`src/components/KanalTablosu/gs-eslemesi.mjs`)
+  denetlenir; uymazsa betik uyarı verir, AIP değeri `gpFreq`'te korunur ve eşin değeri
+  `gpFreqIcao`'ya yazılır (harita ikisini birlikte gösterir; ör. LTAG IDAN, AIP'de 322.0 MHz).
 - **AIP Türkiye kullanım izni:** AIP telifle korunur (GEN 0.1, madde 5). DHMİ, Ekim
   2026'da **ticari olmayan kullanımda kaynak gösterilmesi** koşuluyla izin vermiştir
   (izin yazısı depo sahibindedir). Bu yüzden: site ticari hâle getirilmez/reklam
