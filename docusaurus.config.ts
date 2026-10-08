@@ -384,7 +384,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.nightOwl,
-      additionalLanguages: ['c'],
+      additionalLanguages: ['c', 'armasm'],
     },
   } satisfies Preset.ThemeConfig,
 };

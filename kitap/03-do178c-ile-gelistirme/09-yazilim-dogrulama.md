@@ -488,12 +488,290 @@ doğrulanmıyorsa kalifiye edilir (bkz.
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
 
 **Seviye A'da ek olarak**, kapsam hangi kod biçimi üzerinde ölçülmüş olursa olsun,
-kaynak kod ile nesne kodu arasındaki mesafeye bakılır. Derleyici ya da bağlayıcı, kaynak
-koda doğrudan izlenemeyen nesne kodu üretiyorsa — örneğin derleyicinin eklediği dizi
-sınırı denetimleri ya da örtük ilklendirme kodu — bu kod belirlenir ve doğruluğu ek
-doğrulamayla gösterilir. Beklenti böyle bir kodun
-yokluğunu kanıtlamak değil, var olanı bulup doğrulamaktır; derleyici seçenekleri ve
-eniyileme düzeyi bu iş yükünü doğrudan belirlediği için planlama kararıdır.
+kaynak kod ile nesne kodu arasındaki mesafeye bakılır; bu iş aşağıda ayrı bir başlık
+altında anlatılmıştır. Elle yazılmış çevirici dili modüllerinin kapsamı da ayrı bir
+başlıktadır, çünkü C için kurulan ölçüm düzeni bu modüllerde çoğunlukla çalışmaz.
+
+### Kaynak koda izlenemeyen nesne kodu
+
+Kaynak kod düzeyinde tam MC/DC elde etmek, uçakta çalışan bütün komutların sınandığı
+anlamına gelmez. Kapsam aracı kaynaktaki yapıları sayar; derleyici ise bu yapıları
+makine komutlarına çevirirken kendi kararlarını verir ve kaynakta karşılığı olmayan bir
+karşılaştırma, döngü ya da kütüphane çağrısı ekleyebilir. Gereksinim tabanlı testler
+bu ek kodu tesadüfen çalıştırmış olabilir; ama bunu gösteren bir kayıt yoktur ve ek
+kodun içindeki bir dal hiç işletilmemiş de olabilir. DO-178C bu yüzden Seviye A'da,
+kapsam hangi kod biçiminde ölçülmüş olursa olsun, derleyicinin, bağlayıcının ya da
+başka bir yolun ürettiği ve kaynak deyimlerine doğrudan izlenemeyen kodun doğruluğunun
+ek doğrulamayla gösterilmesini ister (§6.4.4.2). Uygulamada bu işe kaynak koddan nesne
+koduna izlenebilirlik analizi (source to object code traceability analysis) denir.
+Hedef yalnızca Seviye A'dadır.
+
+Beklentinin ne olduğu iyi anlaşılmalıdır. Amaç ek kodun hiç olmadığını kanıtlamak
+**değildir**; eniyileme kapalı olsa bile bir derleyici neredeyse her zaman bir miktar
+ek kod üretir. Amaç var olanı **bulmak**, ne yaptığını **anlamak** ve doğruluğunu
+**göstermektir**. "Derleyicimiz ek kod üretmez" diyen bir plan, bunu gösteren analiz
+olmadan kabul görmez; analiz ek kod bulmadıysa bu sonuç da kayda geçer.
+
+**Ek kod nereden gelir?** Kaynaklar derleyiciye ve seçeneklere göre değişir; tipik
+olanlar şunlardır:
+
+| Kaynak | Örnek | Nesne kodunda ne görülür | Tipik doğrulama |
+|---|---|---|---|
+| Çalışma zamanı denetimleri | Ada'da aralık ve dizi indisi denetimi; C'de yalnızca böyle bir denetimi açan derleyici seçeneği kullanıldığında | Kaynakta görünmeyen bir karşılaştırma ve normal girdilerle hiç alınmayan hata dalı | Hata dalı gürbüzlük testiyle tetiklenir; tetiklenince ne olacağı (istisna işleyici, güvenli durum) gereksinimde yazılıdır |
+| Örtük ilklendirme | Yerel diziye `= {0}` ataması; `.bss` bölgesini sıfırlayan, `.data` bölgesini kopyalayan başlangıç kodu | Bir döngü ya da `memset`/`memcpy` çağrısı | Başlangıç kodu kendi gereksinimleriyle doğrulanır; işlev içindeki ilklendirmenin sonucu testte gözlenir |
+| Yardımcı kütüphane çağrıları | 32 bit işlemcide 64 bit bölme; kayan nokta birimi olmayan işlemcide kayan nokta işlemleri; büyük yapı ataması | Derleyici kütüphanesine çağrı; çağrılan rutinin kendi dalları ve döngüleri vardır | Rutin bir kütüphane bileşeni olarak ayrıca doğrulanır ya da yapı kodlama standardında yasaklanır |
+| Kontrol akışı dönüşümleri | `switch`'in sınır denetimli atlama tablosuna dönüşmesi; döngü açma (loop unrolling) | Kaynakta tek olan karar birden çok dala bölünür ya da birkaç karar tek dalda birleşir | Dönüşümün anlamı koruduğu listede gözden geçirilir; ortaya çıkan dalların testlerde iki yönde de işletildiği gösterilir |
+| Koruma kodu | Yığın koruyucu (stack protector) denetimi | Her işlev çıkışında, normalde hiç alınmayan bir hata dalı | Seçenek kapatılır ya da dal hata enjeksiyonuyla (fault injection) işletilir |
+| Kod çoğaltma | Satır içine alma (inlining), işlev kopyalama | Aynı kaynak satırın birden çok kopyası; kaynak düzeyindeki sayaç kopyaları ayırt etmez | Her kopyanın işletildiği nesne kodunda gösterilir ya da satır içine alma sınırlanır |
+
+Bunun ters yönü de vardır: eniyileyici kaynakta bulunan bir kararı dalsız komutlara,
+örneğin koşullu atama komutuna çevirebilir. Kod kaynakta izlenebilir kalır, ama kapsam
+nesne kodunda ölçülüyorsa bu karar ölçümde görünmez olur (aşağıya bakınız).
+
+**Bir örnek: `switch` ve atlama tablosu.** Aşağıdaki işlev uçuş kipini bir veri yolu
+koduna çevirir:
+
+```c
+typedef enum { KIP_YER, KIP_KALKIS, KIP_SEYIR, KIP_INIS } ucus_kipi_t;
+
+uint8_t kip_kodu(ucus_kipi_t kip)
+{
+    uint8_t kod;
+
+    switch (kip) {
+    case KIP_YER:    kod = 0x10u; break;
+    case KIP_KALKIS: kod = 0x21u; break;
+    case KIP_SEYIR:  kod = 0x32u; break;
+    case KIP_INIS:   kod = 0x43u; break;
+    default:         kod = 0xFFu; break;   /* savunmacı dal */
+    }
+    return kod;
+}
+```
+
+Bir ARM derleyicisi eniyileme açıkken bunu kabaca şöyle çevirebilir. Aşağıdaki liste
+temsilîdir; gerçek çıktı derleyiciye, sürüme ve seçeneklere göre değişir ve analiz her
+zaman projenin kendi çıktısı üzerinde yapılır:
+
+```armasm
+kip_kodu:
+        cmp     r0, #3              @ (1) tablo sınırı denetimi
+        bhi     .Lvarsayilan        @     kip > 3 (işaretsiz) ise default
+        ldr     r3, =.Lkodlar       @ (2) dört case tek bir tablo okumasına dönüştü
+        ldrb    r0, [r3, r0]
+        bx      lr
+.Lvarsayilan:
+        movs    r0, #0xFF
+        bx      lr
+.Lkodlar:
+        .byte   0x10, 0x21, 0x32, 0x43
+```
+
+Kaynakta beş dal vardır; nesne kodunda tek bir koşullu dal ve dört baytlık bir tablo.
+Analiz bu dönüşümü şöyle kaydeder: (1) `cmp`/`bhi` çifti `default` dalının nesne
+kodundaki karşılığıdır ve izlenebilirdir; karşılaştırma işaretsiz olduğu için negatif
+değerler de `default`'a gider, bu da kaynağın anlamıyla uyumludur. (2) Tablonun dört
+baytı dört `case`'in değerleridir; içerikleri her `case`'i işleten testlerle doğrulanır.
+Sonuçta ek kod yoktur, ama yapı değişmiştir ve mevcut testlerin bu yapıyı tam olarak
+işletmesi bir koşula bağlıdır: `default` dalını, yani tanım dışı bir kip değerini
+deneyen bir gürbüzlük testi bulunmalıdır. Yoksa `bhi` komutunun alınan yönü hiçbir
+testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savunmacı dalı
+"gerekçeli" saymışsa göstermez.
+
+**Analiz nasıl yapılır?** Yaygın akış şöyledir:
+
+1. **Kapsamı ve yöntemi planlamak.** Derleyici ve bağlayıcı, sürümleri ve seçenekleri
+   (özellikle eniyileme düzeyi) dondurulur. Yöntem yazılım doğrulama planına, özeti
+   PSAC'a yazılır. Analizin sonucu yalnızca bu araç zinciri ve bu seçenekler için
+   geçerlidir.
+2. **Temsilî örnek mi, tam analiz mi?** İki yol vardır. Temsilî örnekte, kodlama
+   standardının izin verdiği her dil yapısı (karar biçimleri, döngüler, `switch`, dizi
+   ve işaretçi erişimleri, yapı ataması, tamsayı ve kayan nokta işlemleri, çağrılar)
+   için küçük örnekler yazılır ve projenin seçenekleriyle derlenir. Tam analizde ise
+   projenin bütün nesne kodu incelenir. Temsilî örnek daha ucuzdur ama iki ek iddia
+   gerektirir: proje kodunun örnekte bulunmayan bir yapı kullanmadığı (kodlama standardı
+   denetimi ve statik analizle gösterilir) ve aynı yapının proje kodunda örnektekinden
+   farklı derlenmediği. Eniyileme düzeyi arttıkça ikinci iddia zayıflar, çünkü derleyici
+   çevredeki koda bakarak karar verir. Yüksek eniyilemede tam analiz ya da nesne kodu
+   düzeyinde kapsam ölçümü daha savunulabilir hâle gelir.
+3. **Listeyi çıkarmak ve eşlemek.** Derleyicinin çevirici listesi (assembly listing)
+   ya da hata ayıklama bilgisiyle ters çevrilmiş (disassembled) nesne kodu, kaynak
+   satırlarıyla yan yana konur. GNU araç zincirinde `-S` seçeneği ve `objdump -d -S`
+   bunun bilinen yollarıdır. Analizin dayandığı listenin uçacak nesne koduyla aynı
+   olduğu gösterilir: liste için ayrı bir derleme yapılıyorsa seçeneklerin aynı olduğu,
+   mümkünse doğrudan uçacak imajın ters çevrildiği kayda geçer.
+4. **Sınıflandırmak.** Her komut dizisi üç sınıftan birine konur: doğrudan izlenebilir;
+   izlenebilir ama yapısı değişmiş (atlama tablosu, birleştirilmiş koşul); izlenemeyen
+   ek kod. Ek kod için hangi yapının onu doğurduğu, nerede olduğu ve ne yaptığı yazılır.
+5. **Ek kodu doğrulamak.** Her ek kod dizisinin doğruluğu liste üzerinde gözden
+   geçirilir. İçinde dal varsa her yönünün testlerde işletildiği nesne kodu düzeyinde
+   (izleme ya da hata ayıklayıcı ile) gösterilir; normal girdilerle işletilemeyen yön
+   için gürbüzlük testi, hata enjeksiyonu ya da gerekçeli analiz kullanılır. Doğrulaması
+   pahalı kalıplar kodlama standardında yasaklanır ya da bir seçenek değiştirilerek
+   ortadan kaldırılır; analizin en değerli çıktısı çoğu zaman bu geri beslemedir.
+6. **Kaydetmek ve güncel tutmak.** Sonuç yazılım doğrulama sonuçlarının parçasıdır ve
+   SOI-3'te gözden geçirilir. Derleyici sürümü, bir seçenek ya da kodlama standardı
+   değişirse değişiklik etki analizi (change impact analysis) yapılır; temsilî örneğin
+   eski ve yeni listelerini karşılaştırmak çoğu zaman bunun için yeterlidir.
+
+```mermaid
+flowchart TD
+    A["Derleyici sürümü ve seçenekleri dondurulur"] --> B["Temsilî örnek kod ya da tüm proje kodu"]
+    B --> C["Çevirici listesi / ters çevrilmiş nesne kodu"]
+    C --> D{"Komut dizisi bir kaynak<br/>deyimine izlenebiliyor mu?"}
+    D -- "Evet, aynı yapıda" --> E["Kaynak düzeyindeki doğrulama kapsar"]
+    D -- "Evet, yapı değişmiş" --> F["Dönüşüm gözden geçirilir;<br/>yeni dalların işletildiği gösterilir"]
+    D -- "Hayır" --> G["Ek kod listesine alınır"]
+    G --> H["Gözden geçirme + test,<br/>gerekirse hata enjeksiyonu"]
+    G --> I["Gerekirse yapı yasaklanır<br/>ya da seçenek değiştirilir"]
+    I --> B
+    E --> J["Sonuç doğrulama sonuçlarına girer;<br/>SOI-3'te gözden geçirilir"]
+    F --> J
+    H --> J
+```
+
+**Kapsamı doğrudan nesne kodunda ölçmek.** Bir diğer yol, kapsamın kaynak kod yerine
+nesne kodu üzerinde, örneğin işlemcinin izleme donanımıyla ölçülmesidir. Bu yolda
+derleyicinin eklediği her dal ölçüme kendiliğinden girer ve "ek kod işletildi mi?"
+sorusunun cevabı ölçümden okunur. Ancak ispat yükü yer değiştirir: nesne kodunda
+kullanılan ölçütün, seviyenin kaynak düzeyinde istediği ölçütü karşıladığı gösterilmek
+zorundadır. Nesne kodundaki her koşullu dalın iki yönde de alınması, kısa devre
+biçiminde derlenmiş kararlarda MC/DC'ye çoğu zaman yaklaşır ama ona kendiliğinden denk
+değildir: eniyileyici iki koşulu dalsız komutlarla birleştirdiğinde koşullardan biri
+nesne kodunda hiç dal üretmez ve etkisi ölçülemez. Bu yolu seçen proje, denkliği hangi
+kod kalıpları için gösterdiğini ve dalsız kalıpları nasıl ele aldığını (bir seçenekle
+önleyerek ya da ayrıca analiz ederek) plana yazar. Nesne kodunda ölçüm, Seviye A'daki
+ek doğrulama yükümlülüğünü de kaldırmaz; yalnızca ek kodun bulunma biçimini değiştirir.
+Ek kod listede analizle değil ölçümde işletilmiş ya da işletilmemiş komut olarak
+görünür, doğruluğunun gösterilmesi yine gerekir.
+
+### Çevirici diliyle yazılmış modüllerde yapısal kapsam
+
+Çoğu projede elle yazılmış birkaç çevirici dili (assembly language) modülü bulunur:
+başlatma kodu, kesme ve istisna girişleri, bağlam değiştirme (context switch), önbellek
+ve bellek yönetim birimi ayarları, zamanlaması kritik sürücü parçaları. Bu modüller
+küçüktür ama en kritik anlarda çalışır. Yazılımın parçasıdırlar ve C koduyla aynı
+hedeflere tabidirler: düşük seviyeli gereksinimlere izlenir, gözden geçirilir,
+gereksinim tabanlı testlerle doğrulanır ve seviyenin istediği yapısal kapsam ölçütünü
+karşılar. "Kapsam aracımız çevirici kodunu desteklemiyor" bir gerekçe değil, planlama
+aşamasında cevaplanması gereken bir sorudur.
+
+Çevirici kodunu C kodundan ayıran iki şey vardır. Birincisi, kaynak ile nesne kodu
+neredeyse bire bir örtüşür, çünkü çevirici (assembler) derleyici gibi karar vermez; bu
+yüzden kaynak–nesne izlenebilirliği çok daha kolaydır. "Neredeyse" sözcüğü önemlidir:
+makrolar, sözde komutlar (pseudo-instruction; örneğin ARM'da bir sabiti sabit havuzundan,
+literal pool, okuyan `ldr r0, =sabit`) ve bağlayıcının uzak çağrılar için eklediği ara
+kod da listede görülür ve analizde hesaba katılır. İkincisi, C için hazır kapsam araçları
+çoğunlukla kaynak kodu donatarak çalışır ve çevirici kodunda bu yol kapalıdır; ölçütlerin
+çevirici diline nasıl uygulanacağı da projede tanımlanmalıdır.
+
+**Ölçütleri çevirici diline uyarlamak.** Kaynak düzeyindeki ölçütlerin çevirici
+dilindeki karşılığı planda yazılı olmalıdır. Tipik bir tanım şöyledir:
+
+| Ölçüt | Çevirici dilindeki karşılığı | Dikkat edilecek nokta |
+|---|---|---|
+| Satır kapsama | Her komut, makro açılımları dahil, en az bir kez çalışmış | Kod içine gömülü sabit havuzu ve tablolar komut değildir; içerikleri gözden geçirmeyle doğrulanır |
+| Karar kapsama | Her koşullu dal komutu hem alınmış hem alınmamış; her giriş noktası (rutin etiketi, istisna vektörü) ve her çıkış işletilmiş; dolaylı atlamalarda (atlama tablosu, yazmaç üzerinden atlama) olası her hedefe gidilmiş | Koşullu yürütülen komutlar (ARM'da `IT` bloğu, koşullu atama) dal olmadan karar verir; koşulun iki sonucu da ayrıca kaydedilir |
+| MC/DC | Tek bir mantıksal kararı birlikte gerçekleyen koşullu dallar bir karar olarak gruplanır ve her koşul için bağımsızlık çifti gösterilir | Hangi dalların aynı karara ait olduğu koddan okunmaz; tasarımda ya da açıklama satırında belirtilir |
+
+Koşullu yürütme ayrıca dikkat ister. Aşağıdaki iki komut her koşuda "geçilmiş" görünür,
+ama yalnızca biri etkili olur:
+
+```armasm
+        cmp     r0, #0
+        ite     eq                  @ K4: r0 == 0 mı? (GDG-KES-031)
+        moveq   r1, #1              @ yalnızca Z = 1 iken etkili
+        movne   r1, #0              @ yalnızca Z = 0 iken etkili
+```
+
+Komut düzeyinde bir sayaç burada satır kapsamayı her zaman tam gösterir; karar
+kapsama için `eq` koşulunun iki sonucunun da en az bir testte gerçekleştiği kaydedilmelidir.
+İzleme donanımı koşulu sağlanmadığı için etkisiz kalan komutu ayrıca işaretleyebiliyorsa
+bu bilgi oradan okunur; okuyamıyorsa koşulun iki sonucunu gösteren test kaydı gerekir.
+
+Kısa devre biçimiyle yazılmış bir zincirde, örneğin `(durum & HATA_MASKESI) == 0 &&
+sayac < SINIR` kararı için art arda iki koşullu dal varsa, her iki dalın iki yönde de
+alınması bu karar için bağımsızlık çiftlerini de verir. Bu her karar biçiminde
+kendiliğinden doğru değildir; MC/DC iddiası karar başına, dalların gruplanmasıyla birlikte
+gösterilir.
+
+**Ölçüm yöntemleri.** Çevirici kodunu donatmak, yani komutların arasına sayaç eklemek,
+çoğu zaman uygulanamaz. Eklenen sayaç koşul bayraklarını ya da bir yazmacı bozabilir:
+`cmp` ile `bhi` arasına giren ve bayrakları değiştiren bir sayaç programın anlamını
+değiştirir. Zamanlama ve hizalama değişir; başlatma kodu ise bellek ve yığın hazır
+olmadan çalıştığı için sayacı yazacak bir yer bile bulamaz. Bu yüzden çevirici
+modüllerinde koda dokunmayan yöntemler tercih edilir:
+
+- **Donanım izleme (hardware trace).** İşlemcinin izleme birimi (ARM'da ETM, Power
+  Architecture'da Nexus gibi) çalışan komutların adreslerini ve dalların alınıp
+  alınmadığını dışarı aktarır; araç bunu bağlama haritası ve listeyle eşleştirir. Uçacak
+  imaj değiştirilmeden, hedefte ölçülür. İzleme tamponu taşar ve veri kaybedilirse o koşu
+  kapsam kanıtı olarak kullanılmaz; aracın kaybı bildirdiği ve kaybın raporu nasıl
+  etkilediği bilinmelidir. Her işlemcide ve kartta izleme portu bulunmaz; bu yüzden karar
+  donanım tasarımı sırasında verilmelidir.
+- **Hata ayıklayıcı betiği.** Her temel bloğun (basic block) başına kesme noktası konur
+  ve test koşulur; hangi blokların çalıştığı ve dalların hangi yöne gittiği ardışık
+  durmalardan çıkarılır. Yavaştır ve donanım kesme noktalarının sayısı sınırlıdır; buna
+  karşılık başlatma kodu gibi küçük modüllerde uygulanabilir.
+- **Komut seti benzeticisi (instruction set simulator).** Ayrıntılı kapsam verir ama
+  benzetici hedef bilgisayar değildir. Benzeticinin ilgili komutları doğru modellediği
+  ve kredi alınan testlerin hedefte de koşulduğu gösterilir; çevre birimine ve
+  zamanlamaya bağlı kod benzeticide farklı davranabilir.
+- **Elle analiz.** Birkaç düzine komutluk modüllerde her testin izlediği yol kontrol
+  akış çizgesi üzerinde işaretlenir ve bağımsız olarak gözden geçirilir. Yalnızca çok
+  küçük ve dallanması az kodda savunulabilir; kayıt test sonuçlarıyla birlikte saklanır.
+
+Hangi yöntem seçilirse seçilsin, ölçüm aracının ya da izleme verisini ayrıştıran proje
+betiğinin çıktısı ayrıca doğrulanmıyorsa araç kalifikasyonu değerlendirilir; kapsam
+ölçen araçlar tipik olarak bir hatayı gözden kaçırabilecek doğrulama araçlarıdır (bkz.
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+
+**Bir örnek: `.bss` bölgesinin sıfırlanması.** Başlatma kodundaki bu rutin, C kodu
+çalışmadan önce ilk değeri verilmemiş değişkenlerin bölgesini sıfırlar:
+
+```armasm
+@ GDG-BOOT-012: [__bss_baslangic, __bss_bitis) aralığındaki her kelime sıfırlanır.
+@ Ön koşul (bağlayıcı betiği): iki sınır da 4 bayta hizalıdır.
+        .syntax unified
+        .thumb
+        .global bss_sifirla
+bss_sifirla:
+        ldr     r0, =__bss_baslangic
+        ldr     r1, =__bss_bitis
+        movs    r2, #0
+1:      cmp     r0, r1              @ K1: bölge bitti mi?
+        bhs     2f                  @     evet ise çık
+        str     r2, [r0], #4        @ kelimeyi sıfırla, adresi ilerlet
+        b       1b
+2:      bx      lr
+```
+
+Gereksinim tabanlı test hedefte, hata ayıklayıcıyla yapılır: belleğe sıfırlamadan önce
+bilinen bir desen yazılır, işlemci sıfırlanır ve `main`'e kadar koşturulur; ardından
+bölgenin tamamen sıfır olduğu ve bölgenin hemen dışındaki kelimelerin değişmediği
+denetlenir. Bu tek koşu, `.bss` boş olmadığı sürece bütün komutları ve `bhs` dalının
+iki yönünü işletir; satır ve karar kapsama tamamdır. Yine de kapsamın tam olması
+rutinin doğru olduğunu göstermez: sınırlardan biri 4 bayta hizalı değilse döngü son
+kelimeyi bölgenin dışına taşarak yazar. Bu yüzden hizalama ön koşulu gereksinimde
+yazılıdır ve bağlayıcı betiğinin ve bağlama haritasının gözden geçirilmesiyle doğrulanır
+(bkz. yukarıdaki bağlantı ve yükleme analizi). `.bss` bölgesi boş olan bir
+konfigürasyon varsa döngü gövdesi hiç çalışmaz; kapsam o konfigürasyon için ayrıca
+değerlendirilir.
+
+**C ile arayüz.** Çevirici modülü ile C kodu arasındaki sınır, veri ve kontrol
+bağlaşımının en kırılgan yeridir. Çağrı kuralı (calling convention) — hangi yazmaçların
+korunacağı, yığın hizası, parametrelerin ve dönüş değerinin nerede taşınacağı — burada
+derleyici tarafından değil, elle sağlanır. Gözden geçirme kontrol listesinde bu maddeler
+ayrıca yer alır, entegrasyon testleri arayüzü işletir; derleyici sürümü ya da çağrı
+kuralını etkileyen bir seçenek değişirse modüller yeniden gözden geçirilir.
+
+**Kodlama standardı çevirici dilini de kapsar.** Kapsamı ölçülebilir ve gözden
+geçirilebilir kılan kurallar baştan konur: her rutinin tek girişi vardır; kendini
+değiştiren kod yasaktır; dolaylı atlama yalnızca sınırı denetlenen tablo üzerinden
+yapılır; her koşullu dal ve koşullu yürütülen komut, açıklama satırında karar ya da
+koşul kimliği ve izlendiği gereksinimle işaretlenir; makro kullanımı sınırlıdır. En
+etkili kural ise çevirici dilinin yalnızca C ile yapılamayan işlerle sınırlandırılmasıdır
+(bkz. [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](08-yazilim-gerceklestirme-kodlama-entegrasyon.md)).
 
 ### Veri bağlaşımı ve kontrol bağlaşımı analizi
 
@@ -651,6 +929,10 @@ değerlendirilmemiş rapordur.
 - Yapısal kapsam ölçütü seviyeye göre artar (satır → karar → MC/DC); kapsam verisi
   gereksinim tabanlı testlerden toplanır ve her boşluk dört nedenden birine (test
   eksikliği, gereksinim eksikliği, gereksiz kod, devre dışı bırakılmış kod) bağlanır.
-  Seviye A'da kaynak koda izlenemeyen nesne kodu ayrıca doğrulanır.
+  Seviye A'da kaynak koda izlenemeyen nesne kodu bulunur, sınıflandırılır ve ayrıca
+  doğrulanır; amaç böyle bir kodun yokluğunu kanıtlamak değil, var olanı doğrulamaktır.
+- Elle yazılmış çevirici dili modülleri aynı kapsam ölçütüne tabidir; ölçütün çevirici
+  dilindeki karşılığı planda tanımlanır ve kapsam çoğunlukla koda dokunmayan yöntemlerle
+  (donanım izleme, hata ayıklayıcı) ölçülür.
 - Doğrulama bulguları problem raporuyla yaşar; sertifikasyona açık raporla gidilebilir,
   ama sınıflandırılmamış ve SAS'ta gerekçelendirilmemiş raporla gidilemez.

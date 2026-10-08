@@ -68,6 +68,11 @@ dil arasında yapılır: çevirici dili, Ada, C ve C++.
 (register) doğrudan erişim, kesin zamanlama ve başlatma (boot) kodu gibi yerlerde hâlâ
 vazgeçilmezdir. Ancak taşınabilirliği yoktur, okunması ve gözden geçirilmesi zordur;
 bu yüzden modern projelerde yalnızca donanıma dokunan dar bir katmanla sınırlandırılır.
+Çevirici diliyle yazılan modüller de C koduyla aynı doğrulama hedeflerine tabidir;
+kodlama standardı onları da kapsar ve yapısal kapsamları, C için kullanılan donatma
+yöntemi burada çoğunlukla işlemediğinden, ayrıca planlanır (bkz.
+[9. Yazılım Doğrulama](./09-yazilim-dogrulama.md), "Çevirici diliyle yazılmış
+modüllerde yapısal kapsam").
 
 **Ada**, emniyet-kritik sistemler düşünülerek tasarlanmış bir dildir. Güçlü tip
 denetimi, aralık kontrolü ve görev (tasking) modeli sayesinde birçok hata sınıfını
@@ -133,7 +138,8 @@ kodudur. Derleyici değerlendirilirken şu ölçütlere bakılır:
   aranan, böyle bir kodun yokluğunu kanıtlamak değil, var olanı bulup doğrulamaktır.
   Kodun hangi yöntemle saptanacağı planlama aşamasında belirlenir ve ilgili plana
   yazılır. Bu işi kolaylaştıran ya da zorlaştıran, seçilen derleyici ve seçenekleridir
-  (bkz.
+  Analizin adımları ve bir örnek 9. bölümde, "Kaynak koda izlenemeyen nesne kodu"
+  başlığı altındadır (bkz.
   [9. Yazılım Doğrulama](./09-yazilim-dogrulama.md) ve [SW SOI-3](../kaynaklar/soi-3.md)).
 
 Derleyici çoğu projede kalifiye edilmez: ürettiği nesne kodu gereksinim tabanlı

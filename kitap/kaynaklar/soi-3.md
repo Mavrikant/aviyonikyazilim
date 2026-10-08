@@ -92,11 +92,16 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
       (deactivated code)?
 - [ ] Her boşluk için çözüm (yeni test, gereksinim değişikliği, kod kaldırma ya da
       gerekçeli analiz) kayıt altında mı?
-- [ ] Kapsam ölçümü kod enstrümantasyonu (instrumentation) ile yapıldıysa, enstrümante
-      edilmiş ve edilmemiş kod arasındaki farkın etkisi tartışılmış mı?
+- [ ] Kapsam ölçümü kodu donatarak (instrumentation) yapıldıysa, donatılmış ve
+      donatılmamış kod arasındaki farkın etkisi tartışılmış mı?
 - [ ] Seviye A'da, derleyicinin ya da bağlayıcının ürettiği ve kaynak koda doğrudan
       izlenemeyen nesne kodu belirlenmiş ve doğruluğu ek doğrulamayla gösterilmiş mi;
-      böyle kod yoksa bunu gösteren analiz var mı?
+      böyle kod yoksa bunu gösteren analiz var mı? Analiz temsilî örnek kodla
+      yapıldıysa proje kodunun örnekteki yapılarla sınırlı kaldığı ve analizin uçacak
+      kodu üreten derleyici sürümü ve seçenekleriyle yapıldığı gösterilmiş mi?
+- [ ] Elle yazılmış çevirici dili (assembly language) modüllerinde kapsam ölçütünün
+      karşılığı (koşullu dallar, koşullu yürütülen komutlar, dolaylı atlamalar, giriş
+      noktaları) planda tanımlanmış ve bu modüllerin kapsamı ölçülmüş mü?
 - [ ] Seviye A, B ve C'de veri bağlaşımı ve kontrol bağlaşımı (data coupling and
       control coupling) analizi, mimaride tanımlı bileşen arası ilişkilerin testlerde
       gerçekten işletildiğini gösteriyor mu?

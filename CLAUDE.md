@@ -217,6 +217,16 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | çok çekirdekli işlemci | multi-core processor |
 | kod üreteci | code generator |
 | kodlama standardı | software code standards |
+| kaynak koddan nesne koduna izlenebilirlik analizi | source to object code traceability analysis |
+| çevirici dili / çevirici | assembly language / assembler |
+| çevirici listesi | assembly listing |
+| ters çevirme (nesne kodundan çevirici diline) | disassembly |
+| donatma (kapsam için koda sayaç ekleme) | instrumentation |
+| donanım izleme | hardware trace |
+| temel blok | basic block |
+| sözde komut / sabit havuzu | pseudo-instruction / literal pool |
+| çağrı kuralı | calling convention |
+| hata enjeksiyonu | fault injection |
 | derleme | build |
 | imaj | image (executable image) |
 | sağlama toplamı | checksum |
