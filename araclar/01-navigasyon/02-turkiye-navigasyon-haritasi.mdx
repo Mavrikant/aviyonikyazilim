@@ -52,6 +52,19 @@ alınır.
   çizilir; süzülüş yolu (GP) olmayan, yalnızca yön veren LOC yaklaşmaları
   kesik çizgilidir. Panelde LLZ ve GP frekansı, DME kanalı, kategori,
   süzülüş açısı ve RDH (eşik üzeri referans yüksekliği) yer alır.
+- **ILS kapsaması:** bir ILS seçildiğinde, ICAO Ek 10'un yön verici (LOC) ve
+  süzülüş yolu için tanımladığı asgari hizmet hacmi haritaya çizilir. LOC
+  alanı, LLZ anteninden yaklaşma yönüne açılan basamaklı bir yelpazedir: ön
+  rota ekseninin ±10° içinde 25 NM, ±10° ile ±35° arasında 17 NM (kesik
+  çizgi). GP alanı, GP anteninden açılan ±8° genişliğinde ve 10 NM
+  uzunluğunda daha koyu bir dilimdir. Paneldeki **kapsama profili** aynı
+  hacmi yandan gösterir: LOC'un alt sınırı eşiğin 2.000 ft üstü (ya da
+  yaklaşma alanındaki en yüksek noktanın 1.000 ft üstü, hangisi yüksekse),
+  üst sınırı antenden 7°'lik yüzeydir; GP, süzülüş açısının (θ) 0,45 katı
+  ile 1,75 katı arasında kalır (3°'lik bir yolda 1,35°–5,25°). Bunlar
+  standardın asgari değerleridir: gerçek kapsama arazi ve engellerle
+  daralabilir, uçuş denetimiyle doğrulanır ve AIP'de yayımlanan kısıtlar
+  (ör. "LOC unusable beyond …") haritaya yansımaz.
 - **AIP dışı:** açık veri setinde bulunup AIP'de karşılığı olmayan
   istasyonlar (kapatılmış ya da askerî olabilir) varsayılan olarak gizlidir;
   bu katmanla soluk olarak gösterilebilir.
