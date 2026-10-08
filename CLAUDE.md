@@ -37,6 +37,9 @@ src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, ba�
 src/components/HedefGezgini/  DO-178C Ek A hedef gezgini (veri.ts: 71 hedef × seviye; araç + seviye özeti şekilleri)
 src/components/KanalTablosu/  VOR/ILS/DME kanal tablosu (kanallar.ts: ICAO Ek 10 eşlemesi + sağlama;
                           Türkiye sütunu turkiye-navigasyon.json'dan)
+src/components/RadyoKapsama/  VOR/DME/TACAN radyo kapsama aracı (yayilim.ts: yol kaybı çekirdeği + sağlama;
+                          arazi.ts: yükseklik karoları; hesap.ts: kutupsal ızgara ve harita görüntüsü)
+src/components/LeafletCekirdek/  Leaflet haritalarının ortak çekirdek CSS'i (.leaflet) ve sade altlık süzgeci
 src/components/GorevCizelgeleme/  Görev çizelgeleme analiz aracı (tepki süresi analizi, EDF talep ölçütü,
                           benzetim, döngüsel yürütücü çerçeve tasarımı)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
@@ -159,6 +162,17 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | kanal eşleme | channel pairing (VHF ⇄ DME, LOC ⇄ GS) |
 | sorgu / cevap frekansı | interrogation / reply frequency (DME) |
 | darbe çifti aralığı | pulse pair spacing |
+| kapsama alanı | coverage |
+| görüş hattı | line of sight |
+| radyo ufku | radio horizon |
+| serbest uzay kaybı | free-space path loss |
+| kırınım kaybı | diffraction loss |
+| bıçak sırtı | knife-edge |
+| bağlantı bütçesi | link budget |
+| pay (bağlantı bütçesinde) | margin |
+| güç yoğunluğu | power density |
+| alıcı hassasiyeti | receiver sensitivity |
+| eşdeğer izotropik yayılan güç | equivalent isotropically radiated power (EIRP) |
 | benzersiz neden MC/DC | unique-cause MC/DC |
 | maskeleme MC/DC | masking MC/DC |
 | bağlı koşul | coupled condition |
@@ -390,7 +404,9 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   siteye konmaz, yalnızca ayrıştırılmış olgusal alanlar kullanılır. Sayfadaki
   "seyrüsefer amaçlı kullanılmaz" uyarısı korunur.
 - Leaflet'in `leaflet.css` dosyası **import edilmez** (tüm CSS tek `styles.css`'e
-  girer); gereken çekirdek kurallar harita CSS modülünde `.harita` kapsamındadır.
+  girer); gereken çekirdek kurallar `src/components/LeafletCekirdek/leaflet.module.css`
+  içinde `.leaflet` kapsamındadır. Harita kullanan bileşen köküne bu sınıfı verir ve modülü
+  kendi CSS modülünden **sonra** import eder (eşit özgüllükte çekirdek sonda kalır).
   Altlık karoları harici servislerden (OpenStreetMap, OpenTopoMap) gelir ve atıf
   satırı korunur; API anahtarı isteyen servis kullanılmaz.
 - Gömme sayfaları (`src/pages/gom/`) `Layout` kullanmaz, `noindex` taşır ve
@@ -418,6 +434,17 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   adım bütçesiyle sınırlıdır; bütçe biterse sonuç "sınırsız" değil "belirsiz" sayılır.
   Çekirdek değişirse bilinen bir örnekle karşılaştırılır (tablo sırası, kesintili:
   T=70/C=26 ve T=100/C=62 → ikinci görevin en kötü tepki süresi 118 ms).
+- **Radyo kapsama aracı** model tahminidir, ölçüm değildir; sayfadaki "seyrüsefer amaçlı
+  kullanılmaz" uyarısı ve "Sınırlar" bölümü korunur. Yol kaybı serbest uzay kaybı ile ITU-R
+  P.526 Bullington kırınımının toplamıdır, dünya eğriliği 4/3 etkin yarıçapla eklenir
+  (`yayilim.ts`; dosya sonundaki sağlama tutmazsa derleme durur). Verici gücü ve anten
+  kazancı AIP'de yoktur: `index.tsx`'teki `BILESENLER` tipik değerlerdir ve sayfada öyle
+  anılır, AIP verisiymiş gibi gösterilmez. Arazi, AWS Open Data'daki Terrain Tiles
+  karolarından tarayıcıda indirilir (anahtar yok; atfı harita köşesinde ve sayfada korunur);
+  depoya yükseklik verisi konmaz. Hesap ana iş parçacığında parçalar hâlinde yapılır; yarıçap
+  önce deniz seviyesine göre seçilir, kapsama çok daha darsa daraltılıp yinelenir. Kapsama
+  renkleri hem CSS'te (`--rk-*`, lejant) hem `PALETLER`'de (harita görüntüsü) durur, birlikte
+  değiştirilir. NDB ve ILS kapsam dışıdır (yer dalgası; yönlü anten).
 - **VOR/ILS/DME kanal tablosu** elle yazılmaz: `src/components/KanalTablosu/kanallar.ts`
   252 DME kanalını (1X–126Y) ICAO Ek 10 Cilt I eşleme kuralından hesaplar; yalnızca
   LOC → GS eşlemesi listedir. Frekanslar tam sayı kHz tutulur. Dosya sonundaki sağlama

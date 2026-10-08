@@ -92,6 +92,18 @@ const SIMGELER: Record<string, ReactNode> = {
       <path d="M54 10v44M51 14l3-4 3 4" data-vurgu="" />
     </>
   ),
+  // Radyo kapsama: istasyon, yayılan dalga yayları ve arkasında sinyal gölgesi bırakan dağ
+  kapsama: (
+    <>
+      <path d="M6 54h52" />
+      <path d="M12 54V34M8 34h8" />
+      <circle cx="12" cy="30" r="2.5" />
+      <path d="M20 22a12 12 0 0 1 0 16M26 16a20 20 0 0 1 0 28" />
+      <path d="M30 54l10-20 6 9 4-6 8 17" />
+      <path d="M12 30l28 4 18 2.6" strokeDasharray="2 3" data-vurgu="" />
+      <path d="M46 43l12 3" data-vurgu="" />
+    </>
+  ),
 };
 
 const VARSAYILAN = (

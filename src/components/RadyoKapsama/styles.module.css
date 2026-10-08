@@ -1,0 +1,524 @@
+/*
+ * Radyo kapsama aracı. Kabuk (üst şerit, ayarlar, düğmeler) diğer hesap araçlarıyla aynı
+ * düzendedir; yerleşim useGeometri'nin köke yazdığı data-boyut ve data-dokunmatik
+ * özniteliklerine göre ayarlanır. Leaflet çekirdeği ../LeafletCekirdek modülünden gelir.
+ *
+ * Kapsama renkleri (--rk-guclu … --rk-arazi) index.tsx'teki PALETLER ile aynı tutulur:
+ * harita görüntüsü pikselleri CSS değişkeni okuyamaz.
+ */
+
+.arac {
+  --rk-cizgi: var(--ifm-toc-border-color);
+  --rk-zemin: var(--ifm-background-surface-color);
+  --rk-guclu: #17497a;
+  --rk-orta: #4f93cf;
+  --rk-sinir: #d89a3d;
+  --rk-arazi: #6b7a8a;
+  --rk-var: #2f7d4f;
+  --rk-yok: #b4232a;
+  --rk-isaret: var(--av-navy-600);
+  --rk-nokta: #b4232a;
+
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: var(--ifm-global-radius);
+  background: var(--rk-zemin);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+[data-theme='dark'] .arac {
+  --rk-guclu: #85b7e6;
+  --rk-orta: #4a7fb3;
+  --rk-sinir: #ffc65c;
+  --rk-arazi: #8193a6;
+  --rk-var: #6fd39a;
+  --rk-yok: #ff8a8f;
+  --rk-isaret: #85b7e6;
+  --rk-nokta: #ff8a8f;
+}
+
+/* Tam ekran: tarayıcı tam ekranı ya da (desteklenmiyorsa) ekranı kaplayan katman */
+.tamEkran,
+.arac:fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.kaydirmaKilidi {
+  overflow: hidden;
+}
+
+.arac :is(input, select, button) {
+  font: inherit;
+  color: inherit;
+}
+
+.arac :is(input:not([type='checkbox']), select) {
+  height: 2.2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.arac :is(input, select, button):focus-visible {
+  outline: 2px solid var(--av-amber-500);
+  outline-offset: 1px;
+}
+
+/* iOS, 16 px'ten küçük giriş kutusuna dokununca sayfayı yakınlaştırır */
+.arac[data-dokunmatik] :is(input:not([type='checkbox']), select) {
+  height: 2.75rem;
+  font-size: 16px;
+}
+
+/* ---------- Üst şerit ve düğmeler ---------- */
+
+.ustSerit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.ustBaslik {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dugmeler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.dugme {
+  min-height: 2.2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dugme:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.arac[data-dokunmatik] .dugme {
+  min-height: 2.75rem;
+}
+
+.tamEkranDugme {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tamEkranDugme svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ---------- Ayarlar ---------- */
+
+.ayarlar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.alan :is(input, select) {
+  width: 100%;
+}
+
+.genisAlan {
+  grid-column: span 2;
+}
+
+.arac[data-boyut='kucuk'] .ayarlar {
+  grid-template-columns: 1fr 1fr;
+}
+
+.etiket {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.secici {
+  display: flex;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.secici button {
+  flex: 1;
+  min-height: 2.2rem;
+  padding: 0 0.4rem;
+  border: 0;
+  background: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.secici button + button {
+  border-left: 1px solid var(--rk-cizgi);
+}
+
+.secici .secili {
+  background: var(--ifm-color-primary);
+  color: var(--ifm-background-color);
+}
+
+.arac[data-dokunmatik] .secici button {
+  min-height: 2.75rem;
+}
+
+/* ---------- Özet sayıları ---------- */
+
+.ozet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0.9rem 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--rk-cizgi);
+}
+
+.ozet dt {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.ozet dd {
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+}
+
+.arac[data-boyut='kucuk'] .ozet {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ---------- Harita ---------- */
+
+.govde {
+  position: relative;
+  flex: 1 0 auto;
+  height: clamp(20rem, 62vh, 40rem);
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tamEkran .govde,
+.arac:fullscreen .govde {
+  height: auto;
+  min-height: 24rem;
+}
+
+.haritaAlan {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  cursor: crosshair;
+}
+
+.haritaAlan :global(.leaflet-grab) {
+  cursor: crosshair;
+}
+
+/* Çekirdekte olmayan iki Leaflet kuralı: görüntü katmanı ve ipucu */
+.arac :global(.leaflet-image-layer) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.kapsamaGoruntusu {
+  image-rendering: pixelated;
+}
+
+.arac :global(.leaflet-tooltip) {
+  position: absolute;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 4px;
+  background: var(--rk-zemin);
+  color: var(--ifm-font-color-base);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ipucu {
+  margin-top: -8px;
+}
+
+.isaret {
+  stroke: var(--rk-zemin);
+  stroke-width: 1.5;
+  fill: var(--rk-isaret);
+  fill-opacity: 0.9;
+  cursor: pointer;
+}
+
+.isaretSecili {
+  stroke: var(--rk-zemin);
+  stroke-width: 2.5;
+  fill: var(--av-amber-500);
+  fill-opacity: 1;
+}
+
+.hesapSiniri {
+  stroke: var(--ifm-color-emphasis-600);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+  fill: none;
+}
+
+.yayimlanan {
+  stroke: var(--av-amber-600);
+  stroke-width: 2;
+  stroke-dasharray: 8 5;
+  fill: none;
+}
+
+.noktaHatti {
+  stroke: var(--rk-nokta);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.noktaIsareti {
+  stroke: var(--rk-zemin);
+  stroke-width: 2;
+  fill: var(--rk-nokta);
+  fill-opacity: 1;
+}
+
+.durum {
+  position: absolute;
+  left: 50%;
+  top: 0.6rem;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: calc(100% - 1.2rem);
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--rk-cizgi);
+  border-radius: 6px;
+  background: var(--rk-zemin);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+  transform: translateX(-50%);
+}
+
+/* ---------- Lejant ---------- */
+
+.lejant {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.lejantOge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.lejantOge i {
+  display: inline-block;
+  width: 1rem;
+  height: 0.75rem;
+  border-radius: 2px;
+}
+
+.renkGuclu {
+  background: var(--rk-guclu);
+}
+
+.renkOrta {
+  background: var(--rk-orta);
+}
+
+.renkSinir {
+  background: var(--rk-sinir);
+}
+
+.renkArazi {
+  background: var(--rk-arazi);
+}
+
+.lejantOge .cizgiSinir,
+.lejantOge .cizgiYayimlanan {
+  height: 0;
+  border-radius: 0;
+  border-top: 1px dashed var(--ifm-color-emphasis-600);
+}
+
+.lejantOge .cizgiYayimlanan {
+  border-top: 2px dashed var(--av-amber-600);
+}
+
+.onay {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+/* ---------- Seçilen nokta ve kesit ---------- */
+
+.nokta {
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rk-cizgi);
+}
+
+.ipucuMetni {
+  margin: 0;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.85rem;
+}
+
+.noktaBaslik {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+
+.noktaBaslik .dugme {
+  margin-left: auto;
+}
+
+.nokta .ozet {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.rozet {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rozetVar {
+  color: var(--rk-var);
+}
+
+.rozetYok {
+  color: var(--rk-yok);
+}
+
+.kesit {
+  margin: 0;
+}
+
+.kesit svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.kesit figcaption {
+  margin-top: 0.3rem;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+}
+
+.kesitIzgara {
+  stroke: var(--rk-cizgi);
+  stroke-width: 1;
+  fill: none;
+}
+
+.kesitEtiket {
+  fill: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 10px;
+}
+
+.kesitArazi {
+  fill: color-mix(in srgb, var(--rk-arazi) 45%, transparent);
+  stroke: var(--rk-arazi);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.kesitDeniz {
+  stroke: var(--ifm-color-emphasis-500);
+  stroke-width: 0.8;
+  fill: none;
+}
+
+.kesitFresnel {
+  stroke: var(--ifm-color-emphasis-600);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+  fill: none;
+}
+
+.kesitHat,
+.kesitHatKesik {
+  stroke: var(--rk-var);
+  stroke-width: 1.8;
+  fill: none;
+}
+
+.kesitHatKesik {
+  stroke: var(--rk-yok);
+}
+
+.kesitUc {
+  fill: var(--av-amber-500);
+  stroke: var(--rk-zemin);
+  stroke-width: 1.5;
+}
