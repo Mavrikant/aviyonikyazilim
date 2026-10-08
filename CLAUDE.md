@@ -35,6 +35,8 @@ scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.js
 src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
 src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set)
 src/components/HedefGezgini/  DO-178C Ek A hedef gezgini (veri.ts: 71 hedef × seviye; araç + seviye özeti şekilleri)
+src/components/KanalTablosu/  VOR/ILS/DME kanal tablosu (kanallar.ts: ICAO Ek 10 eşlemesi + sağlama;
+                          Türkiye sütunu turkiye-navigasyon.json'dan)
 src/components/GorevCizelgeleme/  Görev çizelgeleme analiz aracı (tepki süresi analizi, EDF talep ölçütü,
                           benzetim, döngüsel yürütücü çerçeve tasarımı)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
@@ -152,6 +154,11 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | kontak boyutu | contact size |
 | ön (geçme) yüz / arka yüz | mating face / rear face |
 | ana kama | master key |
+| yön verici | localizer (LOC) |
+| süzülüş yolu | glide path / glide slope (GP/GS) |
+| kanal eşleme | channel pairing (VHF ⇄ DME, LOC ⇄ GS) |
+| sorgu / cevap frekansı | interrogation / reply frequency (DME) |
+| darbe çifti aralığı | pulse pair spacing |
 | benzersiz neden MC/DC | unique-cause MC/DC |
 | maskeleme MC/DC | masking MC/DC |
 | bağlı koşul | coupled condition |
@@ -398,6 +405,12 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
   adım bütçesiyle sınırlıdır; bütçe biterse sonuç "sınırsız" değil "belirsiz" sayılır.
   Çekirdek değişirse bilinen bir örnekle karşılaştırılır (tablo sırası, kesintili:
   T=70/C=26 ve T=100/C=62 → ikinci görevin en kötü tepki süresi 118 ms).
+- **VOR/ILS/DME kanal tablosu** elle yazılmaz: `src/components/KanalTablosu/kanallar.ts`
+  252 DME kanalını (1X–126Y) ICAO Ek 10 Cilt I eşleme kuralından hesaplar; yalnızca
+  LOC → GS eşlemesi listedir. Frekanslar tam sayı kHz tutulur. Dosya sonundaki sağlama
+  (252 kanal; 160 VOR, 40 LOC, 52 eşsiz; 40 farklı GS; uç değerler) tutmazsa derleme durur.
+  Türkiye sütunu navigasyon haritasının veri dosyasından gelir; AIP atfı tablonun altında
+  korunur.
 - Konnektör aracında sinyal türü renkleri CSS değişkenleridir (açık/koyu tema); sunucuda
   üretilen HTML temadan bağımsız kalsın diye renk bileşende seçilmez. Dışa aktarım paleti
   (`veri.ts`, `ACIK`) CSS'teki açık tema değerleriyle aynı tutulur. Paylaşım bağlantısı

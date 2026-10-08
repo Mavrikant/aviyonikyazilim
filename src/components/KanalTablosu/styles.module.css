@@ -1,0 +1,458 @@
+/*
+ * VOR / ILS / DME kanal tablosu. Yerleşim, useGeometri'nin köke yazdığı data-boyut
+ * (kucuk | orta | genis) ve data-dokunmatik özniteliklerine göre ayarlanır. Tür renkleri
+ * anlamı tek başına taşımaz: her etiket metniyle (VOR / LOC / DME) birlikte görünür.
+ */
+
+.arac {
+  --kt-cizgi: var(--ifm-toc-border-color);
+  --kt-zemin: var(--ifm-background-surface-color);
+  --kt-vurgu: var(--av-amber-500);
+  --kt-vor: #2563a6;
+  --kt-ils: #8a5a12;
+  --kt-dme: var(--ifm-color-emphasis-700);
+
+  margin: 1.5rem 0 2rem;
+  padding: 1rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: var(--ifm-global-radius);
+  background: var(--kt-zemin);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+[data-theme='dark'] .arac {
+  --kt-vurgu: var(--av-amber-400);
+  --kt-vor: #6aa5e6;
+  --kt-ils: var(--av-amber-400);
+}
+
+.ustSerit {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.ustDugmeler {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.etiket {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.arac :is(input, select, button) {
+  font: inherit;
+  color: inherit;
+}
+
+.arac :is(select, input[type='search']) {
+  height: 2.2rem;
+  max-width: 100%;
+  padding: 0 0.55rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+/* iOS, 16 px'ten küçük giriş kutusuna dokununca sayfayı yakınlaştırır */
+.arac[data-dokunmatik] :is(select, input[type='search']) {
+  height: 2.75rem;
+  font-size: 16px;
+}
+
+.arac :is(select, input, button, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--kt-vurgu);
+  outline-offset: 1px;
+}
+
+.dugme {
+  min-height: 2.2rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.arac[data-dokunmatik] :is(.dugme, .turDugme) {
+  min-height: 2.75rem;
+}
+
+.dugme:hover:not(:disabled) {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
+.dugme:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ipucu {
+  margin: 0.4rem 0 0;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.78rem;
+}
+
+/* ---------- Süzgeçler ---------- */
+
+.suzgecSatiri {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.6rem 0.9rem;
+}
+
+.alan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.aramaAlani {
+  flex: 1 1 16rem;
+}
+
+.aramaAlani input {
+  width: 100%;
+}
+
+.arac[data-boyut='kucuk'] :is(.alan, .alan select) {
+  width: 100%;
+}
+
+.secenekler {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+  margin-top: 0.75rem;
+}
+
+.turler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.turDugme {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 6px;
+  background: none;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.turDugme:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+.seciliTur {
+  border-color: var(--ifm-color-primary);
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+  font-weight: 600;
+}
+
+.sayi {
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.onay {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.onay:has(input:disabled) {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.arac[data-dokunmatik] .onay {
+  min-height: 2.2rem;
+}
+
+/* ---------- Tür etiketi ---------- */
+
+.tur {
+  display: inline-block;
+  min-width: 2.6rem;
+  padding: 0 0.3rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  text-align: center;
+  vertical-align: 0.08em;
+}
+
+.turVOR {
+  color: var(--kt-vor);
+}
+
+.turILS {
+  color: var(--kt-ils);
+}
+
+.turDME {
+  color: var(--kt-dme);
+}
+
+/* ---------- Ayrıntı ---------- */
+
+.ayrinti {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--kt-cizgi);
+  border-left: 3px solid var(--kt-vurgu);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.ayrintiUst {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.ayrintiBaslik {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.kartlar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin: 0;
+}
+
+.arac:not([data-boyut='genis']) .kartlar {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kart {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 6px;
+}
+
+.kart dd {
+  margin: 0.15rem 0 0;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.kart dd b {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.not,
+.ayrintiTr {
+  margin: 0.6rem 0 0;
+  font-size: 0.85rem;
+}
+
+.istasyonAdi {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.8rem;
+}
+
+/* ---------- Tablo ---------- */
+
+.listeUst {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.sonuc {
+  margin: 0;
+}
+
+.bos {
+  margin: 0;
+  padding: 1.25rem 1rem;
+  border: 1px dashed var(--kt-cizgi);
+  border-radius: 6px;
+  color: var(--ifm-color-emphasis-700);
+  text-align: center;
+}
+
+/* Tablo kendi kutusunda kayar; başlık satırı kutunun üstüne yapışır */
+.tabloSar {
+  max-height: min(36rem, 70vh);
+  overflow: auto;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.tablo {
+  display: table;
+  width: 100%;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.tablo :is(th, td) {
+  padding: 0.3rem 0.6rem;
+  border: 0;
+  border-bottom: 1px solid var(--kt-cizgi);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.tablo tr,
+.tablo tr:nth-child(2n) {
+  border: 0;
+  background: none;
+}
+
+.tablo thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 0;
+  background: var(--kt-zemin);
+  font-family: var(--ifm-font-family-base);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tablo thead th:not(:has(button)) {
+  padding: 0.45rem 0.6rem;
+}
+
+.sirala {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 0;
+  background: none;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sirala:hover {
+  color: var(--ifm-color-primary);
+}
+
+.ok {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.65rem;
+}
+
+[aria-sort] .ok {
+  color: var(--kt-vurgu);
+}
+
+.tablo tbody tr:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 5%, transparent);
+}
+
+.seciliSatir,
+.tablo tbody tr.seciliSatir:hover {
+  background: color-mix(in srgb, var(--kt-vurgu) 14%, transparent);
+}
+
+.tablo tbody th {
+  font-weight: 600;
+}
+
+.kanalDugme {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-weight: 600;
+  text-decoration: underline dotted var(--ifm-color-emphasis-500);
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.kanalDugme:hover {
+  color: var(--ifm-color-primary);
+}
+
+.frekans {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.yok {
+  color: var(--ifm-color-emphasis-500);
+}
+
+.trHucre {
+  min-width: 8rem;
+}
+
+.istasyon {
+  font-weight: 500;
+}
+
+.dahaFazla {
+  margin-left: 0.3rem;
+  padding: 0 0.3rem;
+  border: 1px solid var(--kt-cizgi);
+  border-radius: 4px;
+  background: none;
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+
+.arac[data-boyut='kucuk'] .darbe {
+  display: none;
+}
+
+@media print {
+  .tabloSar {
+    max-height: none;
+    overflow: visible;
+  }
+}

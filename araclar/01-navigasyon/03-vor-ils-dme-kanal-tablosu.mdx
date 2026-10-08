@@ -1,0 +1,96 @@
+---
+title: "VOR, ILS ve DME Kanal Tablosu"
+description: "VOR ve LOC frekanslarını eşli GS frekansı ve DME kanalıyla (1X–126Y, sorgu/cevap) listeleyen; frekans, kanal ve istasyonla aranabilen tablo."
+sidebar_position: 3
+hide_table_of_contents: true
+sidebar_custom_props:
+  simge: kanal
+  ozellikler: [252 DME kanalı, Akıllı arama, Sıralama, Türkiye istasyonları, CSV, Paylaşılabilir]
+keywords: ["DME kanal tablosu", "VOR DME eşleme", "ILS glide slope frekansı", "LOC GS eşleme", "TACAN kanalları", "DME X Y kanal"]
+---
+
+import KanalTablosu from '@site/src/components/KanalTablosu';
+
+# VOR, ILS ve DME Kanal Tablosu
+
+VHF seyrüsefer bandındaki her VOR ve yön verici (localizer, LOC) frekansının
+hangi DME kanalıyla, LOC frekanslarının da hangi süzülüş yolu (glide slope,
+GS) frekansıyla eşlendiğini tek tabloda gösterir. 252 DME kanalının (1X–126Y)
+sorgu ve cevap frekansları, darbe çifti aralıkları ve Türkiye'de o kanalı
+kullanan istasyonlar da aynı satırdadır.
+
+<KanalTablosu />
+
+## Kanal eşleme nasıl kurulur?
+
+Bir aviyonik sistemde pilot yalnızca VHF frekansını seçer; DME sorgulayıcı ve
+(ILS'de) süzülüş yolu alıcısı bu seçimden kendiliğinden ayarlanır. Bu, ICAO'nun
+Ek 10 Cilt I'de tanımladığı sabit bir kanal eşlemesi (channel pairing) ile
+mümkündür: her VHF frekansının tek bir DME kanalı, her LOC frekansının tek bir
+GS frekansı vardır. Tablo bu kuraldan hesaplanır:
+
+```
+DME kanalı      n = 1 … 126, mod X ya da Y
+sorgu frekansı  = 1024 + n MHz                   (uçak → yer istasyonu)
+cevap frekansı  X: n ≤ 63 ise sorgu − 63, değilse sorgu + 63 MHz
+                Y: n ≤ 63 ise sorgu + 63, değilse sorgu − 63 MHz
+VHF eşi         n = 17 … 59  → 108,00 + (n − 17) × 0,1 MHz
+                n = 70 … 126 → 112,30 + (n − 70) × 0,1 MHz
+                Y kanalı, X kanalının 50 kHz üstüdür
+```
+
+- **VOR mu LOC mu?** 108,00–111,95 MHz aralığını VOR ve ILS paylaşır: MHz'in
+  onda birler basamağı tek olan frekanslar (108,10, 108,15, 108,30 …) LOC,
+  çift olanlar (108,00, 108,05, 108,20 …) VOR içindir. 112,00–117,95 MHz'in
+  tamamı VOR'dur. Böylece bant 160 VOR ve 40 LOC frekansına ayrılır.
+- **GS eşlemesi** bir formüle bağlı değildir: 40 LOC frekansının her biri
+  328,6–335,4 MHz bandındaki 40 GS frekansından birine sabit bir listeyle
+  bağlanır. Liste ardışık değildir; komşu LOC kanallarının GS frekansları
+  birbirinden uzak düşebilir. Y kanalındaki LOC'un GS'i, X eşinin 150 kHz
+  altındadır.
+- **X ve Y modları** aynı kanal numarasını iki kez kullanmanın yoludur: ikisi
+  frekansla değil, darbe çiftleri arasındaki aralıkla da ayrılır (X'te sorgu ve
+  cevap 12 µs; Y'de sorgu 36 µs, cevap 30 µs). Alıcı yalnızca kendi kodundaki
+  darbe çiftlerini kabul eder.
+- **Eşsiz kanallar:** 1–16 ve 60–69 numaralı kanalların (X ve Y, toplam 52
+  kanal) VHF eşi yoktur. Bunlar askerî TACAN istasyonlarına ve ulusal
+  tahsislere kalır; tabloda "Yalnız DME/TACAN" olarak gösterilir. VORTAC ve
+  TACAN istasyonları da aynı 252 kanalı kullanır; VORTAC'ın TACAN bileşeni
+  VOR frekansının eşi olan kanaldadır.
+
+## Kullanım
+
+- **Arama** kutusu yazılanı türüne göre yorumlar:
+  - `40X` → o kanal; `40` → 40X ve 40Y.
+  - `110.3` ya da `110,3` → 110,30 ve 110,35 MHz (önek olarak; LOC ve VOR);
+    `334` → 334,xx MHz'teki GS frekansları.
+  - `1065` → sorgu ya da cevap frekansı 1065 MHz olan kanallar.
+  - `ESB`, `IANK`, `Esenboğa` → Türkiye'de bu istasyonun ya da meydanın
+    kullandığı kanallar; `loc`, `vor`, `tacan` → o türdeki kanallar.
+- **Tür** düğmeleri (VOR, ILS, yalnız DME/TACAN) ve **mod** seçimi (X/Y)
+  tabloyu daraltır; "Yalnızca Türkiye'de kullanılanlar" yalnızca bir istasyona
+  atanmış kanalları bırakır.
+- **Sütun başlığına** tıklayarak kanal, VHF, GS ya da DME frekansına göre
+  sıralayın; ikinci tıklama sırayı tersine çevirir. GS'e göre sıralamak, GS
+  bandının LOC kanallarına ne kadar dağınık dağıtıldığını gösterir.
+- **Kanal adına** tıklayınca (ya da arama tek kanala indiğinde) ayrıntı kartı
+  açılır: eşli frekanslar, darbe aralıkları ve Türkiye'de o kanalı kullanan
+  istasyonların listesi.
+- **İstasyon kodları**, [Türkiye Navigasyon Haritası](./turkiye-navigasyon-haritasi)'nda
+  o istasyonu seçili olarak açar.
+- **CSV indir** görünen satırları dışa aktarır; **Bağlantıyı kopyala** arama,
+  süzgeç ve seçili kanalı adrese yazar.
+
+## Kaynak ve sınırlar
+
+- Kanal planı, ICAO Ek 10 (Annex 10) Cilt I'deki DME/VHF eşleme kuralından
+  hesaplanır; yalnızca LOC → GS eşlemesi tabloya liste olarak girilmiştir.
+  Bileşen her derlemede kanal sayılarını (252 kanal; 160 VOR, 40 LOC, 52 eşsiz)
+  ve bilinen uç değerleri sağlar; tutmazsa derleme durur.
+- Türkiye sütunu, [AIP Türkiye](https://dhmi.gov.tr/Sayfalar/aipturkey.aspx)
+  © DHMİ verisinden (navigasyon haritasıyla aynı dosya) gelir. AIP'de kanalı
+  yazılmamış ILS'lerde kanal, LOC frekansından eşlemeyle bulunur.
+- MLS ile kullanılan DME/P'nin W ve Z kanalları kapsam dışıdır.
+- Tablo eğitim ve tasarım amaçlıdır; frekans tahsisi ve uçuş için yürürlükteki
+  resmî AIP, NOTAM ve ulusal frekans planı esas alınır. **Seyrüsefer amaçlı
+  kullanılmaz.**

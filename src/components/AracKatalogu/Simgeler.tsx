@@ -29,6 +29,15 @@ const SIMGELER: Record<string, ReactNode> = {
       <circle cx="18" cy="46" r="1" />
     </>
   ),
+  // Kanal tablosu: satırlar, kanal sütunu ve iki frekansı eşleyen ok (VHF ⇄ DME)
+  kanal: (
+    <>
+      <rect x="6" y="10" width="52" height="44" rx="4" />
+      <path d="M6 21h52M6 32h52M6 43h52M20 10v44" />
+      <path d="M11 37.5h4" strokeWidth="3" />
+      <path d="M25 37.5h28M49 34l4 3.5-4 3.5M29 34l-4 3.5 4 3.5" data-vurgu="" />
+    </>
+  ),
   // Seri kanal: UART karakter çerçevesi (boşta 1, başlangıç biti 0, veri bitleri, durdurma 1) ve iki uç
   seri: (
     <>
