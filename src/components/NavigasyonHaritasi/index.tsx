@@ -37,7 +37,14 @@ import {
   formatMHz,
   formatNm,
   formatVariation,
+  formatDeg,
+  formatFt,
+  GP_KAPSAMA,
+  gpCoverage,
+  heightFt,
   ilsLabel,
+  LOC_KAPSAMA,
+  locCoverage,
   morse,
   navaidLayer,
   navaidLayers,
@@ -161,7 +168,7 @@ function ilsItems(data: NavData): IlsItem[] {
     }
     const crs = thr ? bearingDeg(thr[0], thr[1], x.llz[0], x.llz[1]) : undefined;
     const [lat, lon] = thr ?? x.llz;
-    return {...x, lat, lon, crs, name: apt?.name ?? x.apt};
+    return {...x, lat, lon, crs, name: apt?.name ?? x.apt, aptElev: apt?.elev};
   });
 }
 
@@ -183,7 +190,7 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
   const navaidMarkersRef = useRef<{marker: Leaflet.Marker; layers: LayerKey[]}[]>([]);
   const markersRef = useRef(new Map<string, Leaflet.Marker>());
   const highlightRef = useRef<Leaflet.CircleMarker | null>(null);
-  const coverageRef = useRef<Leaflet.Circle | null>(null);
+  const coverageRef = useRef<Leaflet.FeatureGroup | null>(null);
   const measureLayerRef = useRef<Leaflet.LayerGroup | null>(null);
   const measuringRef = useRef(false);
   const initialRef = useRef<Initial | null>(null);
@@ -506,15 +513,26 @@ export default function NavigasyonHaritasi({gomulu = false}: Props): ReactNode {
     // Kapsama halkası: AIP değeri düz, tipik (standart hizmet hacmi) değer kesik çizgiyle
     const cov = selected.kind === 'navaid' ? coverage(selected.item) : undefined;
     if (cov) {
-      coverageRef.current = L.circle(position(selected), {
-        radius: cov.nm * 1852,
-        className: clsx(
-          styles.kapsama,
-          !cov.aip && styles.kapsamaTipik,
-          selected.kind === 'navaid' && selected.item.type.startsWith('NDB') && styles.kapsamaNdb,
-        ),
-        interactive: false,
-      }).addTo(map);
+      coverageRef.current = L.featureGroup([
+        L.circle(position(selected), {
+          radius: cov.nm * 1852,
+          className: clsx(
+            styles.kapsama,
+            !cov.aip && styles.kapsamaTipik,
+            selected.kind === 'navaid' && selected.item.type.startsWith('NDB') && styles.kapsamaNdb,
+          ),
+          interactive: false,
+        }),
+      ]).addTo(map);
+    }
+    // ILS kapsama hacminin yatay izdüşümü (ICAO Ek 10): geniş LOC yelpazesi ve içinde GP dilimi
+    if (selected.kind === 'ils') {
+      const loc = locCoverage(selected.item);
+      const gp = gpCoverage(selected.item);
+      const parts: Leaflet.Polygon[] = [];
+      if (loc) parts.push(L.polygon(loc, {className: styles.kapsamaLoc, weight: 1.5, interactive: false}));
+      if (gp) parts.push(L.polygon(gp, {className: styles.kapsamaGp, weight: 1.5, interactive: false}));
+      if (parts.length) coverageRef.current = L.featureGroup(parts).addTo(map);
     }
   }, [selected, mapReady, data, layers]);
 
@@ -1089,7 +1107,7 @@ function Detay({f, nearby, related, onClose, onPick, onCopy, copied, onFitCovera
       <dl className={styles.ozellik}>
         {f.kind === 'navaid' && <NavaidRows n={f.item} onFitCoverage={onFitCoverage} />}
         {f.kind === 'airport' && <AirportRows a={f.item} />}
-        {f.kind === 'ils' && <IlsRows x={f.item} />}
+        {f.kind === 'ils' && <IlsRows x={f.item} onFitCoverage={onFitCoverage} />}
         <dt>{f.kind === 'ils' ? 'LLZ anteni' : 'Konum'}</dt>
         <dd>
           <button type="button" className={styles.kopyaDugme} onClick={() => onCopy(coords, 'coord')} title="Koordinatı kopyala">
@@ -1291,7 +1309,11 @@ function NavaidRows({n, onFitCoverage}: {n: Navaid; onFitCoverage: () => void}):
   );
 }
 
-function IlsRows({x}: {x: IlsItem}): ReactNode {
+function IlsRows({x, onFitCoverage}: {x: IlsItem; onFitCoverage: () => void}): ReactNode {
+  const {dar, genis, ustAci, altFt} = LOC_KAPSAMA;
+  const theta = x.angle ?? 3;
+  const gpAlt = theta * GP_KAPSAMA.alt;
+  const gpUst = theta * GP_KAPSAMA.ust;
   return (
     <>
       <Satir k="LLZ frekansı" v={formatMHz(x.freq)} />
@@ -1308,6 +1330,32 @@ function IlsRows({x}: {x: IlsItem}): ReactNode {
       <Satir k="Süzülüş açısı" v={x.angle ? `${String(x.angle).replace('.', ',')}°` : undefined} />
       <Satir k="RDH" v={x.rdh ? `${x.rdh} ft` : undefined} />
       <Satir k="GP anteni" v={x.gp ? formatDms(x.gp[0], x.gp[1]) : undefined} />
+      <Satir
+        k="LOC kapsaması"
+        v={
+          x.crs !== undefined ? (
+            <button type="button" className={styles.metinDugme} onClick={onFitCoverage} title="Kapsama alanını göster">
+              {dar.nm} NM ±{dar.aci}° · {genis.nm} NM ±{genis.aci}°
+            </button>
+          ) : undefined
+        }
+      />
+      <Satir
+        k="LOC dikey"
+        v={`eşik + ${formatFt(altFt)}${x.aptElev !== undefined ? ` (~${formatFt(x.aptElev + altFt)} MSL)` : ''} ile antenden ${ustAci}° arası`}
+      />
+      <Satir
+        k="GP kapsaması"
+        v={x.gp ? `${GP_KAPSAMA.nm} NM ±${GP_KAPSAMA.aci}° · ${formatDeg(gpAlt)}–${formatDeg(gpUst)}` : undefined}
+      />
+      <Satir
+        k={`GP ${GP_KAPSAMA.nm} NM'de`}
+        v={
+          x.gp
+            ? `${formatFt(heightFt(gpAlt, GP_KAPSAMA.nm))} – ${formatFt(heightFt(gpUst, GP_KAPSAMA.nm))} (anten üstü)`
+            : undefined
+        }
+      />
     </>
   );
 }

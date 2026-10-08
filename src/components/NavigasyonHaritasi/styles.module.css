@@ -818,6 +818,24 @@
   stroke-dasharray: 6 5;
 }
 
+/* ILS kapsaması: geniş LOC yelpazesi açık, içindeki GP dilimi koyu */
+.kapsamaLoc,
+.kapsamaGp {
+  fill: var(--hv-ils);
+  stroke: var(--hv-ils);
+}
+
+.kapsamaLoc {
+  fill-opacity: 0.06;
+  stroke-opacity: 0.8;
+  stroke-dasharray: 6 4;
+}
+
+.kapsamaGp {
+  fill-opacity: 0.2;
+  stroke-opacity: 0.95;
+}
+
 .isikSatir td {
   padding-top: 0 !important;
   color: var(--ifm-color-emphasis-700);

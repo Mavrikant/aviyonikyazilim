@@ -77,7 +77,7 @@ export type Ils = {
 };
 
 /** Haritada kullanılan ILS öğesi: konum eşiğe yakın noktadır, `crs` yaklaşma rotasıdır (gerçek). */
-export type IlsItem = Ils & {lat: number; lon: number; crs?: number; name?: string};
+export type IlsItem = Ils & {lat: number; lon: number; crs?: number; name?: string; aptElev?: number};
 
 export type NavData = {
   generated: string;
@@ -376,3 +376,53 @@ export function searchText(f: Feature): string {
   const freq = formatFrequency(n)?.replace(',', '.') ?? '';
   return normalize([n.ident, n.name, n.type, freq, n.ch, n.apt].filter(Boolean).join(' '));
 }
+
+/**
+ * ILS kapsama hacmi (ICAO Ek 10 Cilt I, 3.1.3.3 ve 3.1.5.3). Değerler standardın
+ * asgari hizmet hacmidir; gerçek kapsama arazi ve engellerle daralabilir.
+ *
+ * - LOC (antenden, ön rota ekseni çevresinde): ±10° içinde 25 NM, ±10°–±35° arasında
+ *   17 NM. Dikeyde alt sınır eşik rakımının 2.000 ft üstü ya da ara ve son yaklaşma
+ *   alanındaki en yüksek noktanın 1.000 ft üstüdür (hangisi yüksekse); üst sınır
+ *   antenden yatayla 7° açı yapan yüzeydir.
+ * - GP (anten çevresinde, pist ekseninin iki yanında): ±8° içinde 10 NM; dikeyde
+ *   süzülüş açısının (θ) 0,45 katından 1,75 katına kadar.
+ */
+export const LOC_KAPSAMA = {dar: {aci: 10, nm: 25}, genis: {aci: 35, nm: 17}, ustAci: 7, altFt: 2000} as const;
+export const GP_KAPSAMA = {aci: 8, nm: 10, alt: 0.45, ust: 1.75} as const;
+
+/** Merkez yönün iki yanında `aci` derecelik yay üzerindeki noktalar (yaklaşık 1°'lik adımlarla) */
+function arc(lat: number, lon: number, center: number, from: number, to: number, nm: number): [number, number][] {
+  const steps = Math.max(2, Math.ceil(Math.abs(to - from)));
+  return Array.from({length: steps + 1}, (_, i) => destination(lat, lon, center + from + ((to - from) * i) / steps, nm));
+}
+
+/** LOC kapsama alanının yatay izdüşümü: antenden yaklaşma yönünün tersine açılan basamaklı yelpaze */
+export function locCoverage(x: IlsItem): [number, number][] | undefined {
+  if (x.crs === undefined) return undefined;
+  const out = (x.crs + 180) % 360;
+  const [lat, lon] = x.llz;
+  const {dar, genis} = LOC_KAPSAMA;
+  return [
+    [lat, lon],
+    ...arc(lat, lon, out, -genis.aci, -dar.aci, genis.nm),
+    ...arc(lat, lon, out, -dar.aci, dar.aci, dar.nm),
+    ...arc(lat, lon, out, dar.aci, genis.aci, genis.nm),
+  ];
+}
+
+/** GP kapsama alanının yatay izdüşümü: GP anteninden açılan ±8°, 10 NM'lik dilim */
+export function gpCoverage(x: IlsItem): [number, number][] | undefined {
+  if (x.crs === undefined || !x.gp) return undefined;
+  const out = (x.crs + 180) % 360;
+  const [lat, lon] = x.gp;
+  return [[lat, lon], ...arc(lat, lon, out, -GP_KAPSAMA.aci, GP_KAPSAMA.aci, GP_KAPSAMA.nm)];
+}
+
+const FT_PER_NM = 1852 / 0.3048;
+
+/** Verilen yükseklik açısının (°) `nm` uzaklıkta antene göre verdiği yükseklik (ft) */
+export const heightFt = (angleDeg: number, nm: number) => Math.tan(rad(angleDeg)) * nm * FT_PER_NM;
+
+export const formatFt = (ft: number) => `${nf(0).format(Math.round(ft / 10) * 10)} ft`;
+export const formatDeg = (d: number) => `${nf(d % 1 ? 2 : 0).format(d).replace(/0$/, '')}°`;
