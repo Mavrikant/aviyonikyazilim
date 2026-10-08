@@ -44,6 +44,7 @@ import {
   parseAerodromeList,
   parseEnr41,
 } from './aip-ayristir.mjs';
+import {gsOf} from '../src/components/KanalTablosu/gs-eslemesi.mjs';
 
 const OURAIRPORTS = 'https://davidmegginson.github.io/ourairports-data';
 const AIP_BASE = 'https://www.dhmi.gov.tr/AIPDocuments';
@@ -372,6 +373,15 @@ async function main() {
     .filter((o) => !aipNavaids.some((n) => n.ident === o.ident && distanceNm([o.lat, o.lon], [n.lat, n.lon]) < 10))
     .map((o) => compact({...o, varSrc: o.var !== undefined ? 'OurAirports' : undefined, src: 'oa'}));
 
+  // GP frekansı LOC frekansıyla ICAO Ek 10'a göre eşlidir. AIP'deki değer eşlemeye uymuyorsa
+  // (ayrıştırma ya da AIP yazım hatası) AIP değeri korunur, eşlemenin verdiği değer yanına yazılır.
+  for (const x of ils) {
+    const icao = x.freq ? gsOf(x.freq) : undefined;
+    if (x.gpFreq === undefined || icao === undefined || x.gpFreq === icao) continue;
+    console.warn(`uyarı: ${x.apt} ${x.ident} GP ${x.gpFreq / 1000} MHz, LOC ${x.freq / 1000} MHz'in eşi ${icao / 1000} MHz`);
+    x.gpFreqIcao = icao;
+  }
+
   const data = {
     generated: new Date().toISOString().slice(0, 10),
     aip: {amdt: latestAmendment(amendmentTexts), url: 'https://dhmi.gov.tr/Sayfalar/aipturkey.aspx'},
@@ -389,6 +399,7 @@ async function main() {
           llz: x.llz,
           gp: x.gp,
           gpFreq: x.gpFreq,
+          gpFreqIcao: x.gpFreqIcao,
           angle: x.angle,
           rdh: x.rdh,
         }),

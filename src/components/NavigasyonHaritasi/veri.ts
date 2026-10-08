@@ -71,6 +71,7 @@ export type Ils = {
   llz: [number, number];
   gp?: [number, number];
   gpFreq?: number; // kHz
+  gpFreqIcao?: number; // AIP'deki GP frekansı LOC'un ICAO eşine uymuyorsa eşin değeri, kHz
   angle?: number; // süzülüş açısı (°)
   rdh?: number; // ft
 };

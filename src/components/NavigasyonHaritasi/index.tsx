@@ -1295,7 +1295,14 @@ function IlsRows({x}: {x: IlsItem}): ReactNode {
   return (
     <>
       <Satir k="LLZ frekansı" v={formatMHz(x.freq)} />
-      <Satir k="GP frekansı" v={formatMHz(x.gpFreq)} />
+      <Satir
+        k="GP frekansı"
+        v={
+          x.gpFreqIcao
+            ? `${formatMHz(x.gpFreq)} (AIP; LOC'un ICAO eşi ${formatMHz(x.gpFreqIcao)})`
+            : formatMHz(x.gpFreq)
+        }
+      />
       <Satir k="DME kanalı" v={x.ch} />
       <Satir k="Yaklaşma rotası" v={x.crs !== undefined ? `${pad3(x.crs)}° gerçek (hesaplanan)` : undefined} />
       <Satir k="Süzülüş açısı" v={x.angle ? `${String(x.angle).replace('.', ',')}°` : undefined} />
