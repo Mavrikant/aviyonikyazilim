@@ -1117,8 +1117,6 @@ function Detay({f, nearby, related, onClose, onPick, onCopy, copied, onFitCovera
         </dd>
       </dl>
 
-      {f.kind === 'ils' && f.item.crs !== undefined && <IlsProfil x={f.item} />}
-
       {f.kind === 'airport' && f.item.com && f.item.com.length > 0 && (
         <>
           <h4 className={styles.detayAltBaslik}>
@@ -1358,89 +1356,6 @@ function IlsRows({x, onFitCoverage}: {x: IlsItem; onFitCoverage: () => void}): R
             : undefined
         }
       />
-    </>
-  );
-}
-
-// Dikey profil çiziminin ölçeği: yatayda eşikten 25 NM, düşeyde eşik üstü 7.000 ft
-const PROFIL = {w: 300, h: 132, x0: 34, x1: 292, y0: 112, y1: 8, nm: 25, ft: 7000};
-const px = (nm: number) => PROFIL.x0 + (Math.max(-1, nm) / PROFIL.nm) * (PROFIL.x1 - PROFIL.x0);
-const py = (ft: number) => PROFIL.y0 - (ft / PROFIL.ft) * (PROFIL.y0 - PROFIL.y1);
-const pts = (list: [number, number][]) => list.map(([nm, ft]) => `${px(nm).toFixed(1)},${py(ft).toFixed(1)}`).join(' ');
-
-/**
- * ILS kapsamasının yandan görünüşü (ICAO Ek 10 asgari hacmi). Uzaklıklar eşikten ölçülür:
- * LOC anteni pistin öbür ucunda (eşiğin gerisinde) olduğundan 7°'lik üst yüzey oradan başlar.
- */
-function IlsProfil({x}: {x: IlsItem}): ReactNode {
-  const {dar, ustAci, altFt} = LOC_KAPSAMA;
-  const theta = x.angle ?? 3;
-  const locBehind = distanceNm(x.lat, x.lon, x.llz[0], x.llz[1]);
-  // 7° yüzeyinin alt sınıra (eşik + 2.000 ft) ulaştığı uzaklık
-  const locStart = Math.max(0, altFt / heightFt(ustAci, 1) - locBehind);
-  const loc: [number, number][] = [
-    [locStart, altFt],
-    [dar.nm, altFt],
-    [dar.nm, heightFt(ustAci, dar.nm + locBehind)],
-  ];
-  const gp: [number, number][] = [
-    [0, 0],
-    [GP_KAPSAMA.nm, heightFt(theta * GP_KAPSAMA.ust, GP_KAPSAMA.nm)],
-    [GP_KAPSAMA.nm, heightFt(theta * GP_KAPSAMA.alt, GP_KAPSAMA.nm)],
-  ];
-  const glide: [number, number][] = [
-    [0, 0],
-    [PROFIL.nm, heightFt(theta, PROFIL.nm)],
-  ];
-  return (
-    <>
-      <h4 className={styles.detayAltBaslik}>
-        Kapsama profili <small>ICAO Ek 10 asgari hacmi</small>
-      </h4>
-      <svg
-        className={styles.profil}
-        viewBox={`0 0 ${PROFIL.w} ${PROFIL.h}`}
-        role="img"
-        aria-label={`Yandan kapsama: LOC eşik üstü ${altFt} ft ile ${ustAci}° arasında ${dar.nm} NM; GP ${GP_KAPSAMA.nm} NM boyunca ${formatDeg(theta * GP_KAPSAMA.alt)} ile ${formatDeg(theta * GP_KAPSAMA.ust)} arasında`}>
-        <defs>
-          <clipPath id="ils-profil-alan">
-            <rect x={PROFIL.x0} y={PROFIL.y1} width={PROFIL.x1 - PROFIL.x0} height={PROFIL.y0 - PROFIL.y1} />
-          </clipPath>
-        </defs>
-        {[2000, 4000, 6000].map((ft) => (
-          <g key={ft}>
-            <line className={styles.profilIzgara} x1={PROFIL.x0} x2={PROFIL.x1} y1={py(ft)} y2={py(ft)} />
-            <text className={styles.profilYazi} x={PROFIL.x0 - 4} y={py(ft) + 3} textAnchor="end">
-              {ft / 1000}k
-            </text>
-          </g>
-        ))}
-        {[0, 5, 10, 15, 20, 25].map((nm) => (
-          <text key={nm} className={styles.profilYazi} x={px(nm)} y={PROFIL.y0 + 11} textAnchor="middle">
-            {nm}
-          </text>
-        ))}
-        <text className={styles.profilYazi} x={PROFIL.x1} y={PROFIL.h - 1} textAnchor="end">
-          NM (eşikten)
-        </text>
-        <text className={styles.profilYazi} x={2} y={PROFIL.y1 + 3}>
-          ft
-        </text>
-        <g clipPath="url(#ils-profil-alan)">
-          <polygon className={styles.profilLoc} points={pts(loc)} />
-          {x.gp && <polygon className={styles.profilGp} points={pts(gp)} />}
-          {x.gp && <polyline className={styles.profilSuzulus} points={pts(glide)} />}
-        </g>
-        <line className={styles.profilZemin} x1={PROFIL.x0} x2={PROFIL.x1} y1={PROFIL.y0} y2={PROFIL.y0} />
-        <text className={clsx(styles.profilYazi, styles.profilLocYazi)} x={px(20)} y={py(2700)}>
-          LOC
-        </text>
-        {x.gp && (
-          <text className={clsx(styles.profilYazi, styles.profilGpYazi)} x={px(6.2)} y={py(600)}>
-            GP {formatDeg(theta)}
-          </text>
-        )}
-      </svg>
     </>
   );
 }
