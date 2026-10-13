@@ -51,6 +51,7 @@ Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmi
 | TOR | Tool Operational Requirements | araç operasyonel gereksinimleri | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | TQP | Tool Qualification Plan | araç kalifikasyon planı | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | TAS | Tool Accomplishment Summary | araç başarı özeti | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| TCI | Tool Configuration Index | araç konfigürasyon indeksi | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | FLS | Field-Loadable Software | sahada yüklenebilir yazılım | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |
 | LSP | Loadable Software Part | yüklenebilir yazılım parçası | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |
 | UMS | User-Modifiable Software | kullanıcı tarafından değiştirilebilir yazılım | [Bölüm 19](../05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.md) |

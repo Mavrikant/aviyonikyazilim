@@ -9,7 +9,8 @@ Araç kalifikasyonu (tool qualification), çıktısı ayrıca doğrulanmadan kul
 yazılım aracına duyulan güvenin kanıtla temellendirilmesidir. Bu bölüm, kalifikasyonun
 hangi araçlar için gerektiğini, üç ölçüt ile yazılım seviyesinden araç kalifikasyon
 seviyesinin nasıl bulunduğunu ve DO-330'un bu seviyeye göre aracın geliştiricisinden ve
-kullanıcısından hangi kanıtı beklediğini anlatır.
+kullanıcısından hangi kanıtı, hangi veriyle ve bu veriyi hangi kontrol kategorisinde
+beklediğini anlatır.
 
 ## Araç neden kalifiye edilir?
 
@@ -186,46 +187,227 @@ seviyenin bir öncekine ne eklediğine bakmaktır:
 
 | TQL | Hangi durumda | Kabaca beklenen |
 |---|---|---|
-| TQL-5 | Ölçüt 3 (her seviye); Ölçüt 2 (Seviye C, D) | TOR, kurulum, operasyonel doğrulama ve geçerleme; araç için sınırlı kapsamda konfigürasyon yönetimi (tanımlama, arşivleme) ve kalite güvencesi, otoriteyle irtibat. Aracın nasıl geliştirildiğine bakılmaz |
+| TQL-5 | Ölçüt 3 (her seviye); Ölçüt 2 (Seviye C, D) | TOR, kurulum, operasyonel doğrulama ve geçerleme; araç için sınırlı kapsamda konfigürasyon yönetimi (tanımlama, arşivleme) ve bağımsız kalite güvencesi, otoriteyle irtibat. Aracın nasıl geliştirildiğine bakılmaz |
 | TQL-4 | Ölçüt 2 (Seviye A, B); Ölçüt 1 (Seviye D) | Ek olarak araç planları, araç gereksinimleri ve araç mimarisi; gereksinimlerin gözden geçirilmesi, aracın bu gereksinimlere karşı test edildiğinin ve gereksinimlerin testlerle kapsandığının kanıtı; temel çizgi, problem raporlama ve değişiklik kontrolü |
 | TQL-3 | Ölçüt 1 (Seviye C) | Ek olarak araç geliştirme standartları, düşük seviyeli araç gereksinimleri ve kaynak kodun doğrulanması; aracın kendi kodu için satır kapsama (statement coverage) düzeyinde yapısal kapsam ile veri ve kontrol bağlaşımı (data and control coupling) analizi |
 | TQL-2 | Ölçüt 1 (Seviye B) | Ek olarak karar kapsama (decision coverage) ve doğrulama hedeflerinin bir kısmında bağımsızlık |
 | TQL-1 | Ölçüt 1 (Seviye A) | Ek olarak değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC), dış bileşenlere (external components) ilişkin analiz ve en geniş bağımsızlık; Seviye A yazılım geliştirmeye yaklaşan bir titizlik |
 
 Tablo yön göstermek içindir; hangi hedefin hangi TQL'de ve hangi bağımsızlıkla arandığı
-DO-330'un hedef tablolarından okunur. Projeler açısından en çok maliyet farkı yaratan
-basamak TQL-5 ile TQL-4 arasındadır. TQL-5'te araç bir kara kutu gibi ele alınır ve işin
+DO-330'un Ek A'sındaki hedef tablolarından okunur (bkz. bir sonraki başlık). Projeler
+açısından en çok maliyet farkı yaratan basamak TQL-5 ile TQL-4 arasındadır. TQL-5'te araç bir kara kutu gibi ele alınır ve işin
 neredeyse tamamını kullanıcı kendi ortamında yapabilir. TQL-4'ten itibaren aracın *nasıl
 geliştirildiğini* gösteren veri gerekir; bu veri araç üreticisinde yoksa ya da
 paylaşılmıyorsa kalifikasyon çok güçleşir. Bu yüzden ekipler çoğu zaman aracı
 kullanım biçimini daraltarak Ölçüt 3'te tutmayı, yani araç sonucunu başka bir faaliyeti
 azaltmanın gerekçesi yapmamayı seçer.
 
-### Kalifikasyon verisi
+### Ek A: hedef tabloları
 
-Başlıca veriler ve hangi seviyelerde ayrı birer belge olarak beklendikleri şöyledir:
+DO-330'un Ek A'sı, DO-178C'nin Ek A'sına benzer biçimde on bir tablodan oluşur. Her satır
+bir hedefi tanımlar ve o hedefin hangi TQL'de arandığını, hangisinde bağımsızlıkla
+karşılanması gerektiğini, hangi veriyi ürettiğini ve o verinin TQL'e göre kontrol
+kategorisini verir. Tablolar iki dünyaya ayrılır:
 
-| Veri | İngilizce adı | İçeriği | Hangi TQL'de |
-|---|---|---|---|
-| Araca özgü bilgi (PSAC, SECI ve SAS içinde) | Tool-specific information | Aracın rolü, ölçüt ve TQL gerekçesi; aracın sürüm tanımı; proje sonunda kalifikasyonun durumu | Tümü |
-| Araç operasyonel gereksinimleri (TOR) | Tool Operational Requirements | Kullanım senaryoları, ortam, kısıtlar | Tümü |
-| Araç kurulum raporu | Tool Installation Report | Kullanım ortamı ve kurulan araç sürümü; SECI içinde de verilebilir | Tümü |
-| Operasyonel doğrulama ve geçerleme sonuçları | Tool Operational Verification and Validation Results | TOR senaryolarının kullanım ortamında koşulmasına ait kayıtlar | Tümü |
-| Araç kalifikasyon planı | Tool Qualification Plan (TQP) | Kalifikasyon faaliyetleri, üretilecek veri, sorumluluklar | TQL-1 – TQL-4 |
-| Araç gereksinimleri | Tool Requirements | Aracın işlevlerinin doğrulanabilir tanımı | TQL-1 – TQL-4 |
-| Araç tasarım tanımı ve kaynak kod | Tool Design Description, Tool Source Code | Mimari, düşük seviyeli gereksinimler, kod | Mimari TQL-1 – TQL-4; düşük seviyeli gereksinimler, kaynak kod ve bunların doğrulanması TQL-1 – TQL-3 |
-| Araç doğrulama sonuçları | Tool Verification Results | Araç gereksinimlerine karşı testler, gözden geçirme ve analiz kayıtları | TQL-1 – TQL-4 |
-| Araç konfigürasyon indeksi | Tool Configuration Index (TCI) | Aracın ve ortamının tam sürüm tanımı | TQL-1 – TQL-4 |
-| Araç başarı özeti | Tool Accomplishment Summary (TAS) | Planlananla yapılanın karşılaştırması, bilinen problemler, uyum beyanı | TQL-1 – TQL-4 |
+- **Kullanıcının dünyası:** T-0, aracın projede kullanılmasına ilişkin operasyonel
+  süreçleri (TOR, kurulum, operasyonel doğrulama ve geçerleme) kapsar. T-8 konfigürasyon
+  yönetimini, T-9 kalite güvencesini, T-10 otoriteyle kalifikasyon irtibatını kapsar;
+  bu üçü aracın bütün yaşam döngüsüne uygulanır.
+- **Geliştiricinin dünyası:** T-1 araç planlamasını, T-2 araç geliştirme süreçlerini
+  kapsar. T-3'ten T-7'ye kadarki tablolar ise araç gereksinimlerinin, tasarımın, kodlama
+  ve entegrasyonun, testin ve test kapsamının doğrulanmasıyla ilgilidir.
+
+Hedef sayıları seviyeler arasındaki farkı somut olarak gösterir:
+
+| Tablo | Konu | TQL-1 | TQL-2 | TQL-3 | TQL-4 | TQL-5 |
+|---|---|---|---|---|---|---|
+| T-0 | Operasyonel süreçler | 7 | 7 | 7 | 7 | 6 |
+| T-1 | Araç planlama | 7 | 7 | 7 | 2 | — |
+| T-2 | Araç geliştirme | 8 | 8 | 8 | 5 | — |
+| T-3 | Araç gereksinimlerinin doğrulanması | 9 | 9 | 9 | 8 | — |
+| T-4 | Araç tasarımının doğrulanması | 11 | 11 | 9 | 1 | — |
+| T-5 | Kodlama ve entegrasyonun doğrulanması | 7 | 7 | 6 | — | — |
+| T-6 | Entegre aracın test edilmesi | 4 | 4 | 4 | 2 | — |
+| T-7 | Test ve test kapsamının doğrulanması | 9 | 7 | 6 | 2 | — |
+| T-8 | Konfigürasyon yönetimi | 5 | 5 | 5 | 5 | 2 |
+| T-9 | Kalite güvencesi | 5 | 5 | 5 | 2 | 2 |
+| T-10 | Kalifikasyon irtibatı | 4 | 4 | 4 | 4 | 4 |
+| **Toplam** | | **76** | **74** | **70** | **38** | **14** |
+| Bağımsızlıkla karşılanan | | 35 | 22 | 5 | 2 | 2 |
+
+Tablodan üç gözlem çıkar:
+
+- **TQL-5'in on dört hedefinin tamamı kullanıcının dünyasındadır.** T-0'dan altısı
+  geçerlidir; TOR'un tam, doğru, doğrulanabilir ve tutarlı olduğunun ayrıca doğrulanması
+  bu seviyede aranmaz. Bunlara T-8'den konfigürasyon öğelerinin tanımlanması ile
+  arşivleme, geri getirme ve sürüm teslimi, T-9'dan iki hedef ve T-10'un dördü eklenir.
+  Geliştirme tablolarından tek bir hedef yoktur; aracın kara kutu olarak kalifiye
+  edilebilmesi buradan gelir.
+- **TQL-4 hedef sayısını iki katından fazla artırır (14'ten 38'e).** Eklenen yirmi dört
+  hedefin yirmisi geliştiricinin dünyasındandır: planlar, araç gereksinimleri ve
+  mimarisi, gereksinimlerin doğrulanması ve gereksinim tabanlı test. Kalan dördü TOR'un
+  kendisinin doğrulanması ile temel çizgi, problem raporlama ve araç ortamının kontrolüdür.
+  İkinci büyük sıçrama TQL-3'tedir: düşük seviyeli araç gereksinimleri, kaynak kod,
+  standartlar ve yapısal kapsamla sayı 70'e çıkar.
+- **Doğrulama hedeflerinde bağımsızlık yalnızca TQL-1 ve TQL-2'de aranır.** TQL-3'ten
+  itibaren bağımsızlık yalnızca kalite güvencesinde kalır; kalite güvencesi hedefleri
+  ise TQL-5'te bile bağımsızlıkla karşılanır.
+
+Ek A bir kontrol listesi olarak kullanılmamalıdır; DO-330 de bunu açıkça belirtir. Bir
+hedefin nasıl karşılanacağı, tablonun atıf yaptığı bölümün metninden okunur.
+
+### Kalifikasyon verisi ve kontrol kategorileri
+
+DO-330'un 10. bölümü yirmi sekiz veri öğesi tanımlar ve bunları üç gruba ayırır:
+planlama, bütünleyici süreçler ve kalifikasyon irtibatı verisi; araç geliştirme ve
+doğrulama verisi; operasyonel veri. Ek A'daki her hedef, ürettiği verinin **kontrol
+kategorisini (control category)** TQL'e göre belirtir. Kategoriler DO-178C'dekiyle
+aynıdır:
+
+- **CC1** tam kontroldür; temel çizgi, problem raporlama, değişiklik gözden geçirmesi ve
+  konfigürasyon durum muhasebesi dahil bütün faaliyetleri kapsar.
+- **CC2** daha hafif bir rejimdir; tanımlama, izlenebilirlik, bütünlüğün korunması, geri
+  getirme ve saklamayla sınırlıdır.
+
+Faaliyet bazındaki ayrım
+[10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#kontrol-kategorileri-cc1-ve-cc2)
+bölümündeki tabloda verilmiştir; DO-330'un Tablo 7-1'i aynı ayrımı araç verisine
+uygular. Kategoriler asgaridir: proje bir veriyi daha sıkı kontrol edebilir, daha gevşek
+edemez.
+
+Aşağıdaki tablo, Ek A'daki dağılımı veri öğesi bazında birleştirir. Bir hücre, o TQL'de
+aranan en az bir hedefin o veriyi ürettiğini ve verinin hangi kategoride yönetileceğini
+gösterir. "—" ise verinin o TQL'de kalifikasyon verisi olarak istenmediği anlamına gelir.
+Aynı veri farklı hedeflerde farklı kategoride geçiyorsa sıkı olanı yazılmış, fark
+notlarda açıklanmıştır. İkinci sütun, verinin içeriğini tanımlayan DO-330 bölümüdür.
+
+| Veri | DO-330 | TQL-1 | TQL-2 | TQL-3 | TQL-4 | TQL-5 |
+|---|---|---|---|---|---|---|
+| ***Uçuş yazılımı belgelerindeki araç bilgisi*** | | | | | | |
+| PSAC'taki araca özgü bilgi (tool-specific information in PSAC) | 10.1.1 | CC1 | CC1 | CC1 | CC1 | CC1 |
+| SECI'deki araca özgü bilgi | 10.1.17 | CC1 | CC1 | CC1 | CC1 | CC1 |
+| SAS'taki araca özgü bilgi | 10.1.16 | CC1 | CC1 | CC1 | CC1 | CC1 |
+| ***Araç planları ve standartları*** | | | | | | |
+| Araç kalifikasyon planı (Tool Qualification Plan, TQP) | 10.1.2 | CC1 | CC1 | CC1 | CC1 | CC1¹ |
+| Araç geliştirme planı (Tool Development Plan) | 10.1.3 | CC1 | CC1 | CC2 | CC2 | — |
+| Araç doğrulama planı (Tool Verification Plan) | 10.1.4 | CC1 | CC1 | CC2 | CC2 | — |
+| Araç konfigürasyon yönetimi planı (Tool Configuration Management Plan) | 10.1.5 | CC1 | CC1 | CC2 | CC2 | — |
+| Araç kalite güvencesi planı (Tool Quality Assurance Plan) | 10.1.6 | CC1 | CC1 | CC2 | CC2 | — |
+| Araç gereksinim, tasarım ve kod standartları (Tool Requirements, Design and Code Standards) | 10.1.7 – 10.1.9 | CC1 | CC1 | CC2 | — | — |
+| ***Araç geliştirme verisi*** | | | | | | |
+| Araç gereksinimleri (Tool Requirements) | 10.2.1 | CC1 | CC1 | CC1 | CC1 | — |
+| Araç tasarım tanımı (Tool Design Description) | 10.2.2 | CC1 | CC1 | CC1 | CC2² | — |
+| Araç kaynak kodu (Tool Source Code) | 10.2.3 | CC1 | CC1 | CC1 | — | — |
+| Aracın çalıştırılabilir nesne kodu (Tool Executable Object Code) | 10.2.4 | CC1 | CC1 | CC1 | CC1 | CC2³ |
+| İz verisi (Trace Data) | 10.2.7 | CC1 | CC1 | CC1⁴ | CC1⁴ | — |
+| ***Araç doğrulama verisi*** | | | | | | |
+| Araç doğrulama durumları ve prosedürleri (Tool Verification Cases and Procedures) | 10.2.5 | CC1 | CC1 | CC2 | CC2 | — |
+| Araç doğrulama sonuçları (Tool Verification Results) | 10.2.6 | CC2 | CC2 | CC2 | CC2 | — |
+| ***Operasyonel veri*** | | | | | | |
+| Araç operasyonel gereksinimleri (TOR) | 10.3.1 | CC1 | CC1 | CC1 | CC1 | CC2 |
+| Araç kurulum raporu (Tool Installation Report) | 10.3.2 | CC2 | CC2 | CC2 | CC2 | CC2⁵ |
+| Operasyonel doğrulama ve geçerleme durumları ve prosedürleri (Tool Operational Verification and Validation Cases and Procedures) | 10.3.3 | CC2 | CC2 | CC2 | CC2 | CC2 |
+| Operasyonel doğrulama ve geçerleme sonuçları (Tool Operational Verification and Validation Results) | 10.3.4 | CC2 | CC2 | CC2 | CC2 | CC2 |
+| ***Konfigürasyon yönetimi, kalite güvencesi ve uyum verisi*** | | | | | | |
+| Araç yaşam döngüsü ortam konfigürasyon indeksi (Tool Life Cycle Environment Configuration Index) | 10.1.10 | CC1 | CC1 | CC1 | CC2 | — |
+| Araç konfigürasyon indeksi (Tool Configuration Index, TCI) | 10.1.11 | CC1 | CC1 | CC1 | CC1 | CC1¹ |
+| Araç problem raporları (Tool Problem Reports) | 10.1.12 | CC2 | CC2 | CC2 | CC2 | — |
+| Araç konfigürasyon yönetimi kayıtları (Tool Configuration Management Records) | 10.1.13 | CC2 | CC2 | CC2 | CC2 | CC2 |
+| Araç kalite güvencesi kayıtları (Tool Quality Assurance Records) | 10.1.14 | CC2 | CC2 | CC2 | CC2 | CC2⁶ |
+| Araç başarı özeti (Tool Accomplishment Summary, TAS) | 10.1.15 | CC1 | CC1 | CC1 | CC1 | CC1¹ |
+
+Tablo notları:
+
+1. TQL-5'te TQP, TCI ve TAS zorunlu değildir; karşılıkları sırasıyla PSAC, SECI ve
+   SAS'taki araca özgü bilgidir. Ayrı belge olarak hazırlanırlarsa CC1 olarak yönetilirler.
+2. TQL-4'te tasarım tanımı yalnızca araç mimarisini içerir; düşük seviyeli araç
+   gereksinimleri TQL-3'ten itibaren istenir.
+3. Çalıştırılabilir nesne kodu, aracı çalıştırmak için gereken parametre ve konfigürasyon
+   dosyalarını da kapsar. TQL-1 – TQL-4'te geliştirme tablosundaki (T-2) hedefler onu
+   CC1 yapar. TQL-5'te yalnızca kullanım ortamına kurulumla ilgili hedef (T-0) kaldığı
+   için CC2'dir.
+4. Geliştirme süreçlerinin ürettiği izler (TOR'dan araç gereksinimlerine, oradan düşük
+   seviyeli gereksinimlere ve koda) istendikleri her seviyede CC1'dir. Gereksinimlerle
+   test durumları arasındaki izler ise TQL-3 ve TQL-4'te CC2'dir.
+5. Kurulum raporunun içeriği SECI'ye konabilir.
+6. TQL-5'te kalite güvencesi kayıtları, yazılımın kalite güvencesi kayıtlarının parçası
+   olabilir.
+
+Tablodan dört kural çıkar:
+
+- **Uyum iddiasını taşıyan veri her TQL'de CC1'dir.** Bu grupta PSAC, SECI ve SAS'taki
+  araca özgü bilgi ile TQP, TCI ve TAS bulunur. DO-178C'de PSAC, SCI ve SAS'ın her
+  seviyede CC1 olmasının karşılığıdır.
+- **Kayıt niteliğindeki veri her TQL'de CC2'dir.** Doğrulama sonuçları, problem
+  raporları, konfigürasyon yönetimi ve kalite güvencesi kayıtları, kurulum raporu ve
+  operasyonel doğrulama ve geçerleme verisi bu gruptadır.
+- **Planlar, standartlar ve araç doğrulama durumları TQL-1 ve TQL-2'de CC1, TQL-3 ve
+  TQL-4'te CC2'dir.** Bu, DO-178C'deki Seviye A-B ile Seviye C-D ayrımına karşılık gelir.
+  TQP bu kuralın dışındadır; otoriteye sunulduğu için her seviyede CC1'dir.
+- **Aracın kendisini tanımlayan veri TQL-1 – TQL-4'te CC1'dir.** Araç gereksinimleri,
+  kaynak kod, çalıştırılabilir kod ve geliştirme izleri bu gruptadır. Tasarım tanımı ve
+  araç yaşam döngüsü ortam konfigürasyon indeksi TQL-4'te CC2'ye iner.
+
+#### TQL-5: kara kutu kalifikasyonunun verisi
+
+TQL-5'te tablo ikiye ayrılır. CC1 olan yalnızca uçuş yazılımının kendi belgelerindeki
+araç bilgisidir; aracın kendi kalifikasyon verisinin tamamı, TOR ve kurulan
+çalıştırılabilir kod dahil, CC2'dir. DO-330'un sonundaki açıklayıcı soru-yanıtlar bunu
+açıkça yazar ve sonucunu da çıkarır: TQL-5'te konfigürasyon yönetiminden aranan,
+konfigürasyon öğelerinin tanımlanması ile arşivleme, geri getirme ve sürüm teslimidir.
+Temel çizgi ve problem raporlama hedefleri bu seviyede yoktur. TQL-4'ten itibaren ise
+TOR CC1'dir: bu seviyelerde araç gereksinimleri TOR'a karşı doğrulanır ve ona izlenir,
+yani TOR aracın geliştirme zincirinin başına geçer.
 
 TQL-5'te ayrı bir TQP, TCI ve TAS beklenmez; karşılıkları projenin kendi verisinin araca
-özgü kısımlarıdır: plan bilgisi PSAC'ta, aracın sürüm tanımı yazılım yaşam döngüsü ortam
-konfigürasyon indeksinde (Software Life Cycle Environment Configuration Index, SECI),
-sonuç ise yazılım başarı özetinde (Software Accomplishment Summary, SAS) verilir. Bu,
-"TQL-5'te yazacak bir şey yok" demek değildir: aracın kimliği ve kullanım amacı, araçtan
-alınmak istenen kredi, TQL ve gerekçesi, sorumluluklar, kullanım ortamı ve kalifikasyon
-verisine atıf yine kayıt altında olmalıdır; isteyen proje bunları TQL-5'te de ayrı
-belgeler olarak düzenleyebilir.
+özgü kısımlarıdır. Bu kısımlar şunları içerir:
+
+- **PSAC:** aracın kimliği ve kullanım amacı; araçtan alınmak istenen kredi, yani
+  hangi faaliyetin kaldırıldığı, azaltıldığı ya da otomatikleştirildiği; önerilen TQL ve
+  gerekçesi; aracın kaynağı (kurum içi, ticari ya da üçüncü taraf); paydaşlar ve
+  sorumlulukları; TOR'un yazılması, kurulum ve operasyonel doğrulama ve geçerleme
+  süreçlerinin tanımı; kullanım ortamı. Kalifikasyon verisi önceki bir projeden yeniden
+  kullanılıyorsa önceki uygulamalar ve yeniden kullanımın gerekçesi de burada yer alır.
+  TQP hazırlanmadıysa PSAC kalifikasyon verisine doğrudan atıf yapar.
+- **Yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment
+  Configuration Index, SECI):** aracın kimliği ile TOR'a ve operasyonel doğrulama ve
+  geçerleme verisine atıf. Kurulum raporunun içeriği de buraya konabilir.
+- **Yazılım başarı özeti (Software Accomplishment Summary, SAS):** aracın kimliği,
+  alınan kredi, kalifikasyon verisine atıf ve bilinen problemler ile işlevsel
+  sınırlamaların TOR'a etkisinin analizi. Bu son kalem, T-10'un TQL-5'te de aranan
+  hedefidir.
+
+Bu, "TQL-5'te yazacak bir şey yok" demek değildir; isteyen proje bu bilgileri TQL-5'te
+de ayrı belgeler olarak düzenleyebilir. Kalite güvencesinde iki hedef TQL-5'te de
+bağımsızlıkla karşılanır: araç süreçlerinin onaylı planlara uyduğunun güvence altına
+alınması ve araç uygunluk gözden geçirmesi. Kayıtlar yazılımın kalite güvencesi
+kayıtlarının parçası olabilir; uygunluk gözden geçirmesi de yazılım uygunluk gözden
+geçirmesi (software conformity review) içinde yapılabilir. Son olarak DO-330, TQL-5
+hedeflerinin araç geliştiricisinden hiçbir kalifikasyon verisi alınmadan
+karşılanabileceğini açıkça söyler. Ticari bir aracı üreticinin desteği olmadan kalifiye
+etmenin dayanağı budur.
+
+#### Aracın kaynak kodu
+
+Aracın kaynak kodunun kalifikasyondaki yeri TQL'e göre keskin biçimde değişir:
+
+| TQL | Kaynak kod | Çalıştırılabilir nesne kodu |
+|---|---|---|
+| TQL-1 – TQL-3 | Kalifikasyon verisidir (CC1). Düşük seviyeli gereksinimlere ve mimariye uygunluğu, kodlama standardına uyumu ve izlenebilirliği doğrulanır. TCI her kaynak bileşenini ve çalıştırılabilir kodun nasıl üretileceğini tanımlar | CC1; araç gereksinimlerine ve düşük seviyeli araç gereksinimlerine karşı test edilir |
+| TQL-4 | Kaynak kodun geliştirilmesi ve doğrulanması hedefleri aranmaz; kaynak kod kalifikasyon verisi olarak sunulmaz. Kimliksiz de değildir: TCI, aracın konfigürasyonunu tanımlarken kaynak bileşenlerini de listeler | CC1; araç gereksinimlerine karşı normal ve gürbüzlük girdileriyle test edilir |
+| TQL-5 | Kalifikasyon verisi değildir; geliştiriciden hiçbir veri gerekmez ve TCI da istenmez | CC2; kullanım ortamına kurulan sürüm tanımlanır, arşivlenir ve TOR'a karşı doğrulanır |
+
+TQL-5'te kalifikasyon iddiası kurulan çalıştırılabilir kod içindir. Kurum içinde
+geliştirilen bir araçta kaynak kodu yine de konfigürasyon yönetimi altında tutmak iyi
+uygulamadır: aracı yeniden üretmek ve bir değişikliğin etkisini değerlendirmek ancak
+böyle mümkündür. Kaynakta yapılan her değişiklik yeni bir çalıştırılabilir kod, yani
+yeni bir araç sürümü demektir. DO-330, kalifiye bir araç değiştiğinde değişiklik etki
+analizi ister; bu analiz hangi doğrulamanın yineleneceğini belirler. TQL-5'te bu,
+operasyonel doğrulama ve geçerlemenin gerekli kısmının yeni sürümle yeniden koşulması
+demektir.
+
+Burada söz konusu olan aracın kendi kaynak kodudur. Aracın işlediği uçuş yazılımı kaynak
+kodu (örneğin bir statik analiz aracının girdisi) DO-178C verisidir ve orada CC1'dir.
 
 ### Araç geliştiricisi ve araç kullanıcısı
 
@@ -397,7 +579,13 @@ de en az diğerleri kadar sorgulanır (bkz.
 - Süreç araç operasyonel gereksinimleri (TOR) etrafında kurulur; araç işlevleri
   arasındaki koruma gösterilebiliyorsa yalnızca projede fiilen kredi alınan işlevler
   kalifiye edilir. TQL-5 kullanım odaklı kanıtla yetinir; TQL-4 ve daha sıkı seviyeler
-  aracın nasıl geliştirildiğini gösteren veriyi de ister.
+  aracın nasıl geliştirildiğini gösteren veriyi de ister. Hedef sayısı TQL-5'te 14,
+  TQL-4'te 38, TQL-1'de 76'dır.
+- DO-330'un Ek A'sı her veri öğesine TQL'e göre bir kontrol kategorisi atar. Uyum
+  iddiasını taşıyan veri (PSAC, SECI ve SAS'taki araç bilgisi, TQP, TCI, TAS) her TQL'de
+  CC1, kayıtlar her TQL'de CC2'dir. TQL-5'te aracın kendi verisinin tamamı, TOR ve
+  çalıştırılabilir kod dahil, CC2'dir. Aracın kaynak kodu yalnızca TQL-1 – TQL-3'te
+  kalifikasyon verisidir.
 - Araç üreticisinden hazır veri alınsa bile kalifikasyon sorumluluğu başvuru
   sahibinde kalır; operasyonel doğrulama kullanıcının kendi ortamında yapılır.
 - Belirlenimcilik bir tasarruf yolu değil, kalifikasyon kanıtının geçerlilik koşuludur:

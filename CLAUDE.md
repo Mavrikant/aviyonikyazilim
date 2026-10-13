@@ -256,6 +256,12 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | yazılım konfigürasyon indeksi | Software Configuration Index (SCI) |
 | yazılım yaşam döngüsü ortam konfigürasyon indeksi | Software Life Cycle Environment Configuration Index (SECI) |
 | araç başarı özeti | Tool Accomplishment Summary (TAS) |
+| araç kalifikasyon planı | Tool Qualification Plan (TQP) |
+| araç konfigürasyon indeksi | Tool Configuration Index (TCI) |
+| araç operasyonel gereksinimleri | Tool Operational Requirements (TOR) |
+| araç kurulum raporu | Tool Installation Report |
+| operasyonel doğrulama ve geçerleme | tool operational verification and validation |
+| araç geliştiricisi / araç kullanıcısı | tool developer / tool user |
 
 Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgisi", "temel hat"
 (temel çizgi); objective anlamında "amaç" (hedef); review anlamında "inceleme" (gözden
