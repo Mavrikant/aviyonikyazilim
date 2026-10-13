@@ -488,7 +488,7 @@ Yamanın savunulabildiği durum, geliştirme ortamından kaynaklanan bilinen bir
 örneğin belgelenmiş bir derleyici hatasının — başka türlü aşılamamasıdır. O zaman da
 üç şey gösterilir: yamanın konfigürasyon yönetimi altında tanımlandığı ve izlendiği,
 yamalı yazılımın uygulanabilir bütün hedefleri hâlâ karşıladığını gösteren analiz ve
-yazılım başarı özetinde (Software Accomplishment Summary, SAS) yamanın gerekçesi.
+yazılım başarım özetinde (Software Accomplishment Summary, SAS) yamanın gerekçesi.
 
 ### Hedefe yükleme
 

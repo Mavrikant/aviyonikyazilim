@@ -314,7 +314,7 @@ notlarda açıklanmıştır. İkinci sütun, verinin içeriğini tanımlayan DO-
 | Araç problem raporları (Tool Problem Reports) | 10.1.12 | CC2 | CC2 | CC2 | CC2 | — |
 | Araç konfigürasyon yönetimi kayıtları (Tool Configuration Management Records) | 10.1.13 | CC2 | CC2 | CC2 | CC2 | CC2 |
 | Araç kalite güvencesi kayıtları (Tool Quality Assurance Records) | 10.1.14 | CC2 | CC2 | CC2 | CC2 | CC2⁶ |
-| Araç başarı özeti (Tool Accomplishment Summary, TAS) | 10.1.15 | CC1 | CC1 | CC1 | CC1 | CC1¹ |
+| Araç başarım özeti (Tool Accomplishment Summary, TAS) | 10.1.15 | CC1 | CC1 | CC1 | CC1 | CC1¹ |
 
 Tablo notları:
 
@@ -372,7 +372,7 @@ TQL-5'te ayrı bir TQP, TCI ve TAS beklenmez; karşılıkları projenin kendi ve
 - **Yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment
   Configuration Index, SECI):** aracın kimliği ile TOR'a ve operasyonel doğrulama ve
   geçerleme verisine atıf. Kurulum raporunun içeriği de buraya konabilir.
-- **Yazılım başarı özeti (Software Accomplishment Summary, SAS):** aracın kimliği,
+- **Yazılım başarım özeti (Software Accomplishment Summary, SAS):** aracın kimliği,
   alınan kredi, kalifikasyon verisine atıf ve bilinen problemler ile işlevsel
   sınırlamaların TOR'a etkisinin analizi. Bu son kalem, T-10'un TQL-5'te de aranan
   hedefidir.

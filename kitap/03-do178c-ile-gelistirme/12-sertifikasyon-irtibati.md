@@ -8,7 +8,7 @@ sidebar_position: 9
 Sertifikasyon irtibatı (certification liaison), onayı isteyen kuruluş ile sertifikasyon
 otoritesi (certification authority) arasında uyumun nasıl gösterileceği üzerine kurulan
 ve proje boyunca süren mutabakat sürecidir. Süreç yazılım sertifikasyon planıyla (Plan
-for Software Aspects of Certification, PSAC) başlar, yazılım başarı özetiyle (Software
+for Software Aspects of Certification, PSAC) başlar, yazılım başarım özetiyle (Software
 Accomplishment Summary, SAS) kapanır. Bu bölüm sürecin hedeflerini, taraflarını ve
 kanallarını, SAS'ın içeriğini, katılım aşaması (Stage of Involvement, SOI) denetimlerini
 ve sertifikasyon uçuş testlerinden önce beklenen yazılım olgunluğunu anlatır.
@@ -61,7 +61,7 @@ Kalifikasyon gerektiren bir araç kullanılıyorsa asgari liste uzar: DO-330, ya
 döngüsü ortam konfigürasyon indeksinin (Software Life Cycle Environment Configuration
 Index, SECI) de sunulmasını bekler. Araç kalifikasyon seviyesi (tool qualification level,
 TQL) TQL-1 ile TQL-4 arasındaysa buna araç kalifikasyon planı ile aracın konfigürasyon
-indeksi ve başarı özeti eklenir.
+indeksi ve başarım özeti eklenir.
 
 Verinin bir bölümü ayrıca ürünün tip tasarımıyla (type design) ilişkilidir. Otoriteyle
 aksi kararlaştırılmadıkça bu küme altı veriden oluşur: gereksinim verisi, tasarım tanımı,
@@ -132,9 +132,9 @@ Order, TSO) ya da Avrupa'daki karşılığı ETSO kapsamında — başvuru sahib
 onay konusudur; uçak üreticisi SAS'taki kısıtlara ve açık problem raporlarına o aşamada
 ihtiyaç duyar.
 
-## Yazılım başarı özeti
+## Yazılım başarım özeti
 
-Yazılım başarı özeti, yazılım yaşam döngüsünün sonunda otoriteye sunulan kapanış
+Yazılım başarım özeti, yazılım yaşam döngüsünün sonunda otoriteye sunulan kapanış
 belgesidir. En kısa tanımıyla SAS, projenin başında verilen sözün — yani PSAC'ın — ne
 ölçüde ve nasıl yerine getirildiğini anlatır. PSAC "şunu şöyle yapacağız" derken, SAS
 "şunu şöyle yaptık; sapmalar, gerekçeleri ve kalan açık noktalar da bunlardır" der.

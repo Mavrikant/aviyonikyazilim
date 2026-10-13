@@ -16,7 +16,7 @@ Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmi
 
 | Kısaltma | İngilizce açılım | Türkçe karşılık | Bölüm |
 |----|----|----|----|
-| IMA | Integrated Modular Avionics | tümleşik modüler aviyonik | [Bölüm 2](../02-baglam/02-sistem-baglaminda-yazilim.md) |
+| IMA | Integrated Modular Avionics | entegre modüler aviyonik | [Bölüm 2](../02-baglam/02-sistem-baglaminda-yazilim.md) |
 | DAL | Development Assurance Level | geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
 | FDAL | Function Development Assurance Level | fonksiyon geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
 | IDAL | Item Development Assurance Level | öğe geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
@@ -45,12 +45,12 @@ Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmi
 | SCI | Software Configuration Index | yazılım konfigürasyon indeksi | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
 | SECI | Software Life Cycle Environment Configuration Index | yazılım yaşam döngüsü ortam konfigürasyon indeksi | [Bölüm 10](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md) |
 | QA | Quality Assurance | kalite güvencesi | [Bölüm 11](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md) |
-| SAS | Software Accomplishment Summary | yazılım başarı özeti | [Bölüm 12](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md) |
+| SAS | Software Accomplishment Summary | yazılım başarım özeti | [Bölüm 12](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md) |
 | SOI | Stage of Involvement | katılım aşaması | [Bölüm 12](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md) |
 | TQL | Tool Qualification Level | araç kalifikasyon seviyesi | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | TOR | Tool Operational Requirements | araç operasyonel gereksinimleri | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | TQP | Tool Qualification Plan | araç kalifikasyon planı | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
-| TAS | Tool Accomplishment Summary | araç başarı özeti | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
+| TAS | Tool Accomplishment Summary | araç başarım özeti | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | TCI | Tool Configuration Index | araç konfigürasyon indeksi | [Bölüm 13](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md) |
 | FLS | Field-Loadable Software | sahada yüklenebilir yazılım | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |
 | LSP | Loadable Software Part | yüklenebilir yazılım parçası | [Bölüm 18](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md) |

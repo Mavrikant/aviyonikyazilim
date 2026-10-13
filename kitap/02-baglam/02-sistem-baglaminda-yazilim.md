@@ -136,7 +136,7 @@ Sınırın açık çizilmesi iki tipik sorunu önler:
   zaten sınırlanmış geliyor" gibi kabuller bir gereksinime ya da arayüz tanımına
   bağlanmamışsa, donanım değiştiği gün kimse fark etmeden geçersizleşir.
 
-Sınır her zaman tek bir kutuyla da çakışmaz. Tümleşik modüler aviyonik (integrated
+Sınır her zaman tek bir kutuyla da çakışmaz. Entegre modüler aviyonik (integrated
 modular avionics, IMA) platformlarında birden çok sistem fonksiyonunun yazılımı aynı
 işlemciyi ve işletim sistemini paylaşır. Bu durumda yazılımın bağlamı hem
 gerçekleştirdiği fonksiyon hem de üzerinde koştuğu platformdur; farklı yazılım
@@ -215,8 +215,8 @@ güncel tutmasını sağlar:
 | Türetilmiş gereksinimler ve gerekçeleri | Gereksinim ve tasarım süreçleri | Yazılım gereksinim verisi ve tasarım tanımı |
 | Mimarinin emniyetle ilgili yönleri: bölümleme sınırları, izleme ve hata algılama mekanizmaları | Tasarım süreci | Tasarım tanımı |
 | Sistem gereksinimlerinde bulunan eksik, çelişki ve belirsizlikler | Gereksinim, tasarım ve doğrulama süreçleri | Problem raporları (problem report) |
-| Kullanım kısıtları ve açık problem raporlarının işlevsel etkisi | Yazılım ekibi, sertifikasyon irtibatı | Yazılım başarı özeti (Software Accomplishment Summary, SAS) |
-| Yazılımın konfigürasyon tanımlaması; başarım, zamanlama ve doğruluk özellikleri | Yazılım ekibi | Yazılım konfigürasyon indeksi (Software Configuration Index, SCI); zamanlama ve bellek payları yazılım başarı özetinde |
+| Kullanım kısıtları ve açık problem raporlarının işlevsel etkisi | Yazılım ekibi, sertifikasyon irtibatı | Yazılım başarım özeti (Software Accomplishment Summary, SAS) |
+| Yazılımın konfigürasyon tanımlaması; başarım, zamanlama ve doğruluk özellikleri | Yazılım ekibi | Yazılım konfigürasyon indeksi (Software Configuration Index, SCI); zamanlama ve bellek payları yazılım başarım özetinde |
 | Sistem doğrulamasında kullanılabilecek yazılım doğrulama kanıtı | Doğrulama süreci | Yazılım doğrulama sonuçları |
 
 Türetilmiş gereksinim (derived requirement), yazılım geliştirme süreçlerinde —

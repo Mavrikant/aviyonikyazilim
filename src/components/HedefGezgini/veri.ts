@@ -57,7 +57,7 @@ export const VERILER = {
   pr: {ad: 'Problem raporları', atif: '11.17', kk: '2222'},
   scmKayit: {ad: 'Konfigürasyon yönetimi kayıtları', atif: '11.18', kk: '2222'},
   sqaKayit: {ad: 'Kalite güvencesi kayıtları', atif: '11.19', kk: '2222'},
-  sas: {ad: 'Yazılım başarı özeti', kisa: 'SAS', atif: '11.20', kk: '1111'},
+  sas: {ad: 'Yazılım başarım özeti', kisa: 'SAS', atif: '11.20', kk: '1111'},
   // İz verisinin kategorisi hangi sürecin çıktısı olduğuna göre değişir
   izGelistirme: {ad: 'İz verisi (geliştirme)', atif: '11.21', kk: '1111'},
   izTest: {ad: 'İz verisi (test)', atif: '11.21', kk: '1122'},
@@ -700,7 +700,7 @@ export const HEDEFLER: Hedef[] = [
     ],
     [
       'Uyum kanıtı sunulmuş',
-      'Hedeflerin karşılandığı, yazılım başarı özeti ve konfigürasyon indeksiyle otoriteye gösterilmiştir.',
+      'Hedeflerin karşılandığı, yazılım başarım özeti ve konfigürasyon indeksiyle otoriteye gösterilmiştir.',
       '9.c',
       'GGGG',
       ['sas', 'sci'],

@@ -39,7 +39,8 @@ Biçimsel analiz soruyu tersinden sorar: "şu girdide ne oluyor?" yerine "bu öz
 bozulduğu herhangi bir girdi ya da durum var mı?". Cevap, modelin ve yazılı varsayımların
 kapsadığı uzayın tamamı için geçerlidir. Bu fark en çok şu tür mantıkta karşılığını verir:
 çok sayıda durumu ve geçişi olan mod mantığı; "şu koşul yokken bu komut asla verilmez"
-türünden emniyet kilitlemeleri (interlock); artıklık yönetimi ve oylama mantığı; taşma ya
+türünden emniyet kilitlemeleri (interlock); yedeklilik yönetimi (redundancy management)
+ve oylama mantığı; taşma ya
 da sıfıra bölme gibi yalnızca dar bir girdi aralığında ortaya çıkan aritmetik hatalar.
 Ortak yanları, hatanın nadir bir olay sıralamasında ya da bir sınırda saklanması ve
 testle bulunmasının, birinin o senaryoyu akıl etmesine bağlı olmasıdır.

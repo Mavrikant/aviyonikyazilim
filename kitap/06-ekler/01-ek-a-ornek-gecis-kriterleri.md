@@ -80,7 +80,7 @@ birlikte sağlandığında geçilmiş sayılır.
 ## Örnek kriterler
 
 Tablolarda geçen belge kısaltmaları: yazılım sertifikasyon planı (Plan for Software
-Aspects of Certification, PSAC), yazılım başarı özeti (Software Accomplishment Summary,
+Aspects of Certification, PSAC), yazılım başarım özeti (Software Accomplishment Summary,
 SAS), yazılım konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım yaşam
 döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration
 Index, SECI). "Kredi amaçlı (for-credit) doğrulama", sonuçları sertifikasyon kanıtı

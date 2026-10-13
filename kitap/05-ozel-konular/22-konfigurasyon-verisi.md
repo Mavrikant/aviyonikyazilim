@@ -321,7 +321,7 @@ PDI dosyasının doğrulanması ve yükleme sonrasındaki parça numarası kontr
 
 ## PDI yaşam döngüsü verisinde nerede görünür?
 
-PDI yalnızca bir dosya değildir; planlardan başarı özetine kadar bütün veride iz
+PDI yalnızca bir dosya değildir; planlardan başarım özetine kadar bütün veride iz
 bırakır. Tipik dağılım şöyledir:
 
 | Yaşam döngüsü verisi | PDI ile ilgili içerik |
@@ -331,7 +331,7 @@ bırakır. Tipik dağılım şöyledir:
 | PDI dosyası | Belirli bir konfigürasyona ait değerlerin yüklenebilir hâli; kendi parça numarası ve sürümüyle ayrı bir konfigürasyon öğesi. Entegrasyon sürecinin çıktısıdır ve Seviye A–D'nin hepsinde en sıkı kontrol kategorisindedir (CC1). Her dosya için yaşam döngüsü verisi üretilir; bu veri ayrı paketleniyorsa ilgili çalıştırılabilir nesne kodunun SAS'ına atıf yapar |
 | Doğrulama durumları, prosedürleri ve sonuçları | Kodun veri zarfına göre normal aralık ve gürbüzlük testleri; her PDI dosyası için değer doğruluğu, yapı uyumu ve eksiksizlik kanıtları |
 | Yazılım konfigürasyon indeksi (Software Configuration Index, SCI) | PDI dosyalarının kimliği ve sürümü, dosyanın nasıl üretildiği, uyumluluk kaydı: hangi PDI sürümünün hangi çalıştırılabilir nesne kodu sürümüyle geçerli olduğu |
-| Yazılım başarı özeti (Software Accomplishment Summary, SAS) | Onaya sunulan konfigürasyondaki PDI dosyaları, planlanan yaklaşımdan sapmalar ve PDI ile ilgili açık problem raporları |
+| Yazılım başarım özeti (Software Accomplishment Summary, SAS) | Onaya sunulan konfigürasyondaki PDI dosyaları, planlanan yaklaşımdan sapmalar ve PDI ile ilgili açık problem raporları |
 
 Bu kararların çoğu planlama aşamasında verilir. Ayrı doğrulama yolu seçilecekse bunun
 PSAC'ta beyan edilmesi ve otoriteyle erken konuşulması gerekir; proje sonunda "bu tablo

@@ -52,7 +52,7 @@ ve standart bu konuyu önceki sürümüne göre daha açık hâle getirmiştir. 
 yapılacağı planlama sürecinde belirlenir ve planlara yazılır. Konfigürasyon yönetimi
 (configuration management) faaliyetleri tedarikçide yürüyen işe de uygulanır; kalite
 güvencesi (quality assurance) süreci tedarikçi süreç ve çıktılarının onaylı plan ve
-standartlara uyduğuna güvence verir. Yazılım başarı özeti (Software Accomplishment
+standartlara uyduğuna güvence verir. Yazılım başarım özeti (Software Accomplishment
 Summary, SAS) bu uyumun nasıl sağlandığını ayrı bir başlıkta anlatır.
 
 FAA AC 20-115D ve EASA AMC 20-115D, DO-178C'yi kabul edilebilir uyum yöntemi olarak

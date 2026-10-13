@@ -85,7 +85,7 @@ otorite bu iddiayı ilk denetimde sorgular ([SW SOI-1](../kaynaklar/soi-1.md)).
 İzi başka verilerde de aranır: bütünlüğün hangi yöntemle doğrulanacağı yazılım
 doğrulama planında (Software Verification Plan, SVP), yazılıma tahsis edilen bölümleme
 gereksinimleri ile bölümlerin etkileşimi ve seviyeleri gereksinim verisinde, bölümleme
-yöntemi ve ihlalin nasıl önlendiği tasarım tanımında yer alır; yazılım başarı özeti
+yöntemi ve ihlalin nasıl önlendiği tasarım tanımında yer alır; yazılım başarım özeti
 (Software Accomplishment Summary, SAS) kullanılan yaklaşımı plandan farklarıyla yeniden
 anlatır. Bölümler arasında hangi etkileşime ne ölçüde izin verildiği ve korumanın
 yalnız donanımla mı, donanım ile yazılımın birlikte çalışmasıyla mı sağlandığı bu
@@ -237,7 +237,7 @@ bölümle sınırlı kalmasıdır.
 sağlık izleme tepkileri uygulama kodunda değil, entegratörün hazırladığı tablolarda
 durur. Bölümleme mekanizması çekirdekte, bölümleme kararı ise bu tablolardadır.
 
-ARINC 653 çoğunlukla tümleşik modüler aviyonik (integrated modular avionics, IMA)
+ARINC 653 çoğunlukla entegre modüler aviyonik (integrated modular avionics, IMA)
 platformlarında kullanılır. IMA'da işler başlıca üç role dağılır: platformu ve çekirdeği
 sağlayan, platformda barınan uygulamayı geliştiren ve hepsini tek bir konfigürasyonda
 birleştiren entegratör. Bu rollerin sorumluluklarını ve platformun, tek tek

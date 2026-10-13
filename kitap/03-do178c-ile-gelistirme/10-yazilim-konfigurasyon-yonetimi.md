@@ -184,7 +184,7 @@ beklemektir.
 
 Hangi verinin hangi kategoride yönetileceği yazılım seviyesine göre değişir. Yazılım
 sertifikasyon planı (Plan for Software Aspects of Certification, PSAC), yazılım
-konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım başarı özeti
+konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım başarım özeti
 (Software Accomplishment Summary, SAS) gibi otoriteye sunulan veriler uygulandıkları her
 seviyede CC1'dir; geliştirme, doğrulama, konfigürasyon yönetimi ve kalite güvencesi
 planları (sırasıyla SDP, SVP, SCMP, SQAP) ise seviyeye göre kategori değiştirir.
