@@ -405,7 +405,7 @@ süreleri yalnızca paketin kapsadığı işlemci ve yapılandırma için geçer
 incelenirken bakılan konular arasında sayar, derleyici ve bağlayıcı seçenekleri ile
 kimi donanım özelliklerinin en kötü durum süresine etkisinin değerlendirilmesini ister
 ve gözden geçirme, analiz ve testin birlikte kullanılabileceğini belirtir. Ulaşılan
-zamanlama ve bellek payları yazılım başarı özetinde (Software Accomplishment Summary,
+zamanlama ve bellek payları yazılım başarım özetinde (Software Accomplishment Summary,
 SAS) bildirilir. RTOS'a özgü nokta yığının görev başına ayrılmasıdır: her görevin
 yığını kendi en derin çağrı zincirine göre boyutlandırılır ve kesmelerin hangi yığını
 kullandığı (ayrı bir kesme yığını mı, kesilen görevin yığını mı) hesaba katılır.

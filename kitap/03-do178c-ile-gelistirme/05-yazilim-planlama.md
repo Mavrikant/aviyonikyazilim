@@ -148,7 +148,7 @@ etkileyebilir.
 Beş plan beş ayrı belge olmak zorunda da değildir. Küçük projelerde bazıları tek
 belgede birleştirilir, büyük kuruluşlarda ise ortak kurum süreçlerine atıf yapan ince
 proje planları yazılır. Belirleyici olan paketleme değil, beklenen içeriğin bulunabilir
-ve tutarlı olmasıdır. Tek çekince şudur: bazı otoriteler PSAC'ı ve yazılım başarı
+ve tutarlı olmasıdır. Tek çekince şudur: bazı otoriteler PSAC'ı ve yazılım başarım
 özetini ayrı belgeler olarak görmek isteyebilir.
 
 Beş plan A'dan D'ye bütün yazılım seviyelerinde beklenir; seviyeyle değişen, yedi
@@ -420,7 +420,7 @@ gözden geçirildiğine dair güvence beklenir.
 
 **Onay** tarafında planların hepsi aynı yolu izlemez. PSAC otoriteye erken sunulur ve
 üzerinde mutabakat aranır; yazılım konfigürasyon indeksi (Software Configuration Index,
-SCI) ve yazılım başarı özeti (Software Accomplishment Summary, SAS) ile birlikte
+SCI) ve yazılım başarım özeti (Software Accomplishment Summary, SAS) ile birlikte
 otoriteye asgari olarak sunulan veriyi oluşturur. Diğer dört plan ve üç standart
 otoritenin erişimine açık tutulur ve uygulamada ilk katılım aşaması (Stage of
 Involvement, SOI) denetiminde incelenir. Bu denetimin giriş koşulları ve otoritenin

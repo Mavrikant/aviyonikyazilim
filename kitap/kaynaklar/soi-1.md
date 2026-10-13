@@ -136,7 +136,7 @@ güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değild
 ## Hazırlanacak veri paketi
 
 DO-178C'nin otoriteye sunulmasını asgari olarak beklediği veri PSAC, yazılım
-konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım başarı özetidir
+konfigürasyon indeksi (Software Configuration Index, SCI) ve yazılım başarım özetidir
 (Software Accomplishment Summary, SAS); bu aşamada bunlardan yalnızca PSAC vardır.
 Kalifikasyon gerektiren araç varsa DO-330, TQL-1 ile TQL-4 arasındaki araçlar için araç
 kalifikasyon planının da PSAC ile birlikte sunulmasını bekler. Geri kalan veri denetimde

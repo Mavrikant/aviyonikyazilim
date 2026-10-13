@@ -139,7 +139,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | araç kalifikasyon seviyesi | tool qualification level (TQL) |
 | sahada yüklenebilir yazılım | field-loadable software |
 | kullanıcı tarafından değiştirilebilir yazılım | user-modifiable software |
-| yazılım başarı özeti | Software Accomplishment Summary (SAS) |
+| yazılım başarım özeti | Software Accomplishment Summary (SAS) |
 | veri yükleyici | data loader |
 | yüklenebilir yazılım parçası | loadable software part (LSP) |
 | elektronik parça işaretleme | electronic part marking |
@@ -255,7 +255,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | yazılım sertifikasyon planı | Plan for Software Aspects of Certification (PSAC) |
 | yazılım konfigürasyon indeksi | Software Configuration Index (SCI) |
 | yazılım yaşam döngüsü ortam konfigürasyon indeksi | Software Life Cycle Environment Configuration Index (SECI) |
-| araç başarı özeti | Tool Accomplishment Summary (TAS) |
+| araç başarım özeti | Tool Accomplishment Summary (TAS) |
 | araç kalifikasyon planı | Tool Qualification Plan (TQP) |
 | araç konfigürasyon indeksi | Tool Configuration Index (TCI) |
 | araç operasyonel gereksinimleri | Tool Operational Requirements (TOR) |
@@ -268,7 +268,8 @@ Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgis
 geçirme); DO-178C yazılım seviyesi anlamında "güvence seviyesi/düzeyi"; "sertifikasyon
 makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partition anlamında
 "bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4); scheduling anlamında "zamanlama"
-(çizelgeleme; "zamanlama" timing içindir); deadline anlamında "son tarih" ya da "termin".
+(çizelgeleme; "zamanlama" timing içindir); deadline anlamında "son tarih" ya da "termin";
+SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti).
 
 ## Yeni blog yazısı ekleme
 

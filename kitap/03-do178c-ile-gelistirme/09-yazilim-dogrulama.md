@@ -905,7 +905,7 @@ neden kabul edilebilir olduğu, sistem düzeyindeki hafifletmeler (mitigation) v
 kısıtlarıyla birlikte açıkça yazılır; kısıtla hafifletilen rapor kapanmış değil,
 gerekçesiyle açık taşınan rapordur.
 
-Değerlendirmenin özeti, işlevsel kısıtlar ve gerekçeyle birlikte yazılım başarı
+Değerlendirmenin özeti, işlevsel kısıtlar ve gerekçeyle birlikte yazılım başarım
 özetinde (Software Accomplishment Summary, SAS) yer alır ve sertifikasyon otoritesine
 sunulur (bkz. [12. Sertifikasyon İrtibatı](12-sertifikasyon-irtibati.md)). Deneyimin
 öğrettiği kural şudur: denetçiyi rahatsız eden açık rapor sayısı değil, sahipsiz ve

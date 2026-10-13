@@ -10,7 +10,7 @@ tanımlanmış ve yeniden üretilebilir mi, açık kalan problem raporları kabu
 mi? Bu sayfa, son denetim öncesinde sunum paketini sınamak için bir kontrol listesidir.
 
 Katılım aşaması (Stage of Involvement, SOI) denetimlerinin genel mantığı ve yazılım
-başarı özetinin (Software Accomplishment Summary, SAS) içeriği
+başarım özetinin (Software Accomplishment Summary, SAS) içeriği
 [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 bölümünde anlatılır. Buradaki maddeler bir otorite listesinin çevirisi değil, sahada
 işe yarayan hazırlık sorularıdır.
@@ -80,7 +80,7 @@ olmadığıdır.
       SECI'dekilerle aynı mı; araçların bilinen problemleri ve işlevsel kısıtları
       yazılım açısından değerlendirilip SAS'ta raporlanmış mı?
 
-### Yazılım başarı özeti (SAS)
+### Yazılım başarım özeti (SAS)
 
 - [ ] SAS, PSAC'ta verilen sözlerle aynı başlık düzeninde karşılaştırılabiliyor mu?
 - [ ] Plandan yapılan tüm sapmalar, gerekçeleri ve onay kayıtlarıyla birlikte
@@ -149,9 +149,9 @@ hakkında bir şey söylemez.
 
 | Veri | Neden istenir |
 |---|---|
-| Yazılım başarı özeti (SAS) | Projenin PSAC'a göre nasıl tamamlandığının özeti |
+| Yazılım başarım özeti (SAS) | Projenin PSAC'a göre nasıl tamamlandığının özeti |
 | Yazılım konfigürasyon indeksi (SCI) ve SECI | Teslim edilen yazılımın ve yaşam döngüsü ortamının tam tanımı |
-| Araç konfigürasyon indeksi (Tool Configuration Index, TCI) ve araç başarı özeti (Tool Accomplishment Summary, TAS) | Araç kalifikasyon seviyesi (tool qualification level, TQL) TQL-1 ile TQL-4 arasında olan araç varsa: kalifikasyonun planlandığı gibi tamamlandığı; DO-330 bu ikisinin otoriteye sunulmasını bekler |
+| Araç konfigürasyon indeksi (Tool Configuration Index, TCI) ve araç başarım özeti (Tool Accomplishment Summary, TAS) | Araç kalifikasyon seviyesi (tool qualification level, TQL) TQL-1 ile TQL-4 arasında olan araç varsa: kalifikasyonun planlandığı gibi tamamlandığı; DO-330 bu ikisinin otoriteye sunulmasını bekler |
 | Son temel çizgiye ait doğrulama sonuçları ve kapsam analizi | Doğrulamanın teslim edilen sürüm için tamamlandığı |
 | Açık problem raporları ve değerlendirmeleri | Bilinen kusurların kabul edilebilirliği |
 | Önceki SOI bulgularının kapanış kayıtları | Sürecin tutarlı işletildiği |

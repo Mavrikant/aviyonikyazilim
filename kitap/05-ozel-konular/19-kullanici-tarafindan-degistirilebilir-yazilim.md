@@ -123,7 +123,7 @@ Configuration Index, SCI) kullanıcı değişikliği için öngörülen prosedü
 araçları tanımlar (§11.16). SCI'de tanımlanan yazılım ürünü temel çizgisi (baseline) ise
 UMS'nin yalnızca koruma ve sınır bileşenlerini içerir, değiştirilebilir içeriğin kendisini
 içermez (§7.2.2); kullanıcı değişikliğinin onaylı ürünün konfigürasyon kimliğini
-değiştirmemesini sağlayan da budur. Yazılım başarı özeti (Software Accomplishment
+değiştirmemesini sağlayan da budur. Yazılım başarım özeti (Software Accomplishment
 Summary, SAS) PSAC'ta beyan edilen yaklaşımdan farkları açıklar; uygulamada korumanın
 nasıl sağlandığı ve kısıtların son hâli de burada özetlenir.
 

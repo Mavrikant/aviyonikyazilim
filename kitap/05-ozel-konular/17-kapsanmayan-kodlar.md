@@ -231,7 +231,7 @@ anlatılır.
 
 Sonuç ne olursa olsun, her kapsanmayan kod bulgusu ve verilen karar **kanıt dosyasına
 yansıtılmalıdır**: bulgular ve gerekçeleri yapısal kapsam analizi sonuçlarında, açık
-kalan konular ise yazılım başarı özetinde (Software Accomplishment Summary, SAS) görünür
+kalan konular ise yazılım başarım özetinde (Software Accomplishment Summary, SAS) görünür
 olmalıdır (bkz.
 [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)).
 Denetçinin sormadan önce cevabı dosyada bulması, sürecin olgunluğunun en iyi
