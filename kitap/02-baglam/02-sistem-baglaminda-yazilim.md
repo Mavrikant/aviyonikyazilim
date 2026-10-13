@@ -136,7 +136,7 @@ Sınırın açık çizilmesi iki tipik sorunu önler:
   zaten sınırlanmış geliyor" gibi kabuller bir gereksinime ya da arayüz tanımına
   bağlanmamışsa, donanım değiştiği gün kimse fark etmeden geçersizleşir.
 
-Sınır her zaman tek bir kutuyla da çakışmaz. Tümleşik modüler aviyonik (integrated
+Sınır her zaman tek bir kutuyla da çakışmaz. Entegre modüler aviyonik (integrated
 modular avionics, IMA) platformlarında birden çok sistem fonksiyonunun yazılımı aynı
 işlemciyi ve işletim sistemini paylaşır. Bu durumda yazılımın bağlamı hem
 gerçekleştirdiği fonksiyon hem de üzerinde koştuğu platformdur; farklı yazılım

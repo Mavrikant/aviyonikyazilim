@@ -227,7 +227,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | ana çerçeve / küçük çerçeve | major frame / minor frame |
 | alan bölümlemesi / zaman bölümlemesi | spatial / temporal partitioning |
 | bölüm (bölümleme bağlamında) | partition |
-| tümleşik modüler aviyonik | integrated modular avionics (IMA) |
+| entegre modüler aviyonik | integrated modular avionics (IMA) |
 | çok çekirdekli işlemci | multi-core processor |
 | kod üreteci | code generator |
 | kodlama standardı | software code standards |
@@ -245,6 +245,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | imaj | image (executable image) |
 | sağlama toplamı | checksum |
 | döngüsel artıklık denetimi | cyclic redundancy check (CRC) |
+| yedeklilik / yedekleme | redundancy |
 | çevrimsel karmaşıklık | cyclomatic complexity |
 | güvenli durum | safe state |
 | emniyet / güvenlik | safety / security |
@@ -269,7 +270,10 @@ geçirme); DO-178C yazılım seviyesi anlamında "güvence seviyesi/düzeyi"; "s
 makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partition anlamında
 "bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4); scheduling anlamında "zamanlama"
 (çizelgeleme; "zamanlama" timing içindir); deadline anlamında "son tarih" ya da "termin";
-SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti).
+SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti); requirement anlamında
+"ister" (gereksinim); IMA için "tümleşik modüler aviyonik" (entegre modüler aviyonik);
+redundancy anlamında "artıklık" ya da "redundans" (yedeklilik/yedekleme; CRC'nin yerleşik
+adı "döngüsel artıklık denetimi" bunun dışındadır).
 
 ## Yeni blog yazısı ekleme
 

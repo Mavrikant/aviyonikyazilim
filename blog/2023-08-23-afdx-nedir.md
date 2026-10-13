@@ -25,7 +25,7 @@ AFDX, tam çift yönlü iletişimi destekleyen anahtarlama yapısıyla karakteri
 
 Deterministik İletişim: AFDX, belirli bir zaman diliminde veri iletimini garanti eden deterministik bir iletişim sağlar. Bu sayede, kritik verilerin hızlı ve güvenilir bir şekilde iletilmesi mümkün olur.
 
-**Redundans ve Güvenilirlik:** AFDX, veri yollarında meydana gelebilecek kesintilere karşı yüksek düzeyde dayanıklılık ve güvenilirlik sunar. Çift hat ve çift anahtar yapısıyla ağın kesintisiz çalışması sağlanır.
+**Yedeklilik ve Güvenilirlik:** AFDX, veri yollarında meydana gelebilecek kesintilere karşı yüksek düzeyde dayanıklılık ve güvenilirlik sunar. Çift hat ve çift anahtar yapısıyla ağın kesintisiz çalışması sağlanır.
 
 **Geniş Bant Genişliği:** AFDX ağı, yüksek bant genişliği sunar. Bu özellik, büyük veri miktarlarının hızlı ve etkili bir şekilde iletilmesini sağlar.
 

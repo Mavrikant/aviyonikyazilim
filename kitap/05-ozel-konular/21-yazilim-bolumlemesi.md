@@ -237,7 +237,7 @@ bölümle sınırlı kalmasıdır.
 sağlık izleme tepkileri uygulama kodunda değil, entegratörün hazırladığı tablolarda
 durur. Bölümleme mekanizması çekirdekte, bölümleme kararı ise bu tablolardadır.
 
-ARINC 653 çoğunlukla tümleşik modüler aviyonik (integrated modular avionics, IMA)
+ARINC 653 çoğunlukla entegre modüler aviyonik (integrated modular avionics, IMA)
 platformlarında kullanılır. IMA'da işler başlıca üç role dağılır: platformu ve çekirdeği
 sağlayan, platformda barınan uygulamayı geliştiren ve hepsini tek bir konfigürasyonda
 birleştiren entegratör. Bu rollerin sorumluluklarını ve platformun, tek tek

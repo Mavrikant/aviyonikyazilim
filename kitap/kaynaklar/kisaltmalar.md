@@ -16,7 +16,7 @@ Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmi
 
 | Kısaltma | İngilizce açılım | Türkçe karşılık | Bölüm |
 |----|----|----|----|
-| IMA | Integrated Modular Avionics | tümleşik modüler aviyonik | [Bölüm 2](../02-baglam/02-sistem-baglaminda-yazilim.md) |
+| IMA | Integrated Modular Avionics | entegre modüler aviyonik | [Bölüm 2](../02-baglam/02-sistem-baglaminda-yazilim.md) |
 | DAL | Development Assurance Level | geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
 | FDAL | Function Development Assurance Level | fonksiyon geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
 | IDAL | Item Development Assurance Level | öğe geliştirme güvence seviyesi | [Bölüm 3](../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md) |
