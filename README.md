@@ -39,6 +39,11 @@ Diğer otomasyonlar:
   her PR'da siteyi derler ve kitap PDF'ini üretir; kırık iç bağlantı, kırık çapa, tanımsız
   etiket ya da PDF üretimini bozan bir değişiklik birleştirmeden önce PR üzerinde görünür.
   Dağıtım yapmaz.
+- **IndexNow:** her yayından sonra deploy.yml'deki `indexnow` işi yeni, güncellenmiş ve
+  kaldırılmış sayfaları [IndexNow](https://www.indexnow.org/) ile Bing, Yandex ve diğer
+  katılımcı arama motorlarına bildirir ([scripts/indexnow.mjs](scripts/indexnow.mjs)).
+  *Actions* sekmesinden "tüm sayfalar" seçilerek elle de çalıştırılabilir. Ayrıntı:
+  [SEO.md](SEO.md).
 - **Dış bağlantı denetimi:** [link-check.yml](.github/workflows/link-check.yml) her ayın
   1'inde içerikteki dış bağlantıları [lychee](https://lychee.cli.rs/) ile denetler;
   kırık bağlantı varsa "Kırık dış bağlantılar" başlıklı bir issue açar ya da açık olana

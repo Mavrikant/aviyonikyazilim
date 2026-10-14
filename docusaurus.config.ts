@@ -262,9 +262,11 @@ const config: Config = {
         ...(GA_MEASUREMENT_ID ? {gtag: {trackingID: GA_MEASUREMENT_ID, anonymizeIP: true}} : {}),
         sitemap: {
           // Son değişiklik tarihi git geçmişinden okunur (showLastUpdateTime +
-          // deploy.yml'deki fetch-depth: 0 gerektirir).
+          // deploy.yml'deki fetch-depth: 0 gerektirir). Saat de yazılır: IndexNow betiği
+          // (scripts/indexnow.mjs) değişen sayfayı bu değerden tanır, aynı gün ikinci
+          // değişiklik yalnızca tarihle görünmez.
           // Google changefreq/priority alanlarını yok sayar.
-          lastmod: 'date',
+          lastmod: 'datetime',
           changefreq: null,
           priority: null,
           // Yalnızca liste işlevi gören, özgün içeriği olmayan sayfalar.

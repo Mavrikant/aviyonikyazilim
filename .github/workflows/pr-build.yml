@@ -37,6 +37,10 @@ jobs:
         run: npm ci
       - name: Siteyi derle
         run: npm run build
+      - name: IndexNow listesini denetle
+        # Birleştirilince bildirilecek sayfaları günlüğe yazar; gönderim yapmaz (gönderim
+        # deploy.yml'de, dağıtımdan sonra). Anahtar dosyası ya da sitemap bozuksa durur.
+        run: node scripts/indexnow.mjs liste
       - name: PDF için Chromium'u kur
         # Sürüm, package-lock.json'daki playwright-core ile sabittir; --with-deps sistem
         # kitaplıklarını ve yedek yazı tiplerini de kurar.
