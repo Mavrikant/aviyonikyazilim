@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      indexnow-tumu:
+        description: "IndexNow'a yalnızca değişen sayfaları değil, sitemap'teki tüm sayfaları bildir"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -20,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     # Olağan süre birkaç dakikadır; asılı kalan bir adım yayın kuyruğunu saatlerce tutmasın.
     timeout-minutes: 15
+    outputs:
+      # Dağıtımdan sonra IndexNow'a bildirilecek adresler (satır başına bir adres).
+      indexnow: ${{ steps.indexnow.outputs.adresler }}
     steps:
       - name: Depoyu al
         uses: actions/checkout@v7
@@ -49,6 +57,20 @@ jobs:
       - name: Kitap PDF'ini üret
         # build/ altına yazar; ana sayfadaki "PDF indir" düğmesi bu dosyaya bağlanır.
         run: npm run pdf
+      - name: IndexNow'a bildirilecek sayfaları belirle
+        id: indexnow
+        # Yeni derlemenin sitemap'ini yayındakiyle karşılaştırır: yeni, güncellenmiş ve
+        # kaldırılmış sayfalar. İlk bildirimde ya da elle çalıştırmada "tüm sayfalar"
+        # seçilirse sitemap'in tamamı bildirilir. Yayındaki site okunamazsa yalnızca uyarır.
+        env:
+          TUMU: ${{ inputs.indexnow-tumu && '--tumu' || '' }}
+        run: |
+          node scripts/indexnow.mjs liste $TUMU > "$RUNNER_TEMP/indexnow.txt"
+          {
+            echo 'adresler<<INDEXNOW_EOF'
+            cat "$RUNNER_TEMP/indexnow.txt"
+            echo 'INDEXNOW_EOF'
+          } >> "$GITHUB_OUTPUT"
       - name: Pages yapılandır
         uses: actions/configure-pages@v6
       - name: Yapıyı yükle
@@ -67,3 +89,25 @@ jobs:
       - name: GitHub Pages'e dağıt
         id: deployment
         uses: actions/deploy-pages@v5
+
+  indexnow:
+    name: IndexNow'a bildir
+    # Sayfalar ve anahtar dosyası yayındayken çalışır; adresleri Bing, Yandex ve diğer
+    # IndexNow arama motorlarına iletir (Google IndexNow'u desteklemez, sitemap'i okur).
+    needs: [build, deploy]
+    if: needs.build.outputs.indexnow != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v7
+      - name: Node.js kur
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      - name: Değişen sayfaları bildir
+        env:
+          ADRESLER: ${{ needs.build.outputs.indexnow }}
+        run: printf '%s\n' "$ADRESLER" | node scripts/indexnow.mjs gonder

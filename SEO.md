@@ -10,7 +10,8 @@ edileceğini toplar. Kod kuralları için [CLAUDE.md](CLAUDE.md), katkı yollar�
 | Alan | Çözüm | Nerede |
 |---|---|---|
 | `robots.txt` | Her şeye izin verir, sitemap adresini gösterir | `static/robots.txt` |
-| Sitemap | `<lastmod>` her dosyanın son git commit tarihinden gelir; etiket/arşiv/yazar listeleri dışarıda | `docusaurus.config.ts` (`sitemap`), `deploy.yml` (`fetch-depth: 0`) |
+| Sitemap | `<lastmod>` her dosyanın son git commit zamanından (tarih + saat) gelir; etiket/arşiv/yazar listeleri dışarıda | `docusaurus.config.ts` (`sitemap`), `deploy.yml` (`fetch-depth: 0`) |
+| IndexNow | Her yayından sonra yeni, güncellenmiş ve kaldırılmış sayfalar IndexNow'a bildirilir; Bing, Yandex, Seznam, Naver, Yep ve diğer katılımcılar adresleri aynı istekten alır. Google IndexNow'u desteklemez (sitemap + Search Console). Tüm sayfaları yeniden göndermek için *Actions → GitHub Pages'e Dağıt → Run workflow* ekranında "tüm sayfalar" kutusu işaretlenir | `scripts/indexnow.mjs`, `static/<anahtar>.txt`, `deploy.yml` (`indexnow` işi) |
 | Meta açıklaması | `description` yoksa ilk paragraftan üretilir; blogda elle yazılır | `plugins/meta-description.ts` |
 | Site kimliği (Organization + Person + WebSite) | Her sayfada tek bir schema.org `@graph`; varlıklar `@id` ile bağlı; logo 256 px PNG (Google en az 112 px ister) | `docusaurus.config.ts` (`identityGraph`, `headTags`), `static/img/logo-256.png` |
 | Kitap şeması | `/kitap` sayfasında `Book` + `TechArticle`, diğer bölümlerde `TechArticle` | `src/theme/DocItem/Metadata/` |
@@ -76,7 +77,8 @@ durdurmaz; build günlüğünde `[config] … geçersiz biçimde, yok sayıldı`
 3. **URL denetimi:** ana sayfa, `/kitap`, en yeni blog yazısı ve bir kitap bölümü için
    *URL Denetimi* → *Dizine eklenmesini iste*.
 4. **Bing Webmaster Tools:** Search Console'dan içe aktar (DuckDuckGo ve diğer bazı arama
-   motorları Bing dizinini kullanır).
+   motorları Bing dizinini kullanır). IndexNow bildirimleri hesap gerektirmez; Bing
+   Webmaster Tools açıksa *IndexNow* sayfasında gönderilen adresler görünür.
 5. **GitHub deposu:** *About* bölümüne web sitesi olarak `https://aviyonikyazilim.com`,
    konu etiketleri olarak `do-178c`, `avionics`, `aviation`, `safety-critical`,
    `turkish`, `docusaurus` ekle. GitHub kullanıcı bağlantılarına `rel=nofollow` ekler;
@@ -135,6 +137,10 @@ kaynaklara dayanan bir madde ya da başkalarının referans vermesi gerekir.
 - **Dizin:** Search Console → *Sayfalar* (dizine eklenenler/dışarıda kalanlar),
   *Performans* (hangi sorgularla görünüyorsunuz), *Site haritaları*.
 - **Basit kontrol:** Google'da `site:aviyonikyazilim.com`.
+- **IndexNow:** deploy.yml çalıştırmasındaki *IndexNow'a bildir* işinin günlüğü gönderilen
+  adresleri ve yanıtı (200/202) listeler. Yerelde `npm run build` sonrasında
+  `node scripts/indexnow.mjs liste` bildirilecek adresleri gösterir (gönderim yapmaz);
+  tek bir sayfayı elle bildirmek için `node scripts/indexnow.mjs gonder <adres>`.
 - **Yerelde:** `npm run build` sonrasında `build/llms.txt`, `build/robots.txt` ve
   `build/sitemap.xml` dosyalarına bakın. E-posta sızıntısı denetimi:
   `grep -rIlE "serdar@|karaman\.dev" build` ve `grep -rIl "mailto:" build --include='*.html'`

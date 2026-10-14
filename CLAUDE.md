@@ -52,6 +52,7 @@ plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + 
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
 plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
 scripts/kitap-pdf.mjs     Derlenmiş siteden kitabın PDF'ini üretir (`npm run pdf`); düzeni kitap-pdf.css
+scripts/indexnow.mjs      Değişen sayfaları IndexNow ile arama motorlarına bildirir (deploy.yml çalıştırır)
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
 src/pages/iletisim.mdx    İletişim sayfası (e-posta, GitHub; canlı sohbet yalnızca yapılandırılmışsa)
 src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` sarmalayıcısı
@@ -68,6 +69,7 @@ static/img/kitap/<slug>/  Kitap/kaynak görselleri
 static/2023|2024|p/*.html Eski Blogger URL'leri için redirect stub'ları — SİLME
 static/CNAME              Yayın alan adı (aviyonikyazilim.com)
 static/robots.txt         Tarayıcı kuralları + sitemap adresi
+static/<anahtar>.txt      IndexNow anahtar dosyası (adı = içeriği) — SİLME
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
 i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri
@@ -540,9 +542,17 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   `plugins/remark-lcp-image.ts` onu `loading="eager"` + `fetchpriority="high"` yapar,
   diğer görseller tembel yüklenir. Büyük bir kapak görseli bu yüzden doğrudan sayfa
   açılışını yavaşlatır.
-- **Sitemap:** `<lastmod>` her dosyanın son git commit tarihinden üretilir; bunun için
-  `showLastUpdateTime: true` ve `deploy.yml`'deki `fetch-depth: 0` korunur. Etiket,
+- **Sitemap:** `<lastmod>` her dosyanın son git commit zamanından (tarih + saat) üretilir;
+  bunun için `showLastUpdateTime: true` ve `deploy.yml`'deki `fetch-depth: 0` korunur. Etiket,
   arşiv ve yazar listeleri sitemap'e alınmaz. `static/robots.txt` sitemap'i gösterir.
+- **IndexNow:** her yayında `scripts/indexnow.mjs` yeni derlemenin sitemap'ini yayındakiyle
+  karşılaştırır; yeni, `<lastmod>`'u değişmiş ve kaldırılmış adresler dağıtımdan sonra
+  `api.indexnow.org`'a gönderilir (Bing, Yandex, Seznam, Naver, Yep … hepsine iletilir;
+  Google IndexNow'u desteklemez). Değişmeyen sayfalar yeniden gönderilmez; tümünü göndermek
+  için deploy.yml elle "tüm sayfalar" seçilerek çalıştırılır. Anahtar `static/` altındaki,
+  adı içeriğiyle aynı `.txt` dosyasıdır; herkese açıktır (gizli değildir). Dosya silinir ya
+  da adı içeriğiyle uyuşmazsa PR derlemesi durur. Anahtar değişirse ilk yayında tüm sayfalar
+  yeniden bildirilir. Alan adı `static/CNAME`'den okunur.
 - **Site kimliği:** her sayfada `docusaurus.config.ts` içindeki `identityGraph`
   (schema.org `Organization` + `Person` + `WebSite`, `@id` ile bağlı) bulunur; Google
   bunu site adı ve kimlik bilgisi için kullanabilir. Yalnızca depoda doğrulanabilen
