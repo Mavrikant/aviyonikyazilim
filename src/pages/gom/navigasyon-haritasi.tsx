@@ -24,6 +24,10 @@ export default function NavigasyonHaritasiGom(): ReactNode {
     <>
       <Head>
         <title>Türkiye Navigasyon Haritası | Aviyonik Yazılım</title>
+        <meta
+          name="description"
+          content="Başka sitelere gömülebilen Türkiye navigasyon haritası: AIP Türkiye verisiyle VOR, DME, TACAN, NDB istasyonları, ILS yaklaşmaları, havalimanları ve pistler."
+        />
         <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href={`${siteConfig.url}/araclar/navigasyon/turkiye-navigasyon-haritasi`} />
       </Head>
