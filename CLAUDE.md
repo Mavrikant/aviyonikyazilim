@@ -48,7 +48,8 @@ src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı davet
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
 plugins/meta-description.ts  description yoksa ilk paragraftan meta açıklaması üretir
 plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriority=high yapar
-plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı
+plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı;
+                          meta açıklaması olmayan sayfada derlemeyi durdurur
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
 plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
 scripts/kitap-pdf.mjs     Derlenmiş siteden kitabın PDF'ini üretir (`npm run pdf`); düzeni kitap-pdf.css
@@ -57,8 +58,9 @@ src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınc
 src/pages/iletisim.mdx    İletişim sayfası (e-posta, GitHub; canlı sohbet yalnızca yapılandırılmışsa)
 src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` sarmalayıcısı
 src/components/CanliSohbet/  İsteğe bağlı Tawk.to sohbeti: betiği tembel yükleyen kanca ve yüzen düğme
-src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage ve
-                          SearchPage (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage,
+                          Blog/Pages/BlogAuthorsListPage, BlogTagsListPage, NotFound ve SearchPage
+                          (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
                           kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır), Root.tsx
                           (resmi Root genişletme noktası, eject değildir: yüzen sohbet düğmesini ekler)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
@@ -72,7 +74,7 @@ static/robots.txt         Tarayıcı kuralları + sitemap adresi
 static/<anahtar>.txt      IndexNow anahtar dosyası (adı = içeriği) — SİLME
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
-i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri
+i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri; blog arşivinin açıklaması
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
 .github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım (site + kitap PDF'i)
@@ -534,6 +536,14 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   Sayfa görsel/tablo/listeyle başlıyorsa, ilk paragraf özet değilse ya da birden çok
   sayfada aynı giriş varsa (SOI sayfaları gibi) `description` elle yazılır
   (Türkçe, en çok 160 karakter, sayfaya özgü). Blog yazılarında elle yazmak tercih edilir.
+  Markdown'dan gelmeyen sayfalar (`src/pages/*.tsx`, 404, arama, blog etiket/yazar
+  listeleri) açıklamayı kendileri verir: `<PageMetadata description>` ya da `<Head>` içinde
+  `<meta name="description">`. `plugins/font-preload.ts` build sonunda her sayfayı denetler;
+  açıklaması olmayan ya da boş olan sayfa derlemeyi durdurur (redirect stub'ları hariç).
+  Site içi aramada dizinlenen bir liste sayfasına açıklama eklenirse aramada başlıksız
+  sonuç çıkıp çıkmadığına bakılır (bu yüzden `/blog/archive` ve `/blog/authors` aramanın
+  `ignoreFiles` listesindedir). Blog arşivinin açıklaması (sayfada alt başlık olarak da
+  görünür) `i18n/tr/code.json`'daki `theme.blog.archive.description` çevirisidir.
 - **Görseller:** fotoğraf/illüstrasyonlar en fazla ~800 px genişliğe küçültülüp WebP
   (kalite ~78) olarak kaydedilir; diyagram ve ekran görüntüleri PNG kalabilir.
   Yüzlerce KB'lık görsel eklenmez. Her görselin **Türkçe alt metni** vardır

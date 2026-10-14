@@ -38,5 +38,9 @@
   "theme.SearchPage.searchContext.everywhere": {
     "message": "Her yerde",
     "description": "Arama sayfasındaki bağlam seçicisinin 'tümü' seçeneği"
+  },
+  "theme.blog.archive.description": {
+    "message": "Aviyonik yazılım blogundaki tüm yazılar, yayın yılına göre: DO-178C, yapısal kapsam analizi, ARINC 429, AFDX ve gerçek zamanlı sistemler.",
+    "description": "Blog arşivinin (/blog/archive) alt başlığı ve meta açıklaması; varsayılanı başlıkla aynı ('Arşiv')"
   }
 }

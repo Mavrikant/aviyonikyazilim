@@ -24,6 +24,12 @@
  * İşaretleme React ağacının dışındadır, hydration etkilenmez; Docusaurus
  * işaretlemeyi değiştirirse eşleşme olmaz ve sayfa olduğu gibi kalır.
  *
+ * (3) Meta açıklaması denetimi — her Docusaurus sayfasında boş olmayan bir
+ * <meta name="description"> bulunmalıdır. Markdown sayfalarına onu
+ * `plugins/meta-description.ts` verir; React sayfaları ve tema sayfaları (404,
+ * arama, blog etiket/yazar listeleri) kendileri yazar. Eksik sayfa varsa derleme
+ * adresleriyle birlikte durur. Redirect stub'ları içerik sayfası değildir, denetlenmez.
+ *
  * Neden aynı eklentide: Docusaurus tüm eklentilerin postBuild kancalarını
  * PARALEL çalıştırır. HTML dosyalarını okuyup yeniden yazan ikinci bir eklenti,
  * bu eklentiyle yarışır ve değişikliklerden biri sessizce kaybolur. HTML'i
@@ -42,6 +48,17 @@ const PRELOAD_FONTS = ['ibm-plex-sans-latin-wght-normal', 'ibm-plex-sans-latin-e
 const STYLESHEET_LINK = /<link rel="?stylesheet"?/;
 const INLINE_SPRITE = /<svg style="display: ?none;?">/;
 const CLASSED_SPRITE = '<svg class="svg-sprite">';
+
+/** Küçültülmüş HTML'de öznitelikler tırnaksız olabilir (`name=description`). */
+const META_TAG = /<meta\s[^>]*>/g;
+const DESCRIPTION_NAME = /\sname=(["']?)description\1[\s/>]/;
+const NON_EMPTY_CONTENT = /\scontent=("[^"\s][^"]*"|'[^'\s][^']*'|[^\s"'=<>`]+)/;
+
+function hasDescription(html: string): boolean {
+  return Array.from(html.matchAll(META_TAG), ([tag]) => tag).some(
+    (tag) => DESCRIPTION_NAME.test(tag) && NON_EMPTY_CONTENT.test(tag),
+  );
+}
 
 export default function fontPreload(context: LoadContext): Plugin {
   return {
@@ -67,15 +84,26 @@ export default function fontPreload(context: LoadContext): Plugin {
         .filter((e) => e.isFile() && e.name.endsWith('.html'))
         .map((e) => path.join(e.parentPath, e.name));
 
+      const withoutDescription: string[] = [];
       await Promise.all(
         htmlFiles.map(async (file) => {
           const html = await fs.readFile(file, 'utf8');
           const match = STYLESHEET_LINK.exec(html);
           if (!match) return;
+          if (!hasDescription(html)) withoutDescription.push(path.relative(outDir, file));
           const withTags = html.slice(0, match.index) + tags + html.slice(match.index);
           await fs.writeFile(file, withTags.replace(INLINE_SPRITE, CLASSED_SPRITE));
         }),
       );
+
+      if (withoutDescription.length > 0) {
+        throw new Error(
+          `[font-preload] Şu sayfalarda <meta name="description"> yok ya da boş:\n  ` +
+            withoutDescription.sort().join('\n  ') +
+            '\nMarkdown sayfasına `description` frontmatter\'ı ya da özet bir ilk paragraf, ' +
+            'React/tema sayfasına <PageMetadata description> (ya da <Head> içinde meta) eklenmelidir.',
+        );
+      }
     },
   };
 }
