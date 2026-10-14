@@ -74,7 +74,7 @@ static/robots.txt         Tarayıcı kuralları + sitemap adresi
 static/<anahtar>.txt      IndexNow anahtar dosyası (adı = içeriği) — SİLME
 docusaurus.config.ts      Ana yapılandırma
 sidebars.ts               kitapSidebar (otomatik üretilir)
-i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri
+i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri; blog arşivinin açıklaması
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
 .github/ISSUE_TEMPLATE/   Hata bildirimi ve konu önerisi formları
 .github/workflows/deploy.yml  GitHub Pages otomatik dağıtım (site + kitap PDF'i)
@@ -541,8 +541,9 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   `<meta name="description">`. `plugins/font-preload.ts` build sonunda her sayfayı denetler;
   açıklaması olmayan ya da boş olan sayfa derlemeyi durdurur (redirect stub'ları hariç).
   Site içi aramada dizinlenen bir liste sayfasına açıklama eklenirse aramada başlıksız
-  sonuç çıkıp çıkmadığına bakılır (bu yüzden `/blog/authors` aramanın `ignoreFiles`
-  listesindedir).
+  sonuç çıkıp çıkmadığına bakılır (bu yüzden `/blog/archive` ve `/blog/authors` aramanın
+  `ignoreFiles` listesindedir). Blog arşivinin açıklaması (sayfada alt başlık olarak da
+  görünür) `i18n/tr/code.json`'daki `theme.blog.archive.description` çevirisidir.
 - **Görseller:** fotoğraf/illüstrasyonlar en fazla ~800 px genişliğe küçültülüp WebP
   (kalite ~78) olarak kaydedilir; diyagram ve ekran görüntüleri PNG kalabilir.
   Yüzlerce KB'lık görsel eklenmez. Her görselin **Türkçe alt metni** vardır

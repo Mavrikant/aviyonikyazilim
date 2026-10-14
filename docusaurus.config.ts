@@ -148,10 +148,10 @@ const config: Config = {
         blogDir: 'blog',
         explicitSearchResultPath: true,
         highlightSearchTermsOnTargetPage: true,
-        // Eklenti blog listesini ve etiket sayfalarını kendisi atlar; yazar listesi bu
-        // kurala girmez. Listede <article> başlığı olmadığından meta açıklaması başlıksız bir
-        // sonuç olarak dizinlenirdi.
-        ignoreFiles: ['blog/authors'],
+        // Eklenti blog listesini ve etiket sayfalarını kendisi atlar; arşiv ve yazar listesi bu
+        // kurala girmez. Listelerde <article> başlığı olmadığından meta açıklamaları başlıksız
+        // birer sonuç olarak dizinlenirdi.
+        ignoreFiles: ['blog/archive', 'blog/authors'],
       },
     ],
   ],
