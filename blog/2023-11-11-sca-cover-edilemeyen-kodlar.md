@@ -64,7 +64,7 @@ Devre dışı bırakılmış kodun yönetimi ve kontrolü için Plan Software As
 
 1.  *Developing Safety-Critical Software: A Practical Guide for Aviation Software and DO-178C Compliance*, **Leanna Rierson**, Chapter 17 Noncovered Code (Dead, Extraneous, and Deactivated Code)
 2.  [GCC, Options to Request or Suppress Warnings](https://gcc.gnu.org/onlinedocs/gcc-3.2/gcc/Warning-Options.html)
-3.  [Carnegie Mellon University Software Engineering Institute, MSC12-C. Detect and remove code that has no effect or is never executed](https://wiki.sei.cmu.edu/confluence/display/c/MSC12-C.+Detect+and+remove+code+that+has+no+effect+or+is+never+executed)
+3.  [Carnegie Mellon University Software Engineering Institute, MSC12-C. Detect and remove code that has no effect or is never executed](https://cmu-sei.github.io/secure-coding-standards/sei-cert-c-coding-standard/recommendations/miscellaneous-msc/msc12-c/)
 
 ## Ileri Okuma
 
