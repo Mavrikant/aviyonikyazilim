@@ -184,7 +184,7 @@ kayıt bulunmalı, kredi amaçlı koşu gibi tanıklık etmek isteyebileceği ge
 kendisine önceden bildirilmelidir. Bir kriter pratikte işlemiyorsa sessizce
 aşılmamalı; plan güncellenmeli ve değişiklik kayda alınmalıdır. Geçiş kriterleri aynı
 zamanda katılım aşaması denetimlerine hazırlığın da omurgasıdır
-([SW SOI-1](../kaynaklar/soi-1.md)).
+([SW SOI-1](06-kontrol-listeleri/soi-1.md)).
 
 ## Bu ekten akılda kalması gerekenler
 

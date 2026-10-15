@@ -205,10 +205,14 @@ const config: Config = {
           {from: ['/2023/08/havaclgn-kalbindeki-iletisim-arinc-429', '/2023/08/havaclgn-kalbindeki-iletisim-arinc-429.html'], to: '/blog/arinc-429'},
           {from: ['/2023/08/aviyonik-nedir', '/2023/08/aviyonik-nedir.html'], to: '/blog/aviyonik-nedir'},
           {from: ['/p/ksaltmalar', '/p/ksaltmalar.html'], to: '/kitap/kaynaklar/kisaltmalar'},
-          {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/kaynaklar/soi-1'},
-          {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/kaynaklar/soi-2'},
-          {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/kaynaklar/soi-3'},
-          {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/kaynaklar/soi-4'},
+          {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/ekler/kontrol-listeleri/soi-1'},
+          {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/ekler/kontrol-listeleri/soi-2'},
+          {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/ekler/kontrol-listeleri/soi-3'},
+          {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/ekler/kontrol-listeleri/soi-4'},
+          {from: '/kitap/kaynaklar/soi-1', to: '/kitap/ekler/kontrol-listeleri/soi-1'},
+          {from: '/kitap/kaynaklar/soi-2', to: '/kitap/ekler/kontrol-listeleri/soi-2'},
+          {from: '/kitap/kaynaklar/soi-3', to: '/kitap/ekler/kontrol-listeleri/soi-3'},
+          {from: '/kitap/kaynaklar/soi-4', to: '/kitap/ekler/kontrol-listeleri/soi-4'},
           // Kütüphane kategori sayfalarının Türkçe karakter içeren eski adresleri (ASCII'ye taşındı).
           {from: '/kutuphane/category/emniyet-mühendisliği', to: '/kutuphane/category/emniyet-muhendisligi'},
           // Araçlar kategorileri ayrı dizin sayfası yerine giriş sayfasındaki katalogda listelenir.
@@ -359,7 +363,8 @@ const config: Config = {
           title: 'Başvuru',
           items: [
             {label: 'Kısaltmalar', to: '/kitap/kaynaklar/kisaltmalar'},
-            {label: 'SOI denetimleri', to: '/kitap/kaynaklar/soi-1'},
+            {label: 'Plan ve standart şablonları', to: '/kitap/ekler/sablonlar'},
+            {label: 'Kontrol listeleri', to: '/kitap/ekler/kontrol-listeleri'},
             {label: 'Giriş bölümü', to: '/kitap/giris/giris-ve-genel-bakis'},
           ],
         },

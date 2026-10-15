@@ -114,7 +114,8 @@ flowchart TD
 ```
 
 Bu faaliyetlerin nasıl yürütüleceği yazılım doğrulama planında (Software Verification
-Plan, SVP) tanımlanır (bkz. [5. Yazılım Planlama](05-yazilim-planlama.md)). Gözden
+Plan, SVP) tanımlanır (bkz. [5. Yazılım Planlama](05-yazilim-planlama.md); bölüm bölüm
+şablonu: [SVP Şablonu ve Yazım Rehberi](../06-ekler/05-sablonlar/03-svp.md)). Gözden
 geçirme ve analiz prosedürleriyle test durumları ve prosedürleri, yazılım doğrulama
 durumları ve prosedürleri (Software Verification Cases and Procedures, SVCP) verisini;
 bunların uygulanmasıyla elde edilen kayıtlar yazılım doğrulama sonuçları (Software
@@ -357,7 +358,7 @@ test durumları ve prosedürleri ve kayıtlı bir test ortamıyla yapılan, sonu
 giren koşu. Hedef donanımda ya da hedefe denkliği gerekçelendirilmiş bir ortamda
 yapılır. Bu koşuya hangi koşullarla girileceği geçiş kriterlerinde tanımlanır (bkz.
 [Ek A: Örnek Geçiş Kriterleri](../06-ekler/01-ek-a-ornek-gecis-kriterleri.md));
-otoritenin doğrulama verisinde baktığı noktalar ise [SW SOI-3](../kaynaklar/soi-3.md)
+otoritenin doğrulama verisinde baktığı noktalar ise [SW SOI-3](../06-ekler/06-kontrol-listeleri/soi-3.md)
 kontrol listesindedir.
 
 ### İyi bir testin nitelikleri

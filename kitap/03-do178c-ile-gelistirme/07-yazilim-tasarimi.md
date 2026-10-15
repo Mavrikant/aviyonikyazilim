@@ -470,7 +470,7 @@ Pratikte tasarım gözden geçirmeleri kontrol listeleriyle yürütülür ve bul
 altına alınır: kim baktı, hangi sürüme baktı, hangi ölçüt geçti, hangi bulgu açık
 kaldı. Bu kayıtlar hem kalite güvencesinin hem de katılım aşaması (Stage of
 Involvement, SOI) denetimlerinin, özellikle geliştirme denetiminin
-([SW SOI-2](../kaynaklar/soi-2.md)) doğrudan girdisidir. Deneyimle sabittir ki tasarım
+([SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md)) doğrudan girdisidir. Deneyimle sabittir ki tasarım
 aşamasında yakalanan bir tutarsızlık, kod ve test yazıldıktan sonra yakalanana göre
 kat kat ucuza düzeltilir; gözden geçirmeye ayrılan zaman bu yüzden bir maliyet değil,
 yatırımdır.

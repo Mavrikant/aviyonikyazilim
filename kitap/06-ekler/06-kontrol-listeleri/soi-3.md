@@ -1,7 +1,7 @@
 ---
 title: "SW SOI-3"
 description: "SOI-3 doğrulama denetimi kontrol listesi: gereksinim tabanlı test, gürbüzlük, yapısal kapsam analizi, test ortamı, problem raporları ve sık bulgular."
-sidebar_position: 4
+sidebar_position: 16
 ---
 
 SOI-3, otoritenin doğrulama kanıtını incelediği denetimdir: testler gereksinimlerden
@@ -10,9 +10,9 @@ sürümüne ait mi ve kapsam analizi geride açıklanamamış bir boşluk bırak
 sayfa, SOI-3 öncesinde doğrulama verisini sınamak için bir kontrol listesi sunar.
 
 Katılım aşaması (Stage of Involvement, SOI) denetimlerinin genel mantığı
-[12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+[12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 bölümünde, doğrulamanın kendisi
-[9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
 bölümünde anlatılır. Buradaki maddeler bir otorite listesinin çevirisi değil, sahada
 işe yarayan hazırlık sorularıdır; hangi maddenin geçerli olduğu otoriteye ve yazılım
 seviyesine (software level) göre değişir, seviyeye bağlı maddelerde bu ayrıca
@@ -109,7 +109,7 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
 Seviye D'de yapısal kapsam hedefi yoktur; bu grupta yalnızca yüksek seviyeli
 gereksinimlerin test kapsamı sorulur (düşük seviyeli gereksinimlerin test kapsamı Seviye
 A, B ve C'de aranır). Ölçütlerin ne istediği 9. bölümde, boşluk sınıflarının ayrıntısı
-[17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../05-ozel-konular/17-kapsanmayan-kodlar.md)
+[17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
 bölümünde anlatılır.
 
 ### Analizler ve araçlar
@@ -122,7 +122,7 @@ bölümünde anlatılır.
 - [ ] Parametre verisi öğesi (parameter data item, PDI) dosyaları varsa, yapıları,
       öznitelikleri ve içerdikleri değerler doğrulanmış, dosyanın tüm öğeleri bu
       doğrulamada kapsanmış mı (bkz.
-      [22. Konfigürasyon Verisi](../05-ozel-konular/22-konfigurasyon-verisi.md))?
+      [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md))?
 - [ ] Test ve kapsam araçlarının kalifikasyon gerekip gerekmediği değerlendirilmiş;
       gerekiyorsa kalifikasyon verisi hazır mı?
 - [ ] Bağımsızlığın arandığı doğrulama hedeflerinde (Seviye A ve B) bağımsızlık
@@ -201,7 +201,7 @@ doğrudan yazılmış bir iştir.
 
 ## İlgili bölümler
 
-- [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../05-ozel-konular/17-kapsanmayan-kodlar.md)
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
 - Önceki aşama: [SW SOI-2](soi-2.md) · Sonraki aşama: [SW SOI-4](soi-4.md)

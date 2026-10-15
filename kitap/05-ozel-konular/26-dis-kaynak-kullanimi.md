@@ -264,8 +264,8 @@ denetimde gözetimin yapıldığı ancak kayıtla gösterilebilir. Tipik kayıtl
 tedarikçi denetim raporları, teslimat kabul tutanakları, gözden geçirme kayıtları,
 bulgu ve düzeltici faaliyet (corrective action) takibi, sapma onayları. Kitabın denetim
 listeleri bu iki ucu sorar: planlama denetiminde gözetim yaklaşımının tanımlı olup
-olmadığı ([SW SOI-1](../kaynaklar/soi-1.md)), son denetimde gözetim kayıtlarının tamam
-olup olmadığı ([SW SOI-4](../kaynaklar/soi-4.md)).
+olmadığı ([SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md)), son denetimde gözetim kayıtlarının tamam
+olup olmadığı ([SW SOI-4](../06-ekler/06-kontrol-listeleri/soi-4.md)).
 
 ### Erken ve yazılı beklenti aktarımı
 

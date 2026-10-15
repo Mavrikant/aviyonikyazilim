@@ -1,0 +1,318 @@
+---
+title: "Entegrasyon Çıktıları Kontrol Listesi"
+sidebar_label: "Entegrasyon çıktıları"
+sidebar_position: 6
+description: "DO-178C §6.3.5 entegrasyon çıktıları için kontrol listesi: derleme kaydı, derleyici ve bağlayıcı uyarıları, bellek haritası, eksik bileşen ve imaj bütünlüğü."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), entegrasyon sürecinin ürettiği derleme, bağlama ve yükleme
+verisinin (compiling, linking and loading data) gözden geçirilmesinde (review) kullanılır:
+derleme kaydı, derleyici ve bağlayıcı (linker) uyarıları, bağlayıcı haritası (linker map) ve
+hedefe yüklenecek imaj (image). Gözden geçirme, kredi amaçlı testte kullanılacak her resmî
+derlemeden (build) sonra ve derleme seçeneği, bağlayıcı betiği (linker script) ya da araç
+sürümü değiştiğinde yapılır. Derlemeyi hazırlayan entegrasyon mühendisi soruları yanıtlar;
+listeyi bir doğrulama mühendisi yürütür. Gözden geçirme kaydı,
+[Ek A](../01-ek-a-ornek-gecis-kriterleri.md)'daki G4 geçişinde kodun derlendiğini, hedefe
+yüklenebildiğini ve derlemenin yeniden üretilebildiğini isteyen çıkış koşulunu destekler.
+
+DO-178C'de bu iş §6.3.5'teki entegrasyon çıktılarının gözden geçirilmesine ve analizine, Ek
+A'da A-5 tablosunun yedinci hedefine karşılık gelir. Aşağıdaki gruplar bu hedefi derleme
+kaydı, bağlayıcı haritası ve yükleme imajı üzerinde tek tek yanıtlanabilen sorulara böler.
+Entegrasyonun bir üretim süreci olarak anlatımı
+[8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md#entegrasyon-çıktılarının-gözden-geçirilmesi)
+bölümünde, yöntem tarafı [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bellek-haritası-analizi)
+bölümünün bellek haritası ile bağlantı ve yükleme analizi başlıklarında, listelerin ortak
+kullanımı [genel bakış](index.md) sayfasında anlatılır.
+
+:::info[Bu listenin sınırı]
+Liste tek bir derlemenin çıktısına bakar. Parametre verisi öğesi (parameter data item, PDI)
+dosyalarının doğrulaması (§6.6, A-5 #8–#9) bu listenin kapsamı dışındadır
+([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)). SCI ve SECI'nin
+içeriği, arşivden yeniden derleme ve yükleme kontrolü
+[konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx), kaynak koda izlenemeyen nesne kodu
+[kapsam analizi](09-kapsam-analizleri.mdx), bellek yerleşiminin tasarımdaki tanımı
+[yazılım mimarisi](03-yazilim-mimarisi.mdx) listesinde sorulur.
+:::
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §6.3.5.a (ilgili: §4.4.1.f bilinen araç sorunları, §5.4.2 entegrasyon faaliyetleri ve yamalar, §11.15 SECI, §11.16.g derleme talimatı, §11.16.i bütünlük denetimi) |
+| Ek A hedefleri | A-5 #7 (entegrasyon sürecinin çıktısı tam ve doğru): A, B ve C'de gerekli, hiçbir seviyede bağımsızlık aranmaz; D'de aranmaz. A-1 #3 (yaşam döngüsü ortamı seçilmiş ve tanımlı): A, B ve C'de gerekli, bağımsızlık aranmaz; yalnızca ENT-04 bu hedefe dayanır. A-2 #7 (çalıştırılabilir nesne kodu üretilmiş ve hedefe yüklenmiş): A, B, C ve D'de gerekli, bağımsızlık aranmaz; yalnızca yama maddeleri (ENT-28–ENT-30) bu hedefe dayanır |
+| Gözden geçirilen veri | Derleme kaydı (araç sürümleri, komut satırları, uyarı çıktısı), bağlayıcı betiği, bağlayıcı haritası ve bellek özeti, yükleme imajı ve bütünlük değeri, varsa yama kaydı |
+| Başvuru verisi | Mimarideki bellek yerleşimi ve bellek bütçesi; hedef donanımın adres haritası ve donanım/yazılım arayüz tanımı; yazılım geliştirme planındaki (Software Development Plan, SDP) derleme seçenekleri ve resmî derleme ortamı; yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI); bileşen listesi ve parça numarası için yazılım konfigürasyon indeksi (Software Configuration Index, SCI) ya da sürüm adayı için hazırlanan taslağı; kabul edilen uyarılar listesi; bu kod sürümüne ait yığın (stack) kullanımı analizi |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR), derleme kimliğiyle; bulgular (findings) → kayıt içinde, temel çizgideki (baseline) bir veriyi (bağlayıcı betiği, kaynak, SCI) değiştirmeyi gerektiriyorsa [SCMP](../05-sablonlar/04-scmp.md)'deki sınıra göre problem raporu (problem report) |
+| İlgili şablon | [SDP](../05-sablonlar/02-sdp.md) (resmî derleme, derleme seçenekleri, yama politikası); [SCMP](../05-sablonlar/04-scmp.md) (yükleme ve ortam kontrolü); derleyici ve bağlayıcı varsayımları: [SVP](../05-sablonlar/03-svp.md) |
+| Madde öneki | `ENT` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek derleme tek bir kimlikle (derleme numarası ve kaynak etiketi)
+      tanımlanmış; kayıt bu kimliği ve imajın bütünlük değerini taşıyacak.
+- [ ] Derlemeye giren kaynak kod gözden geçirilmiş ve kimliğin gösterdiği sürüm temel çizgide
+      ya da kontrollü dalda.
+- [ ] Derleme kaydı, bağlayıcı betiği, bağlayıcı haritası ve yükleme imajı aynı derlemeden
+      alınıp gözden geçirene oturumdan önce verilmiş.
+- [ ] Başvuru verisi güncel: mimarideki bellek yerleşimi, donanımın adres haritası, SDP'deki
+      seçenek tablosu, SECI ve bu kod sürümüne ait yığın kullanımı analizi.
+- [ ] Gözden geçiren belli; bağımsızlık aranmasa da tercihen bağlayıcı betiğini yazan kişi
+      değil.
+- [ ] Kullanılan kontrol listesinin sürümü kayda yazılacak.
+
+## Kontrol listesi
+
+Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde
+numarasıyla yazılır. Sondaki parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
+
+<ListeIndir dosya="entegrasyon-ciktilari" baslik="Entegrasyon Çıktıları Kontrol Listesi" />
+
+### Derleme kaydı ve ortam
+
+- [ ] **ENT-01** Gözden geçirilen imaj, SDP'de tanımlı resmî derleme ortamında ve
+      konfigürasyon kontrollü derleme betiğiyle alınmış bir derlemeden mi geliyor? Örneğin
+      geliştiricinin kendi makinesinde ya da elle verilen komutlarla üretilmiş bir ikili
+      (binary) değil. *(A–C · §6.3.5.a)*
+- [ ] **ENT-02** Derleme kaydında görünen derleyici, bağlayıcı, çevirici (assembler) ve imaj
+      işleme araçlarının sürümleri SECI'dekilerle bire bir aynı mı? Örneğin derleme
+      makinesindeki bir paket güncellemesi derleyicinin yama düzeyini değiştirmemiş.
+      *(A–C · §6.3.5.a)*
+- [ ] **ENT-03** Derleyici ve bağlayıcı seçenekleri, komut satırından tanımlanan makrolar ve
+      bağlayıcı betiğinin sürümü derleme kaydında eksiksiz görünüyor ve SDP'de dondurulan
+      değerlerle aynı mı? Örneğin tek bir dosyaya farklı eniyileme (optimization) seviyesi
+      verilmişse bu, SDP'de gerekçesiyle yazılı bir istisna. *(A–C · §6.3.5.a)*
+- [ ] **ENT-04** Derleyici ve bağlayıcı tedarikçisinin bilinen hata listesi bu sürüm ve
+      seçenekler için değerlendirilmiş ve projeyi etkileyen her maddeye karşı alınan önlem
+      (kaçınılan dil yapısı, ek kural, ek analiz) kayıtlı mı? *(A–C · §4.4.1.f)*
+
+### Yeniden üretilebilirlik
+
+- [ ] **ENT-05** Derleme temiz bir çalışma alanında sıfırdan (full build) mı alınmış;
+      derlemeye konfigürasyon yönetimi dışında değiştirilmiş ya da sürümü olmayan bir dosya
+      girmemiş mi? Örneğin derleme kaydı, kaynak ağacının etiketle bire bir aynı olduğunu
+      gösteriyor. *(A–C · iyi uygulama)*
+- [ ] **ENT-06** İmaja derlemeden derlemeye değişen bilgi (zaman damgası, derleme makinesinin
+      adı, mutlak dosya yolu) ya hiç gömülmüyor ya da gömüldüğü yer ve ikili karşılaştırmada
+      nasıl ayıklanacağı tanımlı mı? *(A–C · iyi uygulama)*
+
+### Derleyici ve bağlayıcı uyarıları
+
+- [ ] **ENT-07** Derleme kaydındaki her derleyici uyarısı ya giderilmiş ya da kabul edilen
+      uyarılar listesinde gerekçesiyle yer alıyor mu ve liste bu derleme için güncellenmiş mi?
+      Örneğin önceki sürümde kabul edilen bir uyarı türünün yeni bir dosyada çıkması ayrıca
+      değerlendirilmiş. *(A–C · §6.3.5.a)*
+- [ ] **ENT-08** Uyarı seviyesi SDP'de tanımlı düzeyde mi ve uyarılar gizlenmemiş mi? Örneğin
+      genel bir bastırma seçeneği eklenmemiş, derleme çıktısı kimsenin okumadığı bir dosyaya
+      yönlendirilip bırakılmamış. *(A–C · §6.3.5.a)*
+- [ ] **ENT-09** Bağlayıcının uyarıları ve bilgi iletileri gözden geçirilmiş mi: aynı sembolün
+      birden çok tanımı, zayıf sembolün (weak symbol) hangi tanımla çözüldüğü, hizalama ya da
+      bölge uyumsuzluğu? Örneğin kütüphanedeki zayıf varsayılan kesme işleyicisi, projedeki
+      gerçek işleyicinin yerine bağlanmamış. *(A–C · §6.3.5.a)*
+
+### Bileşenlerin eksiksizliği
+
+- [ ] **ENT-10** Bağlayıcı haritasındaki nesne dosyaları, imaja girmesi beklenen bileşen
+      listesiyle (SCI ya da taslağı) bire bir eşleşiyor mu? Örneğin bir kaynak dosya derleme
+      betiğinden düşmüş ve onun yerine kütüphanedeki varsayılan bir tanım sessizce bağlanmamış.
+      *(A–C · §6.3.5.a)*
+- [ ] **ENT-11** İmajda uçuş yazılımına ait olmayan bileşen bulunmuyor mu? Örneğin yer tutucu
+      kod (stub), test sürücüsü, hata ayıklama izleyicisi (debug monitor) ya da yalnızca test
+      derlemesinde açılması gereken bir koşullu derleme bloğu bu imaja girmemiş.
+      *(A–C · §6.3.5.a)*
+- [ ] **ENT-12** Çözülmemiş sembol kalmamış ve bağlanan her çalışma zamanı kütüphanesi (runtime
+      library) işlevi, SDP'de izin verilen ve doğrulaması planlanan işlevler arasında mı?
+      Örneğin 64 bitlik bölme ya da kayan nokta işlemi için derleyicinin örtük çağırdığı
+      yardımcı işlevler haritada beklenen adlarla görünüyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-13** Her bileşen, gözden geçirilmiş ve aynı temel çizgiye ait sürümden mi gelmiş?
+      Örneğin hazır alınan bir nesne kütüphanesi ya da tedarikçi paketi, SCI'de yazan sürümün
+      dosyası; farklı temel çizgilerden alınmış iki bileşen aynı imajda buluşmamış.
+      *(A–C · §6.3.5.a)*
+- [ ] **ENT-14** Önceden derlenmiş kütüphaneler ve tedarikçi nesne dosyaları; işlemci modeli,
+      kayan nokta birimi kullanımı, bayt sırası ve çağrı kuralı (calling convention) bakımından
+      uygulamayla aynı seçeneklerle mi derlenmiş? Örneğin kayan nokta işlemlerini yazılımla
+      yapacak biçimde derlenmiş bir kütüphane, donanım kayan nokta birimini kullanan uygulamaya
+      bağlanmamış. *(A–C · §6.3.5.a)*
+
+### Bellek yerleşimi
+
+- [ ] **ENT-15** Bağlayıcı betiğindeki her bellek bölgesinin başlangıç adresi ve uzunluğu, hedef
+      donanımın adres haritasıyla ve mimarideki bellek yerleşimiyle aynı mı? Örneğin flaş
+      bölgesinin uzunluğu, karta takılan bellek bileşeninin gerçek boyutunu aşmıyor.
+      *(A–C · §6.3.5.a)*
+- [ ] **ENT-16** Kod, sabit veri, başlangıç değerli veri, sıfırlanan veri ve aygıt tamponları
+      tasarımda öngörülen bölgelere mi yerleşmiş? Örneğin başlangıç değerleri flaşta,
+      değişkenler RAM'de duruyor ve başlatma kodunun kopyaladığı adres aralığı
+      haritadakiyle aynı. *(A–C · §6.3.5.a)*
+- [ ] **ENT-17** Bölgeler birbirine girmiyor ve hiçbir bölgede kullanılan miktar bölgenin
+      uzunluğunu aşmıyor mu? Örneğin veri bölümünün sonu, yığına ayrılan alana ya da tasarımın
+      istediği koruma boşluğuna taşmıyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-18** Her bölgede kalan bellek payı (margin) SDP'de ya da tasarımda öngörülen sınırın
+      üstünde mi ve önceki derlemeye göre değişimi kayda geçmiş mi? *(A–C · iyi uygulama)*
+- [ ] **ENT-19** Her görev ve kesme yığını için ayrılan alan, bu kod sürümüne ait yığın
+      kullanımı analizinin en kötü sonucunu karşılıyor mu? Örneğin analizdeki yığın boyutları
+      bağlayıcı betiğindeki değerlerle tek tek karşılaştırılmış ve analiz bu derlemenin kaynak
+      sürümüne ait. *(A–C · §6.3.5.a)*
+
+### Adresler ve bölüm sınırları
+
+- [ ] **ENT-20** Çevre birimi yazmaçlarına, bellek eşlemeli giriş/çıkışa ve paylaşılan belleğe
+      verilen sabit adresler, donanım/yazılım arayüz tanımındaki adreslerle aynı mı? Örneğin bir
+      sembol, kartın önceki donanım sürümündeki adresi taşımıyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-21** Sıfırlama vektörü (reset vector), giriş noktası (entry point) ve kesme vektör
+      tablosu (interrupt vector table) donanımın beklediği adreste mi ve her vektör tasarımdaki
+      işleyiciye mi bağlı? Örneğin kullanılmayan vektörler tanımlı bir hata işleyicisine
+      gidiyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-22** Yazılım bölümlemesi (software partitioning) kullanılıyorsa her bölümün
+      (partition) kodu, verisi ve yığını, bölümleme konfigürasyonunda o bölüme ayrılan
+      bölgelerin içinde mi? Örneğin bir bölümün sembolü, bellek koruma birimi tablosunda başka
+      bir bölüme ait adres aralığına yerleşmemiş. *(A–C · §6.3.5.a)*
+- [ ] **ENT-23** Önyükleyici (bootloader), uygulama ve PDI bölgesi gibi ayrı bağlanan imajlar
+      varsa, önyükleyicinin uygulama için beklediği adres aralığı, giriş adresi ve bütünlük
+      alanının yeri uygulamanın bağlayıcı haritasındakiyle aynı mı? Örneğin iki imajın
+      bağlayıcı betikleri bölge sınırlarını ayrı ayrı tanımlıyorsa iki tanım karşılaştırılmış
+      ve imajların adres aralıkları birbirine girmiyor. *(A–C · §6.3.5.a)*
+
+### Yükleme verisi ve imaj bütünlüğü
+
+- [ ] **ENT-24** Yükleme imajı (ör. Intel HEX ya da Motorola S-record dosyası) bağlayıcı
+      çıktısından derleme betiğinin bir adımı olarak mı üretilmiş ve içerdiği adres aralıkları
+      hedefteki yükleme bölgelerinin içinde mi? Örneğin dönüşümün atladığı bölgeler ve boş
+      alanların dolgu değeri tanımlı. *(A–C · §6.3.5.a)*
+- [ ] **ENT-25** Sağlama toplamı (checksum) ya da döngüsel artıklık denetimi (cyclic redundancy
+      check, CRC), tasarımda tanımlı adres aralığının tamamı üzerinden ve tanımlı algoritmayla
+      mı hesaplanmış ve hedefteki denetim aynı aralığı ve algoritmayı mı kullanıyor? Örneğin
+      değerin yazıldığı alan hesaptan dışlanmış, dolgu baytları iki tarafta da aynı biçimde
+      ele alınıyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-26** İmaja gömülen parça numarası ve sürüm kimliği, derleme kaydındaki ve SCI'deki
+      değerlerle aynı mı ve hedefte okunabiliyor mu? Örneğin bakım arayüzünden okunan sürüm bu
+      derlemenin kimliğini gösteriyor. *(A–C · §6.3.5.a)*
+- [ ] **ENT-27** Hedefe yüklenen dosya, gözden geçirilen derlemenin çıktısıyla aynı mı? Örneğin
+      donanım/yazılım entegrasyonunda yüklenen dosyanın bütünlük değeri derleme kaydındakiyle
+      karşılaştırılmış ve yüklemeden sonra hedefin hesapladığı değer kayda geçmiş.
+      *(A–C · §6.3.5.a)*
+
+### Yamalar
+
+- [ ] **ENT-28** Çalıştırılabilir nesne kodu, bağlamadan sonra, derleme betiğindeki planlı
+      adımlar (biçim dönüştürme, dolgu, parça numarası, sürüm ve bütünlük değeri yazma)
+      dışında elle ya da bir betikle değiştirilmemiş mi? Örneğin bir hata düzeltmesi ikili
+      üzerinde değil, kaynakta yapılıp yeniden derlenmiş. *(A–D · §5.4.2.e)*
+- [ ] **ENT-29** Yama (patch) kullanıldıysa, dayandığı geliştirme ortamı kusuru tedarikçinin
+      hata listesindeki bir kayıtla ya da bir problem raporuyla tanımlı mı? Örneğin yama bir
+      gereksinim ya da tasarım değişikliğini veya bir gözden geçirme ya da test bulgusunun
+      düzeltmesini taşımıyor; bunlar kaynakta düzeltilip yeniden derlenir. *(A–D · §5.4.2.e)*
+- [ ] **ENT-30** Yamalı imajın derleme kaydında yamanın kimliği, değiştirdiği adres aralığı ve
+      yama öncesi ve sonrası bütünlük değerleri yazılı mı? Örneğin yamadan etkilenen testler
+      yamalı imajda yeniden koşulmuş ve yazılım başarım özetinin (Software Accomplishment
+      Summary, SAS) taslağında yama için bir satır açılmış. *(A–D · §5.4.2.f)*
+
+## Araçla denetlenebilecek maddeler
+
+Entegrasyon çıktılarının çoğu makinenin okuduğu dosyalardır; bu yüzden bu listenin maddeleri
+betikle denetlemeye en elverişli olanlardır. Betik iki listeyi karşılaştırır; karşılaştırdığı
+beklenen değerlerin doğru olup olmadığı insana kalır.
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| ENT-02, ENT-03 | Derleme kaydındaki araç sürümlerini ve komut satırlarını SECI ve SDP'deki seçenek tablosuyla karşılaştıran betik | Tabloda hiç olmayan bir seçeneği ya da aracı fark etmek; istisna gerekçesinin yeterliliği |
+| ENT-07, ENT-08 | Uyarıları derleme kaydından ayıklayıp kabul edilen uyarılar listesiyle karşılaştıran betik; uyarıyı hata sayan derleme ayarı | Kabul gerekçesinin yeni bağlamda da geçerli olması |
+| ENT-10–ENT-12 | Bağlayıcı haritasından nesne dosyası ve sembol listesini çıkarıp beklenen bileşen ve izinli kütüphane işlevi listesiyle karşılaştıran betik | Beklenen listenin kendisinin doğruluğu; zayıf sembol gibi sessiz çözümlemeler (ENT-09) |
+| ENT-14 | Nesne dosyalarının ve kütüphanelerin hedef özniteliklerini (işlemci, kayan nokta, çağrı kuralı) döküp uygulamanınkiyle karşılaştıran betik | Karşılaştırılan seçenek listesinin SDP'deki hedef tanımıyla aynı olması; öznitelik taşımayan eski nesne dosyalarını ayrıca ele almak |
+| ENT-15–ENT-17, ENT-22, ENT-23 | Bellek haritası betiği: bölge sınırları, örtüşme, doluluk, bölümlere ve imajlara ayrılan aralıklar | Betiğin dayandığı adres tablosunun donanımla ve tasarımla aynı olması |
+| ENT-25, ENT-27 | Bütünlük değerini derleme zincirinden ayrı bir uygulamayla yeniden hesaplayan betik | Aralığın ve algoritmanın hedefteki denetimle aynı olduğunu tasarım verisinden görmek |
+
+Bir maddeyi yalnızca betiğin "sorun yok" çıktısına dayanarak işaretliyor ve haritayı o konuda
+ayrıca gözden geçirmiyorsanız betik doğrulama faaliyetinin yerini almış olur; araç
+kalifikasyonu (tool qualification) sorusu doğar ve karar planlarda yazılır
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+İmaja CRC gömen ya da imaj biçimini dönüştüren betik ise bir doğrulama aracı değil, çıktısı
+uçuş imajına giren bir geliştirme aracıdır: çıktısı ENT-25 ve ENT-27'deki gibi ayrı bir
+hesapla doğrulanmıyorsa kalifikasyonu gündeme gelir. Bu betiklerin SECI'de yer alması
+[konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx) listesinde sorulur.
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| Yüklenen imaj gözden geçirilen derlemeyle aynı değil | Entegrasyon masasında yerel derlemenin yüklenmesi | ENT-01, ENT-27 |
+| Derleme kaydında SDP'de olmayan bir seçenek ya da tanımlı makro | Geliştiricinin yerel ayarının derleme betiğine sızması | ENT-03 |
+| Kabul edilen uyarılar listesi eski derlemeye ait; yeni uyarılar listede yok | Derleme çıktısının yalnızca "başarılı" satırına bakılması | ENT-07 |
+| Uçuş imajında test sürücüsü ya da yer tutucu kod | Test ve uçuş derlemelerinin aynı betikte ayrılmaması | ENT-11 |
+| Haritada doğrulaması planlanmamış bir çalışma zamanı kütüphanesi işlevi | Koddaki örtük tür dönüşümü ya da 64 bitlik işlem; kütüphane listesinin plana yazılmaması | ENT-12 |
+| Bağlayıcı betiğindeki bölge boyutu kartın gerçek belleğinden büyük | Betiğin değerlendirme kartından kopyalanıp uyarlanmaması | ENT-15 |
+| Yığın bölgesi yığın analizinin sonucundan küçük ya da analiz eski sürüme ait | Analizin ve bağlayıcı betiğinin ayrı kişilerce, birbirinden habersiz güncellenmesi | ENT-19 |
+| Derlemenin hesapladığı CRC ile hedefteki denetim farklı aralığı kapsıyor | Aralığın iki yerde ayrı ayrı tanımlanması | ENT-25 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "Bellek haritası yanlış." | "ENT-17: Derleme 2.3.0-b41 haritasında `.bss` bölümü `0x2000DF80`'de bitiyor, yığın bölgesi `0x2000E000`'da başlıyor; mimarideki bellek yerleşimi iki bölge arasında `0x400` baytlık koruma boşluğu istiyor, kalan boşluk `0x80` bayt. Veri bölgesi küçültülmeli ya da yerleşim tasarımda güncellenmeli." |
+| "Uyarılar var." | "ENT-07: Derleme 2.3.0-b41 kaydında `nav_filtre.c` satır 88 için daraltan örtük dönüşüm uyarısı çıkıyor; kabul edilen uyarılar listesinde (rev. 6) bu dosya için kayıt yok. Uyarı kodda giderilmeli ya da gerekçesiyle listeye eklenmeli." |
+| "CRC eksik olabilir." | "ENT-25: Derleme betiğindeki CRC adımı yalnızca `.text` bölümünü kapsıyor, `.rodata` dışarıda kalıyor; tasarım tanımındaki bütünlük gereksinimi uygulama bölgesindeki bütün kod ve sabit verinin korunmasını istiyor. Aralık bölge sınırlarından alınacak biçimde düzeltilmeli; hedefteki denetim de aynı aralığa çekilmeli." |
+
+İyi bulgu derlemenin kimliğini, yeri (dosya, bölüm, adres), gözlemi ve dayanağı (tasarım,
+plan ya da liste) birlikte verir. Entegrasyon bulgusu çoğu zaman bir sonraki derlemede
+yeniden üretilip kapatılır; kapanışı doğrulayan kişi, düzeltmenin hangi derleme kimliğinde
+göründüğünü kayda yazar.
+
+## Seviyeye göre uyarlama
+
+| Maddeler | Seviye A ve B | Seviye C | Seviye D |
+|---|---|---|---|
+| ENT-01–ENT-03, ENT-07–ENT-17, ENT-19–ENT-27 (A-5 #7) | Gerekli | Gerekli | Aranmaz |
+| ENT-04 (A-1 #3, §4.4.1.f) | Gerekli | Gerekli | Aranmaz |
+| ENT-05, ENT-06, ENT-18 (iyi uygulama) | Önerilir | Önerilir | Aranmaz |
+| ENT-28–ENT-30 (A-2 #7) | Gerekli | Gerekli | Gerekli |
+
+**Bağımsızlık.** Listenin dayandığı üç hedef de (A-5 #7, A-1 #3, A-2 #7) hiçbir seviyede
+bağımsızlık istemez; derlemeyi alan kişi listeyi kendisi de yürütebilir. Yine de bağlayıcı
+betiğini yazan ile haritayı gözden geçirenin ayrı kişiler olması, betikteki yanlış bir
+varsayımın haritada da doğru görünmesini önler; bu yüzden iyi uygulamadır. Bağımsızlığın ne
+zaman ve nasıl arandığı
+[9. bölümün bağımsızlık başlığında](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)
+anlatılır.
+
+**Seviye A, B ve C.** Liste üç seviyede aynıdır. Seviye A'da ek iş bu listenin değil
+[kapsam analizi](09-kapsam-analizleri.mdx) listesinin konusudur: kaynak koda izlenemeyen nesne
+kodu analizi, ENT-03'te sabitlenen derleyici seçeneklerine dayanır. Seçenek değişirse o analiz
+de yeniden ele alınır.
+
+**Seviye D.** A-5 #7 ve A-1 #3 D'de aranmadığı için ENT-01–ENT-27 zorunlu değildir.
+Çalıştırılabilir nesne kodunun üretilip yüklenmesi (A-2 #7) ise D'de de hedeftir; yama kuralı
+bu yüzden geçerlidir ve ENT-28–ENT-30 sorulur. Derleme ve yükleme araçlarının kontrolü (A-8 #6)
+da her seviyede aranır ve [konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx) listesinde
+kalır. Seviye D projede ENT-01 ve ENT-07 hafif bir gözden geçirme olarak kullanılabilir. Doğru
+imajın bozulmadan yüklendiğinin gösterilmesi ise yazılım yükleme kontrolü (A-8 #5) olarak D'de
+de hedeftir ve aynı listede (KYD-25–KYD-27) sorulur; ENT-26 ve ENT-27 bu kanıtı üretmenin
+pratik yoludur.
+
+**Yeni derlemede.** Kaynakta küçük bir değişiklik bile yerleşimi kaydırabilir; bu yüzden
+liste her resmî derlemede yeniden yanıtlanır. Önceki derlemenin haritası ve kaydıyla fark
+almak işi kısaltır: değişmeyen bir bölümün yanıtı, farkın onu etkilemediği kayda yazılarak
+taşınabilir. Derleme seçeneği, bağlayıcı betiği ya da araç sürümü değiştiyse yanıt taşınmaz;
+liste baştan uygulanır ve etkilenen test ile analizlerin yeniden değerlendirilmesi
+[SVP](../05-sablonlar/03-svp.md)'deki yeniden doğrulama kuralına göre belirlenir.
+
+## İlgili bölümler
+
+- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md):
+  derleme sürecinin tekrarlanabilirliği, entegrasyon çıktılarının gözden geçirilmesi, yamalar
+  ve hedefe yükleme
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): bellek
+  haritası analizi, bağlantı ve yükleme analizi, gözden geçirme kaydı ve bulgu sınıfları
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md)
+- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.md)
+- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- Şablonlar: [SDP](../05-sablonlar/02-sdp.md), [SVP](../05-sablonlar/03-svp.md),
+  [SCMP](../05-sablonlar/04-scmp.md)
+- Otorite denetimine hazırlık: [SW SOI-2](soi-2.md), [SW SOI-3](soi-3.md)
+- Komşu listeler: [kaynak kod](05-kaynak-kod.mdx), [yazılım mimarisi](03-yazilim-mimarisi.mdx),
+  [kapsam analizleri](09-kapsam-analizleri.mdx),
+  [konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx)
+- [Kontrol listelerine genel bakış](index.md)

@@ -1,0 +1,576 @@
+---
+title: "Tasarım Standardı (SDStd) Şablonu"
+sidebar_label: Tasarım standardı
+sidebar_position: 7
+description: "Tasarım standardı (SDStd) şablonu: önerilen içindekiler, TS numaralı örnek kurallar, düşük seviyeli gereksinim ayrıntısı ve DO-178C §11.7 uyum tablosu."
+---
+
+Tasarım standardı (software design standards, SDStd), yazılım mimarisini (software
+architecture) ve düşük seviyeli gereksinimleri (low-level requirements) yazan herkesin aynı
+gösterimi kullanmasını, riskli yapılara aynı koşullarla başvurmasını ve karmaşıklığı aynı
+sınırlarda tutmasını sağlayan kural kitabıdır: tasarımcı için çalışma kuralı, tasarımı gözden
+geçiren için nesnel ölçüttür. Tipik olarak yazılım mimarı yazar, yazılım geliştirme sorumlusu
+onaylar; doğrulama ekibi ve kalite güvencesi (quality assurance) yayımlanmadan önce gözden
+geçirir. Planlama sürecinde, ilk mimari kararlar kayda geçmeden önce yazılır ve SOI-1'de
+diğer planlar ve standartlarla birlikte gösterilir.
+
+Bu standart, tasarım sürecinin çıktısı olan tasarım tanımının (design description) kendisi
+değildir; o verinin nasıl yazılacağını söyler. Tasarımın iki çıktısının ne olduğu
+[7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md), standardın neden
+gerektiği [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
+bölümünde anlatılır; bu sayfa "nasıl yazılır" tarafını verir. Şablonların ortak kuralları ve
+paketleme seçenekleri [genel bakış](index.md) sayfasındadır.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §11.7 (içerik); §4.5 (geliştirme standartları) |
+| İlgili Ek A hedefleri | A-1 #5; A-4 #5, #12; A-9 #1, #3 |
+| Beklendiği seviyeler | A, B, C (D'de beklenmez) |
+| Kontrol kategorisi (A/B/C/D) | CC1/CC1/CC2/– |
+| Otoriteye | Denetimde gösterilir |
+| Sahibi | Yazılım mimarı (tasarım sorumlusu) |
+| İlgili SOI | SOI-1 (standardın kendisi); SOI-2 (tasarımın standarda uyumu) |
+
+:::tip[Şablonu nasıl kullanmalı?]
+Tasarım standardının ölçüsü, gözden geçirenin bir bulguyu "TS-17'ye aykırı" diye
+yazabilmesidir. Aşağıdaki başlıklar ve TS numaralı örnek kurallar doldurulacak metin değil,
+verilecek kararların listesidir: sınır değerlerini, izinleri ve yasakları projenin işlemcisi,
+işletim sistemi ve yazılım seviyesi belirler. Başlıklar kurumunuza göre değişebilir; önemli
+olan uyum tablosundaki her maddenin bir yeri olması ve yazılan her kuralın bir denetim
+yolunun bulunmasıdır.
+:::
+
+## Önerilen içindekiler
+
+Ortak ön bölümler (belge kimliği, onaylar, revizyon geçmişi, referanslar, kısaltmalar ve
+tanımlar) [genel bakış](index.md) sayfasında anlatılır ve burada tekrarlanmaz.
+
+```text
+1 Amaç ve kapsam
+1.1 Uygulandığı yazılım ve seviyeler
+1.2 Kapsam dışı ve ayrı standarda tabi bileşenler
+2 Tasarım tanımlama yöntemi ve gösterimler
+2.1 Tasarım yaklaşımı
+2.2 Mimari görünümler
+2.3 Diyagram türleri ve gösterim kuralları
+2.4 Tasarım verisinin yeri ve kimliklendirilmesi
+3 Mimari kuralları
+3.1 Bileşenler ve katmanlar
+3.2 Arayüz tanımı
+3.3 Bölümleme ve koruma sınırları
+3.4 Emniyet mekanizmaları ve hata yönetimi
+3.5 Kaynak bütçeleri ve paylar
+4 Düşük seviyeli gereksinim kuralları
+4.1 Ayrıntı düzeyi
+4.2 Yazım kalıbı
+4.3 Öznitelikler
+4.4 Türetilmiş düşük seviyeli gereksinimler
+4.5 Kodla ve mimariyle ilişki
+5 Adlandırma kuralları
+6 İzin verilen tasarım yöntemlerinin koşulları
+6.1 Çizelgeleme
+6.2 Kesmeler
+6.3 Olay güdümlü mimari
+6.4 Dinamik görev oluşturma
+6.5 Yeniden girilebilirlik
+6.6 Global veri ve paylaşılan kaynaklar
+6.7 İstisna yönetimi
+7 Tasarım kısıtları
+7.1 Özyineleme
+7.2 Dinamik nesneler ve bellek
+7.3 Veri takma adları
+7.4 Sıkıştırılmış ifadeler
+7.5 Nesne yönelimli özellikler (kullanılıyorsa)
+8 Karmaşıklık sınırları
+9 Veri ve kontrol bağlaşımı kuralları
+10 Devre dışı bırakılmış kod ve seçenekle seçilebilir işlevler
+11 Tasarım araçlarının kullanım kısıtları
+11.1 İzin verilen araçlar ve özellikler
+11.2 Kod üretimi ve koddan tasarım üretimi
+12 Uyum denetimi ve sapma süreci
+12.1 Kuralların denetim yolu
+12.2 Sapma isteği ve onayı
+12.3 Standardın değiştirilmesi
+```
+
+## Bölüm bölüm yazım rehberi
+
+Örnek kurallar `TS-nn` biçiminde numaralıdır; numara, gözden geçirme kontrol listesinin ve
+sapma kaydının kurala atıf yapmasını sağlar. Sayısal değerler temsilîdir; projenin değerleri
+işlemciden, işletim sisteminden ve önceki ölçümlerden çıkarılır.
+
+### 1. Amaç ve kapsam
+
+Bu bölüm standardın hangi bileşenlere, hangi seviyelerde ve hangi tasarım verisine
+uygulandığını söyler. Kapsam dışı bırakılanlar (işletim sistemi çekirdeği, kart destek paketi
+(board support package, BSP), önceden geliştirilmiş bileşenler, otomatik üretilen kod)
+adlarıyla ve tabi oldukları standartla yazılır; yazılmazsa her gözden geçirmede "bu bileşen
+bu kurala tabi mi?" sorusu yeniden açılır. Bağlayıcı kural ile tavsiye arasındaki dil farkı
+da burada tanımlanır, çünkü sapma süreci yalnızca bağlayıcı kurallar için işler. Çok sürümlü
+benzemez yazılımın (multiple-version dissimilar software) sürümleri farklı tasarım
+standartlarıyla geliştirilecekse bu da kapsamda yazılır.
+
+**Verilecek kararlar:**
+
+- Standart hangi bileşenlere ve seviyelere uygulanıyor; seviyeye göre kural farkı var mı?
+- İşletim sistemi, kütüphaneler ve önceden geliştirilmiş bileşenler hangi standarda tabi?
+- Bağlayıcı kural ile tavsiye nasıl ayırt ediliyor; çok sürümlü benzemez yazılım için ayrı
+  standart var mı?
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Bu standart projedeki tüm tasarımlar için geçerlidir." | "Bu standart `<ürün adı>` uçuş yazılımının Seviye B ve C bileşenlerine uygulanır; `<işletim sistemi adı ve sürümü>` çekirdeği ve kart destek paketi, tedarikçinin tasarım verisiyle birlikte kapsam dışıdır." |
+
+### 2. Tasarım tanımlama yöntemi ve gösterimler
+
+Bu bölüm tasarımın hangi yaklaşımla (yapısal, nesne yönelimli, model tabanlı) ve hangi
+görünümlerle (bileşen, veri akışı, kontrol akışı, durum, görev tablosu) anlatılacağını, her
+diyagram türünde öğelerin anlamını ve tasarım verisinin nerede durduğunu (mimari belgesi,
+gereksinim aracı, veri sözlüğü (data dictionary)) belirler. Tasarım modeli (design model)
+kullanılıyorsa modelleme kuralları ayrı bir model standardına (software model standards)
+gider; biçimsel yöntemlerle (formal methods) analiz edilecek gösterimin sözdizimi ve anlamı
+matematiksel olarak tanımlı olmalıdır.
+
+**Verilecek kararlar:**
+
+- Hangi tasarım yaklaşımı, hangi bileşende kullanılacak?
+- Mimari hangi görünümlerle, hangi diyagram türü ve araçla anlatılacak?
+- Tasarım verisi hangi ortamlarda tutulacak; aralarındaki kimlik bağı nasıl kurulacak?
+
+Dikkat: Okun veri akışını mı, çağrıyı mı gösterdiği tanımlanmamışsa aynı diyagram iki gözden
+geçirene iki farklı şey söyler; veri ve kontrol bağlaşımı analizi de bu belirsizliği devralır.
+
+### 3. Mimari kuralları
+
+Bu bölüm bileşenlerin nasıl bölüneceğini, nasıl bağlanacağını ve arıza karşısında nasıl
+davranacağını sınırlar; mimarinin tutarlılığı ve hedef bilgisayarla uyumu gözden geçirmede bu
+kurallarla değerlendirilir. Bölüm sınırını geçen verinin doğrulanması, değiştirilemeyen
+bileşenin kullanıcı tarafından değiştirilebilir bileşenden korunması, bekçi köpeği
+zamanlayıcısı (watchdog timer) ve makullük denetimi (reasonableness check) gibi izleme
+mekanizmaları ve en kötü durum yürütme süresine (worst-case execution time, WCET) bırakılacak
+pay buraya yazılır.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-01 | Bağımlılık yalnızca üst katmandan alt katmana doğrudur; donanım yazmaçlarına yalnızca sürücü katmanı erişir. | Donanım değişikliği sürücüde kalır; etki analizi daralır. | Statik analizden çıkan bağımlılık grafiği katman tablosuyla karşılaştırılır. |
+| TS-02 | Her arayüz verisi için birim, aralık, çözünürlük, güncelleme hızı, tazelik sınırı, geçerlilik bilgisi ve başlangıç değeri yazılır. | Entegrasyon hatası çoğunlukla aynı verinin iki tarafta farklı yorumlanmasıdır. | Veri sözlüğünde boş alan sorgusu; anlam gözden geçirmede. |
+| TS-03 | Daha düşük seviyeli bir bileşenden ya da başka bir bölümden gelen veri, kullanılmadan önce aralık ve tazelik denetiminden geçer. | Üst seviyeli bileşen hatalı girdiye karşı kendini korur. | Arayüz tablosunda kaynak seviyesi sütunu; denetimi yapan düşük seviyeli gereksinime iz. |
+| TS-04 | Bileşenler algıladıkları hatayı hata yönetimi bileşenine bildirir; kısıtlı çalışma ya da güvenli duruma geçişe yalnızca o bileşen karar verir. | Aynı arızaya tutarlı tepki; sınanacak yol sayısı azalır. | Durum diyagramı ve çağrı grafiğinin gözden geçirmesi. |
+| TS-05 | En kötü durumda işlemci kullanımı %80'i, her görevin yığın kullanımı ayrılan alanın %75'ini aşmaz. | Sonraki değişiklikler ve ölçüm belirsizliği için pay. | WCET ve yığın kullanımı analiz raporları. |
+
+**Verilecek kararlar:**
+
+- Kaç katman var ve donanıma hangi katman erişir?
+- Bölümleme ya da kullanıcı tarafından değiştirilebilir bileşen varsa koruma hangi
+  mekanizmayla sağlanıyor; bölümler arası veri hangi kanallardan geçiyor?
+- Hangi izleme mekanizmaları hangi koşulda zorunlu?
+- İşlemci zamanı, bellek ve veri yolu için en az pay kaç, nasıl ölçülür?
+- Çok çekirdekli işlemcide (multi-core processor) görevler ve bölümler çekirdeklere hangi
+  kuralla atanıyor; paylaşılan önbellek ve veri yolu girişimi (interference) WCET bütçesine nasıl giriyor
+  ([20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md#çok-çekirdekli-işlemciler))?
+- Sistem gereksinimleri tek olay bozulmasına (single event upset) karşı yazılıma önlem
+  ayırdıysa saklı veri ve donanım yapılandırması hangi yöntemle denetleniyor: döngüsel
+  artıklık denetimi (cyclic redundancy check, CRC), yazmaçların periyodik tazelenmesi?
+
+### 4. Düşük seviyeli gereksinim kuralları
+
+Tasarım standardının en çok tartışılan bölümüdür. Ölçüt şudur: düşük seviyeli gereksinim
+(LLR) koddan bire bir kopya olmayacak kadar soyut, kodlayıcıya davranış kararı bırakmayacak
+kadar somut olmalıdır; kodlayıcı LLR'yi ve mimariyi okuyarak başka bilgiye gerek duymadan kodu
+yazabilmelidir. Bölüm bu ölçütü bir yazım kalıbına, zorunlu özniteliklere (kimlik, üst iz,
+türetilmiş işareti, gerekçe, doğrulama yöntemi) ve kodla iz kurulacak birime çevirir.
+Türetilmiş gereksinimlerin (derived requirements) işaretlenme ve iletilme yolu gereksinim
+standardındakiyle aynıdır.
+
+:::warning[Ayrıntı düzeyi kişiye bırakılmamalı]
+Standart ayrıntı düzeyini tanımlamazsa aynı projede kimi bileşen sözde kod (pseudocode), kimi
+tek cümlelik özet düzeyinde yazılır. Sözde koddan türetilen test, kodun doğruluğunu değil
+kendisiyle tutarlılığını gösterir; özet ise kararı kodlayıcıya bırakır ve kodda gereksinimsiz
+davranış belirir. İkisi de SOI-2'de bulgu olarak döner; standarda en az bir yetersiz ve bir
+yeterli örnek çifti konmalıdır.
+:::
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Uyarı mantığı aşırı hız durumunda uyarı verir." (tek cümlelik özet; kararı koda bırakır) | "Havahızı geçerliyse ve `VNE_LIMIT_knot` değerinden büyükse uyarı çıkışı aynı çevrimde ETKİN yapılır." |
+| "`hiz` değişkeni `VNE_LIMIT_knot - VNE_HISTEREZIS_knot`'tan küçükse `sayac` bir artırılır, değilse sıfırlanır; `sayac` `VNE_TEYIT_CEVRIM` olunca `uyari` ve `sayac` sıfırlanır." (sözde kod; kodun kopyası) | "Uyarı ETKİN iken havahızı art arda `VNE_TEYIT_CEVRIM` çevrim boyunca `VNE_LIMIT_knot - VNE_HISTEREZIS_knot` değerinin altında kalırsa uyarı PASİF yapılır." |
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-06 | Her LLR tek bir davranışı tetikleyici koşul, girdi ve sonuçla tanımlar; yerel değişken, döngü yapısı ya da işlem sırası gibi kod ayrıntısı içermez. | Ayrıntı düzeyi tek biçimli olur; test gereksinimden yazılabilir. | Gözden geçirme kontrol listesi; standarttaki örnek çiftle karşılaştırma. |
+| TS-07 | Tasarımda seçilen her eşik, teyit süresi, zaman aşımı ve filtre katsayısı birimi ve gerekçesiyle adlandırılmış bir tasarım parametresidir; üst gereksinimde yoksa türetilmiş işaretlenir. | Türetilmiş gereksinimin en sık kaynağı; gürbüzlük (robustness) testinin girdisi. | Kodda adsız sayısal sabit taraması; parametre listesinin LLR'lerle karşılaştırılması. |
+| TS-08 | Kipe bağlı davranış durum makinesiyle verilir; her durum ve olay çifti için ya bir LLR vardır ya da çiftin bilerek yok sayıldığı yazılır. | Tanımsız geçiş, kodda gereksinimsiz davranış olarak belirir. | Durum–olay tablosunun tamlık denetimi. |
+
+**Verilecek kararlar:**
+
+- LLR hangi biçimde yazılacak: düzyazı kalıbı, karar tablosu, durum geçiş tablosu?
+- Algoritmalar hangi düzeyde verilecek: formül, adım listesi, sayısal örnek?
+- Doğrulama yöntemi özniteliği hangi değerleri alıyor (Test, Analiz, Gözden geçirme)?
+- Yüksek seviyeli gereksinimden LLR'ye iz hangi ayrıntıda, kim tarafından ve hangi gözden
+  geçirmeden önce kuruluyor; bir LLR birden çok üst gereksinime bağlanabilir mi?
+- LLR ile kod arasındaki iz hangi birimle kuruluyor?
+- Tek gereksinim katmanıyla çalışılacak bileşen var mı; gerekçesi yazılım sertifikasyon
+  planında (Plan for Software Aspects of Certification, PSAC) mı?
+
+### 5. Adlandırma kuralları
+
+Bu bölüm bileşenlerin, arayüz verilerinin, durumların, olayların, tasarım parametrelerinin ve
+LLR kimliklerinin nasıl adlandırılacağını söyler. Tasarımdaki ad kodda aynen korunursa
+izlenebilirlik kolaylaşır; bu yüzden kural kodlama standardındaki adlandırmayla çelişmemelidir.
+Birim taşıyan adlar, knot ile metre/saniyenin karışması gibi hataları görünür kılar.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-09 | Fiziksel nicelik taşıyan her arayüz verisinin ve tasarım parametresinin adı birim sonekiyle biter (`_knot`, `_ms`, `_deg`); aynı ad kodda korunur. | Birim karışıklığı görünür olur; iz kolaylaşır. | Veri sözlüğünde ad–birim tutarlılık sorgusu; kodda adlandırma denetimi. |
+
+**Verilecek kararlar:**
+
+- Bileşen kısaltmalarını kim, hangi listede yönetiyor?
+- LLR kimlik biçimi ne (ör. `LLR-<bileşen>-<sıra>`); silinen kimlik yeniden kullanılabilir mi?
+- Tasarımdaki adın koddaki adla aynı olması zorunlu mu?
+
+### 6. İzin verilen tasarım yöntemlerinin koşulları
+
+Bu bölüm riskli ama gerekli yöntemleri yasaklamaz; her biri için izin koşulunu ve gerekçesini
+yazar. Çizelgelemede (scheduling) döngüsel yürütücü (cyclic executive) seçilirse ana çerçeve
+(major frame) ve küçük çerçeve (minor frame) kuralları, sabit öncelikli kesintili (preemptive)
+çizelgeleme seçilirse öncelik atama kuralı yazılır. Görevlerin periyodu, zaman sınırı
+(deadline) ve WCET bütçesi çizelgelenebilirlik analizinin (schedulability analysis) girdisidir
+([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#en-kötü-durum-yürütme-süresi-analizi),
+[20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md));
+görev kümesi denemeleri için
+[Görev Çizelgeleme Analiz Aracı](/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme)
+kullanılabilir. Kesme servis rutini (interrupt service routine, ISR), olay güdümlü mimari
+(event-driven architecture), dinamik görev oluşturma (dynamic tasking), yeniden girilebilirlik
+(re-entrancy), paylaşılan veri ve istisna yönetimi (exception handling) için de koşul yazılır;
+işletim sisteminin tedarikçi belgesindeki kullanım kısıtları buraya taşınır.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-10 | Döngüsel yürütücüde ana çerçeve küçük çerçevenin tam katıdır; her küçük çerçevenin en kötü yükü çerçeve süresinin %80'ini aşmaz; taşma algılanıp bildirilir. | Belirlenimci sıra; taşma sessiz kalmaz. | Çerçeve tablosu ve WCET analizi; taşma için gürbüzlük testi. |
+| TS-11 | Kesintili çizelgelemede öncelikler hız-monoton (rate-monotonic, RM) kurala göre, zaman sınırı periyottan kısa görev varsa zaman sınırı-monoton (deadline-monotonic, DM) kurala göre atanır; periyot, zaman sınırı, WCET bütçesi, öncelik ve yığın boyutu görev tablosunda verilir. | Öncelik önem sırası değildir; tablo analizin girdisidir. | Görev tablosu ile işletim sistemi yapılandırmasının karşılaştırılması; çizelgelenebilirlik analizi. |
+| TS-12 | ISR yalnızca veriyi alır, kesme kaynağını temizler ve bir bayrak ya da kuyrukla görevi uyandırır; beklemeli çekirdek çağrısı yapmaz. | Kesme süresi kısa ve sınırlı kalır; işleme olağan testle sınanır. | ISR başına WCET ölçümü; kesme bağlamındaki çekirdek çağrılarının taranması. |
+| TS-13 | Kesmeye ya da olaya bağlanan her kaynağın iki varış arasındaki en kısa süresi tasarımda verilir; sınırı bilinmeyen kaynak yoklamayla (polling) okunur. | Sınırı bilinmeyen olay kaynağı analize girmez. | Kesme tablosundaki en kısa varış aralığı sütununun gözden geçirmesi. |
+| TS-14 | Olay ve mesaj kuyruklarının derinliği sabittir; taşma algılanır, sayılır ve tanımlı bir tepkiye bağlanır. | Yük patlamasında veri kaybı sessiz kalmaz. | Kuyruk tablosu; taşma için gürbüzlük testi. |
+| TS-15 | Görevler, kuyruklar ve muteksler yalnızca başlatmada yaratılır; çalışma sırasında görev yaratılmaz, silinmez, önceliği değişmez. | Analizin dayandığı görev modeli sabit kalır. | Başlatma sonrasında çağrılan çekirdek hizmetlerinin statik taraması. |
+
+Paylaşılan veri muteksle korunuyorsa öncelik kalıtımı (priority inheritance) ya da öncelik
+tavanı (priority ceiling) kullanılır. Daha düşük öncelikli görevlerin bu görevi bekletebilecek
+kritik kesitleri (critical section) analize engellenme süresi (blocking time) olarak girer:
+öncelik tavanında en uzun tek kesit yeterlidir; öncelik kalıtımında görev art arda birden çok
+kesitte bekleyebileceğinden her düşük öncelikli görevin en uzun ilgili kesiti toplanır
+([20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md#paylaşılan-verinin-korunması)).
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-16 | Birden çok görevden ya da kesmeden çağrılan fonksiyon tasarımda yeniden girilebilir diye işaretlenir; statik yerel değişken ve korumasız global yazım içermez. | Eşzamanlı çağrıda iç durum bozulmaz. | Çağrı grafiğinden çoklu bağlam taraması; işaretli fonksiyonların gözden geçirmesi. |
+| TS-17 | Görevler arası paylaşılan her verinin tek yazanı vardır; okuyanlar ve koruma yöntemi (öncelik kalıtımlı muteks, kuyruk, çift tampon) global veri erişim tablosunda yazılır. | Yarı eski yarı yeni okuma ve yarış durumu dışlanır. | Erişim tablosu ile statik analiz erişim raporunun karşılaştırılması. |
+| TS-18 | Muteks beklemeleri zaman aşımlıdır; süresiz bekleme yasaktır; iç içe kilitler için tek bir alma sırası tanımlanır. | Kilitlenme dışlanır; engellenme süresi sınırlanır. | Çekirdek çağrılarının parametre taraması; kilit sırası tablosu. |
+| TS-19 | İşlemci istisnaları (sıfıra bölme, bellek koruma ihlali, tanımsız komut) tek işleyicide yakalanır, kaydedilir ve istisna tablosunda tanımlı tepkiye (güvenli duruma geçiş ya da yeniden başlatma) bağlanır. | Belirsiz durumdan sessizce devam edilmez. | İstisna vektör tablosunun gözden geçirmesi; hata enjeksiyonu testi. |
+
+**Verilecek kararlar:**
+
+- Döngüsel yürütücü mü, kesintili çizelgeleme mi; gerekçesi ne?
+- Hangi çekirdek hizmetleri kesme bağlamından çağrılabilir, hangileri hiç kullanılmaz?
+- Hangi istisnada yeniden başlatma, hangisinde güvenli duruma geçiş var?
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Görevler uygun önceliklerle çalıştırılır." | "Öncelikler hız-monoton kurala göre atanır; görev tablosu tasarım tanımında yer alır ve çizelgelenebilirlik analizinin girdisidir." |
+
+### 7. Tasarım kısıtları
+
+Bu bölüm doğrulanamayan ya da emniyet gereksinimleriyle bağdaşmayan yapıları dışlar.
+Özyineleme (recursion) yığın üst sınırının hesaplanmasını engeller; başlatma sonrasında bellek
+ayırma parçalanma ve belirsiz süre getirir; veri takma adı (data alias), yani aynı belleğe
+birden çok adla erişim, veri akışı analizini kör eder; sıkıştırılmış ifadeler (compacted
+expressions) ara taşma ve ölçekleme hatalarını gizler. Kuralın dili "yasak" ya da "yalnızca
+şu koşulla" olmalıdır; "kaçınılır" gibi bir ifade gözden geçirmede uygulanamaz.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-20 | Doğrudan ve dolaylı özyineleme yasaktır. | Yığın üst sınırı hesaplanamaz; mimari doğrulanamaz hâle gelir. | Çağrı grafiğinde döngü taraması; kodlama standardındaki karşılığı (ör. MISRA C:2012 Kural 17.2). |
+| TS-21 | Başlatma tamamlandıktan sonra bellek ayrılmaz ve bırakılmaz. | Parçalanma, belirsiz süre ve bellek tükenmesi dışlanır. | Bağlama haritasında ayırma fonksiyonu ve öbek (heap) bölümü taraması. |
+| TS-22 | Aynı bellek alanına birden çok adla (union, işaretçi dönüşümü) erişim yalnızca sürücü katmanında ve tasarımda listelenen yerlerde yapılır. | Gözden geçirme ve veri akışı analizi takma adı göremez. | Listedeki yerlerle statik analiz bulgularının karşılaştırılması. |
+| TS-23 | Birden çok işlem içeren bir hesapta LLR ara sonuçları adlandırır, her birinin birimini ve aralığını verir. | Ara taşma ve ölçekleme hataları gereksinimde görünür. | LLR gözden geçirme kontrol listesi. |
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Dinamik bellek kullanımından mümkün olduğunca kaçınılır." | "Başlatma bittikten sonra bellek ayrılmaz ve bırakılmaz; başlatmadaki ayırmalar statik havuzdan yapılır, bağlama haritasında öbek bölümünün boyutu sıfırdır." |
+
+**Nesne yönelimli özellikler (7.5).** Nesne yönelimli bir teknik kullanılıyorsa DO-332 bu
+standarda ayrı bir başlık ekler; uygulama örnekleri
+[15. DO-332 ve Nesne Yönelimli Teknoloji](../../04-arac-kalifikasyonu-ve-ekler/15-do332-nesne-yonelimli-teknoloji.md#pratik-tasarım-ve-kodlama-kuralları)
+bölümündedir. Standart en az şu konularda karar verir:
+
+| Konu | Standartta verilecek karar |
+|---|---|
+| Sınıf hiyerarşisi | Gereksinimlerden çıkarılışı, kalıtım (inheritance) derinliği, yerel tip tutarlılığının (local type consistency) gösterilme yöntemi |
+| Parametrik çok biçimlilik (parametric polymorphism) | Şablon ve generic birimlerin hangi tiplerle örneklenebileceği |
+| Aşırı yükleme (overloading), tip dönüşümü (type conversion) | İzin koşulları; örtük dönüşüm ve örtük çağrı üreten yapıların sınırı |
+| İstisna ve bellek yönetimi | Mimari düzeyde tek strateji: yayılma sınırı, havuz ya da başlatmada ayırma, çöp toplama (garbage collection) varsa zaman davranışı |
+| Sanallaştırma (virtualization) | Yorumlayıcı ya da sanal makine üzerindeki kodun kod mu veri mi sayılacağı |
+| Yeniden kullanım | Yeniden kullanılan sınıflardan doğan türetilmiş gereksinimler ve devre dışı kalacak işlevler |
+
+**Verilecek kararlar:**
+
+- Özyineleme tümden mi yasak, derinliği statik sınırlı biçimde mi izinli?
+- Başlatmada bellek ayırmaya izin var mı; havuz boyutları nerede tanımlı?
+- Nesne yönelimli özelliklerden hangileri, hangi sınırla kullanılıyor?
+
+### 8. Karmaşıklık sınırları
+
+Bu bölüm tasarımın gözden geçirilebilir ve analiz edilebilir kalmasını sayısal sınırlara
+bağlar. Karmaşıklık ile emniyet arasında nicel bir bağ kurulamadığından sınırın değeri bir
+mühendislik kararıdır ve gerekçesi (yığın bütçesi, test maliyeti) yazılır. Ölçümün tanımı da
+verilir: dolaylı çağrılar ve kesme rutinleri çağrı derinliğine sayılıyor mu? Çevrimsel
+karmaşıklık (cyclomatic complexity) gibi fonksiyon içi sınırların sahibi kodlama standardıdır;
+bu bölüm bileşen ve mimari düzeyindeki sınırları koyar, fonksiyon içi sınırlara atıf yapar.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-24 | İç içe çağrı derinliği, kesme rutinleri dahil, en çok 8'dir. | Yığın analizi ve en kötü yol izlenebilir kalır. | Statik analiz aracının çağrı grafiği raporu. |
+| TS-25 | Koşul yapılarının iç içe derinliği ve bir karardaki koşul sayısı kodlama standardındaki sınırlara uyar (örnekte KS-11: en çok 4 ve 6); LLR'deki karar yapıları bu sınırı aşmayacak biçimde bölünür. | Gözden geçirilebilirlik; değiştirilmiş koşul/karar kapsama (MC/DC) test sayısı denetimde kalır. | LLR gözden geçirme kontrol listesi; kodda KS-11 ölçümü. |
+| TS-26 | Koşulsuz dallanma (`goto`, `setjmp`/`longjmp`) kullanılmaz; her fonksiyonun tek giriş noktası vardır, çıkış noktası sayısı kodlama standardındaki karara uyar (örnekte MISRA C:2012 Kural 15.5 gerekli sayılmış: tek çıkış, erken dönüş yalnızca sapma kaydıyla). | Kontrol akışı tasarımdan okunur; kapsam analizi sadeleşir. | Kodlama standardındaki karşılık kurallar (ör. MISRA C:2012 Kural 15.1, 15.5, 21.4). |
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Tasarım gereğinden karmaşık olmamalıdır." | "İç içe çağrı derinliği en çok 8'dir; ölçüm `<statik analiz aracı ve sürümü>` çağrı grafiği raporuyla yapılır, aşan her zincir için sapma kaydı açılır." |
+
+**Verilecek kararlar:**
+
+- Hangi sınırlar bu standartta, hangileri kodlama standardında tanımlanacak?
+- Sınır değerleri ne, gerekçesi ne ve hangi araçla ölçülüyor?
+- Sınırı aşan bileşen için sapma mı açılıyor, yeniden tasarım mı yapılıyor?
+
+### 9. Veri ve kontrol bağlaşımı kuralları
+
+Seviye A, B ve C'de bileşenler arası veri ve kontrol bağlaşımının (data and control coupling)
+gereksinim tabanlı testlerle işletildiği analizle gösterilir. Analiz mimaride tanımlı
+bağlaşımları esas alır; mimaride görünmeyen bağlaşım analizde de görünmez ve sonradan bulgu
+olarak döner
+([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#veri-bağlaşımı-ve-kontrol-bağlaşımı-analizi)).
+Bu bölüm bağlaşımın tasarımda hangi biçimde bildirileceğini tanımlar: bileşen arayüz tablosu
+(dışa açık fonksiyonlar, çağrılan bileşenler, kip seçimi gibi kontrol etkileri) ve global veri
+erişim tablosu; tabloların elle mi tutulduğu, araçtan mı üretildiği de burada yazılır.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-27 | Her bileşenin dışa açık fonksiyonları ile okuduğu ve yazdığı global veriler bileşen arayüz tablosunda listelenir; tabloda olmayan erişim bulgudur. | Bağlaşım analizi mimaride tanımlı bağlaşıma dayanır. | Arayüz tablosu ile statik analiz çağrı ve erişim raporunun karşılaştırılması. |
+| TS-28 | Fonksiyon işaretçisiyle ya da çağrı tablosuyla yapılan çağrıların hedef kümesi tasarımda listelenir ve başlatmadan sonra değişmez. | Dolaylı çağrının hedefi analizde bilinir. | Çağrı tablolarının sabit bellekte olduğunun bağlama haritasından denetimi; gözden geçirme. |
+
+**Verilecek kararlar:**
+
+- Bileşen arayüz tablosu hangi alanları içeriyor ve tasarım verisinde nerede duruyor?
+- Global veri erişim tablosu elle mi tutuluyor, araçtan mı üretiliyor?
+- Dolaylı çağrılara izin var mı; varsa hedef kümesi nerede listeleniyor?
+
+### 10. Devre dışı bırakılmış kod ve seçenekle seçilebilir işlevler
+
+Devre dışı bırakılmış kodun (deactivated code) etkin işlevleri bozmasını ve istem dışı
+etkinleşmesini (inadvertent enabling) önleyen mekanizma tasarımın parçasıdır. Standart onun
+biçimini tanımlar: ayrımın derleme zamanında mı, çalışma zamanında mı (konfigürasyon verisi,
+pin programlama) yapılacağı, seçim noktasının tekliği ve tanımsız seçim değerinin sonucu.
+Seçenekle seçilebilir yazılımın (option-selectable software) seçim verisi ayrı dosyadaysa
+parametre verisi öğesi olarak yönetilir
+([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)); kanıt beklentisi
+[17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md) bölümündedir.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-29 | Seçenekle seçilebilir her işlev tek bir seçim noktasından yönetilir; seçim verisinin tanımsız ya da bozuk değeri işlevi kapalı tutar ve arıza bildirir. | İstem dışı etkinleşme tek noktada önlenir ve doğrulanır. | Seçim verisinin kullanıldığı yerlerin taraması; tanımsız değer için gürbüzlük testi. |
+| TS-30 | Koşullu derleme anahtarları tasarımda listelenir; listede olmayan anahtar kullanılmaz, her derleme varyantı ayrı imaj olarak tanımlanır. | Hangi kodun imaja girdiği belirsiz kalmaz. | Derleme betiklerindeki anahtarların listeyle karşılaştırılması. |
+
+**Verilecek kararlar:**
+
+- Devre dışı bırakma derleme zamanında mı, çalışma zamanında mı yapılacak?
+- Seçim verisi parametre verisi öğesi olarak mı yönetiliyor?
+- Gelecek sürüm işlevi gibi riskli kullanımlara izin var mı; varsa otoriteyle konuşuldu mu?
+
+### 11. Tasarım araçlarının kullanım kısıtları
+
+Araç adı ve sürümü yazılım geliştirme planında ve yazılım yaşam döngüsü ortam konfigürasyon
+indeksinde (Software Life Cycle Environment Configuration Index, SECI) durur; bu bölüm aracın nasıl kullanılacağını sınırlar: izin verilen diyagram
+türleri, kapalı tutulan otomatik özellikler, araç dosyalarının saklanma biçimi. Araçtan kod
+üretilecekse doğrulama ya da kalifikasyon planlarda karara bağlanır. Koddan tasarım üretmek
+tersine mühendisliktir (reverse engineering) ve kodla uyumu gösterir, doğruluğu göstermez
+([25. Tersine Mühendislik](../../05-ozel-konular/25-tersine-muhendislik.md)). Uyumu otomatik
+denetleyen aracın çıktısı gözden geçirmenin yerine geçecekse kalifikasyon kararı PSAC'tadır.
+
+| No | Kural | Gerekçe | Nasıl denetlenir |
+|---|---|---|---|
+| TS-31 | Planlarda tersine mühendislik tanımlanmadıkça tasarım verisi koddan araçla üretilmez; tasarım aracının kod üretme özelliği yalnızca planlarda tanımlıysa kullanılır. | Koddan üretilen tasarım kodla uyumu gösterir, doğruluğu göstermez. | Tasarım verisinin oluşturma kaydı; araç ayarlarının gözden geçirmesi. |
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Tasarım `<araç adı>` ile yapılır." | "Mimari `<araç adı ve sürümü>` ile yalnızca bileşen, durum ve sıralama diyagramlarıyla çizilir; kod üretme ve koddan diyagram üretme özellikleri kapalıdır; araç dosyaları `<depo adı>` altında konfigürasyon kontrolündedir." |
+
+**Verilecek kararlar:**
+
+- Hangi tasarım ve modelleme araçları kullanılıyor; hangi özellikleri kapalı?
+- Araçtan kod üretilecek mi; üretilecekse doğrulama mı, kalifikasyon mu?
+- Araç dosyaları hangi biçimde temel çizgiye (baseline) alınıyor?
+
+### 12. Uyum denetimi ve sapma süreci
+
+Bu bölüm standardı yaşatan mekanizmayı tanımlar. Her kural için bir denetim yolu (araç,
+kontrol listesi maddesi ya da analiz) yazılır; kontrol listesi kural numaralarına atıf yapınca
+"standarda uygun mu?" sorusu tek bir onay kutusu olmaktan çıkar. Sapma (deviation) akışının
+ayrıntısı (kayıt alanları, tekil ve proje geneli sapma, onay yetkisi)
+[kodlama standardı](08-kodlama-standardi.md) şablonundadır; tasarım standardı aynı akışı kullanır ve
+yalnızca tasarıma özgü olanı ekler: sapma kaydının kimliği ilgili bileşenin ya da LLR'nin
+tasarım verisine yazılır. Sapmalar proje sonunda yazılım başarım özetinin (Software
+Accomplishment Summary, SAS) uyum beyanında anıldığı için kayıtlar toplanabilir tutulur;
+kayıtları kalite güvencesi denetler (A-9 #3). Standart değişirse eski sürüme göre gözden
+geçirilmiş tasarımın ne olacağı da buradadır.
+
+| Zayıf ifade | Güçlü ifade |
+|---|---|
+| "Gerekirse standarttan sapılabilir." | "Sapma, kodlama standardındaki akışla kural numarası, yer, gerekçe ve telafi edici doğrulamayla kaydedilir; kayıt kimliği tasarım verisine yazılır ve `<onaylayan rolü>` onaylamadan ilgili gözden geçirme kapatılmaz." |
+
+**Verilecek kararlar:**
+
+- Her kural hangi yolla denetleniyor: araç, kontrol listesi, analiz?
+- Tasarım sapmasını kodlama standardındaki onaylayan rol mü onaylıyor; kayıt kimliği tasarım
+  verisinde nereye yazılıyor?
+- Standart değiştiğinde mevcut tasarım verisi yeniden değerlendiriliyor mu?
+
+Dikkat: Toplu muafiyet ("sürücü katmanı bu standarda tabi değildir") sapma değildir; 1.2'de
+gerekçeli kapsam dışı bırakmadır.
+
+## Seviyeye göre farklar
+
+| Konu | Seviye A ve B | Seviye C | Seviye D |
+|---|---|---|---|
+| Standardın tanımlanması (A-1 #5) | Beklenir | Beklenir | Beklenmez |
+| Kontrol kategorisi | CC1 | CC2 | – |
+| Tasarımın standarda uyumu (A-4 #5, #12) | Aranır; bağımsızlık gerekmez | Aranır; bağımsızlık gerekmez | Aranmaz |
+| Hedef bilgisayarla uyum, doğrulanabilirlik (A-4 #3, #4, #10, #11) | Aranır | Aranmaz | Aranmaz |
+| Bölümleme bütünlüğü (A-4 #13) | A'da bağımsızlıkla; B'de aranır | Aranır | Aranır |
+| Veri ve kontrol bağlaşımı analizi (A-7 #8) | Bağımsızlıkla aranır | Aranır | Aranmaz |
+| Kalite güvencesi: standart ve uyum (A-9 #1, #3) | Bağımsızlıkla aranır | Bağımsızlıkla aranır | Aranmaz |
+
+**Seviye A ve B.** Standart CC1 altında yönetilir: temel çizgiye alınır, değişikliği problem
+raporu ve değişiklik gözden geçirmesiyle yapılır. Hedef bilgisayarla uyum (başlatma,
+eşzamanlama, kesmeler, kaynak kullanımı) ve doğrulanabilirlik yalnızca bu iki seviyede ayrı
+hedeftir; 3, 6, 7 ve 8. bölümlerdeki kurallar onların dayanağıdır.
+
+**Seviye C.** Standart yine beklenir ama CC2 altında yönetilebilir: sürümü tanımlı, korunmuş
+ve geri getirilebilir olur; değişikliği için problem raporu ve resmî değişiklik onayı aranmaz
+([10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#kontrol-kategorileri-cc1-ve-cc2)).
+Standarda yazılan her kurala uyum denetlenmeye devam eder; A ve B ile aynı standart
+kullanılıyorsa C'de uygulanmayacak kurallar 1.1'de açıkça ayrılır.
+
+**Seviye D.** Tasarım standardı beklenen veri değildir; LLR'ler de hedef değildir. Yine de
+yararlı olabilir: mimari bu seviyede de geliştirilir, bölümleme kullanılıyorsa bütünlüğü D'de
+de doğrulanır ve arayüz ve bölümleme kuralları yazılı değilse bu doğrulamanın ölçütü kalmaz.
+Ortak standart, farklı seviyelerde çalışan ekipte tutarlılık sağlar ve ileride seviye
+yükseltmeyi ucuzlatır. Planlarda zorunlu tutulan standart, planlara uyumla birlikte denetim
+konusu olabilir; bu yüzden yalnızca gerçekten uygulanacak kurallar yazılır.
+
+## DO-178C uyum tablosu
+
+| DO-178C | Konu | Şablondaki yer |
+|---|---|---|
+| §11.7 | Standardın kapsamı ve uygulanışı | 1 Amaç ve kapsam |
+| §11.7.a | Tasarım tanımlama yöntemi | 2 Tasarım tanımlama yöntemi ve gösterimler |
+| §11.7.b | Adlandırma kuralları | 5 Adlandırma kuralları |
+| §11.7.c | İzinli yöntemlerin koşulu ve gerekçesi | 6 İzin verilen tasarım yöntemlerinin koşulları |
+| §11.7.d | Tasarım aracı kısıtları | 11 Tasarım araçlarının kullanım kısıtları |
+| §11.7.e | Yasak ya da kısıtlı yapılar | 7 Tasarım kısıtları |
+| §11.7.f | Karmaşıklık sınırları | 8 Karmaşıklık sınırları |
+| §4.1.e | Emniyet hedefleriyle tutarlı standart | 1.1 Uygulandığı yazılım ve seviyeler; 3.4 Emniyet mekanizmaları ve hata yönetimi |
+| §4.2.b | Standardın seçilmesi ya da yazılması | 1 Amaç ve kapsam |
+| §4.2.f, §12.3.2 | Benzemez sürümler için ayrı standart | 1.2 Kapsam dışı ve ayrı standarda tabi bileşenler |
+| §4.2.g | Değişiklik kontrolü ve gözden geçirme | Ortak ön bölümler; 12.3 Standardın değiştirilmesi |
+| §4.2.h, §5.2.4 | Devre dışı kod mekanizması | 10 Devre dışı bırakılmış kod ve seçenekle seçilebilir işlevler |
+| §4.2.i, §5.2.3 | Değiştirilebilir bileşenin korunması | 3.3 Bölümleme ve koruma sınırları |
+| §4.5.a | Bölüm 11'e uyum | Bu uyum tablosu |
+| §4.5.b | Tek biçimli tasarım | 2 Tasarım tanımlama yöntemi ve gösterimler; 4.2 Yazım kalıbı; 5 Adlandırma kuralları |
+| §4.5.c | Doğrulanamayan yapıların dışlanması | 7 Tasarım kısıtları; 8 Karmaşıklık sınırları |
+| §4.5.d | Gürbüzlüğün gözetilmesi | 3.4 Emniyet mekanizmaları ve hata yönetimi |
+| §5.2.2.a | Tasarımın standarda uyması | 12 Uyum denetimi ve sapma süreci |
+| §5.2.2.b | Türetilmiş LLR ve gerekçesi | 4.4 Türetilmiş düşük seviyeli gereksinimler |
+| §5.2.2.d | Bileşen arayüzlerinin tutarlılığı | 3.2 Arayüz tanımı; 9 Veri ve kontrol bağlaşımı kuralları |
+| §5.2.2.e | Kontrol ve veri akışının izlenmesi | 3.4 Emniyet mekanizmaları ve hata yönetimi |
+| §6.3.2.c, §6.3.3.c | Hedef bilgisayarla uyum | 3.5 Kaynak bütçeleri ve paylar; 6 İzin verilen tasarım yöntemlerinin koşulları |
+| §6.3.2.e, §6.3.3.e | LLR'nin ve mimarinin standarda uyumu | 12.1 Kuralların denetim yolu |
+| §6.3.3.d | Doğrulanabilir mimari | 7.1 Özyineleme; 8 Karmaşıklık sınırları |
+| §8.1.a | Standardın kalite güvencesi | Ortak ön bölümler (onaylar) |
+| §8.1.b | Standarda uyumun kalite güvencesi | 12.2 Sapma isteği ve onayı |
+| §11.20.l | Sapmaların SAS'ta anılması | 12.2 Sapma isteği ve onayı |
+| §12.2 | Tasarım aracının kalifikasyon kararı | 11.2 Kod üretimi ve koddan tasarım üretimi |
+
+### Teknoloji ekleri
+
+| Ek | Madde | Şablona etkisi |
+|---|---|---|
+| DO-331 | MB.11.7 | §11.7 değişmez. Mimari ya da LLR modelle ifade ediliyorsa ek kurallar model standardına yazılır; 2.1 hangi bileşenin modelle tasarlandığını söyler. |
+| DO-331 | MB.4.5, MB.11.23 | Model standardı dördüncü geliştirme standardıdır; tasarım modeli için ayrı bir standart ya da bu belgenin eki olarak yazılır ([14. bölüm](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md#planlama-ve-modelleme-standartları)). |
+| DO-331 | MB.6.3.2.e, MB.6.3.3.e | Modelle ifade edilen tasarımda uyum model standardına göre denetlenir; 12.1 bunu da kapsar. |
+| DO-332 | OO.5.2.2.h–l | Sınıf hiyerarşisi, yerel tip tutarlılığı, bellek ve istisna stratejisi ile yeniden kullanım tasarım faaliyetine girer; gösterimleri 2 ve 7.5'te tanımlanır. |
+| DO-332 | OO.11.7.g.1–g.4, g.7 | Kalıtım, parametrik çok biçimlilik, aşırı yükleme, tip dönüşümü ve sanallaştırma kısıtları: 7.5 |
+| DO-332 | OO.11.7.g.5 | İstisna yönetimi kısıtları: 6.7 ve 7.5 |
+| DO-332 | OO.11.7.g.6 | Dinamik bellek yönetimi kısıtları: 7.2 ve 7.5 |
+| DO-332 | OO.6.3.3.a–b | Mimari değerlendirmesine istisna ve bellek yönetimi ile kalıtım ilişkileri eklenir: 9 ve 12.1 |
+| DO-333 | FM.11.7.a | Biçimsel modelde gösterimin sözdizimi ve anlamı matematiksel olarak tanımlıdır; gösterim kısıtları 2.3'e yazılır. |
+
+Bu eşleme bir başvuru aracıdır; standardın kendisinin yerine geçmez, madde metinleri için
+DO-178C ve ilgili ek esas alınır.
+
+## Diğer belgelerle tutarlılık
+
+| Bu belgede | Örtüşmesi gereken belge | Nasıl denetlenir |
+|---|---|---|
+| Tasarım araçları ve kullanım biçimi (11) | [SDP](02-sdp.md): geliştirme ortamı ve araç sürümleri; SECI | Araç adları ve sürümleri iki belgede aynıdır |
+| LLR kimliği ve türetilmiş işaretleme (4) | [Gereksinim standardı](06-gereksinim-standardi.md): kimlik biçimi ve türetilmiş gereksinim akışı | Türetilmiş gereksinimin sistem süreçlerine iletilme yolu iki standartta aynıdır |
+| Karmaşıklık, özyineleme, dinamik bellek, global veri (7, 8) | [Kodlama standardı](08-kodlama-standardi.md): dil alt kümesi ve karmaşıklık sınırları | Her sınır tek belgede tanımlanır, öteki atıf yapar; sayılar çelişmez |
+| Kuralların denetim yolu (12.1) | [SVP](03-svp.md): tasarım gözden geçirme kontrol listesi, bağlaşım analizi | Kontrol listesi maddeleri TS numaralarına atıf yapar |
+| Sapma süreci (12.2) | [Kodlama standardı](08-kodlama-standardi.md): sapma akışı; [SQAP](05-sqap.md): sapma kayıtlarının denetimi | Ayrı akış tanımlanmamış; kayıt alanları ve onaylayan rol aynıdır |
+| Standardın değiştirilmesi (12.3) | [SCMP](04-scmp.md): kontrol kategorisi ve değişiklik kontrolü | Standart A ve B'de CC1, C'de CC2 olarak listelenmiştir |
+| Bölümleme, devre dışı kod, değiştirilebilir bileşen (3.3, 10) | [PSAC](01-psac.md): yazılıma genel bakış ve ek hususlar | PSAC'ta anılan her mekanizmanın bu standartta kuralı vardır |
+
+## Sık hatalar
+
+| Hata | Tipik nedeni | Önlem |
+|---|---|---|
+| Standart tasarım ilkelerini anlatıyor; numaralı, denetlenebilir kural yok | Ders kitabından derleme, takvim baskısı | Her kurala numara, sınır değeri, gerekçe ve denetim yolu |
+| LLR ayrıntı düzeyi bileşenden bileşene sözde koddan özete değişiyor | Ölçütün ekip deneyimine bırakılması | 4.1'de ölçüt ve yetersiz/yeterli örnek çifti |
+| Çizelgeleme ve kesme kuralları seçilen işletim sisteminin kullanım kısıtlarıyla uyuşmuyor | Standardın işletim sistemi seçiminden önce yazılıp güncellenmemesi | Tedarikçinin kullanım kısıtlarını 6. bölüme taşımak; seçimden sonra revizyon |
+| Aynı sınır tasarım ve kodlama standardında farklı sayıyla | İki standardın birbirinden habersiz yazılması | Sınırın sahibi olan belgeyi belirlemek; öteki atıf yapar |
+| Tedarikçi kodu için çok sayıda sapma | Kapsamın yalnızca yeni kod düşünülerek yazılması | 1.2'de bileşen bileşen kapsam dışı listesi ve tabi oldukları standart |
+| Tasarım koddan araçla üretilmiş; standarda uyum kâğıt üzerinde | Tasarım verisinin kodlamadan sonra yazılması | TS-31; tersine mühendislik gerekiyorsa planlarda tanımlamak |
+| Mimaride bildirilmemiş global veri erişimi bağlaşım analizinde bulgu çıkarıyor | Arayüz tablosunun zorunlu tutulmaması | 9. bölümdeki tablonun statik analizle karşılaştırılması |
+
+## Yayımlamadan önce
+
+- [ ] Her kuralın numarası, gerekçesi ve denetim yolu var; "mümkün olduğunca" gibi ifade yok.
+- [ ] LLR ayrıntı düzeyi için ölçüt ve en az bir yetersiz/yeterli örnek çifti standartta.
+- [ ] Çizelgeleme, kesme ve paylaşılan veri kuralları seçilen işletim sisteminin ve
+      sertifikasyon paketinin kullanım kısıtlarıyla karşılaştırıldı.
+- [ ] Karmaşıklık sınırları kodlama standardıyla çelişmiyor; her sınır tek belgede tanımlı.
+- [ ] Kapsam dışı bırakılan bileşenler adıyla ve tabi oldukları standartla yazılı.
+- [ ] Tasarım araçları, sürümleri ve kapalı tutulan özellikler SDP'deki ortam tanımıyla aynı.
+- [ ] Tasarım gözden geçirme kontrol listesi kural numaralarına atıf yapıyor.
+- [ ] Sapma süreci kodlama standardındaki akışa atıf yapıyor; ayrı akış ya da farklı
+      onaylayan tanımlanmamış, kayıtların denetimi SQAP'ta.
+
+Otoritenin standartlarda baktığı noktalar [SW SOI-1](../06-kontrol-listeleri/soi-1.md), tasarımın bu standarda
+uyumunun nasıl örneklendiği [SW SOI-2](../06-kontrol-listeleri/soi-2.md) sayfasındadır.
+
+## İlgili bölümler
+
+- [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- Teknoloji ekleri: [14. DO-331](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md) ·
+  [15. DO-332](../../04-arac-kalifikasyonu-ve-ekler/15-do332-nesne-yonelimli-teknoloji.md) ·
+  [16. DO-333](../../04-arac-kalifikasyonu-ve-ekler/16-do333-bicimsel-yontemler.md)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
+- [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md)
+- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.md)
+- Diğer şablonlar: [Gereksinim standardı](06-gereksinim-standardi.md) ·
+  [Kodlama standardı](08-kodlama-standardi.md) · [SDP](02-sdp.md) · [Genel bakış](index.md)
+- Denetim listeleri: [SW SOI-1](../06-kontrol-listeleri/soi-1.md) · [SW SOI-2](../06-kontrol-listeleri/soi-2.md)

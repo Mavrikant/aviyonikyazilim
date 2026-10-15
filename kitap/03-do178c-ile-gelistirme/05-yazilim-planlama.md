@@ -60,6 +60,10 @@ seslenir:
 | Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP) | Veri nasıl tanımlanacak, korunacak ve kontrollü biçimde değiştirilecek? | [10. Yazılım Konfigürasyon Yönetimi](10-yazilim-konfigurasyon-yonetimi.md) |
 | Yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP) | Süreçlerin planlara uyduğu nasıl ve kim tarafından güvence altına alınacak? | [11. Yazılım Kalite Güvencesi](11-yazilim-kalite-guvencesi.md) |
 
+Bu bölüm planların neden ve ne için yazıldığını anlatır. Her planın bölüm bölüm önerilen
+içindekileri, her bölümde verilecek kararlar ve DO-178C maddeleriyle eşlemesi
+[Plan ve Standart Şablonları](../06-ekler/05-sablonlar/index.md) sayfalarındadır.
+
 ### Yazılım sertifikasyon planı (PSAC)
 
 PSAC, sertifikasyon otoritesiyle varılacak mutabakatın yazılı hâlidir ve beş plan
@@ -208,7 +212,10 @@ karşılığıdır. Planlar süreci tarif ederken standartlar, üretilen her bir
 kendisine bakar: gereksinim nasıl yazılır, tasarım nasıl ifade edilir, kod hangi
 kurallara uyar. Gözden geçirme yapan kişi elinde bu standartlar olmadan "bence böyle
 daha iyi olurdu" düzeyinde kalır; standart varsa "bu madde 4.2'ye aykırı" diyebilir.
-Fark, öznel görüş ile nesnel bulgu arasındaki farktır.
+Fark, öznel görüş ile nesnel bulgu arasındaki farktır. Örnek kurallarla birer şablon:
+[gereksinim standardı](../06-ekler/05-sablonlar/06-gereksinim-standardi.md),
+[tasarım standardı](../06-ekler/05-sablonlar/07-tasarim-standardi.md) ve
+[kodlama standardı](../06-ekler/05-sablonlar/08-kodlama-standardi.md).
 
 ### Gereksinim standardı
 
@@ -424,7 +431,7 @@ SCI) ve yazılım başarım özeti (Software Accomplishment Summary, SAS) ile bi
 otoriteye asgari olarak sunulan veriyi oluşturur. Diğer dört plan ve üç standart
 otoritenin erişimine açık tutulur ve uygulamada ilk katılım aşaması (Stage of
 Involvement, SOI) denetiminde incelenir. Bu denetimin giriş koşulları ve otoritenin
-planlarda baktığı noktalar [SW SOI-1](../kaynaklar/soi-1.md) kontrol listesindedir.
+planlarda baktığı noktalar [SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md) kontrol listesindedir.
 
 **Değişiklik** kaçınılmazdır; önemli olan kontrollü olmasıdır. Plan değişikliği
 değişiklik kontrolünden geçer, etkilenen diğer planlarla birlikte yeniden gözden

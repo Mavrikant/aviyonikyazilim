@@ -1,7 +1,7 @@
 ---
 title: "SW SOI-4"
 description: "SOI-4 son sertifikasyon denetimi kontrol listesi: önceki bulguların kapanışı, SAS ve SCI tutarlılığı, açık problem raporları, uygunluk gözden geçirmesi."
-sidebar_position: 5
+sidebar_position: 17
 ---
 
 SOI-4, yazılımın sertifikasyona sunulmadan önceki son denetimidir: tüm faaliyetler
@@ -11,7 +11,7 @@ mi? Bu sayfa, son denetim öncesinde sunum paketini sınamak için bir kontrol l
 
 Katılım aşaması (Stage of Involvement, SOI) denetimlerinin genel mantığı ve yazılım
 başarım özetinin (Software Accomplishment Summary, SAS) içeriği
-[12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+[12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 bölümünde anlatılır. Buradaki maddeler bir otorite listesinin çevirisi değil, sahada
 işe yarayan hazırlık sorularıdır.
 
@@ -107,7 +107,7 @@ olmadığıdır.
 ### Açık problem raporları
 
 Açık raporların sınıfları ve değerlendirme soruları
-[9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) bölümünde
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) bölümünde
 tanımlanır; burada yalnızca son pakette aranan tutarlılık sorulur.
 
 - [ ] SAS'taki açık problem raporu listesi, problem raporlama aracındaki kayıtla aynı
@@ -180,9 +180,9 @@ analiziyle başlayan ayrı bir süreçtir.
 
 ## İlgili bölümler
 
-- [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
-- [11. Yazılım Kalite Güvencesi](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
-- [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
-- [18. Sahada Yüklenebilir Yazılım](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+- [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md)
 - Önceki aşama: [SW SOI-3](soi-3.md)

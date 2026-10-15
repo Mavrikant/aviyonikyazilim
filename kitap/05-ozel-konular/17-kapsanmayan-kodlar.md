@@ -386,7 +386,7 @@ vardır:
 Bir de süreç alışkanlığı vardır: bir gereksinim silindiğinde ya da değiştiğinde, ona
 izlenen kod ve testler aynı değişiklik kapsamında ele alınır. Gereksiz kodun en yaygın
 kaynağı, gereksinimi kaldırılıp kodu yerinde bırakılan işlevlerdir. Otoritenin kapsam
-boşluklarında baktığı noktalar [SW SOI-3](../kaynaklar/soi-3.md) kontrol listesindedir.
+boşluklarında baktığı noktalar [SW SOI-3](../06-ekler/06-kontrol-listeleri/soi-3.md) kontrol listesindedir.
 
 ## Bu bölümden akılda kalması gerekenler
 

@@ -1,0 +1,268 @@
+---
+title: "Test Durumu ve Prosedürü Kontrol Listesi"
+sidebar_label: "Test durumları ve prosedürleri"
+sidebar_position: 7
+description: "Test durumları ve prosedürlerinin akran gözden geçirmesi için kontrol listesi: gereksinim izi, normal aralık, gürbüzlük, beklenen sonuç ve test ortamı."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu liste, test durumlarının (test case) ve test prosedürlerinin (test procedure) kredi amaçlı
+(for-credit) koşudan önce yapılan akran gözden geçirmesi (peer review) içindir. Gözden geçiren,
+testleri yazmamış bir doğrulama mühendisidir ve üç şeye bakar: testler gereksinimden mi
+türetilmiş, normal aralığı ve gürbüzlüğü kapsıyor mu, prosedür başka biri tarafından aynı
+sonuçla koşulabilir mi? Gözden geçirilen veri, yazılım doğrulama durumları ve prosedürleridir
+(Software Verification Cases and Procedures, SVCP).
+
+DO-178C'de bu gözden geçirme, test prosedürlerinin doğruluğu hedefini (A-7 #1) karşılar; test
+durumlarının yeterliliğine dair bulduğu her şey gereksinim kapsam analizine girdi olur. Testler
+koşulduğunda çalıştırılabilir nesne kodunun gereksinimlere uyumunu ve gürbüzlüğünü gösteren
+A-6 hedeflerini karşılar; burada kaçan bir eksik o kanıtı doğrudan zayıflatır. Testin ilkeleri
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md) bölümünde,
+listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır. Koşunun kendisi
+[Test Sonuçları](08-test-sonuclari.mdx), testlerin bütün gereksinim setini ve kodu ne kadar
+kapsadığı [Kapsam Analizi](09-kapsam-analizleri.mdx) listesinin konusudur.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §4.4.3; §6.2.a, b, e; §6.4.1, §6.4.2 (6.4.2.1, 6.4.2.2), §6.4.3, §6.4.5.a–b, §6.5.a–b; verinin içeriği §11.13 |
+| Ek A hedefleri | A-7 #1: A'da bağımsızlıkla, B ve C'de gerekli, D'de aranmaz. Test durumlarının yeterliliği A-7 #3 (A'da bağımsızlıkla, B–D'de gerekli) ve A-7 #4'e (A'da bağımsızlıkla, B ve C'de gerekli) girdi verir. Betik ve girdi dosyalarının konfigürasyon kimliği: A-8 #1, A–D'de gerekli |
+| Testlerle karşılanan hedefler | A-6 #1, #2, #5: A–D'de gerekli. A-6 #3: A ve B'de bağımsızlıkla, C'de gerekli. A-6 #4: A'da bağımsızlıkla, B ve C'de gerekli |
+| Gözden geçirilen veri | SVCP'deki test durumları ve prosedürleri; prosedürlerin kullandığı betikler, girdi dosyaları ve düzenek yapılandırması; test durumu ile prosedür arasındaki iz verisi (trace data) |
+| Başvuru verisi | Temel çizgideki yüksek ve düşük seviyeli gereksinimler; gereksinim ile test durumu arasındaki iz verisi; yazılım doğrulama planı (Software Verification Plan, SVP); yazılım yaşam döngüsü ortam konfigürasyon indeksindeki (Software Life Cycle Environment Configuration Index, SECI) test ortamı tanımı |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → kayıt içinde, yazılım konfigürasyon yönetimi planındaki (Software Configuration Management Plan, SCMP) sınırı aşanlar problem raporuna |
+| İlgili şablon | [SVP Şablonu](../05-sablonlar/03-svp.md): 4. Doğrulama yöntemleri, 6. Doğrulama ortamı, 7. Geçiş kriterleri |
+| Madde öneki | `TDP` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek test durumları ve prosedürleri paket adı ve sürümüyle tanımlanmış;
+      sınadıkları gereksinimlerin listesi pakete eklenmiş.
+- [ ] Testlerin dayandığı gereksinimler gözden geçirilmiş ve temel çizgide (baseline); açık
+      gereksinim bulguları gözden geçirene bildirilmiş.
+- [ ] SVP'nin test seviyeleri, gürbüzlük kategorileri ve test ortamı bölümleri ile SECI'deki
+      düzenek tanımı gözden geçirenin elinde.
+- [ ] Katılımcılar belli; Seviye A'da prosedürleri gözden geçiren kişi, test durumlarının ve
+      prosedürlerin yazarı değil.
+- [ ] Kontrol listesinin sürümü gözden geçirme kaydına yazılacak.
+
+:::tip[Önce gereksinimi okuyun]
+Testleri açmadan önce paketteki birkaç gereksinimi okuyup her biri için kendi sınıf, sınır ve
+anormal koşul listenizi çıkarın; sonra test durumlarıyla karşılaştırın. Testten başlayan
+gözden geçiren, yazarın gördüğünü görür ve atladığını çoğu zaman o da atlar.
+:::
+
+## Kontrol listesi
+
+Her madde evet/hayır sorusudur ve "Evet" istenen durumdur; "Hayır" yanıtı bir bulgudur, sondaki
+etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
+
+<ListeIndir dosya="test-durumlari-ve-prosedurleri" baslik="Test Durumu ve Prosedürü Kontrol Listesi" />
+
+### Gereksinime izlenebilirlik
+
+- [ ] **TDP-01** Her test durumu sınadığı gereksinimi kimliğiyle ve o gereksinimin hangi
+      koşulunu sınadığını (testin amacını) yazıyor mu; pakette hiçbir gereksinime izlenmeyen
+      test durumu kalmamış mı? *(A–D · §6.5.a)*
+- [ ] **TDP-02** Test durumu ile prosedür arasındaki iz iki yönlü ve eksiksiz mi? Örneğin her
+      test durumu en az bir prosedürde uygulanıyor, her prosedür en az bir test durumunu
+      uyguluyor ve bir test durumunun hangi adımlarda uygulandığı prosedürden okunabiliyor.
+      *(A–C · §6.5.b)*
+- [ ] **TDP-03** Pakete düşen gereksinimlerden testle doğrulanmayacak olanlar adıyla listelenmiş
+      ve her birinin hangi analiz ya da gözden geçirmeyle karşılanacağı SVP'de (ya da SVR'de)
+      gerekçelendirilmiş mi? Örneğin doğrulama yöntemi özniteliği "Analiz" olan bir gereksinim,
+      listede karşılandığı analizin adıyla birlikte görünüyor. *(A–D · §6.2.b)*
+
+### Normal aralık
+
+- [ ] **TDP-04** Her sayısal girdi için geçerli eşdeğerlik sınıfları (equivalence classes)
+      belirlenmiş ve her sınıftan en az bir temsilci seçilmiş mi? *(A–D · §6.4.2.1.a)*
+- [ ] **TDP-05** Geçerli aralığın her sınır değeri (boundary value), kendisi ve hemen içindeki
+      değerle sınanıyor mu? Örneğin 0–350 knot için 0, 1, 349 ve 350; kayan noktalı girdide
+      "hemen içi" gereksinimdeki çözünürlükle belirlenmiş. *(A–D · §6.4.2.1.a)*
+- [ ] **TDP-06** Filtre, integratör ve oran sınırlayıcı gibi zamana bağlı işlevler tek çağrıyla
+      değil, davranışın oturduğunu gösterecek sayıda çevrimle sınanıyor mu? Örneğin bir
+      filtrenin zaman sabiti çıkışın yerleşme eğrisi üzerinden gözleniyor. *(A–D · §6.4.2.1.b)*
+- [ ] **TDP-07** Gereksinimde tanımlı her geçerli durum geçişi en az bir test durumunda
+      tetikleniyor ve geçişten sonraki durum bir çıktı üzerinden doğrulanıyor mu?
+      *(A–D · §6.4.2.1.c)*
+- [ ] **TDP-08** Mantık denklemiyle yazılmış gereksinimlerde test durumları her değişkenin
+      etkisini ve her işleci ayırt ediyor mu? Örneğin VE yerine VEYA yazılmış bir gerçekleştirme
+      en az bir test durumunda farklı sonuç veriyor. *(A–D · §6.4.2.1.d)*
+- [ ] **TDP-09** Davranışı birden çok girdinin birlikte aldığı değerlere bağlı gereksinimlerde,
+      gereksinimin ayrı sonuç tanımladığı her geçerli girdi birleşimi en az bir test durumunda
+      deneniyor mu? Örneğin hıza ve tekerleklerde ağırlık (weight-on-wheels) bilgisine bağlı
+      bir kip seçiminde yerde düşük hız, yerde yüksek hız ve havada durumlarının her biri için
+      test durumu var. *(A–D · §6.4.2.1)*
+
+### Gürbüzlük
+
+- [ ] **TDP-10** Her sayısal girdi için geçersiz eşdeğerlik sınıflarından değer seçilmiş mi?
+      Örneğin aralığın hemen altı ve üstü, türün uç değerleri, kayan noktalı girdide NaN ve
+      sonsuz. *(A–D · §6.4.2.2.a)*
+- [ ] **TDP-11** Yazılımın açılışı, beklediği ön koşullardan biri sağlanmadığında da
+      deneniyor mu? Örneğin kalıcı bellekte bozuk veri, uçuşta yeniden başlatma, ilk çevrimde
+      gelmeyen sensör verisi. *(A–D · §6.4.2.2.b)*
+- [ ] **TDP-12** Dış sistemden gelen her veri akışının bozulma biçimleri listelenmiş ve her biri
+      bir test durumuyla sınanıyor mu? Örneğin eksik ya da gecikmiş mesaj, bayat veri, eşlik
+      hatası, işaret/durum matrisi (sign/status matrix, SSM) geçersiz olan ARINC 429 kelimesi.
+      *(A–D · §6.4.2.2.c)*
+- [ ] **TDP-13** Döngü sayısı çalışma anında hesaplanan döngülerde, hesaplanan değeri sıfıra,
+      negatife ya da dizi boyunu aşan bir değere zorlayan test durumu var mı?
+      *(A–D · §6.4.2.2.d)*
+- [ ] **TDP-14** Çerçeve süresi (frame time) aşıldığında devreye giren koruma bir test durumunda
+      bilerek tetikleniyor ve gereksinimdeki tepki gözleniyor mu? Örneğin bekçi köpeği
+      zamanlayıcısı (watchdog timer) ya da çerçeve taşma sayacı. *(A–D · §6.4.2.2.e)*
+- [ ] **TDP-15** Zamana bağlı işlevlerin aritmetik taşma koruması (doyum, sınırlama, sayaç
+      sarması), girdi uzun süre uç değerde tutularak sınanıyor mu? *(A–D · §6.4.2.2.f)*
+- [ ] **TDP-16** Gereksinimin yasakladığı her durum geçişi için o geçişi zorlayan bir uyarım
+      verilip yazılımın gereksinimdeki tepkiyi verdiği gösteriliyor mu? Örneğin havadayken
+      bakım kipine geçme komutu gönderiliyor; kipin değişmediği ve gereksinimdeki uyarının
+      üretildiği gözleniyor. *(A–D · §6.4.2.2.g)*
+- [ ] **TDP-17** Her gürbüzlük test durumunun beklenen tepkisi bir gereksinimde yazılı mı;
+      yazılı olmayan tepki, test yazarınca seçilmek yerine gereksinim eksikliği olarak
+      bildirilmiş mi? *(A–D · §6.4.2)*
+
+### Beklenen sonuç ve geçti/kaldı ölçütü
+
+- [ ] **TDP-18** Her test durumunun beklenen sonucu gereksinimden türetilmiş ve türetme yolu
+      görülebiliyor mu? Örneğin hesap test durumunda ya da gözden geçirilmiş bir referans
+      modelde duruyor; değer kodun ya da önceki bir koşunun çıktısından kopyalanmamış.
+      *(A–D · §11.13.b)*
+- [ ] **TDP-19** Geçti/kaldı ölçütü nesnel mi? Örneğin sayısal çıktıda tolerans ve kaynağı,
+      zamanlı çıktıda gözlem penceresi ("3. çevrimde" ya da "50 ms içinde") yazılı; "değer
+      makul" gibi yoruma açık ölçüt yok. *(A–D · §11.13.b)*
+- [ ] **TDP-20** Test durumundaki girdiler ve beklenen değerler prosedüre doğru aktarılmış mı?
+      Örneğin mühendislik biriminden ham veriye (knot'tan LSB'ye) dönüşümde ölçek, işaret ve
+      yuvarlama doğru. *(A–C · §6.4.5.b)*
+
+### Prosedürün tekrarlanabilirliği
+
+- [ ] **TDP-21** Prosedür ön koşulları, kurulum adımlarını, uyarım sırasını ve sonucun nasıl
+      değerlendirileceğini, yazarına danışmadan başka bir mühendisin koşabileceği açıklıkta
+      veriyor mu? Örneğin prosedür başlangıç durumunu kendisi kuruyor; sonucu koşu sırasına
+      ya da önceki testin bıraktığı duruma bağlı değil. *(A–C · §11.13.c)*
+- [ ] **TDP-22** Prosedürün kullandığı betikler, girdi dosyaları ve düzenek yapılandırması
+      kimlik ve sürümüyle anılıyor ve konfigürasyon kontrolünde mi? *(A–D · A-8 #1)*
+
+### Test seviyesi ve ortam
+
+- [ ] **TDP-23** Her test durumunun test seviyesi (donanım/yazılım entegrasyon, yazılım
+      entegrasyon ya da düşük seviyeli test) belirtilmiş mi ve her gereksinim, hatasının ortaya
+      çıkabileceği seviyede sınanıyor mu? Örneğin kesme ve donanım arayüzü gereksinimleri
+      donanım/yazılım entegrasyon testinde; bileşenler arası veri akışı, ölçü birimi uyumu ve
+      uçtan uca sayısal çözünürlük yazılım entegrasyon testinde sınanıyor, yalnızca düşük
+      seviyeli teste bırakılmamış. *(A–D · §6.4.3)*
+- [ ] **TDP-24** Donanım arızasına, besleme gerilimindeki geçici değişimlere (power transient) ve
+      yerleşik teste (built-in test, BIT) ilişkin her gereksinim için arızayı düzenekte gerçekten
+      oluşturan ya da hata enjeksiyonuyla (fault injection) üreten bir test durumu var mı?
+      Örneğin "sensör kopukluğunu BIT iki çevrimde bildirir" gereksinimi, yazılımdaki arıza
+      bayrağı elle kurularak değil, sensör hattı ayrılarak sınanıyor. *(A–D · §6.4.3.a)*
+- [ ] **TDP-25** Yürütme süresi, iş çıkarma (throughput) ve yığın payı gibi zamanlama ve kaynak
+      kullanımı gereksinimleri hedefte ölçüm yapan test durumlarıyla sınanıyor mu ve ölçüm
+      yöntemi prosedürde yazılı mı? Örneğin zaman damgasının kaynağı ve çözünürlüğü ile
+      ölçümün yapıldığı en kötü yük senaryosu belirtilmiş. *(A–D · §6.4.3.a)*
+- [ ] **TDP-26** Hedef bilgisayarla uyumu göstermek için seçilen testlerin prosedürleri,
+      tümleşik hedef donanımda koşacak biçimde mi yazılmış? *(A–D · §6.4.1.a)*
+- [ ] **TDP-27** Test emülatörde ya da ana bilgisayar simülasyonunda koşacaksa, ortamın hedeften
+      farkları ve bu farkların hata yakalamaya etkisi SVP'deki fark analizinde ele alınmış ve
+      emülatörün ya da simülatörün kalifikasyon gereği değerlendirilmiş mi?
+      *(A–D · §4.4.3)*
+- [ ] **TDP-28** Sınanan kod uçacak koddan farklıysa farklar prosedürde belirtilmiş ve
+      gerekçelendirilmiş mi? Örneğin donatılmış (instrumented) derleme, yer tutucu kod (stub)
+      ya da test kancası. *(A–D · §6.2.a)*
+
+### Kredi koşusuna hazırlık
+
+- [ ] **TDP-29** Düşük seviyeli gereksinimlere dayanan test durumlarını yazan kişi, aynı
+      gereksinimlerden kaynak kodu yazan kişiden farklı mı ve bu, kayıtta adlarla
+      görülebiliyor mu? *(A–B · §6.2.e)*
+- [ ] **TDP-30** Prosedür kuru koşuda (dry run), SVP'nin ona atadığı düzenekte uçtan uca
+      koşmuş mu; kuru koşuda bulunan prosedür hataları düzeltilmiş, kod kaynaklı
+      başarısızlıklar problem raporuna bağlanmış mı? *(A–C · iyi uygulama)*
+
+## Araçla denetlenebilecek maddeler
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| TDP-01 | Gereksinim yönetim ya da iz aracı sorgusu: gereksinim bağlantısı olmayan test durumu, silinmiş gereksinime giden bağlantı | Bağlantının doğru gereksinime gittiği ve testin o gereksinimin hangi koşulunu sınadığı |
+| TDP-02 | Test yönetim aracı raporu: prosedüre bağlanmamış test durumu, hiçbir test durumuna bağlanmamış prosedür | Prosedürün test durumunu doğru uyguladığı (TDP-20) |
+| TDP-05, TDP-10 | Gereksinim veritabanındaki aralık özniteliklerinden sınır ve geçersiz değer listesi üreten betik | Aralığın ve çözünürlüğün gereksinimde doğru yazıldığı; türün uç değerleri |
+| TDP-08 | [MC/DC Test Seti Üretici](/araclar/dogrulama/mcdc-test-seti) gibi bağımsızlık çifti hesaplayan araç | Araca girilen ifadenin gereksinimdeki denklemle aynı olduğu |
+| TDP-19 | Test çerçevesinin beklenen ile gözlenen değeri karşılaştıran modülü | Toleransın gereksinimden geldiği; karşılaştırıcının kendisinin doğrulanmış olduğu |
+| TDP-22 | Sürüm kontrol sistemi ve sağlama toplamı (checksum) listesi | Prosedür metninin, betiğin gerçekte yaptığını anlattığı |
+
+Bir maddeyi aracın çıktısına güvenerek gözden geçirmeden çıkarıyorsanız araç bir doğrulama
+adımının yerine geçmiş olur; çıktısı ayrıca doğrulanmıyorsa kalifikasyon gerekip gerekmediği
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+bölümüne göre değerlendirilir. Sonuç karşılaştıran betikler bu açıdan tipik adaydır.
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| Beklenen sonuç kodun ya da önceki koşunun çıktısından kopyalanmış | Test, kod yazıldıktan sonra koda bakılarak yazılmış | TDP-18 |
+| Gürbüzlük yalnızca aralık dışı değerden ibaret; başlatma, bozuk veri ve izinsiz geçiş sınanmamış | Gürbüzlük kategorileri SVP'de listelenmemiş; testler "mutlu yol"dan başlanarak yazılmış | TDP-11, TDP-12, TDP-16 |
+| Gürbüzlük testinin beklenen tepkisini test yazarı seçmiş | Gereksinim anormal girdide ne olacağını söylemiyor | TDP-17 |
+| Kayan noktalı girdide sınırın "hemen içi" gelişigüzel bir değerle sınanmış | Çözünürlük gereksinimde ya da SVP'de tanımlı değil | TDP-05 |
+| Prosedürdeki beklenen değer test durumundakinden farklı | Elle aktarım; mühendislik birimi ile ham verinin karışması | TDP-20 |
+| Geçti/kaldı kararı "çıktıyı kontrol edin" diye bırakılmış | Otomatik karşılaştırma kurulmamış, tolerans yazılmamış | TDP-19 |
+| Prosedür yalnızca yazarının düzeneğinde çalışıyor | Betik ve girdi dosyaları konfigürasyon kontrolü dışında; düzenek yapılandırması yazılmamış | TDP-21, TDP-22 |
+| Zamana bağlı işlev tek çağrıyla sınanmış | Birim testi alışkanlığının filtre ve integratörlere taşınması | TDP-06 |
+
+### İyi yazılmış bulgu
+
+İyi bulgu yeri, madde numarasını, gözlemi ve beklenen düzeltmeyi birlikte söyler; yazarın
+toplantıya dönmeden işe başlayabilmesi için yeterlidir.
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "Gürbüzlük testleri eksik." | "TDP-12: TD-ADC-031 … 035, SRD-210'un (statik basınç girişi) yalnızca aralık dışı değerlerini sınıyor; SSM'si 'arıza uyarısı' olan ve eşliği hatalı kelime için test durumu yok. SRD-210'un bu iki durum için tanımladığı 'son geçerli değeri üç çevrim tut' davranışı sınanmalı." |
+| "Beklenen sonuç yanlış." | "TDP-20: TP-NAV-12 adım 7'de beklenen değer 3200 LSB; TD-NAV-12'deki 100 knot, gereksinimdeki 0,0625 knot/LSB ölçeğiyle 1600 LSB olmalı. Prosedürde 0,03125 knot/LSB kullanılmış." |
+| "Prosedür anlaşılmıyor." | "TDP-21: TP-FCS-04 adım 3 'düzeneği uygun kipe alın' diyor; kip adı ve yapılandırma dosyası verilmemiş. Adım, SECI'deki düzenek kimliğini ve yapılandırma dosyasının sürümünü anmalı." |
+
+## Seviyeye göre uyarlama
+
+Maddelerin seviye etiketi bağlı oldukları Ek A hedefinden gelir. Test prosedürlerinin
+doğruluğu (A-7 #1) Seviye D'de aranmaz; ama D'de de yüksek seviyeli gereksinimlere dayanan
+testler yazılır, hedefte koşulur ve bu gereksinimlerin test kapsamı gösterilir (A-6 #1, #2, #5;
+A-7 #3). Bu yüzden D'de liste kısalır ama kalkmaz.
+
+| Seviye | Uygulanan maddeler | Bağımsızlık |
+|---|---|---|
+| A | 30 maddenin tümü | Prosedürleri gözden geçiren, test durumlarının ve prosedürlerin yazarı olmaz (A-7 #1). Düşük seviyeli test durumlarını yazan, o gereksinimlerden kodu yazan olmaz (A-6 #3, #4; TDP-29) |
+| B | 30 maddenin tümü | A-7 #1'de bağımsızlık aranmaz; TDP-29 A-6 #3 nedeniyle sürer |
+| C | TDP-29 dışındaki 29 madde | Aranmaz; yazar dışı bir gözden geçiren yine iyi uygulamadır |
+| D | A–D etiketli 25 madde, yalnızca yüksek seviyeli gereksinim testlerine | Aranmaz |
+
+Seviye D'de TDP-13 ve TDP-15 yalnızca bir yüksek seviyeli gereksinim hesaplanan döngü sayısını
+ya da zamana bağlı bir işlevin taşma korumasını tanımlıyorsa uygulanır; yoksa gerekçesiyle
+"Uygulanmaz" yazılır. D'de düşen TDP-20 hedef olarak aranmasa da prosedürdeki bir aktarım
+hatası A-6 kanıtını doğrudan bozar; maliyeti düşük olduğundan sürdürülmesi iyi uygulamadır.
+SVCP Seviye A ve B'de CC1, C ve D'de CC2 altında tutulur; TDP-22'deki konfigürasyon kontrolü
+bu kategoriye göre uygulanır.
+
+## İlgili bölümler
+
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md):
+  [test stratejileri](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#test-stratejileri),
+  [test seviyeleri](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#test-seviyeleri),
+  [test planlama ve test geliştirme](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#test-planlama-ve-test-geliştirme),
+  [kontrol listeleri ve kayıt](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kontrol-listeleri-ve-kayıt)
+- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md):
+  gürbüzlük davranışının gereksinimde tanımlanması
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md): kredi amaçlı
+  doğrulamaya giriş (G4)
+- Şablonlar: [SVP](../05-sablonlar/03-svp.md),
+  [gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md) (doğrulama yöntemi
+  özniteliği)
+- Otorite denetimi: [SW SOI-3](soi-3.md)
+- Komşu listeler: [yüksek seviyeli gereksinimler](02-yuksek-seviyeli-gereksinimler.mdx),
+  [düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx),
+  [test sonuçları](08-test-sonuclari.mdx), [kapsam analizi](09-kapsam-analizleri.mdx),
+  [problem raporu ve değişiklik](11-problem-raporu-ve-degisiklik.mdx)
+- [Genel bakış](index.md)

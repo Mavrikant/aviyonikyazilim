@@ -1,7 +1,7 @@
 ---
 title: "SW SOI-1"
 description: "SOI-1 planlama denetimi kontrol listesi: giriş kriterleri, planlarda otoritenin baktığı noktalar, veri paketi ve sık görülen bulgular."
-sidebar_position: 2
+sidebar_position: 14
 ---
 
 SOI-1, sertifikasyon otoritesinin projeye ilk resmî katılımıdır: yazılım planları ve
@@ -12,7 +12,7 @@ kontrol listesi olarak toplar.
 
 Katılım aşaması (Stage of Involvement, SOI) denetimlerinin genel mantığı, dört
 aşamanın birbirine bağlanışı ve denetim akışı
-[12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+[12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 bölümünde anlatılır. Buradaki maddeler bir otorite listesinin çevirisi değil, sahada
 işe yarayan hazırlık sorularıdır; denetimin kapsamı ve biçimi otoriteye, yazılım
 seviyesine ve projenin özelliklerine göre değişir.
@@ -85,14 +85,14 @@ güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değild
 ### Geliştirme, doğrulama ve destek planları
 
 - [ ] Yaşam döngüsü modeli ve her sürecin geçiş kriterleri (transition criteria)
-      ölçülebilir biçimde tanımlı mı? ([Ek A](../06-ekler/01-ek-a-ornek-gecis-kriterleri.md))
+      ölçülebilir biçimde tanımlı mı? ([Ek A](../01-ek-a-ornek-gecis-kriterleri.md))
 - [ ] SDP, kullanılan dili, derleyiciyi, bağlayıcıyı ve geliştirme ortamını
       sürümleriyle belirtiyor; gereksinim, tasarım ve kodlama kuralları için ilgili
       standartlara atıf yapıyor mu?
 - [ ] Yazılım doğrulama planı (Software Verification Plan, SVP), yazılım seviyesinin
       gerektirdiği bağımsızlığı (independence) kimin, hangi faaliyette sağlayacağını
       söylüyor mu? Bağımsızlık her hedefte değil, seviyeye göre belirli hedeflerde
-      aranır ([9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)).
+      aranır ([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)).
 - [ ] Gereksinim tabanlı test (requirements-based testing), gürbüzlük (robustness)
       testi, hedef donanımda test ve yapısal kapsam analizi (structural coverage
       analysis) yaklaşımı tanımlı mı?
@@ -105,7 +105,7 @@ güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değild
       category; CC1 ya da CC2) yönetileceğini, arşivleme ve geri getirme yöntemini ve
       yaşam döngüsü ortamının (derleyici, araçlar, test düzeneği) nasıl kontrol altında
       tutulacağını söylüyor mu?
-      ([10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md))
+      ([10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md))
 - [ ] Yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP), kalite
       güvencesinin bağımsızlığını, denetim sıklığını ve uygunsuzluk kayıtlarının nasıl
       kapatılacağını açıklıyor mu?
@@ -177,10 +177,12 @@ SOI-2'ye girilmez.
 
 ## İlgili bölümler
 
-- [5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
-- [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
-- [11. Yazılım Kalite Güvencesi](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
-- [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
+- [Plan ve Standart Şablonları](../05-sablonlar/index.md): beş planın ve üç standardın bölüm bölüm
+  şablonları
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
 - Sonraki aşama: [SW SOI-2](soi-2.md)

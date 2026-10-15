@@ -1,7 +1,7 @@
 ---
 title: "SW SOI-2"
 description: "SOI-2 geliştirme denetimi kontrol listesi: gereksinim, tasarım ve kodda izlenebilirlik, standart uyumu, gözden geçirme kayıtları ve sık görülen bulgular."
-sidebar_position: 3
+sidebar_position: 15
 ---
 
 SOI-2, otoritenin geliştirme verisine ilk kez yakından baktığı denetimdir: gereksinim,
@@ -11,7 +11,7 @@ SOI-2 öncesinde ekibin kendi verisini sınamak için kullanabileceği bir kontr
 listesidir.
 
 Katılım aşaması (Stage of Involvement, SOI) denetimlerinin genel mantığı
-[12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+[12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 bölümünde anlatılır. Aşağıdaki maddeler bir otorite listesinin çevirisi değil, sahada
 işe yarayan hazırlık sorularıdır; kapsam otoriteye ve yazılım seviyesine göre değişir.
 
@@ -48,7 +48,7 @@ nesne koduna (executable object code) kayar: düşük seviyeli gereksinimlerin v
 kodun ne geliştirilmesi ne de doğrulanması hedef olarak aranır; mimarinin geliştirilmesi
 beklenir, ama üzerindeki doğrulama hedeflerinden yalnızca bölümleme bütünlüğünün teyidi
 kalır. Projeniz için geçerli kapsamı
-[4. DO-178C ve Destekleyici Dokümanlara Genel Bakış](../03-do178c-ile-gelistirme/04-do178c-genel-bakis.md)
+[4. DO-178C ve Destekleyici Dokümanlara Genel Bakış](../../03-do178c-ile-gelistirme/04-do178c-genel-bakis.md)
 bölümündeki seviye–hedef özetine ve PSAC'a göre belirleyin.
 
 ### Gereksinimler
@@ -171,11 +171,11 @@ sorgulanması demektir.
 
 ## İlgili bölümler
 
-- [6. Yazılım Gereksinimleri](../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
-- [7. Yazılım Tasarımı](../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md)
-- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md)
-- [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
-- [11. Yazılım Kalite Güvencesi](../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
-- [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md)
+- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
 - Önceki aşama: [SW SOI-1](soi-1.md) · Sonraki aşama: [SW SOI-3](soi-3.md)

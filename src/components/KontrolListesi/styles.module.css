@@ -1,0 +1,18 @@
+.indir {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.aciklama {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.85rem;
+}
+
+/* Basılı kopyada ve kitap PDF'inde düğmenin işlevi yoktur */
+@media print {
+  .indir {
+    display: none;
+  }
+}

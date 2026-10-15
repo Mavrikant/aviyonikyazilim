@@ -22,13 +22,18 @@ blog/                     Blog yazıları (YYYY-MM-DD-slug.md) + authors.yml + t
 kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
   index.md                Kitap giriş + içindekiler (slug: /, yani /kitap)
   01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .md dosyaları
-  kaynaklar/              Başvuru sayfaları (Kısaltmalar, SOI 1-4); sidebar'da en sonda
+  06-ekler/05-sablonlar/  Ek E: beş plan ve üç geliştirme standardı için şablon + yazım rehberi
+  06-ekler/06-kontrol-listeleri/  Ek F: gözden geçirme ve süreç denetimi listeleri (.mdx, CSV
+                          indirme) + SOI-1…4 denetim listeleri. Çok sayfalı eklerin index.md'si
+                          kategorinin giriş sayfasıdır; ana sayfa içindekilerinde tek satırdır
+  kaynaklar/              Başvuru sayfaları (Kısaltmalar); sidebar'da en sonda
 kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni için .mdx)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
 araclar/                  Tarayıcıda çalışan araçlar (routeBasePath: /araclar); giriş sayfası katalogdur
 src/components/AracKatalogu/  Araçlar giriş sayfasındaki katalog (araclarSidebar'dan üretilir)
+src/components/KontrolListesi/  Ek F'deki "CSV olarak indir" düğmesi (maddeleri sayfadan okur)
 src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/DME/TACAN/NDB, havalimanı, pist)
 src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
@@ -234,7 +239,13 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | entegre modüler aviyonik | integrated modular avionics (IMA) |
 | çok çekirdekli işlemci | multi-core processor |
 | kod üreteci | code generator |
-| kodlama standardı | software code standards |
+| gereksinim standardı | software requirements standards (SRStd) |
+| tasarım standardı | software design standards (SDStd) |
+| kodlama standardı | software code standards (SCStd) |
+| şablon | template |
+| kontrol listesi | checklist |
+| bulgu (gözden geçirme bulgusu) | finding |
+| çok sürümlü benzemez yazılım | multiple-version dissimilar software |
 | kaynak koddan nesne koduna izlenebilirlik analizi | source to object code traceability analysis |
 | çevirici dili / çevirici | assembly language / assembler |
 | çevirici listesi | assembly listing |
@@ -322,6 +333,35 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.
 - Placeholder bölümlerdeki `:::info Bu bölüm hazırlanıyor 🚧` kutusu, içerik yazıldığında
   kaldırılır.
+
+## Plan ve standart şablonları (Ek E) ve kontrol listeleri (Ek F)
+
+- `kitap/06-ekler/05-sablonlar/` (Ek E) PSAC, SDP, SVP, SCMP, SQAP ve üç geliştirme standardı için
+  önerilen içindekileri ve bölüm bölüm yazım rehberini verir. 5. bölüm "neden", SOI-1
+  "denetimde neye bakılır", bu sayfalar "nasıl yazılır" sorusunu cevaplar; birbirini tekrarlamaz.
+- Belge sayfaları aynı iskeleti izler: Bir bakışta → Önerilen içindekiler (`text` bloğu) →
+  Bölüm bölüm yazım rehberi (verilecek kararlar, zayıf/güçlü ifade) → Seviyeye göre farklar →
+  DO-178C uyum tablosu (+ teknoloji ekleri) → Diğer belgelerle tutarlılık → Sık hatalar →
+  Yayımlamadan önce → İlgili bölümler. Ortak ön bölümler, paketleme ve hangi konunun hangi
+  belgede tanımlandığı (tutarlılık matrisi) yalnızca `index.md`'dedir.
+- Şablonlar **doldurmalık metin değil karar listesidir**; hazır plan cümlesi yazılmaz.
+- Uyum tablosu DO-178C ve eklerine (DO-331/332/333) **yalnızca madde numarası** ve birkaç
+  kelimelik özgün etiketle atıf yapar; standardın madde listesi ya da cümlesi çevrilmez.
+  MISRA kural metni yazılmaz, yalnızca kural numarası verilir.
+- Seviye, kontrol kategorisi ve Ek A hedef numaraları `src/components/HedefGezgini/veri.ts`
+  ile aynı tutulur. Hedef Gezgini'ndeki plan ve standart çipleri bu sayfalara bağlanır
+  (`VERILER` içindeki `yol`); sayfa adresi değişirse orası da güncellenir.
+- `kitap/06-ekler/06-kontrol-listeleri/` (Ek F) akran gözden geçirmesi ve süreç denetimi
+  listeleridir (gözden geçirilen iş ürününün içeriğine bakar); yazarın öz denetimi şablonlardaki
+  "Yayımlamadan önce", otorite denetimine hazırlık SOI-1…4 sayfalarıdır. Sayfalar birbirini
+  tekrarlamaz.
+- Liste maddeleri CSV sözleşmesine uyar: `- [ ] **ÖNEK-NN** Soru? *(SEVİYE · DAYANAK)*`
+  (önek 3 büyük ASCII harf, sayfa boyunca 01'den sıralı; devam satırları 6 boşluk; "Evet"
+  istenen durumdur). `<ListeIndir>` bileşeni bu maddeleri sayfanın HTML'inden okur; biçim
+  bozulursa madde CSV'ye girmez. Numarasız onay kutuları (giriş koşulları) dışa aktarılmaz.
+  Seviye etiketleri `veri.ts`'teki hedef geçerliliğiyle tutarlıdır. Maddeler örnek standart
+  kural numaralarına (GS-, TS-, KS-) değil konuya atıf yapar.
+- Liste sayfaları `.mdx`'tir: düz metinde `<`, `{`, `}` kullanılmaz (satır içi koda alınır).
 
 ## Kitap PDF'i
 
@@ -513,7 +553,8 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
 - İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
   React bileşeni gerekmedikçe `.mdx` kullanılmaz (şu an yalnızca `<Eposta>` kullanan
-  `kutuphane/index.mdx` ve `araclar/index.mdx`, araç sayfaları ve `src/pages/iletisim.mdx`).
+  `kutuphane/index.mdx` ve `araclar/index.mdx`, araç sayfaları, Ek F'deki kontrol listeleri ve
+  `src/pages/iletisim.mdx`).
 - `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
   `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
   metin olarak basılır).

@@ -140,7 +140,7 @@ kodudur. Derleyici değerlendirilirken şu ölçütlere bakılır:
   yazılır. Bu işi kolaylaştıran ya da zorlaştıran, seçilen derleyici ve seçenekleridir
   Analizin adımları ve bir örnek 9. bölümde, "Kaynak koda izlenemeyen nesne kodu"
   başlığı altındadır (bkz.
-  [9. Yazılım Doğrulama](./09-yazilim-dogrulama.md) ve [SW SOI-3](../kaynaklar/soi-3.md)).
+  [9. Yazılım Doğrulama](./09-yazilim-dogrulama.md) ve [SW SOI-3](../06-ekler/06-kontrol-listeleri/soi-3.md)).
 
 Derleyici çoğu projede kalifiye edilmez: ürettiği nesne kodu gereksinim tabanlı
 testlerle hedef ortamda zaten doğrulandığı için araç kalifikasyonu (tool
@@ -578,7 +578,7 @@ sicaklik_t ortalama_sicaklik(int32_t toplam, uint16_t ornek_sayisi,
 Düzeltilmiş sürümde gereksinimin iki cümlesi kodun iki dalında bulunabilir, iz etiketi
 ikisini birbirine bağlar ve gürbüzlük (robustness) testi sıfır örnek için beklenen
 sonucu tahmin etmek yerine gereksinimden okur. Bulgular, kaynakları ve kapanışları
-gözden geçirme kaydında kalır; geliştirme denetiminde ([SW SOI-2](../kaynaklar/soi-2.md))
+gözden geçirme kaydında kalır; geliştirme denetiminde ([SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md))
 örnekleme yapan denetçi tam da bu zinciri izler: gereksinim, kod, kayıt, kapanış.
 
 ## Gerçekleştirmede tipik riskler

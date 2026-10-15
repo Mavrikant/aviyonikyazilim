@@ -189,7 +189,7 @@ flowchart TD
     K2 --> K3["Kısım III — DO-178C ile Geliştirme<br/>Planlama'dan sertifikasyona yaşam döngüsü<br/>(Bölüm 4–12)"]
     K3 --> K4["Kısım IV — Araç Kalifikasyonu ve DO-178C Ekleri<br/>DO-330 ile DO-331/332/333<br/>(Bölüm 13–16)"]
     K4 --> K5["Kısım V — Özel Konular<br/>RTOS, bölümleme, yeniden kullanım vb.<br/>(Bölüm 17–26)"]
-    K5 --> K6["Ekler ve Kaynaklar<br/>Ek A–D, kısaltmalar, SOI kontrol listeleri"]
+    K5 --> K6["Ekler ve Kaynaklar<br/>Ek A–F: geçiş kriterleri, şablonlar,<br/>kontrol listeleri; kısaltmalar"]
 ```
 
 - **Kısım II**, yazılımın içine yerleştiği çerçeveyi kurar:
@@ -219,9 +219,11 @@ flowchart TD
   kullanım, tersine mühendislik ve dış kaynak kullanımı.
 - **Ekler ve Kaynaklar**, bölümlerde anlatılanı uygulamaya taşıyan başvuru
   sayfalarıdır: örnek geçiş kriterleri, gerçek zamanlı işletim sistemlerindeki endişe
-  alanları, işletim sistemi seçimi ve servis geçmişi için soru listeleri,
-  [Kısaltmalar](../kaynaklar/kisaltmalar.md) ve otoritenin katılım aşaması
-  (Stage of Involvement, SOI) denetimlerine hazırlık için dört kontrol listesi.
+  alanları, işletim sistemi seçimi ve servis geçmişi için soru listeleri, beş plan ve üç
+  geliştirme standardı için [şablonlar](../06-ekler/05-sablonlar/index.md), akran gözden
+  geçirmesi, süreç denetimi ve otoritenin katılım aşaması (Stage of Involvement, SOI)
+  denetimleri için [kontrol listeleri](../06-ekler/06-kontrol-listeleri/index.md) ve
+  [Kısaltmalar](../kaynaklar/kisaltmalar.md).
 
 İlk kez okuyan için en verimli sıra kısımların sırasıdır: önce bağlam, sonra süreçler,
 en son özel konular. Belirli bir konuya ihtiyacı olan okuyucu, Kısım II'deki bağlamı
