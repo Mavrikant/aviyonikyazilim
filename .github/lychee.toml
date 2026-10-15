@@ -18,6 +18,10 @@ user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Ge
 exclude = [
   # Sitenin kendi adresleri: iç bağlantılar build sırasında denetlenir.
   '^https?://(www\.)?aviyonikyazilim\.com',
+  # Yer tutuculu adres şablonları (Leaflet karo adresleri: https://tile…/{z}/{x}/{y}.png).
+  # Gerçek bir sayfa değildir; lychee süslü parantezi %7B…%7D olarak kodlayıp ister ve
+  # sunucu 400 döner. Hem ham hem kodlanmış yazım yakalanır.
+  '(?i)(\{|%7B)[a-z]+(\}|%7D)',
 ]
 
 # Kök-göreli bağlantılar (/kitap/…, /img/…) site adresine çevrilir ve yukarıdaki
