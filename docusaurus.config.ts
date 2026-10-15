@@ -206,7 +206,9 @@ const config: Config = {
           {from: ['/2023/08/afdx-nedir', '/2023/08/afdx-nedir.html'], to: '/blog/afdx-nedir'},
           {from: ['/2023/08/havaclgn-kalbindeki-iletisim-arinc-429', '/2023/08/havaclgn-kalbindeki-iletisim-arinc-429.html'], to: '/blog/arinc-429'},
           {from: ['/2023/08/aviyonik-nedir', '/2023/08/aviyonik-nedir.html'], to: '/blog/aviyonik-nedir'},
-          {from: ['/p/ksaltmalar', '/p/ksaltmalar.html'], to: '/kitap/kaynaklar/kisaltmalar'},
+          {from: ['/p/ksaltmalar', '/p/ksaltmalar.html'], to: '/kitap/kisaltmalar'},
+          // Kısaltmalar "Kaynaklar" kategorisinden çıkıp kitabın sonunda tek başına duran sayfa oldu.
+          {from: ['/kitap/kaynaklar/kisaltmalar', '/kitap/category/kaynaklar'], to: '/kitap/kisaltmalar'},
           {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/ekler/kontrol-listeleri/soi-1'},
           {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/ekler/kontrol-listeleri/soi-2'},
           {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/ekler/kontrol-listeleri/soi-3'},
@@ -331,7 +333,7 @@ const config: Config = {
           position: 'left',
           label: 'Araçlar',
         },
-        {to: '/kitap/kaynaklar/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
+        {to: '/kitap/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
         {to: '/iletisim', label: 'İletişim', position: 'right'},
         {
           href: 'https://github.com/Mavrikant/aviyonikyazilim',
@@ -364,7 +366,7 @@ const config: Config = {
         {
           title: 'Başvuru',
           items: [
-            {label: 'Kısaltmalar', to: '/kitap/kaynaklar/kisaltmalar'},
+            {label: 'Kısaltmalar', to: '/kitap/kisaltmalar'},
             {label: 'Plan ve standart şablonları', to: '/kitap/ekler/sablonlar'},
             {label: 'Kontrol listeleri', to: '/kitap/ekler/kontrol-listeleri'},
             {label: 'Giriş bölümü', to: '/kitap/giris/giris-ve-genel-bakis'},

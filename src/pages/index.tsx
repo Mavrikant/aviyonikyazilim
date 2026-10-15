@@ -332,7 +332,7 @@ export default function Home(): ReactNode {
               <TocColumn parts={right} />
             </nav>
             <p className={styles.references}>
-              <span className={styles.refLabel}>Kaynaklar</span>
+              <span className={styles.refLabel}>Başvuru</span>
               {book.references.map((ref) => (
                 <Link key={ref.permalink} to={ref.permalink}>
                   {ref.title}

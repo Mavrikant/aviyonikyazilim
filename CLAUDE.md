@@ -26,7 +26,9 @@ kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
   06-ekler/06-kontrol-listeleri/  Ek F: gözden geçirme ve süreç denetimi listeleri (CSV
                           indirme) + SOI-1…4 denetim listeleri. Çok sayfalı eklerin index.mdx'i
                           kategorinin giriş sayfasıdır; ana sayfa içindekilerinde tek satırdır
-  kaynaklar/              Başvuru sayfaları (Kısaltmalar); sidebar'da en sonda
+  kisaltmalar.mdx         Kısaltmalar sözlüğü: kategorisiz, kenar çubuğunda eklerden sonra
+                          (sidebar_position: 99). Kitabın sonuna eklenen kategorisiz sayfaları
+                          ana sayfa "Başvuru" satırında, /kitap içindekileri eklerden sonra gösterir
 kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.mdx sayfası (künye: <Kunye>)

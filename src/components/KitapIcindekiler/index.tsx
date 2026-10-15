@@ -1,5 +1,6 @@
 import type {ReactNode} from 'react';
 import Link from '@docusaurus/Link';
+import clsx from 'clsx';
 
 import useHomepageData from '@site/src/components/AnaSayfa/useHomepageData';
 import styles from './styles.module.css';
@@ -39,22 +40,19 @@ export default function KitapIcindekiler(): ReactNode {
           </ol>
         </section>
       ))}
+      {/* Kitabın sonunda kategorisiz duran sayfalar (Kısaltmalar): kenar çubuğundaki gibi
+          bir kısım başlığı altında değil, ekleri izleyen ayrı satırlar olarak. */}
       {book.references.length > 0 && (
-        <section className={styles.kisim}>
-          <h3 className={styles.kisimBaslik}>
-            <span>Kaynaklar</span>
-          </h3>
-          <ul className={styles.liste}>
-            {book.references.map((ref) => (
-              <li key={ref.permalink}>
-                <Link className={styles.satir} to={ref.permalink}>
-                  <span className={styles.no} aria-hidden="true">·</span>
-                  <span className={styles.ad}>{ref.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <ul className={clsx(styles.liste, styles.son)}>
+          {book.references.map((ref) => (
+            <li key={ref.permalink}>
+              <Link className={styles.satir} to={ref.permalink}>
+                <span className={styles.no} aria-hidden="true" />
+                <span className={styles.ad}>{ref.title}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
