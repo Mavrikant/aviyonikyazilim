@@ -227,7 +227,7 @@ export default function Home(): ReactNode {
                 </li>
                 <li>
                   <Link to="/araclar">
-                    <b>{tools.length}</b> simülatör
+                    <b>{tools.length}</b> araç
                   </Link>
                 </li>
               </ul>
@@ -342,7 +342,7 @@ export default function Home(): ReactNode {
             </p>
           </section>
 
-          {/* ---------- Blog | Kütüphane + Araçlar ---------- */}
+          {/* ---------- Blog | Kütüphane ---------- */}
           <div className={styles.lower}>
             <section className={styles.section}>
               <div className={styles.sectionHead}>
@@ -372,69 +372,73 @@ export default function Home(): ReactNode {
               </ol>
             </section>
 
-            <div>
-              <section className={styles.section}>
-                <div className={styles.sectionHead}>
-                  <Heading as="h2" id="kutuphane" className={styles.sectionTitle}>
-                    Aviyonik yazılım kütüphanesi
-                  </Heading>
-                  <Link className={styles.headLink} to="/kutuphane">
-                    Tüm kitaplar <Arrow />
-                  </Link>
-                </div>
-                <p className={styles.sideText}>
-                  Alanda okumaya değer kitaplar ve standart aileleri; künye ve özgün tanıtımlarıyla.
-                </p>
-                <ul className={styles.covers}>
-                  {library.covers.map((cover) => (
-                    <li key={cover.permalink}>
-                      <Link to={cover.permalink} title={cover.title}>
-                        <img
-                          src={withBaseUrl(cover.image)}
-                          alt={cover.title}
-                          width={64}
-                          height={96}
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <ul className={styles.shelves}>
-                  {library.shelves.map((shelf) => (
-                    <li key={shelf.permalink}>
-                      <Link to={shelf.permalink}>{shelf.title}</Link>
-                      <span>{shelf.count}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-
-              <section className={styles.section}>
-                <div className={styles.sectionHead}>
-                  <Heading as="h2" id="araclar" className={styles.sectionTitle}>
-                    Araçlar
-                  </Heading>
-                  <Link className={styles.headLink} to="/araclar">
-                    Tüm araçlar <Arrow />
-                  </Link>
-                </div>
-                <figure className={styles.vorFigure}>
-                  <VorSemasi />
-                  <figcaption>
-                    VOR istasyonu yakınından düz rotada geçiş: yön açısı (bearing), en yakın
-                    noktada (d) en hızlı değişir.
-                  </figcaption>
-                </figure>
-                {tools.map((tool) => (
-                  <p className={styles.tool} key={tool.permalink}>
-                    <Link to={tool.permalink}>{tool.title}</Link> — {tool.description}
-                  </p>
+            <section className={styles.section}>
+              <div className={styles.sectionHead}>
+                <Heading as="h2" id="kutuphane" className={styles.sectionTitle}>
+                  Aviyonik yazılım kütüphanesi
+                </Heading>
+                <Link className={styles.headLink} to="/kutuphane">
+                  Tüm kitaplar <Arrow />
+                </Link>
+              </div>
+              <p className={styles.sideText}>
+                Alanda okumaya değer kitaplar ve standart aileleri; künye ve özgün tanıtımlarıyla.
+              </p>
+              <ul className={styles.covers}>
+                {library.covers.map((cover) => (
+                  <li key={cover.permalink}>
+                    <Link to={cover.permalink} title={cover.title}>
+                      <img
+                        src={withBaseUrl(cover.image)}
+                        alt={cover.title}
+                        width={64}
+                        height={96}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </Link>
+                  </li>
                 ))}
-              </section>
-            </div>
+              </ul>
+              <ul className={styles.shelves}>
+                {library.shelves.map((shelf) => (
+                  <li key={shelf.permalink}>
+                    <Link to={shelf.permalink}>{shelf.title}</Link>
+                    <span>{shelf.count}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           </div>
+
+          {/* ---------- Araçlar: tam genişlikte, şema solda ---------- */}
+          <section className={clsx(styles.section, styles.toolsSection)}>
+            <div className={styles.sectionHead}>
+              <Heading as="h2" id="araclar" className={styles.sectionTitle}>
+                Araçlar
+              </Heading>
+              <Link className={styles.headLink} to="/araclar">
+                Tüm araçlar <Arrow />
+              </Link>
+            </div>
+            <div className={styles.toolsBody}>
+              <figure className={styles.vorFigure}>
+                <VorSemasi />
+                <figcaption>
+                  VOR istasyonu yakınından düz rotada geçiş: yön açısı (bearing), en yakın
+                  noktada (d) en hızlı değişir.
+                </figcaption>
+              </figure>
+              <ul className={styles.toolGrid}>
+                {tools.map((tool) => (
+                  <li className={styles.tool} key={tool.permalink}>
+                    <Link to={tool.permalink}>{tool.title}</Link>
+                    <span className={styles.toolText}>{tool.description}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
         </div>
 
         {/* ---------- Kapanış: kısa katkı hatırlatması ---------- */}
