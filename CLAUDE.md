@@ -168,6 +168,28 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | tekerleklerde ağırlık | weight-on-wheels |
 | istem dışı etkinleşme | inadvertent enabling |
 | uçuşa elverişlilik güvenliği | airworthiness security |
+| uçuşa elverişlilik güvenlik süreci | airworthiness security process (AWSP; DO-326A) |
+| kasıtlı yetkisiz elektronik etkileşim | intentional unauthorized electronic interaction (IUEI) |
+| güvenlik sertifikasyon planı | Plan for Security Aspects of Certification (PSecAC) |
+| güvenlik kapsamı | security scope |
+| güvenlik sınırı / güvenlik ortamı | security perimeter / security environment |
+| varlık | asset |
+| tehdit durumu | threat condition (arıza durumunun güvenlikteki karşılığı) |
+| tehdit senaryosu / tehdit kaynağı | threat scenario / threat source |
+| tehdit seviyesi | level of threat |
+| saldırı vektörü / saldırı yolu | attack vector / attack path |
+| zafiyet / zafiyet dosyası | vulnerability / vulnerability dossier |
+| güvenlik önlemi | security measure |
+| güvenlik etkinliği / güvenlik etkinliği güvencesi | security effectiveness / security effectiveness assurance |
+| güvenlik güvence seviyesi | security assurance level (SAL; DO-356A) |
+| kabul edilebilirlik matrisi | airworthiness acceptability matrix |
+| kalan risk | residual risk |
+| çürütme | refutation (DO-356A) |
+| sızma testi / bulanık test | penetration testing / fuzzing |
+| güvenlik rehberi | security guidance (operatöre: ASOG; sistem entegratörüne: SSIG) |
+| uçuşa elverişliliğin sürdürülmesi talimatları | instructions for continued airworthiness (ICA) |
+| tasarım onayı sahibi | design approval holder (DAH) |
+| güven kökü | root of trust |
 | fabrika yüklemeli yazılım | factory-loadable software |
 | tam yetkili sayısal motor kontrolü | full authority digital engine control (FADEC) |
 | radyo seyrüsefer yardımcısı | radio navigation aid (navaid) |
@@ -301,7 +323,10 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti); requirement anlamında
 "ister" (gereksinim); IMA için "tümleşik modüler aviyonik" (entegre modüler aviyonik);
 redundancy anlamında "artıklık" ya da "redundans" (yedeklilik/yedekleme; CRC'nin yerleşik
-adı "döngüsel artıklık denetimi" bunun dışındadır).
+adı "döngüsel artıklık denetimi" bunun dışındadır). Uçuşa elverişlilik güvenliğinde
+security perimeter anlamında "güvenlik çevresi" (güvenlik sınırı; "ortam" ile karışır),
+vulnerability anlamında "güvenlik açığı" (zafiyet) ve SAL anlamında öneksiz "güvence
+seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 
 ## Yeni blog yazısı ekleme
 
