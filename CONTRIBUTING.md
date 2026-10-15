@@ -48,7 +48,7 @@ npm run build    # üretim derlemesi: uyarı ya da hata vermeden geçmeli
 ```
 
 Derleme yapılandırması katıdır: kırık bağlantı ya da çapa, `blog/tags.yml` içinde
-tanımlanmamış etiket ve `<!-- truncate -->` işareti olmayan blog yazısı derlemeyi durdurur.
+tanımlanmamış etiket ve `{/* truncate */}` işareti olmayan blog yazısı derlemeyi durdurur.
 
 ## İçerik kuralları (özet)
 
@@ -60,6 +60,10 @@ tanımlanmamış etiket ve `<!-- truncate -->` işareti olmayan blog yazısı de
   dilindedir.
 - Görseller depoya indirilir (`static/img/...`); harici görsel bağlantısı kullanılmaz.
 - Dosya ve klasör adları ASCII karakterlerden oluşur (`giris`, `dogrulama`).
+- Sayfalar **MDX** biçimindedir (`.mdx`): Markdown gibi yazılır, ama düz metindeki `<` ve `{`
+  karakterleri satır içi koda alınır (`` `a < b` ``) ya da `\<`, `\{` diye kaçırılır. Sayfanın
+  başındaki `import` satırları ve `<Kunye … />` gibi etiketler bileşendir; metni düzeltirken
+  dokunmanız gerekmez.
 
 Terminoloji sözlüğü, klasör yapısı ve ayrıntılı kurallar [CLAUDE.md](CLAUDE.md)
 dosyasındadır; depoda çalışan yapay zekâ oturumları da aynı rehberi izler.

@@ -329,8 +329,11 @@ body {
   break-inside: avoid;
 }
 
+/* MDX bileşenlerinin çizdiği şekiller (figure) ve araç kartları (aside) da bölünmez. */
 .bolum .theme-admonition,
 .bolum blockquote,
+.bolum figure,
+.bolum aside,
 .bolum .docusaurus-mermaid-container {
   break-inside: avoid;
 }

@@ -191,8 +191,9 @@ async function launchBrowser() {
 function extractInPage({key, title, grouped, isAbout, keys, siteUrl, webOnlyHeading}) {
   const root = document.querySelector('.theme-doc-markdown').cloneNode(true);
 
-  // Yalnızca ekranda anlamlı olan öğeler: başlık çapaları, kod bloğu düğmeleri.
-  root.querySelectorAll('.hash-link, button').forEach((el) => el.remove());
+  // Yalnızca ekranda anlamlı olan öğeler: başlık çapaları, kod bloğu düğmeleri ve MDX
+  // bileşenlerinin `data-pdf-disi` ile işaretlediği etkileşimli parçalar (arama kutusu gibi).
+  root.querySelectorAll('.hash-link, button, [data-pdf-disi]').forEach((el) => el.remove());
   // Docusaurus'un Details bileşeni kapalı içeriğe satır içi `display: none` yazar;
   // `open` tek başına içeriği göstermez.
   for (const details of root.querySelectorAll('details')) {
@@ -577,7 +578,7 @@ async function main() {
     }),
   );
   if (manifest.pages[0].group !== '') {
-    throw new Error('Manifestin ilk sayfası kitabın giriş sayfası (kitap/index.md) olmalı.');
+    throw new Error('Manifestin ilk sayfası kitabın giriş sayfası (kitap/index.mdx) olmalı.');
   }
   const printCss = await fs.readFile(PRINT_CSS, 'utf8');
   const revision = bookRevision();

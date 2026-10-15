@@ -1,0 +1,107 @@
+/* Kütüphane künyesi: kart yerine üstte kalın, satır aralarında ince çizgiler. */
+
+.kunye {
+  display: grid;
+  gap: 1.25rem;
+  margin: 1.25rem 0 2.25rem;
+  padding: 1rem 0 0.25rem;
+  border-top: 2px solid var(--ifm-color-emphasis-800);
+}
+
+@media (min-width: 576px) {
+  .kapakli {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.kapak {
+  max-width: 9.5rem;
+}
+
+.kapak p {
+  margin: 0;
+}
+
+.kapak img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 3px;
+}
+
+.liste {
+  margin: 0;
+}
+
+.satir {
+  display: grid;
+  grid-template-columns: 7.25rem minmax(0, 1fr);
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.satir:first-child {
+  padding-top: 0;
+}
+
+.satir dt {
+  padding-top: 0.2rem;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.satir dd {
+  margin: 0;
+}
+
+@media (max-width: 420px) {
+  .satir {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Seviye: yükselen üç çubuk */
+.olcek {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 0.9rem;
+  margin-right: 0.55rem;
+  vertical-align: -0.05rem;
+}
+
+.basamak {
+  width: 0.45rem;
+  border: 1px solid var(--ifm-color-emphasis-500);
+  border-radius: 1px;
+}
+
+.basamak:nth-child(1) {
+  height: 40%;
+}
+
+.basamak:nth-child(2) {
+  height: 70%;
+}
+
+.basamak:nth-child(3) {
+  height: 100%;
+}
+
+.secili {
+  border-color: var(--av-amber-600);
+  background: var(--av-amber-500);
+}
+
+.not {
+  margin-left: 0.4rem;
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.9em;
+}

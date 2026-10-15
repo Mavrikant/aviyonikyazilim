@@ -18,27 +18,34 @@ Türkçe bir aviyonik yazılım / test / sertifikasyon sitesi. İki ana içerik 
 ## Klasör yapısı
 
 ```
-blog/                     Blog yazıları (YYYY-MM-DD-slug.md) + authors.yml + tags.yml
+blog/                     Blog yazıları (YYYY-MM-DD-slug.mdx) + authors.yml + tags.yml
 kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
-  index.md                Kitap giriş + içindekiler (slug: /, yani /kitap)
-  01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .md dosyaları
+  index.mdx               Kitap giriş + içindekiler (slug: /, yani /kitap; içindekiler üretilir)
+  01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .mdx dosyaları
   06-ekler/05-sablonlar/  Ek E: beş plan ve üç geliştirme standardı için şablon + yazım rehberi
-  06-ekler/06-kontrol-listeleri/  Ek F: gözden geçirme ve süreç denetimi listeleri (.mdx, CSV
-                          indirme) + SOI-1…4 denetim listeleri. Çok sayfalı eklerin index.md'si
+  06-ekler/06-kontrol-listeleri/  Ek F: gözden geçirme ve süreç denetimi listeleri (CSV
+                          indirme) + SOI-1…4 denetim listeleri. Çok sayfalı eklerin index.mdx'i
                           kategorinin giriş sayfasıdır; ana sayfa içindekilerinde tek satırdır
   kaynaklar/              Başvuru sayfaları (Kısaltmalar); sidebar'da en sonda
 kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
-  index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni için .mdx)
-  01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.md sayfası
+  index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni)
+  01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.mdx sayfası (künye: <Kunye>)
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
 araclar/                  Tarayıcıda çalışan araçlar (routeBasePath: /araclar); giriş sayfası katalogdur
 src/components/AracKatalogu/  Araçlar giriş sayfasındaki katalog (araclarSidebar'dan üretilir)
-src/components/KontrolListesi/  Ek F'deki "CSV olarak indir" düğmesi (maddeleri sayfadan okur)
+src/components/KontrolListesi/  "CSV olarak indir" düğmeleri: Ek F maddeleri (ListeIndir) ve soru
+                          tabloları (TabloIndir, Ek C); veriyi sayfanın HTML'inden okur
+src/components/Kunye/     Kütüphane sayfalarının künyesi (kapak, yazar, yayınevi, seviye ölçeği)
+src/components/KitapIcindekiler/  /kitap sayfasındaki içindekiler (kitapSidebar'dan, okuma süreli)
+src/components/AracKarti/ Kitap ve blogdan araca giden kart (başlık/açıklama araç listesinden)
+src/components/SoiAsamalari/  SOI-1…4 sayfalarının başındaki aşama şeridi (PDF'e girmez)
+src/components/KisaltmaSuzgeci/  Kısaltmalar sayfasının arama kutusu ve A–Z şeridi (PDF'e girmez)
 src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/DME/TACAN/NDB, havalimanı, pist)
 src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
 src/components/KonnektorTasarim/  Konnektör pin yerleşimi aracı (MIL-DTL-38999, D-sub, JTAG, pin başlığı)
-src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set)
+src/components/McdcAraci/  MC/DC test seti üretici (ifade ayrıştırıcı, bağımsızlık çiftleri, en küçük set;
+                          paylasim.ts: #d= bağlantısı, içerikten aracı bir ifadeyle açmak için)
 src/components/HedefGezgini/  DO-178C Ek A hedef gezgini (veri.ts: 71 hedef × seviye; araç + seviye özeti şekilleri)
 src/components/KanalTablosu/  VOR/ILS/DME kanal tablosu (kanallar.ts: ICAO Ek 10 eşlemesi + sağlama;
                           Türkiye sütunu turkiye-navigasyon.json'dan)
@@ -292,9 +299,9 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 
 ## Yeni blog yazısı ekleme
 
-1. Dosya: `blog/YYYY-MM-DD-kisa-slug.md` (tarih = yayın tarihi, slug ASCII).
+1. Dosya: `blog/YYYY-MM-DD-kisa-slug.mdx` (tarih = yayın tarihi, slug ASCII).
 2. Frontmatter şablonu:
-   ```md
+   ```mdx
    ---
    title: "Yazının Başlığı"
    description: "Arama sonucunda görünecek, 160 karakteri aşmayan özet."
@@ -305,12 +312,12 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 
    Giriş paragrafı (özet olarak listede görünür).
 
-   <!-- truncate -->
+   {/* truncate */}
 
    Yazının gövdesi…
    ```
-3. `<!-- truncate -->` işareti **zorunludur**; `onUntruncatedBlogPosts: 'throw'` olduğu
-   için işareti olmayan yazı build'i kırar.
+3. `{/* truncate */}` işareti **zorunludur**; `onUntruncatedBlogPosts: 'throw'` olduğu
+   için işareti olmayan yazı build'i kırar. (MDX'te HTML yorumu `<!-- -->` yazılmaz.)
 4. `tags` değerleri `blog/tags.yml` içinde tanımlı olmalıdır (yeni etiket önce oraya
    eklenir; `onInlineTags: 'throw'`). Her etikete 160 karakteri aşmayan, o etiketli
    yazıların gerçekten kapsadığı konuyu anlatan bir `description` yazılır (etiket
@@ -329,7 +336,7 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 - Diyagramlar **Mermaid** ile metin olarak yazılır (`mermaid` kod bloğu). Harici görsel
   yerine mümkün olduğunca Mermaid tercih edilir.
 - Kod örnekleri ağırlıklı olarak **C** dilindedir (aviyonik yaygınlığı nedeniyle).
-- Her bölüm dosyası `NN-slug.md` biçiminde adlandırılır; `sidebar_position` klasör içi
+- Her bölüm dosyası `NN-slug.mdx` biçiminde adlandırılır; `sidebar_position` klasör içi
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.
 - Placeholder bölümlerdeki `:::info Bu bölüm hazırlanıyor 🚧` kutusu, içerik yazıldığında
   kaldırılır.
@@ -343,7 +350,7 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   Bölüm bölüm yazım rehberi (verilecek kararlar, zayıf/güçlü ifade) → Seviyeye göre farklar →
   DO-178C uyum tablosu (+ teknoloji ekleri) → Diğer belgelerle tutarlılık → Sık hatalar →
   Yayımlamadan önce → İlgili bölümler. Ortak ön bölümler, paketleme ve hangi konunun hangi
-  belgede tanımlandığı (tutarlılık matrisi) yalnızca `index.md`'dedir.
+  belgede tanımlandığı (tutarlılık matrisi) yalnızca `index.mdx`'tedir.
 - Şablonlar **doldurmalık metin değil karar listesidir**; hazır plan cümlesi yazılmaz.
 - Uyum tablosu DO-178C ve eklerine (DO-331/332/333) **yalnızca madde numarası** ve birkaç
   kelimelik özgün etiketle atıf yapar; standardın madde listesi ya da cümlesi çevrilmez.
@@ -361,7 +368,11 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   bozulursa madde CSV'ye girmez. Numarasız onay kutuları (giriş koşulları) dışa aktarılmaz.
   Seviye etiketleri `veri.ts`'teki hedef geçerliliğiyle tutarlıdır. Maddeler örnek standart
   kural numaralarına (GS-, TS-, KS-) değil konuya atıf yapar.
-- Liste sayfaları `.mdx`'tir: düz metinde `<`, `{`, `}` kullanılmaz (satır içi koda alınır).
+- Düz metinde `<`, `{`, `}` kullanılmaz (satır içi koda alınır; bkz. "MDX kuralları").
+- SOI-1…4 sayfaları `<SoiAsamalari aktif={n} />` ile başlar; aşama adları 12. bölümdeki
+  tabloyla aynıdır. Ek C'nin soru tabloları `<TabloIndir>` ile CSV olarak indirilir: başlık
+  satırı `sutunlar` ile birebir aynı olan tablolar alınır, tablo başlığı değişirse bileşenin
+  `sutunlar` özelliği de değişir.
 
 ## Kitap PDF'i
 
@@ -372,8 +383,12 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 - Sayfa sırası ve kısımlar `kitapSidebar`'dan gelir (`plugins/kitap-pdf.ts`); yeni bölüm
   PDF'e kendiliğinden girer. PDF'in adresi aynı dosyadaki `KITAP_PDF_PATH` sabitidir; ana
   sayfadaki "PDF indir" düğmesi de onu kullanır.
-- `kitap/index.md` içindeki "İçindekiler" bölümü PDF'e alınmaz (PDF'in kendi içindekiler
-  sayfası vardır); başlığın adı değişirse betikteki `WEB_ONLY_HEADING` güncellenir.
+- `kitap/index.mdx` içindeki "İçindekiler" bölümü PDF'e alınmaz (PDF'in kendi içindekiler
+  sayfası vardır); başlığın adı değişirse betikteki `WEB_ONLY_HEADING` güncellenir. Sitedeki
+  içindekiler elle yazılmaz: `<KitapIcindekiler />` ana sayfayla aynı veriden üretir.
+- Yalnızca ekranda anlamlı MDX bileşenleri (arama kutusu, gezinme şeridi) kök öğelerine
+  `data-pdf-disi` verir; betik bunları PDF'ten çıkarır. Şekil (`figure`) ve araç kartı
+  (`aside`) PDF'te kalır ve sayfa arasında bölünmez (`kitap-pdf.css`).
 - Baskı düzeni `scripts/kitap-pdf.css` içindedir. PDF'te sitedeki değişken yazı tipi
   yerine `@fontsource/ibm-plex-sans` paketinin statik dosyaları kullanılır: değişken yazı
   tipi PDF'e harf harf konumlanan Type 3 olarak gömülür, dosyayı büyütür ve metin seçimini
@@ -386,10 +401,17 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
 
 ## Kütüphane sayfası kuralları
 
-- Her kitap sayfası: künye tablosu (yazar, yayınevi, yıl/baskı, odak, seviye,
-  kimin için) + **özgün** tanıtım (kitaptan alıntı/çeviri YASAK) + sitedeki kitap
-  bölümlerine bağlantı.
-- **Kapak görseli** başlığın hemen altına eklenir; görsel *yerel* olarak
+- Her kitap sayfası: künye (yazar, yayınevi, yıl/baskı, odak, seviye, kimin için) +
+  **özgün** tanıtım (kitaptan alıntı/çeviri YASAK) + sitedeki kitap bölümlerine bağlantı.
+- Künye tablo olarak değil `<Kunye>` bileşeniyle yazılır; alanlar özelliktir (`yazar`,
+  `editor`, `yayinevi`, `yayimci`, `yil`, `baski`, `surum`, `tur`, `odak`, `seviye`,
+  `kimin`), etiket ve sıra bileşendedir. Birden çok yazar dizi olarak verilir
+  (`yazar={["A", "B"]}`, etiket "Yazarlar" olur). `seviye` "Başlangıç", "Orta", "İleri" ya
+  da aralığıdır ("Başlangıç–Orta"; parantez içinde not eklenebilir); tanınmayan değer
+  derlemeyi durdurur.
+- **Kapak görseli** `<Kunye>`'nin çocuğu olarak Markdown görseli biçiminde yazılır
+  (başlığın hemen altında; görsel işleme, öncelikli yükleme ve ana sayfadaki kapak listesi
+  bu kalıba bağlıdır); görsel *yerel* olarak
   `static/img/kutuphane/<slug>/kapak.<ext>` altına indirilir (harici hotlink
   YASAK — blog/kitap görsel kuralıyla aynı ilke). Kaynak yayınevi veya büyük
   kitapçı sitesindeki ürün küçük resmidir (thumbnail boyutunda, editoryal amaçlı).
@@ -479,8 +501,11 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   açıklamaları **özgün özettir**; standardın cümlesi ya da çevirisi yazılmaz. Dosyanın
   sonundaki sağlama, toplamlar 71/69/62/26 hedef ve 30/18/5/2 bağımsızlıktan saparsa
   derlemeyi durdurur. Araç sayfasındaki şekiller ve tablo (`SeviyeOzeti.tsx`) sayıları bu
-  veriden hesaplar; sayfa metnindeki adım farkları (+36, +7, +2 …) veri değişirse elle
-  güncellenir. Teknoloji eklerinin (DO-331/332/333) ve DO-330'un tabloları kapsam dışıdır.
+  veriden hesaplar; sayfa metnindeki sayılar ve adım farkları da MDX ifadeleriyle
+  (`{say('D').hedef}`, `{artis('D', 'C')}`) aynı veriden gelir. Kitapta hedef sayısı geçen
+  tablolar (3., 4. bölüm) ve ekleri olmayan cümleler de `say()` kullanır; sayıya ek alan
+  ("30'dan 18'e") metin elle yazılır, ünlü uyumu sayıya bağlıdır. Teknoloji eklerinin
+  (DO-331/332/333) ve DO-330'un tabloları kapsam dışıdır.
 - **Görev çizelgeleme aracında** hesap tam sayı mikrosaniyeyle yapılır
   (`src/components/GorevCizelgeleme/cizelgeleme.ts`; kayan nokta tavan/taban işlemlerini
   bozar). Analiz (fazdan bağımsız en kötü durum) ile benzetim (girilen fazlarla tek çizelge)
@@ -544,6 +569,38 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   şablon kalıpları yerine düz renk alanları, çizgiler ve alana özgü öğeler
   (gösterge, kontrol listesi, şekil altyazısı) tercih edilir.
 
+## MDX kuralları
+
+Tüm içerik sayfaları (blog, kitap, kütüphane, araçlar, `src/pages/*.mdx`) MDX'tir ve
+`markdown.format: 'mdx'` ile derlenir; `.md` uzantılı yeni bir sayfa da MDX olarak ayrıştırılır,
+yine de yeni sayfalar `.mdx` uzantısıyla açılır.
+
+- **Sözdizimi:** düz metinde `<` ve `{` JSX başlatır; bu karakterler satır içi koda alınır
+  (`` `a < b` ``) ya da kaçırılır (`\<`, `\{`). HTML yorumu yerine `{/* … */}`; `<br>` yerine
+  `<br />`; `<https://…>` biçimli otomatik bağlantı yerine `[adres](adres)` yazılır. Kod
+  çitlerinin ve satır içi kodun içi olduğu gibi kalır.
+- **İçe aktarma:** `import` satırları frontmatter'ın hemen altında, ilk içerikten önce durur.
+  Bileşenler `@site/src/components/…` yoluyla alınır (genel MDX bileşeni kaydı yoktur;
+  sayfada ne kullanıldığı başından okunur).
+- **Bileşen ne zaman:** tekrar eden bir yapı (künye, araç kartı, aşama şeridi), elle tutulunca
+  eskiyen bir liste (içindekiler) ya da veri dosyasında zaten bulunan bir sayı (DO-178C hedef
+  sayıları) için. Düz anlatım, tablo, liste ve admonition Markdown olarak kalır; bileşen
+  yalnızca görünüm için eklenmez.
+- **Veri tek yerden:** sayı ya da liste bir veri dosyasında varsa sayfaya elle yazılmaz;
+  MDX ifadesiyle alınır (`{say('A').hedef}`). Sayfaya özgü küçük hesaplar `export const`
+  ile sayfada tanımlanabilir (bkz. Hedef Gezgini sayfasındaki `artis`).
+- **Sunucuda tam çıktı:** bileşenin içeriği sunucu çıktısında (HTML) eksiksiz bulunur; site
+  içi arama, meta açıklaması ve kitap PDF'i HTML'den beslenir. Yalnızca tarayıcıda anlamlı
+  denetimler (düğme, arama kutusu) istemcide çizilebilir ya da `data-pdf-disi` taşır.
+- **Bağlantılar:** bileşen içindeki iç bağlantılar `@docusaurus/Link` ile verilir (kırık bağlantı
+  denetimine girer). Başlık çapası olmayan `#…` eki (araç paylaşım verisi) taşıyan bağlantı
+  düz `<a>` olur; adresi bileşen başka yoldan doğrular (bkz. `AracKarti`).
+- **Meta açıklaması:** `plugins/meta-description.ts` ilk düz metin paragrafını alırken satır
+  başındaki JSX öğelerini (çok satırlı özellikleri ve çocuklarıyla), `import`/`export`
+  satırlarını ve `{/* */}` yorumlarını atlar. İlk paragrafa MDX ifadesi (`{…}`) yazılmaz.
+- **Görsel önceliği:** `plugins/remark-lcp-image.ts` ilk üç görünür bloğa bakar; `import` ve
+  `export` blok sayılmaz, bileşenin çocuğundaki görsel de bulunur.
+
 ## Kalite kuralları
 
 - Her değişiklikten sonra **`npm run build` uyarısız/hatasız** geçmelidir.
@@ -551,13 +608,9 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   `markdown.hooks.onBrokenMarkdownLinks`, `onInlineTags`, `onInlineAuthors`,
   `onUntruncatedBlogPosts` hepsi `'throw'`.
 - **Kırık link bırakılmaz.** İç bağlantılar göreli yol veya doküman id'si ile verilir.
-- İçerik `.md` (saf Markdown / CommonMark) olarak yazılır; `format: 'detect'` sayesinde
-  React bileşeni gerekmedikçe `.mdx` kullanılmaz (şu an yalnızca `<Eposta>` kullanan
-  `kutuphane/index.mdx` ve `araclar/index.mdx`, araç sayfaları, Ek F'deki kontrol listeleri ve
-  `src/pages/iletisim.mdx`).
-- `.md` dosyalarında başlıklı admonition **köşeli parantez** ister:
-  `:::tip[Başlık]` (boşluklu `:::tip Başlık` yalnızca MDX'te çalışır; .md'de düz
-  metin olarak basılır).
+- İçerik sayfaları `.mdx`'tir; kurallar için "MDX kuralları" bölümüne bakınız.
+- Başlıklı admonition **köşeli parantezle** yazılır: `:::tip[Başlık]` (depodaki yerleşik
+  biçim; boşluklu `:::tip Başlık` kullanılmaz).
 - **Redirect stub'ları** (`static/2023/`, `static/2024/`, `static/p/`) ve
   `docusaurus.config.ts` içindeki `redirects` listesi eski Blogger URL'lerini korur;
   bunlar silinmez.
@@ -620,7 +673,7 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   bileşeni adresi yalnızca tıklamada tarayıcıda birleştirir. Denetim:
   `grep -rIlE "serdar@|karaman\.dev" build` ve `grep -rIl "mailto:" build --include='*.html'`
   boş dönmelidir (JS paketlerindeki üçüncü taraf `mailto:` dizgeleri — Docusaurus yazar
-  kartı, Markdown kütüphanesi — sayılmaz). Footer ve `.md` içeriğinde `mailto:`
+  kartı, Markdown kütüphanesi — sayılmaz). Footer ve MDX içeriğinde `mailto:`
   bağlantısı bırakılmaz.
 - **Satır içi stil yok:** `style="…"`/`style={{…}}` kullanılmaz; kural CSS sınıfıyla
   yazılır (tek bilinen istisna: kod bloklarındaki Prism renk öznitelikleri — `socials`

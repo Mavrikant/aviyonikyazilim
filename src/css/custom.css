@@ -254,6 +254,12 @@ h1, h2, h3, h4 {
   max-width: 46rem;
 }
 
+/* Görev listesi onay kutusu: MDX, `- [ ] Metin` satırında kutu ile metin arasındaki boşluğu
+   korumaz; aralığı CSS verir. */
+.markdown .task-list-item > input[type='checkbox'] {
+  margin-inline-end: 0.5em;
+}
+
 /* Tablolar */
 table {
   display: table;

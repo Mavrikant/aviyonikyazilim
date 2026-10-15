@@ -20,11 +20,11 @@ faaliyetleridir (§7.2.3–§7.2.5) ve Tablo A-8'in üçüncü hedefine kanıt �
 Kurulun üyelerini SCMP belirler; çoğu projede yazılım lideri, doğrulama lideri ve
 konfigürasyon yönetimi sorumlusu bulunur, emniyet etkisi olabilecek raporda sistem emniyet
 temsilcisi, süreç uygunsuzluğunda kalite güvencesi (quality assurance) katılır. Üç an,
-[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#problem-raporlama)
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#problem-raporlama)
 bölümündeki durum akışının geçişlerine denk gelir: Açık → Analizde, Analizde → Düzeltmede
 (ya da Reddedildi) ve Doğrulamada → Kapalı. Etki analizinin eksenleri
-[10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#değişiklik-etki-analizi)
-bölümünde, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır.
+[10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx#değişiklik-etki-analizi)
+bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasında anlatılır.
 Maddelerdeki "rapor", projede ayrı bir kayıt türüyse değişiklik talebini de kapsar.
 
 ## Bir bakışta
@@ -36,7 +36,7 @@ Maddelerdeki "rapor", projede ayrı bir kayıt türüyse değişiklik talebini d
 | Gözden geçirilen veri | Problem raporu ya da değişiklik talebi; değişiklik etki analizi; kapanışta düzeltici faaliyet kaydı, değişen öğelerin yeni sürümleri ve yeniden doğrulama kayıtları |
 | Başvuru verisi | SCMP'deki rapor alanları, sınıflar ve durum akışı; yazılım doğrulama planındaki (Software Verification Plan, SVP) yeniden doğrulama kuralı; iz verisi (trace data); etkilenen temel çizginin içeriği (durum muhasebesi kaydı) |
 | Kaydın gideceği yer | Rapor içeriği ve kapanış → problem raporunun kendisi (§11.17); kurul kararı → konfigürasyon yönetimi kayıtları (§11.18), rapora bağlı; bulgular (finding) → rapora not olarak, giderilene kadar rapor sonraki duruma geçmez |
-| İlgili şablon | [SCMP](../05-sablonlar/04-scmp.md) (problem raporlama, değişiklik kontrolü, değişiklik gözden geçirmesi); [SVP](../05-sablonlar/03-svp.md) (yeniden doğrulama); [PSAC](../05-sablonlar/01-psac.md) (yazılım sertifikasyon planı; açık problem raporlarının yönetimi) |
+| İlgili şablon | [SCMP](../05-sablonlar/04-scmp.mdx) (problem raporlama, değişiklik kontrolü, değişiklik gözden geçirmesi); [SVP](../05-sablonlar/03-svp.mdx) (yeniden doğrulama); [PSAC](../05-sablonlar/01-psac.mdx) (yazılım sertifikasyon planı; açık problem raporlarının yönetimi) |
 | Madde öneki | `PRD` |
 
 ## Gözden geçirmeye giriş koşulları
@@ -183,7 +183,7 @@ toplantısından önce yanıtlayabilir; kurula kalan, aracın ölçemediği yarg
 
 Bir madde araç çıktısına güvenilerek atlanıyorsa, örneğin regresyon seti aracın seçtiği
 biçimde gözden geçirilmeden kabul ediliyorsa, o aracın kalifikasyonu sorusu doğar (bkz.
-[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 
 ## Sık bulgular
 
@@ -218,7 +218,7 @@ birinin bakması iyi uygulamadır.
 Seviye düştükçe asıl değişen, hangi verinin problem raporlamaya tabi olduğudur. Problem
 raporlama birinci kontrol kategorisindeki (CC1) veriye uygulanır; ikinci kategorideki (CC2)
 bir veride yapılan düzeltme için rapor açılması gerekmez (bkz.
-[10. bölüm, kontrol kategorileri](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#kontrol-kategorileri-cc1-ve-cc2)).
+[10. bölüm, kontrol kategorileri](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx#kontrol-kategorileri-cc1-ve-cc2)).
 
 | Seviye | Düşen maddeler | Problem raporlamaya tabi olmayan (CC2) veri |
 |---|---|---|
@@ -232,21 +232,21 @@ kurul, standardın değil uygulamanın terimidir.
 
 ## İlgili bölümler
 
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): problem
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx): problem
   raporunun durum akışı, proje içi sınıflar ve
-  [açık problem raporlarıyla sertifikasyona gitmek](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#açık-problem-raporlarıyla-sertifikasyona-gitmek).
-- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md):
+  [açık problem raporlarıyla sertifikasyona gitmek](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#açık-problem-raporlarıyla-sertifikasyona-gitmek).
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx):
   değişiklik etki analizi ve baştan sona işlenmiş bir değişiklik örneği.
-- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md):
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx):
   uygunsuzluk kaydı ile problem raporu arasındaki sınır.
-- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md):
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.mdx):
   açık raporların yazılım başarım özetinde (Software Accomplishment Summary, SAS) sunulması.
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md): temel çizgideki veri
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx): temel çizgideki veri
   değiştiğinde sürece yeniden girişin koşulları.
-- Şablonlar: [SCMP](../05-sablonlar/04-scmp.md), [SVP](../05-sablonlar/03-svp.md),
-  [PSAC](../05-sablonlar/01-psac.md).
-- Otorite denetimi: [SW SOI-3](soi-3.md) (doğrulamada problem raporları),
-  [SW SOI-4](soi-4.md) (teslimde açık raporlar).
+- Şablonlar: [SCMP](../05-sablonlar/04-scmp.mdx), [SVP](../05-sablonlar/03-svp.mdx),
+  [PSAC](../05-sablonlar/01-psac.mdx).
+- Otorite denetimi: [SW SOI-3](soi-3.mdx) (doğrulamada problem raporları),
+  [SW SOI-4](soi-4.mdx) (teslimde açık raporlar).
 - Komşu listeler: [Test Sonuçları](08-test-sonuclari.mdx) (başarısız testin rapora
   bağlanması), [Konfigürasyon Denetimi](10-konfigurasyon-denetimi.mdx) (temel çizgi, SCI ve
   durum muhasebesi), [Kalite Güvencesi Denetimi](12-kalite-guvencesi-denetimi.mdx) (problem

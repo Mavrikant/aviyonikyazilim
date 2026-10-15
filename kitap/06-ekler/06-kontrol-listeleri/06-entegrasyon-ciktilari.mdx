@@ -14,22 +14,22 @@ hedefe yüklenecek imaj (image). Gözden geçirme, kredi amaçlı testte kullan�
 derlemeden (build) sonra ve derleme seçeneği, bağlayıcı betiği (linker script) ya da araç
 sürümü değiştiğinde yapılır. Derlemeyi hazırlayan entegrasyon mühendisi soruları yanıtlar;
 listeyi bir doğrulama mühendisi yürütür. Gözden geçirme kaydı,
-[Ek A](../01-ek-a-ornek-gecis-kriterleri.md)'daki G4 geçişinde kodun derlendiğini, hedefe
+[Ek A](../01-ek-a-ornek-gecis-kriterleri.mdx)'daki G4 geçişinde kodun derlendiğini, hedefe
 yüklenebildiğini ve derlemenin yeniden üretilebildiğini isteyen çıkış koşulunu destekler.
 
 DO-178C'de bu iş §6.3.5'teki entegrasyon çıktılarının gözden geçirilmesine ve analizine, Ek
 A'da A-5 tablosunun yedinci hedefine karşılık gelir. Aşağıdaki gruplar bu hedefi derleme
 kaydı, bağlayıcı haritası ve yükleme imajı üzerinde tek tek yanıtlanabilen sorulara böler.
 Entegrasyonun bir üretim süreci olarak anlatımı
-[8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md#entegrasyon-çıktılarının-gözden-geçirilmesi)
-bölümünde, yöntem tarafı [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bellek-haritası-analizi)
+[8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx#entegrasyon-çıktılarının-gözden-geçirilmesi)
+bölümünde, yöntem tarafı [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bellek-haritası-analizi)
 bölümünün bellek haritası ile bağlantı ve yükleme analizi başlıklarında, listelerin ortak
-kullanımı [genel bakış](index.md) sayfasında anlatılır.
+kullanımı [genel bakış](index.mdx) sayfasında anlatılır.
 
 :::info[Bu listenin sınırı]
 Liste tek bir derlemenin çıktısına bakar. Parametre verisi öğesi (parameter data item, PDI)
 dosyalarının doğrulaması (§6.6, A-5 #8–#9) bu listenin kapsamı dışındadır
-([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)). SCI ve SECI'nin
+([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx)). SCI ve SECI'nin
 içeriği, arşivden yeniden derleme ve yükleme kontrolü
 [konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx), kaynak koda izlenemeyen nesne kodu
 [kapsam analizi](09-kapsam-analizleri.mdx), bellek yerleşiminin tasarımdaki tanımı
@@ -44,8 +44,8 @@ içeriği, arşivden yeniden derleme ve yükleme kontrolü
 | Ek A hedefleri | A-5 #7 (entegrasyon sürecinin çıktısı tam ve doğru): A, B ve C'de gerekli, hiçbir seviyede bağımsızlık aranmaz; D'de aranmaz. A-1 #3 (yaşam döngüsü ortamı seçilmiş ve tanımlı): A, B ve C'de gerekli, bağımsızlık aranmaz; yalnızca ENT-04 bu hedefe dayanır. A-2 #7 (çalıştırılabilir nesne kodu üretilmiş ve hedefe yüklenmiş): A, B, C ve D'de gerekli, bağımsızlık aranmaz; yalnızca yama maddeleri (ENT-28–ENT-30) bu hedefe dayanır |
 | Gözden geçirilen veri | Derleme kaydı (araç sürümleri, komut satırları, uyarı çıktısı), bağlayıcı betiği, bağlayıcı haritası ve bellek özeti, yükleme imajı ve bütünlük değeri, varsa yama kaydı |
 | Başvuru verisi | Mimarideki bellek yerleşimi ve bellek bütçesi; hedef donanımın adres haritası ve donanım/yazılım arayüz tanımı; yazılım geliştirme planındaki (Software Development Plan, SDP) derleme seçenekleri ve resmî derleme ortamı; yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI); bileşen listesi ve parça numarası için yazılım konfigürasyon indeksi (Software Configuration Index, SCI) ya da sürüm adayı için hazırlanan taslağı; kabul edilen uyarılar listesi; bu kod sürümüne ait yığın (stack) kullanımı analizi |
-| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR), derleme kimliğiyle; bulgular (findings) → kayıt içinde, temel çizgideki (baseline) bir veriyi (bağlayıcı betiği, kaynak, SCI) değiştirmeyi gerektiriyorsa [SCMP](../05-sablonlar/04-scmp.md)'deki sınıra göre problem raporu (problem report) |
-| İlgili şablon | [SDP](../05-sablonlar/02-sdp.md) (resmî derleme, derleme seçenekleri, yama politikası); [SCMP](../05-sablonlar/04-scmp.md) (yükleme ve ortam kontrolü); derleyici ve bağlayıcı varsayımları: [SVP](../05-sablonlar/03-svp.md) |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR), derleme kimliğiyle; bulgular (findings) → kayıt içinde, temel çizgideki (baseline) bir veriyi (bağlayıcı betiği, kaynak, SCI) değiştirmeyi gerektiriyorsa [SCMP](../05-sablonlar/04-scmp.mdx)'deki sınıra göre problem raporu (problem report) |
+| İlgili şablon | [SDP](../05-sablonlar/02-sdp.mdx) (resmî derleme, derleme seçenekleri, yama politikası); [SCMP](../05-sablonlar/04-scmp.mdx) (yükleme ve ortam kontrolü); derleyici ve bağlayıcı varsayımları: [SVP](../05-sablonlar/03-svp.mdx) |
 | Madde öneki | `ENT` |
 
 ## Gözden geçirmeye giriş koşulları
@@ -226,7 +226,7 @@ beklenen değerlerin doğru olup olmadığı insana kalır.
 Bir maddeyi yalnızca betiğin "sorun yok" çıktısına dayanarak işaretliyor ve haritayı o konuda
 ayrıca gözden geçirmiyorsanız betik doğrulama faaliyetinin yerini almış olur; araç
 kalifikasyonu (tool qualification) sorusu doğar ve karar planlarda yazılır
-([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 İmaja CRC gömen ya da imaj biçimini dönüştüren betik ise bir doğrulama aracı değil, çıktısı
 uçuş imajına giren bir geliştirme aracıdır: çıktısı ENT-25 ve ENT-27'deki gibi ayrı bir
 hesapla doğrulanmıyorsa kalifikasyonu gündeme gelir. Bu betiklerin SECI'de yer alması
@@ -272,7 +272,7 @@ bağımsızlık istemez; derlemeyi alan kişi listeyi kendisi de yürütebilir. 
 betiğini yazan ile haritayı gözden geçirenin ayrı kişiler olması, betikteki yanlış bir
 varsayımın haritada da doğru görünmesini önler; bu yüzden iyi uygulamadır. Bağımsızlığın ne
 zaman ve nasıl arandığı
-[9. bölümün bağımsızlık başlığında](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)
+[9. bölümün bağımsızlık başlığında](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bağımsızlık)
 anlatılır.
 
 **Seviye A, B ve C.** Liste üç seviyede aynıdır. Seviye A'da ek iş bu listenin değil
@@ -294,25 +294,25 @@ liste her resmî derlemede yeniden yanıtlanır. Önceki derlemenin haritası ve
 almak işi kısaltır: değişmeyen bir bölümün yanıtı, farkın onu etkilemediği kayda yazılarak
 taşınabilir. Derleme seçeneği, bağlayıcı betiği ya da araç sürümü değiştiyse yanıt taşınmaz;
 liste baştan uygulanır ve etkilenen test ile analizlerin yeniden değerlendirilmesi
-[SVP](../05-sablonlar/03-svp.md)'deki yeniden doğrulama kuralına göre belirlenir.
+[SVP](../05-sablonlar/03-svp.mdx)'deki yeniden doğrulama kuralına göre belirlenir.
 
 ## İlgili bölümler
 
-- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md):
+- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx):
   derleme sürecinin tekrarlanabilirliği, entegrasyon çıktılarının gözden geçirilmesi, yamalar
   ve hedefe yükleme
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): bellek
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx): bellek
   haritası analizi, bağlantı ve yükleme analizi, gözden geçirme kaydı ve bulgu sınıfları
-- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
-- [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md)
-- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.md)
-- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
-- Şablonlar: [SDP](../05-sablonlar/02-sdp.md), [SVP](../05-sablonlar/03-svp.md),
-  [SCMP](../05-sablonlar/04-scmp.md)
-- Otorite denetimine hazırlık: [SW SOI-2](soi-2.md), [SW SOI-3](soi-3.md)
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
+- [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.mdx)
+- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx)
+- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)
+- Şablonlar: [SDP](../05-sablonlar/02-sdp.mdx), [SVP](../05-sablonlar/03-svp.mdx),
+  [SCMP](../05-sablonlar/04-scmp.mdx)
+- Otorite denetimine hazırlık: [SW SOI-2](soi-2.mdx), [SW SOI-3](soi-3.mdx)
 - Komşu listeler: [kaynak kod](05-kaynak-kod.mdx), [yazılım mimarisi](03-yazilim-mimarisi.mdx),
   [kapsam analizleri](09-kapsam-analizleri.mdx),
   [konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx)
-- [Kontrol listelerine genel bakış](index.md)
+- [Kontrol listelerine genel bakış](index.mdx)

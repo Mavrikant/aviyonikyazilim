@@ -9,9 +9,12 @@
  * özet (snippet), sosyal paylaşım önizlemesi ve RSS özeti bu alandan beslenir.
  *
  * Burada ilk paragrafın satırları birleştirilir; başlık, görsel, tablo, liste,
- * alıntı, kod bloğu, HTML ve admonition içeriği atlanır. Sonuç ~160 karakteri
- * aşarsa önce cümle sonunda, olmazsa kelime sınırında kısaltılır.
- * `markdown.parseFrontMatter` kancası olarak tüm içerik eklentilerinde çalışır.
+ * alıntı, kod bloğu, HTML ve admonition içeriği atlanır. İçerik MDX olduğundan
+ * satır başında açılan JSX öğeleri (birden çok satıra yayılan özellikleri ve
+ * çocuklarıyla birlikte), `import`/`export` satırları ve `{/*` ile açılan MDX yorumları
+ * da atlanır. Sonuç ~160 karakteri aşarsa önce cümle sonunda, olmazsa kelime
+ * sınırında kısaltılır. `markdown.parseFrontMatter` kancası olarak tüm içerik
+ * eklentilerinde çalışır.
  */
 
 import type {ParseFrontMatter} from '@docusaurus/types';
@@ -116,8 +119,78 @@ function shorten(text: string): string {
   return `${text.slice(0, cut).replace(/[\s,;:(—–-]+$/, '')}…`;
 }
 
+/**
+ * `start`ta (`<Ad`) açılan JSX öğesinin bittiği konumu döndürür. Açılış etiketi tırnak ve
+ * süslü parantez içleri atlanarak okunur (`ifade="a > b"` etiketi bitirmez); kendini
+ * kapatmıyorsa öğe aynı adlı kapanış etiketinde biter.
+ */
+function jsxEnd(source: string, start: number, name: string): number {
+  let depth = 0;
+  let quote = '';
+  for (let i = start + name.length + 1; i < source.length; i++) {
+    const c = source[i];
+    if (quote) {
+      if (c === quote) quote = '';
+    } else if (c === '"' || c === "'" || c === '`') {
+      quote = c;
+    } else if (c === '{') {
+      depth += 1;
+    } else if (c === '}') {
+      depth -= 1;
+    } else if (c === '>' && depth === 0) {
+      if (source[i - 1] === '/') return i + 1;
+      const close = source.indexOf(`</${name}>`, i);
+      return close === -1 ? i + 1 : close + name.length + 3;
+    }
+  }
+  return source.length;
+}
+
+/** Kod çitlerinin (``` ya da ~~~) kapladığı [başlangıç, bitiş) aralıkları. */
+function fencedRanges(content: string): [number, number][] {
+  const ranges: [number, number][] = [];
+  let fence: string | null = null;
+  let start = 0;
+  let offset = 0;
+  for (const line of content.split('\n')) {
+    const marker = /^[ \t>]*(`{3,}|~{3,})/.exec(line)?.[1];
+    if (fence) {
+      if (marker?.startsWith(fence) && line.trim().replace(/[`~]/g, '') === '') {
+        ranges.push([start, offset + line.length]);
+        fence = null;
+      }
+    } else if (marker) {
+      fence = marker;
+      start = offset;
+    }
+    offset += line.length + 1;
+  }
+  if (fence) ranges.push([start, content.length]);
+  return ranges;
+}
+
+/** MDX'e özgü blokları (satır başındaki JSX öğeleri, `{/*` yorumları) içerikten çıkarır. */
+function stripMdxBlocks(content: string): string {
+  const fenced = fencedRanges(content);
+  let result = '';
+  let index = 0;
+  const blockStart = /^[ \t]*(?:<([A-Za-z][\w.-]*)|\{\/\*)/gm;
+  for (let match = blockStart.exec(content); match; match = blockStart.exec(content)) {
+    const at = match.index;
+    if (fenced.some(([from, to]) => at >= from && at < to)) continue;
+    const name = match[1];
+    const start = at + match[0].length - (name ? name.length + 1 : 3);
+    const end = name ? jsxEnd(content, start, name) : content.indexOf('*/}', start) + 3;
+    if (end <= start) break;
+    result += content.slice(index, at);
+    index = end;
+    blockStart.lastIndex = end;
+  }
+  return result + content.slice(index);
+}
+
 export function createDescription(content: string): string | undefined {
-  const text = toPlainText(firstParagraph(content).join(' '));
+  const text = toPlainText(firstParagraph(stripMdxBlocks(content)).join(' '));
   return text ? shorten(text) : undefined;
 }
 

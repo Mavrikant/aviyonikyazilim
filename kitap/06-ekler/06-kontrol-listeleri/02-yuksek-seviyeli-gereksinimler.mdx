@@ -12,7 +12,7 @@ akran gözden geçirmesinde (peer review) kullanılır. Gözden geçirilen, gere
 çıktısıdır: türetilmiş gereksinimler (derived requirements) dahil yüksek seviyeli
 gereksinimler, öznitelikleri ve sistem gereksinimlerine kurulan iz. Gözden geçirme (review),
 gereksinimler temel çizgiye (baseline) alınmadan ve tasarıma geçilmeden önce yapılır
-([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md), G2); masada yazarın
+([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx), G2); masada yazarın
 yanında başka bir gereksinim mühendisi, bir sistem ya da emniyet temsilcisi ve bir test
 mühendisi bulunur. Seviye A ve B'de maddelerin bir kısmında bağımsızlık (independence)
 aranır: bu maddeleri yazardan başka biri yanıtlar.
@@ -24,8 +24,8 @@ uyumluluk, doğrulanabilirlik, standarda uyum, izlenebilirlik (traceability) ve 
 Liste bunlara iki grup ekler: türetilmiş gereksinimler (§6.3.1.a'daki doğru tanım beklentisi
 ile A-2 #2'deki sistem süreçlerine iletim hedefi) ve gürbüzlük (robustness) testlerinin
 dayanağı olan anormal durum davranışı. Bu sorulara neden bakıldığı
-[6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
-bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](index.md) sayfasında
+[6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.mdx)
+bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](index.mdx) sayfasında
 anlatılır. Gereksinim standardının kendisi
 [planlar ve standartlar](01-planlar-ve-standartlar.mdx) listesiyle, düşük seviyeli
 gereksinimler ise [kendi listeleriyle](04-dusuk-seviyeli-gereksinimler.mdx) gözden geçirilir.
@@ -39,8 +39,8 @@ gereksinimler ise [kendi listeleriyle](04-dusuk-seviyeli-gereksinimler.mdx) göz
 | İçeriğine bakılan geliştirme hedefleri | A-2 #1 (yüksek seviyeli gereksinimler geliştirilmiş) ve A-2 #2 (türetilmiş gereksinimler tanımlanmış ve sistem süreçlerine iletilmiş): her seviyede gerekli |
 | Gözden geçirilen veri | Yazılım gereksinim verisi (Software Requirements Data, §11.9): gereksinim metni ve öznitelikleri; sistem gereksinimlerine iz verisi (trace data, §11.21) |
 | Başvuru verisi | Yazılıma tahsis edilen sistem gereksinimleri (emniyet gereksinimleri dahil), arayüz kontrol dokümanı (interface control document, ICD), sistem mimarisi, gereksinim standardı ve terim sözlüğü |
-| Kaydın gideceği yer | Gözden geçirme kaydı ve doldurulmuş liste → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular (findings) temel çizgi öncesinde kaydın içinde, sonrasında problem raporuyla (problem report; sınır [SCMP](../05-sablonlar/04-scmp.md)'de tanımlıdır) |
-| İlgili şablon | [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md); gözden geçirme yöntemi için [SVP](../05-sablonlar/03-svp.md) |
+| Kaydın gideceği yer | Gözden geçirme kaydı ve doldurulmuş liste → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular (findings) temel çizgi öncesinde kaydın içinde, sonrasında problem raporuyla (problem report; sınır [SCMP](../05-sablonlar/04-scmp.mdx)'de tanımlıdır) |
+| İlgili şablon | [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.mdx); gözden geçirme yöntemi için [SVP](../05-sablonlar/03-svp.mdx) |
 | Madde öneki | `YGR` |
 
 ## Gözden geçirmeye giriş koşulları
@@ -210,7 +210,7 @@ Araç çıktısı gözden geçirme kaydına eklenir ve gözden geçiren maddeyi 
 yanıtlar. Bir madde, araç çıktısına güvenilip ayrıca bakılmadan "Evet" sayılıyorsa sorgu ya
 da betik bir doğrulama faaliyetinin yerini almış olur; bu da araç kalifikasyonu (tool
 qualification) sorusunu doğurur
-([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 
 ## Sık bulgular
 
@@ -252,7 +252,7 @@ gereksinimin içeriğini tanımlayan maddelerdir (§5.1.2, §11.9); gözden geç
 #2'nin parçası olarak yanıtlanırlar ve Seviye A ile B'de bağımsızlık onlar için de geçerlidir.
 Bağımsızlık, maddeyi yazardan başka birinin yanıtlamasıdır; aynı ekipten bir mühendis
 yeterlidir, yeter ki adı kayıtta yazarınkinden ayrı görünsün (bkz. 9. bölümün
-[Bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık) başlığı).
+[Bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bağımsızlık) başlığı).
 Bağımsızlık aranmayan maddelerde de yazar dışından birinin bakması iyi uygulamadır.
 
 Seviye C'de hedef bilgisayarla uyumluluk hedef değildir. Zamanlama ya da bellek bütçesi dar bir
@@ -268,30 +268,30 @@ gereksinimlere kayar; türetilmiş gereksinimlerin iletimi (A-2 #2) her seviyede
 
 Gereksinimler bir belirtim modeli (specification model) olarak ifade ediliyorsa model
 öğelerine ilişkin ek beklentiler listeye proje maddesi olarak eklenir
-([14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md)).
+([14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.mdx)).
 Proje parametre verisi öğesi (parameter data item, PDI) planlıyorsa her seviyede bir proje
 maddesi daha eklenir (§5.1.2.j): gereksinimler her PDI'nin yazılımca nasıl kullanıldığını,
 yapısını ve veri elemanlarının özniteliklerini (tür, aralık, birim) tanımlamalı, öngörülen
 değerler de bu yapıyla tutarlı olmalıdır
-([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)).
+([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx)).
 
 ## İlgili bölümler
 
-- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [2. Sistem Bağlamında Yazılım](../../02-baglam/02-sistem-baglaminda-yazilim.md)
-- [3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md)
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
-- [14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md)
-- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
-- Şablonlar: [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md) ·
-  [SDP](../05-sablonlar/02-sdp.md) · [SVP](../05-sablonlar/03-svp.md) ·
-  [SCMP](../05-sablonlar/04-scmp.md)
-- Otorite denetimine hazırlık: [SW SOI-2](soi-2.md)
+- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.mdx)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
+- [2. Sistem Bağlamında Yazılım](../../02-baglam/02-sistem-baglaminda-yazilim.mdx)
+- [3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.mdx)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
+- [14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.mdx)
+- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)
+- Şablonlar: [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.mdx) ·
+  [SDP](../05-sablonlar/02-sdp.mdx) · [SVP](../05-sablonlar/03-svp.mdx) ·
+  [SCMP](../05-sablonlar/04-scmp.mdx)
+- Otorite denetimine hazırlık: [SW SOI-2](soi-2.mdx)
 - Komşu listeler: [Planlar ve standartlar](01-planlar-ve-standartlar.mdx) ·
   [Yazılım mimarisi](03-yazilim-mimarisi.mdx) ·
   [Düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx) ·
   [Test durumları ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) ·
   [Problem raporu ve değişiklik](11-problem-raporu-ve-degisiklik.mdx)
-- Genel bakış: [Ek F: Kontrol Listeleri](index.md)
+- Genel bakış: [Ek F: Kontrol Listeleri](index.mdx)
