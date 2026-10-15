@@ -41,7 +41,7 @@ export default function KitapIcindekiler(): ReactNode {
         </section>
       ))}
       {/* Kitabın sonunda kategorisiz duran sayfalar (Kısaltmalar): kenar çubuğundaki gibi
-          bir kısım başlığı altında değil, ekleri izleyen ayrı satırlar olarak. */}
+          bir kısım başlığı altında değil, son kısmı izleyen ayrı satırlar olarak. */}
       {book.references.length > 0 && (
         <ul className={clsx(styles.liste, styles.son)}>
           {book.references.map((ref) => (

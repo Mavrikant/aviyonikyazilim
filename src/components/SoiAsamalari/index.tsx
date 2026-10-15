@@ -6,10 +6,10 @@ import styles from './styles.module.css';
 
 /** Dört katılım aşaması denetimi; adlar 12. bölümdeki tabloyla aynıdır. */
 const ASAMALAR = [
-  {no: 1, ad: 'Planlama', yol: '/kitap/ekler/kontrol-listeleri/soi-1'},
-  {no: 2, ad: 'Geliştirme', yol: '/kitap/ekler/kontrol-listeleri/soi-2'},
-  {no: 3, ad: 'Doğrulama', yol: '/kitap/ekler/kontrol-listeleri/soi-3'},
-  {no: 4, ad: 'Son sertifikasyon', yol: '/kitap/ekler/kontrol-listeleri/soi-4'},
+  {no: 1, ad: 'Planlama', yol: '/kitap/soi-denetimleri/soi-1'},
+  {no: 2, ad: 'Geliştirme', yol: '/kitap/soi-denetimleri/soi-2'},
+  {no: 3, ad: 'Doğrulama', yol: '/kitap/soi-denetimleri/soi-3'},
+  {no: 4, ad: 'Son sertifikasyon', yol: '/kitap/soi-denetimleri/soi-4'},
 ] as const;
 
 type Props = {

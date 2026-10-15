@@ -21,14 +21,16 @@ Türkçe bir aviyonik yazılım / test / sertifikasyon sitesi. İki ana içerik 
 blog/                     Blog yazıları (YYYY-MM-DD-slug.mdx) + authors.yml + tags.yml
 kitap/                    "Kitap" docs içeriği (routeBasePath: /kitap)
   index.mdx               Kitap giriş + içindekiler (slug: /, yani /kitap; içindekiler üretilir)
-  01-giris/ … 06-ekler/   Kısımlar; her klasörde _category_.json + bölüm .mdx dosyaları
+  01-giris/ … 07-soi-denetimleri/  Kısımlar; her klasörde _category_.json + bölüm .mdx dosyaları
   06-ekler/05-sablonlar/  Ek E: beş plan ve üç geliştirme standardı için şablon + yazım rehberi
   06-ekler/06-kontrol-listeleri/  Ek F: gözden geçirme ve süreç denetimi listeleri (CSV
-                          indirme) + SOI-1…4 denetim listeleri. Çok sayfalı eklerin index.mdx'i
-                          kategorinin giriş sayfasıdır; ana sayfa içindekilerinde tek satırdır
-  kisaltmalar.mdx         Kısaltmalar sözlüğü: kategorisiz, kenar çubuğunda eklerden sonra
+                          indirme). Çok sayfalı eklerin index.mdx'i kategorinin giriş sayfasıdır;
+                          ana sayfa içindekilerinde tek satırdır
+  07-soi-denetimleri/     SOI Denetimleri: SOI-1…4 otorite denetimine hazırlık listeleri; eklerden
+                          sonra, Kısaltmalar'dan önce ayrı başlık (giriş sayfası yok)
+  kisaltmalar.mdx         Kısaltmalar sözlüğü: kategorisiz, kenar çubuğunda SOI Denetimleri'nden sonra
                           (sidebar_position: 99). Kitabın sonuna eklenen kategorisiz sayfaları
-                          ana sayfa "Başvuru" satırında, /kitap içindekileri eklerden sonra gösterir
+                          ana sayfa "Başvuru" satırında, /kitap içindekileri son kısımdan sonra gösterir
 kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.mdx sayfası (künye: <Kunye>)

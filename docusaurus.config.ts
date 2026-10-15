@@ -209,14 +209,19 @@ const config: Config = {
           {from: ['/p/ksaltmalar', '/p/ksaltmalar.html'], to: '/kitap/kisaltmalar'},
           // Kısaltmalar "Kaynaklar" kategorisinden çıkıp kitabın sonunda tek başına duran sayfa oldu.
           {from: ['/kitap/kaynaklar/kisaltmalar', '/kitap/category/kaynaklar'], to: '/kitap/kisaltmalar'},
-          {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/ekler/kontrol-listeleri/soi-1'},
-          {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/ekler/kontrol-listeleri/soi-2'},
-          {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/ekler/kontrol-listeleri/soi-3'},
-          {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/ekler/kontrol-listeleri/soi-4'},
-          {from: '/kitap/kaynaklar/soi-1', to: '/kitap/ekler/kontrol-listeleri/soi-1'},
-          {from: '/kitap/kaynaklar/soi-2', to: '/kitap/ekler/kontrol-listeleri/soi-2'},
-          {from: '/kitap/kaynaklar/soi-3', to: '/kitap/ekler/kontrol-listeleri/soi-3'},
-          {from: '/kitap/kaynaklar/soi-4', to: '/kitap/ekler/kontrol-listeleri/soi-4'},
+          {from: ['/p/sw-soi-1', '/p/sw-soi-1.html'], to: '/kitap/soi-denetimleri/soi-1'},
+          {from: ['/p/sw-soi-2', '/p/sw-soi-2.html'], to: '/kitap/soi-denetimleri/soi-2'},
+          {from: ['/p/sw-soi-3', '/p/sw-soi-3.html'], to: '/kitap/soi-denetimleri/soi-3'},
+          {from: ['/p/sw-soi-4', '/p/sw-soi-4.html'], to: '/kitap/soi-denetimleri/soi-4'},
+          {from: '/kitap/kaynaklar/soi-1', to: '/kitap/soi-denetimleri/soi-1'},
+          {from: '/kitap/kaynaklar/soi-2', to: '/kitap/soi-denetimleri/soi-2'},
+          {from: '/kitap/kaynaklar/soi-3', to: '/kitap/soi-denetimleri/soi-3'},
+          {from: '/kitap/kaynaklar/soi-4', to: '/kitap/soi-denetimleri/soi-4'},
+          // SOI sayfaları Ek F'den çıkıp eklerden sonraki ayrı "SOI Denetimleri" başlığına taşındı.
+          {from: '/kitap/ekler/kontrol-listeleri/soi-1', to: '/kitap/soi-denetimleri/soi-1'},
+          {from: '/kitap/ekler/kontrol-listeleri/soi-2', to: '/kitap/soi-denetimleri/soi-2'},
+          {from: '/kitap/ekler/kontrol-listeleri/soi-3', to: '/kitap/soi-denetimleri/soi-3'},
+          {from: '/kitap/ekler/kontrol-listeleri/soi-4', to: '/kitap/soi-denetimleri/soi-4'},
           // Kütüphane kategori sayfalarının Türkçe karakter içeren eski adresleri (ASCII'ye taşındı).
           {from: '/kutuphane/category/emniyet-mühendisliği', to: '/kutuphane/category/emniyet-muhendisligi'},
           // Araçlar kategorileri ayrı dizin sayfası yerine giriş sayfasındaki katalogda listelenir.
