@@ -24,7 +24,10 @@ import type {LoadedContent as DocsContent} from '@docusaurus/plugin-content-docs
 export const KITAP_PDF_PATH = '/do-178c-ile-emniyet-kritik-aviyonik-yazilim.pdf';
 
 export type PdfPage = {
-  /** Kenar çubuğundaki üst kategori ("Kısım I — Giriş", "Ekler", "Kaynaklar"); giriş sayfasında boş */
+  /**
+   * Kenar çubuğundaki üst kategori ("Kısım I — Giriş", "Ekler"); kategorisiz sayfalarda (giriş
+   * sayfası, kitabın sonundaki Kısaltmalar) boş
+   */
   group: string;
   title: string;
   permalink: string;

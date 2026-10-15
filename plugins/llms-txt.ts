@@ -201,7 +201,7 @@ export default function llmsTxt(context: LoadContext): Plugin {
   function render({docs, blog}: SiteContent): string {
     const book = docsSections(getVersion(docs, 'default'), 'kitapSidebar', {
       title: 'Kitap',
-      groupHeading: (label) => (label === 'Kaynaklar' ? label : `Kitap — ${partName(label)}`),
+      groupHeading: (label) => `Kitap — ${partName(label)}`,
     });
     const library = docsSections(getVersion(docs, 'kutuphane'), 'kutuphaneSidebar', {
       title: 'Kütüphane',

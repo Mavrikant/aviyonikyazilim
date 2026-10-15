@@ -179,7 +179,7 @@ async function loadBook(siteDir: string, version: LoadedVersion): Promise<Homepa
   }
 
   const parts: Part[] = [];
-  let references: PageLink[] = [];
+  const references: PageLink[] = [];
 
   const docsOf = (ids: string[]) =>
     ids.map((id) => byId.get(id)).filter((doc): doc is DocMetadata => doc !== undefined);
@@ -199,16 +199,15 @@ async function loadBook(siteDir: string, version: LoadedVersion): Promise<Homepa
     });
 
   for (const item of sidebar) {
+    // Kitabın sonunda kategorisiz duran sayfalar (Kısaltmalar) bölüm değil, başvuru sayfasıdır.
+    if (item.type === 'doc' && item !== aboutDoc) {
+      references.push(...docsOf([item.id]).map((doc) => ({title: doc.title, permalink: doc.permalink})));
+      continue;
+    }
     if (item.type !== 'category') {
       continue;
     }
     const entries = entriesOf(item.items);
-
-    // Kaynaklar (Kısaltmalar) bölüm değil, başvuru listesidir.
-    if (item.label === 'Kaynaklar') {
-      references = entries.map(({lead}) => ({title: lead.title, permalink: lead.permalink}));
-      continue;
-    }
 
     const chapters = await Promise.all(
       entries.map(async ({lead, docs}): Promise<Chapter> => {
