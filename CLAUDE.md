@@ -78,7 +78,7 @@ src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` s
 src/components/CanliSohbet/  İsteğe bağlı Tawk.to sohbeti: betiği tembel yükleyen kanca ve yüzen düğme
 src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage,
                           Blog/Pages/BlogAuthorsListPage, BlogTagsListPage, NotFound, SearchPage,
-                          Mermaid ve MDXComponents/Img (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+                          Mermaid, MDXComponents/Img ve BlogPostPage/Metadata (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
                           kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır), Root.tsx
                           (resmi Root genişletme noktası, eject değildir: yüzen sohbet düğmesini ekler)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
@@ -673,7 +673,12 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
 - **Site kimliği:** her sayfada `docusaurus.config.ts` içindeki `identityGraph`
   (schema.org `Organization` + `Person` + `WebSite`, `@id` ile bağlı) bulunur; Google
   bunu site adı ve kimlik bilgisi için kullanabilir. Yalnızca depoda doğrulanabilen
-  alanlar yazılır (uydurma profil, adres, puan eklenmez). `/kitap` sayfası `Book` ve
+  alanlar yazılır (uydurma profil, adres, puan eklenmez). Site ve kitap gönüllü bir grubun
+  ortak işidir: `WebSite`, `Book` ve `TechArticle`'ın yazarı `Organization`'dır, `Person`
+  yalnızca kurucu olarak bağlanır; `author` meta etiketi, PDF'in yazarı ve kitaba atıf biçimi
+  (`kitap/index.mdx`) "Aviyonik Yazılım topluluğu"dur. Blog yazılarında `author` meta etiketi
+  yazının kendi yazarlarını (`authors.yml`) gösterir (`src/theme/BlogPostPage/Metadata/`), böylece
+  `article:author` ve `BlogPosting` ile çelişmez. `/kitap` sayfası `Book` ve
   `TechArticle`, diğer kitap sayfaları `TechArticle` taşır (`src/theme/DocItem/Metadata/`);
   kütüphane önerileri `Review`/`Book` olarak işaretlenmez. `BreadcrumbList`
   (`src/theme/DocBreadcrumbs/StructuredData/`) en az iki öğe içerir ve adresleri

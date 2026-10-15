@@ -40,7 +40,7 @@ const FONT_DIR = path.join(ROOT, 'node_modules/@fontsource/ibm-plex-sans');
 /** PDF'te kullanılan statik IBM Plex Sans ağırlıkları (paketin kendi @font-face dosyaları). */
 const FONT_STYLESHEETS = ['400', '400-italic', '500', '600', '600-italic', '700', '700-italic'];
 
-const AUTHOR = 'M. Serdar Karaman ve katkıda bulunanlar';
+const AUTHOR = 'Aviyonik Yazılım topluluğu';
 const SUBTITLE = 'Emniyet-kritik aviyonik yazılım geliştirme, doğrulama ve sertifikasyon';
 const KEYWORDS = ['aviyonik yazılım', 'DO-178C', 'emniyet-kritik yazılım', 'sertifikasyon'];
 const REPO_URL = 'https://github.com/Mavrikant/aviyonikyazilim';

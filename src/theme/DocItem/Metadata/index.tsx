@@ -51,14 +51,15 @@ function DocStructuredData(): ReactNode {
     return null;
   }
 
-  // @id değerleri docusaurus.config.ts içindeki kimlik grafiğiyle (Organization ve
-  // Person) aynıdır; alan adı siteConfig.url'den türetilir.
+  // @id değeri docusaurus.config.ts içindeki kimlik grafiğindeki Organization ile aynıdır;
+  // alan adı siteConfig.url'den türetilir. Kitap topluluğun ortak işi olduğundan yazar da
+  // yayımcı da kuruluştur.
   const origin = siteConfig.url.replace(/\/+$/, '');
   const {trailingSlash} = siteConfig;
   const pageUrl = origin + applyTrailingSlashPolicy(permalink, trailingSlash);
   const bookUrl = origin + applyTrailingSlashPolicy(bookPath, trailingSlash);
-  const author = {'@id': `${origin}/#person`};
-  const publisher = {'@id': `${origin}/#organization`};
+  const author = {'@id': `${origin}/#organization`};
+  const publisher = author;
   const bookId = `${bookUrl}#book`;
 
   const article = {
