@@ -1,6 +1,6 @@
 ---
 title: "Ek F: Kontrol Listeleri"
-description: "DO-178C akran gözden geçirmesi ve süreç denetimi için numaralı, seviye etiketli, CSV olarak indirilebilir 13 kontrol listesi ve SOI hazırlık listeleri."
+description: "DO-178C akran gözden geçirmesi ve süreç denetimi için numaralı, seviye etiketli, CSV olarak indirilebilir 13 kontrol listesi; SOI hazırlık listelerine yol gösterir."
 ---
 
 Bu ek, DO-178C projesinde yaşam döngüsü verisinin (software life cycle data) gözden
@@ -20,7 +20,7 @@ masasında kullanılabilir sorulara çevirir. Kitapta kontrol listesi üç ayrı
 |---|---|---|
 | Yazarın öz denetimi | Yazar; planı ya da standardı gözden geçirmeye sunmadan önce | [Ek E](../05-sablonlar/index.mdx) şablon sayfalarının sonundaki "Yayımlamadan önce" listeleri |
 | Akran gözden geçirmesi (peer review) ve süreç denetimi | Gözden geçirenler, değişiklik kontrol kurulu (change control board) ve kalite güvencesi (quality assurance); iş ürünü temel çizgiye (baseline) girmeden, geçiş kriterlerinde (transition criteria) ve her değişiklikte | Bu ek: aşağıdaki on üç liste |
-| Otorite denetimine hazırlık | Proje ekibi ve kalite güvencesi; katılım aşaması (Stage of Involvement, SOI) denetiminden birkaç hafta önce, iç ön denetimde (mock audit) | SW SOI-1 … SW SOI-4; bu ekin parçasıdır, sayfa sırasında sondadır |
+| Otorite denetimine hazırlık | Proje ekibi ve kalite güvencesi; katılım aşaması (Stage of Involvement, SOI) denetiminden birkaç hafta önce, iç ön denetimde (mock audit) | SW SOI-1 … SW SOI-4; bu ekte değil, eklerden sonraki SOI Denetimleri başlığındadır |
 
 İkinci ve üçüncü tür kolayca karışır. Akran gözden geçirmesi listesi ürünün kendisini sorar:
 bu gereksinim doğrulanabilir mi? SOI listesi süreç kanıtını sorar: gereksinimin gözden
@@ -68,16 +68,17 @@ aracında süzülebilir. Parametre verisi öğesinin (parameter data item, PDI) 
 
 ### Otorite denetimine hazırlık
 
-Dört SOI sayfası, otoritenin SOI denetiminde soracaklarına hazırlık içindir. Maddeleri
+Dört SOI sayfası, otoritenin SOI denetiminde soracaklarına hazırlık içindir ve kitapta
+eklerden sonra ayrı bir başlık (SOI Denetimleri) altında durur. Maddeleri
 numarasızdır ve CSV düğmesi yoktur; bir iş ürününün gözden geçirme kaydına girmez, iç ön
 denetimde kullanılırsa sonucu kalite güvencesi kaydına yazılır.
 
 | Liste | Ne zaman | Bakılan |
 |---|---|---|
-| [SW SOI-1](soi-1.mdx) | Planlar yayımlandıktan sonra, geliştirme verisi üretimi hızlanmadan önce | Planlar, standartlar, araçlar ve plan setinin tutarlılığı |
-| [SW SOI-2](soi-2.mdx) | Gereksinim, tasarım ve kodun temsil edici bir bölümü üretilip gözden geçirildiğinde | Geliştirme verisi, izlenebilirlik (traceability), standart uyumu, gözden geçirme kayıtları |
-| [SW SOI-3](soi-3.mdx) | Doğrulama verisinin temsil edici bir bölümü tamamlanıp kapsam analizi sonuç vermeye başladığında | Testlerin türetilmesi ve sonuçları, kapsam analizleri, test ortamı, problem raporları (problem report) |
-| [SW SOI-4](soi-4.mdx) | Faaliyetler tamamlanıp sertifikasyona esas sürüm belirlendiğinde | Önceki bulguların kapanışı, yazılım başarım özeti (Software Accomplishment Summary, SAS) ve yazılım konfigürasyon indeksi (Software Configuration Index, SCI), açık problem raporları, uygunluk gözden geçirmesi |
+| [SW SOI-1](../../07-soi-denetimleri/soi-1.mdx) | Planlar yayımlandıktan sonra, geliştirme verisi üretimi hızlanmadan önce | Planlar, standartlar, araçlar ve plan setinin tutarlılığı |
+| [SW SOI-2](../../07-soi-denetimleri/soi-2.mdx) | Gereksinim, tasarım ve kodun temsil edici bir bölümü üretilip gözden geçirildiğinde | Geliştirme verisi, izlenebilirlik (traceability), standart uyumu, gözden geçirme kayıtları |
+| [SW SOI-3](../../07-soi-denetimleri/soi-3.mdx) | Doğrulama verisinin temsil edici bir bölümü tamamlanıp kapsam analizi sonuç vermeye başladığında | Testlerin türetilmesi ve sonuçları, kapsam analizleri, test ortamı, problem raporları (problem report) |
+| [SW SOI-4](../../07-soi-denetimleri/soi-4.mdx) | Faaliyetler tamamlanıp sertifikasyona esas sürüm belirlendiğinde | Önceki bulguların kapanışı, yazılım başarım özeti (Software Accomplishment Summary, SAS) ve yazılım konfigürasyon indeksi (Software Configuration Index, SCI), açık problem raporları, uygunluk gözden geçirmesi |
 
 ## Bağımsızlık
 
@@ -268,5 +269,5 @@ koşulları dışa aktarılmaz; onlar kaydın başında bir kez teyit edilir.
 - [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.mdx)
 - [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
 - [Ek E: Plan ve Standart Şablonları](../05-sablonlar/index.mdx)
-- [SW SOI-1](soi-1.mdx), [SW SOI-2](soi-2.mdx), [SW SOI-3](soi-3.mdx), [SW SOI-4](soi-4.mdx)
+- [SW SOI-1](../../07-soi-denetimleri/soi-1.mdx), [SW SOI-2](../../07-soi-denetimleri/soi-2.mdx), [SW SOI-3](../../07-soi-denetimleri/soi-3.mdx), [SW SOI-4](../../07-soi-denetimleri/soi-4.mdx)
 - [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)
