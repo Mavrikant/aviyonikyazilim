@@ -671,7 +671,10 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
 - **Site kimliği:** her sayfada `docusaurus.config.ts` içindeki `identityGraph`
   (schema.org `Organization` + `Person` + `WebSite`, `@id` ile bağlı) bulunur; Google
   bunu site adı ve kimlik bilgisi için kullanabilir. Yalnızca depoda doğrulanabilen
-  alanlar yazılır (uydurma profil, adres, puan eklenmez). `/kitap` sayfası `Book` ve
+  alanlar yazılır (uydurma profil, adres, puan eklenmez). Site ve kitap gönüllü bir grubun
+  ortak işidir: `WebSite`, `Book` ve `TechArticle`'ın yazarı `Organization`'dır, `Person`
+  yalnızca kurucu olarak bağlanır; `author` meta etiketi ve PDF'in yazarı "Aviyonik Yazılım
+  topluluğu"dur (blog yazılarının yazarı `authors.yml`'den gelir). `/kitap` sayfası `Book` ve
   `TechArticle`, diğer kitap sayfaları `TechArticle` taşır (`src/theme/DocItem/Metadata/`);
   kütüphane önerileri `Review`/`Book` olarak işaretlenmez. `BreadcrumbList`
   (`src/theme/DocBreadcrumbs/StructuredData/`) en az iki öğe içerir ve adresleri

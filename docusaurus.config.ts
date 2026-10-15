@@ -79,7 +79,8 @@ const identityGraph = {
       inLanguage: 'tr',
       license: 'https://creativecommons.org/licenses/by-sa/4.0/',
       publisher: {'@id': `${SITE_URL}/#organization`},
-      author: {'@id': `${SITE_URL}/#person`},
+      // Site gönüllü bir grup mühendisin ortak işidir; yazar kuruluştur, kişi kurucu olarak bağlanır.
+      author: {'@id': `${SITE_URL}/#organization`},
     },
   ],
 };
@@ -295,7 +296,7 @@ const config: Config = {
     // etiket bulunursa "ARINC 429" gibi aramalar ilgisiz sayfalarla dolar. Blog yazıları
     // kendi `keywords` frontmatter'ını kullanır.
     metadata: [
-      {name: 'author', content: 'M. Serdar Karaman'},
+      {name: 'author', content: 'Aviyonik Yazılım topluluğu'},
       ...(GOOGLE_SITE_VERIFICATION
         ? [{name: 'google-site-verification', content: GOOGLE_SITE_VERIFICATION}]
         : []),
