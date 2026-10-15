@@ -35,17 +35,21 @@ export type Veri = {
   atif: string;
   /** Kontrol kategorisi, A B C D sırasıyla: 1 = CC1, 2 = CC2, - = o seviyede çıktı değil */
   kk: string;
+  /** Kitaptaki şablon sayfası (planlar ve geliştirme standartları için) */
+  yol?: string;
 };
 
+const SABLON = '/kitap/ekler/sablonlar';
+
 export const VERILER = {
-  psac: {ad: 'Yazılım sertifikasyon planı', kisa: 'PSAC', atif: '11.1', kk: '1111'},
-  sdp: {ad: 'Yazılım geliştirme planı', kisa: 'SDP', atif: '11.2', kk: '1122'},
-  svp: {ad: 'Yazılım doğrulama planı', kisa: 'SVP', atif: '11.3', kk: '1122'},
-  scmp: {ad: 'Yazılım konfigürasyon yönetimi planı', kisa: 'SCMP', atif: '11.4', kk: '1122'},
-  sqap: {ad: 'Yazılım kalite güvencesi planı', kisa: 'SQAP', atif: '11.5', kk: '1122'},
-  gerStd: {ad: 'Yazılım gereksinim standartları', atif: '11.6', kk: '112-'},
-  tasStd: {ad: 'Yazılım tasarım standartları', atif: '11.7', kk: '112-'},
-  kodStd: {ad: 'Kodlama standardı', atif: '11.8', kk: '112-'},
+  psac: {ad: 'Yazılım sertifikasyon planı', kisa: 'PSAC', atif: '11.1', kk: '1111', yol: `${SABLON}/psac`},
+  sdp: {ad: 'Yazılım geliştirme planı', kisa: 'SDP', atif: '11.2', kk: '1122', yol: `${SABLON}/sdp`},
+  svp: {ad: 'Yazılım doğrulama planı', kisa: 'SVP', atif: '11.3', kk: '1122', yol: `${SABLON}/svp`},
+  scmp: {ad: 'Yazılım konfigürasyon yönetimi planı', kisa: 'SCMP', atif: '11.4', kk: '1122', yol: `${SABLON}/scmp`},
+  sqap: {ad: 'Yazılım kalite güvencesi planı', kisa: 'SQAP', atif: '11.5', kk: '1122', yol: `${SABLON}/sqap`},
+  gerStd: {ad: 'Yazılım gereksinim standartları', atif: '11.6', kk: '112-', yol: `${SABLON}/gereksinim-standardi`},
+  tasStd: {ad: 'Yazılım tasarım standartları', atif: '11.7', kk: '112-', yol: `${SABLON}/tasarim-standardi`},
+  kodStd: {ad: 'Kodlama standardı', atif: '11.8', kk: '112-', yol: `${SABLON}/kodlama-standardi`},
   srd: {ad: 'Yazılım gereksinim verisi', atif: '11.9', kk: '1111'},
   tasarim: {ad: 'Tasarım tanımı', atif: '11.10', kk: '1112'},
   kaynak: {ad: 'Kaynak kod', atif: '11.11', kk: '111-'},

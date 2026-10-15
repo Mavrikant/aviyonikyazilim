@@ -119,9 +119,11 @@ kalite güvencesinin gözünden bakıyoruz. İyi bir SQAP şu soruları cevaplar
 - **Hangi kayıtlar tutulur?** Üretilecek kalite güvencesi kayıtlarının tanımı.
 
 Otoritenin planlama denetiminde, yani ilk katılım aşaması (Stage of Involvement, SOI)
-denetiminde SQAP'ta baktığı noktalar [SW SOI-1](../kaynaklar/soi-1.md) kontrol
+denetiminde SQAP'ta baktığı noktalar [SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md) kontrol
 listesindedir. Tipik zayıflık ölçülemeyen taahhüttür: "süreçler düzenli olarak
-denetlenir" cümlesinin ne zaman yerine getirildiği anlaşılamaz.
+denetlenir" cümlesinin ne zaman yerine getirildiği anlaşılamaz. Planın bölüm bölüm
+şablonu ve ölçülebilir taahhüt örnekleri
+[SQAP Şablonu ve Yazım Rehberi](../06-ekler/05-sablonlar/05-sqap.md) sayfasındadır.
 
 Kalite güvencesinin kendi çıktısı **kalite güvencesi kayıtlarıdır**. Standart bunlara
 bir biçim dayatmaz, ama iki şeyin kayıtlarda bulunmasını açıkça bekler: denetim
@@ -339,7 +341,7 @@ talimatındaki eksik adım gibi sorunlar düzeltmeye zaman varken ortaya çıkar
 izlenir ve teslimden önce kapatılır ya da gerekçesiyle kayda geçer. Uygunluk gözden
 geçirmesi başvuru sahibinin (applicant) kendi iç denetimidir; otoritenin son
 denetiminin yerine geçmez, ona girdi olur. Otoritenin bu kayıtta ve çevresindeki
-veride nelere baktığı [SW SOI-4](../kaynaklar/soi-4.md) kontrol listesindedir.
+veride nelere baktığı [SW SOI-4](../06-ekler/06-kontrol-listeleri/soi-4.md) kontrol listesindedir.
 
 ## Etkili ve etkisiz kalite güvencesi
 

@@ -505,6 +505,17 @@
   border-radius: 4px;
 }
 
+/* Şablon sayfası olan veri (planlar, standartlar) bağlantıdır */
+a.veri {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.veri:hover {
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+}
+
 .veri b {
   color: var(--ifm-color-emphasis-700);
   font-family: var(--ifm-font-family-monospace);

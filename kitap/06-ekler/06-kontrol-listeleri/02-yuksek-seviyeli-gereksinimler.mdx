@@ -1,0 +1,297 @@
+---
+title: "Yüksek Seviyeli Gereksinim Kontrol Listesi"
+sidebar_label: "Yüksek seviyeli gereksinimler"
+sidebar_position: 2
+description: "Yüksek seviyeli gereksinimlerin akran gözden geçirmesi için DO-178C §6.3.1'e dayalı, numaralı ve CSV olarak indirilebilir kontrol listesi."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), yüksek seviyeli gereksinimlerin (high-level requirements)
+akran gözden geçirmesinde (peer review) kullanılır. Gözden geçirilen, gereksinim sürecinin
+çıktısıdır: türetilmiş gereksinimler (derived requirements) dahil yüksek seviyeli
+gereksinimler, öznitelikleri ve sistem gereksinimlerine kurulan iz. Gözden geçirme (review),
+gereksinimler temel çizgiye (baseline) alınmadan ve tasarıma geçilmeden önce yapılır
+([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md), G2); masada yazarın
+yanında başka bir gereksinim mühendisi, bir sistem ya da emniyet temsilcisi ve bir test
+mühendisi bulunur. Seviye A ve B'de maddelerin bir kısmında bağımsızlık (independence)
+aranır: bu maddeleri yazardan başka biri yanıtlar.
+
+Bu gözden geçirme, DO-178C'nin yüksek seviyeli gereksinimler için tanımladığı gözden geçirme
+ve analiz faaliyetine (§6.3.1) ve Ek A Tablo A-3'teki yedi hedefe karşılık gelir: sistem
+gereksinimleriyle uyum, doğruluk ve tutarlılık, hedef bilgisayarla (target computer)
+uyumluluk, doğrulanabilirlik, standarda uyum, izlenebilirlik (traceability) ve algoritmalar.
+Liste bunlara iki grup ekler: türetilmiş gereksinimler (§6.3.1.a'daki doğru tanım beklentisi
+ile A-2 #2'deki sistem süreçlerine iletim hedefi) ve gürbüzlük (robustness) testlerinin
+dayanağı olan anormal durum davranışı. Bu sorulara neden bakıldığı
+[6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
+bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](index.md) sayfasında
+anlatılır. Gereksinim standardının kendisi
+[planlar ve standartlar](01-planlar-ve-standartlar.mdx) listesiyle, düşük seviyeli
+gereksinimler ise [kendi listeleriyle](04-dusuk-seviyeli-gereksinimler.mdx) gözden geçirilir.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §6.3.1 a–g; gereksinimin içeriği için §5.1.2 ve §11.9; sistem gereksinimlerine iz için §5.5.a |
+| Ek A hedefleri | A-3 #1 ve #2: A ve B'de bağımsızlıkla, C ve D'de gerekli; A-3 #3: A ve B'de gerekli, C ve D'de aranmaz; A-3 #4 ve #5: A, B ve C'de gerekli, D'de aranmaz; A-3 #6: her seviyede gerekli; A-3 #7: A ve B'de bağımsızlıkla, C'de gerekli, D'de aranmaz |
+| İçeriğine bakılan geliştirme hedefleri | A-2 #1 (yüksek seviyeli gereksinimler geliştirilmiş) ve A-2 #2 (türetilmiş gereksinimler tanımlanmış ve sistem süreçlerine iletilmiş): her seviyede gerekli |
+| Gözden geçirilen veri | Yazılım gereksinim verisi (Software Requirements Data, §11.9): gereksinim metni ve öznitelikleri; sistem gereksinimlerine iz verisi (trace data, §11.21) |
+| Başvuru verisi | Yazılıma tahsis edilen sistem gereksinimleri (emniyet gereksinimleri dahil), arayüz kontrol dokümanı (interface control document, ICD), sistem mimarisi, gereksinim standardı ve terim sözlüğü |
+| Kaydın gideceği yer | Gözden geçirme kaydı ve doldurulmuş liste → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular (findings) temel çizgi öncesinde kaydın içinde, sonrasında problem raporuyla (problem report; sınır [SCMP](../05-sablonlar/04-scmp.md)'de tanımlıdır) |
+| İlgili şablon | [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md); gözden geçirme yöntemi için [SVP](../05-sablonlar/03-svp.md) |
+| Madde öneki | `YGR` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek gereksinimler, gereksinim yönetim aracındaki sürüm ya da temel çizgi
+      adını taşıyan bir dışa aktarımla tanımlanmıştır.
+- [ ] Başvurulan sistem gereksinimleri, ICD ve gereksinim standardı belirli sürümleriyle temel
+      çizgidedir.
+- [ ] İz verisi aynı sürüm için üretilmiş; yasaklı ifade taraması ve boş öznitelik sorgusu
+      gibi araç çıktıları gözden geçirenlere dağıtılmıştır.
+- [ ] Katılımcılar bellidir; Seviye A ve B'de bağımsızlık gereken maddeleri yazardan başka
+      biri yanıtlayacak ve adı kayda ayrıca yazılacaktır.
+- [ ] Malzeme oturumdan önce dağıtılmış, kapsam tek oturumda ele alınabilecek parçalara
+      bölünmüştür.
+- [ ] Kullanılan kontrol listesinin sürümü kayda yazılacaktır.
+
+## Kontrol listesi
+
+Her madde "Evet" yanıtı istenen durumu gösteren bir sorudur; "Hayır" yanıtı bir bulgudur,
+sondaki parantez ise maddenin geçerli olduğu seviyeleri ve dayanağını verir.
+
+<ListeIndir dosya="yuksek-seviyeli-gereksinimler" baslik="Yüksek Seviyeli Gereksinim Kontrol Listesi" />
+
+### Sistem gereksinimleriyle uyum
+
+- [ ] **YGR-01** Yazılıma tahsis edilen her sistem gereksiniminin istediği davranış, ona bağlı
+      yüksek seviyeli gereksinimlerde eksiksiz karşılanıyor mu? Örneğin sistem gereksinimindeki
+      süre bütçesinin yazılıma ayrılan payı, toleransıyla birlikte bütçenin içinde kalıyor mu?
+      *(A–D · §6.3.1.a)*
+- [ ] **YGR-02** Emniyetle ilgili sistem gereksinimlerinden gelen gereksinimler, ilgili arıza
+      durumunun (failure condition) kimliğiyle emniyet gereksinimi olarak işaretlenmiş mi?
+      *(A–D · §11.9.a)*
+- [ ] **YGR-03** Gereksinim kümesi çalışma kipleri, performans, zamanlama, bellek kısıtları,
+      donanım ve yazılım arayüzleri, arıza tespiti ile emniyet izleme ve bölümleme
+      başlıklarının her birine ya gereksinimle ya da açık bir "uygulanmaz" notuyla yanıt
+      veriyor mu? *(A–D · §11.9)*
+- [ ] **YGR-04** Sistem gereksinimlerinde ya da ICD'de bulunan belirsizlik, çelişki ve
+      eksikler resmî bir kanalla (problem raporu ya da eşdeğeri) sistem sürecine bildirilmiş
+      mi; yazar bunları kendi yorumuyla kapatıp gereksinime gömmemiş mi? *(A–D · §5.1.2.b)*
+
+### Doğruluk ve tutarlılık
+
+- [ ] **YGR-05** Gereksinim tek bir tepki tanımlıyor mu; ikinci bir tepki "ve", "ayrıca" ya da
+      virgülle aynı cümleye eklenmemiş mi? *(A–D · §6.3.1.b)*
+- [ ] **YGR-06** Girdi, tetikleyen koşul ve beklenen tepki, yazar, tasarımcı ve test
+      mühendisinin aynı davranışı anlayacağı açıklıkta yazılmış mı? Örneğin geçilmesi istenen
+      "güvenli kip", kipleri tanımlayan gereksinimlerde yer alıyor mu? *(A–D · §6.3.1.b)*
+- [ ] **YGR-07** Fiziksel büyüklük ve süre bildiren her değer birimiyle verilmiş; periyot ve
+      hesaplanan çıkış gibi toleransın anlam taşıdığı değerlerde tolerans, aralıklarda uçların
+      dahil olup olmadığı yazılmış mı? Örneğin gecikme gereksiniminde sürenin hangi olaydan
+      başlayarak ölçüldüğü belli mi? *(A–D · §5.1.2.f)*
+- [ ] **YGR-08** Kip adları ve "bayat", "geçersiz" gibi tanımlı terimler kümenin her yerinde
+      terim sözlüğündeki tek anlamı ve yazımıyla mı kullanılıyor? *(A–D · §6.3.1.b)*
+- [ ] **YGR-09** Gereksinim kümedeki başka bir gereksinimle çelişmiyor ve onu yinelemiyor mu?
+      Örneğin aynı çıkış için iki farklı güncelleme periyodu ya da aynı koşulda iki farklı
+      tepki tanımlanmamış mı? *(A–D · §6.3.1.b)*
+- [ ] **YGR-10** Gerekçeli bir tasarım kısıtı (design constraint) olarak işaretlenmedikçe,
+      gereksinim fonksiyon, değişken, görev ya da sayaç adı, test adımı veya test ortamı
+      içermiyor mu? *(A–D · §5.1.2.g)*
+
+### Hedef bilgisayarla uyumluluk
+
+- [ ] **YGR-11** İstenen tepki süreleri ve güncelleme periyotları, hedef bilgisayarın işlem
+      kapasitesi ve giriş/çıkış donanımının hız ve gecikmeleriyle gerçekleştirilebilir mi?
+      Örneğin 10 ms içinde tepki istenen bir çıkış, yalnızca 20 ms'de bir yenilenen bir
+      girdiye bağlanmamış mı? *(A–B · §6.3.1.c)*
+- [ ] **YGR-12** İstenen değer aralığı, çözünürlük ve bellek kullanımı hedef donanımın
+      olanaklarıyla bağdaşıyor mu? Örneğin istenen 0,1 knot çözünürlük, çıkış veri kelimesinin
+      0,25 knot'luk en küçük adımıyla çelişmiyor mu? *(A–B · §6.3.1.c)*
+
+### Doğrulanabilirlik
+
+- [ ] **YGR-13** Test mühendisi geçti/kaldı ölçütünü başka bir belgeye bakmadan gereksinimden
+      çıkarabiliyor mu? Örneğin 500 ms'lik bir eşikte tepkinin 480 ms'de ya da 520 ms'de
+      gelmesinin geçti mi kaldı mı sayılacağı gereksinimden okunabiliyor mu?
+      *(A–C · §6.3.1.d)*
+- [ ] **YGR-14** Gereksinimdeki tepki, yazılımın içini bilmeden, sınırında (çıkış, durum
+      kelimesi, arıza kaydı) gözlenebilen bir değişiklik olarak mı tanımlanmış?
+      *(A–C · §6.3.1.d)*
+- [ ] **YGR-15** Her gereksinimin doğrulama yöntemi (test, analiz, gözden geçirme),
+      gereksinimin testle gösterilip gösterilemeyeceğine bakılarak seçilmiş mi? Örneğin mutlak
+      ifade ("her zaman", "hiçbir zaman") içeren ya da testle tetiklenemeyen bir koşul
+      tanımlayan gereksinimde testin yanında analiz de öngörülmüş mü? *(A–C · §6.3.1.d)*
+
+### Standarda uyum
+
+- [ ] **YGR-16** Gereksinim metni, proje gereksinim standardının yasaklı ifade listesindeki bir
+      sözcüğü ("uygun", "hızlıca", "yaklaşık", "belirlenecek" gibi) içermiyor mu?
+      *(A–C · §6.3.1.e)*
+- [ ] **YGR-17** Gereksinim, standardın bağlayıcı kipi ve cümle kalıplarından biriyle yazılmış
+      mı; öznesi "yazılım" ya da adı tanımlı bir yazılım işlevi mi? *(A–C · §6.3.1.e)*
+- [ ] **YGR-18** Standardın zorunlu kıldığı öznitelikler (kimlik, tür, türetilmiş, doğrulama
+      yöntemi, emniyet etkisi, uygulanıyorsa kip ve bölüm) dolu ve değerleri tanımlı listeden
+      mi seçilmiş? *(A–C · §6.3.1.e)*
+- [ ] **YGR-19** Standarttan her sapma, onaylı bir sapma kaydının kimliğiyle gereksinimde
+      gösterilmiş mi; gözden geçirmede sözlü olarak kabul edilmiş bir sapma kalmamış mı?
+      *(A–C · §6.3.1.e)*
+
+### İzlenebilirlik
+
+- [ ] **YGR-20** Gözden geçirilen kapsama tahsis edilen her sistem gereksinimi en az bir yüksek
+      seviyeli gereksinime bağlı mı; karşılanamayan bir tahsis varsa sistem sürecine
+      bildirilmiş mi? *(A–D · §6.3.1.f)*
+- [ ] **YGR-21** Türetilmemiş her gereksinim, bölüm ya da belge düzeyinde değil tek tek
+      kurulmuş bir bağla sistem gereksinimine izleniyor ve bağın iki ucu aynı davranıştan mı
+      söz ediyor? *(A–D · §5.5.a)*
+- [ ] **YGR-22** İz verisi, gözden geçirilen gereksinim sürümüyle ve başvurulan sistem
+      gereksinimi sürümüyle mi kurulmuş; kaynak değiştiği için işaretlenen şüpheli bağ
+      (suspect link) açık kalmamış mı? *(A–D · §6.3.1.f)*
+
+### Algoritmalar
+
+- [ ] **YGR-23** Gereksinimde verilen formül, katsayı ve ölçekleme, kaynağıyla (sistem
+      gereksinimi, analiz raporu, ICD) karşılaştırılmış ve birimleri tutarlı mı?
+      *(A–C · §6.3.1.g)*
+- [ ] **YGR-24** Algoritmanın süreksizlik noktalarındaki (discontinuity) davranışı tanımlı mı?
+      Örneğin aralık sınırında, tablo uçlarında ya da yön açısının 359°'dan 0°'ye geçtiği
+      noktada yazılımın ne üreteceği yazılı mı? *(A–C · §6.3.1.g)*
+
+### Türetilmiş gereksinimler
+
+- [ ] **YGR-25** Sistem gereksinimine izlenemeyen ya da orada olmayan bir davranış ekleyen her
+      gereksinim, türetilmiş gereksinim (derived requirement) olarak işaretli mi? Örneğin
+      makullük denetimi (reasonableness check) ya da açılışta izlemeyi askıya alan bir pencere
+      tanımlayan gereksinim işaretlenmiş mi? *(A–D · §6.3.1.a)*
+- [ ] **YGR-26** Türetilmiş her gereksinimin gerekçesi, neden gerektiğini ve sistemin bilmediği
+      davranışı söylüyor mu; gerekçe "tasarım gereği" gibi boş bir ifadeyle geçiştirilmemiş mi?
+      *(A–D · §6.3.1.a)*
+- [ ] **YGR-27** Türetilmiş her gereksinim, sistem emniyet değerlendirme süreci (system safety
+      assessment process) dahil sistem süreçlerine iletilmiş ve iletim kaydının kimliği
+      gereksinime işlenmiş mi? *(A–D · A-2 #2)*
+
+### Gürbüzlük ve anormal durumlar
+
+- [ ] **YGR-28** Aralık dışı değer, geçersiz işaretli veri, süresinde tazelenmeyen (bayat) veri
+      ve izin verilmeyen kip geçişi isteği karşısında yazılımın tepkisi bir gereksinimde
+      tanımlı mı? *(A–D · iyi uygulama)*
+- [ ] **YGR-29** Açılışta, yeniden başlatmada ve güç kesintisinden dönüşte çıkışların başlangıç
+      değerleri ve süreye bağlı koşulların nereden başlayarak sayıldığı tanımlı mı? Örneğin
+      uçuşta yeniden başlatmanın yerdeki açılıştan farklı ele alınıp alınmadığı yazılı mı?
+      *(A–D · iyi uygulama)*
+- [ ] **YGR-30** Donanımın bildirdiği bir arıza, çerçeve süresinin aşılması ya da izleme
+      işlevinin çalışamaması durumunda yazılımın ne bildireceği, hangi çıkışı keseceği ve
+      hangi kipe geçeceği tanımlı mı? *(A–D · §11.9.g)*
+
+:::tip[Tek gereksinime ve kümeye bakan maddeler]
+Maddelerin çoğu gereksinimleri tek tek okuyarak yanıtlanır. YGR-01, YGR-03, YGR-09 ve YGR-20
+ise kümeye bakar ve ancak sistem gereksinimleri ile ICD yan yana açıkken yanıtlanabilir; bu
+maddeler için oturumda ayrı bir tur ayırmak, tek tek okumanın arasında gözden kaçmalarını
+önler. Kümede hiç türetilmiş gereksinim çıkmaması da, gereksinimlerin çoğunun türetilmiş olması
+da YGR-25 için soru doğurur: ilki işaretlenmemiş türetilmiş gereksinime, ikincisi eksik sistem
+gereksinimlerine işaret eder.
+:::
+
+## Araçla denetlenebilecek maddeler
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| YGR-16 | Gereksinim yönetim aracında yasaklı ifade taraması | Listede olmayan ama aynı belirsizliği taşıyan ifade; listeye eklenmesi önerisi |
+| YGR-10 | Alt çizgili ya da büyük-küçük harf karışık sözcük taraması | ICD sinyal kimliği gibi meşru istisnalar; metne giren test ayrıntısı |
+| YGR-18 | Araç sorgusu: zorunlu özniteliği boş ya da liste dışı değer taşıyan nesne | Değerin doğruluğu; örneğin yalnızca analizle gösterilebilecek gereksinime "Test" yazılması |
+| YGR-20, YGR-21 | İz aracı sorgusu: bağı olmayan tahsisli sistem gereksinimi ve bağı olmayan türetilmemiş gereksinim | Bağın içerikçe doğruluğu; iki ucun aynı davranıştan söz edip etmediği |
+| YGR-22 | Şüpheli bağ raporu; iz raporundaki sürümlerin temel çizgiyle karşılaştırılması | Değişen sistem gereksinimi karşısında gereksinimin gerçekten değişmesi gerekip gerekmediği |
+| YGR-26, YGR-27 | Araç sorgusu: türetilmiş işaretli, gerekçesi ya da iletim kaydı boş nesne | Gerekçenin yeterliliği; işaretlenmemiş türetilmiş gereksinim (YGR-25) ancak okuyarak bulunur |
+
+Araç çıktısı gözden geçirme kaydına eklenir ve gözden geçiren maddeyi bu çıktıya bakarak
+yanıtlar. Bir madde, araç çıktısına güvenilip ayrıca bakılmadan "Evet" sayılıyorsa sorgu ya
+da betik bir doğrulama faaliyetinin yerini almış olur; bu da araç kalifikasyonu (tool
+qualification) sorusunu doğurur
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| Periyot ya da süre sınırı toleranssız ya da başlangıç olayı belirsiz; aralık uçlarının dahil olup olmadığı yazılmamış | Sayının sistem gereksiniminden olduğu gibi aktarılması | YGR-07, YGR-13 |
+| Aralık dışı veri, bayat veri ya da yeniden başlatma davranışı tanımsız | Kümenin yalnızca normal işleyişi anlatması; anormal durumun "kodda nasılsa ele alınır" diye bırakılması | YGR-28, YGR-29 |
+| Makullük denetimi ya da açılış penceresi bir sistem gereksinimine bağlanmış, türetilmiş işaretlenmemiş | Yeni davranışın "yakın" bir sistem gereksinimine iz verilerek görünmez kılınması | YGR-25 |
+| Türetilmiş gereksinim işaretli ama iletim kaydı yok | İşaretlemenin iletim sanılması | YGR-27 |
+| Gereksinim sayaç, görev ya da fonksiyon adı içeriyor | Tasarımın gereksinimden önce yapılması ya da kodun sonradan gereksinim diye belgelenmesi | YGR-10 |
+| Bağ var ama iki uç farklı davranıştan söz ediyor | İz bağlarının sonradan, başlık benzerliğine bakılarak toplu kurulması | YGR-21 |
+| Tek gereksinimde üç tepki ("reddetmeli, kaydetmeli ve uyarmalıdır") | Sistem gereksinimi cümlesinin olduğu gibi aktarılması | YGR-05 |
+| Yön açısının 359°'dan 0°'ye geçtiği noktada davranış tanımsız | Algoritmanın yalnızca tipik aralıkta düşünülmesi | YGR-24 |
+
+### İyi yazılmış bulgu
+
+İyi bulgu yeri (gereksinim kimliği), dayandığı maddeyi ya da kuralı, gözlemi ve beklenen
+düzeltmeyi söyler; yazar onu yeniden toplantıya dönmeden kapatabilir.
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| Gereksinim belirsiz. | YGR-16: HLR-0142 "hızlıca" ifadesini içeriyor; proje gereksinim standardının yasaklı ifade kuralına aykırı. Tepki süresi, başlangıç olayı ve ms cinsinden üst sınırla verilmeli. |
+| İz eksik. | YGR-20: SYS-031 (yazılıma tahsisli; kip geçişinde çıkışların söndürülmesi) hiçbir yüksek seviyeli gereksinime bağlı değil. Karşılayan gereksinim yazılmalı ya da tahsis yanlışsa sistem sürecine bildirilmeli. |
+| Türetilmiş gereksinim işaretlenmemiş. | YGR-25: HLR-0210, ardışık iki örnek arasındaki 30 knot'tan büyük farkı geçersiz sayıyor; bağlı olduğu SYS-018 yalnızca geçersiz verinin kullanılmamasını istiyor. Yeni bir davranış eklendiği için gereksinim türetilmiş işaretlenmeli, gerekçesi yazılmalı ve emniyet sürecine iletilmeli. |
+
+## Seviyeye göre uyarlama
+
+Maddenin seviye etiketi, dayandığı Ek A hedefinin geçerli olduğu seviyelerdir. Seviye
+düştükçe uygulanmayan maddeler ve bağımsızlığın arandığı maddeler şöyledir:
+
+| Seviye | Uygulanmayan maddeler | Bağımsızlık gereken maddeler |
+|---|---|---|
+| A, B | Yok | YGR-01–10, YGR-25–26 ve YGR-30 (A-3 #1, #2); YGR-23–24 (A-3 #7) |
+| C | YGR-11–12 (A-3 #3) | Yok |
+| D | YGR-11–19 (A-3 #3, #4, #5) ve YGR-23–24 (A-3 #7) | Yok |
+
+YGR-02, YGR-03, YGR-04, YGR-07, YGR-10 ve YGR-30'un dayanağı gereksinim sürecini ve
+gereksinimin içeriğini tanımlayan maddelerdir (§5.1.2, §11.9); gözden geçirmede A-3 #1 ve
+#2'nin parçası olarak yanıtlanırlar ve Seviye A ile B'de bağımsızlık onlar için de geçerlidir.
+Bağımsızlık, maddeyi yazardan başka birinin yanıtlamasıdır; aynı ekipten bir mühendis
+yeterlidir, yeter ki adı kayıtta yazarınkinden ayrı görünsün (bkz. 9. bölümün
+[Bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık) başlığı).
+Bağımsızlık aranmayan maddelerde de yazar dışından birinin bakması iyi uygulamadır.
+
+Seviye C'de hedef bilgisayarla uyumluluk hedef değildir. Zamanlama ya da bellek bütçesi dar bir
+projede YGR-11 ve YGR-12 yine sorulabilir; bu durumda "Hayır" yanıtı bir hedefin
+karşılanmadığını değil, tasarımda ele alınması gereken bir riski gösterir ve kayda öyle geçer.
+
+Seviye D'de gereksinim standardı beklenmediği için YGR-16–19 düşer; yazılım geliştirme planına
+(Software Development Plan, SDP) eklenmiş bir yazım rehberi varsa YGR-16 ve YGR-17 o rehbere
+göre yanıtlanabilir. Doğrulanabilirlik de bu seviyede hedef değildir, ama YGR-07 değerlerin
+toleransını sorduğu ve dayanağı gereksinim sürecinin kendisi olduğu için listede kalır. D'de
+ağırlık sistem gereksinimleriyle uyuma, doğruluk ve tutarlılığa, izlenebilirliğe ve türetilmiş
+gereksinimlere kayar; türetilmiş gereksinimlerin iletimi (A-2 #2) her seviyede hedeftir.
+
+Gereksinimler bir belirtim modeli (specification model) olarak ifade ediliyorsa model
+öğelerine ilişkin ek beklentiler listeye proje maddesi olarak eklenir
+([14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md)).
+Proje parametre verisi öğesi (parameter data item, PDI) planlıyorsa her seviyede bir proje
+maddesi daha eklenir (§5.1.2.j): gereksinimler her PDI'nin yazılımca nasıl kullanıldığını,
+yapısını ve veri elemanlarının özniteliklerini (tür, aralık, birim) tanımlamalı, öngörülen
+değerler de bu yapıyla tutarlı olmalıdır
+([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)).
+
+## İlgili bölümler
+
+- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [2. Sistem Bağlamında Yazılım](../../02-baglam/02-sistem-baglaminda-yazilim.md)
+- [3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](../../04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.md)
+- [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.md)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- Şablonlar: [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md) ·
+  [SDP](../05-sablonlar/02-sdp.md) · [SVP](../05-sablonlar/03-svp.md) ·
+  [SCMP](../05-sablonlar/04-scmp.md)
+- Otorite denetimine hazırlık: [SW SOI-2](soi-2.md)
+- Komşu listeler: [Planlar ve standartlar](01-planlar-ve-standartlar.mdx) ·
+  [Yazılım mimarisi](03-yazilim-mimarisi.mdx) ·
+  [Düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx) ·
+  [Test durumları ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) ·
+  [Problem raporu ve değişiklik](11-problem-raporu-ve-degisiklik.mdx)
+- Genel bakış: [Ek F: Kontrol Listeleri](index.md)

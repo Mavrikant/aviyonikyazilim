@@ -48,7 +48,8 @@ yüzden yanlıştır.
 Hedeflerin projede nasıl karşılanacağı yazılım konfigürasyon yönetimi planında (Software
 Configuration Management Plan, SCMP) yazılır: adlandırma ve sürümleme kuralları, temel
 çizgiler, problem raporu akışı, kurulun yetkisi, arşiv düzeni ve tedarikçi verisinin
-kontrolü oradadır (bkz. [5. Yazılım Planlama](05-yazilim-planlama.md)). Faaliyetlerin
+kontrolü oradadır (bkz. [5. Yazılım Planlama](05-yazilim-planlama.md); bölüm bölüm şablonu:
+[SCMP Şablonu ve Yazım Rehberi](../06-ekler/05-sablonlar/04-scmp.md)). Faaliyetlerin
 fiilen yapıldığını konfigürasyon yönetimi kayıtları gösterir; sürecin plana uygun
 yürüdüğünü ise kalite güvencesi denetler.
 
@@ -405,8 +406,8 @@ yaklaşımından doğar. Sahada en sık karşılaşılan tuzaklar şunlardır:
 Bu tuzakların ortak ilacı aynıdır: konfigürasyon yönetimini bürokratik bir yük olarak
 değil, doğrulama kanıtının geçerliliğini koruyan mühendislik altyapısı olarak görmek ve
 projenin ilk gününden itibaren işletmek. Denetime hazırlanırken bu bölümdeki beklentilerin
-kontrol listesi karşılıkları [SW SOI-2](../kaynaklar/soi-2.md) ve
-[SW SOI-4](../kaynaklar/soi-4.md) sayfalarındadır.
+kontrol listesi karşılıkları [SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md) ve
+[SW SOI-4](../06-ekler/06-kontrol-listeleri/soi-4.md) sayfalarındadır.
 
 ## Bu bölümden akılda kalması gerekenler
 

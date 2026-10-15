@@ -178,27 +178,44 @@ async function loadBook(siteDir: string, version: LoadedVersion): Promise<Homepa
   const parts: Part[] = [];
   let references: PageLink[] = [];
 
+  const docsOf = (ids: string[]) =>
+    ids.map((id) => byId.get(id)).filter((doc): doc is DocMetadata => doc !== undefined);
+
+  /**
+   * Bir kısmın içindekilerdeki satırları: her sayfa bir satırdır; kendi giriş sayfası olan
+   * alt kategori (Ek E, Ek F gibi çok sayfalı ekler) ise giriş sayfasıyla tek satırdır ve
+   * okuma süresi alt sayfalarıyla birlikte hesaplanır.
+   */
+  const entriesOf = (items: SidebarItem[]): {lead: DocMetadata; docs: DocMetadata[]}[] =>
+    items.flatMap((child) => {
+      if (child.type === 'category' && child.link?.type === 'doc') {
+        const index = byId.get(child.link.id);
+        return index ? [{lead: index, docs: [index, ...docsOf(docItemIds(child.items))]}] : [];
+      }
+      return docsOf(docItemIds([child])).map((doc) => ({lead: doc, docs: [doc]}));
+    });
+
   for (const item of sidebar) {
     if (item.type !== 'category') {
       continue;
     }
-    const docs = docItemIds(item.items)
-      .map((id) => byId.get(id))
-      .filter((doc): doc is DocMetadata => doc !== undefined);
+    const entries = entriesOf(item.items);
 
-    // Kaynaklar (Kısaltmalar, SOI sayfaları) bölüm değil, başvuru listesidir.
+    // Kaynaklar (Kısaltmalar) bölüm değil, başvuru listesidir.
     if (item.label === 'Kaynaklar') {
-      references = docs.map((doc) => ({title: doc.title, permalink: doc.permalink}));
+      references = entries.map(({lead}) => ({title: lead.title, permalink: lead.permalink}));
       continue;
     }
 
     const chapters = await Promise.all(
-      docs.map(async (doc): Promise<Chapter> => {
-        const source = await fs.readFile(sourcePath(siteDir, doc.source), 'utf8');
+      entries.map(async ({lead, docs}): Promise<Chapter> => {
+        const sources = await Promise.all(
+          docs.map(async (doc) => stripFrontMatter(await fs.readFile(sourcePath(siteDir, doc.source), 'utf8'))),
+        );
         return {
-          ...splitChapterTitle(doc.title),
-          permalink: doc.permalink,
-          minutes: readingMinutes(stripFrontMatter(source)),
+          ...splitChapterTitle(lead.title),
+          permalink: lead.permalink,
+          minutes: readingMinutes(sources.join('\n')),
         };
       }),
     );

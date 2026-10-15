@@ -1,0 +1,300 @@
+---
+title: "Kaynak Kod Kontrol Listesi"
+sidebar_label: "Kaynak kod"
+sidebar_position: 5
+description: "Kaynak kod gözden geçirmesi için DO-178C §6.3.4 kontrol listesi: gereksinim ve mimari uyumu, kodlama standardı, iz, taşma, yığın, WCET ve paylaşılan veri."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Kaynak kod gözden geçirmesi (code review), bir bileşenin kodunu izlendiği düşük seviyeli
+gereksinimlerle (low-level requirements), yazılım mimarisiyle (software architecture) ve kodlama
+standardıyla (software code standards) karşılaştırır, iki yönlü izlenebilirliğini (traceability)
+denetler; taşma, yığın (stack), yürütme süresi ve paylaşılan veri gibi doğruluk konularının ele
+alındığını da sorar. Çoğunlukla kodu yazan geliştirici dışında bir doğrulama mühendisi akran
+gözden geçirmesi (peer review) olarak yürütür; yazar dışı gözden geçiren, Seviye A ve B'de bazı
+hedeflerde zorunludur. [Ek A](../01-ek-a-ornek-gecis-kriterleri.md)'daki örnek geçiş
+kriterlerinde bu gözden geçirme, G4 geçişinin (kodlamadan kredi amaçlı doğrulamaya) çıkış
+koşuludur: kod gözden geçirilmeden kredi amaçlı teste ve temel çizgiye (baseline) girmez.
+
+DO-178C'de bu iş §6.3.4'teki kaynak kod gözden geçirmesine ve analizine, Ek A'da A-5 tablosunun
+ilk altı hedefine karşılık gelir. Gözden geçirme tek başına yetmez: değer aralığı, yığın ve en
+kötü durum yürütme süresi (worst-case execution time, WCET) gibi konular araçla ve analizle
+desteklenir; liste bu analizlerin gözden geçirilen kod sürümü için yapıldığını ve kodla tutarlı
+olduğunu sorar. Koda özgü soruların gerekçesi
+[8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md#kaynak-kodun-doğrulanması)
+bölümünde, kayıt ve bulgu sınıfları
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kontrol-listeleri-ve-kayıt)
+bölümünde, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır.
+
+:::info[Bu listenin sınırı]
+Liste kaynak kodun içeriğine bakar; komşu konular kendi listelerinde sorulur: düşük seviyeli
+gereksinimlerin kendisi [düşük seviyeli gereksinim](04-dusuk-seviyeli-gereksinimler.mdx),
+mimarinin kendisi [yazılım mimarisi](03-yazilim-mimarisi.mdx), derleyici ve bağlayıcı uyarıları
+ile bellek haritası [entegrasyon çıktıları](06-entegrasyon-ciktilari.mdx), kod kapsamı ve kaynak
+koda izlenemeyen nesne kodu [kapsam analizi](09-kapsam-analizleri.mdx) listesinde. Bu gözden
+geçirmede o konularda bir sorun görülürse bulgu yine yazılır.
+:::
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §6.3.4.a–f (ilgili: §5.3 kodlama süreci, §11.8 kodlama standardı, §11.11 kaynak kod) |
+| Ek A hedefleri | A-5 #1 (düşük seviyeli gereksinimlere uyum): A ve B'de bağımsızlıkla, C'de gerekli; A-5 #2 (mimariye uyum): A'da bağımsızlıkla, B ve C'de gerekli; A-5 #3 (doğrulanabilirlik): A ve B'de gerekli; A-5 #4 (standarda uyum) ve #5 (izlenebilirlik): A, B ve C'de gerekli; A-5 #6 (doğruluk ve tutarlılık): A'da bağımsızlıkla, B ve C'de gerekli. D'de hiçbiri aranmaz |
+| Gözden geçirilen veri | Kaynak kod: C ve çevirici dili (assembly language) dosyaları, başlık dosyaları; kod üreteci (code generator) kalifiye değilse üretilen kod da elle yazılmış kod gibi |
+| Başvuru verisi | Düşük seviyeli gereksinimler ve mimari (tasarım açıklaması), kodlama standardı ve onaylı sapma listesi, iz verisi (trace data), statik analiz (static analysis) ve metrik raporları, yığın ve yürütme süresi analizlerinin girdileri |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → temel çizgi öncesinde kayıt içinde, temel çizgideki kodda [SCMP](../05-sablonlar/04-scmp.md)'deki sınıra göre problem raporu (problem report) |
+| İlgili şablon | [Kodlama standardı](../05-sablonlar/08-kodlama-standardi.md); gözden geçirme yöntemi ve bağımsızlık: [SVP](../05-sablonlar/03-svp.md) |
+| Madde öneki | `KOD` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek kaynak dosyalar konfigürasyon yönetimi (configuration management)
+      aracında bir sürüm ya da değişiklik kimliğiyle tanımlanmış; kayıt bu kimliği taşıyacak.
+- [ ] Kodun izlendiği düşük seviyeli gereksinimler ve mimari gözden geçirilmiş ve temel çizgide;
+      kodun hangi gereksinim sürümüne göre yazıldığı biliniyor.
+- [ ] Kod projenin derleme seçenekleriyle derleniyor; kodlama standardı denetim aracının ve
+      metrik aracının bu sürüme ait raporları gözden geçirene oturumdan önce verilmiş.
+- [ ] İz verisi (koddaki iz etiketleri ve gereksinim aracındaki bağlantılar) bu kod sürümüne
+      göre güncellenmiş.
+- [ ] Gözden geçirenler belli; bağımsızlık aranan maddelerde gözden geçiren kodun yazarı değil.
+- [ ] Kullanılan kontrol listesinin ve kodlama standardının sürümü kayda yazılacak.
+
+## Kontrol listesi
+
+Her madde evet/hayır sorusudur ve "Hayır" yanıtı kayda bulgu (finding) olarak geçer; sondaki
+parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
+
+<ListeIndir dosya="kaynak-kod" baslik="Kaynak Kod Kontrol Listesi" />
+
+### Düşük seviyeli gereksinimlerle uyum
+
+- [ ] **KOD-01** Fonksiyonun izlendiği her düşük seviyeli gereksinimin her koşulu ve her sonucu
+      kodda bir karşılık buluyor mu? Örneğin "geçerli örnek yoksa son değer korunur" cümlesi
+      ayrı bir dala karşılık geliyor mu? *(A–C · §6.3.4.a)*
+- [ ] **KOD-02** Sınır değerleri, birimler, çözünürlük ve geçersizlik işaretleri gereksinimde
+      yazıldığı gibi mi gerçeklenmiş? Örneğin "eşiği aşarsa" ifadesi `>=` ile değil `>` ile mi
+      yazılmış? *(A–C · §6.3.4.a)*
+- [ ] **KOD-03** Kod, hiçbir gereksinimde tanımlı olmayan bir davranış içermiyor mu? Örneğin
+      belgelenmemiş bir bakım kipi, hata ayıklama çıktısı ya da test için bırakılmış bir kısayol
+      bulunmuyor mu? *(A–C · §6.3.4.a)*
+- [ ] **KOD-04** Kod, gereksinimin yanıtlamadığı bir konuda kendi başına karar vermiyor mu?
+      Örneğin gereksinimde yazmayan bir yuvarlama yönü ya da eşitlik durumu kodda sessizce
+      seçilmek yerine tasarıma bulgu olarak geri beslenmiş mi? *(A–C · §6.3.4.a)*
+
+### Mimariyle uyum
+
+- [ ] **KOD-05** Fonksiyonun çağırdığı ve onu çağıran birimler mimarideki kontrol akışıyla aynı
+      mı? Örneğin mimaride olmayan bir bileşenler arası çağrı ya da farklı bir çağrı sırası
+      bulunmuyor mu? *(A–C · §6.3.4.b)*
+- [ ] **KOD-06** Kodun okuduğu ve yazdığı global ve paylaşılan veri, mimarideki veri akışıyla,
+      global veri tablosuyla ve fonksiyon başlığındaki global veri satırıyla örtüşüyor mu?
+      Örneğin başka bir bileşenin değişkenine `extern` bildirimiyle doğrudan erişilmiyor mu?
+      *(A–C · §6.3.4.b)*
+- [ ] **KOD-07** Fonksiyon, mimaride atandığı yürütme bağlamında mı çalışıyor: görev, kesme
+      servis rutini (interrupt service routine, ISR) ya da bölüm (partition)? Örneğin yalnız
+      görev bağlamı için tasarlanmış bir işlev ISR'den çağrılmıyor mu? *(A–C · §6.3.4.b)*
+
+### Doğrulanabilirlik
+
+- [ ] **KOD-08** Her dalın sonucu bir çıktıda, arayüzde ya da test ortamından okunabilen bir
+      durumda gözlenebiliyor mu? Örneğin bir hata dalı, dışarıdan okunamayan bir yerel bayrağı
+      değiştirmekle kalmıyor mu? *(A–B · §6.3.4.c)*
+- [ ] **KOD-09** Testler, uçuş imajıyla aynı kaynaktan ve aynı koşullu derleme ayarlarıyla
+      üretilen kod üzerinde koşulabiliyor mu? Örneğin yalnızca test derlemesinde açılan bir
+      `#ifdef` dalı bulunmuyor mu; uçuş kodunda kalan bir test kancası bir gereksinime
+      izleniyor mu? *(A–B · §6.3.4.c)*
+- [ ] **KOD-10** Kod, yapısal kapsamın (structural coverage) ölçülmesini ya da yorumlanmasını
+      zorlaştıran yapılardan arınmış mı? Örneğin karar içinde yan etkili ifade, kısa devre
+      değerlendirmesine (short-circuit evaluation) bağlı çağrı ya da hesaplanmış atlama
+      bulunmuyor mu? *(A–B · §6.3.4.c)*
+
+### Kodlama standardına uyum
+
+- [ ] **KOD-11** Kodlama standardı denetim aracı ve metrik aracı bu kod sürümü üzerinde
+      koşulmuş mu; raporlardaki her uyarı ya düzeltilmiş, ya yanlış alarm (false positive)
+      olarak analiz kaydında gerekçesiyle kapatılmış ya da gerçek ihlalse (aşılan karmaşıklık
+      sınırı dahil) onaylı bir sapma (deviation) kaydına bağlanmış mı? *(A–C · §6.3.4.d)*
+- [ ] **KOD-12** Standardın araçla değil gözden geçirmede denetlenir dediği kurallar bu kodda
+      tek tek sınanmış mı? Örneğin donanım bekleyen döngülerin deneme sınırına ve kesmeyle
+      paylaşılan değişkenin `volatile` nitelenmesine bakılmış mı? *(A–C · §6.3.4.d)*
+- [ ] **KOD-13** Koddaki her uyarı bastırma yorumu ya da pragması onaylı bir sapma kaydının
+      kimliğini taşıyor mu ve kayıttaki kullanım yeri bu satırı kapsıyor mu?
+      *(A–C · §6.3.4.d)*
+
+### İzlenebilirlik
+
+- [ ] **KOD-14** İz etiketlerindeki her gereksinim kimliği gereksinim yönetim aracında var mı
+      ve yürürlükteki sürüme mi ait? Örneğin silinmiş ya da başka bileşene taşınmış bir
+      gereksinimi anan etiket kalmamış mı? *(A–C · §6.3.4.e)*
+- [ ] **KOD-15** Bu bileşene atanmış her düşük seviyeli gereksinim kodda en az bir yere
+      izleniyor mu? Örneğin gereksinim aracında "kodlandı" görünen ama hiçbir iz etiketinde
+      geçmeyen bir gereksinim yok mu? *(A–C · §6.3.4.e)*
+- [ ] **KOD-16** Savunmacı yapılar (KOD-30) dışında her fonksiyon ve anlamlı her dal bir
+      gereksinime izleniyor ve hiçbir gereksinime bağlanmayan gereksiz kod (extraneous code)
+      kalmamış mı? Örneğin bu konfigürasyonda çalışmayan kod, devre dışı bırakılmış kod
+      (deactivated code) olarak bir gereksinime izlenip planlarda beyan edilmiş mi?
+      *(A–C · §6.3.4.e)*
+
+### Aritmetik ve veri
+
+- [ ] **KOD-17** Tamsayı işlemlerinde taşmanın, sıfıra bölmenin ve işaretli-işaretsiz
+      karışımından doğan hatalı dönüşümün girdi aralığı içinde oluşmadığı gösterilmiş mi?
+      Örneğin bölen sıfır olabiliyorsa bu durum kodda denetleniyor ya da gereksinimde
+      çağıranın ön koşulu olarak yazılı mı? *(A–C · §6.3.4.f)*
+- [ ] **KOD-18** Sabit noktalı (fixed-point) hesaplarda ölçek ve çözünürlük gereksinimdeki
+      birimle tutarlı mı; ara sonuçların tipi taşmayı ve gereksinimde verilen doğruluğu aşan
+      yuvarlama hatasını önleyecek genişlikte mi? *(A–C · §6.3.4.f)*
+- [ ] **KOD-19** Kayan nokta (floating-point) kullanılıyorsa değerler eşitlikle
+      karşılaştırılmıyor ve NaN, sonsuz değer ve sıfıra yakın bölen durumları ele alınıyor mu?
+      *(A–C · §6.3.4.f)*
+- [ ] **KOD-20** Her değişken, her yolda ilk okunmasından önce bir değer alıyor mu;
+      kullanılmayan değişken, parametre ya da atama kalmamış mı? *(A–C · §6.3.4.f)*
+- [ ] **KOD-21** Kod, tanımsız davranışa (undefined behavior) ya da kodlama standardında
+      listelenmemiş bir gerçeklemeye bağlı davranışa (implementation-defined behavior)
+      dayanmıyor mu? Örneğin tip genişliğine eşit ya da ondan büyük kaydırma, negatif işaretli
+      sayının sağa kaydırılması, değerlendirme sırasına bağlı yan etki ya da bit alanıyla
+      eşlenmiş bir haberleşme kelimesi bulunmuyor mu? *(A–C · §6.3.4.f)*
+
+### Bellek ve yürütme süresi
+
+- [ ] **KOD-22** Dizi ve tampon erişimleri, işaretçi aritmetiği ve bellek kopyalama işlemleri
+      erişilen dizinin ya da tamponun sınırları içinde kalıyor mu? Örneğin bir mesajdan okunan
+      uzunluk alanı, kopyalama boyutu olarak kullanılmadan önce tampon boyutuyla denetleniyor
+      mu? *(A–C · §6.3.4.f)*
+- [ ] **KOD-23** Yığın kullanımı ve bellek analizleri bu kod sürümünü kapsıyor mu ve kalan pay
+      (margin) tasarımdaki en az payı koruyor mu? Örneğin büyük bir yerel dizi, yeni bir çağrı
+      zinciri ya da yeni bir statik tampon analize girmiş mi? *(A–C · §6.3.4.f)*
+- [ ] **KOD-24** Bu kod sürümüne ait WCET analizi ya da ölçümü var mı ve sonuç, mimarideki
+      zaman bütçesini tasarımdaki en az payı koruyarak karşılıyor mu? Örneğin analizin
+      varsaydığı döngü ve donanım beklemesi üst sınırları koddakilerle aynı mı; analizden
+      sonra değişen eniyileme (optimization) seçeneği, önbellek ayarı ya da bağlama yerleşimi
+      varsa etkisi değerlendirilmiş mi? *(A–C · §6.3.4.f)*
+
+### Eşzamanlılık ve donanım
+
+- [ ] **KOD-25** Kesmeyle ya da başka görevle paylaşılan veriye erişim, tasarımda seçilen
+      yöntemle (kesme maskeleme, kilit, çift tampon) korunuyor mu? Örneğin çok kelimelik bir
+      değer, yarısı güncellenmişken okunamıyor mu? *(A–C · §6.3.4.f)*
+- [ ] **KOD-26** Kritik kesitler (critical section) erken dönüş ve hata dalı dahil her çıkış
+      yolunda kapanıyor mu ve içlerinde engelleyici çağrı ya da üst sınırı olmayan bir döngü
+      veya donanım beklemesi bulunmuyor mu; kilit alma sırası ve sınırlı kaynakların (kuyruk,
+      tampon, semafor) tükenme davranışı tasarımla tutarlı mı? *(A–C · §6.3.4.f)*
+- [ ] **KOD-27** Doğrudan bellek erişimi (direct memory access, DMA) ya da başka bir işlemciyle
+      paylaşılan bellekte önbellek temizleme ve geçersiz kılma işlemleri tasarımın öngördüğü
+      noktalarda yapılıyor mu? Örneğin DMA ile dolan bir tampon okunmadan önce ilgili önbellek
+      satırları geçersiz kılınıyor mu? *(A–C · §6.3.4.f)*
+- [ ] **KOD-28** Çevirici diliyle yazılmış rutinlerde çağrı kuralı (calling convention) C
+      tarafının beklentisiyle örtüşüyor mu? Örneğin korunması gereken yazmaçlar geri
+      yükleniyor, yığın hizası ve dönüş değeri derleyicinin kuralına uyuyor mu?
+      *(A–C · §6.3.4.f)*
+
+### Hata işleme ve savunmacı yapılar
+
+- [ ] **KOD-29** Hata bilgisi döndüren her çağrının sonucu ve işlemci istisnaları (exception),
+      gereksinimde tanımlı davranışa (güvenli değer, geçersizlik işareti, hata raporu)
+      götürülüyor mu? Örneğin bir sürücüden dönen zaman aşımı yok sayılıp eski veri geçerli diye
+      kullanılmıyor mu? *(A–C · §6.3.4.f)*
+- [ ] **KOD-30** Savunmacı programlama (defensive programming) yapılarının her biri bir
+      gereksinime, tasarım kararına ya da kodlama standardı kuralına dayanıyor mu? Örneğin
+      ulaşılmaması beklenen bir `default` dalının ne yaptığı bir gereksinimden okunabiliyor mu?
+      *(A–C · iyi uygulama)*
+
+## Araçla denetlenebilecek maddeler
+
+Kaynak kodda statik analiz, insan gözünün sistematik olarak kaçırdığı hata sınıflarını yakalar;
+bu yüzden maddelerin bir bölümü araç çıktısının gözden geçirilmesine dönüşür. Aşağıdaki tablo
+aracın neyi üstlendiğini ve gözden geçirene neyin kaldığını gösterir.
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| KOD-11 | Kodlama standardı denetçisi; çevrimsel karmaşıklığı (cyclomatic complexity), iç içe derinliği ve karardaki koşul sayısını ölçen metrik aracı | Yanlış alarmların gerekçeyle ayıklanması, aracın kesin karar veremediği kurallar, sapma gerekçesinin yeterliliği |
+| KOD-14, KOD-15 | İz etiketlerini gereksinim veritabanıyla karşılaştıran betik ya da gereksinim yönetim aracı sorgusu | Etiketlenen gereksinimin kodda gerçekten ve eksiksiz gerçeklenmesi (KOD-01) |
+| KOD-17, KOD-21, KOD-22 | Değer aralığı analizi yapan statik analiz aracı; ör. soyut yorumlama (abstract interpretation) tabanlı | Aracın kanıtlayamadığı noktaların gerekçesi; dayanılan ön koşulun gereksinimde yazılı olması |
+| KOD-20 | Veri akışı analizi, derleyici uyarıları | Kasıtla kullanılmayan parametre ya da atamanın gerekçesi |
+| KOD-23, KOD-24 | Çağrı grafiğinden yığın analizi; WCET analiz aracı ya da hedefte ölçüm | İşlev işaretçisi ve kesme yükü varsayımları; analizin hangi kod sürümüne ait olduğu |
+| KOD-25, KOD-26 | Veri yarışı ve kilit analizi yapan statik analiz | Korumanın tasarımda seçilen yöntemle aynı olması; aracın görmediği donanım paylaşımı |
+
+Araç raporunu gözden geçirmek yanlış alarmı ayıklar, ama aracın atladığı ihlali göstermez. Bir
+maddeyi yalnızca aracın "ihlal yok" sonucuna dayanarak işaretliyor ve kodu o konuda ayrıca
+gözden geçirmiyorsanız araç doğrulama faaliyetinin yerini almış olur; kalifikasyonu gündeme
+gelir ve karar planlarda yazılır
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+Hangi kuralın araçla, hangisinin gözden geçirmede denetlendiği kodlama standardının otomatik
+denetim bölümünde kural kural yazılır ([kodlama standardı şablonu](../05-sablonlar/08-kodlama-standardi.md));
+KOD-12, o eşlemede gözden geçirmeye bırakılan kuralları karşılar.
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| Gereksinimdeki hata ya da sınır durumu kodda yok | Kodun olağan yol düşünülerek yazılması; gereksinimin gürbüzlük (robustness) cümlesinin atlanması | KOD-01 |
+| Sınır karşılaştırmasında bir birimlik kayma (`>` yerine `>=`) | Gereksinimdeki "aşarsa" ile "ulaşırsa" ayrımının gözden kaçması | KOD-02 |
+| Gereksinimde olmayan bakım kipi ya da hata ayıklama çıktısı | Geliştirme sırasında eklenen yardımcı kodun temizlenmemesi | KOD-03 |
+| Bastırma yorumu sapma kaydına bağlı değil ya da kayıt başka bir yer için onaylı | Uyarının takvim baskısıyla susturulması | KOD-13 |
+| İz etiketi silinmiş ya da taşınmış bir gereksinimi anıyor | Gereksinim değişince koddaki etiketin güncellenmemesi | KOD-14 |
+| Ara sonuçta taşma ya da örtük işaretli-işaretsiz dönüşüm | Tipin girdi aralığına göre değil alışkanlıkla seçilmesi | KOD-17 |
+| Yığın ya da WCET analizi eski kod sürümüne ait | Analizlerin kod değişikliğinde yenilenmemesi; analizle kod arasında sürüm bağı olmaması | KOD-23, KOD-24 |
+| Kesmeyle paylaşılan değişken korumasız okunuyor | Paylaşım kararının tasarımda değil kodlama sırasında verilmesi | KOD-25 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "Sıfıra bölme olabilir." | KOD-01, KOD-17: `sicaklik.c` içindeki `ortalama_sicaklik()`, `ornek_sayisi` sıfırken bölme yapıyor (C'de tanımsız davranış); LLR-73-2 bu durumda son geçerli değerin korunmasını ve sonucun geçersiz işaretlenmesini istiyor. Sıfır durumu ayrı dalda ele alınmalı. |
+| "Standart ihlali var." | KOD-13: `nav_filtre.c` satır 212'deki tamsayıdan işaretçiye dönüşüm (MISRA C:2012 K 11.4) için bastırma yorumu SAP-011'i anıyor; SAP-011'in kapsamı yalnızca `donanim_yazmac.h` içindeki yazmaç makroları. Dönüşüm o dosyadaki bir makroya taşınmalı ya da bu yer için ayrı bir sapma kaydı açılıp onaylanmalı. |
+| "İz eksik." | KOD-15: LLR-41-3 gereksinim aracında "kodlandı" durumunda, ama `yakit_` önekli bileşende bu kimliği anan iz etiketi yok. Gerçekleyen fonksiyon etiketlenmeli ya da gereksinimin durumu düzeltilmeli. |
+
+İyi bulgu madde numarasını, yeri (dosya, fonksiyon, satır), gözlemi ve dayanağı (gereksinim
+ya da standart kuralı) birlikte verir; böylece yazar düzeltmeyi gözden geçireni yeniden
+çağırmadan yapabilir, kapanışı doğrulayan da neye bakacağını bilir. İlk örnek, 8. bölümdeki
+[gözden geçirme örneğinin](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md#gereksinimden-koda-bir-gözden-geçirme-örneği)
+kayda nasıl geçeceğini gösterir.
+
+## Seviyeye göre uyarlama
+
+| Maddeler | Seviye A | Seviye B | Seviye C |
+|---|---|---|---|
+| KOD-01–KOD-04 (A-5 #1) | Bağımsızlıkla | Bağımsızlıkla | Gerekli |
+| KOD-05–KOD-07 (A-5 #2) | Bağımsızlıkla | Gerekli | Gerekli |
+| KOD-08–KOD-10 (A-5 #3) | Gerekli | Gerekli | Aranmaz |
+| KOD-11–KOD-13 (A-5 #4) | Gerekli | Gerekli | Gerekli |
+| KOD-14–KOD-16 (A-5 #5) | Gerekli | Gerekli | Gerekli |
+| KOD-17–KOD-29 (A-5 #6) | Bağımsızlıkla | Gerekli | Gerekli |
+| KOD-30 (iyi uygulama) | Önerilir | Önerilir | Önerilir |
+
+**Bağımsızlık.** Seviye A'da üç hedefin maddeleri (KOD-01–KOD-07 ve KOD-17–KOD-29), Seviye B'de
+yalnızca KOD-01–KOD-04 kodun yazarı olmayan biri tarafından yanıtlanır. Listeyi baştan sona aynı
+bağımsız kişinin yürütmesi kaydı sadeleştirir; iş bölünüyorsa kayıt hangi maddeyi kimin
+yanıtladığını göstermelidir. Bağımsızlığın kişi düzeyinde olduğu ve araçla nasıl sağlanabileceği
+[9. bölümün bağımsızlık başlığında](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)
+anlatılır.
+
+**Seviye C.** Doğrulanabilirlik hedefi (A-5 #3) aranmadığı için KOD-08–KOD-10 düşer; geri kalan
+maddeler bağımsızlık aranmadan yanıtlanır. Kapsamı ölçmeyi zorlaştıran bir yapı yine de satır
+kapsama (statement coverage) analizinde açıklama isteyebilir.
+
+**Seviye D.** Ek A'da kaynak kodun gözden geçirilmesine ve analizine ilişkin hedef yoktur; liste
+zorunlu değildir. Yazılım geliştirme planı (Software Development Plan, SDP) bir kodlama
+standardına uyulacağını yazıyorsa, süreçlerin planlara uyduğuna ilişkin kalite güvencesi
+(quality assurance) hedefi (A-9 #2) D'de de geçerli olduğundan bu taahhüt denetlenir;
+KOD-11–KOD-13 o durumda hafif bir gözden geçirme olarak kullanılabilir.
+
+**Seviye A'ya özgü ek iş.** Kaynak koda izlenemeyen nesne kodu ve değiştirilmiş koşul/karar
+kapsama (modified condition/decision coverage, MC/DC) bu listenin değil
+[kapsam analizi](09-kapsam-analizleri.mdx) listesinin konusudur; KOD-10'daki yapılar orada iş
+yükü olarak geri döner. Nesne kodu analizi temsilî bir örnekle yapılıyorsa, proje kodunun
+standardın izin verdiği yapılarla sınırlı kaldığı varsayımına dayanır; bu yüzden Seviye A'da
+KOD-11 ve KOD-12'deki bir "Hayır", o analizin geçerliliğini de sorgulatır.
+
+## İlgili bölümler
+
+- [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
+- [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md)
+- Şablonlar: [kodlama standardı](../05-sablonlar/08-kodlama-standardi.md), [SVP](../05-sablonlar/03-svp.md), [SCMP](../05-sablonlar/04-scmp.md)
+- Otorite denetimi: [SW SOI-2](soi-2.md); geçiş kriterleri: [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- Komşu listeler: [yazılım mimarisi](03-yazilim-mimarisi.mdx), [düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx), [entegrasyon çıktıları](06-entegrasyon-ciktilari.mdx), [kapsam analizleri](09-kapsam-analizleri.mdx); [genel bakış](index.md)

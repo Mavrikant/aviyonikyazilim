@@ -1,0 +1,311 @@
+---
+title: "Uygunluk Gözden Geçirmesi Kontrol Listesi"
+sidebar_label: "Uygunluk gözden geçirmesi"
+sidebar_position: 13
+description: "Yazılım uygunluk gözden geçirmesi için kontrol listesi: tamamlanmış süreçler, eksiksiz veri, yeniden üretilebilir nesne kodu, SCI ve SAS tutarlılığı."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), sertifikasyon başvurusunun parçası olarak sunulacak bir yazılım
+sürümü için teslimden önce yapılan yazılım uygunluk gözden geçirmesinde (software conformity
+review) kullanılır. Gözden geçirme üç soruya yanıt arar: kredi alınan yaşam döngüsü süreçleri
+bu sürüm için tamamlanmış mı, yaşam döngüsü verisi eksiksiz ve kontrol altında mı,
+çalıştırılabilir nesne kodu (executable object code) ve varsa parametre verisi öğesi
+(parameter data item, PDI) dosyaları arşivdeki kaynaktan yeniden üretilip yayımlanmış
+talimatla yüklenebiliyor mu? Gözden geçirmeyi, bu sürümün verisini yazmamış ve doğrulamamış
+bir kalite güvencesi (quality assurance) mühendisi son temel çizgi (baseline) üzerinde
+yürütür; konfigürasyon yönetimi sorumlusu ve doğrulama lideri kayıtları gösterir. DO-178C'de
+§8.3'teki yazılım uygunluk gözden geçirmesine ve Tablo A-9'un beşinci hedefine (objective)
+karşılık gelir.
+
+Uygunluk gözden geçirmesi yeni bir doğrulama turu değildir; var olan kayıtların teslim
+edilecek sürümü anlattığını ve birbirini tuttuğunu sınar. Bu yüzden maddelerin çoğu iki
+kaydı yan yana koyar: yazılım sertifikasyon planı (Plan for Software Aspects of
+Certification, PSAC) ile tamamlanmış kayıtları, yazılım konfigürasyon indeksi
+(Software Configuration Index, SCI) ile arşivi, yazılım doğrulama sonuçları (Software
+Verification Results, SVR) ile SCI'yi, yazılım başarım özeti (Software Accomplishment
+Summary, SAS) ile problem raporu aracını. Verinin teknik içeriği önceki listelerde, SCI'nin
+ayrıntılı içeriği [Konfigürasyon Denetimi](10-konfigurasyon-denetimi.mdx), yaşam döngüsü
+boyunca yapılan süreç denetimi [Kalite Güvencesi Denetimi](12-kalite-guvencesi-denetimi.mdx)
+listesinde sorulur. Otoritenin son denetimine hazırlık [SW SOI-4](soi-4.md) sayfasındadır;
+bu listeyle üretilen kayıt, o denetimde istenen kanıtlardan biridir. Gözden geçirmenin amacı
+ve zamanlaması
+[11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md#yazılım-uygunluk-gözden-geçirmesi),
+SAS'ın içeriği
+[12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md#yazılım-başarım-özeti)
+bölümünde, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §8.3.a–i ve maddenin notu; §8.1.d, §8.2.g, §8.2.h; çapraz denetim: §11.14 (SVR), §11.16 (SCI), §11.20 (SAS); önceden geliştirilmiş yazılımda §12.1, §12.1.1 ve §12.1.6; kayıt §11.19 |
+| Ek A hedefleri | A-9 #5: A, B, C ve D'de bağımsızlıkla. Destekleyen hedefler: A-9 #2 (UGG-04): A, B, C ve D'de bağımsızlıkla; A-9 #4 (UGG-03): A, B ve C'de bağımsızlıkla |
+| Gözden geçirilen veri | Sertifikasyona sunulacak sürümün son temel çizgisi; SCI'nin yayım adayı, yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI) ve SAS taslağı; SVR; dondurulmuş problem raporu listesi; gereksinim sapması kayıtları ve plan ve standart sapmalarının onaylı listesi; yeniden derleme ve yükleme denemesi kayıtları; sürüm teslim ve arşiv kayıtları |
+| Başvuru verisi | PSAC: kredi faaliyetleri, veri listesi, ek hususlar (additional considerations); yazılım geliştirme, doğrulama, konfigürasyon yönetimi ve kalite güvencesi planları (SDP, SVP, SCMP, SQAP); standartlar; iz verisi (trace data); kalite güvencesi ve konfigürasyon denetimi kayıtları; değişiklik projesinde önceki sürümün SCI'si, SAS'ı ve önceki uygunluk gözden geçirmesinin kaydı |
+| Kaydın gideceği yer | Uygunluk gözden geçirmesi kaydı → kalite güvencesi kayıtları (§11.19; CC2); sonucu SAS'taki uyum beyanının (compliance statement) dayanağıdır. Bulgular → uygunsuzluk (nonconformance) kaydı; ürün ya da veri kusuru SCMP'deki sınıra göre problem raporuna dönüşür ve açık rapor listesine girer |
+| İlgili şablon | [SQAP Şablonu](../05-sablonlar/05-sqap.md) (yazılım uygunluk gözden geçirmesi bölümü); [PSAC Şablonu](../05-sablonlar/01-psac.md) (kredi faaliyetleri, veri listesi, SAS'ın izleyeceği başlık düzeni); [SCMP Şablonu](../05-sablonlar/04-scmp.md) (arşiv, sürüm teslimi, problem raporu sınırı) |
+| Madde öneki | `UGG` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Sertifikasyona sunulacak sürümün son temel çizgisi alınmış; kimliği ve alındığı tarih
+      kayda yazılacak.
+- [ ] Problem raporu listesi son temel çizginin tarihinde araçtan alınıp dondurulmuş; önceki
+      bir uygunluk gözden geçirmesinden ertelenen raporlar listede ayrıca işaretlenmiş.
+- [ ] SCI'nin yayım adayı, SECI ve SAS taslağı kimlik ve sürümleriyle dağıtılmış; PSAC'taki
+      kredi faaliyetleri ve veri listesi, kayıt kimlikleriyle eşlenmiş bir tablo olarak hazır.
+- [ ] Yeniden derleme için SECI'ye uygun temiz bir ortam, yükleme denemesi için hedef donanım
+      ya da yükleme bakımından ona eşdeğer bir birim ve yükleme talimatının yayımlanmış sürümü
+      ayrılmış.
+- [ ] Gözden geçiren, bu sürümün verisini yazmamış, gözden geçirmemiş ve doğrulamamış bir
+      kalite güvencesi mühendisi; kontrol listesinin sürümü kayda yazılacak.
+
+Son temel çizgiden sonra veri ya da kod değişirse gözden geçirme en azından etkilenen maddeler
+için tekrarlanır; değişiklikten önce tarihlenmiş bir kayıt teslim edilen sürümü anlatmaz.
+Hangi maddelerin yeniden sorulacağı değişikliğin türüne göre şöyle seçilebilir:
+
+| Son temel çizgiden sonraki değişiklik | Yeniden sorulacak maddeler |
+|---|---|
+| Kaynak kod, derleme ayarı ya da PDI dosyası | UGG-01, UGG-05–07, UGG-09–11, UGG-13, UGG-18–22, UGG-29–30 |
+| Yalnızca bir belge, ör. test prosedüründe ya da tasarım tanımında düzeltme | UGG-02, UGG-05, UGG-06, UGG-07, UGG-18 (o belgeye dayanan sonuçlar için), UGG-20 |
+| Yeni açılan, kapanan ya da sınıfı değişen problem raporu | UGG-12–15, UGG-22, UGG-23, UGG-27 |
+
+## Kontrol listesi
+
+Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtüştüğünü gösterir,
+"Hayır" bir bulgudur (finding) ve SQAP'taki akışla uygunsuzluk olarak kayda geçer.
+
+<ListeIndir dosya="uygunluk-gozden-gecirmesi" baslik="Uygunluk Gözden Geçirmesi Kontrol Listesi" />
+
+### Süreçlerin tamamlanması
+
+- [ ] **UGG-01** PSAC'ta ve SVP'de kredi alınacağı söylenen her faaliyetin karşısına, bu sürüme
+      ait tamamlanmış ve kapanmış bir kaydın kimliği yazılabiliyor mu? Örneğin açık büyük
+      bulgusu ya da kapanış teyidi eksik olan bir gözden geçirme kaydı tamamlanmış
+      sayılmamış. *(A–D · §8.3.a)*
+- [ ] **UGG-02** PSAC'ın veri listesindeki her yaşam döngüsü verisi bu sürüm için üretilmiş ve
+      son temel çizgide kimliğiyle bulunuyor mu? Örneğin araç kalifikasyonu ya da önceden
+      geliştirilmiş yazılım gibi ek hususların verisi de listede ve hiçbir belge yalnızca
+      taslak sürümüyle durmuyor. *(A–D · §8.3.a)*
+- [ ] **UGG-03** Son temel çizgiye giden geçişlerde planlardaki geçiş kriterleri (transition
+      criteria) sağlanmış ve kalite güvencesinin bu geçişlerde açtığı uygunsuzluklar kapanmış
+      mı? *(A–C · A-9 #4)*
+- [ ] **UGG-04** SQAP'ta bu sürüm için öngörülen kalite güvencesi denetimleri ve kredi koşusu
+      tanıklıkları yapılmış ve kayıtlı mı; açtıkları uygunsuzluklar kapanmış ya da gerekçesiyle
+      kayda geçirilmiş mi? *(A–D · A-9 #2)*
+
+### Verinin eksiksizliği ve izlenebilirliği
+
+- [ ] **UGG-05** Son temel çizgideki her veri için, planlarda ve projede tanımlı standartlarda
+      öngörülen yöntemle üretildiğini ve doğrulandığını gösteren bir kayıt (gözden geçirme
+      kaydı, doldurulmuş kontrol listesi, araç raporu) var mı? *(A–D · §8.3.c)*
+- [ ] **UGG-06** Son temel çizgi ve SCI için konfigürasyon denetimi yapılmış ve bulguları
+      kapanmış mı; SCI'de sürümüyle anılan her öğe arşivde aynı sürüm ve içerikle bulunuyor mu?
+      *(A–D · §8.3.c)*
+- [ ] **UGG-07** İz verisi son temel çizgideki sürümlerden üretilmiş ve seviyenin gerektirdiği
+      her ilişkide iki yönde eksiksiz mi? Örneğin kalite güvencesinin seçtiği birkaç sistem
+      gereksinimi test sonucuna kadar ve geri izlendiğinde zincir kopmuyor, ara halkalardaki
+      sürümler SCI'dekilerle aynı çıkıyor. *(A–D · §8.3.b)*
+- [ ] **UGG-08** Sistem emniyet değerlendirme sürecinden (system safety assessment process)
+      gelen emniyetle ilgili gereksinimler yazılım gereksinimlerinde tanınabiliyor ve her biri
+      bir doğrulama sonucuna kadar izlenebiliyor mu? *(A–D · §8.3.b)*
+
+### Nesne kodunun kontrolü ve yeniden üretilebilirliği
+
+- [ ] **UGG-09** Teslim edilecek nesne kodunu ve PDI dosyalarını kontrollü kütüphaneden
+      yayımlayan sürüm teslim (release) kaydı son temel çizgideki derlemeye mi ait ve kayıttaki
+      sağlama toplamı (checksum) ya da döngüsel artıklık denetimi (cyclic redundancy check, CRC)
+      değerleri SCI'dekilerle aynı mı? Örneğin konfigürasyon denetiminden sonra yapılan bir
+      derleme, yeni bir teslim kaydı ve SCI güncellemesi olmadan teslim paketine girmemiş.
+      *(A–D · A-9 #5)*
+- [ ] **UGG-10** Son temel çizginin kaynak kodu arşivden temiz bir çalışma alanına geri getirilip
+      SCI'deki talimat ve SECI'deki ortamla yeniden derlendiğinde, nesne kodunun ve PDI
+      dosyalarının bütünlük değerleri SCI'dekilerle aynı çıkıyor mu, ya da her farkın SQAP'ta
+      önceden kabul edilmiş bir türden (ör. gömülü derleme zamanı) olduğu ikili karşılaştırmayla
+      (binary comparison) gösterilmiş mi? Örneğin konfigürasyon denetiminde yapılmış bir yeniden
+      derlemenin kaydı kanıt olarak anılıyorsa o derleme de son temel çizginin kaynağıyla
+      yapılmış. *(A–D · §8.3.f)*
+- [ ] **UGG-11** Yeniden derleme, talimatta yazmayan bir adıma gerek kalmadan tamamlanmış mı?
+      Örneğin elle kopyalanan bir dosya, kayıt dışı bir ortam değişkeni ya da derleme
+      makinesinde önceden kurulu kalmış bir kütüphane gerekmemiş. *(A–D · §11.16.g)*
+
+### Problem raporları
+
+- [ ] **UGG-12** Son temel çizginin tarihinde dondurulan listedeki her problem raporunun
+      sınıfı, değerlendirmesi ve güncel durumu (açık, ertelenmiş, reddedildi, kapalı) kayıtlı
+      mı? *(A–D · §8.3.d)*
+- [ ] **UGG-13** Kapalı sayılan her raporun düzeltmesini içeren öğe sürümü son temel çizgide mi?
+      Örneğin "kapalı" görünen bir raporun düzeltmesi birleştirilmemiş bir dalda ya da sonraki
+      sürüme ayrılmış bir değişiklikte kalmamış. *(A–D · §8.3.d)*
+- [ ] **UGG-14** Açık taşınan her raporun emniyet etkisi değerlendirmesinde sistem ve emniyet
+      ekibinin görüşü kayıtlı mı; işletme sınırlaması gerektiren rapor sistem tarafına
+      bildirilmiş mi? *(A–D · §11.20.k)*
+- [ ] **UGG-15** Önceki uygunluk gözden geçirmesinin kaydında ertelenmiş görünen her rapor için
+      bu sürüme ait, tarihli yeni bir değerlendirme var mı ve bu değerlendirme, aradaki
+      değişikliklerin rapordaki kısıtı ya da emniyet etkisini değiştirip değiştirmediğini
+      söylüyor mu? *(A–D · §8.3.h)*
+
+### Sapmalar
+
+- [ ] **UGG-16** Karşılanmayan ya da kısmen karşılanan her yazılım gereksinimi, gerekçesi ve
+      yetkili onayıyla bir sapma kaydında mı? Örneğin gereksinim yalnızca test sonucunda
+      "kaldı, kabul edildi" notuyla durmuyor ve sapma kaydı sistem tarafının görüşünü de
+      içeriyor. *(A–D · §8.3.e)*
+- [ ] **UGG-17** Onaylı sapmalar listesindeki her plan ve standart sapması, SAS taslağında
+      ilgili başlıkta ya da uyum beyanında onay kaydının kimliğiyle anılıyor mu ve SAS'ta bu
+      listede olmayan bir sapma geçmiyor mu? *(A–D · §11.20.l)*
+
+### SCI, SAS ve sonuçların tutarlılığı
+
+- [ ] **UGG-18** SVR'deki her sonuç kaydının andığı yazılım ve veri sürümleri SCI ile
+      karşılaştırılmış mı; farklı sürüme ait her sonuç, yeni sürüm için de geçerli olduğunu
+      gösteren bir değişiklik etki analizine (change impact analysis) bağlı mı?
+      *(A–D · §11.14.b)*
+- [ ] **UGG-19** SVR özetindeki her "kaldı" sonucu, kapatılmamış kapsam boşluğu ve tamamlanmamış
+      analiz bir problem raporuna ya da onaylı bir gerekçeye bağlı mı? *(A–D · §11.14)*
+- [ ] **UGG-20** SAS'taki yazılım tanımlaması (parça numarası ve sürüm), SCI'deki kayıt ve hedefe
+      yüklenmiş yazılımdan okunan kimlik yan yana konduğunda üçü aynı mı? Örneğin SAS'ın andığı
+      SCI ve SECI sürümleri de bu gözden geçirmede kullanılanlardır. *(A–D · §11.20.h)*
+- [ ] **UGG-21** SAS'taki yazılım karakteristikleri, yani nesne kodu boyutu, en kötü durum
+      yürütme süresi (worst-case execution time, WCET) dahil zamanlama payları, bellek ve yığın
+      payları, son temel çizgideki derlemeye ait bir analiz ya da ölçüm kaydına kimliğiyle
+      bağlanabiliyor mu? *(A–D · §11.20.i)*
+- [ ] **UGG-22** SAS'ın yazılım durumu bölümündeki her açık rapor, dondurulmuş listedeki
+      numarası, sınıfı ve değerlendirmesiyle aynı mı? Örneğin SAS'taki gerekçe rapordakinden
+      daha iyimser yazılmamış, işlevsel kısıt ya da işletme sınırlaması atlanmamış.
+      *(A–D · §11.20.k)*
+- [ ] **UGG-23** SAS'taki uyum beyanı bu gözden geçirmenin sonucuyla çelişmiyor mu? Örneğin açık
+      bir uygunsuzluk ya da onaylanmamış bir sapma varken beyan koşulsuz uyumdan söz etmiyor.
+      *(A–D · §11.20.l)*
+
+### Önceki sürümden devralınan kredi
+
+- [ ] **UGG-24** Önceden geliştirilmiş yazılımdan (previously developed software, PDS) kredi
+      alınıyorsa, kredinin dayandığı önceki temel çizgi ile güncel ürün temel çizgisi
+      karşılaştırıldığında çıkan her fark onaylı bir değişikliğe bağlanabiliyor mu? Örneğin
+      karşılaştırma aradaki ara temel çizgilerden değil, önceki sertifikasyonun SCI'sinde ya da
+      PSAC'ta kimliğiyle anılan sürümden yapılmış. *(A–D · §8.3.i)*
+- [ ] **UGG-25** PSAC'taki PDS değerlendirmesinde yeni uygulama ya da seviye için belirlenen
+      eksikler (ek doğrulama, kapsam analizi, eksik veri) kapatılmış ve kaydı var mı?
+      *(A–D · §12.1.6.a)*
+- [ ] **UGG-26** Değişmeyen kısımlar için önceki sürümün doğrulama kanıtına dayanılıyorsa,
+      etkilenen alan analizle belirlenmiş ve o alan yeniden doğrulanmış mı? Örneğin etkilenen
+      alan yalnızca değişen dosyaları değil, onlarla veri ve kontrol bağlaşımı (data and
+      control coupling) olan bileşenleri de kapsıyor. *(A–D · §12.1.1)*
+- [ ] **UGG-27** PDS'nin önceki kullanımından devralınan her çözülmemiş problem raporunun yeni
+      uygulamaya etkisi değerlendirilmiş ve rapor, dondurulmuş listede bu sürümün raporları gibi
+      sınıfı ve durumuyla yer alıyor mu? Örneğin önceki projenin ya da tedarikçinin aracında
+      kalan bir rapor, bu projenin listesine taşınmadığı için SAS'ın yazılım durumu bölümünden
+      düşmemiş. *(A–D · §12.1)*
+- [ ] **UGG-28** Sertifikasyon sonrası bir değişiklikte bu gözden geçirmenin yalnızca bir kısmı
+      yapılıyorsa, uygulanan maddeler ve seçimin değişikliğin önemine dayanan gerekçesi kayda
+      yazılmış mı? *(A–D · §8.3 Not)*
+
+### Yükleme ve teslim
+
+- [ ] **UGG-29** Onaylı yazılım, yükleme talimatının yayımlanmış sürümü adım adım izlenerek
+      hedef donanıma ya da giriş koşulunda tanımlanan eşdeğer birime yüklenmiş ve doğru
+      yazılımın eksiksiz yüklendiği talimattaki yöntemle (CRC karşılaştırması, parça
+      numarasının okunması) teyit edilmiş mi? *(A–D · §8.3.g)*
+- [ ] **UGG-30** Yükleme denemesinde teslim edilecek yayımlanmış medya ya da paket ve sahada ya
+      da üretimde kullanılacak yükleyici mi kullanılmış? Örneğin geliştirme ekibinin hata
+      ayıklama aracıyla yapılan yükleme, talimatın işlediğini göstermiyor. *(A–D · §8.3.g)*
+
+## Araçla denetlenebilecek maddeler
+
+Uygunluk gözden geçirmesinin büyük kısmı iki kaydı karşılaştırmaktır; bu karşılaştırmayı
+betikler insandan daha güvenilir yapar. İnsana kalan, karşılaştırmanın doğru kaynaklarla
+yapıldığını görmek ve farkın açıklamasının yeterli olup olmadığına karar vermektir.
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| UGG-06 | SCI'deki öğe, sürüm ve bütünlük değerlerini kontrollü kütüphanedeki etiketle karşılaştıran betik | SCI'de hiç anılmayan ama teslim paketinde bulunan öğeyi fark etmek |
+| UGG-07 | İz aracının son temel çizgi etiketinden ürettiği izsiz öğe ve sürüm uyuşmazlığı raporu | İzlerin anlamca doğru olduğunu birkaç gereksinimi uçtan uca izleyerek görmek |
+| UGG-10 | Sürekli entegrasyonda temiz ortamda yeniden derleme ve ikili karşılaştırma | Derlemenin son temel çizginin arşivden geri getirilen kaynağıyla yapıldığını görmek; fark çıktığında her farkın SQAP'ta önceden kabul edilmiş türden olduğuna karar vermek |
+| UGG-12, UGG-13 | Problem raporu aracında son temel çizgi tarihli durum sorgusu; kapalı raporların düzeltme sürümünü SCI ile karşılaştıran betik | Değerlendirmenin ve ret gerekçelerinin içerikçe yeterli olduğu |
+| UGG-18 | Sonuç kayıtlarındaki sürüm alanlarını SCI ile karşılaştıran sorgu | Farklı sürüme ait sonucun yeni sürümde de geçerli olduğunu savunan etki analizinin yeterliliği |
+| UGG-20, UGG-22 | SAS'taki kimlik ve açık rapor tablosunu derleme kaydından ve problem raporu aracından üreten betik | Kimliği hedefe yüklenmiş birimden okumak; SAS'taki gerekçe metnini rapordakiyle karşılaştırmak |
+
+Yeniden derlemeyi, resmî derlemeyi yapan kişiden başkasının yapması ya da kalite güvencesinin
+derlemeye tanıklık etmesi, betiğin sonucuna duyulan güveni artırır. Bir maddeyi yalnızca bir
+aracın çıktısına bakarak "Evet" diye işaretlemek ve çıktıyı ayrıca doğrulamamak, o aracın
+kalifikasyonu (tool qualification) sorusunu doğurur; ölçütler
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+bölümündedir.
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| PSAC'ta kredi alınan bir faaliyetin (ör. bağlantı ve yükleme analizi) bu sürüme ait kaydı yok | Faaliyet listesinin PSAC'tan değil ekibin alışkanlığından çıkarılması | UGG-01 |
+| İz raporu bir önceki temel çizgiden üretilmiş; son değişiklikle gelen gereksinimler izsiz | Raporun her temel çizgide yeniden üretilmemesi | UGG-07 |
+| Temiz ortamda yeniden derleme, talimatta olmayan bir adım gerektiriyor | Talimatın, derleme makinesini kuran kişinin bilgisine dayanması | UGG-11 |
+| Problem raporu "kapalı", düzeltmesi son temel çizgide değil | Raporun düzeltme ana dala birleştirildiğinde değil, dalda yapıldığında kapatılması | UGG-13 |
+| Karşılanmayan bir gereksinim yalnızca test sonucunda "kabul edildi" notuyla duruyor | Gereksinim sapması için onay yolunun bilinmemesi | UGG-16 |
+| Bazı test sonuçları son temel çizgiden önceki bir derlemeye ait, etki analizi yok | Son düzeltmelerin "küçük" ya da "yalnızca belge" sayılması | UGG-18 |
+| SAS'taki açık rapor gerekçesi rapordaki değerlendirmeden daha iyimser | SAS metninin rapordan aktarılmayıp yeniden yazılması | UGG-22 |
+| Yükleme denemesi laboratuvarın hata ayıklama aracıyla yapılmış | Hedef donanımın laboratuvarda geliştirme düzeninde durması | UGG-30 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "Yeniden derleme başarısız." | "UGG-10: Arşivden geri getirilen YB-3.0 kaynağıyla, SCI-FCU rev. D'deki talimat izlenerek SECI'deki ortamda yapılan derlemede `fcu_app.bin` CRC değeri 0x91B04D3E çıkıyor, SCI 0x5C21E7A0 diyor. İkili karşılaştırma farkın bağlayıcıya verilen mutlak derleme dizininden geldiğini gösteriyor; talimatta dizin yazılı değil. Dizin SCI'deki talimata eklenmeli ve yeniden derleme değeri tutana kadar tekrarlanmalı." |
+| "Açık raporlar SAS'ta eksik." | "UGG-22: Son temel çizgi tarihinde araçta 14 açık rapor var, SAS taslağı rev. B'nin yazılım durumu bölümü 12 rapor sayıyor; PR-0412 (işlevsel) ve PR-0419 (yaşam döngüsü verisi) yok. İki rapor sınıfı, kısıtı ve gerekçesiyle SAS'a eklenmeli; kapanmışlarsa kapanış kaydı gösterilip liste düzeltilmeli." |
+| "Yükleme talimatı yetersiz." | "UGG-29: YT-FCU-02 rev. A izlenerek yapılan yüklemede yükleyici 6. adımdan sonra talimatta geçmeyen bir yapılandırma dosyası istedi; deneme ancak geliştirme ekibinin yerel kopyasıyla tamamlandı. Dosya kimliğiyle SCI'ye ve talimata eklenmeli, yükleme talimatın yeni sürümüyle tekrarlanmalı." |
+
+İyi bulgu iki kaydı ve aradaki farkı adıyla söyler: hangi belge hangi sürümde ne diyor, öteki
+kayıt ne gösteriyor, teslimden önce ne yapılmalı.
+
+## Seviyeye göre uyarlama
+
+Tablo A-9'un beşinci hedefi Seviye A'dan D'ye bütün seviyelerde ve hepsinde bağımsızlıkla
+aranır. Liste bu yüzden seviyeyle kısalmaz: Seviye D'de de 30 maddenin 29'u sorulur ve
+gözden geçiren, bu sürümün verisini yazmamış, gözden geçirmemiş ve doğrulamamış biri olmalıdır.
+Tek istisna UGG-03'tür: geçiş kriterlerinin tanımlanması (A-1 #2) ve denetlenmesi (A-9 #4)
+Seviye D'de aranmaz. Proje Seviye D'de de geçiş kriteri yazdıysa ona uyum UGG-04 içinde,
+planlara uyum olarak sorulur.
+
+Seviyeyle değişen, bazı maddelerin neye bakacağıdır:
+
+| Madde | A, B ve C | D |
+|---|---|---|
+| UGG-05 | Planlar ile gereksinim, tasarım ve kodlama standartları | Yalnızca planlar; standartlar Seviye D'de beklenmez (A-1 #5) |
+| UGG-07 | Sistem gereksiniminden yüksek ve düşük seviyeli gereksinime, oradan kaynak koda; gereksinimlerden teste | Sistem gereksiniminden yüksek seviyeli gereksinime; yüksek seviyeli gereksinimden teste |
+| UGG-10, UGG-11 | Yeniden derlenen kaynak kod gözden geçirilmiş ve gereksinimlere izlenmiştir | Kaynak kodun gözden geçirilmesi ve izlenmesi aranmaz, ama yeniden derleme yine arşivdeki kaynaktan yapılır |
+| UGG-19 | Gereksinim kapsamı boşluklarının yanında yapısal kapsam boşlukları da (C'de satır kapsama) | Yalnızca yüksek seviyeli gereksinimlerin test kapsamı (A-7 #3) |
+
+Seviye A ile B arasında bu liste açısından fark yoktur; fark, önceki listelerin dayandığı
+doğrulama hedeflerinin bağımsızlığındadır. Önceki sürümden devralınan kredi maddeleri
+(UGG-24–28) seviyeye değil projenin niteliğine bağlıdır: PDS kullanılmayan ilk
+sertifikasyonda "Uygulanmaz" yanıtlanır ve gerekçe olarak PSAC'taki ek hususlar bölümü anılır.
+Sertifikasyon sonrası değişiklikte uygulanan alt küme de seviyeye göre değil, değişikliğin
+önemine göre seçilir; seviye yalnızca seçilen maddelerin içeriğini yukarıdaki tabloya göre
+belirler.
+
+## İlgili bölümler
+
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md):
+  yazılım uygunluk gözden geçirmesi, uygunsuzluk yönetimi
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md):
+  yazılım başarım özeti
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#açık-problem-raporlarıyla-sertifikasyona-gitmek):
+  açık problem raporlarıyla sertifikasyona gitmek
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md):
+  SCI, arşiv, değişiklik etki analizi
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.md)
+- [24. Yazılım Yeniden Kullanımı](../../05-ozel-konular/24-yazilim-yeniden-kullanimi.md):
+  önceden geliştirilmiş yazılımın kullanımı
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- Şablonlar: [SQAP](../05-sablonlar/05-sqap.md), [PSAC](../05-sablonlar/01-psac.md),
+  [SCMP](../05-sablonlar/04-scmp.md)
+- Otorite denetimine hazırlık: [SW SOI-4](soi-4.md)
+- Komşu listeler: [Test Sonuçları](08-test-sonuclari.mdx),
+  [Kapsam Analizleri](09-kapsam-analizleri.mdx),
+  [Konfigürasyon Denetimi](10-konfigurasyon-denetimi.mdx),
+  [Problem Raporu](11-problem-raporu-ve-degisiklik.mdx),
+  [Kalite Güvencesi Denetimi](12-kalite-guvencesi-denetimi.mdx)
+- [Kontrol listelerine genel bakış](index.md)

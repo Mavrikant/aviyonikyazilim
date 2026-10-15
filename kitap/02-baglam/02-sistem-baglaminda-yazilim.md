@@ -229,9 +229,9 @@ nedeni, sistem analizi yapılırken henüz var olmaması ve emniyet etkisinin
 değerlendirilmemiş olmasıdır.
 
 Tabloların her satırı aynı zamanda bir denetim sorusudur. Planlama denetiminde yazılım
-seviyesinin hangi arıza durumuna dayandığı sorulur ([SW SOI-1](../kaynaklar/soi-1.md));
+seviyesinin hangi arıza durumuna dayandığı sorulur ([SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md));
 geliştirme denetiminde türetilmiş gereksinimlerin sistem süreçlerine iletildiğinin
-kaydı aranır ([SW SOI-2](../kaynaklar/soi-2.md)). "Sistem ekibine söylemiştik" bir kayıt
+kaydı aranır ([SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md)). "Sistem ekibine söylemiştik" bir kayıt
 değildir.
 
 ### Donanım/yazılım arayüzü

@@ -184,7 +184,7 @@ Son satırın cevabı çoğu zaman "hayır"dır: kod anlama aracının çıktıs
 veri akış özeti) gözden geçirmeyle ayrıca doğrulanıyorsa kalifikasyon gerekmez. Aracın
 çıktısına doğrulanmadan güvenilecekse durum değişir; ölçütler
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
-bölümündedir. Planlama denetimine hazırlanırken [SW SOI-1](../kaynaklar/soi-1.md)
+bölümündedir. Planlama denetimine hazırlanırken [SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md)
 kontrol listesi, tersine mühendislik kapsamındaki bileşenler için de aynen uygulanır.
 
 ### Kaynak malzemenin konfigürasyon kontrolü

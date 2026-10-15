@@ -1,0 +1,255 @@
+---
+title: "Problem Raporu Kontrol Listesi"
+sidebar_label: "Problem raporu ve değişiklik"
+sidebar_position: 11
+description: "Problem raporlarının ve değişiklik taleplerinin kurulda gözden geçirilmesi için kontrol listesi: içerik, etki analizi ve kapanış."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), temel çizgiye (baseline) alınmış veriyle ilgili bir problem
+raporunun (problem report) ya da değişiklik talebinin (change request), değişiklik kontrol
+kurulunda (change control board) veya yazılım konfigürasyon yönetimi planının (Software
+Configuration Management Plan, SCMP) yetkili kıldığı sorumlu tarafından gözden geçirilmesi
+(review) içindir. Rapor kurula üç kez gelir: açıldığında sınıflandırılır, düzeltme onaylanırken
+değişiklik etki analizi (change impact analysis) sınanır, kapatılırken düzeltici faaliyetin
+(corrective action) yapıldığı ve doğrulandığı görülür. DO-178C'de bu iş konfigürasyon
+yönetimi sürecinin problem raporlama, değişiklik kontrolü ve değişiklik gözden geçirmesi
+faaliyetleridir (§7.2.3–§7.2.5) ve Tablo A-8'in üçüncü hedefine kanıt üretir.
+
+Kurulun üyelerini SCMP belirler; çoğu projede yazılım lideri, doğrulama lideri ve
+konfigürasyon yönetimi sorumlusu bulunur, emniyet etkisi olabilecek raporda sistem emniyet
+temsilcisi, süreç uygunsuzluğunda kalite güvencesi (quality assurance) katılır. Üç an,
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#problem-raporlama)
+bölümündeki durum akışının geçişlerine denk gelir: Açık → Analizde, Analizde → Düzeltmede
+(ya da Reddedildi) ve Doğrulamada → Kapalı. Etki analizinin eksenleri
+[10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#değişiklik-etki-analizi)
+bölümünde, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır.
+Maddelerdeki "rapor", projede ayrı bir kayıt türüyse değişiklik talebini de kapsar.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §7.2.3 problem raporlama, izleme ve düzeltici faaliyet; §7.2.4 değişiklik kontrolü; §7.2.5 değişiklik gözden geçirmesi; veri: §11.17 (problem raporu), §11.18 (konfigürasyon yönetimi kayıtları), §11.20.k (teslimde açık raporlar); açılışta §6.2.c (bulgunun bildirilmesi), kapanışta §6.2.d–e (yeniden doğrulama, bağımsızlık) |
+| Ek A hedefleri | A-8 #3: problem raporlama, değişiklik kontrolü, değişiklik gözden geçirmesi ve konfigürasyon durum muhasebesi (configuration status accounting); A, B, C ve D'de gerekli, bağımsızlık (independence) aranmaz. Kapanıştaki yeniden doğrulama (reverification), değişen verinin kendi hedeflerine (A-3 … A-7) ve onların bağımsızlığına tabidir |
+| Gözden geçirilen veri | Problem raporu ya da değişiklik talebi; değişiklik etki analizi; kapanışta düzeltici faaliyet kaydı, değişen öğelerin yeni sürümleri ve yeniden doğrulama kayıtları |
+| Başvuru verisi | SCMP'deki rapor alanları, sınıflar ve durum akışı; yazılım doğrulama planındaki (Software Verification Plan, SVP) yeniden doğrulama kuralı; iz verisi (trace data); etkilenen temel çizginin içeriği (durum muhasebesi kaydı) |
+| Kaydın gideceği yer | Rapor içeriği ve kapanış → problem raporunun kendisi (§11.17); kurul kararı → konfigürasyon yönetimi kayıtları (§11.18), rapora bağlı; bulgular (finding) → rapora not olarak, giderilene kadar rapor sonraki duruma geçmez |
+| İlgili şablon | [SCMP](../05-sablonlar/04-scmp.md) (problem raporlama, değişiklik kontrolü, değişiklik gözden geçirmesi); [SVP](../05-sablonlar/03-svp.md) (yeniden doğrulama); [PSAC](../05-sablonlar/01-psac.md) (yazılım sertifikasyon planı; açık problem raporlarının yönetimi) |
+| Madde öneki | `PRD` |
+
+## Gözden geçirmeye giriş koşulları
+
+Kurul toplantısından ya da tek başına verilecek karardan önce şunlar sağlanmış olmalıdır:
+
+- [ ] Gündemdeki raporlar numaralarıyla listelenmiş ve kurul üyelerine toplantıdan önce
+      dağıtılmış.
+- [ ] Etkilenen öğe, SCMP'nin problem raporunu zorunlu kıldığı ana (genellikle ilk temel
+      çizgi) ulaşmış; temel çizgi öncesindeki bulgu bu listeyle değil gözden geçirme kaydıyla
+      kapanır.
+- [ ] Oy hakkı olan üyeler toplanmış; emniyet etkisi işaretli rapor için sistem emniyet
+      temsilcisi çağrılmış.
+- [ ] Onay gündemdeyse değişiklik etki analizi hazırlanıp rapora bağlanmış; kapanış
+      gündemdeyse yeniden doğrulama kayıtları erişilebilir.
+- [ ] Durum muhasebesi sorgusuyla sorumlusu ya da durumu boş kalan raporlar listelenmiş ve
+      gündeme alınmış.
+- [ ] Kontrol listesinin sürümü ve durum akışını tanımlayan SCMP'nin sürümü kayda yazılacak.
+
+## Kontrol listesi
+
+Her madde "Evet" yanıtı istenen durum olan bir sorudur; "Hayır" yanıtı rapora işlenen bir
+bulgudur.
+
+<ListeIndir dosya="problem-raporu-ve-degisiklik" baslik="Problem Raporu Kontrol Listesi" />
+
+### Açılış: raporun içeriği
+
+- [ ] **PRD-01** Rapor, sorunun görüldüğü konfigürasyon öğesini sürümüyle ya da süreç
+      faaliyetini adıyla tanımlıyor mu? Örneğin "son derleme" yerine derleme kimliği ve test
+      düzeneği yazılmış. *(A–D · §11.17.a)*
+- [ ] **PRD-02** Tanım, gözlenen ve beklenen davranışı ayrı ayrı veriyor ve sorunu yeniden
+      üretmeye yetecek adımları ya da koşulları içeriyor mu? *(A–D · §11.17.c)*
+- [ ] **PRD-03** Tanım, sorunun görüldüğü uçuş evresini ya da işletim kipini, onu tetikleyen
+      girdiyi ve etkilenen çıktıyı ya da göstergeyi yazıyor mu? Örneğin emniyet sorumlusu
+      etkiyi, raporu açana sormadan sınıflandırabiliyor. *(A–D · §11.17.c)*
+- [ ] **PRD-04** Raporun türü (yazılımın anormal davranışı, yaşam döngüsü verisinde kusur,
+      plana ya da standarda uygunsuzluk) işaretlenmiş mi; süreç uygunsuzluğu ayrı bir kalite
+      güvencesi kaydında tutuluyorsa iki kayıt birbirine bağlı mı? *(A–D · §7.2.3.a)*
+
+### Açılış: sınıflandırma ve yönlendirme
+
+- [ ] **PRD-05** Rapora SCMP'de tanımlı proje içi etki (önem) sınıfı atanmış ve sınıfın
+      gerekçesi bir cümleyle yazılmış mı? *(A–D · iyi uygulama)*
+- [ ] **PRD-06** Kök nedenin girdiği süreç ve iş ürünü (gereksinim, tasarım, kod, test, araç)
+      belirlenmiş mi? Örneğin testte görülen bir sınır hatası gereksinimdeki yanlış aralıktan
+      doğuyorsa rapor yalnızca koda değil gereksinime bağlanmış. *(A–D · §7.2.4.d)*
+- [ ] **PRD-07** Emniyet etkisi olabileceği düşünülen rapor açılışta işaretlenmiş ve SCMP'de
+      yazılı yolla sistem emniyet sorumlusuna iletilmiş mi? *(A–D · §7.2.5.a)*
+- [ ] **PRD-08** Sorun bir derleyicinin, gerçek zamanlı işletim sisteminin (RTOS) ya da ticari
+      hazır yazılımın (COTS) bilinen kusurundan doğuyorsa üreticinin hata listesindeki (errata)
+      kayda bağlanmış ve aynı yapının yazılımdaki öteki kullanımları taranmış mı?
+      *(A–D · iyi uygulama)*
+- [ ] **PRD-09** Raporun adı yazılı bir sorumlusu ve SCMP'deki durum akışına uyan güncel bir
+      durumu var mı? *(A–D · §7.2.3.b)*
+
+### Onay: sistem, emniyet ve sertifikasyon etkisi
+
+- [ ] **PRD-10** Değişiklik etki analizi, sorunun ya da değişikliğin sistem gereksinimlerine ve
+      sistem emniyet değerlendirmesine dokunup dokunmadığını gerekçesiyle yanıtlıyor mu;
+      dokunuyorsa sistem ekibinin yanıtı alınmış ve karar bu yanıt değerlendirildikten sonra
+      verilmiş mi? *(A–D · §7.2.5.a)*
+- [ ] **PRD-11** Etki analizi, değişikliğin daha önce alınmış sertifikasyon kredilerini bozup
+      bozmadığını da tarıyor mu? Örneğin otoritenin kabul ettiği bir sapmanın (deviation), bir
+      araç kalifikasyonu (tool qualification) kredisinin ya da açık taşınan başka bir raporun
+      gerekçesi bu değişiklikten sonra da geçerli. *(A–D · §7.2.5.b)*
+
+### Onay: yaşam döngüsü verisine etki
+
+- [ ] **PRD-12** Etkilenen yüksek ve düşük seviyeli gereksinimler, tasarım öğeleri, kaynak
+      dosyalar ve test durumları iz verisi sorgulanarak listelenmiş mi? Örneğin
+      liste tahmine değil, iz aracının o günkü sorgu çıktısına dayanıyor. *(A–D · §7.2.5.b)*
+- [ ] **PRD-13** Analiz, değişecek dosyaların yanında geçersiz kalacak kanıtları da sayıyor mu?
+      Örneğin değişen kaynak dosyanın gözden geçirme kaydı, ilgili test sonuçları ve analiz
+      raporları. *(A–D · §7.2.5.b)*
+- [ ] **PRD-14** Değişikliğin arayüzlere, zamanlama ve bellek bütçelerine ve varsa bölümleme
+      varsayımlarına etkisi değerlendirilmiş; etkilenmediği söylenen bütçe için gerekçe
+      yazılmış mı? *(A–D · §7.2.5.b)*
+- [ ] **PRD-15** Yapısal kapsam sonuçlarının ve en kötü durum yürütme süresi (worst-case
+      execution time, WCET) ile yığın analizlerinin değişiklikten sonra geçerli kalıp kalmadığı
+      değerlendirilmiş mi? *(A–C · §7.2.5.b)*
+- [ ] **PRD-16** Yeniden doğrulama kapsamı SVP'deki seçim kuralıyla belirlenmiş mi: değişen
+      gereksinimlerin testleri, iz verisiyle bulunan bağlı testler ve asgari regresyon
+      (regression) seti? *(A–D · §6.2.d)*
+- [ ] **PRD-17** Değiştirilecek her öğe kimliği ve hedef sürümüyle listelenmiş mi; yazılım
+      konfigürasyon indeksinin (Software Configuration Index, SCI) ya da otoriteye sunulan
+      başka bir verinin güncellenmesi gerekiyorsa o da listede mi? *(A–D · §7.2.5.c)*
+
+### Onay: karar
+
+- [ ] **PRD-18** Karar (onay, ret ya da erteleme) SCMP'nin yetkili kıldığı kurul ya da rol
+      tarafından verilmiş ve gerekçesiyle rapora bağlı bir kayda geçmiş mi? *(A–D · §7.2.4.c)*
+- [ ] **PRD-19** Onaylanan düzeltmede işin hangi süreçten yeniden başlayacağı ve hangi ekiplere
+      bildirileceği kararda yazılı mı? Örneğin gereksinim hatasında iş gereksinim sürecinden
+      başlıyor ve test ekibi bilgilendiriliyor. *(A–D · §7.2.5.d)*
+- [ ] **PRD-20** Kararda düzeltmenin gireceği sürüm ve onaylanan değişikliğin sınırı (değişecek
+      öğeler ve davranış) yazılı mı? *(A–D · §7.2.4.c)*
+- [ ] **PRD-21** Reddedilen raporda sorunun neden sorun olmadığı ya da hangi kayıtla
+      yinelendiği yazılmış ve raporu açan taraf karardan haberdar edilmiş mi? *(A–D · §7.2.3.b)*
+- [ ] **PRD-22** Ertelenen ya da teslimde açık taşınacak rapor, FAA AC 20-189 / EASA
+      AMC 20-189'un beklediği en az dört sınıftan (önemli, işlevsel, süreç, yaşam döngüsü
+      verisi) birine atanmış mı; işlevsel kısıtı, gerekiyorsa işletme sınırlaması, olası emniyet
+      etkisi, açık kalma gerekçesi, hafifletici önlemi ve planlanan düzeltme sürümü yazılmış mı?
+      *(A–D · §11.20.k)*
+
+### Kapanış: uygulama ve yeniden doğrulama
+
+- [ ] **PRD-23** Etki analizinde listelenen her öğe için ya değişiklik yapılmış ya da "bakıldı,
+      değişmedi" kaydı düşülmüş mü; açık kalem kalmamış mı? *(A–D · §7.2.4.e)*
+- [ ] **PRD-24** Sürüm kontrolündeki her değişiklik kaydı bu raporun numarasını taşıyor, kurul
+      onayından sonra yapılmış ve fark onaylanan sınırın dışına taşmıyor mu? Örneğin dosya
+      açılmışken yapılan küçük bir iyileştirme farkta görünmüyor. *(A–D · §7.2.3.c, §7.2.4.a)*
+- [ ] **PRD-25** Sorunu ortaya çıkaran test ya da gözden geçirme ile kararda belirlenen
+      regresyon testleri, değişikliği içeren derlemeye karşı yinelenmiş ve sonuçlar o derlemenin
+      kimliğiyle kaydedilmiş mi? *(A–D · §6.2.d)*
+- [ ] **PRD-26** Değişen her veri (gereksinim, tasarım, kod, test durumu), seviyenin o veri için
+      istediği gözden geçirme ve analizlerden yeniden geçirilmiş ve kayıtları rapora bağlanmış
+      mı? Örneğin kod yamasında kaynak kod kontrol listesi değişen fonksiyonlara uygulanmış.
+      *(A–D · §6.2.d)*
+- [ ] **PRD-27** Değişen veri, ilgili hedefin istediği bağımsızlıkla gözden geçirilmiş mi?
+      Örneğin düzeltmeyi yazan kişi değişen kodu kendisi gözden geçirmemiş. *(A–B · §6.2.e)*
+
+### Kapanış: kayıt ve durum muhasebesi
+
+- [ ] **PRD-28** Düzeltici faaliyet rapora işlenmiş mi: ne değişti, hangi öğe hangi sürüme
+      geçti ve kapanışın kanıtı olan doğrulama kayıtları hangileri? *(A–D · §11.17.d)*
+- [ ] **PRD-29** Kapanışı SCMP'de yetkili kılınan rol onaylamış mı; ürün kusurunda doğrulama,
+      süreç uygunsuzluğunda kalite güvencesi kapanışı teyit etmiş mi? *(A–D · §7.2.3.b)*
+- [ ] **PRD-30** Kapanan raporun düzeltmesi bir temel çizgiye girmiş ve konfigürasyon durum
+      muhasebesi raporunda bu ilişki görünüyor mu? *(A–D · §7.2.6.a)*
+
+## Araçla denetlenebilecek maddeler
+
+Problem raporlama aracı, iz aracı ve sürüm kontrolü bu listenin bir bölümünü kurul
+toplantısından önce yanıtlayabilir; kurula kalan, aracın ölçemediği yargıdır.
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| PRD-01, PRD-02 | Problem raporlama aracında zorunlu alan ve biçim denetimi | Alanların dolu olması değil, içeriğin sorunu anlatmaya ve yeniden üretmeye yetmesi |
+| PRD-12 | Gereksinim yönetim ya da iz aracında etkilenenler sorgusu | Eksik ya da güncel olmayan izler yüzünden sorgunun kaçırdığı bağlar |
+| PRD-16, PRD-25 | Test yönetim aracında iz verisinden regresyon seçimi ve koşu kaydı | Seçim kuralının bu değişiklik için yeterli olup olmadığı; seçilmeyen testlerin gerekçesi |
+| PRD-24 | Sürüm kontrol aracında fark raporu ve değişiklik kayıtlarındaki rapor numarası denetimi | Farkın onaylanan değişiklikle sınırlı kalıp kalmadığı |
+| PRD-30 | Durum muhasebesi sorgusu: kapalı rapor ile temel çizgi eşlemesi | Sorgu tanımının doğruluğu; elle tutulan listelerin araçla aynı olması |
+
+Bir madde araç çıktısına güvenilerek atlanıyorsa, örneğin regresyon seti aracın seçtiği
+biçimde gözden geçirilmeden kabul ediliyorsa, o aracın kalifikasyonu sorusu doğar (bkz.
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| Rapor yalnızca "test başarısız" diyor; derleme kimliği ve beklenen davranış yok | Rapor koşu sırasında aceleyle açılmış; araçta zorunlu alan yok | PRD-01, PRD-02 |
+| Gereksinim hatası kod yamasıyla kapatılmış; gereksinim eski hâlinde | Kök neden sorulmadan en kısa düzeltme seçilmiş | PRD-06, PRD-19 |
+| Etki analizi yalnızca değişen dosyayı listeliyor; geçersiz kalan test sonuçları ve analizler yok | Analiz "ne değişecek" sorusuyla yapılmış, "hangi kanıt geçersiz kalacak" sorusuyla değil | PRD-13, PRD-15 |
+| Emniyet etkisi olabilecek rapor sistem ekibine danışılmadan karara bağlanmış | Sistem süreçlerine geri bildirim yolu SCMP'de tanımsız | PRD-07, PRD-10 |
+| Kurul kararı toplantı notunda kalmış, raporda yok | Karar ile rapor ayrı yerlerde tutuluyor | PRD-18 |
+| Düzeltmeyle birlikte onaylanmamış başka değişiklikler de girmiş | Dosya açılmışken yapılan küçük iyileştirmeler | PRD-20, PRD-24 |
+| Rapor kapalı, ama düzeltme hiçbir temel çizgide yok ya da kapanış kanıtı boş | Kapanış, kodun depoya girmesiyle aynı anda yapılmış | PRD-28, PRD-30 |
+| Ertelenen raporun sınıfı ve kısıtı teslim haftasında ilk kez yazılıyor | Erteleme kararı gerekçesiz verilmiş | PRD-22 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| Etki analizi eksik. | PRD-13: PR-0213'ün etki analizi `hiz_filtre.c` dosyasını listeliyor, ancak bu dosyayı sınayan TC-118-01…04 test sonuçlarını ve dosyanın gözden geçirme kaydını geçersiz kalacak kanıt olarak saymıyor; SVP'deki seçim kuralına göre bu testler regresyon setine eklenmeli. |
+| Rapor yetersiz. | PRD-03: PR-0187 yalnızca "irtifa göstergesi donuyor" diyor; hangi uçuş evresinde, hangi girdiyle ve ne kadar süre donduğu yazılmamış, emniyet etkisi bu tanımla değerlendirilemiyor; SCMP'deki tanım alanının istediği koşullar eklenmeli. |
+| Kapanış hatalı. | PRD-30: PR-0150 kapalı, ancak düzeltmeyi içeren `nav_mod.c` 3.4 sürümü durum muhasebesi raporundaki hiçbir temel çizgide yok; rapor, düzeltme bir temel çizgiye girene kadar Doğrulamada durumunda kalmalı. |
+
+## Seviyeye göre uyarlama
+
+Tablo A-8'in üçüncü hedefi dört seviyede de geçerlidir ve bağımsızlık istemez; bu yüzden
+maddelerin çoğu A–D etiketlidir. İki madde başka hedeflere dayanır. PRD-15 yapısal kapsama
+ve WCET ile yığın analizlerine bağlıdır; bunlar Seviye D'de aranmaz. PRD-27 doğrulama
+hedeflerindeki bağımsızlığa bağlıdır; doğrulama hedeflerinde bağımsızlık yalnızca Seviye A
+ve B'de vardır. Bağımsızlık aranmayan seviyelerde de kapanışa değişikliği yapandan başka
+birinin bakması iyi uygulamadır.
+
+Seviye düştükçe asıl değişen, hangi verinin problem raporlamaya tabi olduğudur. Problem
+raporlama birinci kontrol kategorisindeki (CC1) veriye uygulanır; ikinci kategorideki (CC2)
+bir veride yapılan düzeltme için rapor açılması gerekmez (bkz.
+[10. bölüm, kontrol kategorileri](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md#kontrol-kategorileri-cc1-ve-cc2)).
+
+| Seviye | Düşen maddeler | Problem raporlamaya tabi olmayan (CC2) veri |
+|---|---|---|
+| A, B | — | Doğrulama sonuçları, problem raporlarının kendisi, konfigürasyon yönetimi ve kalite güvencesi kayıtları |
+| C | PRD-27 | Yukarıdakilere ek olarak geliştirme, doğrulama, konfigürasyon yönetimi ve kalite güvencesi planları (SDP, SVP, SCMP, SQAP); standartlar; doğrulama durumları ve prosedürleri; test tarafındaki iz verisi |
+| D | PRD-15, PRD-27 | C'dekilere ek olarak tasarım tanımı ve yazılım yaşam döngüsü ortam konfigürasyon indeksi (SECI); standartlar D'de beklenmez |
+
+Bu kategoriler asgaridir: proje bir veriyi daha sıkı kontrol etmeyi seçip SCMP'ye yazabilir.
+Kararı bir kurulun mu yoksa tek bir sorumlunun mu vereceğini standart değil SCMP belirler;
+kurul, standardın değil uygulamanın terimidir.
+
+## İlgili bölümler
+
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): problem
+  raporunun durum akışı, proje içi sınıflar ve
+  [açık problem raporlarıyla sertifikasyona gitmek](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#açık-problem-raporlarıyla-sertifikasyona-gitmek).
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md):
+  değişiklik etki analizi ve baştan sona işlenmiş bir değişiklik örneği.
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md):
+  uygunsuzluk kaydı ile problem raporu arasındaki sınır.
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md):
+  açık raporların yazılım başarım özetinde (Software Accomplishment Summary, SAS) sunulması.
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md): temel çizgideki veri
+  değiştiğinde sürece yeniden girişin koşulları.
+- Şablonlar: [SCMP](../05-sablonlar/04-scmp.md), [SVP](../05-sablonlar/03-svp.md),
+  [PSAC](../05-sablonlar/01-psac.md).
+- Otorite denetimi: [SW SOI-3](soi-3.md) (doğrulamada problem raporları),
+  [SW SOI-4](soi-4.md) (teslimde açık raporlar).
+- Komşu listeler: [Test Sonuçları](08-test-sonuclari.mdx) (başarısız testin rapora
+  bağlanması), [Konfigürasyon Denetimi](10-konfigurasyon-denetimi.mdx) (temel çizgi, SCI ve
+  durum muhasebesi), [Kalite Güvencesi Denetimi](12-kalite-guvencesi-denetimi.mdx) (problem
+  raporlama sürecinin plana uygunluğu),
+  [Uygunluk Gözden Geçirmesi](13-uygunluk-gozden-gecirmesi.mdx) (teslimde açık raporların
+  bütünü).

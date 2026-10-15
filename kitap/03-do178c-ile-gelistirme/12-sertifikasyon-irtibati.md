@@ -45,7 +45,8 @@ gönderilmelidir: planlara göre aylarca veri üretildikten sonra gelen bir itir
 verinin bir kısmını geçersiz kılar. İkincisi, mutabakat PSAC'ın anlattığı projeyi
 kapsar: yazılım seviyesi, kapsam, araç ya da yöntem değişirse PSAC güncellenir ve
 otoriteye yeniden bildirilir. PSAC'ın içeriği
-[5. Yazılım Planlama](05-yazilim-planlama.md) bölümünde anlatılır.
+[5. Yazılım Planlama](05-yazilim-planlama.md) bölümünde, bölüm bölüm şablonu
+[PSAC Şablonu ve Yazım Rehberi](../06-ekler/05-sablonlar/01-psac.md) sayfasında anlatılır.
 
 Otoriteye sunulan veri ile erişime açık tutulan veri aynı şey değildir. Asgari olarak üç
 veri sunulur: PSAC, SCI ve SAS; üçü de her yazılım seviyesinde tam kontrol isteyen
@@ -241,9 +242,9 @@ yeniden yap" riskine girilmez. Her aşamanın kabaca giriş kriteri ve odağı �
 SOI-2 ve SOI-3 için tipik olarak en az yarısını anar, EASA'nın yürürlükten kalkan notu
 en az dörtte üçünü arıyordu. Projede geçerli eşik PSAC'ta otoriteyle kararlaştırılır.
 Öteki kriterler de otoriteden otoriteye ve projeden projeye küçük farklılıklar gösterir;
-tam listeler için Kaynaklar kısmındaki [SW SOI-1](../kaynaklar/soi-1.md),
-[SW SOI-2](../kaynaklar/soi-2.md), [SW SOI-3](../kaynaklar/soi-3.md) ve
-[SW SOI-4](../kaynaklar/soi-4.md) kontrol listelerine bakılabilir.
+tam listeler için [Ek F: Kontrol Listeleri](../06-ekler/06-kontrol-listeleri/index.md) içindeki [SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md),
+[SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md), [SW SOI-3](../06-ekler/06-kontrol-listeleri/soi-3.md) ve
+[SW SOI-4](../06-ekler/06-kontrol-listeleri/soi-4.md) kontrol listelerine bakılabilir.
 
 Denetim akışı genellikle şu düzende ilerler:
 

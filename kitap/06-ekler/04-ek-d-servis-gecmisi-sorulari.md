@@ -139,7 +139,7 @@ sertifikasyon otoritesiyle erkenden konuşulur.
   veriyle?
 - Otoriteyle hangi aşamada konuşuldu? (Tercihen planlama aşamasında, SOI-1'den önce;
   bkz. [12. Sertifikasyon İrtibatı](../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
-  ve [SW SOI-1](../kaynaklar/soi-1.md).)
+  ve [SW SOI-1](06-kontrol-listeleri/soi-1.md).)
 - Kabul edilebilir süre ve hata oranı için ölçüt önceden anlaşıldı mı? Neyin hata
   sayılacağı ve hangi tür problemin servis geçmişini geçersiz kılacağı PSAC'ta tanımlı mı?
 - Servis geçmişinin kullanımı ve sonuçları sistem emniyet değerlendirme sürecinin önünden

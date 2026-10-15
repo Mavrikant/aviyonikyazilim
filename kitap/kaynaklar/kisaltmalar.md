@@ -31,6 +31,9 @@ Tablo, kısaltmaların kitapta ele alındığı bölüm sırasına göre dizilmi
 | SVP | Software Verification Plan | yazılım doğrulama planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
 | SCMP | Software Configuration Management Plan | yazılım konfigürasyon yönetimi planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
 | SQAP | Software Quality Assurance Plan | yazılım kalite güvencesi planı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SRStd | Software Requirements Standards | gereksinim standardı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SDStd | Software Design Standards | tasarım standardı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
+| SCStd | Software Code Standards | kodlama standardı | [Bölüm 5](../03-do178c-ile-gelistirme/05-yazilim-planlama.md) |
 | HLR | High-Level Requirements | yüksek seviyeli gereksinimler | [Bölüm 6](../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md) |
 | LLR | Low-Level Requirements | düşük seviyeli gereksinimler | [Bölüm 7](../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md) |
 | EOC | Executable Object Code | çalıştırılabilir nesne kodu | [Bölüm 8](../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.md) |

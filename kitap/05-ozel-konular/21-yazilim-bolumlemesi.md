@@ -81,7 +81,7 @@ seviyesi oradan atanır; ayrı ayrı seviye alabilenler yalnızca bölümlenmiş
 bileşenlerdir. İkincisi, bölümleme yaklaşımı yazılım sertifikasyon planında
 (Plan for Software Aspects of Certification, PSAC) yazılıma genel bakış içinde
 bildirilir (bkz. [5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.md));
-otorite bu iddiayı ilk denetimde sorgular ([SW SOI-1](../kaynaklar/soi-1.md)).
+otorite bu iddiayı ilk denetimde sorgular ([SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md)).
 İzi başka verilerde de aranır: bütünlüğün hangi yöntemle doğrulanacağı yazılım
 doğrulama planında (Software Verification Plan, SVP), yazılıma tahsis edilen bölümleme
 gereksinimleri ile bölümlerin etkileşimi ve seviyeleri gereksinim verisinde, bölümleme

@@ -1,0 +1,267 @@
+---
+title: "Planlar ve Standartlar Kontrol Listesi"
+sidebar_label: "Planlar ve standartlar"
+sidebar_position: 1
+description: "Beş plan ve üç geliştirme standardının gözden geçirilmesi için kontrol listesi: DO-178C'ye uyum, tutarlılık ve ölçülebilirlik soruları."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), beş yazılım planının ve üç geliştirme standardının birlikte
+gözden geçirilmesi (review) içindir: belgeler ilk kez yayımlanıp temel çizgiye (baseline)
+alınmadan önce ve sonra her revizyonda. Gözden geçirmeyi belgelerin yazarları dışındaki proje
+mühendisleri, doğrulama ve konfigürasyon yönetimi sorumluları yapar; kalite güvencesi de
+katılır. Sorulan üç şeydir: plan seti yazılım seviyesinin gerektirdiği her şeyi karşılıyor mu,
+belgeler birbiriyle tutarlı mı ve yazılanlar bir kayda bakılarak denetlenebilir mi?
+
+DO-178C'de bu iş planlama sürecinin gözden geçirilmesidir (§4.6). Sonucu, Tablo A-1'in iki
+hedefinin (objective) kanıtıdır: planların DO-178C ile uyumu (#6) ve planların eşgüdümlü
+geliştirilip revize edilmesi (#7). Planların neden ve nasıl gözden geçirildiği
+[5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.md#planların-gözden-geçirilmesi-onayı-ve-değişmesi)
+bölümünde, belge belge içerikleri [Plan ve Standart Şablonları](../05-sablonlar/index.md)
+sayfalarında, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır.
+Otoritenin planlama denetiminde baktığı noktalar [SW SOI-1](soi-1.md) listesindedir; bu liste
+ondan önce, ekibin kendi gözden geçirmesinde belgelerin içeriğine bakar. Kalite güvencesinin
+planlara ilişkin güvencesi (A-9 #1) ise
+[Kalite güvencesi denetimi](12-kalite-guvencesi-denetimi.mdx) listesindedir.
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §4.6 planlama sürecinin gözden geçirilmesi; içerik ölçütü §4.2–§4.5 ve §11.1–§11.8 |
+| Ek A hedefleri | A-1 #6: A, B ve C'de gerekli, D'de aranmaz. A-1 #7: A, B ve C'de gerekli, D'de aranmaz. İkisinde de bağımsızlık (independence) hiçbir seviyede aranmaz. Maddeler ayrıca A-1 #1–#5'in çıktısına bakar: #1 ve #4 A–D'de, #2, #3 ve #5 A–C'de gerekli |
+| Gözden geçirilen veri | Beş plan: yazılım sertifikasyon planı (Plan for Software Aspects of Certification, PSAC), yazılım geliştirme planı (Software Development Plan, SDP), yazılım doğrulama planı (Software Verification Plan, SVP), yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP) ve yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP); gereksinim, tasarım ve kodlama standartları; Seviye D'de beş plan. Plan setinin atıf yaptığı kurum süreçleri ve ek planlar tutarlılık açısından |
+| Başvuru verisi | DO-178C Ek A (seviyeye göre hedefler) ve uygulanan teknoloji ekleri (supplement); yazılım seviyesini veren emniyet değerlendirmesi çıktıları; yazılıma tahsis edilen sistem gereksinimleri; araç envanteri ve yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI) taslağı; otoriteyle önceki görüşmelerin kayıtları |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR), A-1 #6 ve #7'nin çıktısı. Bulgular (finding) → kayıt içinde. Belgeler temel çizgiye alındıktan sonra bulunan kusur → SCMP'deki sınıra göre problem raporu (problem report) ya da değişiklik talebi (change request) |
+| İlgili şablon | [Plan ve Standart Şablonları](../05-sablonlar/index.md): [PSAC](../05-sablonlar/01-psac.md), [SDP](../05-sablonlar/02-sdp.md), [SVP](../05-sablonlar/03-svp.md), [SCMP](../05-sablonlar/04-scmp.md), [SQAP](../05-sablonlar/05-sqap.md), [gereksinim](../05-sablonlar/06-gereksinim-standardi.md), [tasarım](../05-sablonlar/07-tasarim-standardi.md) ve [kodlama](../05-sablonlar/08-kodlama-standardi.md) standardı |
+| Madde öneki | `PLS` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek belgeler numarası ve sürümüyle listelenmiş ve konfigürasyon yönetimi
+      altında; set, birlikte yayımlanacak sürümlerden oluşuyor.
+- [ ] Başvuru verisi tanımlı sürümleriyle gözden geçirenlerin erişiminde: yazılım seviyesini
+      veren emniyet değerlendirmesi çıktıları, tahsis edilen sistem gereksinimleri ve araç
+      envanteri.
+- [ ] Her belgenin uyum tablosu (DO-178C maddesi → belge bölümü) ve plan setinin tutarlılık
+      matrisi belgelerle birlikte dağıtılmış.
+- [ ] Gözden geçirenler belli: her belgeye yazarı dışında en az bir kişi, setin tamamına
+      tutarlılık için en az bir kişi atanmış; kalite güvencesinin katılımı kayda geçecek.
+- [ ] Bu kontrol listesinin projede kullanılan sürümü ve eklenen proje maddeleri kayda
+      yazılacak.
+
+## Kontrol listesi
+
+Her madde evet/hayır sorusudur: "Evet" istenen durumdur, "Hayır" bir bulgudur ve kayda
+sınıfıyla yazılır; sondaki parantez maddenin geçerli olduğu seviyeleri ve dayanağını verir.
+
+<ListeIndir dosya="planlar-ve-standartlar" baslik="Planlar ve Standartlar Kontrol Listesi" />
+
+### Plan setinin bütünlüğü
+
+- [ ] **PLS-01** Yazılım seviyesinin gerektirdiği belgelerin hepsi gözden geçirmeye girmiş mi?
+      Örneğin Seviye A–C'de beş plan ve üç standart, Seviye D'de beş plan; birleştirilmiş
+      bir belgede her birinin içeriği ayrı bölümlerde bulunabiliyor. *(A–D · §4.2.a)*
+- [ ] **PLS-02** Yazılım seviyesi (bileşenler arasında fark varsa her bileşenin seviyesi) bütün
+      belgelerde aynı geçiyor ve PSAC'ın dayandığı emniyet değerlendirmesi sürümü, sistemin
+      güncel temel çizgisindeki sürüm mü? *(A–D · §4.1.a)*
+- [ ] **PLS-03** Plan seti kurum süreçlerine, ek planlara (test planı, gereksinim yönetim planı
+      gibi) ya da tedarikçi planlarına atıf yapıyorsa bu belgeler sürümleriyle anılmış ve bu
+      projede neyin farklı uygulandığı yazılmış mı? *(A–C · §4.6.d)*
+
+### DO-178C'ye uyum
+
+- [ ] **PLS-04** Seviyede geçerli her Ek A hedefi için plan setinde bir faaliyet, onu yapacak
+      rol ve kanıtın duracağı kayıt gösterilebiliyor mu? Örneğin hedeften plan bölümüne giden
+      eşleme satır satır izlenebiliyor ve boş satır kalmıyor. *(A–D · A-1 #1)*
+- [ ] **PLS-05** Her belgenin uyum tablosu, §11.1–§11.8'de o belgeye düşen harfli maddelerin
+      hepsini, maddeyi gerçekten karşılayan bir bölümle eşliyor mu? Örneğin "uygulanmaz"
+      denen her madde için bir gerekçe yazılı. *(A–C · A-1 #6)*
+- [ ] **PLS-06** SVP'deki bağımsızlık listesi, Ek A'da bu seviyede bağımsızlık isteyen
+      doğrulama hedeflerinin hepsini içeriyor ve her biri için organizasyonda bu bağımsızlığı
+      sağlayacak bir rol gösteriliyor mu? *(A–B · §11.3.b)*
+- [ ] **PLS-07** SQAP'ta tanımlanan kalite güvencesi rolü, organizasyon şemasında denetleyeceği
+      işi yöneten kişiye bağlı olmayan ve düzeltici faaliyeti (corrective action) zorunlu
+      kılma yetkisi olan birine karşılık geliyor mu? *(A–D · §11.5.b)*
+
+### Planlar arası tutarlılık
+
+- [ ] **PLS-08** Tutarlılık matrisindeki her konu tek belgede tanımlanmış, öteki belgeler o
+      konuda yalnızca atıf yapıyor ya da tanımla çelişmeyen bir özet veriyor mu? Örneğin
+      PSAC'taki doğrulama özeti SVP'de olmayan bir faaliyet vaat etmiyor. *(A–C · A-1 #7)*
+- [ ] **PLS-09** Her araç, derleyici ve kütüphane bütün belgelerde aynı adla, aynı sürümle ve
+      aynı rolle geçiyor; sürüm anan her yer SECI'deki değeri veriyor mu? *(A–C · §4.1.g)*
+- [ ] **PLS-10** Roller (yazar, gözden geçiren, kalite güvencesi, konfigürasyon yöneticisi,
+      değişiklik kontrol kurulu) bütün planlarda aynı adla ve aynı sorumlulukla geçiyor mu?
+      *(A–C · A-1 #7)*
+- [ ] **PLS-11** SDP ve SVP'deki geçiş kriterlerinde anılan her temel çizgi SCMP'nin temel
+      çizgi listesinde aynı adla bulunuyor ve SQAP'ın denetim takviminde bir denetim
+      noktasına karşılık geliyor mu? Örneğin kriterin istediği gözden geçirme kaydı da
+      SCMP'de kontrol kategorisi belirlenmiş bir kayıt türü. *(A–C · A-1 #7)*
+- [ ] **PLS-12** SVP'deki test hatası akışı ve SQAP'taki uygunsuzluk (nonconformance) akışı,
+      SCMP'de tanımlı problem raporlama akışına atıf yapıp onun durum adlarını ve kapanışı
+      onaylayan rollerini mi kullanıyor? Örneğin SQAP ikinci bir durum akışı tanımlamıyor,
+      yalnızca kalite güvencesine özgü sınıfları ve hedef süreleri ekliyor. *(A–C · §4.1.g)*
+
+### Ölçülebilirlik
+
+- [ ] **PLS-13** Her geçiş kriteri (transition criteria) için, sağlandığını gösterecek kaydın
+      adı planda yazılı mı? Örneğin "gereksinimler olgunlaşınca" yerine "gereksinim gözden
+      geçirme kaydı kapanmış ve gereksinimler temel çizgide" deniyor. *(A–C · §4.3.b)*
+- [ ] **PLS-14** Planlar gözden geçirme, analiz ve test kayıtlarının hangi alanları
+      taşıyacağını tanımlıyor mu? Örneğin her kayıt bakılan verinin kimliğini ve sürümünü,
+      faaliyeti yapan kişiyi ve verinin yazarını (bağımsızlık kayıttan görülebilsin diye),
+      kullanılan yöntemi (kontrol listesi ve sürümü dahil) ve ortamın sürümünü gösterecek.
+      *(A–C · §4.6.c)*
+- [ ] **PLS-15** SDP'deki yaşam döngüsü modeli, PSAC'taki takvimde ve proje planında görünen
+      artım ve teslim yapısıyla örtüşüyor mu? Örneğin artımlı çalışılacaksa geçiş kriterleri
+      artım bazında yazılmış, takvimde karşılığı olmayan katı bir şelale tarif edilmemiş.
+      *(A–C · §4.1.b)*
+- [ ] **PLS-16** Planlardaki taahhütler, kimin neye bakarak karar vereceğini söylemeyen
+      "gerektiğinde", "uygun görülen durumlarda" gibi ifadelerden arınmış mı? Örneğin
+      SQAP'taki her denetimin sıklığı bir olayla ya da süreyle, örneklem büyüklüğü bir
+      sayıyla verilmiş. *(A–C · §4.6.b)*
+
+### Ek hususlar ve teknoloji ekleri
+
+- [ ] **PLS-17** PSAC'ın ek hususlar (additional considerations) listesi, araç envanteri,
+      mimari ve yeniden kullanılan bileşenlerle karşılaştırıldığında eksiksiz mi; her husus
+      için ya bir yaklaşım ya da gerekçeli bir "uygulanmaz" yazılmış mı? *(A–D · §4.1.d)*
+- [ ] **PLS-18** PSAC'ta anılan her ek husus SVP'de bir doğrulama yaklaşımıyla, SCMP'de bir
+      kontrolle karşılanıyor mu? Örneğin devre dışı bırakılmış kodun (deactivated code)
+      mekanizmasının nasıl doğrulanacağı ya da parametre verisi öğesinin (parameter data
+      item, PDI) nasıl yüklenip uyumluluğunun nasıl denetleneceği yazılı. *(A–D · §4.2.k)*
+- [ ] **PLS-19** Uygulanan teknoloji ekleri (DO-331, DO-332, DO-333) PSAC'ta adıyla ve
+      gerekçesiyle anılmış, eklerin istediği ek içerik (ör. DO-331'de model standardı) plan
+      setinde bir yerde bulunuyor mu? *(A–C · §11.1.c)*
+- [ ] **PLS-20** Tedarikçi kullanılıyorsa iş bölümü, uyulacak tedarikçi planlarının sürümü ve
+      gözetim yaklaşımı PSAC, SQAP ve SCMP'de aynı biçimde anlatılıyor mu? *(A–D · §4.2.l)*
+
+### Standartların denetlenebilirliği
+
+- [ ] **PLS-21** Her standarttan seçilen birkaç kural örnek bir iş ürününe uygulandığında, iki
+      gözden geçiren aynı "uyuyor / uymuyor" kararına varıyor mu? Örneğin "fonksiyonlar
+      mümkün olduğunca kısa tutulur" gibi ölçütsüz bir kural yok. *(A–C · §4.5)*
+- [ ] **PLS-22** Standartlar, SVP'deki yöntemlerle doğrulanamayacak yapıları yasaklıyor ya da
+      kullanım koşuluna bağlıyor mu? Örneğin yapısal kapsamı (structural coverage) ölçülemeyen
+      ya da zaman analizine girmeyen bir yapı (dinamik bellek, özyineleme, sınırsız iç içe
+      kesme) koşulsuz serbest bırakılmamış. *(A–C · §4.5.c)*
+- [ ] **PLS-23** Gürbüzlük (robustness) standartlarda karşılık buluyor mu? Örneğin gereksinim
+      standardı geçersiz girdi ve arıza davranışının nasıl yazılacağını, kodlama standardı
+      savunmacı programlama kurallarını tanımlıyor. *(A–C · §4.5.d)*
+- [ ] **PLS-24** Standartlardan sapma (deviation) süreci tek yerde tanımlı mı; onay yetkisi,
+      kayıt biçimi ve kalite güvencesinin sapma kayıtlarını nasıl denetleyeceği belli mi?
+      *(A–C · iyi uygulama)*
+
+### Ortam ve araçlar
+
+- [ ] **PLS-25** Plan setinde ve SECI taslağında adı geçen her araç (derleme ve test betikleri
+      dahil) araç envanterinde bulunuyor ve araç kalifikasyonu (tool qualification) gerekmediği
+      söylenen her aracın çıktısını doğrulayan faaliyet SVP'de gösteriliyor mu? Örneğin test
+      sonuçlarını toplayan betiğin çıktısını kimin, neye bakarak denetleyeceği yazılı.
+      *(A–D · A-1 #4)*
+- [ ] **PLS-26** Derleyici, bağlayıcı (linker) ve kod üreteci (code generator) için kullanılacak
+      seçenekler, eniyileme (optimization) düzeyi dahil, planda yazılı ve bu seçeneklerin
+      yapısal kapsam analizine ve nesne kodu doğrulamasına etkisi SVP'de ele alınmış mı?
+      *(A–C · §4.4.1.e)*
+- [ ] **PLS-27** Derleyici, bağlayıcı ya da yükleyici (loader) sürümü veya seçenekleri proje
+      ortasında değişirse hangi testlerin yeniden koşulacağına ve kapsamın yeniden ölçülüp
+      ölçülmeyeceğine nasıl karar verileceği SVP'de yazılı mı? Örneğin eski ve yeni derlemenin
+      nesne kodu karşılaştırılıyor, fark çıkan bileşenlerin testleri ve kapsam analizi
+      yenileniyor. *(A–C · §4.4.2.c)*
+- [ ] **PLS-28** Hedef dışı bir test ortamından (emülatör, simülatör) kredi alınacaksa SVP bu
+      ortamla hedef bilgisayar arasındaki farkları tek tek listeliyor ve her fark için hedefte
+      koşulacak testi ya da yapılacak analizi gösteriyor mu? Örneğin kesme gecikmesini, bellek
+      eşlemeli donanım arayüzlerini ve zamanlama davranışını sınayan testler hedefte koşulacak
+      diye işaretlenmiş. *(A–C · §4.4.3.b)*
+
+### Plan değişikliği ve revizyonu
+
+- [ ] **PLS-29** Planlar kendi revizyon yolunu tanımlıyor mu: değişikliği kim başlatır,
+      etkilenen öteki belgeler nasıl bulunur ve hangi değişiklikte otoriteye yeniden gidilir?
+      *(A–D · §4.2.e)*
+- [ ] **PLS-30** Bu gözden geçirme bir revizyon içinse, değişikliğin etkilediği öteki planlar
+      ve standartlar bulunmuş ve aynı kapsamda güncellenmiş ya da etkilenmedikleri
+      gerekçelendirilmiş mi? *(A–C · §4.1.g)*
+
+## Araçla denetlenebilecek maddeler
+
+Plan gözden geçirmesi çoğunlukla okuma işidir; yine de birkaç madde bir sorgu ya da küçük bir
+betikle hızlanır.
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| PLS-04, PLS-05 | Hedef–bölüm eşlemesini tutan gereksinim ya da belge yönetim aracında boş eşleme sorgusu | Eşlenen bölümün hedefi gerçekten karşılayıp karşılamadığı; eşleme dolu, içerik boş olabilir |
+| PLS-08 | Belge numarası ve bölüm atıflarının hedef belgede var olduğunu denetleyen çapraz atıf betiği | Atıf yapılan bölümün, atıf yapanın söylediğini gerçekten söyleyip söylemediği |
+| PLS-09, PLS-25 | Belgelerdeki araç adı ve sürüm dizgelerini SECI taslağıyla ve araç envanteriyle karşılaştıran betik | Farkın bilinçli mi (ör. doğrulama ortamında başka sürüm) yoksa hata mı olduğu; kalifikasyon gerekmez denen aracın çıktısını doğrulayan faaliyetin o çıktıyı gerçekten kapsadığı |
+| PLS-11 | Temel çizgi ve kayıt türü adlarını belgelerden çıkarıp karşılaştıran betik | Aynı adın aynı içeriği ve aynı zamanı anlatıp anlatmadığı |
+| PLS-16 | Belirsiz ifade listesiyle metin taraması | Bulunan ifadenin bağlamında gerçekten belirsiz olup olmadığı; listede olmayan ama ölçülemeyen taahhütler |
+
+Bir madde araç raporuna bakılarak işaretleniyor ve rapor ayrıca doğrulanmıyorsa araç bir
+doğrulama faaliyetinin yerini almış olur; kalifikasyon gerekip gerekmediği
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+bölümündeki ölçütlerle değerlendirilir.
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| PSAC'taki doğrulama özeti SVP'de olmayan bir faaliyeti vaat ediyor (ör. "bütün testler hedef donanımda koşulur") | PSAC'ın erken yazılıp SVP olgunlaşınca güncellenmemesi | PLS-08 |
+| Aynı derleyici SDP'de ve SVP'de farklı sürümle anılıyor | Planların farklı zamanlarda yazılması; sürümün esas kaydı olarak SECI'nin kullanılmaması | PLS-09 |
+| Seviye A projesinde yalnızca A'da bağımsızlık isteyen hedefler (ör. A-4 #8, A-5 #2) SVP'nin bağımsızlık listesinde yok | Listenin Seviye B projesinden kopyalanması | PLS-06 |
+| Geçiş kriteri bir temel çizgiye atıf yapıyor, SCMP'de o adla temel çizgi yok | SDP ve SCMP'nin birbirinden habersiz yazılması | PLS-11 |
+| PSAC'ta kod üreteci kullanılmadığı yazıyor, SDP'nin araç tablosunda bir kod üretim aracı var | Araç envanterinin tek yerde tutulmaması | PLS-17, PLS-25 |
+| Devre dışı bırakılmış kod PSAC'ta anılmış, SVP'de doğrulama yaklaşımı yok | Ek hususların yalnızca PSAC yazılırken düşünülmesi | PLS-18 |
+| Karmaşıklık sınırı tasarım ve kodlama standardında farklı sayıyla geçiyor | Aynı kuralın iki belgede ayrı ayrı tanımlanması | PLS-08 |
+| Kapsamın ölçüldüğü derleme ile uçuş derlemesinin seçenekleri farklı, fark değerlendirilmemiş | Kapsam aracının donatma (instrumentation) için ayrı derleme istemesi | PLS-26 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "Planlar tutarsız." | "PLS-09: SDP'nin geliştirme ortamı bölümü derleyiciyi 5.2 sürümüyle, SVP'nin doğrulama ortamı bölümü aynı derleyiciyi 5.1 sürümüyle anıyor; SECI taslağında 5.2 kayıtlı. SVP SECI'ye göre düzeltilmeli ya da farkın gerekçesi yazılmalı." |
+| "Geçiş kriterleri zayıf." | "PLS-13: SDP'deki tasarıma geçiş kriteri ('gereksinimler yeterince olgunlaştığında') bir kayda bağlı değil. Kriter, ilgili gereksinimlerin gözden geçirme kaydının kapanmasına ve gereksinimlerin temel çizgiye alınmasına bağlanmalı." |
+| "Standart belirsiz." | "PLS-21: Tasarım standardındaki fonksiyon uzunluğu kuralı 'mümkün olduğunca kısa' diyor; iki gözden geçiren aynı örnekte farklı karar verdi. Kural sayısal bir üst sınırla ya da kodlama standardındaki sınıra atıfla yazılmalı." |
+
+## Seviyeye göre uyarlama
+
+A-1 #6 ve #7 hiçbir seviyede bağımsızlık istemez; plan yazarları birbirinin belgesini gözden
+geçirebilir. Her belgeye yazarı dışında bir gözden geçiren atamak yine de iyi uygulamadır.
+Kalite güvencesinin plan ve standartlara ilişkin güvencesi (A-9 #1) ise A, B ve C'de
+bağımsızlıkla aranır ve kendi listesinde denetlenir.
+
+| Seviye | Aranan A-1 hedefleri | Bu listeden uygulanan |
+|---|---|---|
+| A | #1–#7 | 30 maddenin hepsi; PLS-06'daki liste 25 doğrulama hedefini kapsar |
+| B | #1–#7 | 30 maddenin hepsi; PLS-06'daki liste 13 doğrulama hedefini kapsar |
+| C | #1–#7 | 29 madde; doğrulama hedeflerinde bağımsızlık aranmadığı için PLS-06 düşer |
+| D | #1 ve #4 | A–D etiketli 9 madde (PLS-01, 02, 04, 07, 17, 18, 20, 25, 29) |
+
+Seviye D'de gözden geçirmenin kendisi bir hedef değildir ve üç standart beklenmez; beş plan
+ise yine yazılır ve planların faaliyetleri tanımlaması (A-1 #1) ile ek hususları ele alması
+(#4) aranır. Liste bu yüzden D'de de kullanılabilir: A–D etiketli maddeler bu iki hedefin
+karşılandığını gösterir, PLS-07 de D'de bağımsızlıkla aranan iki kalite güvencesi hedefinin
+(A-9 #2, #5) planda dayanağını sorar. A–C etiketli maddelerde "Hayır", D'de uyum bulgusu değil
+öneri olarak kaydedilebilir. Proje D'de de kısa bir kural seti yazmışsa standart maddeleri
+(PLS-21–PLS-24) ona uygulanır. Hangi hedefin hangi seviyede arandığı
+[DO-178C Hedef Gezgini](/araclar/sertifikasyon/do178c-hedef-gezgini) ile süzülebilir.
+
+## İlgili bölümler
+
+- [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.md)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#gözden-geçirmeler):
+  gözden geçirme, kontrol listesi ve kayıt
+- [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.md)
+- [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.md)
+- [12. Sertifikasyon İrtibatı](../../03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [Ek E: Plan ve Standart Şablonları](../05-sablonlar/index.md): sekiz belgenin şablonu,
+  uyum tabloları ve tutarlılık matrisi
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- [SW SOI-1](soi-1.md): otoritenin planlama denetimine hazırlık
+- Komşu listeler: [Kalite güvencesi denetimi](12-kalite-guvencesi-denetimi.mdx) (A-9 #1),
+  [Yüksek seviyeli gereksinimler](02-yuksek-seviyeli-gereksinimler.mdx) (gereksinim standardının
+  uygulanışı), [Entegrasyon çıktıları](06-entegrasyon-ciktilari.mdx) (derleyici ve bağlayıcının
+  bilinen hata listesinin değerlendirilmesi), [Kapsam analizleri](09-kapsam-analizleri.mdx)
+  (Seviye A'da kaynak koda izlenemeyen nesne kodu), [genel bakış](index.md)

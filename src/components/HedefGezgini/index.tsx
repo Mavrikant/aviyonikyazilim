@@ -82,12 +82,24 @@ function HedefSatiri({h, seviye, taban}: {h: Hedef; seviye: SeviyeE; taban: Sevi
           <span className={styles.atif}>DO-178C §{h.atif}</span>
           {seviye !== 'E' &&
             durum !== '-' &&
-            h.cikti.map((v) => (
-              <span key={v} className={styles.veri} title={veriOf(v).kisa && veriOf(v).ad}>
-                {veriOf(v).kisa ?? veriOf(v).ad}
-                <b>{kkOf(v, seviye)}</b>
-              </span>
-            ))}
+            h.cikti.map((v) => {
+              const {ad, kisa, yol} = veriOf(v);
+              const icerik = (
+                <>
+                  {kisa ?? ad}
+                  <b>{kkOf(v, seviye)}</b>
+                </>
+              );
+              return yol ? (
+                <Link key={v} to={yol} className={styles.veri} title={`${ad}: şablon ve yazım rehberi`}>
+                  {icerik}
+                </Link>
+              ) : (
+                <span key={v} className={styles.veri} title={kisa && ad}>
+                  {icerik}
+                </span>
+              );
+            })}
         </p>
       </div>
       <div className={styles.yan}>
@@ -362,16 +374,19 @@ export default function HedefGezgini(): ReactNode {
             Seviye {BULUNMA[seviye]} beklenen yaşam döngüsü verisi ve kontrol kategorileri ({veriSayisi} öğe)
           </summary>
           <ul className={styles.veriListesi}>
-            {veriler.map((v) => (
-              <li key={v}>
-                <span className={styles.atif}>{veriOf(v).atif}</span>
-                <span>
-                  {veriOf(v).ad}
-                  {veriOf(v).kisa && ` (${veriOf(v).kisa})`}
-                </span>
-                <b className={clsx(styles.kk, kkOf(v, seviye) === 'CC1' && styles.kk1)}>{kkOf(v, seviye)}</b>
-              </li>
-            ))}
+            {veriler.map((v) => {
+              const {ad, kisa, atif, yol} = veriOf(v);
+              return (
+                <li key={v}>
+                  <span className={styles.atif}>{atif}</span>
+                  <span>
+                    {yol ? <Link to={yol}>{ad}</Link> : ad}
+                    {kisa && ` (${kisa})`}
+                  </span>
+                  <b className={clsx(styles.kk, kkOf(v, seviye) === 'CC1' && styles.kk1)}>{kkOf(v, seviye)}</b>
+                </li>
+              );
+            })}
           </ul>
           <p className={styles.ipucu}>
             CC1 veride değişiklik kontrolü ve problem raporlama dahil bütün konfigürasyon yönetimi faaliyetleri uygulanır;

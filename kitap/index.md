@@ -44,9 +44,11 @@ değildir; belirli bir iş üzerindeyseniz aşağıdaki rotalardan birini izleye
 
 Bunların dışında:
 
-- **Başvuru arıyorsanız** kitap sonundaki Ek A–D ile Kaynaklar sayfalarını birlikte
-  kullanın: kısaltmalar sözlüğü ve katılım aşaması (Stage of Involvement, SOI)
-  denetimlerine hazırlık için dört kontrol listesi.
+- **Başvuru arıyorsanız** kitap sonundaki ekleri ve Kaynaklar sayfasını birlikte kullanın:
+  [Ek E](./06-ekler/05-sablonlar/index.md) beş plan ve üç geliştirme standardı için şablonlar,
+  [Ek F](./06-ekler/06-kontrol-listeleri/index.md) akran gözden geçirmesi, süreç denetimi ve
+  katılım aşaması (Stage of Involvement, SOI) denetimleri için kontrol listeleri verir;
+  Kaynaklar'da kısaltmalar sözlüğü bulunur.
 - **Bir konuya takıldıysanız** blog yazılarını destekleyici kısa notlar gibi değerlendirin;
   çoğu yazı, kitabın daha geniş akışındaki bir kavrama açıklık getirmek için yazılmıştır.
 
@@ -157,13 +159,11 @@ korur. Sertifikasyon kanıtı sonda derlenen bir paket değil, bu süreçlerin y
 - [Ek B: Gerçek Zamanlı İşletim Sistemlerinde Endişe Alanları](./06-ekler/02-ek-b-rtos-endise-alanlari.md)
 - [Ek C: Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular](./06-ekler/03-ek-c-rtos-secim-sorulari.md)
 - [Ek D: Yazılım Servis Geçmişi Soruları](./06-ekler/04-ek-d-servis-gecmisi-sorulari.md)
+- [Ek E: Plan ve Standart Şablonları](./06-ekler/05-sablonlar/index.md) — beş plan ve üç geliştirme standardı için bölüm bölüm şablon ve yazım rehberi
+- [Ek F: Kontrol Listeleri](./06-ekler/06-kontrol-listeleri/index.md) — akran gözden geçirmesi, süreç denetimi ve SOI-1 … SOI-4 denetimleri için kontrol listeleri
 
 ### Kaynaklar
 - [Kısaltmalar](./kaynaklar/kisaltmalar.md) — aviyonikte sık karşılaşılan kısaltmalar ve İngilizce açılımları
-- [SW SOI-1](./kaynaklar/soi-1.md) — planlama denetimi kontrol listesi
-- [SW SOI-2](./kaynaklar/soi-2.md) — geliştirme denetimi kontrol listesi
-- [SW SOI-3](./kaynaklar/soi-3.md) — doğrulama denetimi kontrol listesi
-- [SW SOI-4](./kaynaklar/soi-4.md) — son sertifikasyon denetimi kontrol listesi
 
 ## Bu kitaba atıf ve bağlantı
 

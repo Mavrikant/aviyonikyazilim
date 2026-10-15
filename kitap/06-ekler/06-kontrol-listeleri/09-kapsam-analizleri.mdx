@@ -1,0 +1,295 @@
+---
+title: "Kapsam Analizi Kontrol Listesi"
+sidebar_label: "Kapsam analizleri"
+sidebar_position: 9
+description: "Kapsam analizi kontrol listesi: gereksinim kapsamı, yapısal kapsam ve MC/DC, veri ve kontrol bağlaşımı, izlenemeyen nesne kodu ve boşlukların çözümü."
+---
+
+import ListeIndir from '@site/src/components/KontrolListesi';
+
+Bu kontrol listesi (checklist), gereksinim tabanlı testlerin (requirements-based testing)
+kredi amaçlı (for-credit) koşusundan sonra hazırlanan kapsam analizlerinin akran gözden
+geçirmesi (peer review) içindir: gereksinim kapsam analizi (requirements-based test
+coverage analysis), yapısal kapsam analizi (structural coverage analysis), veri ve kontrol
+bağlaşımı (data and control coupling) analizi ve Seviye A'da kaynak koda izlenemeyen nesne
+kodunun analizi. Gözden geçiren, tercihen analizi yapmamış bir doğrulama mühendisidir; bu
+bağımsızlık Seviye A'da bütün kapsam hedeflerinde, Seviye B'de yapısal kapsam ve bağlaşım
+hedeflerinde zorunludur. Analiz testlerle birlikte artımlı yürüdüğü için liste her kapsam
+raporu sürümünde uygulanır; son kez doğrulamadan sertifikasyon teslimine geçişten önce
+([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md), G5).
+
+Gözden geçirme, DO-178C'nin test kapsamı analizi faaliyetlerinin (§6.4.4) çıktısını sınar ve
+doğrulamanın doğrulanmasına ilişkin A-7 #3–#9 hedeflerine (objective) kanıt üretir.
+Ölçütlerin ne istediği
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#yapısal-kapsam-analizi)
+bölümünde, boşluk sınıfları
+[17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md) bölümünde anlatılır;
+burada tekrarlanmaz. Testlerin kendisi bu listenin konusu değildir: test durumlarının
+doğruluğu [Test Durumu ve Prosedürü Kontrol Listesi](07-test-durumlari-ve-prosedurleri.mdx),
+koşunun sonuçları [Test Sonuçları Kontrol Listesi](08-test-sonuclari.mdx) ile gözden
+geçirilir. Bu liste, o testlerin gereksinimleri ve kodu ne ölçüde sınadığına bakar. Bütün
+listelerin ortak kullanım kuralları [genel bakış](index.md) sayfasındadır.
+
+:::tip[Yüzdeden değil boşluk listesinden başlayın]
+Kapsam raporundaki yüzde, gözden geçirmenin sonucu değil girdisidir. Önce kapsanmayan
+yapıların listesini ve her birinin gerekçesini okuyun. Sonra raporda kapsanmış görünen
+birkaç kararı seçip hangi testin, hangi gereksinimle ve hangi beklenen sonuçla kapsadığını
+geriye doğru izleyin. İki yönde de takılmadan ilerleyebiliyorsanız rapora güvenmek için bir
+dayanağınız vardır.
+:::
+
+## Bir bakışta
+
+| Özellik | Değer |
+|---|---|
+| DO-178C maddesi | §6.4.4: 6.4.4.1 gereksinim tabanlı test kapsamı, 6.4.4.2 yapısal kapsam, 6.4.4.3 kapsam boşluklarının çözümü; kayıt §11.14 |
+| Ek A hedefleri: gereksinim kapsamı | A-7 #3, yüksek seviyeli gereksinimler: A'da bağımsızlıkla, B, C ve D'de gerekli; A-7 #4, düşük seviyeli gereksinimler: A'da bağımsızlıkla, B ve C'de gerekli |
+| Ek A hedefleri: yapısal kapsam | A-7 #5, değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC): yalnız A'da, bağımsızlıkla; A-7 #6, karar kapsama (decision coverage): A ve B'de bağımsızlıkla; A-7 #7, satır kapsama (statement coverage): A ve B'de bağımsızlıkla, C'de gerekli |
+| Ek A hedefleri: bağlaşım ve nesne kodu | A-7 #8, veri ve kontrol bağlaşımı: A ve B'de bağımsızlıkla, C'de gerekli; A-7 #9, kaynak koda izlenemeyen ek kod: yalnız A'da, bağımsızlıkla |
+| Gözden geçirilen veri | Kapsam analizi sonuçları: gereksinim–test kapsam tablosu, yapısal kapsam raporu, boşluk listesi ve çözüm kayıtları, bağlaşım analizi; Seviye A'da nesne kodu analizi |
+| Başvuru verisi | Yüksek ve düşük seviyeli gereksinimler ve iz verisi (trace data); mimarideki arayüz ve çağrı tanımları; test durumları (test case), test prosedürleri (test procedure) ve kredi koşusunun sonuçları; doğrulama planının kapsam bölümü; geliştirme planında dondurulan derleyici seçenekleri; sertifikasyon planındaki devre dışı kod beyanı |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → temel çizgiye (baseline) alınmış veride problem raporu (problem report), temel çizgi öncesinde gözden geçirme kaydı (sınır konfigürasyon yönetimi planındadır) |
+| İlgili şablon | [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.md): kapsam analizleri; derleyici, bağlayıcı ve yükleyici varsayımları |
+| Madde öneki | `KAP` |
+
+## Gözden geçirmeye giriş koşulları
+
+- [ ] Gözden geçirilecek kapsam raporları ve boşluk listesi bir sürümle tanımlanmış; hangi
+      yazılım sürümüne, hangi test temel çizgisine ve hangi kredi koşusuna ait oldukları
+      yazılıdır.
+- [ ] Kapsam verisinin toplandığı koşunun test sonuçları gözden geçirilmiş, başarısız
+      testler problem raporuna bağlanmıştır.
+- [ ] Gereksinimler, mimari ve iz verisi temel çizgidedir; analiz bunların hangi sürümüne
+      dayandığını belirtir.
+- [ ] Doğrulama planının kapsam bölümü (ölçüt, araç, ölçülen kod biçimi, boşluk kabul
+      yetkisi) onaylı sürümündedir.
+- [ ] Gözden geçirenler belli; bağımsızlığın arandığı hedeflerde analizi yapan kişi gözden
+      geçiren değildir.
+- [ ] Kullanılan kontrol listesinin sürümü kayda yazılacaktır.
+
+## Kontrol listesi
+
+Her madde, sonunda geçerli olduğu seviyeler ve dayanağı yazılı bir evet/hayır sorusudur;
+"Evet" istenen durumdur, "Hayır" yanıtı bir bulgudur (finding).
+
+<ListeIndir dosya="kapsam-analizleri" baslik="Kapsam Analizi Kontrol Listesi" />
+
+### Gereksinim kapsamı
+
+- [ ] **KAP-01** Her yüksek seviyeli gereksinim, türetilmiş gereksinimler (derived
+      requirements) dahil, iz verisinde en az bir test durumuna bağlı mı? Örneğin testle
+      değil analizle karşılanan gereksinimde analiz kaydı iz verisine bağlanmış ve gerekçesi
+      yazılı mı? *(A–D · A-7 #3)*
+- [ ] **KAP-02** Her düşük seviyeli gereksinim iz verisinde en az bir test durumuna bağlı mı;
+      bağlı olmayanlar adıyla listelenmiş ve her biri için test eklenmesi ya da gerekçeli
+      analiz kararı kayıtlı mı? *(A–C · A-7 #4)*
+- [ ] **KAP-03** Analiz eşlemeyle yetinmeyip yeterliliğe de bakmış mı: bağlı testler
+      gereksinimin bütün aralıklarını, kiplerini ve durum geçişlerini sınıyor mu? Örneğin üç
+      kip tanımlayan bir gereksinimde üç kipin de denendiği analizde görülüyor mu?
+      *(A–D · §6.4.4.1.b)*
+- [ ] **KAP-04** Yeterlilik analizi gürbüzlüğü (robustness) de kapsıyor mu: geçersiz girdi,
+      sınır dışı değer ya da arıza durumu tanımlayan her gereksinim için bu durumları
+      deneyen test gösterilmiş mi? *(A–D · §6.4.4.1.b)*
+- [ ] **KAP-05** Gereksinim kapsamında bulunan her eksiklik çözülmüş mü: test eklenmiş ya da
+      genişletilmiş, test edilemeyecek biçimde yazılmış gereksinimde ise test değil
+      gereksinim düzeltilmiş mi? *(A–D · §6.4.4.1.c)*
+- [ ] **KAP-06** Yapısal kapsamın toplandığı koşudaki her test durumu bir gereksinime
+      izleniyor mu? Örneğin boşluk kapatmak için sonradan eklenen testler de iz verisinde
+      adıyla bir gereksinime bağlı ve o gereksinimin beklenen davranışını bir çıktı
+      üzerinden sınıyor mu? *(A–C · §6.4.4.1.d)*
+
+### Ölçüt ve ölçüm yöntemi
+
+- [ ] **KAP-07** Kapsam raporu her bileşen için o bileşenin seviyesini ve seviyenin istediği
+      her ölçütün sonucunu ayrı ayrı veriyor mu: C'de satır kapsama (statement coverage),
+      B'de ayrıca karar kapsama (decision coverage), A'da ayrıca MC/DC? Örneğin farklı
+      seviyeli bileşenler içeren bir imajda Seviye A bileşeni yalnızca karar kapsamayla
+      raporlanmamış ve ölçütler tek bir yüzdede birleştirilmemiş mi? *(A–C · §6.4.4.2.a)*
+- [ ] **KAP-08** Araç, karar sayarken standardın tanımını kullanıyor mu: yalnızca dallanma
+      noktaları değil, atamada, dönüş değerinde ya da parametrede kullanılan Boole ifadeleri
+      de karar sayılıyor mu? Örneğin `uyari = a && b;` satırındaki kararın iki sonucu da
+      raporda görünüyor mu? *(A–B · A-7 #6)*
+- [ ] **KAP-09** Kapsam verisi, test sonuçlarıyla aynı yazılım sürümünden ve aynı prosedür
+      sürümleriyle yapılan gereksinim tabanlı koşudan mı toplanmış? Örneğin başarısız ya da
+      sonucu değerlendirilmemiş bir testin çalıştırdığı kod kapsanmış sayılmıyor mu?
+      *(A–C · §6.4.4.2.a)*
+- [ ] **KAP-10** Ölçüm, doğrulama planındaki araç, araç sürümü ve kod biçimiyle mi yapılmış;
+      kapsam donatılmış (instrumented) derlemeden toplandıysa donatılmış koşunun geçti/kaldı
+      sonuçlarının, donatılmamış imajla yapılan kredi koşusununkilerle aynı olduğu
+      gösterilmiş mi? *(A–C · iyi uygulama)*
+- [ ] **KAP-11** Çevirici dili (assembly language) modülleri, başlatma kodu ve imaja giren
+      kütüphane kodu için kapsam kanıtı var mı: ölçüme dahil edilmiş, aracın ölçemediği
+      yerde donanım izleme (hardware trace), hata ayıklayıcı betiği ya da elle analiz gibi
+      planda tanımlı başka bir yolla ölçülmüş ya da kanıt hazır bir sertifikasyon paketinden
+      geliyorsa paketin bu derleyici sürümüne ve yapılandırmaya uygulanabilirliği
+      gösterilmiş mi? *(A–C · §6.4.4.2.a)*
+- [ ] **KAP-12** Kapsam birden çok koşudan, test ortamından ya da test seviyesinden
+      birleştirildiyse birleştirme kuralı doğrulama planında tanımlı mı ve koşular aynı
+      yazılım sürümüne mi ait; değilse aradaki değişikliğin birleştirilen kapsamı geçersiz
+      kılmadığı değişiklik etki analiziyle (change impact analysis) gösterilmiş mi?
+      *(A–C · iyi uygulama)*
+- [ ] **KAP-13** Kapsam nesne kodunda ölçüldüyse, nesne kodundaki ölçütün seviyenin kaynak
+      düzeyinde gerektirdiği ölçütü karşıladığı gösterilmiş mi? Örneğin eniyileme
+      (optimization) sırasında dalsız komutlara çevrilen kararlar ayrıca ele alınmış mı?
+      *(A–C · §6.4.4.2.b)*
+
+### MC/DC
+
+- [ ] **KAP-14** Her bileşik kararda her koşul için bir bağımsızlık çifti (independence
+      pair) gösterilmiş mi; eksik kalan çiftin hangi kararın hangi koşuluna ait olduğu
+      raporda okunabiliyor mu? *(A · A-7 #5)*
+- [ ] **KAP-15** Kullanılan MC/DC biçimi, benzersiz neden MC/DC (unique-cause MC/DC) ya da
+      maskeleme MC/DC (masking MC/DC), doğrulama planında belirtilmiş ve araç bu biçimle mi
+      hesaplıyor? Örneğin bağlı koşul (coupled condition) içeren kararlarda seçilen biçim
+      tutarlı uygulanmış mı? *(A · A-7 #5)*
+- [ ] **KAP-16** Kısa devre değerlendirmesi (short-circuit evaluation) çiftlerde doğru ele
+      alınmış mı? Örneğin `a && b` kararında `a` yanlışken koşulan test, `b` için çiftin
+      parçası sayılmıyor mu? *(A · A-7 #5)*
+- [ ] **KAP-17** Çiftin iki testinde kararın farklı sonucu, testin beklenen sonuçla
+      karşılaştırdığı bir çıktıda da görünüyor mu? Örneğin karar sonucu yalnızca kapsam
+      aracında görünen, çıktıda hiçbir farka yol açmayan bir çift kanıt sayılmamış mı?
+      *(A · iyi uygulama)*
+
+### Veri ve kontrol bağlaşımı
+
+- [ ] **KAP-18** Analiz mimarideki arayüz ve çağrı tanımlarından türetilmiş bir listeye mi
+      dayanıyor: her veri bağlaşımı (paylaşılan değişken, mesaj, parametre) ve her kontrol
+      bağlaşımı (çağrı, kip seçimi, görev etkinleştirme, kesme) listede bir kalem mi?
+      *(A–C · §6.4.4.2.c)*
+- [ ] **KAP-19** Listedeki her kalem için onu işleten gereksinim tabanlı test adıyla
+      gösterilmiş mi; veri bağlaşımında değerin üreten bileşenden tüketene ulaştığı ve
+      tüketenin davranışını değiştirdiği, kontrol bağlaşımında ise çağrının tasarımda
+      öngörülen sırayla ve koşulda gerçekleştiği bileşenler birlikte çalışırken gözlenmiş
+      mi? *(A–C · A-7 #8)*
+- [ ] **KAP-20** Analiz sırasında mimaride tanımlı olmayan bir bağlaşım (örtük global
+      değişken, adres üzerinden paylaşım) bulunduysa bulgu olarak kaydedilip mimariye ya da
+      koda geri bildirilmiş mi? *(A–C · iyi uygulama)*
+
+### Nesne kodu izlenebilirliği
+
+- [ ] **KAP-21** Kaynak koddan nesne koduna izlenebilirlik analizi (source to object code
+      traceability analysis), uçacak kodu üreten derleyici sürümü ve seçenekleriyle mi
+      yapılmış; analiz edilen çevirici listesinin (assembly listing) ya da ters çevirme
+      (disassembly) çıktısının uçacak imajla aynı derlemeden geldiği gösterilmiş mi?
+      *(A · A-7 #9)*
+- [ ] **KAP-22** Analiz temsilî örnek kodla yapıldıysa, proje kodunun örnekte bulunmayan bir
+      dil yapısı kullanmadığı kodlama standardı (software code standards) denetimi ya da
+      statik analizle, aynı yapının proje kodunda örnektekinden farklı derlenmediği de ayrıca
+      gösterilmiş mi? Örneğin proje kodunun çevirici listesinden alınan bir örneklem,
+      temsilî örneğin listesiyle karşılaştırılmış mı? *(A · A-7 #9)*
+- [ ] **KAP-23** Bulunan her ek kod dizisi (çalışma zamanı denetimi, kütüphane çağrısı,
+      atlama tablosu sınırı, koruma kodu) kaynağıyla birlikte listelenmiş, doğruluğu gözden
+      geçirilmiş ve içindeki dalların her yönü testle işletilmiş ya da normal girdilerle
+      işletilemeyen yön için hata enjeksiyonu (fault injection), gürbüzlük testi veya
+      gerekçeli analiz kullanılmış mı? *(A · §6.4.4.2.b)*
+
+### Kapsam boşluklarının çözümü
+
+- [ ] **KAP-24** Kapsanmayan her yapı (deyim, karar sonucu, koşul çifti, bağlaşım kalemi)
+      boşluk listesinde kaynak konumuyla tek tek yer alıyor ve test eksikliği, gereksinim
+      eksikliği, gereksiz kod (extraneous code), devre dışı bırakılmış kod (deactivated
+      code) ya da savunmacı programlama (defensive programming) gerekçesinden birine atanmış
+      mı? *(A–C · §6.4.4.3)*
+- [ ] **KAP-25** Test eksikliğine atanan boşlukta eklenen ya da genişletilen test
+      gereksinimden türetilmiş, koşulmuş ve kapsam yeniden ölçülmüş mü; gereksinim kapsam
+      analizinin bu eksikliği neden yakalamadığı da sorulmuş mu? *(A–C · §6.4.4.3.a)*
+- [ ] **KAP-26** Gereksinim eksikliğine atanan boşlukta yazılan gereksinim gerçek bir
+      ihtiyacı anlatıyor, gözden geçirilmiş, türetilmiş gereksinimse sistem emniyet
+      değerlendirme sürecine (system safety assessment process) iletilmiş ve bu gereksinim
+      için test eklenip koşularak kapsam yeniden ölçülmüş mü? Örneğin gereksinim, mevcut
+      kodun davranışını olduğu gibi yeniden anlatmakla kalmıyor mu? *(A–C · §6.4.4.3.b)*
+- [ ] **KAP-27** Gereksiz koda atanan her boşluk, ölü kod (dead code) dahil, ya bir problem
+      raporuyla kaldırılıp etkilenen doğrulama değişiklik etki analizine göre yinelenmiş ya
+      da kaynakta bırakıldıysa bağlayıcı haritasında (linker map) ve ters çevrilmiş imajda
+      bulunmadığı gösterilip bu denetimin eniyileme ya da bağlayıcı seçeneği her değiştiğinde
+      yinelenmesi derleme prosedürüne yazılmış mı? *(A–C · §6.4.4.3.c)*
+- [ ] **KAP-28** Devre dışı bırakılmış kodun kategorisi belli ve yazılım sertifikasyon
+      planında beyan edilmiş mi; birinci kategoride istem dışı etkinleşmenin (inadvertent
+      enabling) önlendiği analiz ve testle, ikinci kategoride kapsam o konfigürasyonda ek
+      testlerle gösterilmiş mi? *(A–C · §6.4.4.3.d)*
+- [ ] **KAP-29** Savunmacı programlama yapısı diye gerekçelendirilen her boşluk bir
+      gereksinime, tasarım kararına ya da kodlama standardı kuralına dayanıyor ve testle
+      ulaşılamayan kısmın analizi yazarı dışında biri tarafından gözden geçirilmiş mi?
+      *(A–C · iyi uygulama)*
+- [ ] **KAP-30** Çözümü bu sürümde tamamlanmayan her boşluk açık bir problem raporuna bağlı ve
+      kapsam analizi sonuçlarında görünür mü; sertifikasyona açık kalan boşluk varsa yazılım
+      başarım özetine (Software Accomplishment Summary, SAS) de yansıtılmış mı?
+      *(A–C · iyi uygulama)*
+
+## Araçla denetlenebilecek maddeler
+
+| Madde | Araç türü | Gözden geçirene kalan |
+|---|---|---|
+| KAP-01, KAP-02, KAP-06 | Gereksinim yönetim aracı sorgusu: testi olmayan gereksinim, gereksinimi olmayan test | Eşlenen testlerin yeterliliği (KAP-03, KAP-04); testin gerçekten gereksinimden türetildiği |
+| KAP-07, KAP-14 | Yapısal kapsam aracının raporu | Araç ayarının karar tanımına ve MC/DC biçimine uyduğu (KAP-08, KAP-15); birkaç kararın çiftleri elle ya da [MC/DC Test Seti Üretici](/araclar/dogrulama/mcdc-test-seti) ile yeniden hesaplanıp raporla karşılaştırılır |
+| KAP-09, KAP-12 | Kapsam verisindeki yazılım ve test sürümlerini koşu kaydıyla karşılaştıran betik | Birleştirme kuralının doğrulama planıyla tutarlılığı; farklı sürümden gelen kapsam için etki analizinin yeterliliği |
+| KAP-18, KAP-19 | Statik analizle çıkarılan çağrı çizgesi ve paylaşılan değişken listesi; entegrasyon testlerinin kapsam verisi | Listenin mimariyle karşılaştırılması; tüketenin davranışının gerçekten değiştiğinin gözlenmesi |
+| KAP-21, KAP-23 | Ters çevirici ve eski/yeni çevirici listelerinin farkını çıkaran betik | Ek kodun ne yaptığı, doğruluğu; dallarının işletildiğinin ya da işletilemeyen yönün gerekçeli analizinin kanıtı |
+| KAP-24 | Kapsanmayan yapı dökümünü boşluk listesiyle karşılaştıran betik | Her boşluğun sınıfının ve gerekçesinin doğruluğu |
+
+Bir maddeyi araç çıktısına güvenerek atlıyor ve çıktıyı başka bir yoldan doğrulamıyorsanız
+araç kalifikasyonu (tool qualification) sorusu doğar. Kapsam aracı da, iz verisini ya da
+izleme kaydını ayrıştıran proje betiği de bir hatayı gözden kaçırabilecek araçlardır (bkz.
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+
+## Sık bulgular
+
+| Bulgu | Tipik nedeni | İlgili madde |
+|---|---|---|
+| İz matrisi tam diye gereksinim kapsamı tam sayılmış; gürbüzlük durumlarına bakılmamış | Analizin yalnızca eşleme sorgusundan ibaret kalması | KAP-03, KAP-04 |
+| Kapsam boşluğu koda bakılarak yazılmış, gereksinimsiz testle kapatılmış | Yüzdeyi kapatma baskısı; kök nedenin aranmaması | KAP-06, KAP-25 |
+| Karar kapsama raporu atamalardaki Boole ifadelerini saymıyor | Aracın varsayılan ayarının yalnızca dallanma noktalarını karar sayması | KAP-08 |
+| Kapsam, kod değiştikten sonra yeniden ölçülmemiş; rapor eski bir yazılım sürümüne ait | Kapsam koşusunun kredi koşusundan ayrı ve daha seyrek yapılması | KAP-09, KAP-12 |
+| Bağlaşım analizi "bütün birim testleri geçti" cümlesinden ibaret | Bağlaşımın bileşen içi kapsamla karıştırılması | KAP-18, KAP-19 |
+| Seviye A'da nesne kodu analizi, uçacak koddan farklı bir eniyileme düzeyiyle yapılmış | Analizin projenin başında yapılıp seçenek değişince yenilenmemesi | KAP-21 |
+| Devre dışı kod "kapalı" denip bırakılmış, kapatma mekanizması sınanmamış | Kategorinin belirlenmemesi; sertifikasyon planında beyanın eksik kalması | KAP-28 |
+| Boşluk listesi "savunmacı kod" satırlarıyla dolu, dayanak gösterilmemiş | Açıklanamayan her boşluğa savunmacı etiketi verilmesi | KAP-29 |
+
+### İyi yazılmış bulgu
+
+| Zayıf bulgu | İyi yazılmış bulgu |
+|---|---|
+| "MC/DC eksik." | "KAP-14: `fren_izleme.c` içindeki `ust_sinir_asildi && !bakim_kipi` kararında `bakim_kipi` için bağımsızlık çifti yok; kapsam raporu yalnızca karar başına yüzde veriyor. Doğrulama planı koşul başına çift gerektirir; eksik çift gereksinim tabanlı bir testle tamamlanmalı ya da boşluk sınıflandırılmalı." |
+| "Bağlaşım analizi yetersiz." | "KAP-19: Arayüz listesindeki `irtifa_gecerli` bayrağı (sensör işleme → kontrol yasası) için yalnızca bayrağın doğru değeriyle koşan bir entegrasyon testi gösterilmiş; yanlış değerde kontrol yasasının davranışını sınayan test yok, eklenmeli." |
+| "Gerekçe zayıf." | "KAP-29: Boşluk listesinin 17. kaydı `kip_kodu()` içindeki `default` dalını savunmacı yapı sayıyor, ama dayanak olarak gereksinim, tasarım kararı ya da kodlama standardı kuralı göstermiyor; dayanak eklenmeli ya da dal gereksiz kod olarak sınıflandırılmalı." |
+
+## Seviyeye göre uyarlama
+
+Maddelerin seviye etiketi, bağlı olduğu A-7 hedefinin geçerli olduğu seviyelerdir. Bir
+seviyede düşen maddeyi listeden silmek yerine kayıtta seviye gerekçesiyle "Uygulanmaz" diye
+işaretlemek, kayıtları sürümler ve projeler arasında karşılaştırılabilir tutar.
+
+| Seviye | Uygulanan maddeler | Bağımsızlık |
+|---|---|---|
+| A | Bütün maddeler (KAP-01 … KAP-30) | A-7 #3–#9'un hepsinde: analizi yapan kişi gözden geçiremez |
+| B | MC/DC (KAP-14 … KAP-17) ve nesne kodu (KAP-21 … KAP-23) grupları düşer | Yapısal kapsam ve bağlaşımda (A-7 #6, #7, #8) aranır; gereksinim kapsamında (A-7 #3, #4) aranmaz |
+| C | Ayrıca KAP-08 düşer; yapısal ölçüt satır kapsamadır | Aranmaz |
+| D | Yalnızca KAP-01, KAP-03, KAP-04 ve KAP-05 kalır; bu maddeler yalnızca yüksek seviyeli gereksinimlere uygulanır | Aranmaz |
+
+Seviye D'de yapısal kapsam ve bağlaşım hedefi olmadığı için boşluk listesi de beklenmez;
+gereksinim kapsamında bulunan eksiklik ise yine çözülür. Bağımsızlığın aranmadığı
+seviyelerde de analizi yazarından başka birinin gözden geçirmesi iyi uygulamadır
+([bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)).
+Bölümlenmiş bir yazılımda seviyesi farklı bileşenler varsa liste her bileşene kendi
+seviyesiyle uygulanır.
+
+## İlgili bölümler
+
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): gereksinim
+  kapsam analizi, yapısal kapsam analizi,
+  [kaynak koda izlenemeyen nesne kodu](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kaynak-koda-izlenemeyen-nesne-kodu),
+  [veri ve kontrol bağlaşımı](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#veri-bağlaşımı-ve-kontrol-bağlaşımı-analizi)
+  ve [kapsam boşlukları](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kapsam-boşluklarının-ele-alınması)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md): bağlaşım
+  analizinin dayandığı arayüz tanımları
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+- [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.md)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
+- Otoritenin bakışı: [SW SOI-3](soi-3.md)
+- Komşu listeler: [Test Durumu ve Prosedürü Kontrol Listesi](07-test-durumlari-ve-prosedurleri.mdx),
+  [Test Sonuçları Kontrol Listesi](08-test-sonuclari.mdx),
+  [Yazılım Mimarisi Kontrol Listesi](03-yazilim-mimarisi.mdx),
+  [Kaynak Kod Kontrol Listesi](05-kaynak-kod.mdx),
+  [Problem Raporu Kontrol Listesi](11-problem-raporu-ve-degisiklik.mdx)
+- [MC/DC Test Seti Üretici](/araclar/dogrulama/mcdc-test-seti)

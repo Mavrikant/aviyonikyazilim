@@ -197,7 +197,7 @@ ve gerekçesi yazılım sertifikasyon planında (Plan for Software Aspects of Ce
 PSAC) yazılır ve otoriteyle mutabakat gerektirir
 (bkz. [5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.md)).
 Planlama denetiminde ilk sorulanlardan biri de budur: seviye hangi arıza durumuna
-dayanıyor ve bu dayanak gösterilebiliyor mu ([SW SOI-1](../kaynaklar/soi-1.md))?
+dayanıyor ve bu dayanak gösterilebiliyor mu ([SW SOI-1](../06-ekler/06-kontrol-listeleri/soi-1.md))?
 
 Atanan seviye bir alt sınırdır. İleride eklenecek işlevlerin ya da değişecek tahsisin
 daha ağır bir arıza durumuna yol açması bekleniyorsa yazılımı baştan daha yüksek

@@ -312,7 +312,7 @@ doldurulan matris, bağlantıların varlığını gösterir ama doğruluğunu g�
 gereksinim yazılırken kurulur ve gözden geçirmede içeriğiyle birlikte sınanır.
 "Bağlantı var" demek yetmez; bağlanan iki madde gerçekten aynı davranıştan mı söz
 ediyor? Otoritenin denetimde yaptığı da budur: rastgele bir gereksinim seçer ve zinciri
-iki yönde yürür ([SW SOI-2](../kaynaklar/soi-2.md) sayfasındaki iz sürme alıştırması
+iki yönde yürür ([SW SOI-2](../06-ekler/06-kontrol-listeleri/soi-2.md) sayfasındaki iz sürme alıştırması
 aynı yolu izler).
 
 ## Gereksinimlerin gözden geçirilmesi
