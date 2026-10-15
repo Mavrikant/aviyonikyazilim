@@ -42,6 +42,8 @@ src/components/KitapIcindekiler/  /kitap sayfasındaki içindekiler (kitapSideba
 src/components/AracKarti/ Kitap ve blogdan araca giden kart (başlık/açıklama araç listesinden)
 src/components/SoiAsamalari/  SOI-1…4 sayfalarının başındaki aşama şeridi (PDF'e girmez)
 src/components/KisaltmaSuzgeci/  Kısaltmalar sayfasının arama kutusu ve A–Z şeridi (PDF'e girmez)
+src/components/SekilBuyutme/  Küçülen Mermaid diyagramı ve Markdown görseline "Büyüt" düğmesi ve tam ekran
+                          görüntüleyici (yakınlaştırma, sürükleme); src/theme/Mermaid ve MDXComponents/Img sarar
 src/components/NavigasyonHaritasi/  Türkiye navigasyon haritası (Leaflet; VOR/DME/TACAN/NDB, havalimanı, pist)
 src/pages/gom/            Başka sitelere <iframe> ile gömülen yalın sayfalar (noindex, sitemap dışı)
 scripts/navigasyon-verisi.mjs  OurAirports'tan static/data/turkiye-navigasyon.json üretir
@@ -73,8 +75,8 @@ src/pages/iletisim.mdx    İletişim sayfası (e-posta, GitHub; canlı sohbet ya
 src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` sarmalayıcısı
 src/components/CanliSohbet/  İsteğe bağlı Tawk.to sohbeti: betiği tembel yükleyen kanca ve yüzen düğme
 src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage,
-                          Blog/Pages/BlogAuthorsListPage, BlogTagsListPage, NotFound ve SearchPage
-                          (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+                          Blog/Pages/BlogAuthorsListPage, BlogTagsListPage, NotFound, SearchPage,
+                          Mermaid ve MDXComponents/Img (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
                           kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır), Root.tsx
                           (resmi Root genişletme noktası, eject değildir: yüzen sohbet düğmesini ekler)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
@@ -337,6 +339,13 @@ adı "döngüsel artıklık denetimi" bunun dışındadır).
   cümlelerinizle anlatılır.
 - Diyagramlar **Mermaid** ile metin olarak yazılır (`mermaid` kod bloğu). Harici görsel
   yerine mümkün olduğunca Mermaid tercih edilir.
+- **Diyagram içerik sütununa okunur boyutta sığmalıdır.** Sütun masaüstünde ~700 px'tir;
+  diyagram daha genişse orantılı küçülür ve Mermaid'in 16 px'lik yazısı ufalır. Doğal
+  genişlik ~930 px'i (yazı ~12 px) aşmamalıdır. Beş-altı adımlık zincir `flowchart LR` yerine
+  `TD` ile yazılır, uzun etiketler `<br/>` ile kırılır; geniş karar ağacında gerekirse
+  `config: flowchart: nodeSpacing` verilir. Yön değişince metindeki "soldan sağa" gibi
+  atıflar da güncellenir. Telefonda her geniş şekil küçülür; okur onu "Büyüt" düğmesiyle
+  tam ekranda açar (`src/components/SekilBuyutme`).
 - Kod örnekleri ağırlıklı olarak **C** dilindedir (aviyonik yaygınlığı nedeniyle).
 - Her bölüm dosyası `NN-slug.mdx` biçiminde adlandırılır; `sidebar_position` klasör içi
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.

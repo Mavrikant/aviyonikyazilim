@@ -248,7 +248,7 @@ gözleyen ayrı bir izleyici, arızayı algılar ve sistemi güvenli duruma göt
 yaygın biçimi komut/izleme (command/monitor, COM/MON) mimarisidir:
 
 ```mermaid
-flowchart LR
+flowchart TD
     S1["Sensör 1"] --> COM["Komut kanalı<br/>komutu hesaplar"]
     S2["Sensör 2"] --> MON["İzleme kanalı<br/>bağımsız hesap ve karşılaştırma"]
     COM -- "komut" --> SW["Çıkış anahtarı"]

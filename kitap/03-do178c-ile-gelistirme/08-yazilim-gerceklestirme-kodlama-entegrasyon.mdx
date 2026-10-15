@@ -416,17 +416,17 @@ kendi makinesinde "elle derleyip" ürettiği ikili, ne kadar doğru görünürse
 resmî bir konfigürasyon değildir.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph S1["Yazılım entegrasyonu"]
-        K["Sürümlü kaynak kod"] --> D["Konfigürasyon kontrollü derleme betiği"]
-        A["Derleyici ve bağlayıcı, sürümü sabit"] --> D
-        B["Bağlayıcı betiği ve derleme seçenekleri"] --> D
-        D --> N["Çalıştırılabilir nesne kodu"]
-        D --> H["Bağlayıcı haritası ve derleme kaydı"]
+        K["Sürümlü<br/>kaynak kod"] --> D["Konfigürasyon kontrollü<br/>derleme betiği"]
+        A["Derleyici ve bağlayıcı<br/>(sürümü sabit)"] --> D
+        B["Bağlayıcı betiği ve<br/>derleme seçenekleri"] --> D
+        D --> N["Çalıştırılabilir<br/>nesne kodu"]
+        D --> H["Bağlayıcı haritası<br/>ve derleme kaydı"]
     end
     subgraph S2["Donanım ve yazılım entegrasyonu"]
-        S["Sağlama değeri: CRC ya da özet"] --> Y["Hedefe yükleme"]
-        Y --> DK["Yükleme doğrulama: kimlik ve bütünlük"]
+        S["Sağlama değeri:<br/>CRC ya da özet"] --> Y["Hedefe yükleme"]
+        Y --> DK["Yükleme doğrulama:<br/>kimlik ve bütünlük"]
     end
     N --> S
 ```

@@ -34,7 +34,7 @@ Bir sistem bu öngörülebilirliği ne kadar çok talep ediyorsa, aşağıdaki s
 Sınıfları birbirinden ayıran soru tektir: bir yanıt tanımlı zamandan **sonra** gelirse ne olur? Cevap, hem sistemin gerçek zamanlılık sınıfını hem de ondan beklenen determinizm seviyesini belirler.
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["Mutlak / Hard<br/>geç yanıt kabul edilemez"] --> B["Katı / Firm<br/>geç yanıt faydasız"] --> C["Esnek / Soft<br/>geç yanıt değer kaybeder"] --> D["Gerçek Zamanlı Olmayan<br/>zaman sınırı yok"]
     style A fill:#f6c1c1,stroke:#c0392b,stroke-width:2px,color:#000
     style B fill:#f6d8c1,stroke:#cb6b2b,stroke-width:2px,color:#000
@@ -42,7 +42,7 @@ flowchart LR
     style D fill:#cfe8cf,stroke:#2e7d32,stroke-width:2px,color:#000
 ```
 
-Soldan sağa zaman sınırının sertliği azalır; ters yönde, sağdan sola talep edilen **determinizm seviyesi** artar. En yüksek öngörülebilirlik en solda, mutlak uçta gerekir.
+Yukarıdan aşağı zaman sınırının sertliği azalır; ters yönde, aşağıdan yukarı talep edilen **determinizm seviyesi** artar. En yüksek öngörülebilirlik en üstte, mutlak uçta gerekir.
 
 ### Mutlak (Hard) Gerçek Zamanlı
 

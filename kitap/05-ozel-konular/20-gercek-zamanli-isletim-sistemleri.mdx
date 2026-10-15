@@ -275,18 +275,18 @@ görevdir:
 
 ```mermaid
 sequenceDiagram
-    participant Y as Görev Y - yüksek öncelik
-    participant O as Görev O - orta öncelik
-    participant D as Görev D - düşük öncelik
+    participant Y as Görev Y<br/>yüksek öncelik
+    participant O as Görev O<br/>orta öncelik
+    participant D as Görev D<br/>düşük öncelik
     participant M as Muteks
     D->>M: muteksi alır
-    Note over Y: Y hazır olur ve D'yi keser
+    Note over Y: Y hazır olur<br/>ve D'yi keser
     Y->>M: muteksi ister
     M-->>Y: muteks dolu, Y bekler
-    Note over D: D kritik kesitine devam eder
-    Note over O: O hazır olur ve D'yi keser
-    Note over Y,O: Y, kaynakla ilgisi olmayan O bitene kadar bekler
-    Note over D: O bitince D devam eder
+    Note over D: D kritik kesitine<br/>devam eder
+    Note over O: O hazır olur<br/>ve D'yi keser
+    Note over Y,O: Y, kaynakla ilgisi olmayan<br/>O bitene kadar bekler
+    Note over D: O bitince<br/>D devam eder
     D->>M: muteksi bırakır
     M-->>Y: muteks Y'ye verilir
 ```

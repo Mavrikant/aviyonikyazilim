@@ -125,16 +125,21 @@ ortamında üretilemeyebilir. Testle ulaşılamayan kısım analizle gerekçelen
 deyimin o gereksinimin hangi cümlesini gerçeklediğidir. Bu ayrımı akışa dökersek:
 
 ```mermaid
+---
+config:
+  flowchart:
+    nodeSpacing: 24
+---
 flowchart TD
-    A["Yapısal kapsam analizinde<br/>kapsanmayan kod bulundu"] --> B{"Kod bir gereksinime<br/>izlenebiliyor mu?"}
-    B -- Evet --> K{"Tasarım gereği bu<br/>konfigürasyonda kapalı mı?"}
-    K -- Evet --> L["Devre dışı bırakılmış kod:<br/>etkinleşememe kanıtı ve<br/>kategorisine göre doğrulama"]
-    K -- Hayır --> C{"Gereksinim tabanlı testle<br/>tetiklenebiliyor mu?"}
-    C -- Evet --> D["Test eksikliği: test ekle,<br/>kapsamı yeniden ölç"]
-    C -- Hayır --> E["Savunmacı yapı: analizle<br/>gerekçelendir, kaydını oluştur"]
-    B -- Hayır --> F{"Davranış aslında<br/>gerekli mi?"}
-    F -- Evet --> G["Gereksinim eksikliği: gereksinimi yaz,<br/>izlenebilirliği kur, test ekle"]
-    F -- Hayır --> H["Gereksiz kod, ölü kod dahil:<br/>kaldır, yeniden doğrula"]
+    A["Yapısal kapsam analizinde<br/>kapsanmayan kod bulundu"] --> B{"Kod bir<br/>gereksinime<br/>izleniyor mu?"}
+    B -- Evet --> K{"Bu konfigürasyonda<br/>tasarım gereği<br/>kapalı mı?"}
+    K -- Evet --> L["Devre dışı bırakılmış kod:<br/>etkinleşememe kanıtı ve<br/>kategorisine göre<br/>doğrulama"]
+    K -- Hayır --> C{"Gereksinim<br/>tabanlı testle<br/>tetiklenebilir mi?"}
+    C -- Evet --> D["Test eksikliği:<br/>test ekle, kapsamı<br/>yeniden ölç"]
+    C -- Hayır --> E["Savunmacı yapı:<br/>analizle gerekçelendir,<br/>kaydını oluştur"]
+    B -- Hayır --> F{"Davranış<br/>aslında<br/>gerekli mi?"}
+    F -- Evet --> G["Gereksinim eksikliği:<br/>gereksinimi yaz,<br/>izlenebilirliği kur,<br/>test ekle"]
+    F -- Hayır --> H["Gereksiz kod,<br/>ölü kod dahil:<br/>kaldır, yeniden<br/>doğrula"]
 ```
 
 "Davranış aslında gerekli mi?" sorusuna kolayca "evet" denmemelidir. Kodu haklı çıkarmak

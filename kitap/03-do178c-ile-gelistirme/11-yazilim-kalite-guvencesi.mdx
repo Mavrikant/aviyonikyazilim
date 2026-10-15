@@ -243,13 +243,13 @@ Hedef tarihi aşan ya da üzerinde anlaşılamayan kayıt üst yönetime taşın
 tanımındaki yetki tam burada işe yarar.
 
 ```mermaid
-flowchart LR
-    A["Açık"] -- "sorumlu ve hedef tarih" --> B["Düzeltici faaliyet"]
-    B -- "kapanış kanıtı" --> C["Kalite güvencesi<br/>doğrulaması"]
+flowchart TD
+    A["Açık"] -- "sorumlu ve<br/>hedef tarih" --> B["Düzeltici faaliyet"]
+    B -- "kapanış<br/>kanıtı" --> C["Kalite güvencesi<br/>doğrulaması"]
+    C -- "kanıt<br/>yetersiz" --> B
     C -- "kanıt yeterli" --> D["Kapalı"]
-    C -- "kanıt yetersiz" --> B
-    B -- "hedef tarih aşıldı" --> E["Üst yönetime taşıma"]
-    E -- "karar ve kaynak" --> B
+    B -- "hedef tarih<br/>aşıldı" --> E["Üst yönetime taşıma"]
+    E -- "karar ve<br/>kaynak" --> B
 ```
 
 ### Uygunsuzluk ile problem raporu
