@@ -14,7 +14,7 @@ görev yapısı ve çizelgeleme (scheduling), kaynak bütçeleri ve varsa yazıl
 standardına (software design standards) ve hedef bilgisayara (target computer) karşı denetlenir.
 Gözden geçirme, mimari temel çizgiye (baseline) alınmadan ve tasarımdan kodlamaya geçiş kriteri
 (transition criteria) işletilmeden önce yapılır
-([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)); mimari değiştikçe değişen
+([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)); mimari değiştikçe değişen
 kısım için yinelenir. Mimariyi yazan tasarımcının dışında en az bir gözden geçiren, hedef
 donanımı ya da işletim sistemini bilen bir mühendis ve bölümleme varsa platform sorumlusu
 katılır.
@@ -26,8 +26,8 @@ kısmı en kötü durum yürütme süresi (worst-case execution time, WCET), yı
 çizelgelenebilirlik (schedulability) ve bölümleme analizlerine dayanır. Liste bu analizleri
 yapmaz; var olup olmadıklarını, gözden geçirilen mimari sürümüne ait olup olmadıklarını ve
 sonuçlarının mimariyle tutarlı olup olmadığını sorar. Tasarım doğrulamasının
-mantığı [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md#tasarımın-doğrulanması)
-bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](index.md) sayfasındadır.
+mantığı [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx#tasarımın-doğrulanması)
+bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](index.mdx) sayfasındadır.
 
 ## Bir bakışta
 
@@ -38,7 +38,7 @@ bölümünde, listelerin ortak kullanımı ve kayıt biçimi [genel bakış](ind
 | Gözden geçirilen veri | Tasarım tanımının mimari kısmı: bileşen ve katman yapısı, arayüz ve global veri erişim tabloları, durum makineleri, görev ve kesme tabloları, kaynak bütçeleri; varsa bölümleme konfigürasyonu (bellek eşlemesi, pencere çizelgesi, kanallar) |
 | Başvuru verisi | Yüksek seviyeli gereksinimler ve iz verisi (trace data); tasarım standardı; hedef bilgisayarın donanım belgeleri; gerçek zamanlı işletim sisteminin (real-time operating system, RTOS) kullanım kısıtları; yazılım sertifikasyon planındaki (PSAC) bölümleme ve ek hususlar (additional considerations) beyanı; varsa WCET, yığın ve çizelgelenebilirlik analizleri |
 | Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular (findings) → kayıt içinde ya da konfigürasyon yönetimi planındaki (SCMP) sınıra göre problem raporu |
-| İlgili şablon | [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.md) |
+| İlgili şablon | [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.mdx) |
 | Madde öneki | `MIM` |
 
 :::info[Bu listenin sınırı]
@@ -227,7 +227,7 @@ Görev kümesi denemeleri için sitedeki
 kullanılabilir; sonucu kredi amaçlı analiz kanıtı yerine geçmez. Bir madde yalnızca araç
 çıktısına bakılarak kapatılıyor ve bu çıktı ayrıca doğrulanmıyorsa aracın kalifikasyon
 gerektirip gerektirmediği sorusu doğar
-([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 
 ## Sık bulgular
 
@@ -267,7 +267,7 @@ hedeften (A-2 #4, A–C) alır.
 | D | Yalnızca `A–D` etiketliler (MIM-18–MIM-22); bölümleme yoksa liste hedef karşılamaz | Yok |
 
 Bağımsızlık, mimariyi yazan kişinin kendi işini gözden geçiren sayılmaması demektir
-([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)).
+([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bağımsızlık)).
 Aranmadığı seviyelerde de yazar dışında birinin bakması iyi uygulamadır; tasarım hatasını en
 ucuza yakalayan yer burasıdır.
 
@@ -282,22 +282,22 @@ koruma MIM-18–MIM-22 altında sorulur. D seviyeli bir uygulama paylaşılan bi
 çalışıyorsa MIM-18–MIM-22'nin kanıtı çoğunlukla platformun, koruduğu en yüksek seviyede
 üretilmiş yaşam döngüsü verisindedir; uygulama ekibine platformun kullanım kısıtlarına
 uyulduğunu göstermek kalır
-([21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.md#bölümlemenin-doğrulanması)).
+([21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx#bölümlemenin-doğrulanması)).
 
 ## İlgili bölümler
 
-- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md)
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md)
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
-- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
-- [19. Kullanıcı Tarafından Değiştirilebilir Yazılım](../../05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.md)
-- [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.md)
-- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.md)
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md) ·
-  [Ek B: Gerçek Zamanlı İşletim Sistemlerinde Endişe Alanları](../02-ek-b-rtos-endise-alanlari.md)
-- Şablon: [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.md)
-- Denetim listesi: [SW SOI-2](soi-2.md)
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx)
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx)
+- [19. Kullanıcı Tarafından Değiştirilebilir Yazılım](../../05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.mdx)
+- [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx)
+- [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx) ·
+  [Ek B: Gerçek Zamanlı İşletim Sistemlerinde Endişe Alanları](../02-ek-b-rtos-endise-alanlari.mdx)
+- Şablon: [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.mdx)
+- Denetim listesi: [SW SOI-2](soi-2.mdx)
 - Komşu listeler: [Yüksek seviyeli gereksinimler](02-yuksek-seviyeli-gereksinimler.mdx) ·
   [Düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx) ·
   [Kaynak kod](05-kaynak-kod.mdx) · [Kapsam analizleri](09-kapsam-analizleri.mdx) ·
-  [Genel bakış](index.md)
+  [Genel bakış](index.mdx)

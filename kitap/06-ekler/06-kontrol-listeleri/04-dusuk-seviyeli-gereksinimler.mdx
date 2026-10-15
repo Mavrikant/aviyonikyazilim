@@ -18,10 +18,10 @@ DO-178C'de bu gözden geçirme §6.3.2'deki yedi hedefe (objective) karşılık 
 gereksinimlerle (high-level requirements) uyum, doğruluk ve tutarlılık, hedef bilgisayarla
 (target computer) uyumluluk, doğrulanabilirlik, tasarım standardına uyum, izlenebilirlik
 (traceability) ve algoritmaların doğruluğu (DO-178C Ek A'da A-4 #1–#7). Kavramlar
-[7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md#tasarım-tanımı-ve-düşük-seviyeli-gereksinimler)
+[7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx#tasarım-tanımı-ve-düşük-seviyeli-gereksinimler)
 bölümünde, gözden geçirme ve kayıt düzeni
-[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#gözden-geçirmeler)
-bölümünde, listelerin ortak kullanımı [genel bakış](index.md) sayfasında anlatılır. Bileşenler
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#gözden-geçirmeler)
+bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasında anlatılır. Bileşenler
 arası arayüzlerin ve bölümlemenin tutarlılığı [mimari listesinin](03-yazilim-mimarisi.mdx), kodun
 bu gereksinimlere uyumu [kaynak kod listesinin](05-kaynak-kod.mdx) konusudur. Yüksek seviyeli
 gereksinimlerden doğrudan kod yazılıyorsa, yani tek gereksinim katmanıyla çalışılıyorsa, bu liste
@@ -36,8 +36,8 @@ birlikte uygulanır.
 | Ek A hedefleri | A-4 #1, #2, #7: A ve B'de bağımsızlıkla (independence), C'de gerekli; A-4 #3, #4: A ve B'de gerekli; A-4 #5, #6: A, B ve C'de gerekli; A-2 #5 (türetilmiş gereksinimlerin iletimi): A, B ve C'de gerekli. D'de bu hedeflerin hiçbiri aranmaz. |
 | Gözden geçirilen veri | Tasarım tanımındaki (design description) düşük seviyeli gereksinimler: metin ve öznitelikler, algoritmalar, veri sözlüğü (data dictionary), tasarım parametreleri |
 | Başvuru verisi | Temel çizgideki (baseline) yüksek seviyeli gereksinimler; gözden geçirilmiş yazılım mimarisi; tasarım standardı; donanım/yazılım arayüz tanımı; yüksek ve düşük seviyeli gereksinimler arasındaki iz verisi |
-| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → kayıt içinde, temel çizgideki veriye dokunuyorsa problem raporu (problem report), sınırı [yazılım konfigürasyon yönetimi planı](../05-sablonlar/04-scmp.md) (Software Configuration Management Plan, SCMP) çizer; türetilmiş gereksinim iletimi → sistem süreçlerine giden iletim kaydı |
-| İlgili şablon | [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.md); yasaklı ifadeler için [gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md) |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → kayıt içinde, temel çizgideki veriye dokunuyorsa problem raporu (problem report), sınırı [yazılım konfigürasyon yönetimi planı](../05-sablonlar/04-scmp.mdx) (Software Configuration Management Plan, SCMP) çizer; türetilmiş gereksinim iletimi → sistem süreçlerine giden iletim kaydı |
+| İlgili şablon | [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.mdx); yasaklı ifadeler için [gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.mdx) |
 | Madde öneki | `DGR` |
 
 ## Gözden geçirmeye giriş koşulları
@@ -199,7 +199,7 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
 Bir madde araç çıktısına güvenilerek gözden geçirmede atlanıyorsa araç bir doğrulama
 faaliyetinin yerini almış olur ve çıktısı ayrıca denetlenmediği sürece araç kalifikasyonu (tool
 qualification) sorusu doğar; ayrıntısı
-[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
 bölümündedir.
 
 ## Sık bulgular
@@ -235,7 +235,7 @@ Seviye A ve B'de düşük seviyeli gereksinimlerin gözden geçirmesi aynıdır:
 (üst gereksinimle uyum, doğruluk ve tutarlılık, algoritmalar) bağımsızlık aranır. Bağımsızlık
 hedef bazında tanımlıdır ama pratikte tek oturumda bakılır; oturumda yazardan başka bir gözden
 geçiren bulunur ve tablodaki maddeleri o kişi yanıtlar. Kaydın katılımcı alanı bunu
-gösterebilmelidir ([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)).
+gösterebilmelidir ([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bağımsızlık)).
 Türetilmiş gereksinimin iletimi (DGR-30) ve geri bildirim (DGR-03) birer geliştirme
 faaliyetidir; bağımsızlık gerektirmez.
 
@@ -253,20 +253,20 @@ kayıt sertifikasyon kanıtı sayılmaz. Bölümleme kullanılıyorsa bütünlü
 
 ## İlgili bölümler
 
-- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md)
-- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.md#türetilmiş-gereksinimler):
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx)
+- [6. Yazılım Gereksinimleri](../../03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.mdx#türetilmiş-gereksinimler):
   türetilmiş gereksinimin tanımı
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kontrol-listeleri-ve-kayıt):
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#kontrol-listeleri-ve-kayıt):
   kontrol listesi ve gözden geçirme kaydı
-- [3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.md)
-- [25. Tersine Mühendislik](../../05-ozel-konular/25-tersine-muhendislik.md): koddan yazılan
+- [3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.mdx)
+- [25. Tersine Mühendislik](../../05-ozel-konular/25-tersine-muhendislik.mdx): koddan yazılan
   gereksinimin sınırları
-- Şablonlar: [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.md) ·
-  [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.md)
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md): tasarımdan kodlamaya
+- Şablonlar: [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.mdx) ·
+  [Gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.mdx)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx): tasarımdan kodlamaya
   geçiş (G3)
-- Otorite denetimine hazırlık: [SW SOI-2](soi-2.md)
+- Otorite denetimine hazırlık: [SW SOI-2](soi-2.mdx)
 - Komşu listeler: [Yüksek seviyeli gereksinimler](02-yuksek-seviyeli-gereksinimler.mdx) ·
   [Yazılım mimarisi](03-yazilim-mimarisi.mdx) · [Kaynak kod](05-kaynak-kod.mdx) ·
   [Test durumları ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) ·
-  [Genel bakış](index.md)
+  [Genel bakış](index.mdx)

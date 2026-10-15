@@ -32,11 +32,11 @@ jobs:
           args: >-
             --config .github/lychee.toml
             --no-progress
-            'kitap/**/*.md'
-            'blog/**/*.md'
-            'kutuphane/**/*.md'
+            'kitap/**/*.mdx'
+            'blog/**/*.mdx'
             'kutuphane/**/*.mdx'
             'araclar/**/*.mdx'
+            'src/**/*.mdx'
             'src/**/*.tsx'
           output: lychee/out.md
           format: markdown

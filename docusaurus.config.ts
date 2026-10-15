@@ -123,7 +123,9 @@ const config: Config = {
   onBrokenAnchors: 'throw',
 
   markdown: {
-    format: 'detect',
+    // Tüm içerik MDX'tir (.mdx): bileşen, veri içe aktarımı ve ifade kullanılabilir. Uzantısı
+    // .md olan bir dosya da MDX olarak ayrıştırılır; düz metindeki `<` ve `{` kaçırılmalıdır.
+    format: 'mdx',
     mermaid: true,
     // description frontmatter'ı yoksa ilk paragraftan meta açıklaması üretir.
     parseFrontMatter,

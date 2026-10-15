@@ -16,19 +16,19 @@ kodunun analizi. Gözden geçiren, tercihen analizi yapmamış bir doğrulama m�
 bağımsızlık Seviye A'da bütün kapsam hedeflerinde, Seviye B'de yapısal kapsam ve bağlaşım
 hedeflerinde zorunludur. Analiz testlerle birlikte artımlı yürüdüğü için liste her kapsam
 raporu sürümünde uygulanır; son kez doğrulamadan sertifikasyon teslimine geçişten önce
-([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md), G5).
+([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx), G5).
 
 Gözden geçirme, DO-178C'nin test kapsamı analizi faaliyetlerinin (§6.4.4) çıktısını sınar ve
 doğrulamanın doğrulanmasına ilişkin A-7 #3–#9 hedeflerine (objective) kanıt üretir.
 Ölçütlerin ne istediği
-[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#yapısal-kapsam-analizi)
+[9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#yapısal-kapsam-analizi)
 bölümünde, boşluk sınıfları
-[17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md) bölümünde anlatılır;
+[17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx) bölümünde anlatılır;
 burada tekrarlanmaz. Testlerin kendisi bu listenin konusu değildir: test durumlarının
 doğruluğu [Test Durumu ve Prosedürü Kontrol Listesi](07-test-durumlari-ve-prosedurleri.mdx),
 koşunun sonuçları [Test Sonuçları Kontrol Listesi](08-test-sonuclari.mdx) ile gözden
 geçirilir. Bu liste, o testlerin gereksinimleri ve kodu ne ölçüde sınadığına bakar. Bütün
-listelerin ortak kullanım kuralları [genel bakış](index.md) sayfasındadır.
+listelerin ortak kullanım kuralları [genel bakış](index.mdx) sayfasındadır.
 
 :::tip[Yüzdeden değil boşluk listesinden başlayın]
 Kapsam raporundaki yüzde, gözden geçirmenin sonucu değil girdisidir. Önce kapsanmayan
@@ -49,7 +49,7 @@ dayanağınız vardır.
 | Gözden geçirilen veri | Kapsam analizi sonuçları: gereksinim–test kapsam tablosu, yapısal kapsam raporu, boşluk listesi ve çözüm kayıtları, bağlaşım analizi; Seviye A'da nesne kodu analizi |
 | Başvuru verisi | Yüksek ve düşük seviyeli gereksinimler ve iz verisi (trace data); mimarideki arayüz ve çağrı tanımları; test durumları (test case), test prosedürleri (test procedure) ve kredi koşusunun sonuçları; doğrulama planının kapsam bölümü; geliştirme planında dondurulan derleyici seçenekleri; sertifikasyon planındaki devre dışı kod beyanı |
 | Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → temel çizgiye (baseline) alınmış veride problem raporu (problem report), temel çizgi öncesinde gözden geçirme kaydı (sınır konfigürasyon yönetimi planındadır) |
-| İlgili şablon | [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.md): kapsam analizleri; derleyici, bağlayıcı ve yükleyici varsayımları |
+| İlgili şablon | [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.mdx): kapsam analizleri; derleyici, bağlayıcı ve yükleyici varsayımları |
 | Madde öneki | `KAP` |
 
 ## Gözden geçirmeye giriş koşulları
@@ -230,7 +230,7 @@ Her madde, sonunda geçerli olduğu seviyeler ve dayanağı yazılı bir evet/ha
 Bir maddeyi araç çıktısına güvenerek atlıyor ve çıktıyı başka bir yoldan doğrulamıyorsanız
 araç kalifikasyonu (tool qualification) sorusu doğar. Kapsam aracı da, iz verisini ya da
 izleme kaydını ayrıştıran proje betiği de bir hatayı gözden kaçırabilecek araçlardır (bkz.
-[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)).
+[13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 
 ## Sık bulgular
 
@@ -269,24 +269,24 @@ işaretlemek, kayıtları sürümler ve projeler arasında karşılaştırılabi
 Seviye D'de yapısal kapsam ve bağlaşım hedefi olmadığı için boşluk listesi de beklenmez;
 gereksinim kapsamında bulunan eksiklik ise yine çözülür. Bağımsızlığın aranmadığı
 seviyelerde de analizi yazarından başka birinin gözden geçirmesi iyi uygulamadır
-([bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#bağımsızlık)).
+([bağımsızlık](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#bağımsızlık)).
 Bölümlenmiş bir yazılımda seviyesi farklı bileşenler varsa liste her bileşene kendi
 seviyesiyle uygulanır.
 
 ## İlgili bölümler
 
-- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md): gereksinim
+- [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx): gereksinim
   kapsam analizi, yapısal kapsam analizi,
-  [kaynak koda izlenemeyen nesne kodu](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kaynak-koda-izlenemeyen-nesne-kodu),
-  [veri ve kontrol bağlaşımı](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#veri-bağlaşımı-ve-kontrol-bağlaşımı-analizi)
-  ve [kapsam boşlukları](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.md#kapsam-boşluklarının-ele-alınması)
-- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.md)
-- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.md): bağlaşım
+  [kaynak koda izlenemeyen nesne kodu](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#kaynak-koda-izlenemeyen-nesne-kodu),
+  [veri ve kontrol bağlaşımı](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#veri-bağlaşımı-ve-kontrol-bağlaşımı-analizi)
+  ve [kapsam boşlukları](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#kapsam-boşluklarının-ele-alınması)
+- [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx)
+- [7. Yazılım Tasarımı](../../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx): bağlaşım
   analizinin dayandığı arayüz tanımları
-- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.md)
-- [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.md)
-- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.md)
-- Otoritenin bakışı: [SW SOI-3](soi-3.md)
+- [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
+- [SVP Şablonu ve Yazım Rehberi](../05-sablonlar/03-svp.mdx)
+- [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)
+- Otoritenin bakışı: [SW SOI-3](soi-3.mdx)
 - Komşu listeler: [Test Durumu ve Prosedürü Kontrol Listesi](07-test-durumlari-ve-prosedurleri.mdx),
   [Test Sonuçları Kontrol Listesi](08-test-sonuclari.mdx),
   [Yazılım Mimarisi Kontrol Listesi](03-yazilim-mimarisi.mdx),

@@ -577,7 +577,7 @@ async function main() {
     }),
   );
   if (manifest.pages[0].group !== '') {
-    throw new Error('Manifestin ilk sayfası kitabın giriş sayfası (kitap/index.md) olmalı.');
+    throw new Error('Manifestin ilk sayfası kitabın giriş sayfası (kitap/index.mdx) olmalı.');
   }
   const printCss = await fs.readFile(PRINT_CSS, 'utf8');
   const revision = bookRevision();
