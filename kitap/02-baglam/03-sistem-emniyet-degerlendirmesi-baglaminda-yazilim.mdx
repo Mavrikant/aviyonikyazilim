@@ -3,6 +3,8 @@ title: "3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım"
 sidebar_position: 2
 ---
 
+import {say} from '@site/src/components/HedefGezgini/veri';
+
 # 3. Sistem Emniyet Değerlendirmesi Bağlamında Yazılım
 
 Sistem emniyet değerlendirmesi, bir yazılımın neden belirli bir yazılım seviyesinde
@@ -172,10 +174,10 @@ analizinin (structural coverage analysis) hangi ölçüte kadar ineceğini belir
 
 | Yazılım seviyesi | Hedef sayısı | Bağımsızlıkla karşılanan hedef | Yapısal kapsam ölçütü |
 |---|---|---|---|
-| Seviye A | 71 | 30 | Değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC), karar kapsama (decision coverage) ve satır kapsama (statement coverage) |
-| Seviye B | 69 | 18 | Karar kapsama ve satır kapsama |
-| Seviye C | 62 | 5 | Satır kapsama |
-| Seviye D | 26 | 2 | Yapısal kapsam hedefi yok |
+| Seviye A | {say('A').hedef} | {say('A').bagimsiz} | Değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC), karar kapsama (decision coverage) ve satır kapsama (statement coverage) |
+| Seviye B | {say('B').hedef} | {say('B').bagimsiz} | Karar kapsama ve satır kapsama |
+| Seviye C | {say('C').hedef} | {say('C').bagimsiz} | Satır kapsama |
+| Seviye D | {say('D').hedef} | {say('D').bagimsiz} | Yapısal kapsam hedefi yok |
 | Seviye E | — | — | Otorite Seviye E belirlemesini teyit ettikten sonra DO-178C rehberliği uygulanmaz |
 
 Tablo iki şeyi açıkça gösterir. Seviye A ile Seviye B arasındaki fark hedef sayısından

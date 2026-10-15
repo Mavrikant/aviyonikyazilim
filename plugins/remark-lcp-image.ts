@@ -13,6 +13,9 @@
  * anda öncelik kazanmasın diye işaret içermeyen blog derlemelerine dokunulmaz
  * (onUntruncatedBlogPosts: 'throw' olduğundan tam yazıda işaret hep vardır).
  *
+ * Görsel bir MDX bileşeninin çocuğu olabilir (kütüphane künyesindeki kapak gibi);
+ * blok içinde derinlemesine aranır.
+ *
  * Docusaurus'un transformImage adımından SONRA çalışmalıdır (remarkPlugins):
  * yerel görseller o adımda <img> JSX öğesine dönüşür.
  */
@@ -63,7 +66,10 @@ export default function remarkLcpImage() {
     const isBlogExcerpt = file.path?.includes(BLOG_DIR) && !TRUNCATE_MARKER.test(String(file.value ?? ''));
     if (isBlogExcerpt) return;
 
-    for (const block of (root.children ?? []).slice(0, TOP_BLOCKS)) {
+    // MDX içe/dışa aktarımları (import, Docusaurus'un eklediği `export const toc`) görünür
+    // blok değildir; sayılmaz.
+    const blocks = (root.children ?? []).filter((node) => node.type !== 'mdxjsEsm');
+    for (const block of blocks.slice(0, TOP_BLOCKS)) {
       const image = findImage(block);
       if (image) {
         prioritize(image);

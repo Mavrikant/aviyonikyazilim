@@ -7,6 +7,8 @@ tags: [gercek-zamanli-sistemler, rtos, aviyonik]
 keywords: ["gerçek zamanlı sistemler", "real-time systems", "RTOS", "WCET", "öncelik tersinmesi (priority inversion)", "mutlak gerçek zamanlı (hard real-time)"]
 ---
 
+import AracKarti from '@site/src/components/AracKarti';
+
 Akşam dizi izlerken görüntü yarım saniye donar, sonra kendine gelir. Sinir olursunuz, geçer. Aynı yarım saniye, bir kaza anında hava yastığını ateşleyecek sinyalin gecikmesi olduğunda ise ortada sinir değil, bir trajedi vardır.
 
 İki olayda da sistem geç kaldı; ama birinde bedeli bir homurtu, diğerinde bir hayat. Gerçek zamanlı sistemler (real-time systems) kavramı tam da bu farkın üzerine kuruludur. İşin teknik tanımı da bunu söyler: gerçek zamanlılık, bir sistemin **her bağımsız işlevi için tanımlanmış zaman sınırına uyma kabiliyetidir.** Bir fonksiyonu doğru yerine getirmek kadar, onu istenen zaman çerçevesinde yerine getirmek de gerekir; gerçek zamanlılık bu ikincisini dert edinir. Geç gelen doğru yanıt çoğu zaman yanlış yanıttır.
@@ -86,6 +88,11 @@ Madem hız değil, bir işlevi gerçek zamanlı yapan ne? Tek kelimeyle **garant
 **RTOS.** Masaüstü Linux ya da Windows verimi ve adilliği önceler; bir görevin tam olarak ne zaman çalışacağını garanti etmez. Bir gerçek zamanlı işletim sistemi (real-time operating system, RTOS) — FreeRTOS, VxWorks, QNX, Zephyr ya da `PREEMPT_RT` özellikli Linux (uzun yıllar ayrı bir yama setiydi; Linux 6.12'den beri ana akım çekirdeğin bir parçası) — ise öngörülebilirliği öne koyar: en yüksek öncelikli görevin sınırlı ve bilinen bir süre içinde işlemciye kavuşacağını taahhüt eder. RTOS'un emniyet-kritik aviyonik projelerdeki yeri için kitaptaki [Gerçek Zamanlı İşletim Sistemleri](/kitap/ozel-konular/gercek-zamanli-isletim-sistemleri) bölümüne, sertifikasyon gözüyle dikkat edilecek noktalar için de [Ek B'deki endişe alanları listesine](/kitap/ekler/ek-b-rtos-endise-alanlari) bakabilirsiniz. Aday bir RTOS'u değerlendirirken sorulacak sorular için ise [Ek C'deki kontrol listesine](/kitap/ekler/ek-c-rtos-secim-sorulari) göz atın.
 
 **Zamanlama.** Görevlere öncelik verilir; öncelikli bir görev hazır olunca, çalışan düşük öncelikli görev anında durdurulur (*preemption*). Hangi görevin ne zaman çalışacağına karar veren kurala zamanlama algoritması (*scheduling algorithm*) denir. İki klasiği: RMS (*Rate-Monotonic Scheduling*), daha sık tekrarlanan görevi daha öncelikli sayar; EDF (*Earliest Deadline First*), zaman sınırı en yakın olanı önce çalıştırır. Bu algoritmaların matematiksel "zamanlanabilirlik" ispatları başlı başına bir konudur.
+
+<AracKarti yol="/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme">
+  Bir görev kümesi girin; hız-monoton ve EDF altında her görevin zaman sınırına uyup
+  uymadığını, en kötü tepki süresini ve zaman çizelgesini görün.
+</AracKarti>
 
 ### Mars'taki Hata: Öncelik Tersinmesi
 

@@ -89,8 +89,11 @@ const WORDS_PER_MINUTE = 200;
 
 const wordSegmenter = new Intl.Segmenter('tr', {granularity: 'word'});
 
+/** Okuma süresine girmeyen kısımlar: frontmatter ve MDX içe/dışa aktarım satırları. */
 function stripFrontMatter(source: string): string {
-  return source.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '');
+  return source
+    .replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '')
+    .replace(/^(?:import|export)\s.*$/gm, '');
 }
 
 function readingMinutes(content: string): number {

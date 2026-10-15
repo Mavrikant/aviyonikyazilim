@@ -1,0 +1,87 @@
+/* Kitap ve blogdan araca giden kart: düz zemin, sol kenarda amber çizgi, araç şeması. */
+
+.kart {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  margin: 1.5rem 0;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-left: 3px solid var(--av-amber-500);
+  border-radius: var(--ifm-global-radius);
+  background: var(--ifm-background-surface-color);
+}
+
+.simge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 6px;
+  color: var(--ifm-color-primary);
+}
+
+.simge svg {
+  width: 2.7rem;
+  height: 2.7rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.simge svg [data-vurgu] {
+  stroke: var(--av-amber-600);
+}
+
+[data-theme='dark'] .simge svg [data-vurgu] {
+  stroke: var(--av-amber-400);
+}
+
+.govde {
+  min-width: 0;
+}
+
+.ust {
+  display: block;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Kartın tamamı tıklanabilir: başlık bağlantısının alanı kartı kaplar. */
+.baslik {
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+.baslik::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.kart:hover .baslik {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+.aciklama {
+  margin-top: 0.2rem;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.aciklama > :last-child {
+  margin-bottom: 0;
+}

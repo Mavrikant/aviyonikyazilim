@@ -4,6 +4,8 @@ description: "Emniyet-kritik bir proje için RTOS değerlendirirken sorulacak so
 sidebar_position: 3
 ---
 
+import {TabloIndir} from '@site/src/components/KontrolListesi';
+
 # Ek C: Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular
 
 Bu ek, emniyet-kritik bir aviyonik proje için aday bir gerçek zamanlı işletim sistemini
@@ -23,6 +25,13 @@ destekliyoruz" yanıtı, ancak bunu gösteren bir belge, ölçüm ya da sertifik
 birlikte geldiğinde değer taşır. Yanıtlar ve dayandıkları kanıtlar bir karar kaydında
 toplanır; böylece seçim, aylar sonra "neden bunu seçtik?" sorusu geldiğinde de
 savunulabilir kalır.
+
+<TabloIndir
+  dosya="rtos-secim-sorulari"
+  baslik="Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular"
+  sutunlar={['Soru', 'Neden önemli', 'İyi yanıt']}
+  ekSutunlar={['Tedarikçinin yanıtı', 'Kanıt', 'Değerlendirme']}
+/>
 
 ## Zamanlama davranışı
 

@@ -7,6 +7,9 @@ tags: [sca, yapisal-kapsam-analizi, structural-coverage-analysis]
 keywords: ["yapısal kapsam analizi", "structural coverage analysis", "MC/DC", "karar kapsama", "satır kapsama", "DO-178C"]
 ---
 
+import AracKarti from '@site/src/components/AracKarti';
+import {mcdcIfadesi} from '@site/src/components/McdcAraci/paylasim';
+
 ![Kodun yazılması, testlerin koşturulması ve kod kapsama analizi arasındaki akışı gösteren illüstrasyon](/img/blog/yapisal-kapsam-analizi/gorsel-1.webp)
 
 Yapısal kapsam analizi (structural coverage analysis) ya da bilindik kisa adiyla **SCA**'yi incelemeden once yapisal programlamanin ne oldugunu tekrar hatirlayalim.  
@@ -57,6 +60,13 @@ Bu küçük örnekte:
 
 Bu nedenle yapısal kapsam analizi, "kaç satır çalıştı" sorusundan daha fazlasını sorar;
 mantığın gerçekten kontrol edildiğini kanıtlamaya yaklaşır.
+
+<AracKarti
+  yol="/araclar/dogrulama/mcdc-test-seti"
+  ek={mcdcIfadesi('(motor_calisti && yakit_basinci) || yedek_mod')}>
+  Yukarıdaki kararla açılır: üç koşulun her biri için bağımsızlık çiftini ve MC/DC'yi
+  sağlayan en küçük test setini gösterir.
+</AracKarti>
 
 | Kapsama türü | Kısa amaç | Ne zaman güçlüdür? |
 |---|---|---|

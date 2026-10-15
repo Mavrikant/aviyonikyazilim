@@ -3,6 +3,10 @@ title: "4. DO-178C ve Destekleyici Dokümanlara Genel Bakış"
 sidebar_position: 1
 ---
 
+import {SEVIYE_BILGI, say} from '@site/src/components/HedefGezgini/veri';
+import {SeviyeCubuklari} from '@site/src/components/HedefGezgini/SeviyeOzeti';
+import AracKarti from '@site/src/components/AracKarti';
+
 # 4. DO-178C ve Destekleyici Dokümanlara Genel Bakış
 
 DO-178C, aviyonik yazılım için nasıl geliştirme yapılacağını adım adım emreden bir tarif
@@ -258,6 +262,11 @@ ayrılmıştır. Geliştirme süreçleri tek tabloya sığarken, o süreçlerin 
 olduğunu göstermek dört tablo, doğrulamanın kendisinin yeterli olduğunu göstermek ise
 ayrı bir tablo tutar.
 
+<AracKarti yol="/araclar/sertifikasyon/do178c-hedef-gezgini">
+  Ek A'nın on tablosundaki hedefleri seviyeye göre süzün: hangisi aranır, hangisi
+  bağımsızlık ister, kanıtı hangi veride durur. İki seviyeyi yan yana koyup farkı görebilirsiniz.
+</AracKarti>
+
 ## Yazılım seviyesi
 
 DO-178C, yazılımı uçuş emniyetine etkisine göre beş yazılım seviyesine (software level)
@@ -270,13 +279,16 @@ hedef, daha çok bağımsızlık ve daha derin doğrulama gerekir.
 
 | Yazılım seviyesi | İlişkili arıza durumu şiddeti | Hedef sayısı | Bağımsızlıkla karşılanan hedef |
 |---|---|---|---|
-| Seviye A | Katastrofik | 71 | 30 |
-| Seviye B | Tehlikeli | 69 | 18 |
-| Seviye C | Majör | 62 | 5 |
-| Seviye D | Minör | 26 | 2 |
-| Seviye E | Emniyet etkisi yok | Otorite teyidinden sonra hedef uygulanmaz | — |
+| Seviye A | {SEVIYE_BILGI.A.ariza} | {say('A').hedef} | {say('A').bagimsiz} |
+| Seviye B | {SEVIYE_BILGI.B.ariza} | {say('B').hedef} | {say('B').bagimsiz} |
+| Seviye C | {SEVIYE_BILGI.C.ariza} | {say('C').hedef} | {say('C').bagimsiz} |
+| Seviye D | {SEVIYE_BILGI.D.ariza} | {say('D').hedef} | {say('D').bagimsiz} |
+| Seviye E | {SEVIYE_BILGI.E.ariza} | Otorite teyidinden sonra hedef uygulanmaz | — |
 
-Tablodaki sayılar birkaç şeyi birden söyler:
+{/* Tablo ve şekildeki sayılar DO-178C Hedef Gezgini'nin veri dosyasından hesaplanır. */}
+<SeviyeCubuklari />
+
+Tablodaki ve şekildeki sayılar birkaç şeyi birden söyler:
 
 - **A ile B arasındaki fark sayıda küçük, işte büyüktür.** Hedef sayısı yalnızca iki
   azalır: MC/DC ile kaynak koda doğrudan izlenemeyen nesne kodunun doğrulanması Seviye
@@ -428,8 +440,8 @@ kalifikasyonu ve teknoloji ekleri ise Kısım IV'te, 13–16. bölümlerde işle
   eder.
 - Uyum, Ek A tablolarındaki hedefler üzerinden değerlendirilir; her hedefin bir
   faaliyeti ve kanıtı olan bir yaşam döngüsü verisi vardır.
-- Yazılım seviyesi emniyet değerlendirmesinden gelir ve hedef sayısını (A: 71, B: 69,
-  C: 62, D: 26), bağımsızlığı ve yapısal kapsam derinliğini belirler.
+- Yazılım seviyesi emniyet değerlendirmesinden gelir ve hedef sayısını (A: {say('A').hedef}, B: {say('B').hedef},
+  C: {say('C').hedef}, D: {say('D').hedef}), bağımsızlığı ve yapısal kapsam derinliğini belirler.
 - DO-178C yasa değildir; AC 20-115D ve AMC 20-115D ile kabul edilebilir uyum yöntemi
   olarak tanınır ve projeyi PSAC'taki beyan üzerinden bağlar.
 - Kanıt üretmek, yazılım geliştirme kadar önemli bir iştir; kullanılan teknik bir ekin

@@ -3,6 +3,8 @@ title: "1. Giriş ve Genel Bakış"
 sidebar_position: 1
 ---
 
+import {say} from '@site/src/components/HedefGezgini/veri';
+
 # 1. Giriş ve Genel Bakış
 
 Bu kitap, aviyonik yazılımın yalnızca koddan ibaret olmadığını; gereksinim, tasarım,
@@ -141,7 +143,7 @@ bir yaşam döngüsü modeli, yöntem ya da araç dayatmaz; yazılım seviyesine
 karşılanması gereken hedefleri (objective), bu hedeflere götüren faaliyetleri ve
 hedeflerin karşılandığını gösterecek kanıtı tanımlar. Faaliyetler de rehberin
 parçasıdır; başvuru sahibi başka faaliyetler benimseyebilir, ama bunu otoritenin
-onayıyla yapar. Seviye A'da 71 hedef vardır; seviye düştükçe sayı azalır ve Seviye
+onayıyla yapar. Seviye A'da {say('A').hedef} hedef vardır; seviye düştükçe sayı azalır ve Seviye
 E'de hiçbir hedef uygulanmaz. Kanıtın resmî adı yazılım yaşam döngüsü verisidir
 (software life cycle data): planlar, gereksinimler, tasarım, kod, doğrulama sonuçları
 ve kayıtlar. Kitapta buna kısaca iş ürünü de denir. Belgenin tarihçesi ve belge

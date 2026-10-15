@@ -7,6 +7,7 @@ import {IfadeHatasi, ayristir} from './ifade';
 import type {Ayrisim} from './ifade';
 import {analizEt, benzersizEs, enKucukSet, kapsamHesapla, kosulDegeri} from './mcdc';
 import type {Analiz, Olcut} from './mcdc';
+import {coz, kodla} from './paylasim';
 import styles from './styles.module.css';
 
 const ORNEKLER: {ad: string; ifade: string; aciklama?: string}[] = [
@@ -49,27 +50,6 @@ const ALT_RAKAM = '₀₁₂₃₄₅₆₇₈₉';
 const altSimge = (n: number) => String(n).replace(/\d/g, (d) => ALT_RAKAM[Number(d)]);
 
 type Cozum = {a: Ayrisim; an: Analiz};
-
-/** Paylaşım: ifade, ölçüt ve (değiştirildiyse) seçili satırlar adresin #d= kısmında */
-function kodla(e: string, o: Olcut, s: number[] | null): string {
-  const json = JSON.stringify(s ? {e, o, s} : {e, o});
-  return btoa(unescape(encodeURIComponent(json))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
-}
-
-function coz(d: string): {e: string; o: Olcut; s: number[] | null} | undefined {
-  try {
-    const v = JSON.parse(decodeURIComponent(escape(atob(d.replace(/-/g, '+').replace(/_/g, '/'))))) as {
-      e?: unknown;
-      o?: unknown;
-      s?: unknown;
-    };
-    if (typeof v.e !== 'string' || v.e.length > 500) return undefined;
-    const s = Array.isArray(v.s) ? v.s.filter((x): x is number => Number.isInteger(x) && x >= 0 && x < 4096) : null;
-    return {e: v.e, o: v.o === 'maskeleme' ? 'maskeleme' : 'benzersiz', s};
-  } catch {
-    return undefined;
-  }
-}
 
 function indir(blob: Blob, ad: string) {
   const url = URL.createObjectURL(blob);

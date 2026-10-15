@@ -3,6 +3,9 @@ title: "9. Yazılım Doğrulama"
 sidebar_position: 6
 ---
 
+import AracKarti from '@site/src/components/AracKarti';
+import {mcdcIfadesi} from '@site/src/components/McdcAraci/paylasim';
+
 # 9. Yazılım Doğrulama
 
 Doğrulama (verification), yazılımın gereksinimlerini doğru ve eksiksiz karşıladığını
@@ -470,9 +473,14 @@ coupled condition) ötekileri sabit tutmak mümkün olmaz; o zaman yalnızca son
 etkileyebilecek koşulların sabit kalmasını arayan maskeleme MC/DC (masking MC/DC)
 kullanılır. DO-178C'nin MC/DC tanımı iki biçimi de kabul eder. C'deki kısa devre
 değerlendirmesi (short-circuit evaluation) hangi koşulların gerçekten değerlendirildiğini
-değiştirdiğinden test seti buna göre yorumlanır. Kendi kararlarınızın bağımsızlık
-çiftlerini [MC/DC Test Seti Üretici](/araclar/dogrulama/mcdc-test-seti) ile
-deneyebilirsiniz.
+değiştirdiğinden test seti buna göre yorumlanır.
+
+<AracKarti
+  yol="/araclar/dogrulama/mcdc-test-seti"
+  ek={mcdcIfadesi('(basinc_dusuk && motor_calisiyor) || bakim_kipi')}>
+  Bu bölümdeki basınç uyarısı kararıyla açılır: bağımsızlık çiftlerini ve en küçük test
+  setini gösterir. Ölçütü maskelemeye çevirip kendi kararlarınızı da deneyebilirsiniz.
+</AracKarti>
 
 Önemli bir ayrıntı: kapsam verisi **gereksinim tabanlı testlerin koşusundan** toplanır.
 Kapsamı yükseltmek için gereksinimsiz "kapsam testi" yazmak yöntemi tersine çevirir;

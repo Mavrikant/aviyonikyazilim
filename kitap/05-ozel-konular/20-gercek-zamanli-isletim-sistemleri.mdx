@@ -3,6 +3,8 @@ title: "20. Gerçek Zamanlı İşletim Sistemleri"
 sidebar_position: 4
 ---
 
+import AracKarti from '@site/src/components/AracKarti';
+
 # 20. Gerçek Zamanlı İşletim Sistemleri
 
 Gerçek zamanlı işletim sistemi (real-time operating system, RTOS), aviyonik yazılımda
@@ -399,6 +401,8 @@ gelen engellenme süresi, çekirdek hizmetlerinin ve bağlam değiştirmenin sü
 kesme yükü ile birleştirilerek her görevin en kötü tepki süresi hesaplanır. Sonuç,
 zaman sınırıyla karşılaştırılır ve kalan pay raporlanır. Tedarikçinin verdiği çekirdek
 süreleri yalnızca paketin kapsadığı işlemci ve yapılandırma için geçerlidir.
+
+<AracKarti yol="/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme" />
 
 **WCET ve yığın analizi.** İkisi de yalnız testle gösterilemez; analiz gerekir ve
 ölçümle desteklenir. DO-178C ikisini de kaynak kodun doğruluğu ve tutarlılığı

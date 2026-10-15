@@ -1,5 +1,6 @@
 /**
- * Kontrol listesi sayfalarındaki "CSV olarak indir" düğmesi.
+ * Kontrol listesi sayfalarındaki "CSV olarak indir" düğmesi (varsayılan dışa aktarım,
+ * ListeIndir); soru tablolarından oluşan ekler için TabloIndir (dosyanın sonunda).
  *
  * Maddeler ayrı bir veri dosyasında tutulmaz; sayfanın Markdown'ından üretilen onay kutulu
  * listeden okunur. Böylece liste tek yerde yazılır, sitede, aramada ve PDF'te aynı kalır.
@@ -75,6 +76,13 @@ function indir(blob: Blob, ad: string) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+/** Excel'in Türkçe ayarlarıyla açılsın diye `;` ayraçlı, BOM'lu UTF-8 CSV indirir. */
+function csvIndir(satirlar: unknown[][], dosya: string) {
+  const kacis = (v: unknown) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const csv = satirlar.map((s) => s.map(kacis).join(';')).join('\n');
+  indir(new Blob([`﻿${csv}`], {type: 'text/csv;charset=utf-8'}), `${dosya}.csv`);
+}
+
 export default function ListeIndir({dosya, baslik}: Props): ReactNode {
   const isBrowser = useIsBrowser();
   const ref = useRef<HTMLParagraphElement>(null);
@@ -93,17 +101,17 @@ export default function ListeIndir({dosya, baslik}: Props): ReactNode {
     return null;
   }
 
-  const csvIndir = () => {
-    const kacis = (v: unknown) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const listeyiIndir = () => {
     const adres = `${window.location.origin}${window.location.pathname}`;
-    const satirlar: unknown[][] = [
-      [`# ${baslik}`],
-      [`# Kaynak: ${adres}; maddeler özgündür, bağlayıcı metin DO-178C'nin kendisidir`],
-      ['Grup', 'No', 'Soru', 'Seviye', 'Dayanak', 'Sonuç (Evet / Hayır / Uygulanmaz)', 'Bulgu ya da not'],
-      ...maddeleriOku(kok()).map((m) => [m.grup, m.no, m.soru, m.seviye, m.dayanak, '', '']),
-    ];
-    const csv = satirlar.map((s) => s.map(kacis).join(';')).join('\n');
-    indir(new Blob([`﻿${csv}`], {type: 'text/csv;charset=utf-8'}), `${dosya}.csv`);
+    csvIndir(
+      [
+        [`# ${baslik}`],
+        [`# Kaynak: ${adres}; maddeler özgündür, bağlayıcı metin DO-178C'nin kendisidir`],
+        ['Grup', 'No', 'Soru', 'Seviye', 'Dayanak', 'Sonuç (Evet / Hayır / Uygulanmaz)', 'Bulgu ya da not'],
+        ...maddeleriOku(kok()).map((m) => [m.grup, m.no, m.soru, m.seviye, m.dayanak, '', '']),
+      ],
+      dosya,
+    );
   };
 
   return (
@@ -111,13 +119,99 @@ export default function ListeIndir({dosya, baslik}: Props): ReactNode {
       <button
         type="button"
         className="button button--outline button--primary button--sm"
-        onClick={csvIndir}
+        onClick={listeyiIndir}
         disabled={sayi === 0}>
         CSV olarak indir{sayi > 0 && ` (${sayi} madde)`}
       </button>
       <span className={styles.aciklama}>
         Elektronik tabloya ya da gözden geçirme aracına aktarmak için; sonuç ve not sütunları boştur.
       </span>
+    </p>
+  );
+}
+
+type TabloProps = {
+  /** İndirilecek dosyanın adı, uzantısız (ASCII) */
+  dosya: string;
+  /** CSV'nin ilk satırına yazılan liste adı */
+  baslik: string;
+  /** Dışa aktarılacak tabloların başlık satırı; yalnızca tam eşleşen tablolar alınır */
+  sutunlar: string[];
+  /** Sona eklenen boş sütunlar (yanıt, kanıt gibi), kullanıcı doldurur */
+  ekSutunlar?: string[];
+};
+
+/** Başlık satırı `sutunlar` olan tabloların satırlarını, üstlerindeki H2 ile birlikte okur. */
+function tablolariOku(kok: ParentNode, sutunlar: string[]): string[][] {
+  const satirlar: string[][] = [];
+  let h2 = '';
+  kok.querySelectorAll('h2, table').forEach((el) => {
+    if (el.tagName === 'H2') {
+      h2 = temiz(el.textContent);
+      return;
+    }
+    const basliklar = [...el.querySelectorAll('thead th')].map((th) => temiz(th.textContent));
+    if (basliklar.join('|') !== sutunlar.join('|')) {
+      return;
+    }
+    el.querySelectorAll('tbody tr').forEach((tr) => {
+      satirlar.push([h2, ...[...tr.querySelectorAll('td')].map((td) => temiz(td.textContent))]);
+    });
+  });
+  return satirlar;
+}
+
+/**
+ * Soru tablolarından oluşan sayfalarda (Ek C gibi) "CSV olarak indir" düğmesi. Tablolar
+ * sayfada Markdown olarak kalır; düğme başlık satırı `sutunlar` olan tabloları toplar, her
+ * satıra bölüm başlığını (H2) ve doldurulacak boş sütunları ekler.
+ */
+export function TabloIndir({dosya, baslik, sutunlar, ekSutunlar = []}: TabloProps): ReactNode {
+  const isBrowser = useIsBrowser();
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [sayi, setSayi] = useState(0);
+  const kok = () => ref.current?.closest('.markdown') ?? document;
+  // MDX her çizimde yeni bir dizi verir; etki içeriğe göre yeniden çalışsın.
+  const sutunAnahtari = sutunlar.join('|');
+
+  useEffect(() => {
+    if (isBrowser) {
+      setSayi(tablolariOku(kok(), sutunlar).length);
+    }
+  }, [isBrowser, sutunAnahtari]);
+
+  if (!isBrowser) {
+    return null;
+  }
+
+  const tablolariIndir = () => {
+    const adres = `${window.location.origin}${window.location.pathname}`;
+    csvIndir(
+      [
+        [`# ${baslik}`],
+        [`# Kaynak: ${adres}`],
+        ['Grup', ...sutunlar, ...ekSutunlar],
+        ...tablolariOku(kok(), sutunlar).map((satir) => [...satir, ...ekSutunlar.map(() => '')]),
+      ],
+      dosya,
+    );
+  };
+
+  return (
+    <p ref={ref} className={styles.indir}>
+      <button
+        type="button"
+        className="button button--outline button--primary button--sm"
+        onClick={tablolariIndir}
+        disabled={sayi === 0}>
+        CSV olarak indir{sayi > 0 && ` (${sayi} satır)`}
+      </button>
+      {ekSutunlar.length > 0 && (
+        <span className={styles.aciklama}>
+          Elektronik tabloya aktarmak için; {ekSutunlar.map((s) => s.toLocaleLowerCase('tr-TR')).join(', ')} sütunları
+          boştur.
+        </span>
+      )}
     </p>
   );
 }

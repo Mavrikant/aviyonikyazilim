@@ -12,10 +12,14 @@ keywords: ["DO-178C hedefleri", "DO-178C objectives", "DO-178C objektifleri", "D
 
 import HedefGezgini from '@site/src/components/HedefGezgini';
 import {SeviyeCubuklari, HedefHaritasi, SurecTablosu} from '@site/src/components/HedefGezgini/SeviyeOzeti';
+import {HEDEFLER, say} from '@site/src/components/HedefGezgini/veri';
+
+{/* Metindeki sayılar elle yazılmaz; şekillerle aynı veriden (veri.ts) hesaplanır. */}
+export const artis = (alt, ust, alan = 'hedef') => say(ust)[alan] - say(alt)[alan];
 
 # DO-178C Hedef Gezgini
 
-DO-178C'nin Ek A tablolarındaki 71 hedefi (objective) yazılım seviyesine
+DO-178C'nin Ek A tablolarındaki {HEDEFLER.length} hedefi (objective) yazılım seviyesine
 (software level) göre süzer. Sahada çoğunlukla DAL diye anılan seviyeyi seçin;
 araç o seviyede hangi hedeflerin arandığını, hangilerinin bağımsızlıkla
 (independence) karşılanması gerektiğini ve kanıtın hangi yaşam döngüsü verisinde
@@ -59,25 +63,25 @@ sayısı.
 
 Artış düzgün değildir; her basamakta başka bir şey eklenir:
 
-- **Seviye D (26 hedef): yazılım dışarıdan görülür.** Yüksek seviyeli gereksinimler
+- **Seviye D ({say('D').hedef} hedef): yazılım dışarıdan görülür.** Yüksek seviyeli gereksinimler
   yazılır ve gözden geçirilir, çalıştırılabilir nesne kodu bu gereksinimlere göre
   test edilir, her gereksinimin test edildiği gösterilir. Konfigürasyon yönetimi ve
   sertifikasyon irtibatı hedeflerinin tamamı, kalite güvencesinin iki hedefi bu
   seviyede de aranır. Düşük seviyeli gereksinimler, kaynak kod ve bunların
   doğrulanması hedef olarak yer almaz; yapısal kapsam istenmez.
-- **D'den C'ye (+36 hedef): yazılımın içi açılır.** En büyük sıçrama buradadır.
+- **D'den C'ye (+{artis('D', 'C')} hedef): yazılımın içi açılır.** En büyük sıçrama buradadır.
   Düşük seviyeli gereksinimler ve kaynak kod geliştirme hedefi olur; tasarımın ve
   kodun gözden geçirilmesi, düşük seviyeli gereksinimlere dayalı test, satır kapsama
   ile veri ve kontrol bağlaşımı analizi eklenir. Planlama ve kalite güvencesi
   tabloları tamamlanır: standartlar, geçiş kriterleri, planların uyumu.
-- **C'den B'ye (+7 hedef, +13 bağımsızlık): ikinci göz gelir.** Hedef sayısı az
+- **C'den B'ye (+{artis('C', 'B')} hedef, +{artis('C', 'B', 'bagimsiz')} bağımsızlık): ikinci göz gelir.** Hedef sayısı az
   artar: gereksinimlerin ve mimarinin hedef bilgisayarla uyumu, düşük seviyeli
   gereksinimlerin, mimarinin ve kodun doğrulanabilirliği ve karar kapsama. Asıl
   değişiklik bağımsızlıktadır: doğrulama hedeflerinde ilk kez burada aranır.
   Gereksinimlerin bir üst seviyeye uygunluğu ve doğruluğu, algoritmalar, kodun
   düşük seviyeli gereksinimlere uygunluğu, parametre verisinin doğrulanması, düşük
   seviyeli gereksinim testleri ve yapısal kapsam artık yazarın kendisine bırakılmaz.
-- **B'den A'ya (+2 hedef, +12 bağımsızlık): en ince elek.** Eklenen iki hedef
+- **B'den A'ya (+{artis('B', 'A')} hedef, +{artis('B', 'A', 'bagimsiz')} bağımsızlık): en ince elek.** Eklenen iki hedef
   değiştirilmiş koşul/karar kapsama (MC/DC) ile kaynak koda izlenemeyen nesne
   kodunun doğrulanmasıdır. Bağımsızlık mimariye, kodun mimariye uygunluğuna ve
   doğruluğuna, gürbüzlük testine, test prosedürlerine, test sonuçlarına ve

@@ -1,0 +1,93 @@
+/* Kısaltmalar süzgeci: navbar'ın altında yapışık kalan arama satırı ve harf şeridi. */
+
+.suzgec {
+  position: sticky;
+  top: var(--ifm-navbar-height);
+  z-index: 2;
+  margin: 1.5rem 0 1.75rem;
+  padding: 0.6rem 0 0.5rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  background: var(--ifm-background-color);
+}
+
+.arama {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
+}
+
+.etiket {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kutu {
+  flex: 1 1 14rem;
+  min-width: 0;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  font: inherit;
+}
+
+.kutu:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 1px;
+}
+
+.sonuc {
+  min-width: 6.5rem;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.8rem;
+}
+
+.harfler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  margin-top: 0.5rem;
+}
+
+.harf {
+  min-width: 1.6rem;
+  padding: 0.05rem 0.2rem;
+  border-radius: 3px;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  font-weight: 500 !important;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+.harf:hover {
+  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
+}
+
+.bos {
+  color: var(--ifm-color-emphasis-400) !important;
+  pointer-events: none;
+}
+
+/* Süzgecin gizlediği öğeler: custom.css'teki `table { display: table }` kuralı `hidden`
+   özniteliğinin tarayıcı varsayılanını (display: none) ezer; burada geri alınır. */
+:global(.theme-doc-markdown):has(.suzgec) :global([hidden]) {
+  display: none !important;
+}
+
+/* Harf şeridinden atlanan başlık yapışık süzgecin altında kalmasın */
+:global(.theme-doc-markdown):has(.suzgec) :is(:global(h2), :global(h3)) {
+  scroll-margin-top: calc(var(--ifm-navbar-height) + 7rem);
+}
+
+@media print {
+  .suzgec {
+    display: none;
+  }
+}

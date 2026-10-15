@@ -4,6 +4,8 @@ sidebar_position: 0
 slug: /
 ---
 
+import KitapIcindekiler from '@site/src/components/KitapIcindekiler';
+
 # DO-178C ile Emniyet-Kritik Aviyonik Yazılım
 
 Bu kitap, DO-178C ekseninde emniyet-kritik aviyonik yazılım geliştirmeyi, doğrulamayı
@@ -118,52 +120,11 @@ korur. Sertifikasyon kanıtı sonda derlenen bir paket değil, bu süreçlerin y
 
 ## İçindekiler
 
-### Kısım I — Giriş
-1. [Giriş ve Genel Bakış](./01-giris/01-giris-ve-genel-bakis.mdx)
+Her satırın sağındaki süre, bölümün tahmini okuma süresidir.
 
-### Kısım II — Emniyet-Kritik Yazılım Geliştirmenin Bağlamı
-2. [Sistem Bağlamında Yazılım](./02-baglam/02-sistem-baglaminda-yazilim.mdx)
-3. [Sistem Emniyet Değerlendirmesi Bağlamında Yazılım](./02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.mdx)
+{/* Liste elle yazılmaz: kenar çubuğundan (kitapSidebar) üretilir, bkz. src/components/KitapIcindekiler. */}
 
-### Kısım III — DO-178C ile Emniyet-Kritik Yazılım Geliştirme
-4. [DO-178C ve Destekleyici Dokümanlara Genel Bakış](./03-do178c-ile-gelistirme/04-do178c-genel-bakis.mdx)
-5. [Yazılım Planlama](./03-do178c-ile-gelistirme/05-yazilim-planlama.mdx)
-6. [Yazılım Gereksinimleri](./03-do178c-ile-gelistirme/06-yazilim-gereksinimleri.mdx)
-7. [Yazılım Tasarımı](./03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx)
-8. [Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](./03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx)
-9. [Yazılım Doğrulama](./03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
-10. [Yazılım Konfigürasyon Yönetimi](./03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
-11. [Yazılım Kalite Güvencesi](./03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx)
-12. [Sertifikasyon İrtibatı](./03-do178c-ile-gelistirme/12-sertifikasyon-irtibati.mdx)
-
-### Kısım IV — Araç Kalifikasyonu ve DO-178C Ekleri
-13. [DO-330 ve Yazılım Aracı Kalifikasyonu](./04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
-14. [DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](./04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.mdx)
-15. [DO-332 ve Nesne Yönelimli Teknoloji ve İlgili Teknikler](./04-arac-kalifikasyonu-ve-ekler/15-do332-nesne-yonelimli-teknoloji.mdx)
-16. [DO-333 ve Biçimsel Yöntemler](./04-arac-kalifikasyonu-ve-ekler/16-do333-bicimsel-yontemler.mdx)
-
-### Kısım V — Özel Konular
-17. [Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](./05-ozel-konular/17-kapsanmayan-kodlar.mdx)
-18. [Sahada Yüklenebilir Yazılım](./05-ozel-konular/18-sahada-yuklenebilir-yazilim.mdx)
-19. [Kullanıcı Tarafından Değiştirilebilir Yazılım](./05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.mdx)
-20. [Gerçek Zamanlı İşletim Sistemleri](./05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx)
-21. [Yazılım Bölümlemesi](./05-ozel-konular/21-yazilim-bolumlemesi.mdx)
-22. [Konfigürasyon Verisi](./05-ozel-konular/22-konfigurasyon-verisi.mdx)
-23. [Havacılık Verileri](./05-ozel-konular/23-havacilik-verileri.mdx)
-24. [Yazılım Yeniden Kullanımı](./05-ozel-konular/24-yazilim-yeniden-kullanimi.mdx)
-25. [Tersine Mühendislik](./05-ozel-konular/25-tersine-muhendislik.mdx)
-26. [Yazılım Yaşam Döngüsü Faaliyetlerinde Dış Kaynak Kullanımı](./05-ozel-konular/26-dis-kaynak-kullanimi.mdx)
-
-### Ekler
-- [Ek A: Örnek Geçiş Kriterleri](./06-ekler/01-ek-a-ornek-gecis-kriterleri.mdx)
-- [Ek B: Gerçek Zamanlı İşletim Sistemlerinde Endişe Alanları](./06-ekler/02-ek-b-rtos-endise-alanlari.mdx)
-- [Ek C: Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular](./06-ekler/03-ek-c-rtos-secim-sorulari.mdx)
-- [Ek D: Yazılım Servis Geçmişi Soruları](./06-ekler/04-ek-d-servis-gecmisi-sorulari.mdx)
-- [Ek E: Plan ve Standart Şablonları](./06-ekler/05-sablonlar/index.mdx) — beş plan ve üç geliştirme standardı için bölüm bölüm şablon ve yazım rehberi
-- [Ek F: Kontrol Listeleri](./06-ekler/06-kontrol-listeleri/index.mdx) — akran gözden geçirmesi, süreç denetimi ve SOI-1 … SOI-4 denetimleri için kontrol listeleri
-
-### Kaynaklar
-- [Kısaltmalar](./kaynaklar/kisaltmalar.mdx) — aviyonikte sık karşılaşılan kısaltmalar ve İngilizce açılımları
+<KitapIcindekiler />
 
 ## Bu kitaba atıf ve bağlantı
 
