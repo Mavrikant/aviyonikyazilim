@@ -127,16 +127,16 @@ süreçlerine iletildiğinin kaydını da açın. Zincirin herhangi bir halkası
 takılıyorsanız, otorite de aynı yerde takılacaktır.
 
 ```mermaid
-flowchart LR
-    SYS[Sistem gereksinimi] <--> HLR[Yüksek seviyeli gereksinim]
-    HLR <--> LLR[Düşük seviyeli gereksinim]
-    LLR <--> KOD[Kaynak kod]
-    HLR -.->|"türetilmişse"| SED[Sistem süreçleri ve emniyet değerlendirmesi]
+flowchart TD
+    SYS["Sistem<br/>gereksinimi"] <--> HLR["Yüksek seviyeli<br/>gereksinim"]
+    HLR <--> LLR["Düşük seviyeli<br/>gereksinim"]
+    LLR <--> KOD["Kaynak kod"]
+    HLR -.->|"türetilmişse"| SED["Sistem süreçleri ve<br/>emniyet değerlendirmesi"]
     LLR -.->|"türetilmişse"| SED
-    HLR -.-> GG1[Gözden geçirme kaydı]
-    LLR -.-> GG2[Gözden geçirme kaydı]
-    KOD -.-> GG3[Gözden geçirme kaydı]
-    KOD -.-> KY[Konfigürasyon kaydı ve sürüm]
+    HLR -.-> GG1["Gözden geçirme<br/>kaydı"]
+    LLR -.-> GG2["Gözden geçirme<br/>kaydı"]
+    KOD -.-> GG3["Gözden geçirme<br/>kaydı"]
+    KOD -.-> KY["Konfigürasyon<br/>kaydı ve sürüm"]
 ```
 
 ## Hazırlanacak veri paketi

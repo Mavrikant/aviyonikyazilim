@@ -625,14 +625,14 @@ testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savu
 
 ```mermaid
 flowchart TD
-    A["Derleyici sürümü ve seçenekleri dondurulur"] --> B["Temsilî örnek kod ya da tüm proje kodu"]
-    B --> C["Çevirici listesi / ters çevrilmiş nesne kodu"]
-    C --> D{"Komut dizisi bir kaynak<br/>deyimine izlenebiliyor mu?"}
-    D -- "Evet, aynı yapıda" --> E["Kaynak düzeyindeki doğrulama kapsar"]
-    D -- "Evet, yapı değişmiş" --> F["Dönüşüm gözden geçirilir;<br/>yeni dalların işletildiği gösterilir"]
-    D -- "Hayır" --> G["Ek kod listesine alınır"]
-    G --> H["Gözden geçirme + test,<br/>gerekirse hata enjeksiyonu"]
-    G --> I["Gerekirse yapı yasaklanır<br/>ya da seçenek değiştirilir"]
+    A["Derleyici sürümü ve<br/>seçenekleri dondurulur"] --> B["Temsilî örnek kod<br/>ya da tüm proje kodu"]
+    B --> C["Çevirici listesi /<br/>ters çevrilmiş<br/>nesne kodu"]
+    C --> D{"Komut dizisi<br/>bir kaynak<br/>deyimine izlenebiliyor<br/>mu?"}
+    D -- "Evet,<br/>aynı yapıda" --> E["Kaynak<br/>düzeyindeki<br/>doğrulama<br/>kapsar"]
+    D -- "Evet,<br/>yapı değişmiş" --> F["Dönüşüm gözden<br/>geçirilir; yeni<br/>dalların işletildiği<br/>gösterilir"]
+    D -- "Hayır" --> G["Ek kod<br/>listesine alınır"]
+    G --> H["Gözden geçirme<br/>+ test, gerekirse<br/>hata enjeksiyonu"]
+    G --> I["Gerekirse yapı<br/>yasaklanır ya da<br/>seçenek değiştirilir"]
     I --> B
     E --> J["Sonuç doğrulama sonuçlarına girer;<br/>SOI-3'te gözden geçirilir"]
     F --> J

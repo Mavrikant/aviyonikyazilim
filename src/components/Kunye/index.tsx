@@ -1,6 +1,8 @@
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 
+import {BuyutmesizAlan} from '@site/src/components/SekilBuyutme';
+
 import styles from './styles.module.css';
 
 /**
@@ -19,6 +21,7 @@ import styles from './styles.module.css';
  * Böylece görsel, Docusaurus'un görsel işleminden (boyut, içerik özetli dosya adı) ve
  * plugins/remark-lcp-image.ts'in öncelikli yüklemesinden geçer; ana sayfa da kapağı aynı
  * kalıptan bulur (plugins/homepage-data.ts). Kapağı olmayan sayfada bileşen kendini kapatır.
+ * Kapak bir şekil değildir; görsellere eklenen "Büyüt" düğmesi burada gösterilmez.
  */
 
 type Kisi = string | string[];
@@ -124,7 +127,11 @@ export default function Kunye({
 
   return (
     <section className={clsx(styles.kunye, children && styles.kapakli)} aria-label="Künye">
-      {children && <div className={styles.kapak}>{children}</div>}
+      {children && (
+        <div className={styles.kapak}>
+          <BuyutmesizAlan>{children}</BuyutmesizAlan>
+        </div>
+      )}
       <dl className={styles.liste}>
         {satirlar.map(([etiket, deger]) => (
           <div key={etiket} className={styles.satir}>
