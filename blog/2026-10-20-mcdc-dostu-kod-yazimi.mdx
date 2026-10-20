@@ -20,7 +20,7 @@ Kapsam raporunu daha az emekle tamamlamanın iki yolu vardır ve dışarıdan ba
 
 Birincisi **mantığı gerçekten sadeleştirmektir.** Gereksinim üç koşul istiyorsa kodda beş koşul bulunmaz, aynı soru iki kez sorulmaz, bir değer eşlemesi on iki dallı bir `if` zinciriyle yazılmaz. Test sayısı azalır ama testlerin kanıtladığı şey azalmaz, çünkü kanıtlanacak mantık zaten azalmıştır.
 
-İkincisi **mantığı ölçüm aracının görmediği yere taşımaktır.** Boole değerleri bit işleçleriyle birleştirmek, bir kararı ara değişkenlere bölüp parçaları ayrı ayrı saydırmak ya da bir doğruluk tablosunu (truth table) sabit bir diziye gömmek böyledir. Rapor kısalır, ama doğrulama yükümlülüğü yerinde durur; üstelik araç artık neyin eksik kaldığını söylemez. NASA'nın rehberi de sertifikasyon otoriteleri de bu yolu adıyla anar ve reddeder.
+İkincisi **mantığı ölçüm aracının görmediği yere taşımaktır.** Boole değerleri bit işleçleriyle ya da aritmetikle birleştirmek, bir kararı ara değişkenlere bölüp parçaları ayrı ayrı saydırmak ya da bir doğruluk tablosunu (truth table) sabit bir diziye gömmek böyledir. Rapor kısalır, ama doğrulama yükümlülüğü yerinde durur; üstelik araç artık neyin eksik kaldığını söylemez. NASA'nın rehberi de sertifikasyon otoriteleri de bu yolu adıyla anar ve reddeder.
 
 Bu yazının konusu birinci yol. İkincisini ayrı bir başlıkta anlatıyoruz, çünkü bir kod gözden geçirmesinde (review) ikisini ayırt edebilmek en az birincisini uygulamak kadar önemlidir. Pratik bir sınama sorusu şudur: *bu değişiklikten sonra gereksinimi doğrulamak için düşünülmesi gereken mantık azaldı mı, yoksa yalnızca aracın saydığı şey mi?*
 
@@ -276,25 +276,111 @@ Okunabilirlik için adlandırılmış ara değerler kullanmak yine de meşrudur;
 
 ### Boole değerlerinde bit işleçleri ve dalsız aritmetik
 
+Kapsam araçları kararları Boole işleçlerinden (`&&`, `||`, `!`) ve dallardan tanır. Aynı sonucu bit işleçleriyle ya da aritmetikle hesaplayan kod, araca göre karar içermez; birçok araç böyle bir satırda tek bir atama görür ve en fazla satır kapsamayı arar. İki koşullu bir ifadede bunun kazancı önemsizdir; asıl cazip olduğu yer çok koşullu mantıktır. Üç tipik örnek:
+
+**Paketlenmiş arıza bayrakları.** Ana uyarı, altı arızadan herhangi biri varsa yanar:
+
 ```c
-uyari = basinc_dusuk & motor_calisiyor;          /* iki bool, bit düzeyinde VE */
-hiz   = secili * hiz_a + (1 - secili) * hiz_b;   /* seçim mantığı çarpmanın içinde */
+/* Boole biçimi: 6 koşul, MC/DC için 7 test */
+ana_uyari = yangin || kabin_basinci || hidrolik ||
+            jenerator || yakit_basinci || buzlanma;
+
+/* Bayraklar tek kelimede toplanmış: araç tek koşul görür, 2 test */
+ana_uyari = (ariza_kelimesi & ANA_UYARI_MASKESI) != 0u;
 ```
 
-Birçok kapsam aracı `&` işlecini aritmetik sayar ve ilk satırda karar görmez; derleyici de çoğu zaman dal üretmez. NASA rehberi bu savunmayı adıyla ele alır (§3.7.2): bit işlemlerinin yalnızca aritmetik olduğu ve MC/DC gerektirmediği kabul edilirse, bunun mantıksal sonucu bütün Boole değerlerinin bit olarak yazılmasını zorunlu kılan bir kodlama standardı olur. Bu, MC/DC hedefini fiilen ortadan kaldırır ve rehbere göre hedefin niyetine aykırıdır. Rehberin benimsediği yorum, bir kelimedeki her bitin, bir koşulu temsil ediyorsa, ayrı bir koşul sayılmasıdır (§3.7). MISRA C:2012 Kural 10.1 de Boole türündeki işlenenlerin bit ve aritmetik işleçlerde kullanılmasına izin vermez. İkinci satırdaki gibi dalsız aritmetik hileleri için de hüküm aynıdır: seçim mantığı çarpmanın içine saklanmıştır, yok olmamıştır.
+İkinci biçimde biri arızasız, biri tek arızalı iki test aracı tatmin eder. Maskeden bir bit düşmüş olsa (ör. `buzlanma` unutulmuş) bu iki test yine geçer; hatayı yalnızca o bitin tek başına denendiği test gösterir.
 
-Bit işlemlerinin meşru olduğu yer donanım arayüzüdür: durum kelimeleri, maskeler, paketlenmiş veri. Orada rehberin pratik bir önerisi vardır (§3.7.1): `(durum & 0x3u) != 0u` gibi bir ifadede her bit tek tek değiştirilerek n+1 test yapılır ve ilgilenilmeyen bitler 1'e kurulur. Böylece maskenin yanlışlıkla fazladan bit yakalaması da görünür olur.
+**Üçte iki oylama.** Üç kanaldan en az ikisi geçerliyse sonuç geçerlidir:
+
+```c
+/* Boole biçimi: her kanal iki kez geçer; maskeleme MC/DC ile 6 test */
+gecerli = (kanal_a && kanal_b) || (kanal_a && kanal_c) ||
+          (kanal_b && kanal_c);
+
+/* Sayma biçimi: tek koşul, 2 test */
+gecerli = ((uint32_t)kanal_a + (uint32_t)kanal_b +
+           (uint32_t)kanal_c) >= 2u;
+```
+
+Sayma biçiminde (1, 1, 0) ve (1, 0, 0) testleri MC/DC'yi "tamamlar", ama `kanal_c` hiç doğru olmamıştır. Toplamda `kanal_c` yerine yanlışlıkla `kanal_b` yazılsa bu iki test yine geçer; hata yalnızca (0, 1, 0) ve (1, 0, 1) satırlarında görünür ve ikisi de Boole biçiminin istediği altı testin içindedir. Bir tuzak daha vardır: kanallar `bool` değil de projelerde sık görülen `typedef uint8_t BOOL` türündeyse, bozulup 2 değerini almış tek bir kanal oylamayı tek başına geçer; üçte iki oylamanın önlemek için var olduğu arıza tam olarak budur. Sayma biçimi çok kanallı oylamada okunaklı olduğu için yine de seçilebilir; o zaman test setinin yeterliliği araçtan değil, oylama tablosunun (burada sekiz satır) testlerle tamamen denenmesinden gelmelidir.
+
+**Aralık denetimi.** Hız geçerli aralıktaysa kabul edilir:
+
+```c
+/* İki koşul, MC/DC için 3 test: iki sınır da denenir */
+gecerli = (hiz_kt >= HIZ_ALT_KT) && (hiz_kt <= HIZ_UST_KT);
+
+/* İşaretsiz çıkarma: aralık dışındaki değerler büyük sayılara sarar.
+   Tek koşul, 2 test */
+gecerli = ((uint32_t)hiz_kt - (uint32_t)HIZ_ALT_KT) <=
+          ((uint32_t)HIZ_UST_KT - (uint32_t)HIZ_ALT_KT);
+```
+
+İkinci biçim doğrudur ve eniyileme kaynaklarında sık geçer; ama aralık içinde bir değer ile alt sınırın altında bir değer aracı tatmin eder ve üst sınır hiçbir testte denenmez. Üst sınır sabiti yanlış yazılmış olsa kapsam raporu bunu söylemez.
+
+| Örnek | Boole biçiminde MC/DC | Dalsız biçimde aracın istediği | Dalsız biçimde görünmez kalan |
+|---|---|---|---|
+| Altı arıza bayrağı | 7 test | 2 test | Beş bayrağın etkisi; maskeden düşmüş bit |
+| Üçte iki oylama | 6 test | 2 test | Bir kanalın etkisi; yanlış toplanan kanal |
+| Aralık denetimi | 3 test | 2 test | Sınırlardan biri |
+
+Üç örnekte de mantık yok olmamış, aritmetiğin içine saklanmıştır. NASA rehberi bu savunmayı adıyla ele alır (§3.7.2): bit işlemlerinin yalnızca aritmetik olduğu ve MC/DC gerektirmediği kabul edilirse, bunun mantıksal sonucu bütün Boole değerlerinin bit olarak yazılmasını zorunlu kılan bir kodlama standardı olur. Bu, MC/DC hedefini fiilen ortadan kaldırır ve rehbere göre hedefin niyetine aykırıdır. Rehberin benimsediği yorum, bir kelimedeki her bitin, bir koşulu temsil ediyorsa, ayrı bir koşul sayılmasıdır (§3.7); paketlenmiş arıza kelimesindeki altı bit altı koşuldur ve yine yedi test ister. MISRA C:2012 de bu kalıplara takılır: Kural 10.1 Boole işlenenlerin bit ve aritmetik işleçlerde kullanılmasını, Kural 10.5 Boole değerin sayısal türe dönüştürülmesini uygunsuz sayar. Derleyicinin Boole biçimini de dalsız komutlara çevirebilmesi ayrı bir konudur ([nesne kodu](/kitap/do178c-ile-gelistirme/yazilim-dogrulama#kaynak-koda-izlenemeyen-nesne-kodu) düzeyinde ele alınır); buradaki sorun, kararın kaynak kodda saklanmasıdır.
+
+Bit işlemlerinin meşru olduğu yer donanım arayüzüdür: durum kelimeleri, maskeler, paketlenmiş veri. Arıza kelimesi bir donanım kaydedicisinden geliyorsa maskeli biçim doğal olandır, ama bitler yine koşuldur. Rehberin buna pratik bir önerisi vardır (§3.7.1): `(durum & 0x3u) != 0u` gibi bir ifadede her bit tek tek değiştirilerek n+1 test yapılır ve ilgilenilmeyen bitler 1'e kurulur. Böylece maskenin yanlışlıkla fazladan bit yakalaması da görünür olur.
 
 ### Mantığı doğruluk tablosuna ya da veri bileşenine gömmek
 
-```c
-/* Üç kanaldan en az ikisi geçerliyse: her kombinasyon için önceden hesaplanmış sonuç */
-static const bool IKI_UCTEN[8] = { false, false, false, true, false, true, true, true };
+Kalkış konfigürasyonu uyarısını (takeoff configuration warning) ele alalım: uçak yerdeyken gaz kolları kalkış konumuna getirildiğinde, flaplar kalkış konumunda değilse ya da park freni çekiliyse uyarı verilir. Boole biçimi dört koşullu tek bir karardır ve benzersiz neden MC/DC'si beş test ister:
 
-oylama_gecerli = IKI_UCTEN[((uint32_t)kanal_a << 2) | ((uint32_t)kanal_b << 1) | (uint32_t)kanal_c];
+```c
+uyari = yerde && gaz_kalkista && (flap_uygun_degil || park_freni);
 ```
 
-Kodda karar yoktur; araç bu satırı tek bir dizi okuması olarak görür ve hiçbir eksik bildirmez. CAST-10 bu tehlikeyi de anar: Boole işlemlerinin tamamı bildirimlere ya da işlevsel sayılmayan bir veri bileşenine taşınırsa kod kapsam ölçütlerinden muafmış gibi görünebilir; yazıya göre bu, doğrulamayı ciddi biçimde zayıflatır ve kabul edilemez. Tablo kullanılacaksa, gereksinimin kendisi bir karar tablosu (decision table) olmalı ve tablonun her satırı test edilmelidir. Bu da MC/DC'den az değil, çoklu koşul kapsama (multiple condition coverage) kadar test demektir; kısayol olarak başlayan şey en pahalı yola dönüşür.
+Aynı mantık, on altı kombinasyonun sonucu önceden hesaplanıp bir diziye yazılarak da kurulabilir:
+
+```c
+/* Dizin bitleri: yerde (3), gaz_kalkista (2),
+                  flap_uygun_degil (1), park_freni (0) */
+static const bool KALKIS_UYARISI[16] = {
+    false, false, false, false,   /*  0–3:  havada, gaz kalkışta değil */
+    false, false, false, false,   /*  4–7:  havada, gaz kalkışta       */
+    false, false, false, false,   /*  8–11: yerde, gaz kalkışta değil  */
+    false, true,  true,  true,    /* 12–15: yerde, gaz kalkışta        */
+};
+
+uyari = KALKIS_UYARISI[((uint32_t)yerde << 3) |
+                       ((uint32_t)gaz_kalkista << 2) |
+                       ((uint32_t)flap_uygun_degil << 1) |
+                       (uint32_t)park_freni];
+```
+
+Kodda karar yoktur; araç bu satırı tek bir atama olarak görür ve herhangi bir test satır kapsamayı tamamlar. Beş testlik MC/DC yükü kâğıt üzerinde bire iner. Tablonun on altı satırı ve Boole biçiminin MC/DC seti şöyledir (1 = doğru):
+
+| Satır | `yerde` | `gaz_kalkista` | `flap_uygun_degil` | `park_freni` | Uyarı | Boole biçiminin MC/DC seti |
+|---|---|---|---|---|---|---|
+| 0 | 0 | 0 | 0 | 0 | 0 | |
+| 1 | 0 | 0 | 0 | 1 | 0 | |
+| 2 | 0 | 0 | 1 | 0 | 0 | |
+| 3 | 0 | 0 | 1 | 1 | 0 | |
+| 4 | 0 | 1 | 0 | 0 | 0 | |
+| 5 | 0 | 1 | 0 | 1 | 0 | |
+| 6 | 0 | 1 | 1 | 0 | 0 | ● |
+| 7 | 0 | 1 | 1 | 1 | 0 | |
+| 8 | 1 | 0 | 0 | 0 | 0 | |
+| 9 | 1 | 0 | 0 | 1 | 0 | |
+| 10 | 1 | 0 | 1 | 0 | 0 | ● |
+| 11 | 1 | 0 | 1 | 1 | 0 | |
+| 12 | 1 | 1 | 0 | 0 | 0 | ● |
+| 13 | 1 | 1 | 0 | 1 | 1 | ● |
+| 14 | 1 | 1 | 1 | 0 | 1 | ● |
+| 15 | 1 | 1 | 1 | 1 | 1 | |
+
+Seçili beş satır dört bağımsızlık çifti kurar: 6–14 `yerde`, 10–14 `gaz_kalkista`, 12–14 `flap_uygun_degil` ve 12–13 `park_freni` koşulunun etkisini gösterir.
+
+Tablo biçiminde ise hiçbir satır test edilmeye zorlanmaz. 13. satırın, yani yerde, gaz kalkışta, flaplar doğru ama park freni çekiliyken uyarı verilmesi gereken durumun, yanlışlıkla `false` yazıldığını düşünün. Boole biçiminde bu senaryo MC/DC'nin 12–13 çiftiyle zorunlu olarak denenir; ifade yanlış yazılmışsa o çift bunu gösterir. Tablo biçiminde ise park freni senaryosu testlerde yoksa hata görünmez ve kapsam raporu tamdır. Tabloyu dürüstçe doğrulamak her satırını denemek demektir: on altı test, yani beş testlik MC/DC'nin üç katından fazlası (çoklu koşul kapsama, multiple condition coverage). Kısayol olarak başlayan şey en pahalı yola dönüşür; üstelik gözden geçiren kişi okunabilir bir ifade yerine on altı Boole değerini gereksinimle tek tek karşılaştırmak zorunda kalır. Koşul sayısı arttıkça tablo üstel büyür: yedi koşulda 128 satır.
+
+CAST-10 bu tehlikeyi de anar: Boole işlemlerinin tamamı bildirimlere ya da işlevsel sayılmayan bir veri bileşenine taşınırsa kod kapsam ölçütlerinden muafmış gibi görünebilir; yazıya göre bu, doğrulamayı ciddi biçimde zayıflatır ve kabul edilemez. Tablo kullanılacaksa gereksinimin kendisi bir karar tablosu (decision table) olmalı ve tablonun her satırı test edilmelidir.
 
 Otoriteler, karar kapsama yerine dal kapsamanın alternatif yöntem olarak önerildiği durumlarda bile, programcının Boole ifadelerini kapsam yükünü azaltmak için bilerek kontrol yapılarının dışına taşımadığının standartlar ve gözden geçirmelerle gösterilmesini ister (CAST-10, §5). Bu kalıplar SOI-3'te aranır; kodlama standardından beklenen, onları teşvik etmesi değil yasaklamasıdır.
 
@@ -376,7 +462,7 @@ Bu stillerin kalıcı olması için kişilerin iyi niyetine değil, kodlama stan
 | Aynı koşul bir kararda iki kez geçmez; gerekiyorsa çarpanına ayrılır | Bağlı koşul kalmaz | NASA §2.6 |
 | Birbirini dışlayan durumlar tek bir `enum` ile tutulur | İmkânsız kombinasyon kalmaz | Tasarım standardı |
 | Dış veri sınırda bir kez doğrulanır; içerideki fonksiyonlar doğrulanmış tip alır | Ulaşılamayan savunmacı dal azalır | Tasarım standardı |
-| Boole işlenenler bit ve aritmetik işleçlere girmez | Kararlar ölçümden kaybolmaz | MISRA C:2012 K 10.1; NASA §3.7.2 |
+| Boole işlenenler bit ve aritmetik işleçlere girmez, sayıya dönüştürülmez | Kararlar ölçümden kaybolmaz | MISRA C:2012 K 10.1, K 10.5; NASA §3.7.2 |
 | Mantıksal işleçlerin sağ işleneninde kalıcı yan etki olmaz | Gizli dal kalmaz | MISRA C:2012 K 13.5 |
 | Kontrol ifadesi değişmez olamaz | Hiç alınmayan dal kalmaz | MISRA C:2012 K 14.3 |
 | Her fonksiyonun tek çıkışı vardır | Çıkış noktası kapsamı sadeleşir | MISRA C:2012 K 15.5 |
@@ -389,7 +475,7 @@ Bu kuralların şablon hâli ve gerekçeleri [kodlama standardı](/kitap/ekler/s
 - MC/DC'nin istediği test sayısı bir alt sınırdır, iyi test setinin tarifi değildir. Yükü azaltmak, gereksinimi daha doğrudan ifade eden kod yazmaktır.
 - Bağımsız etkisi gösterilemeyen bir koşul ya gereksizdir ya da gereksinimde yazılmamış bir varsayım taşır. İkisi de kodu düzeltme sebebidir, kapsam testi yazma sebebi değil.
 - Birbirini dışlayan bayraklar, dağınık savunmacı denetimler ve derin iç içe kararlar faturanın en büyük kalemleridir; çözümleri tasarımdadır.
-- Ara değişkene bölmek, bit işleçleri, doğruluk tabloları ve veri bileşenleri mantığı azaltmaz, yalnızca ölçümden saklar. NASA rehberi ve CAST-10 bunu açıkça reddeder ve SOI-3'te aranır.
+- Ara değişkene bölmek, bit işleçleri, dalsız aritmetik, doğruluk tabloları ve veri bileşenleri mantığı azaltmaz, yalnızca ölçümden saklar. NASA rehberi ve CAST-10 bunu açıkça reddeder ve SOI-3'te aranır.
 - NASA rehberinin planlama uyarısının özü şudur: MC/DC'ye hazırlık tasarım ve kodlama standardı yazılırken başlar. O gün verilen kararlar, test aşamasında kaç gün harcanacağını belirler.
 
 ## Kaynakça
