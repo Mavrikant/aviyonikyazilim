@@ -76,9 +76,11 @@ src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınc
 src/pages/iletisim.mdx    İletişim sayfası (e-posta, GitHub; canlı sohbet yalnızca yapılandırılmışsa)
 src/components/Iletisim/  İletişim sayfasının kanal listesi ve `.markdown` sarmalayıcısı
 src/components/CanliSohbet/  İsteğe bağlı Tawk.to sohbeti: betiği tembel yükleyen kanca ve yüzen düğme
+src/components/HataIzleme/  İsteğe bağlı Sentry hata izleme: istemci modülü (istemci.ts), ilk hatada inen
+                          SDK parçası (sdk.ts) ve çöken sayfayı bildiren kanca (useCokmeBildir)
 src/theme/                Tema özelleştirmeleri: DocItem/Metadata, Blog/Pages/BlogAuthorsPostsPage,
                           Blog/Pages/BlogAuthorsListPage, BlogTagsListPage, NotFound, SearchPage,
-                          Mermaid, MDXComponents/Img ve BlogPostPage/Metadata (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
+                          Mermaid, MDXComponents/Img, BlogPostPage/Metadata, Error ve ErrorPageContent (sarmalayıcı), DocBreadcrumbs/StructuredData ve BlogListPage (eject = upstream
                           kopyası; Docusaurus yükseltilince upstream ile elle karşılaştırılır), Root.tsx
                           (resmi Root genişletme noktası, eject değildir: yüzen sohbet düğmesini ekler)
 SEO.md                    Arama motoru rehberi: elle yapılacaklar, backlink planı, doğrulama
@@ -592,6 +594,25 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 - Tema, bağımsız MDX sayfalarına (`src/pages/*.mdx`) `.markdown` sınıfını vermez; içerik
   `<IletisimSayfasi>` gibi `markdown` sınıflı bir sarmalayıcıya alınır.
 
+## Hata izleme (Sentry)
+
+- **İsteğe bağlıdır:** yalnızca `SENTRY_DSN` depo değişkeni tanımlıysa çalışır; DSN
+  `customFields.sentryDsn`, sürüm (derlenen commit, `GITHUB_SHA`) `customFields.sentryRelease`
+  ile tarayıcıya geçer. Sentry projesini ve değişkeni depo sahibi açar.
+- SDK sayfa açılışında **yüklenmez**: `istemci.ts` (`clientModules`) yalnızca `error` ve
+  `unhandledrejection` olaylarını dinler; ilk hatada `sdk.ts` parçası indirilir ve biriken
+  hatalar ona aktarılır. SDK'dan yeni bir işlev gerekirse `sdk.ts`'e adıyla eklenir;
+  `import('@sentry/browser')` yazılmaz (paketin tüm ad alanını, ~400 KB, parçaya katar).
+- React hata sınırına düşen hata pencereye ulaşmaz: `src/theme/Error` ve
+  `src/theme/ErrorPageContent` sarmalayıcıları onu `useCokmeBildir` ile bildirir. Yeni bir hata
+  sınırı eklenirse onun yedek görünümü de bu kancayı çağırır.
+- Üretim derlemesi yalnızca yayın alan adında (`siteConfig.url`) bildirir; kitap PDF'i,
+  `npm run serve` ve sitenin kopyaları olay göndermez. Yalnızca sitenin kendi dosyalarından
+  çıkan hatalar gönderilir (`allowUrls`).
+- IP adresi, çerez ve kullanıcı kimliği gönderilmez (`dataCollection`); oturum kaydı (Replay),
+  performans izleme ve oturum sayımı eklenmez. Bunlardan biri eklenirse `SEO.md`'deki KVKK notu
+  ve çerez onayı yeniden değerlendirilir.
+
 ## Görsel kimlik
 
 - Yazı tipleri: metin ve başlıklarda **IBM Plex Sans**, kod ve etiketlerde
@@ -737,9 +758,9 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
 - **Adresler ASCII:** üretilen dizin sayfalarının adresi etiketten türetilir; Türkçe
   karakterli bir `label` için `_category_.json` içinde `link.slug` (ör.
   `/category/emniyet-muhendisligi`) verilir. Adres değişirse `redirects` listesine eklenir.
-- **Analitik, Search Console ve canlı sohbet** yalnızca `GA_MEASUREMENT_ID` /
-  `GOOGLE_SITE_VERIFICATION` / `TAWK_TO_ID` depo değişkenleri tanımlıysa eklenir; kodda
-  kimlik tutulmaz (bkz. `SEO.md`). Yeni değişken `deploy.yml`'deki `env` bloğuna da eklenir.
+- **Analitik, Search Console, canlı sohbet ve hata izleme** yalnızca `GA_MEASUREMENT_ID` /
+  `GOOGLE_SITE_VERIFICATION` / `TAWK_TO_ID` / `SENTRY_DSN` depo değişkenleri tanımlıysa
+  eklenir; kodda kimlik tutulmaz (bkz. `SEO.md`). Yeni değişken `deploy.yml`'deki `env` bloğuna da eklenir.
 - GitHub Pages tüm dosyaları `Cache-Control: max-age=600` ile sunar ve bu depodan
   değiştirilemez (ayrıntı: README, "Uzun önbellek süresi").
 

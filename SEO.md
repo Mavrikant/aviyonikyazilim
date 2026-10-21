@@ -57,6 +57,7 @@ durdurmaz; build günlüğünde `[config] … geçersiz biçimde, yok sayıldı`
 | `GA_MEASUREMENT_ID` | Google Analytics 4 ölçüm kimliği (`G-XXXXXXXXXX`). `anonymizeIP` seçeneği açık bırakılmıştır ancak GA4'te etkisizdir (GA4 IP adreslerini zaten kaydetmez); çerez ve onay konusu için aşağıdaki nota bakın. |
 | `GOOGLE_SITE_VERIFICATION` | Search Console "HTML etiketi" doğrulamasındaki `content` değeri. DNS doğrulaması yeterliyse gerekmez. |
 | `TAWK_TO_ID` | Canlı sohbet ([Tawk.to](https://www.tawk.to/)) widget kimliği, `<propertyId>/<widgetId>` biçiminde (24 haneli onaltılık kimlik, eğik çizgi, widget kimliği; örn. `0123456789abcdef01234567/default`). Tawk panelindeki *Widget Code* içinde `https://embed.tawk.to/…/…` adresinin son iki parçasıdır. Tawk.to hesabını ve bu değişkeni depo sahibi açar. Tanımlıysa her sayfanın sağ altında "Canlı sohbet" düğmesi ve [İletişim](https://aviyonikyazilim.com/iletisim) sayfasında sohbet kanalı görünür; tanımlı değilse sitede sohbetten hiç söz edilmez. Arama motoru görünürlüğüne etkisi yoktur; depo değişkenleri tek yerde dursun diye buradadır. |
+| `SENTRY_DSN` | Hata izleme ([Sentry](https://sentry.io/)) projesinin DSN'i (`https://<anahtar>@o<kuruluş>.ingest.<bölge>.sentry.io/<proje>`); Sentry'de projenin *Settings → Client Keys (DSN)* sayfasındadır. DSN tarayıcıya giden, herkese açık bir değerdir; gizli değildir. Tanımlıysa ziyaretçinin tarayıcısındaki yakalanmamış JavaScript hataları ve çöken sayfalar ("Bu sayfa çöktü.") Sentry'ye bildirilir; olayın sürümü (release) yayımlanan commit'tir. Tanımlı değilse Sentry SDK'sı hiç indirilmez. Arama motoru görünürlüğüne etkisi yoktur. |
 
 > **KVKK / GDPR:** GA4 çerez kullanır; Türkiye ve AB ziyaretçileri için aydınlatma ve
 > onay (çerez bildirimi) gerekir. Çerezsiz bir ölçüm tercih edilirse Cloudflare Web
@@ -68,6 +69,13 @@ durdurmaz; build günlüğünde `[config] … geçersiz biçimde, yok sayıldı`
 > ziyaretçi sohbet düğmesine bastığında yüklenir (`src/components/CanliSohbet/`) ve İletişim
 > sayfasındaki düğmenin yanında bunu söyleyen bir not bulunur. Betik açılışta yüklenecek
 > biçimde değiştirilirse aynı aydınlatma ve onay yükümlülüğü doğar; Lighthouse puanı da düşer.
+>
+> Sentry çerez kullanmaz ve SDK'sı sayfa açılışında yüklenmez; yalnızca bir hata yakalandığında
+> indirilir (`src/components/HataIzleme/`). Olaya hata iletisi, yığın izi, sayfa adresi ve
+> tarayıcı bilgisi (User-Agent) girer; IP adresi, çerez ve kullanıcı kimliği gönderilmez, oturum
+> kaydı (Replay) ve performans izleme kapalıdır. Sentry projesinde AB veri bölgesi ve
+> *Security & Privacy → Prevent Storing of IP Addresses* seçeneği ek önlem olarak önerilir.
+> Oturum kaydı ya da kullanıcı kimliği eklenirse aydınlatma yükümlülüğü yeniden değerlendirilir.
 
 ## 3. Elle yapılacaklar (sırayla)
 

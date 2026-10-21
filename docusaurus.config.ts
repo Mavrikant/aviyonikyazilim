@@ -15,7 +15,7 @@ const SITE_URL = 'https://aviyonikyazilim.com';
 const SITE_DESCRIPTION =
   'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 
-// Analitik, arama konsolu doğrulaması ve canlı sohbet kimliği depo değişkenlerinden
+// Analitik, arama konsolu doğrulaması, canlı sohbet ve hata izleme kimliği depo değişkenlerinden
 // (GitHub: Settings → Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez.
 // Ayrıntı: SEO.md
 // Boş değer "tanımlı değil" demektir; dolu ama biçimi geçersiz bir değer (yazım hatası,
@@ -37,6 +37,11 @@ const GOOGLE_SITE_VERIFICATION = envValue('GOOGLE_SITE_VERIFICATION', /^[\w-]{20
 // Canlı sohbet (Tawk.to) widget kimliği: "<propertyId>/<widgetId>". Tanımlı değilse sitede
 // sohbet düğmesi de Tawk betiği de bulunmaz (bkz. src/components/CanliSohbet).
 const TAWK_TO_ID = envValue('TAWK_TO_ID', /^[a-f0-9]{24}\/[a-z0-9]{1,32}$/i);
+// Hata izleme (Sentry) DSN'i: "https://<anahtar>@<sunucu>/<proje>". Tanımlı değilse Sentry SDK'sı
+// indirilmez ve Sentry'ye istek gitmez (bkz. src/components/HataIzleme).
+const SENTRY_DSN = envValue('SENTRY_DSN', /^https:\/\/[a-f0-9]{32}@[a-z0-9.-]+(:\d+)?(\/[\w.-]+)*\/\d+$/i);
+// Sentry'de olayın hangi yayından geldiği: GitHub Actions'ın derlediği commit.
+const SENTRY_RELEASE = SENTRY_DSN ? envValue('GITHUB_SHA', /^[a-f0-9]{40}$/) : undefined;
 
 // Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
 // kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
@@ -106,7 +111,13 @@ const config: Config = {
   // Tanımsız değer `undefined` değil `null` verilir: yapılandırma JSON olarak serileştirilir.
   customFields: {
     tawkToId: TAWK_TO_ID ?? null,
+    sentryDsn: SENTRY_DSN ?? null,
+    sentryRelease: SENTRY_RELEASE ?? null,
   },
+
+  // Uygulama çizilmeden önce tarayıcıda çalışır: yakalanmamış hataları dinler (SENTRY_DSN
+  // tanımlı değilse hiçbir şey yapmaz).
+  clientModules: ['./src/components/HataIzleme/istemci.ts'],
 
   headTags: [
     {
