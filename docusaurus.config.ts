@@ -7,6 +7,7 @@ import {parseFrontMatter} from './plugins/meta-description';
 import remarkLcpImage from './plugins/remark-lcp-image';
 import llmsTxt from './plugins/llms-txt';
 import kitapPdf from './plugins/kitap-pdf';
+import sentryKaynakHaritasi from './plugins/sentry-kaynak-haritasi';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -15,7 +16,7 @@ const SITE_URL = 'https://aviyonikyazilim.com';
 const SITE_DESCRIPTION =
   'DO-178C ekseninde emniyet-kritik aviyonik yazılım, test ve sertifikasyon: açık kaynak Türkçe kitap, teknik blog yazıları ve tarayıcıda çalışan araçlar.';
 
-// Analitik, arama konsolu doğrulaması ve canlı sohbet kimliği depo değişkenlerinden
+// Analitik, arama konsolu doğrulaması, canlı sohbet ve hata izleme kimliği depo değişkenlerinden
 // (GitHub: Settings → Variables → Actions) gelir; değer yoksa build'e hiçbir şey eklenmez.
 // Ayrıntı: SEO.md
 // Boş değer "tanımlı değil" demektir; dolu ama biçimi geçersiz bir değer (yazım hatası,
@@ -37,6 +38,15 @@ const GOOGLE_SITE_VERIFICATION = envValue('GOOGLE_SITE_VERIFICATION', /^[\w-]{20
 // Canlı sohbet (Tawk.to) widget kimliği: "<propertyId>/<widgetId>". Tanımlı değilse sitede
 // sohbet düğmesi de Tawk betiği de bulunmaz (bkz. src/components/CanliSohbet).
 const TAWK_TO_ID = envValue('TAWK_TO_ID', /^[a-f0-9]{24}\/[a-z0-9]{1,32}$/i);
+// Hata izleme (Sentry) DSN'i: "https://<anahtar>@<sunucu>/<proje>". Tanımlı değilse Sentry SDK'sı
+// indirilmez ve Sentry'ye istek gitmez (bkz. src/components/HataIzleme). Desen pr-build.yml'deki
+// Sentry denetimiyle aynıdır.
+const SENTRY_DSN = envValue('SENTRY_DSN', /^https:\/\/[a-f0-9]{32}@[a-z0-9.-]+(:\d+)?(\/[\w.-]+)*\/\d+$/i);
+// Sentry'de olayın hangi yayından geldiği: GitHub Actions'ın derlediği commit.
+const SENTRY_RELEASE = SENTRY_DSN ? envValue('GITHUB_SHA', /^[a-f0-9]{40}$/) : undefined;
+// Kaynak haritası üretilsin mi? deploy.yml, haritaları yükleyecek SENTRY_AUTH_TOKEN da
+// tanımlıysa açar; haritalar Sentry'ye yüklendikten sonra yayından silinir.
+const SENTRY_KAYNAK_HARITASI = SENTRY_DSN !== undefined && process.env.SENTRY_KAYNAK_HARITASI === 'true';
 
 // Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
 // kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
@@ -106,7 +116,13 @@ const config: Config = {
   // Tanımsız değer `undefined` değil `null` verilir: yapılandırma JSON olarak serileştirilir.
   customFields: {
     tawkToId: TAWK_TO_ID ?? null,
+    sentryDsn: SENTRY_DSN ?? null,
+    sentryRelease: SENTRY_RELEASE ?? null,
   },
+
+  // Uygulama çizilmeden önce tarayıcıda çalışır: yakalanmamış hataları dinler (SENTRY_DSN
+  // tanımlı değilse hiçbir şey yapmaz).
+  clientModules: ['./src/components/HataIzleme/istemci.ts'],
 
   headTags: [
     {
@@ -169,6 +185,8 @@ const config: Config = {
     llmsTxt,
     // Kitabın PDF'e girecek sayfa listesini üretir; PDF'i `npm run pdf` yazar.
     kitapPdf,
+    // Sentry için istemci paketlerinin kaynak haritalarını üretir (yalnızca deploy.yml'de).
+    ...(SENTRY_KAYNAK_HARITASI ? [sentryKaynakHaritasi] : []),
     [
       '@docusaurus/plugin-content-docs',
       {

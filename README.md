@@ -122,6 +122,30 @@ Tawk betiği sayfa açılışında yüklenmez; ziyaretçi sağ alttaki “Canlı
 İletişim sayfasındaki “Sohbeti aç” düğmesine bastığında yüklenir. Çerez ve gizlilik notu:
 [SEO.md](SEO.md), “Depo değişkenleri”.
 
+### 6. (İsteğe bağlı) Hata izleme (Sentry)
+
+Ziyaretçinin tarayıcısında oluşan JavaScript hataları (ör. bir aracın ya da sayfanın çökmesi)
+yalnızca `SENTRY_DSN` depo değişkeni tanımlıysa [Sentry](https://sentry.io/)'ye bildirilir;
+tanımlı değilse Sentry SDK'sı hiç indirilmez.
+
+- Sentry'de bir **Browser JavaScript** projesi açılır (AB veri bölgesi önerilir). Bu adımı depo
+  sahibi yapar; kodda kimlik tutulmaz.
+- Projenin **Settings → Client Keys (DSN)** sayfasındaki DSN, **Settings → Secrets and
+  variables → Actions → Variables** altına `SENTRY_DSN` adıyla eklenir ve site yeniden
+  dağıtılır. DSN tarayıcıya giden, herkese açık bir değerdir; secret olarak saklanması gerekmez.
+- Yığın izlerinin özgün dosya ve satırı göstermesi için kaynak haritaları (source map) da
+  yüklenebilir: aynı sayfada **Variables** altına `SENTRY_ORG` ve `SENTRY_PROJECT` (Sentry'deki
+  kuruluş ve proje kısa adı), **Secrets** altına `SENTRY_AUTH_TOKEN` eklenir. Jeton Sentry'de
+  **Settings → Developer Settings → Organization Tokens** sayfasında üretilir. Üçü tanımlıysa her
+  yayında haritalar üretilir, Sentry'ye yüklenir ve yayından önce silinir; tanımlı değilse yığın
+  izleri küçültülmüş (minified) dosyalara işaret eder.
+- Yerelde denemek için: `SENTRY_DSN=<dsn> npm start` (olaylar `development` ortamıyla gider).
+  Üretim derlemesi yalnızca `aviyonikyazilim.com` adresinde bildirim yapar; `npm run serve` ve
+  kitap PDF'inin üretimi Sentry'ye olay göndermez.
+
+SDK sayfa açılışında yüklenmez, ilk hata yakalandığında indirilir; olaylar yayımlanan commit'i
+sürüm olarak taşır. Gizlilik notu: [SEO.md](SEO.md), “Depo değişkenleri”.
+
 ## Otomasyon (referans)
 
 Depo oluşturma ve Pages etkinleştirme (yetkili `gh` oturumu ile):
