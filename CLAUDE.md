@@ -621,6 +621,9 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
   sürümüyle yükler; ardından tüm `.map` dosyaları `build/`'den silinir, yayına harita girmez.
   Yükleme başarısız olursa site yine yayımlanır. PR derlemesi ve yerel derleme harita üretmez.
   Jeton yalnızca yükleme adımına verilir; derleme adımına (üçüncü taraf kodu çalıştırır) verilmez.
+- Yükleme hatası yayını durdurmadığı için `pr-build.yml` her PR'da DSN biçimini ve jetonun
+  projeye erişimini sınar (yükleme yapmaz); bozuk değişken ya da süresi dolmuş jeton PR'ı
+  kırmızıya çevirir. DSN deseni `docusaurus.config.ts` ile aynı tutulur.
 
 ## Görsel kimlik
 

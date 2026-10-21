@@ -39,7 +39,8 @@ const GOOGLE_SITE_VERIFICATION = envValue('GOOGLE_SITE_VERIFICATION', /^[\w-]{20
 // sohbet düğmesi de Tawk betiği de bulunmaz (bkz. src/components/CanliSohbet).
 const TAWK_TO_ID = envValue('TAWK_TO_ID', /^[a-f0-9]{24}\/[a-z0-9]{1,32}$/i);
 // Hata izleme (Sentry) DSN'i: "https://<anahtar>@<sunucu>/<proje>". Tanımlı değilse Sentry SDK'sı
-// indirilmez ve Sentry'ye istek gitmez (bkz. src/components/HataIzleme).
+// indirilmez ve Sentry'ye istek gitmez (bkz. src/components/HataIzleme). Desen pr-build.yml'deki
+// Sentry denetimiyle aynıdır.
 const SENTRY_DSN = envValue('SENTRY_DSN', /^https:\/\/[a-f0-9]{32}@[a-z0-9.-]+(:\d+)?(\/[\w.-]+)*\/\d+$/i);
 // Sentry'de olayın hangi yayından geldiği: GitHub Actions'ın derlediği commit.
 const SENTRY_RELEASE = SENTRY_DSN ? envValue('GITHUB_SHA', /^[a-f0-9]{40}$/) : undefined;

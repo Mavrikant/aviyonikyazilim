@@ -37,6 +37,46 @@ jobs:
         run: npm ci
       - name: Siteyi derle
         run: npm run build
+      - name: Sentry yapılandırmasını denetle
+        # Depo değişkenleri tanımlıysa DSN'in biçimini ve jetonun projeye erişebildiğini sınar;
+        # hiçbir şey yüklemez. deploy.yml'deki kaynak haritası yüklemesi hata verse de yayını
+        # durdurmadığı için yanlış yazılmış bir değişken ya da süresi dolmuş bir jeton ancak burada
+        # görünür. Fork ve Dependabot PR'larında secret yoktur; o zaman yalnızca biçim denetlenir.
+        env:
+          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          dsn=$(printf '%s' "$SENTRY_DSN" | tr -d '[:space:]')
+          if [ -z "$dsn" ]; then
+            echo "SENTRY_DSN tanımlı değil: hata izleme kapalı."
+            exit 0
+          fi
+          # docusaurus.config.ts'teki SENTRY_DSN deseniyle aynı; biri değişirse öbürü de değişir.
+          desen='^https://[a-f0-9]{32}@[a-z0-9.-]+(:[0-9]+)?(/[a-z0-9_.-]+)*/[0-9]+$'
+          if ! [[ "${dsn,,}" =~ $desen ]]; then
+            echo "::error::SENTRY_DSN geçersiz biçimde; derleme onu yok sayar ve hata izleme kapalı kalır."
+            exit 1
+          fi
+          echo "SENTRY_DSN geçerli biçimde."
+          if [ -z "$SENTRY_ORG" ] || [ -z "$SENTRY_PROJECT" ] || [ -z "$SENTRY_AUTH_TOKEN" ]; then
+            echo "SENTRY_ORG, SENTRY_PROJECT ya da SENTRY_AUTH_TOKEN yok: kaynak haritası yüklenmez."
+            exit 0
+          fi
+          # API, DSN'deki bölgeden (o….ingest.de.sentry.io → de.sentry.io) okunur.
+          sunucu=${dsn#*@}
+          sunucu=${sunucu%%/*}
+          adres="https://${sunucu#*.ingest.}/api/0/projects/$SENTRY_ORG/$SENTRY_PROJECT/releases/?per_page=1"
+          kod=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 20 \
+            -H "Authorization: Bearer $SENTRY_AUTH_TOKEN" "$adres") || kod=000
+          case "$kod" in
+            200) echo "Jeton geçerli; $SENTRY_ORG/$SENTRY_PROJECT projesine erişiyor." ;;
+            401) echo "::error::SENTRY_AUTH_TOKEN geçersiz ya da süresi dolmuş."; exit 1 ;;
+            403) echo "::error::SENTRY_AUTH_TOKEN bu projeye erişemiyor (yetki eksik)."; exit 1 ;;
+            404) echo "::error::Sentry'de $SENTRY_ORG/$SENTRY_PROJECT bulunamadı; SENTRY_ORG ve SENTRY_PROJECT'i denetleyin."; exit 1 ;;
+            *) echo "::warning::Sentry'ye ulaşılamadı (HTTP $kod); jeton denetlenemedi." ;;
+          esac
       - name: IndexNow listesini denetle
         # Birleştirilince bildirilecek sayfaları günlüğe yazar; gönderim yapmaz (gönderim
         # deploy.yml'de, dağıtımdan sonra). Anahtar dosyası ya da sitemap bozuksa durur.
