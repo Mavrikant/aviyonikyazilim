@@ -317,6 +317,22 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | araç kurulum raporu | Tool Installation Report |
 | operasyonel doğrulama ve geçerleme | tool operational verification and validation |
 | araç geliştiricisi / araç kullanıcısı | tool developer / tool user |
+| tasarım kalıbı | design pattern (kütüphanede "tasarım deseni" de geçer) |
+| durum makinesi / geçiş tablosu | state machine / transition table |
+| fonksiyon işaretçisi / dolaylı çağrı | function pointer / indirect call |
+| geri çağırma | callback |
+| çok biçimlilik | polymorphism |
+| dinamik bellek ayırma | dynamic memory allocation |
+| özyineleme | recursion |
+| halka tampon / çift tampon | ring buffer / double buffering |
+| sıra sayacı | sequence counter |
+| donanım soyutlama katmanı | hardware abstraction layer (HAL) |
+| opak tip | opaque type |
+| yer tutucu kod / bağlama zamanı ikamesi | stub / link-time substitution |
+| savunmacı programlama | defensive programming |
+| makullük denetimi | reasonableness check |
+| bekçi köpeği zamanlayıcısı | watchdog timer |
+| tembel başlatma | lazy initialization |
 
 Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgisi", "temel hat"
 (temel çizgi); objective anlamında "amaç" (hedef); review anlamında "inceleme" (gözden
