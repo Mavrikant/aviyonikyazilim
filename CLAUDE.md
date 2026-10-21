@@ -70,6 +70,8 @@ plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + 
                           meta açıklaması olmayan sayfada derlemeyi durdurur
 plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
 plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
+plugins/sentry-kaynak-haritasi.ts  Yalnızca deploy.yml'de: istemci paketlerinin gizli kaynak haritaları
+                          (Sentry'ye yüklenir, yayına girmez)
 scripts/kitap-pdf.mjs     Derlenmiş siteden kitabın PDF'ini üretir (`npm run pdf`); düzeni kitap-pdf.css
 scripts/indexnow.mjs      Değişen sayfaları IndexNow ile arama motorlarına bildirir (deploy.yml çalıştırır)
 src/components/Eposta/    E-posta düğmesi: adres HTML'e yazılmaz, tıklanınca tarayıcıda birleştirilir
@@ -598,7 +600,7 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 
 - **İsteğe bağlıdır:** yalnızca `SENTRY_DSN` depo değişkeni tanımlıysa çalışır; DSN
   `customFields.sentryDsn`, sürüm (derlenen commit, `GITHUB_SHA`) `customFields.sentryRelease`
-  ile tarayıcıya geçer. Sentry projesini ve değişkeni depo sahibi açar.
+  ile tarayıcıya geçer. Depo değişkenlerini ve secret'ı depo sahibi tanımlar.
 - SDK sayfa açılışında **yüklenmez**: `istemci.ts` (`clientModules`) yalnızca `error` ve
   `unhandledrejection` olaylarını dinler; ilk hatada `sdk.ts` parçası indirilir ve biriken
   hatalar ona aktarılır. SDK'dan yeni bir işlev gerekirse `sdk.ts`'e adıyla eklenir;
@@ -612,6 +614,13 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 - IP adresi, çerez ve kullanıcı kimliği gönderilmez (`dataCollection`); oturum kaydı (Replay),
   performans izleme ve oturum sayımı eklenmez. Bunlardan biri eklenirse `SEO.md`'deki KVKK notu
   ve çerez onayı yeniden değerlendirilir.
+- **Kaynak haritası:** `SENTRY_ORG`, `SENTRY_PROJECT` değişkenleri ve `SENTRY_AUTH_TOKEN`
+  secret'ı da tanımlıysa `deploy.yml` derlemeyi `SENTRY_KAYNAK_HARITASI=true` ile çalıştırır;
+  `plugins/sentry-kaynak-haritasi.ts` istemci paketlerine `hidden-source-map` verir (JS dosyası
+  haritaya bağlanmaz). `getsentry/action-release` dosyalara debug ID gömer ve haritaları commit
+  sürümüyle yükler; ardından tüm `.map` dosyaları `build/`'den silinir, yayına harita girmez.
+  Yükleme başarısız olursa site yine yayımlanır. PR derlemesi ve yerel derleme harita üretmez.
+  Jeton yalnızca yükleme adımına verilir; derleme adımına (üçüncü taraf kodu çalıştırır) verilmez.
 
 ## Görsel kimlik
 

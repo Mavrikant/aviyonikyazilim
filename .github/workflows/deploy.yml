@@ -28,6 +28,11 @@ jobs:
     outputs:
       # Dağıtımdan sonra IndexNow'a bildirilecek adresler (satır başına bir adres).
       indexnow: ${{ steps.indexnow.outputs.adresler }}
+    env:
+      # Sentry kaynak haritası: hata izleme açık ve haritaları yükleyecek jeton tanımlıysa
+      # "true". Derleme haritaları yalnızca o zaman üretir; jetonun kendisi yalnızca yükleme
+      # adımına verilir.
+      SENTRY_KAYNAK_HARITASI: ${{ vars.SENTRY_DSN != '' && vars.SENTRY_ORG != '' && vars.SENTRY_PROJECT != '' && secrets.SENTRY_AUTH_TOKEN != '' }}
     steps:
       - name: Depoyu al
         uses: actions/checkout@v7
@@ -51,6 +56,26 @@ jobs:
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           TAWK_TO_ID: ${{ vars.TAWK_TO_ID }}
           SENTRY_DSN: ${{ vars.SENTRY_DSN }}
+      - name: Kaynak haritalarını Sentry'ye yükle
+        if: env.SENTRY_KAYNAK_HARITASI == 'true'
+        # JS dosyalarına ve haritalarına debug ID gömer, haritaları bu commit'in sürümüyle
+        # yükler; Sentry yığın izlerini özgün kaynağa bununla çevirir. Sentry'ye ulaşılamazsa
+        # site yine yayımlanır, yığın izleri yalnızca küçültülmüş kalır.
+        continue-on-error: true
+        uses: getsentry/action-release@v3
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+        with:
+          release: ${{ github.sha }}
+          sourcemaps: ./build/assets/js
+          url_prefix: '~/assets/js'
+          set_commits: skip
+          disable_telemetry: true
+      - name: Kaynak haritalarını yayından çıkar
+        # Haritalar yalnızca Sentry içindir; JS dosyaları onlara bağlanmaz (hidden-source-map).
+        run: find build -name '*.map' -type f -delete
       - name: PDF için Chromium'u kur
         # Sürüm, package-lock.json'daki playwright-core ile sabittir; --with-deps sistem
         # kitaplıklarını ve yedek yazı tiplerini de kurar.

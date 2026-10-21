@@ -7,6 +7,7 @@ import {parseFrontMatter} from './plugins/meta-description';
 import remarkLcpImage from './plugins/remark-lcp-image';
 import llmsTxt from './plugins/llms-txt';
 import kitapPdf from './plugins/kitap-pdf';
+import sentryKaynakHaritasi from './plugins/sentry-kaynak-haritasi';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -42,6 +43,9 @@ const TAWK_TO_ID = envValue('TAWK_TO_ID', /^[a-f0-9]{24}\/[a-z0-9]{1,32}$/i);
 const SENTRY_DSN = envValue('SENTRY_DSN', /^https:\/\/[a-f0-9]{32}@[a-z0-9.-]+(:\d+)?(\/[\w.-]+)*\/\d+$/i);
 // Sentry'de olayın hangi yayından geldiği: GitHub Actions'ın derlediği commit.
 const SENTRY_RELEASE = SENTRY_DSN ? envValue('GITHUB_SHA', /^[a-f0-9]{40}$/) : undefined;
+// Kaynak haritası üretilsin mi? deploy.yml, haritaları yükleyecek SENTRY_AUTH_TOKEN da
+// tanımlıysa açar; haritalar Sentry'ye yüklendikten sonra yayından silinir.
+const SENTRY_KAYNAK_HARITASI = SENTRY_DSN !== undefined && process.env.SENTRY_KAYNAK_HARITASI === 'true';
 
 // Her sayfada bulunan site kimliği (schema.org). Varlıklar @id ile birbirine bağlıdır;
 // kişi ve kuruluş bilgisi yalnızca depoda doğrulanabilen alanlardan oluşur.
@@ -180,6 +184,8 @@ const config: Config = {
     llmsTxt,
     // Kitabın PDF'e girecek sayfa listesini üretir; PDF'i `npm run pdf` yazar.
     kitapPdf,
+    // Sentry için istemci paketlerinin kaynak haritalarını üretir (yalnızca deploy.yml'de).
+    ...(SENTRY_KAYNAK_HARITASI ? [sentryKaynakHaritasi] : []),
     [
       '@docusaurus/plugin-content-docs',
       {
