@@ -305,6 +305,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | öbek / yığın | heap / stack |
 | ön işlemci / koşullu derleme | preprocessor / conditional compilation |
 | savunmacı programlama | defensive programming |
+| tasarım kalıbı (ör. strateji tasarım kalıbı) | design pattern (strategy pattern) |
+| açık/kapalı ilkesi | open/closed principle |
 | güvenli durum | safe state |
 | emniyet / güvenlik | safety / security |
 | uçuşa elverişlilik | airworthiness |

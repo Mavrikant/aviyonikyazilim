@@ -288,6 +288,53 @@ bool komut_isle(komut_t komut)
 
 Bu kural, gömülü aviyonik dünyasının gerçekleriyle en çok çatışan kuraldır. Kesme vektör tabloları, bir RTOS'ta görev oluştururken verilen giriş fonksiyonu ve ARINC 653'te bir süreç oluşturulurken verilen giriş adresi, doğası gereği fonksiyon adresine dayanır. Holzmann'ın sitesindeki güncel metin de kuralı bu yönde yumuşatmıştır (aşağıdaki tabloya bakın). Fonksiyon işaretçisinin kaçınılmaz olduğu yerlerde, olası hedef kümesinin sabit ve kaynak koddan okunabilir tutulması ve bunun bir sapma kaydıyla belgelenmesi pratik çözümdür; aynı sorunun DO-332 gözüyle ele alınışı kitaptaki [C'de fonksiyon işaretçisiyle dağıtım](/kitap/arac-kalifikasyonu-ve-ekler/do332-nesne-yonelimli-teknoloji#dile-bağlı-olmayan-sorun-cde-fonksiyon-işaretçisiyle-dağıtım) örneğindedir.
 
+### Bir yan etki: strateji tasarım kalıbı
+
+Kural 9'un en çok hissedilen yan etkisi, nesne yönelimli tasarımdan tanıdık bir aracı, strateji tasarım kalıbını (strategy design pattern) doğrudan etkilemesidir. Kalıbın fikri basittir: aynı işi farklı yollarla yapan, birbirinin yerine geçebilen algoritmalar (örneğin bir sensör sinyali için filtresiz, ortalama ve medyan filtreleri) ortak bir arayüzün arkasına konur ve hangisinin kullanılacağı çalışma zamanında seçilir. C'de bu çoğunlukla değiştirilebilir bir fonksiyon işaretçisiyle kurulur: seçim yapıldığında işaretçi yeni fonksiyona yöneltilir, çağıran taraf hep aynı işaretçiyi çağırır. Kuralın 2006 metni tam olarak bunu yasaklar. Çağrının hedefi artık koddan değil, o anda bellekte duran bir değerden okunur; araç çağrı grafiğini çıkaramaz ve Kural 1'in sağladığı yığın ve özyineleme kanıtları bu noktada kopar.
+
+Kural kalıbın amacını değil, açık uçlu biçimini hedef alır. Güncel metnin "analiz aracı hedefi her durumda belirleyebiliyorsa" diye açtığı kapı da buradadır: kalıp, olası stratejilerin kümesi kapalı ve koddan okunabilir olduğu sürece yaşamaya devam eder.
+
+```c
+#include <stdint.h>
+
+typedef int32_t (*filtre_fn)(int32_t ham);
+
+int32_t filtre_yok(int32_t ham);
+int32_t filtre_ortalama(int32_t ham);
+int32_t filtre_medyan(int32_t ham);
+
+typedef enum
+{
+    FILTRE_YOK = 0,
+    FILTRE_ORTALAMA,
+    FILTRE_MEDYAN,
+    FILTRE_SAYISI
+} filtre_t;
+
+/* Olası hedeflerin tamamı: sabit tablo, çalışma zamanında değişmez. */
+static const filtre_fn FILTRELER[FILTRE_SAYISI] = {
+    filtre_yok, filtre_ortalama, filtre_medyan
+};
+
+/* Değiştirilebilir bellekte işaretçi değil, indis tutulur. */
+static filtre_t etkin_filtre = FILTRE_YOK;
+
+int32_t filtrele(int32_t ham)
+{
+    /* Bozulmuş indis bilinen bir stratejiye düşer. */
+    filtre_t f = (etkin_filtre < FILTRE_SAYISI) ? etkin_filtre
+                                                : FILTRE_YOK;
+
+    return FILTRELER[f](ham);
+}
+```
+
+Bu biçimi analiz edilebilir kılan iki karardır. Birincisi, olası hedefler kaynak koddan okunur: üç fonksiyon, `const` bir tablo; çalışma zamanında yeni hedef eklenemez. İkincisi, değiştirilebilir bellekte fonksiyon adresi değil, her kullanımda sınır denetiminden geçen bir indis durur. Taşan bir dizi ya da tek bit hatası bu değeri bozsa bile en kötü sonuç bilinen bir stratejinin seçilmesidir; program rastgele bir adrese atlamaz.
+
+Kuralın katı okumasını benimseyen bir projede aynı yapı, yukarıdaki komut örneğindeki gibi bir `switch` ile kurulur ve hiç fonksiyon işaretçisi kalmaz. Stratejiler kodla değil yalnızca katsayı, sınır ya da tabloyla ayrışıyorsa en temiz çözüm stratejiyi veriye çevirmektir: sabit bir parametre tablosu ve tek bir fonksiyon. Seçim ürün konfigürasyonuna göre sabitse, aynı başlığı gerçekleyen farklı kaynak dosyalarından hangisinin bağlanacağı derlemede belirlenir; çağrı grafiği her derlemede statiktir, ama Kural 8'deki gibi her derleme varyantı ayrı doğrulanır.
+
+Bu dönüşümün bir bedeli vardır: kalıbın en çok övülen yanı olan açık/kapalı ilkesi (open/closed principle) kaybolur. Yeni bir strateji eklemek artık tabloya ya da `switch`'e dokunmayı gerektirir; nesne yönelimli dünyada bu bir tasarım kusuru sayılır. Emniyet-kritik kodda ise çoğu zaman istenen sonuçtur: çağrılabilecek fonksiyonların kümesi kapalıdır, gözden geçirmede tek bakışta görülür ve yeni bir strateji fark edilmeden sisteme giremez. Hangi biçim seçilirse seçilsin, DO-178C açısından yapılacaklar değişmez: her strateji arayüzün sözleşmesine karşı ayrı ayrı test edilir, çağrı noktasının olası bütün hedefleri kontrol bağlaşımı analizine girer ve dolaylı çağrının hedef listesi yığın analizi aracına bildirilir. Tablo biçimi kullanılıyorsa kodlama standardı, tablonun `const` olmasını ve indisin denetlenmesini şart koşan bir kuralı ya da sapma kaydını da içermelidir.
+
 ## Kural 10: Sıfır uyarı, her gün statik analiz
 
 Kod geliştirmenin ilk gününden itibaren derleyicinin en katı ayarıyla, bütün uyarılar açık olarak derlenir ve tek bir uyarı bile kalmaz. Ayrıca kod her gün en az bir, tercihen birden çok güncel statik analiz aracından geçirilir ve sıfır bulguyla geçmelidir.
