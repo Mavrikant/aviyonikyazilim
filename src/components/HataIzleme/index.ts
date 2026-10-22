@@ -64,6 +64,12 @@ function hataOlayi(olay: ErrorEvent): void {
 }
 
 function retOlayi(olay: PromiseRejectionEvent): void {
+  // Error taşımayan ret (dizge, düz nesne) yığın izi vermez, kaynağı bulunamaz; çoğu sitenin dışından
+  // gelir (ör. Tauri masaüstü uygulamasının bağlantı yakalayıcısı). SDK'ya verilirse çağrı noktasından
+  // sahte bir iz eklenir, hata bu dosyadan çıkmış görünür ve allowUrls'ten geçer.
+  if (!(olay.reason instanceof Error)) {
+    return;
+  }
   hataBildir(olay.reason, {type: 'auto.browser.global_handlers.onunhandledrejection', handled: false});
 }
 
@@ -83,6 +89,9 @@ function yukle(dsn: string): void {
         // Yalnızca bu sitenin dosyalarından çıkan hatalar; tarayıcı eklentileri ve üçüncü taraf
         // betikler (Tawk, gtag) gürültüdür.
         allowUrls: [window.location.origin],
+        // allowUrls yığın izi olmayan olayı geçirir: SDK'nın kendi işleyicilerinin yakaladığı Error
+        // olmayan değerler (yukarıdaki retOlayi süzgecinin SDK inince karşılığı) atılır.
+        beforeSend: (olay, ipucu) => (ipucu.originalException instanceof Error ? olay : null),
         // IP adresi ve çerez gönderilmez (bkz. SEO.md, "Depo değişkenleri").
         dataCollection: {userInfo: false, cookies: false},
         // SDK ilk hatada başlatıldığı için oturum sayımı (çökmesiz oturum oranı) anlamsızdır.
