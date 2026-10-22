@@ -610,7 +610,9 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
   sınırı eklenirse onun yedek görünümü de bu kancayı çağırır.
 - Üretim derlemesi yalnızca yayın alan adında (`siteConfig.url`) bildirir; kitap PDF'i,
   `npm run serve` ve sitenin kopyaları olay göndermez. Yalnızca sitenin kendi dosyalarından
-  çıkan hatalar gönderilir (`allowUrls`).
+  çıkan hatalar gönderilir (`allowUrls`). `allowUrls` yığın izi olmayan olayı geçirdiği için
+  Error nesnesi taşımayan hata ve retler (dizge, düz nesne) hem dinleyicide hem `beforeSend`'de
+  atılır; sitenin kendi kodu ret ve `throw` için yalnızca `Error` kullanır.
 - IP adresi, çerez ve kullanıcı kimliği gönderilmez (`dataCollection`); oturum kaydı (Replay),
   performans izleme ve oturum sayımı eklenmez. Bunlardan biri eklenirse `SEO.md`'deki KVKK notu
   ve çerez onayı yeniden değerlendirilir.
