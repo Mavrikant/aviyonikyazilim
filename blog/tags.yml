@@ -21,7 +21,7 @@ sca:
 do-178c:
   label: DO-178C
   permalink: /do-178c
-  description: DO-178C bağlamında aviyonik yazılım yazıları; yapısal kapsam analizinde kapsanmayan kodlar ve ölü, gereksiz ile devre dışı bırakılmış kodun nasıl ele alındığı.
+  description: DO-178C bağlamında aviyonik yazılım yazıları; kapsanmayan kodun ele alınışı ve doğrulamayı kolaylaştıran ya da zorlaştıran C tasarım kalıpları.
 yapisal-kapsam-analizi:
   label: Yapısal kapsam analizi
   permalink: /yapisal-kapsam-analizi
@@ -50,3 +50,11 @@ rtos:
   label: RTOS
   permalink: /rtos
   description: RTOS (gerçek zamanlı işletim sistemi) yazıları; öngörülebilir zamanlama, öncelik tersinmesi ve RTOS'un emniyet-kritik aviyonik projelerdeki yeri.
+tasarim-kaliplari:
+  label: Tasarım Kalıpları
+  permalink: /tasarim-kaliplari
+  description: Aviyonik yazılımda tasarım kalıpları (design patterns); durum makinesi, döngüsel yürütücü, statik bellek gibi kalıpların DO-178C doğrulamasına etkisi.
+c-dili:
+  label: C Dili
+  permalink: /c-dili
+  description: Emniyet-kritik aviyonik yazılımda C dili; MISRA C kuralları, doğrulanabilir kod yapıları ve C ile tasarım kalıplarının uygulanması.
