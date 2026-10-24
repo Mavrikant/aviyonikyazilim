@@ -301,6 +301,16 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | döngüsel artıklık denetimi | cyclic redundancy check (CRC) |
 | yedeklilik / yedekleme | redundancy |
 | çevrimsel karmaşıklık | cyclomatic complexity |
+| özyineleme | recursion |
+| çağrı grafiği | call graph |
+| iddia (koddaki anormallik denetimi) | assertion |
+| görünürlük alanı (C) | scope |
+| dolaylı erişim (işaretçi) | dereference |
+| öbek / yığın | heap / stack |
+| ön işlemci / koşullu derleme | preprocessor / conditional compilation |
+| savunmacı programlama | defensive programming |
+| tasarım kalıbı (ör. strateji tasarım kalıbı) | design pattern (strategy pattern) |
+| açık/kapalı ilkesi | open/closed principle |
 | güvenli durum | safe state |
 | emniyet / güvenlik | safety / security |
 | uçuşa elverişlilik | airworthiness |
@@ -327,7 +337,8 @@ makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partit
 SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti); requirement anlamında
 "ister" (gereksinim); IMA için "tümleşik modüler aviyonik" (entegre modüler aviyonik);
 redundancy anlamında "artıklık" ya da "redundans" (yedeklilik/yedekleme; CRC'nin yerleşik
-adı "döngüsel artıklık denetimi" bunun dışındadır). Uçuşa elverişlilik güvenliğinde
+adı "döngüsel artıklık denetimi" bunun dışındadır); C'deki scope anlamında "kapsam"
+(görünürlük alanı; "kapsam" yapısal kapsamla karışır). Uçuşa elverişlilik güvenliğinde
 security perimeter anlamında "güvenlik çevresi" (güvenlik sınırı; "ortam" ile karışır),
 vulnerability anlamında "güvenlik açığı" (zafiyet) ve SAL anlamında öneksiz "güvence
 seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
