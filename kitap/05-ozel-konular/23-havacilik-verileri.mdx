@@ -207,8 +207,7 @@ Ayrım, verinin biçiminde değil; kimin ürettiğinde ve güvencenin neye dayan
 
 Parametre verisi öğeleri 22. bölümde, kullanıcı tarafından değiştirilebilir veri
 [19. Kullanıcı Tarafından Değiştirilebilir Yazılım](./19-kullanici-tarafindan-degistirilebilir-yazilim.mdx)
-bölümünde anlatılır. Veri tabanı uçağa çoğunlukla sahada, yazılımla aynı veri
-yükleyiciyle yüklenir; yine de DO-178C'deki anlamıyla sahada yüklenebilir yazılım
+bölümünde anlatılır. Veri tabanı uçağa çoğunlukla sahada, yazılımla aynı data loader ile yüklenir; yine de DO-178C'deki anlamıyla sahada yüklenebilir yazılım
 (field-loadable software) gibi ele alınmaz: içeriği o belgenin kapsamı dışındadır ve
 kendi güvence zinciriyle yönetilir. Ortak olan yükleme mekanizmasıdır: doğru dosyanın
 yüklendiğinin ve aktarımda bozulmadığının teyidi
@@ -366,8 +365,8 @@ Sahada en çok gözden kaçan iki araç sınıfı şunlardır:
   basamaklı bir koordinatın hedef biçimde beş basamağa inmesi kimseyi
   uyarmaz, ama yaklaşma prosedüründe fark yaratabilir. Dönüşümün kalite
   boyutlarını (özellikle çözünürlük ve tamlık) koruduğu ayrıca gösterilmelidir.
-- **Elektronik tablolar ve betikler.** Bir mühendisin "geçici olarak" yazdığı
-  dönüştürme betiği ya da elle düzenlenen tablo da veri zincirinin parçasıdır
+- **Elektronik tablolar ve script'ler.** Bir mühendisin "geçici olarak" yazdığı
+  dönüştürme script'i ya da elle düzenlenen tablo da veri zincirinin parçasıdır
   ve aynı iki soruya tabidir. Konfigürasyon yönetimi dışında yaşayan bu tür
   araçlar, denetimlerde bulgu üretmeye en yatkın noktalardır.
 

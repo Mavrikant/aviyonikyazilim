@@ -287,7 +287,7 @@ kullanılır.
 ```mermaid
 flowchart TD
     YER["Yer istasyonları<br/>(VOR ve ILS yayınları)"]
-    BKM["Bakım bilgisayarı ve<br/>veri yükleyici"]
+    BKM["Bakım bilgisayarı ve<br/>data loader"]
     UCK["Uçaktaki diğer sistemler<br/>(ekran, uçuş yönetimi, otopilot)"]
     subgraph SNR["Güvenlik sınırı: navigasyon alıcısı"]
         VAR["Varlıklar: uygulama yazılımı,<br/>konfigürasyon verisi, arıza kayıtları,<br/>sapma ve kerteriz hesabı"]
@@ -498,7 +498,7 @@ nihai risk değerlendirmesine geri dönecek zafiyetleri arar. İmza doğrulama �
 - **Güvenlik gürbüzlük testleri** anormal girdi ve koşullara bakar: bozuk başlık, sınır
   değerleri, yarıda kesilen aktarım. Birimin bu durumlarda güvensiz bir duruma, örneğin
   doğrulanmamış bir imajla açılışa, düşmediği gösterilir. Bu testler DO-178C'nin
-  gürbüzlük test durumlarıyla örtüşür
+  gürbüzlük test case'lerle örtüşür
   (bkz. [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)).
 - **Zafiyet testleri (vulnerability testing)** güvenliğe özgüdür. Testi yapan gereksinime
   değil saldırgana göre düşünür. İmza denetimine uğramayan bir yükleme yolu var mıdır?
@@ -518,7 +518,7 @@ bellek taşmasına sürüklenebilir.
 
 DO-356A bu boşluğu **çürütme (refutation)** kavramıyla daraltır: gereksinim
 doğrulamasından ayrı yürütülen, saldırgan bakışıyla zafiyet arayan faaliyetler. Kamuya
-açık değerlendirmelerde örnek teknikler olarak bulanık test (fuzzing), sızma testi
+açık değerlendirmelerde örnek teknikler olarak fuzzing, sızma testi
 (penetration testing), güvenlik odaklı statik analiz ve biçimsel ispat anılır. Bu
 faaliyetlerin sonucu çoğu zaman önceden yazılmış bir beklenen değerle
 karşılaştırılamaz; her anlamlı bulgu analiz edilip etkisi değerlendirilir. Bulunan
@@ -588,7 +588,7 @@ değerlidir, ama belirli bir işletim ortamı için geçerlidir ve DO-178C'nin s
 güvencesinin yerini tutmaz; tersi de geçerlidir. İkisi farklı soruları cevaplar.
 
 **Anahtar yönetimi.** Yazılım imzası için uçakta yalnızca doğrulamaya yarayan açık anahtar
-(ya da onun özeti) bulunur ve değiştirilemeyen bir bellek bölgesinde, bir güven kökü (root
+(ya da onun özeti) bulunur ve değiştirilemeyen bir bellek bölgesinde, bir root of trust (root
 of trust) olarak saklanır. İmzalamada kullanılan özel anahtar (private key) hiçbir zaman
 uçağa ya da yazılım geliştirme ortamına inmez; üretici tarafında, genellikle bir donanım
 güvenlik modülünde (hardware security module, HSM) kalır. Kökün değiştirilemez olması ile
@@ -731,13 +731,13 @@ static dogrulama_t ozet_esit_mi(const uint8_t a[OZET_UZUNLUGU],
 }
 ```
 
-C dili geçen süreyi gözlenebilir davranış saymaz. Bu yüzden derleyicinin eniyileme
+C dili geçen süreyi gözlenebilir davranış saymaz. Bu yüzden derleyicinin optimizasyon
 (optimization) yaparken döngüyü erken çıkan bir biçime çevirmesi mümkündür. Seviye A'daki
 kaynak koddan nesne koduna izlenebilirlik analizi bunu görmenin doğal yeridir; kullanılan
 kriptografi kütüphanesi böyle bir işlev sunuyorsa o tercih edilir.
 
 DO-178C açısından `parca_dogrula` sıradan bir fonksiyondur: gereksinimlerden izlenir,
-kararları yazılım seviyesinin istediği kapsam ölçütüyle sınanır. Gürbüzlük test durumları
+kararları yazılım seviyesinin istediği kapsam ölçütüyle sınanır. Gürbüzlük test case'ler
 kendiliğinden ortaya çıkar:
 
 - başlıktan kısa kaynak,
@@ -761,7 +761,7 @@ nesne kodunun yeniden üretilebilmesini ister. İmajı bağımsız bir makinede 
 üretebilmek, ele geçirilmiş bir derleme sunucusuna karşı ucuz ve güçlü bir kanıttır.
 
 Üçüncü taraf bileşenler aynı soruyu yaşam döngüsünün tamamına taşır. Gerçek zamanlı
-işletim sistemi, ağ yığını ve kriptografi kütüphanesi için yayımlanan zafiyet bildirimleri
+işletim sistemi, ağ stack'i ve kriptografi kütüphanesi için yayımlanan zafiyet bildirimleri
 izlenir. Bunu sağlamak için hangi bileşenin hangi sürümünün hangi parçada bulunduğunu
 gösteren bir yazılım malzeme listesi (software bill of materials, SBOM) tutulur. Ancak
 havacılıkta bir yama, BT dünyasındaki gibi hızlı uygulanamaz: her yama bir DO-178C

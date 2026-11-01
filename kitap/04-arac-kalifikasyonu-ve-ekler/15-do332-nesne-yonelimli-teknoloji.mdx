@@ -94,7 +94,7 @@ flowchart LR
 birincisi kadar önemlidir. Şablonlar ve genel türler (templates, generics), aşırı yükleme
 (overloading), tip dönüşümü (type conversion), istisna işleme (exception handling),
 dinamik bellek yönetimi ve sanallaştırma (virtualization) nesne yönelimli olmayan
-kodda da karşımıza çıkar. C ile yazılmış ama öbek (heap) belleği ya da gömülü bir
+kodda da karşımıza çıkar. C ile yazılmış ama heap belleği ya da gömülü bir
 yorumlayıcı kullanan proje, sınıf tanımlamasa da ekin ilgili rehberini dikkate alır.
 "DO-332 yalnızca C++ içindir" düşüncesi bu yüzden yanıltıcıdır.
 
@@ -197,10 +197,10 @@ Gösterilmesi beklenen özellikler yedi başlıkta toplanır:
 | Ayırıcı her seferinde geçerli ve başka kullanımda olmayan bir alan döndürür | Aynı alanın iki nesneye verilmesi (belirsiz referans) | Ayırıcının gereksinim tabanlı testi ve gözden geçirmesi |
 | Yeterli boş alan varken ayırma, parçalanma yüzünden başarısız olmaz | Parçalanmadan doğan açlık | Sabit boyutlu bloklar ya da parçalanma analizi |
 | Erişilemez hâle gelen bellek, ihtiyaç doğmadan geri kazanılır | Geri kazanımın gecikmesinden doğan açlık | Serbest bırakma disiplini ya da çöp toplayıcının hız analizi |
-| Uygulamanın ihtiyaç duyduğu toplam bellek her an mevcuttur | Öbek belleğin tükenmesi | En kötü durum bellek ihtiyacı analizi |
+| Uygulamanın ihtiyaç duyduğu toplam bellek her an mevcuttur | Heap belleğin tükenmesi | En kötü durum bellek ihtiyacı analizi |
 | Nesne ancak artık kullanılmadığında serbest bırakılır | Erken serbest bırakma, sarkan referans | Sahiplik kuralları, statik analiz |
 | Bellek yöneticisi nesneleri taşıyorsa referanslar tutarlı kalır | Kayıp güncelleme, bayat referans | Taşıma işleminin bölünmezliğinin gösterilmesi |
-| Ayırma ve serbest bırakma sınırlı sürede tamamlanır | Belirlenimci (deterministic) olmayan yürütme süresi | En kötü durum yürütme süresi (worst-case execution time) analizi |
+| Ayırma ve serbest bırakma sınırlı sürede tamamlanır | Deterministik olmayan yürütme süresi | En kötü durum yürütme süresi (worst-case execution time) analizi |
 
 Bu özelliklerin kimin tarafından sağlanacağı seçilen tekniğe bağlıdır. Ek, uygulama
 kodu ile bellek yönetimi altyapısını (çalışma zamanı kütüphanesi, işletim sisteminin
@@ -219,11 +219,11 @@ Uygulamada üç strateji görülür ve kanıt yükü bu sırayla artar:
 2. **Sabit boyutlu havuzlar.** Çalışma sırasında nesne alınıp geri verilir; bloklar eş
    boyutlu olduğu için parçalanma oluşmaz ve süre sınırlıdır. Havuzun en kötü durumda
    yetmesi ve geri verilen bloğu gösteren referans kalmaması ayrıca gösterilir.
-3. **Çalışma sırasında genel amaçlı öbek kullanımı.** Yedi özelliğin tamamı açık kalır;
+3. **Çalışma sırasında genel amaçlı heap kullanımı.** Yedi özelliğin tamamı açık kalır;
    özellikle parçalanmanın sınırlı olduğunu göstermek güçtür. Emniyet-kritik projelerin
    çoğu bu yüzden bu seçeneği kodlama standardıyla yasaklar.
 
-Belirlenimci ayırma mekanizmalarının işletim sistemi tarafı
+Deterministik ayırma mekanizmalarının işletim sistemi tarafı
 [20. Gerçek Zamanlı İşletim Sistemleri](../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx)
 bölümünde anlatılır.
 
@@ -242,7 +242,7 @@ başvurulan başlıklar:
 | Tip dönüşümü | Daraltan dönüşümde veri kaybı ya da taşma; hiyerarşide aşağı doğru dönüşümde yanlış tip varsayımı | Örtük dönüşümlerin kısıtlanması, açık ve denetimli dönüşüm |
 | Şablonlar, genel türler | Aynı şablonun farklı somutlaştırmalarının farklı davranması, kapsam boşluğu | Her somutlaştırmanın ayrı test edilmesi ve kapsanması |
 | İstisna işleme | Kontrol akışının görünmez dallanması, yakalanmayan istisna, yarım güncellenmiş veri | Mimari düzeyinde istisna stratejisi, kısıtlı kullanım, istisna yollarının testi |
-| Dinamik bellek yönetimi | Tükenme, parçalanma, sarkan referans, belirlenimci olmayan süre | Yukarıdaki yedi özelliğin gösterilmesi, ayırma stratejisinin kısıtlanması |
+| Dinamik bellek yönetimi | Tükenme, parçalanma, sarkan referans, deterministik olmayan süre | Yukarıdaki yedi özelliğin gösterilmesi, ayırma stratejisinin kısıtlanması |
 | Çöp toplama | Kesilemeyen duraklamalar, zamanlama belirsizliği | En kötü durum duraklama analizi ya da tamamen yasaklama |
 | Sanallaştırma (sanal makine, yorumlayıcı) | Yorumlanan kodun "veri" sayılıp doğrulamanın dışında kalması | Sanal makine uçuş yazılımı olarak DO-178C'ye göre doğrulanır; yorumlanan kod çalıştırılabilir kod gibi ele alınır |
 
@@ -255,9 +255,9 @@ Sanal makinenin yorumladığı ara kod (örneğin bayt kodu) da bir yapılandır
 geçiştirilemez: gereksinimlere izlenir, gözden geçirilir, test edilir ve kapsamı
 ölçülür.
 
-## Dile bağlı olmayan sorun: C'de fonksiyon işaretçisiyle dağıtım
+## Dile bağlı olmayan sorun: C'de fonksiyon pointer'ıyla dağıtım
 
-Fonksiyon işaretçileriyle tablo tabanlı dağıtım yapan bir C tasarımı resmen DO-332'nin
+Fonksiyon pointer'larıyla tablo tabanlı dağıtım yapan bir C tasarımı resmen DO-332'nin
 kapsamında sayılmasa da yerel tip tutarlılığının sorduğu soruyu aynen doğurur. Aşağıdaki
 parça, dilde sınıf olmadan da aynı doğrulama sorusunun doğduğunu gösterir:
 
@@ -300,7 +300,7 @@ dolayısıyla "olası bütün hedefler sözleşmeye uyuyor mu ve test edildi mi?
 tıpkı sanal metotlarda olduğu gibi burada da cevaplanmalıdır. Örnekteki iki tasarım
 kararı cevabı kolaylaştırır. Tablo sabit (`const`) olduğu için olası hedef kümesi
 kaynak koddan okunur: iki sensör, dört fonksiyon; çalışma zamanında yeni hedef
-eklenemez ve işaretçiler boş kalamaz. Arayüzün sözleşmesi de imzada görünür: `oku`
+eklenemez ve pointer'lar boş kalamaz. Arayüzün sözleşmesi de imzada görünür: `oku`
 geçerlilik bilgisini döndürür, böylece "sağlıksız sensörde ne döner" sorusu her
 gerçekleştirim için aynı biçimde cevaplanır. `baro_oku` ile `radar_oku` bu sözleşmeye
 karşı ayrı ayrı test edilir; `irtifa_oku` ise her iki hedefle sınanır. DO-332'yi resmen
@@ -332,10 +332,10 @@ sabitlemek, bu iş yükünü belirleyen asıl karardır.
 
 Mevcut doğrulama faaliyetlerinin yorumu da genişler. Yapısal kapsam analizinde her
 şablon somutlaştırması ayrı kod sayılır ve ayrı kapsanır. Kalıtım ve dinamik çağrı,
-bileşenler arasında parametre, çağrı ve ortak veriye ek olarak yeni bir bağlaşım biçimi
-yaratır; veri ve kontrol bağlaşımı analizi bunu da kapsamalıdır. En kötü durum yürütme
-süresi ve yığın kullanımı analizlerinde ise dinamik çağrının olası hedeflerinin en
-kötüsü esas alınır; pratik yol, süre ve yığın sınırını temel sınıf sözleşmesine yazıp
+bileşenler arasında parametre, çağrı ve ortak veriye ek olarak yeni bir coupling biçimi
+yaratır; data ve control coupling analizi bunu da kapsamalıdır. En kötü durum yürütme
+süresi ve stack kullanımı analizlerinde ise dinamik çağrının olası hedeflerinin en
+kötüsü esas alınır; pratik yol, süre ve stack sınırını temel sınıf sözleşmesine yazıp
 her alt sınıfın buna uyduğunu göstermektir. Bu analizlerin genel anlatımı
 [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
 bölümündedir.
@@ -358,10 +358,10 @@ kaygısından doğar. Her biri bir doğrulama maliyetine karşılık gelir.
   değişiminin en sık kaynağı budur.
 - **Dinamik çağrının hedef kümesini kapalı tutun.** Hedefler derleme zamanında
   sayılabilmeli, bağlama başlatmadan sonra değişmemelidir. Çalışma zamanında sınıf
-  yükleme ya da işaretçi tablosunu güncelleme, doğrulanmış hedef kümesinin dışına
+  yükleme ya da pointer tablosunu güncelleme, doğrulanmış hedef kümesinin dışına
   çıkmanın yoludur.
 - **Belleği başlatmada ayırın, örtük ayırmaları arayın.** Standart kütüphane kapları,
-  dizgi sınıfları ve bazı dil yapıları öbeği sessizce kullanır; kural yalnızca açık
+  dizgi sınıfları ve bazı dil yapıları heap'i sessizce kullanır; kural yalnızca açık
   ayırma çağrılarını yasaklıyorsa bunlar gözden kaçar.
 - **Yan etkileri görünür kılın.** Kurucu ve yıkıcılarda iş mantığı, operatör aşırı
   yüklemesi ve örtük tip dönüşümleri kaynak kodda görünmeyen çağrılar üretir; gözden
@@ -389,7 +389,7 @@ kaygısından doğar. Her biri bir doğrulama maliyetine karşılık gelir.
 - "İlgili teknikler" dile bağlı değildir: şablon, tip dönüşümü, istisna, dinamik bellek
   ve sanallaştırma C projelerini de ilgilendirir. Sanal makine araç değil uçuş
   yazılımıdır; yorumladığı kod veri değil çalıştırılabilir koddur.
-- Dinamik çağrı sorunu da dile özgü değildir: C'de fonksiyon işaretçisiyle dağıtım
+- Dinamik çağrı sorunu da dile özgü değildir: C'de fonksiyon pointer'ıyla dağıtım
   yapan tasarım aynı soruyu cevaplar; sabit bir tablo hedef kümesini sayılabilir kılar.
 - Hangi özelliğin kullanılacağı planlama kararıdır ve kodlama standardıyla bağlanır;
   bu karar hem yerel tip tutarlılığı kanıtının hem de Seviye A'da kaynak koda doğrudan

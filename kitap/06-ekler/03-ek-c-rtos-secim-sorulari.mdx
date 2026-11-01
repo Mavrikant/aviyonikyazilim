@@ -40,8 +40,8 @@ savunulabilir kalır.
 | Çekirdek hizmetlerinin en kötü durum yürütme süreleri (worst-case execution time, WCET) hedef işlemci için yayımlanmış mı? | Zamanlama analizi ancak üst sınırlarla kurulabilir | Hedef işlemci ailesi ve önbellek ayarları için ölçüm ya da analiz raporu |
 | Kesme gecikmesi ve kesmelerin kapalı kaldığı en uzun süre ne? | Tepki süresi bütçesine doğrudan girer | Belgelenmiş üst sınır ve ölçüm yöntemi |
 | Hangi çizelgeleme (scheduling) modelleri var (öncelik tabanlı, zaman tetiklemeli)? | Mimarinin hangi zamanlama yaklaşımıyla kurulacağını belirler | Projenin ihtiyacına uyan model ve analiz yöntemi |
-| Öncelik terslenmesine karşı hangi protokol var? | Nadir ama ciddi gecikmelerin ana kaynağı | Öncelik kalıtımı ya da tavanı; davranışını gösteren test verisi |
-| Zamanlayıcı tıkı yapılandırılabilir mi; tıksız (tickless) çalışma var mı? | Zaman çözünürlüğü ve ek yük | Gerekçeli seçenekler ve her birinin etkisi |
+| Priority inversion'a karşı hangi protokol var? | Nadir ama ciddi gecikmelerin ana kaynağı | Priority inheritance ya da tavanı; davranışını gösteren test verisi |
+| Timer tıkı yapılandırılabilir mi; tıksız (tickless) çalışma var mı? | Zaman çözünürlüğü ve ek yük | Gerekçeli seçenekler ve her birinin etkisi |
 
 ## Bellek ve koruma
 
@@ -49,7 +49,7 @@ savunulabilir kalır.
 |---|---|---|
 | Çalışma sırasında dinamik bellek ayırma gerekiyor mu? | Parçalanma ve tükenme riski | Tüm nesnelerin statik ya da başlatmada ayrılabilmesi |
 | Bellek koruma birimi (memory protection unit, MPU) ya da bellek yönetim birimi (memory management unit, MMU) destekleniyor mu? | Görevlerin birbirinin alanına yazmasının önlenmesi | Görev ya da bölüm başına koruma ve ihlal tepkisi |
-| Yığın taşması tespit ediliyor mu? | Sessiz bellek bozulmasını önler | Koruma bölgesi ya da donanım desteğiyle tespit, tanımlı tepki |
+| Stack taşması tespit ediliyor mu? | Sessiz bellek bozulmasını önler | Koruma bölgesi ya da donanım desteğiyle tespit, tanımlı tepki |
 | Çekirdeğin bellek ayak izi ne? | Kaynak kısıtlı hedeflerde belirleyici | Yapılandırmaya göre belgelenmiş boyutlar |
 
 ## Bölümleme, çok çekirdek ve uygulama arayüzü
@@ -74,7 +74,7 @@ ortaya çıkarmak içindir.
 |---|---|---|
 | Paket hangi yazılım seviyesine kadar DO-178C yaşam döngüsü verisi içeriyor? | Projenin seviyesini karşılamayan paket boşluk bırakır | Gereksinim, tasarım, kod, test, kapsam ve izlenebilirlik verisi |
 | Paket bizim işlemcimizi, derleyici sürümümüzü ve yapılandırmamızı kapsıyor mu? | Kanıt yalnızca kapsadığı yapılandırma için geçerlidir | Açık bir kapsam listesi; farklılıklar için uyarlama hizmeti |
-| Kart destek paketi (board support package, BSP) ve sürücüler paketin içinde mi? | Paket dışındaki her katmanın kanıtını proje üretir | Kapsamın katman katman belirtilmesi |
+| BSP (board support package) ve sürücüler paketin içinde mi? | Paket dışındaki her katmanın kanıtını proje üretir | Kapsamın katman katman belirtilmesi |
 | Paket, entegratöre hangi doğrulama işlerini ve kullanım kısıtlarını bırakıyor? | Tedarikçinin kanıtı varsayımlara dayanır; varsayımları sağlamak ve hedef karttaki entegrasyonu doğrulamak projenin işidir | Varsayımların, kısıtların ve entegratöre kalan faaliyetlerin tek tek sayıldığı belge |
 | Kullanmayacağımız çekirdek özellikleri nasıl kapatılıyor: imaja hiç bağlanmıyor mu, yapılandırmayla mı devre dışı kalıyor? | İmajda kalan ama kullanılmayan kod ya devre dışı bırakılmış kod (deactivated code) olarak gerekçelendirilir ya da gereksiz kod (extraneous code) tartışması açar | Özelliğin imaja girmediğinin ya da etkinleşemeyeceğinin kanıtı; paketin bu yapılandırmayı kapsadığının beyanı |
 | Seviye A hedefleniyorsa, bu seviyeye özgü ek kanıt paketin içinde mi? | Değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC) kanıtı Seviye B için hazırlanmış bir pakette bulunmak zorunda değildir; kaynak koda doğrudan izlenemeyen nesne kodunun belirlenmesi ve ek doğrulaması ise derleyiciye ve seçeneklerine bağlıdır | MC/DC sonuçları; projenin derleyici sürümü ve seçenekleriyle üretilen, kaynak koda doğrudan izlenemeyen nesne kodunun belirlendiğini ve ek doğrulamayla doğruluğunun gösterildiğini ortaya koyan kayıt |
@@ -93,7 +93,7 @@ bölümünde ele alınır.
 
 | Soru | Neden önemli | İyi yanıt |
 |---|---|---|
-| Hangi derleyici ve hata ayıklayıcılarla çalışıyor? | Araç zinciri değişikliği paket kapsamını etkiler | Desteklenen sürümler listesi |
+| Hangi derleyici ve debugger'larla çalışıyor? | Araç zinciri değişikliği paket kapsamını etkiler | Desteklenen sürümler listesi |
 | Yapılandırma ya da kod üreten araçlar var mı; kalifikasyon verisi sunuluyor mu? | Bir süreci ortadan kaldıran, azaltan ya da otomatikleştiren ve çıktısı doğrulanmayan araç kalifikasyon gerektirir; kalifikasyon her projede o sistemin bağlamında yeniden gösterilir | Araç kalifikasyon seviyesine (tool qualification level, TQL) uygun, projede yeniden kullanılabilecek veri |
 | Zamanlama ve iz (trace) analiz araçları var mı? | Doğrulama ve hata ayıklama yükü | Hedefte düşük ek yükle çalışan izleme |
 | Hedef dışı (host) simülasyon ortamı var mı? | Erken geliştirme ve birim test | Hedefle farkları belgelenmiş simülasyon ortamı |
@@ -130,10 +130,10 @@ Karar vermeden önce hedefe yakın bir kartta küçük bir deneme uygulaması ko
 belgelerde görünmeyen davranışları erken ortaya çıkarır. Birkaç periyodik görev, bir
 kesme kaynağı ve paylaşılan bir kaynak yeterlidir. Ölçülecek ve gözlenecekler:
 
-- görevler arası bağlam değiştirme (context switch) süresi ve titreşim (jitter),
+- görevler arası context switch süresi ve titreşim (jitter),
 - kesmeden göreve tepki süresi,
 - paylaşılan kaynakta en uzun bekleme süresi,
-- yük altında zaman sınırı kaçırma davranışı,
+- yük altında deadline kaçırma davranışı,
 - birkaç çekirdek çağrısının geçersiz parametreye verdiği tepki,
 - derleme ve hata ayıklama zincirinin ekibin araçlarıyla uyumu.
 

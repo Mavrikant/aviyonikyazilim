@@ -12,7 +12,7 @@ yazarları, onları gözden geçirenler ve gereksinimden test türeten test müh
 Tipik olarak gereksinim sorumlusu yazar; sistem, emniyet ve test temsilcilerinin görüşü
 alınır, yazılım proje yöneticisi onaylar, kalite güvencesi (quality assurance) planlarla
 tutarlılığını gözden geçirir. Planlama sürecinde planlarla birlikte yazılır ve ilk gereksinim
-yazılmadan önce temel çizgiye (baseline) alınır.
+yazılmadan önce baseline'a alınır.
 
 Standardın neden gerektiği
 [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.mdx), iyi
@@ -123,7 +123,7 @@ kalan her şey için düz metin.
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| GS-01 | Tablo biçimindeki gereksinimde her satır, durum geçiş tablosunda her geçiş ayrı kimlik taşır. | Satır satır iz ve test durumu kurulabilir | Tablolu gereksinimlerde kimliksiz satır aranır |
+| GS-01 | Tablo biçimindeki gereksinimde her satır, durum geçiş tablosunda her geçiş ayrı kimlik taşır. | Satır satır iz ve test case kurulabilir | Tablolu gereksinimlerde kimliksiz satır aranır |
 | GS-02 | Açıklayıcı şekil, tablo ve notlar "Bilgi" türüyle işaretlenir; izlenmez, test edilmez. | Bağlayıcı içerik açıklamayla karışmaz | Araçta türü boş nesne sorgulanır; "Bilgi" türündeki nesnelerde bağlayıcı kip taranır |
 
 ### 3. Yazım kalıpları
@@ -142,7 +142,7 @@ Cümle kalıpları aynı türden davranışın her yazarda aynı biçimde okunma
 | `Yazılım, <olay> olduğunda, <süre> içinde <tepki>-malıdır.` | Olayla tetiklenen davranış | Yazılım, ön ısıtma başlat komutu alındığında, en geç 100 ms içinde ısıtıcı rölesi çıkışını etkinleştirmelidir. |
 | `Yazılım, <kip> kipindeyken, <tepki>-malıdır.` | Kipe bağlı sürekli davranış | Yazılım, UÇUŞ kipindeyken, bakım verisi indirme isteklerini reddetmelidir. |
 | `Yazılım, <koşul> ise, <tepki>-malıdır.` | Koşula bağlı davranış | Yazılım, iki yakıt miktarı kanalı arasındaki fark 150 kg'ı aşıyorsa, yakıt uyumsuzluk bayrağını etkinleştirmelidir. |
-| `Yazılım, <koşul> durumunda, <tepki>-mamalıdır.` | İstenmeyen davranışın yasaklanması | Yazılım, tekerleklerde ağırlık (weight-on-wheels) sinyalinin YERDE olmadığı durumda, yazılım yükleme kipine geçmemelidir. |
+| `Yazılım, <koşul> durumunda, <tepki>-mamalıdır.` | İstenmeyen davranışın yasaklanması | Yazılım, weight-on-wheels sinyalinin YERDE olmadığı durumda, yazılım yükleme kipine geçmemelidir. |
 
 Terim sözlüğü de bu bölümdedir: kip adları, "geçersiz", "bayat" gibi sık geçen sözcükler
 bir kez tanımlanır ve yazımları (ör. kip adlarının büyük harfle yazılması) sabitlenir.
@@ -173,7 +173,7 @@ listesi bunun en ucuz aracıdır, çünkü gereksinim aracında metin taramasıy
 kapalı değildir: gözden geçirmede belirsizlik bulgusuna yol açan her yeni sözcük eklenir. Bu
 bölüm ayrıca yüksek seviyeli gereksinime tasarım ve doğrulama ayrıntısının girmesini sınırlar:
 gerekçeli tasarım kısıtları (design constraint) dışında fonksiyon, değişken ya da görev adı
-geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test durumuna yazılır.
+geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test case'e yazılır.
 
 | Yasaklı ifade | Sorunu | Yerine |
 |---|---|---|
@@ -185,7 +185,7 @@ geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test duru
 | yaklaşık, civarında, en az … gibi | Tolerans belirsiz | Değer ± tolerans ya da alt/üst sınır |
 | kullanıcı dostu, kolay, sezgisel | Gözlenebilir davranış değil | Ölçülebilir arayüz ölçütü |
 | ve/veya | İki farklı mantık okunabilir | "ve", "veya" ya da iki gereksinim |
-| belirlenecek (to be determined, TBD) | Doğrulanamaz | Temel çizgiden önce değer ya da kayıtlı açık nokta |
+| belirlenecek (to be determined, TBD) | Doğrulanamaz | Baseline'dan önce değer ya da kayıtlı açık nokta |
 
 **Verilecek kararlar:**
 
@@ -196,7 +196,7 @@ geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test duru
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | GS-07 | Yasaklı ifade listesindeki sözcükler gereksinim metninde geçmez. | Ölçüsüz sözcük kararı kodlayıcıya ve test mühendisine bırakır | Araç taraması; sonuç gözden geçirme kaydına eklenir |
-| GS-08 | Mutlak ifade ("her zaman", "hiçbir zaman", "asla", "her koşulda") yalnızca doğrulama yöntemi özniteliğinde Analiz bulunan gereksinimde kullanılır; gereksinimin test durumu yine yazılır. | Mutlak ifade yalnızca testle gösterilemez; her gereksinimin testi de beklenir | Mutlak ifade taraması; bulunan gereksinimde Analiz değeri ve test izi aranır |
+| GS-08 | Mutlak ifade ("her zaman", "hiçbir zaman", "asla", "her koşulda") yalnızca doğrulama yöntemi özniteliğinde Analiz bulunan gereksinimde kullanılır; gereksinimin test case yine yazılır. | Mutlak ifade yalnızca testle gösterilemez; her gereksinimin testi de beklenir | Mutlak ifade taraması; bulunan gereksinimde Analiz değeri ve test izi aranır |
 | GS-09 | Gereksinim metninde fonksiyon, değişken, görev ya da dosya adı, test adımı ya da test ortamı geçmez; zorunlu tasarım kısıtı "Tasarım kısıtı" türüyle ve gerekçesiyle yazılır. | Gereksinim tasarımdan ve testten bağımsız kalır | ICD sinyal kimlikleri dışındaki alt çizgili ya da büyük-küçük harf karışık sözcük taraması; test ayrıntısı gözden geçirmede |
 
 ### 5. Sayısal değerler
@@ -257,11 +257,11 @@ listedir; serbest metin yalnızca gerekçe gibi açıklama gerektiren alanlarda 
 - Emniyet etkisi özniteliğini kim doldurur: gereksinim yazarı mı, emniyet mühendisi mi?
 - Durum geçişlerinde (Taslak → Onaylı) kim yetkilidir?
 - Gereksinimler tek katmanda yazılıyorsa koddaki iz etiketi `HLR-` kimliğini mi taşır; etiket
-  betiği bu deseni de tanıyor mu?
+  script'i bu deseni de tanıyor mu?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| GS-13 | Zorunlu özniteliği boş olan gereksinim "Onaylı" durumuna geçemez. | Eksik bilgi temel çizgiye girmez | Araç sorgusu: onaylı ve zorunlu alanı boş nesne |
+| GS-13 | Zorunlu özniteliği boş olan gereksinim "Onaylı" durumuna geçemez. | Eksik bilgi baseline'a girmez | Araç sorgusu: onaylı ve zorunlu alanı boş nesne |
 | GS-14 | Kimlik yeniden kullanılmaz; silinen gereksinim "Silindi" durumunda tutulur. | Eski iz ve test kayıtları yanlış gereksinime bağlanmaz | Kimlik tekrarı sorgusu |
 
 ### 7. İzlenebilirlik kuralları
@@ -278,7 +278,7 @@ Verification Plan, SVP) durur; burada yalnızca ortak kimlik biçimi söylenir.
 - İz araçta bağ olarak mı, öznitelik metni olarak mı tutulur?
 - Yazılıma tahsis edilen sistem gereksinimlerinin listesi hangi sürümle, nereden alınır?
 - Sistem gereksinimi ya da ICD yeni sürüme geçince bağlı gereksinimler araçta şüpheli bağ
-  (suspect link) olarak işaretlenir mi; işareti kim, hangi temel çizgiden önce kapatır?
+  (suspect link) olarak işaretlenir mi; işareti kim, hangi baseline'dan önce kapatır?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
@@ -306,18 +306,18 @@ bölümündedir.
 
 - İletim hangi kayıtla yapılır: bildirim formu, sistem tarafındaki değişiklik talebi, ortak
   gözden geçirme tutanağı?
-- Sistem tarafında kim değerlendirir; iletim her temel çizgi öncesinde toplu mu, emniyet
+- Sistem tarafında kim değerlendirir; iletim her baseline öncesinde toplu mu, emniyet
   etkisi olabilecekler için hemen mi yapılır?
 - Değerlendirme "kabul edilemez" derse gereksinim hangi kayıtla değişir?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | GS-18 | Türetilmiş her gereksinimin gerekçesi, neden gerektiğini ve sistemin bilmediği davranışı söyler. | Emniyet ekibi davranışı gerekçeden değerlendirir | Gerekçesi boş ya da yalnızca "tasarım gereği" olan gereksinim aranır |
-| GS-19 | Türetilmiş gereksinim, iletim kaydının kimliği işlenmeden temel çizgiye alınmaz; değerlendirme sonucu geldiğinde özniteliğe işlenir, "kabul edilemez" sonuç gereksinimi değişiklik kaydıyla yeniden açar. | İletim kanıtlanabilir olur | Temel çizgi öncesi sorgu: türetilmiş ve iletim kaydı boş; sonucu bekleyenler listelenir |
+| GS-19 | Türetilmiş gereksinim, iletim kaydının kimliği işlenmeden baseline'a alınmaz; değerlendirme sonucu geldiğinde özniteliğe işlenir, "kabul edilemez" sonuç gereksinimi değişiklik kaydıyla yeniden açar. | İletim kanıtlanabilir olur | Baseline öncesi sorgu: türetilmiş ve iletim kaydı boş; sonucu bekleyenler listelenir |
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Türetilmiş gereksinimler sistem ekibine bildirilir. | Gereksinim sorumlusu, türetilmiş gereksinimleri her temel çizgiden önce gerekçesiyle `<kayıt türü>` ile sistem emniyet ekibine iletir; kayıt kimliği ve gelen sonuç "Emniyet değerlendirmesi" özniteliğine işlenir. |
+| Türetilmiş gereksinimler sistem ekibine bildirilir. | Gereksinim sorumlusu, türetilmiş gereksinimleri her baseline'dan önce gerekçesiyle `<kayıt türü>` ile sistem emniyet ekibine iletir; kayıt kimliği ve gelen sonuç "Emniyet değerlendirmesi" özniteliğine işlenir. |
 
 :::warning[İşaretlemek iletmek değildir]
 Türetilmiş gereksinimi araçta işaretleyip bırakmak beklenen iletimi sağlamaz. Emniyet
@@ -382,25 +382,25 @@ Standart, gereksinim geliştirmede kullanılan araçların kullanımına da sın
 ve sürümü SDP'de ve yazılım yaşam döngüsü ortam konfigürasyon indeksinde (Software Life Cycle
 Environment Configuration Index, SECI) durur; bu bölüm aracın proje içindeki kullanım
 kurallarını verir: belge yapısı, öznitelik alanları ve değer listeleri, bağ türleri, kullanıcı
-rolleri, gözden geçirme ve temel çizgi için dışa aktarım biçimi, kapatılacak özellikler
+rolleri, gözden geçirme ve baseline için dışa aktarım biçimi, kapatılacak özellikler
 (gereksinim metnine gömülü nesne, kendiliğinden yeniden numaralandırma gibi). Yasaklı ifade
-taraması ya da iz raporu üreten betikler de burada anılır; çıktısı ayrıca denetlenmeden
-kullanılan bir betik araç kalifikasyonu (tool qualification) sorusunu doğurur
+taraması ya da iz raporu üreten script'ler de burada anılır; çıktısı ayrıca denetlenmeden
+kullanılan bir script araç kalifikasyonu (tool qualification) sorusunu doğurur
 ([13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 
 **Verilecek kararlar:**
 
 - Araç yapılandırması (alan adları, değer listeleri) standardın eki mi, ayrı kayıt mı?
-- Kural denetimi yapan betiklerin çıktısı nasıl doğrulanır?
+- Kural denetimi yapan script'lerin çıktısı nasıl doğrulanır?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| GS-24 | Gereksinim metni ve öznitelikleri yalnızca araçta değiştirilir; dışa aktarılmış belge üzerinde düzeltme yapılmaz. | Tek kaynak korunur | Temel çizgide dışa aktarım araç içeriğiyle karşılaştırılır |
-| GS-25 | Gözden geçirmeye giren her dışa aktarım, araçtaki temel çizgi ya da sürüm adını taşır. | Gözden geçirilen içerik tanımlanabilir | Gözden geçirme kaydındaki sürüm dışa aktarımla karşılaştırılır |
+| GS-24 | Gereksinim metni ve öznitelikleri yalnızca araçta değiştirilir; dışa aktarılmış belge üzerinde düzeltme yapılmaz. | Tek kaynak korunur | Baseline'da dışa aktarım araç içeriğiyle karşılaştırılır |
+| GS-25 | Gözden geçirmeye giren her dışa aktarım, araçtaki baseline ya da sürüm adını taşır. | Gözden geçirilen içerik tanımlanabilir | Gözden geçirme kaydındaki sürüm dışa aktarımla karşılaştırılır |
 
 ### 12. Modeller ve biçimsel gösterimler
 
-Yüksek seviyeli gereksinimler belirtim modeli (specification model) olarak ifade ediliyorsa
+Yüksek seviyeli gereksinimler spesifikasyon modeli (specification model) olarak ifade ediliyorsa
 DO-331 bu standardın içeriğini değiştirmez; modele özgü kurallar ayrı bir yazılım modelleme
 standardında (software model standards) toplanır. Gereksinim standardı hangi gereksinimlerin
 metin, hangilerinin model olduğunu söyler ve ona atıf yapar. Modelleme standardı, gereksinim
@@ -459,7 +459,7 @@ tek listede toplanabilir tutulur.
 | Standartlara uyumun kalite güvencesi (A-9 #3) | Bağımsızlıkla | Bağımsızlıkla | Aranmaz |
 | Türetilmiş gereksinimlerin iletimi (A-2 #2) | Hedef | Hedef | Hedef |
 
-Seviye A ve B'de standart CC1 altında yönetilir: temel çizgiye alınır, değişiklikleri
+Seviye A ve B'de standart CC1 altında yönetilir: baseline'a alınır, değişiklikleri
 kaydedilir, onaylanır ve izlenir. Seviye C'de CC2 yeterlidir; standardın kimliği, korunması ve
 geri getirilebilmesi yine gerekir, ama her düzeltme için problem raporu aranmaz. İçerik üç
 seviyede aynıdır; değişen, onu kullanan gözden geçirmedir: sistem gereksinimleriyle uyum ile
@@ -502,10 +502,10 @@ güvencesi plana uyumu denetlerken rehbere de bakar.
 
 | Ek | Madde | Şablona etkisi |
 |---|---|---|
-| DO-331 | MB.11.6 | §11.6 değişmez; belirtim modeli varsa ek kurallar modelleme standardına yazılır, 12. bölüm ona atıf yapar |
+| DO-331 | MB.11.6 | §11.6 değişmez; spesifikasyon modeli varsa ek kurallar modelleme standardına yazılır, 12. bölüm ona atıf yapar |
 | DO-331 | MB.4.5 | Geliştirme standartlarına modelleme standardı eklenir |
 | DO-331 | MB.11.23.e–g | Modeldeki gereksinim, türetilmiş gereksinim ve gereksinim olmayan öğelerin ayrımı ile iletim yöntemi; 8. bölümün akışı kullanılabilir |
-| DO-331 | MB.11.23.h | Modelleme tekniğinin belirtim modeli için uygunluk gerekçesi |
+| DO-331 | MB.11.23.h | Modelleme tekniğinin spesifikasyon modeli için uygunluk gerekçesi |
 | DO-332 | OO.11.6 | Değişiklik yok; nesne yönelimli teknoloji bu standarda madde eklemez |
 | DO-333 | FM.11.6.b | Gösterimin tanım belgesi ve analiz için dil kısıtları 12. bölüme yazılır |
 
@@ -520,7 +520,7 @@ başvuru aracıdır; standardın kendisinin ve otorite belgelerinin yerine geçm
 | Türetilmiş gereksinim iletim yöntemi | [SDP](02-sdp.mdx) ve [PSAC](01-psac.mdx): sistem süreçleriyle ilişki | SDP ve PSAC bu standarda atıf yapıyor mu; kayıt türü, alıcı ve sıklık aynı mı? |
 | Numaralı kurallar (GS-nn) | [SVP](03-svp.mdx): gereksinim gözden geçirme kontrol listesi | Kontrol listesi kurallara numarasıyla atıf yapıyor mu? |
 | Doğrulama yöntemi özniteliği | [SVP](03-svp.mdx): doğrulama yöntemleri | Değer listesi SVP'deki yöntem adlarıyla aynı mı? |
-| Durum değerleri ve onay akışı | [SCMP](04-scmp.mdx): temel çizgi ve değişiklik kontrolü | "Onaylı" durumunun temel çizgiyle ilişkisi iki belgede aynı mı? |
+| Durum değerleri ve onay akışı | [SCMP](04-scmp.mdx): baseline ve değişiklik kontrolü | "Onaylı" durumunun baseline ile ilişkisi iki belgede aynı mı? |
 | Sapma kaydı ve onayı | [Kodlama standardı](08-kodlama-standardi.mdx): sapma süreci; [SQAP](05-sqap.mdx): sapma kayıtlarının denetimi | Ayrı bir sapma akışı tanımlanmamış mı; kayıt alanları ve onaylayan aynı mı? |
 | Kimlik biçimi ve düşük seviyeye uygulanan kurallar | [Tasarım standardı](07-tasarim-standardi.mdx) ve [kodlama standardı](08-kodlama-standardi.mdx) | Kimlik biçimi, koddaki iz etiketleri ve ortak yazım kuralları çelişiyor mu? |
 
@@ -544,7 +544,7 @@ başvuru aracıdır; standardın kendisinin ve otorite belgelerinin yerine geçm
       gereksinime nasıl işleneceği yazılı mı?
 - [ ] Standardın istediği her öznitelik gereksinim aracında aynı adla ve aynı değer
       listesiyle tanımlı mı?
-- [ ] Yasaklı ifade ve kip taraması bir araçla yapılabiliyor mu; bunu yapan betik araç
+- [ ] Yasaklı ifade ve kip taraması bir araçla yapılabiliyor mu; bunu yapan script araç
       kalifikasyonu açısından değerlendirildi mi?
 - [ ] Projede kullanılan her gösterim listelenmiş, kullanılmayanlar açıkça dışarıda
       bırakılmış mı?

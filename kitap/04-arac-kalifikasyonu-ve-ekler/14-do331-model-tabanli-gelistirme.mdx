@@ -60,7 +60,7 @@ DO-331'in en temel kavramsal katkısı, "model" sözcüğünün tek bir şey ifa
 netleştirmesidir. Bir model, yaşam döngüsünde hangi iş ürününün yerini alıyorsa o iş
 ürünü gibi ele alınır. Bu bakışla iki ana tür ayrılır:
 
-- **Belirtim modeli (specification model):** Yüksek seviyeli gereksinimin (high-level
+- **Spesifikasyon modeli (specification model):** Yüksek seviyeli gereksinimin (high-level
   requirement) yerine geçer. Yazılımın *ne* yapması gerektiğini tanımlar; iç veri
   yapısı, iç veri akışı ya da kontrol akışı gibi tasarım ayrıntısı içermez. Sistem
   gereksinimlerinden izlenebilir olmalı ve tıpkı metinsel bir gereksinim gibi gözden
@@ -79,11 +79,11 @@ seviyedeki gereksinime göre gösterilir. Örneğin tasarım modeli kullanılıy
 üstünde modelden bağımsız gereksinimler bulunmalı ve model bu gereksinimlere karşı
 doğrulanmalıdır. Aynı modeli hem gereksinim hem tasarım ilan edip "model modele
 uygundur" demek, doğrulama zincirini kısa devre yapar; DO-331 bu tuzağı açıkça kapatır:
-bir model aynı anda hem belirtim hem tasarım modeli sayılamaz.
+bir model aynı anda hem spesifikasyon hem tasarım modeli sayılamaz.
 
 | Model türü | Karşılık geldiği DO-178C iş ürünü | Neye karşı doğrulanır | Tipik içerik |
 |---|---|---|---|
-| Belirtim modeli | Yüksek seviyeli gereksinimler | Yazılıma tahsis edilmiş sistem gereksinimleri | Girdi/çıktı davranışı, modlar, işlevsel kurallar |
+| Spesifikasyon modeli | Yüksek seviyeli gereksinimler | Yazılıma tahsis edilmiş sistem gereksinimleri | Girdi/çıktı davranışı, modlar, işlevsel kurallar |
 | Tasarım modeli | Düşük seviyeli gereksinimler + yazılım mimarisi | Modelin geliştirildiği gereksinimler (çoğunlukla yüksek seviyeli gereksinimler) | Durum makineleri, veri/kontrol akışı, algoritmalar |
 
 Modelin türü, doğrulama zincirinin şeklini doğrudan belirler. Aşağıdaki diyagram iki
@@ -91,7 +91,7 @@ modelin birlikte kullanıldığı düzeni gösterir; bu, olası düzenlerden yal
 
 ```mermaid
 flowchart TD
-    SR["Sistem gereksinimleri"] --> SM["Belirtim modeli<br/>= yüksek seviyeli gereksinim"]
+    SR["Sistem gereksinimleri"] --> SM["Spesifikasyon modeli<br/>= yüksek seviyeli gereksinim"]
     SM --> DM["Tasarım modeli<br/>= düşük seviyeli gereksinim + mimari"]
     DM --> SC["Kaynak kod<br/>elle veya otomatik üretilmiş"]
     SC --> EOC["Çalıştırılabilir nesne kodu"]
@@ -126,8 +126,8 @@ başlıcaları şöyle özetlenebilir:
 | Düzen | Modelin geliştirildiği gereksinimler | Model ve yerini aldığı veri | Dikkat edilecek nokta |
 |---|---|---|---|
 | Metinsel gereksinim + tasarım modeli | Metinsel yüksek seviyeli gereksinimler | Tasarım modeli: düşük seviyeli gereksinimler ve mimari | En yaygın düzen; gereksinimler modele bakılarak değil, modelden bağımsız yazılmalıdır |
-| Belirtim modeli + tasarım modeli | Belirtim modeli için sistem gereksinimleri; tasarım modeli için belirtim modeli | İki ayrı model, iki ayrı veri | İkinci model birincinin kopyası olmamalı; iki model ayrı ayrı doğrulanır |
-| Belirtim modeli + metinsel tasarım | Sistem gereksinimleri | Belirtim modeli: yüksek seviyeli gereksinimler | Tasarım ve kod için DO-178C olduğu gibi uygulanır |
+| Spesifikasyon modeli + tasarım modeli | Spesifikasyon modeli için sistem gereksinimleri; tasarım modeli için spesifikasyon modeli | İki ayrı model, iki ayrı veri | İkinci model birincinin kopyası olmamalı; iki model ayrı ayrı doğrulanır |
+| Spesifikasyon modeli + metinsel tasarım | Sistem gereksinimleri | Spesifikasyon modeli: yüksek seviyeli gereksinimler | Tasarım ve kod için DO-178C olduğu gibi uygulanır |
 | Sistem gereksinimi + tasarım modeli | Yazılıma tahsis edilmiş sistem gereksinimleri | Tasarım modeli; yazılım ya da sistem süreçlerinde üretilmiş olabilir | Arada ayrı bir yazılım gereksinim katmanı yoktur; sistem ve yazılım verisinin sınırı planlarda çizilmelidir |
 
 Son düzen, kontrol yasalarını sistem mühendislerinin modellediği projelerde sık görülür
@@ -135,7 +135,7 @@ ve en çok soru doğuran düzendir. Model sistem ekibinde doğar, yazılım ekib
 üretir; aynı veri iki tarafa da hizmet ettiği için kimin neyi doğruladığı kolayca
 belirsizleşir. Bu durumda iki şey netleştirilmelidir. Birincisi, modelin üstündeki
 gereksinimler yüksek seviyeli gereksinimlerin yükünü taşır: modelden bağımsız yazılmış,
-gözden geçirilmiş ve test durumu (test case) türetilebilecek kadar ayrıntılı olmalıdır.
+gözden geçirilmiş ve test case türetilebilecek kadar ayrıntılı olmalıdır.
 "Kontrol yasası modeldeki gibidir" diyen bir gereksinim, modeli yine kendi referansı
 yapar. İkincisi, modelin sahipliği, konfigürasyon kontrolü ve değişiklik akışı planlarda
 tanımlanmalıdır: sistem ekibinin modelde yaptığı her değişiklik artık bir yazılım
@@ -174,7 +174,7 @@ bunların hangilerine izin verildiğini söyler. Tipik içerik:
 - izlenebilirliğin hangi birimle (blok, alt sistem, durum, geçiş) kurulacağı ve
   türetilmiş gereksinimlerin nasıl işaretleneceği.
 
-Belirtim modeli ile tasarım modeli farklı soyutlama düzeyinde olduğundan, ikisi de
+Spesifikasyon modeli ile tasarım modeli farklı soyutlama düzeyinde olduğundan, ikisi de
 kullanılıyorsa her biri için ayrı kurallar gerekir. Standarda uygunluk bir doğrulama
 hedefidir; kural denetimi araçla otomatikleştirilebilir, ancak aracın denetlemediği
 kurallar gözden geçirmeyle kapatılır.
@@ -221,7 +221,7 @@ olmaktan çıkarılmalıdır. Pratikte bu şu disiplini gerektirir:
 
 Son madde bir tavsiye olmanın ötesindedir: kredi alınan simülasyonda senaryolar,
 prosedürler ve sonuçlar doğrulama verisidir ve DO-331 bunların doğruluğunu ayrı hedefler
-olarak arar; tıpkı test durumlarının ve test sonuçlarının doğruluğunun aranması gibi.
+olarak arar; tıpkı test case'lerin ve test sonuçlarının doğruluğunun aranması gibi.
 
 Simülasyonun neye kredi sağlayıp neye sağlayamayacağı, en çok yanlış anlaşılan
 konudur. Kaba bir özet:
@@ -343,9 +343,9 @@ Birincisi, üreteç Ölçüt 1 aracıdır; Seviye A yazılımda bu, en ağır ka
 seviyesi demektir. İkincisi, kredi üretecin kalifiye edildiği ayarlar ve model öğeleri
 alt kümesiyle sınırlıdır; modelleme standardı bu alt kümeyi zorunlu kılmalıdır.
 Üçüncüsü, kalifikasyon üretecin çıktısında, yani kaynak kodda biter: derleyici ve
-bağlayıcı kapsam dışındadır. Çalıştırılabilir nesne kodunun hedefte test edilmesi,
+linker kapsam dışındadır. Çalıştırılabilir nesne kodunun hedefte test edilmesi,
 donanım/yazılım entegrasyonu, kod üzerindeki yapısal kapsam, en kötü durum yürütme
-süresi ve yığın kullanımı analizleri yerinde durur. DO-330'un açıklayıcı soru-yanıtları,
+süresi ve stack kullanımı analizleri yerinde durur. DO-330'un açıklayıcı soru-yanıtları,
 kalifiye üreteçle düşük seviyeli gereksinimlere dayalı testlerin ve yapısal kapsam
 analizinin amaçlarına hangi ek analizlerle başka yoldan ulaşılabileceğini senaryolarla
 tartışır; bunlar rehber değil açıklamadır ve her biri otoriteyle mutabakat ister.
@@ -416,7 +416,7 @@ senaryo ona dokunmadığı için simülasyon bunu kendiliğinden ortaya çıkarm
 
 Model düzeltildikten sonra kod üretilir. Üreteç kalifiye değilse üretilen kod modele
 karşı gözden geçirilir. Ardından çalıştırılabilir nesne kodu hedefte test edilir:
-gereksinimlerden türetilen test durumları ile tasarım modeline dayalı test durumları
+gereksinimlerden türetilen test case'ler ile tasarım modeline dayalı test case'ler
 hedefte koşulur, yapısal kapsam bu testler sırasında kod üzerinde ölçülür. Hedefin
 simülasyona eklediği bilgi somuttur. Simülasyonda 2 saniye ideal bir zaman adımıyla
 sayılır ve akım kusursuz bir sinyaldir; hedefte ise süre görevin gerçek çalışma
@@ -446,7 +446,7 @@ olabilir. G-2'nin bu koşullarda da sağlandığı ancak hedefte gösterilebilir
 - DO-331 tek başına okunmaz; DO-178C'nin hedeflerine, model kullanılan yerlerde ekleme
   ve değişiklik yapar. Model, izlenebilir ve doğrulanması gereken bir yaşam döngüsü
   verisidir.
-- Modelin türü (belirtim mi tasarım mı) planlarda açıkça beyan edilmeli; bir model
+- Modelin türü (spesifikasyon mu tasarım mı) planlarda açıkça beyan edilmeli; bir model
   kendi kendisinin doğrulama referansı olamaz ve her zaman, geliştirildiği gereksinimlere
   karşı doğrulanır.
 - Modelleme standartları, model öğe kütüphanelerinin doğrulanması ve model öğesi

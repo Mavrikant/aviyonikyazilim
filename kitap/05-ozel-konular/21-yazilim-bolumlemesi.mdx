@@ -22,7 +22,7 @@ Aynı işlemci üzerinde farklı yazılım seviyelerinden (software level) işle
 çalışabilir. Sayfa boyunca şu örneği kullanacağız: tek bir işlemci kartında uçuş
 kontrol işlevi (Seviye A), onun durum verisini kaydedip bozulma eğilimini bildiren bir
 durum izleme işlevi (Seviye C) ve yalnızca yerde kullanılan bir bakım ekranı (Seviye D)
-çalışmaktadır. Bakım yazılımındaki bir hata — bozuk bir işaretçi, sonsuz bir döngü,
+çalışmaktadır. Bakım yazılımındaki bir hata — bozuk bir pointer, sonsuz bir döngü,
 veri yolunu dolduran bir ileti seli — kontrol döngüsünü etkilememelidir. Bu
 gösterilemezse üç bileşen tek bir bileşen gibi ele alınır ve hepsi aralarındaki en
 yüksek seviyeyle, yani Seviye A olarak geliştirilmek zorundadır; bölümlemenin seviye
@@ -71,7 +71,7 @@ Bu beklentileri, neyin korunduğuna göre dört soruda toplamak mümkündür:
 
 Son satır pratikte en çok maliyet doğuran beklentidir. Örneğimizde bölümleme
 çekirdeği, bellek koruma tablolarını kuran başlatma kodu, pencere geçişini yapan
-çizelgeleyici (scheduler) ve bölümlerin ortak kullandığı sürücüler, korudukları
+scheduler ve bölümlerin ortak kullandığı sürücüler, korudukları
 bölümlerden biri Seviye A olduğu için Seviye A olarak geliştirilir. Bölümleme, düşük
 seviyeli uygulamaların maliyetini düşürür; platformun maliyetini düşürmez.
 
@@ -132,25 +132,25 @@ yazılmıştır.
 | Bellek bölgesi | Uçuş kontrol | İzleme | Bakım |
 |---|---|---|---|
 | Uçuş kontrol kodu ve sabit verisi | oku, çalıştır | erişim yok | erişim yok |
-| Uçuş kontrol verisi ve yığını | oku, yaz | erişim yok | erişim yok |
+| Uçuş kontrol verisi ve stack'i | oku, yaz | erişim yok | erişim yok |
 | İzleme kodu ve sabit verisi | erişim yok | oku, çalıştır | erişim yok |
-| İzleme verisi ve yığını | erişim yok | oku, yaz | erişim yok |
+| İzleme verisi ve stack'i | erişim yok | oku, yaz | erişim yok |
 | Bakım kodu ve sabit verisi | erişim yok | erişim yok | oku, çalıştır |
-| Bakım verisi ve yığını | erişim yok | erişim yok | oku, yaz |
-| Durum tamponu (uçuş kontrolden izlemeye) | oku, yaz | oku | erişim yok |
-| Eyleyici arayüzü yazmaçları | oku, yaz | erişim yok | erişim yok |
-| Bakım veri yolu yazmaçları | erişim yok | erişim yok | oku, yaz |
+| Bakım verisi ve stack'i | erişim yok | erişim yok | oku, yaz |
+| Durum buffer'ı (uçuş kontrolden izlemeye) | oku, yaz | oku | erişim yok |
+| Eyleyici arayüzü register'ları | oku, yaz | erişim yok | erişim yok |
+| Bakım veri yolu register'ları | erişim yok | erişim yok | oku, yaz |
 | Çekirdek kodu, verisi ve koruma tabloları | erişim yok | erişim yok | erişim yok |
 
 İki ayrıntı böyle bir tabloda sık atlanır. Hiçbir bölge aynı anda hem yazılabilir hem
 çalıştırılabilir olmamalıdır; aksi hâlde bozulan veri kod olarak yürütülebilir. Her
-yığının bitimine de erişimsiz bir koruma bölgesi konmalıdır ki taşma, komşu veriyi
+stack'in bitimine de erişimsiz bir koruma bölgesi konmalıdır ki taşma, komşu veriyi
 sessizce bozmak yerine istisna üretsin.
 
 Alan bölümlemesi yalnızca RAM ile sınırlı değildir; kalıcı bellek (non-volatile
-memory) bölgeleri, bellek eşlemli (memory-mapped) çevre birimi yazmaçları ve
-yığın/öbek (stack/heap) taşmaları da aynı analiz kapsamına girer. Bir bölümün
-kendi yığınını taşırıp komşu bölgeye yazması, klasik bir alan bölümlemesi ihlalidir.
+memory) bölgeleri, bellek eşlemli (memory-mapped) çevre birimi register'ları ve
+stack/heap taşmaları da aynı analiz kapsamına girer. Bir bölümün
+kendi stack'ini taşırıp komşu bölgeye yazması, klasik bir alan bölümlemesi ihlalidir.
 
 ### Zaman bölümlemesi
 
@@ -176,9 +176,9 @@ flowchart LR
 Zaman bölümlemesinin sağlaması gereken güvenceler şunlardır:
 
 - Bir bölüm kendi penceresini aşarsa (örneğin sonsuz döngüye girerse) çekirdek,
-  donanım zamanlayıcısıyla o bölümü keser ve sıradaki pencereye geçer; taşma diğer
+  donanım timer'ıyla o bölümü keser ve sıradaki pencereye geçer; taşma diğer
   bölümlerin dilimini kısaltamaz.
-- Pencere geçişindeki bağlam değiştirme (context switch) süresi çizelgede hesaba
+- Pencere geçişindeki context switch süresi çizelgede hesaba
   katılır; aksi hâlde kâğıt üzerindeki dilimler pratikte erir.
 - Kritik bölümün penceresi, o bölümün en kötü durum yürütme süresi (worst-case
   execution time, WCET) analiziyle boyutlandırılır.
@@ -198,11 +198,11 @@ edilen parçasıdır. Yaygın çözümler:
 
 | Yaklaşım | Açıklama | Dikkat edilecek nokta |
 |---|---|---|
-| I/O sahipliği | Her çevre birimi tek bir bölüme atanır | Diğer bölümlerin yazmaçlara eşlenmiş adreslere erişimi MMU ile kapatılmalı |
+| I/O sahipliği | Her çevre birimi tek bir bölüme atanır | Diğer bölümlerin register'lara eşlenmiş adreslere erişimi MMU ile kapatılmalı |
 | Sunucu bölüm | Ortak I/O'yu tek bir sürücü bölümü yönetir, diğerleri iletiyle ister | Sunucu bölümün yazılım seviyesi, hizmet verdiği en kritik bölüme göre belirlenir |
 | Zaman dilimli erişim | Veri yoluna erişim, bölüm pencereleriyle hizalanır | Pencere dışına sarkan doğrudan bellek erişimi (DMA) aktarımları ayrıca analiz edilmeli |
 
-Deneyimde en sık görülen hata, çevre birimi yazmaçlarının "kimse oraya yazmaz
+Deneyimde en sık görülen hata, çevre birimi register'larının "kimse oraya yazmaz
 nasılsa" varsayımıyla korumasız bırakılmasıdır. Bölümleme kanıtı varsayıma değil,
 donanımın zorladığı sınıra dayanmalıdır.
 
@@ -268,7 +268,7 @@ aktarımlarına uygulanmaz. Yanlış programlanmış tek bir DMA tanımlayıcıs
 bölümün belleğinin üzerine yazabilir. Alınabilecek önlemler:
 
 - DMA'yı yalnızca çekirdeğin veya tek bir güvenilir sürücü bölümünün
-  programlayabilmesi; uygulama bölümlerinin DMA yazmaçlarına erişiminin MMU ile
+  programlayabilmesi; uygulama bölümlerinin DMA register'larına erişiminin MMU ile
   kapatılması,
 - varsa I/O MMU (IOMMU) benzeri bir donanımla DMA hedef adreslerinin de
   sınırlandırılması,
@@ -292,12 +292,12 @@ belleğe yazılmamışken başlatılan bir DMA aktarımı ise eski veriyi gönde
 fiziksel alanın farklı sanal adreslerle eşlendiği durumlar da bazı önbellek
 mimarilerinde benzer bir tutarsızlık doğurabilir. Pratik yaklaşımlar:
 
-- bölüm geçişinde önbelleğin boşaltılması (flush/invalidate) — belirlenimci
+- bölüm geçişinde önbelleğin boşaltılması (flush/invalidate) — deterministik
   (deterministic) ama performans maliyeti çizelgeye eklenmelidir,
 - önbelleğin yollara/kümelere bölünerek (cache partitioning) bölümlere ayrılması,
 - WCET analizinde önbelleğin tamamen soğuk kabul edilmesi gibi kötümser ama
   savunulabilir varsayımlar,
-- DMA ve aygıt tamponlarının önbelleksiz (non-cacheable) bölgelere yerleştirilmesi
+- DMA ve aygıt buffer'larının önbelleksiz (non-cacheable) bölgelere yerleştirilmesi
   ya da aktarımdan önce ve sonra önbelleğin açıkça eşitlenmesi.
 
 Soğuk önbellek varsayımının gerçekten en kötü durum olduğu, hedef işlemci için
@@ -347,7 +347,7 @@ kontrollü bir kapıdır ve yanlış tasarlanırsa hata yayılım yolu olur:
 - Kanallar ve portlar konfigürasyonla **statik** tanımlanmalı; çalışma zamanında yeni
   kanal açılamamalıdır.
 - Veri, alan bölümlemesini korumak için çekirdek denetiminde kopyalanmalı ya da
-  tek yönlü, salt okunur eşlenmiş tamponlar kullanılmalıdır.
+  tek yönlü, salt okunur eşlenmiş buffer'lar kullanılmalıdır.
 - Alıcı bölüm, gelen veriyi **güvenilmez girdi** gibi ele almalıdır: düşük yazılım
   seviyesindeki bir bölümden gelen bozuk değer, kritik bölümde aralık ve tutarlılık
   kontrolünden geçmeden kullanılmamalıdır.
@@ -437,16 +437,16 @@ kanıtı nerededir? Örneğimiz için matrisin bir kesiti şöyledir:
 | Paylaşılan kaynak | Yayılma yolu | Önlem | Kanıt |
 |---|---|---|---|
 | RAM | Bakım bölümünün uçuş kontrol verisine yazması | MMU eşlemesi, kullanıcı kipi | Bellek haritası analizi, sınır dışı yazma testi |
-| İşlemci zamanı | Bakım bölümünün penceresini aşması | Pencere sonunda zamanlayıcı kesmesi | WCET analizi, pencere aşımı testi |
+| İşlemci zamanı | Bakım bölümünün penceresini aşması | Pencere sonunda timer kesmesi | WCET analizi, pencere aşımı testi |
 | Veri yolu ve DMA | Pencere dışına sarkan aktarım | DMA'nın çekirdekte toplanması | Tasarım gözden geçirmesi, zamanlama ölçümü |
 | Kesme hattı | Bakım veri yolundan kesme fırtınası | Pencere bazlı maskeleme | Kesme fırtınası testi |
 | Haberleşme portu | Bozuk ya da bayat komut | Alıcıda denetim, zaman aşımı | Bozuk ileti testi |
 
 Kanıt sütunu boş kalan satır, kapatılmamış bir yayılma yoludur. Analiz kısmında
 dayanılan teknikler [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
-bölümünde anlatılanlardır: bellek haritası analizi, bağlayıcı çıktısındaki yerleşimin
-koruma tablolarıyla örtüştüğünü; WCET analizi her pencerenin yeterli olduğunu; yığın
-analizi hiçbir bölümün kendi yığınını aşmadığını gösterir.
+bölümünde anlatılanlardır: bellek haritası analizi, linker çıktısındaki yerleşimin
+koruma tablolarıyla örtüştüğünü; WCET analizi her pencerenin yeterli olduğunu; stack
+analizi hiçbir bölümün kendi stack'ini aşmadığını gösterir.
 
 ### İhlal testleri
 
@@ -454,10 +454,10 @@ Olumlu testler ("her bölüm kendi işini yapıyor") bölümleme hakkında nered
 şey söylemez. Bölümlemeyi sınayan, kasıtlı olarak kurala uymayan bir test bölümüdür.
 Hedef donanımda, gerçek konfigürasyonla çalıştırılan tipik senaryolar şunlardır:
 
-- başka bir bölümün verisine, çekirdek alanına ve korunan yazmaçlara okuma, yazma ve
+- başka bir bölümün verisine, çekirdek alanına ve korunan register'lara okuma, yazma ve
   dallanma denemesi; ayrıcalıklı komut çalıştırma denemesi,
 - sonsuz döngü ya da uzun hesapla pencerenin aşılması,
-- yığın taşırma,
+- stack taşırma,
 - bölümün sahip olduğu aygıttan en yüksek sıklıkta kesme üretilmesi,
 - portların doldurulması, bozuk ve aralık dışı iletilerin gönderilmesi, bloklayan
   çağrılarda süresiz bekleme denemesi.
@@ -467,7 +467,7 @@ tanımlı olan mıdır ve diğer bölümlerin verisi ile zamanlaması değişmed
 Sonuncusu ölçümle gösterilir; örneğin uçuş kontrol penceresinin başlama anı ve süresi,
 ihlal senaryosu çalışırken kaydedilir. DO-178C, donanım/yazılım entegrasyon
 testlerinin ortaya çıkarması beklenen hata türleri arasında bölümleme ihlallerini de
-sayar; bellek yönetim donanımının hatalı denetlenmesi, yığın taşması ve yürütme süresi
+sayar; bellek yönetim donanımının hatalı denetlenmesi, stack taşması ve yürütme süresi
 gereksinimlerinin karşılanamaması da aynı gruptadır. Standardın test ortamını belirli
 kıldığı tek test yöntemi budur: yazılım hedef bilgisayarda çalışırken sınanır.
 
@@ -487,7 +487,7 @@ Bölümleme kanıtı, doğrulandığı konfigürasyon için geçerlidir. Bir pen
 yeni bir port eklendiğinde ya da bir bölge büyütüldüğünde değişiklik etki analizi
 (change impact analysis) yalnızca değişen bölümü değil, matrisin ilgili satırlarını
 da yeniden ele alır. Denetimde sorulan soru genellikle yalındır: "Şu bölüm sonsuz
-döngüye girerse ya da bozuk bir işaretçiyle yazarsa ne olur ve bunu hangi kayıt
+döngüye girerse ya da bozuk bir pointer ile yazarsa ne olur ve bunu hangi kayıt
 gösteriyor?"
 
 ## Sık yapılan hatalar
@@ -495,10 +495,10 @@ gösteriyor?"
 - **Doğrulanmamış konfigürasyon.** Çekirdek özenle doğrulanır, tablolar ise
   entegrasyonun son haftasında elle düzenlenir; oysa sınırı çizen tablodur
   ("Konfigürasyon tablolarının doğrulanması").
-- **Korumasız bırakılan paylaşılan kaynak.** RAM bölünür, ama çevre birimi yazmaçları,
+- **Korumasız bırakılan paylaşılan kaynak.** RAM bölünür, ama çevre birimi register'ları,
   DMA denetleyicisi ya da kalıcı bellek herkese açık kalır; hata bu açıklıktan sızar
   ("Paylaşılan giriş/çıkışın yönetimi", "Doğrudan bellek erişimi").
-- **Kâğıt üzerinde kalan zaman bütçesi.** Bağlam değiştirme, kesme yükü, önbellek ve
+- **Kâğıt üzerinde kalan zaman bütçesi.** Context switch, kesme yükü, önbellek ve
   çok çekirdek girişimi pencere hesabına katılmaz; çizelge ölçümde tutmaz ("Zaman
   bölümlemesi", "Bölümlemeyi zorlaştıran konular").
 - **Yalnızca olumlu test.** Sınırın içinde kalan davranış test edilir, sınırı zorlayan

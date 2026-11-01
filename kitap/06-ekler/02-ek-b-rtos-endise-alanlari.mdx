@@ -22,13 +22,13 @@ denetime hazırlanırken kontrol listesi olarak kullanılabilir.
 
 | Alan | Tipik risk | Ele alma yolu |
 |---|---|---|
-| Çizelgeleme | Zaman sınırının yük altında kaçırılması | Çizelgelenebilirlik analizi, en kötü durum ölçümleri |
-| Senkronizasyon | Öncelik terslenmesi, kilitlenme | Öncelik kalıtımı/tavanı, kilit sıralama kuralı, analiz |
+| Çizelgeleme | Deadline'ın yük altında kaçırılması | Çizelgelenebilirlik analizi, en kötü durum ölçümleri |
+| Senkronizasyon | Priority inversion, kilitlenme | Priority inheritance/tavanı, kilit sıralama kuralı, analiz |
 | Kesmeler | Sınırsız kesme gecikmesi, kesme fırtınası | Kısa kesme rutinleri, kesme kapalı süresinin ölçümü, hız sınırlama |
-| Bellek | Yığın taşması, parçalanma | Statik ayırma, yığın analizi, bellek koruma birimi |
+| Bellek | Stack taşması, parçalanma | Statik ayırma, stack analizi, bellek koruma birimi |
 | Görevler arası iletişim | Kuyruk taşması, bayat ya da yarım veri | Boyut analizi, tazelik kontrolü, atomik erişim |
 | Saat ve zaman | Sayaç taşması, saat kayması | Taşma süresi hesabı, taşmaya dayanıklı kod, uzun süreli test |
-| Başlatma ve hata yönetimi | Belirsiz başlangıç durumu, sessiz hata | Tanımlı başlatma sırası, sağlık izleme, bekçi köpeği |
+| Başlatma ve hata yönetimi | Belirsiz başlangıç durumu, sessiz hata | Tanımlı başlatma sırası, sağlık izleme, watchdog |
 | Bölümleme | Bir bölümün diğerini etkilemesi | Alan ve zaman bölümlemesi kanıtı |
 | Çok çekirdek | Çekirdekler arası girişim | Girişim kanallarının analizi ve ölçümü |
 | Yapılandırma | Paket dışı özellik, kullanılmayan kod | Yapılandırma kontrolü, kapsam analizi |
@@ -37,31 +37,30 @@ denetime hazırlanırken kontrol listesi olarak kullanılabilir.
 
 Çizelgeleme (scheduling), görevlerin işlemciyi hangi sırayla ve ne kadar süreyle
 kullanacağını belirler. Her görevin en kötü durum yürütme süresi (worst-case execution
-time, WCET), periyodu ve zaman sınırı bilinmeden sistemin zamanında çalışacağı
+time, WCET), periyodu ve deadline bilinmeden sistemin zamanında çalışacağı
 gösterilemez. Ortalama ölçümlerle kurulan bir zaman bütçesi, nadir bir yük
 kombinasyonunda çöker. Görevlerin toplam işlemci kullanımı, RTOS çekirdek hizmetlerinin
-süresi ve kesmelerin araya girmesi birlikte hesaba katılmalıdır. WCET ve yığın kullanımı
+süresi ve kesmelerin araya girmesi birlikte hesaba katılmalıdır. WCET ve stack kullanımı
 analizlerinin nasıl yapıldığı
 [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx) bölümünde
 anlatılır.
 
 - Çizelgelenebilirlik analizi (schedulability analysis) yapılmış mı ve ne kadar kalan
   pay (margin) gösteriyor?
-- Görev öncelikleri hangi kurala göre atanmış (örneğin periyoda ya da zaman sınırına
+- Görev öncelikleri hangi kurala göre atanmış (örneğin periyoda ya da deadline'a
   göre) ve gerekçesi tasarım verisinde yazılı mı?
-- Aşırı yük durumunda hangi görevin zaman sınırını kaçıracağı tasarımda belirlenmiş mi?
-- Zamanlayıcı tık (tick) çözünürlüğü en kısa periyotlu görev için yeterli mi?
+- Aşırı yük durumunda hangi görevin deadline'ı kaçıracağı tasarımda belirlenmiş mi?
+- Timer tık (tick) çözünürlüğü en kısa periyotlu görev için yeterli mi?
 
 ## Paylaşılan kaynaklar ve senkronizasyon
 
-Paylaşılan kaynakların iki klasik tuzağı öncelik terslenmesi (priority inversion) ve
+Paylaşılan kaynakların iki klasik tuzağı priority inversion ve
 kilitlenmedir (deadlock): ilkinde yüksek öncelikli görev, düşük öncelikli bir görevin
 tuttuğu kaynak yüzünden öngörülemez süre bekler; ikincisinde görevler birbirinin tuttuğu
 kaynağı bekleyerek hiç ilerleyemez. İkisi de nadir tetiklenir; testte görülmeyip sahada
 ortaya çıkabilir.
 
-- Paylaşılan her kaynak için kullanılan koruma mekanizması ve protokol (öncelik
-  kalıtımı ya da öncelik tavanı) belgelenmiş mi?
+- Paylaşılan her kaynak için kullanılan koruma mekanizması ve protokol (priority inheritance ya da priority ceiling) belgelenmiş mi?
 - İç içe kilit (lock) alınıyorsa, tüm görevlerin uyduğu tek bir kilit alma sırası var mı?
 - Bir kilit için en uzun bekleme süresi sınırlı ve zaman bütçesine eklenmiş mi?
 - Birden çok görevden ya da kesme bağlamından çağrılan kütüphane ve sürücü işlevlerinin
@@ -79,19 +78,19 @@ kapalı tutulduğu en uzun süre, sistemin tepki süresini doğrudan belirler. A
 - Bir kaynaktan gelen aşırı kesmeye karşı hız sınırlama ya da devre dışı bırakma
   stratejisi var mı?
 - Kayan nokta (floating-point) işlemi yapan görev ve kesme rutinleri için kayan nokta
-  yazmaçlarının bağlam değiştirme (context switch) sırasında saklanıp geri yüklendiği
+  register'larının context switch sırasında saklanıp geri yüklendiği
   doğrulanmış mı?
 
 ## Bellek
 
 Çalışma sırasında dinamik bellek ayırma (dynamic memory allocation) parçalanma ve
 tükenme riski taşır; çoğu proje onu yasaklar ya da başlatma aşamasıyla sınırlar. Görev
-başına ayrılan yığın (stack) alanı yetersizse taşma, komşu bellek alanını sessizce
+başına ayrılan stack alanı yetersizse taşma, komşu bellek alanını sessizce
 bozar.
 
-- Her görevin yığın ihtiyacı en kötü çağrı derinliğine ve kesme yüküne göre analiz
+- Her görevin stack ihtiyacı en kötü çağrı derinliğine ve kesme yüküne göre analiz
   edilmiş mi?
-- Yığın taşması çalışma sırasında tespit ediliyor mu (koruma bölgesi ya da bellek koruma
+- Stack taşması çalışma sırasında tespit ediliyor mu (koruma bölgesi ya da bellek koruma
   birimi; memory protection unit, MPU)?
 - MPU, görevlerin birbirinin alanına yazmasını engelleyecek biçimde yapılandırılmış mı?
 - Dinamik bellek ayırmaya ilişkin kural kodlama standardında yazılı mı ve uyulduğu araçla ya
@@ -152,7 +151,7 @@ karşılaştırmak ise hatalıdır: toplam başa döndüğünde koşul, süre do
 
 Başlatma sırasında görevlerin, sürücülerin ve paylaşılan verinin hangi sırayla hazır
 hâle geldiği tanımlı değilse, sistem her açılışta farklı bir durumdan başlayabilir.
-Çalışma sırasındaki hatalar da (istisna, zaman aşımı, yığın taşması) tanımlı bir
+Çalışma sırasındaki hatalar da (istisna, zaman aşımı, stack taşması) tanımlı bir
 tepkiye bağlanmalıdır.
 
 - Başlatma sırası belgelenmiş ve her adımın başarısızlığında ne olacağı belli mi?
@@ -160,7 +159,7 @@ tepkiye bağlanmalıdır.
   tepkiyi veriyor?
 - Çekirdek çağrılarının hata dönüş değerleri (kuyruk dolu, zaman aşımı, geçersiz
   parametre) her çağrıda denetleniyor ve tanımlı bir tepkiye bağlanıyor mu?
-- Bekçi köpeği zamanlayıcısı (watchdog) ile yeniden başlatma sonrası hangi durumun
+- Watchdog timer'ı (watchdog) ile yeniden başlatma sonrası hangi durumun
   korunacağı tanımlı mı?
 
 ## Bölümleme
@@ -227,7 +226,7 @@ dışı bırakılmış kod olarak savunmak zorundadır
 - RTOS riskleri çoğunlukla nadir tetiklenen zamanlama ve kaynak etkileşimlerinden
   gelir; bu yüzden testle birlikte analiz gerekir.
 - Her alan için soru aynıdır: en kötü durum ne, nasıl sınırlandı ve kanıtı nerede?
-- Sayaç taşması, yığın taşması ve kuyruk taşması gibi "taşma" riskleri hesapla
+- Sayaç taşması, stack taşması ve kuyruk taşması gibi "taşma" riskleri hesapla
   dışlanabilir; hesap yapılmadıysa risk açıktır. Aylar sonra ortaya çıkacak bir sayaç
   taşmasını olağan süreli test göstermez, hesap gösterir.
 - Alan bölümlemesi ile zaman bölümlemesi ayrı ayrı gösterilir; bellek koruması zaman

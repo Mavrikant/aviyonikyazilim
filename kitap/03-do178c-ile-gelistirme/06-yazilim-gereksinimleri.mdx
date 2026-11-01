@@ -23,7 +23,7 @@ tasarım yanlış yöne kayar, kod istenmeyen davranış üretir ve test ekibi n
 tam olarak bilemez.
 
 DO-178C'de bu bağ gevşek bir benzetme değildir: test, gereksinim tabanlıdır
-(requirements-based testing). Test durumları (test case) koddan değil gereksinimden üretilir ve
+(requirements-based testing). Test case'ler koddan değil gereksinimden üretilir ve
 yazılım, gereksinimin söylediğine göre "doğru" ya da "yanlış" sayılır. Gereksinimde
 yazmayan davranış test edilmez; yanlış yazılmış davranış ise kusursuz biçimde
 kodlanıp "geçti" diye doğrulanır. Gereksinim hatası, sonraki bütün adımların sadakatle
@@ -89,7 +89,7 @@ yazılıma tahsis edilen bir gereksinim de türetilmiş değildir; onun kaynağ�
 
 İki koşula birer örnek:
 
-- **İzlenemeyen:** "Yazılım, donanımın bekçi köpeği zamanlayıcısını (watchdog timer)
+- **İzlenemeyen:** "Yazılım, donanımın watchdog timer'ını
   her 10 ms'lik çerçevede bir kez yenilemelidir." Hiçbir sistem gereksinimi bundan söz
   etmez; ihtiyaç, seçilen işlemci kartından doğmuştur.
 - **Ötesinde davranış tanımlayan:** Sistem gereksinimi yalnızca "geçersiz hava hızı
@@ -133,7 +133,7 @@ flowchart TD
     D -- "türetilmiş gereksinimler" --> H["Sistem ve emniyet<br/>süreçleri"]
     E -- "eksik ya da çelişkili girdi" --> F["Sisteme geri bildirim<br/>(problem raporu)"]
     F --> A
-    E -- "kabul" --> G[Temel çizgiye alma]
+    E -- "kabul" --> G[Baseline'a alma]
 ```
 
 **Girdilerin toplanması ve analizi.** İlk adım, yazılıma tahsis edilen sistem
@@ -193,7 +193,7 @@ gereksinim kümesinin şu başlıkların her birine yanıt vermesi beklenir:
 | Zamanlama | Ne sıklıkta, ne kadar sürede? | Yazılım, hava hızı çıktısını 50 ms (±5 ms) aralıkla güncellemelidir. |
 | Bellek kısıtları | Hangi bütçenin içinde? | Yazılım, arıza kayıtları için kalıcı bellekte en çok 64 kB yer kullanmalıdır. |
 | Donanım ve yazılım arayüzleri | Hangi veri, hangi biçimde, hangi hızda? | Yazılım, hava hızını çıkış veri kelimesinde 0,25 knot çözünürlükle kodlamalıdır. |
-| Arıza tespiti ve emniyet izleme | Yazılım arızayı nasıl fark eder, ne yapar? | Yazılım, açılışta hesapladığı program belleği sağlama toplamı (checksum) beklenen değerle uyuşmazsa çıkışlarını etkinleştirmemelidir. |
+| Arıza tespiti ve emniyet izleme | Yazılım arızayı nasıl fark eder, ne yapar? | Yazılım, açılışta hesapladığı program belleği checksum beklenen değerle uyuşmazsa çıkışlarını etkinleştirmemelidir. |
 | Bölümleme | Hangi yazılım parçası hangisinden korunur? | Yazılım, bakım bölümünün (partition) gösterge bölümüne ait belleğe yazmasını engellemelidir. |
 | Anormal girdi ve koşullar | Beklenmeyen durumda ne olur? | Yazılım, 0–512 knot aralığının dışındaki hava hızı değerini geçersiz saymalıdır. |
 
@@ -273,7 +273,7 @@ standardına yazılır ve gözden geçirmede o standarda göre denetlenir.
 ## İzlenebilirlik
 
 İzlenebilirlik, iki iş ürününün öğeleri arasındaki kayıtlı ilişkidir: hangi yüksek
-seviyeli gereksinim hangi sistem gereksinimini karşılıyor, hangi test durumu hangi
+seviyeli gereksinim hangi sistem gereksinimini karşılıyor, hangi test case hangi
 gereksinimi doğruluyor. DO-178C bu ilişkilerin kaydını — iz verisini (trace data) —
 başlı başına bir yazılım yaşam döngüsü verisi (software life cycle data) sayar; yani
 iz kaydı bir yan ürün değil, üretilmesi, gözden geçirilmesi ve kontrol altında
@@ -285,7 +285,7 @@ flowchart LR
     S["Yazılıma tahsis edilen<br/>sistem gereksinimleri"] <--> H["Yüksek seviyeli<br/>gereksinimler"]
     H <--> L["Düşük seviyeli<br/>gereksinimler"]
     L <--> K[Kaynak kod]
-    H <--> T[Test durumları]
+    H <--> T[Test case'ler]
     L <--> T
 ```
 
@@ -306,7 +306,7 @@ gerekli" diye yazılmış ama hiçbir sistem gereksinimine bağlanamıyorsa, iz 
 gereksinim türetilmiş olarak ele alınır.
 
 Zincir gereksinim sürecinde bitmez: tasarım onu düşük seviyeli gereksinimlere ve koda,
-doğrulama ise test durumlarına, test prosedürlerine ve sonuçlara uzatır. Bu yüzden
+doğrulama ise test case'lere, test prosedürlerine ve sonuçlara uzatır. Bu yüzden
 izlenebilirlik sonradan kurulan bir tablo olmamalıdır. Proje sonunda geriye dönük
 doldurulan matris, bağlantıların varlığını gösterir ama doğruluğunu göstermez; iz,
 gereksinim yazılırken kurulur ve gözden geçirmede içeriğiyle birlikte sınanır.
@@ -320,7 +320,7 @@ aynı yolu izler).
 Gereksinim hatasını yakalamanın en ucuz anı, gereksinim henüz kâğıt üzerindeyken
 yapılan gözden geçirmedir. Aynı hata tasarımda yakalanırsa maliyet katlanır, testte
 yakalanırsa daha da katlanır, sahada ortaya çıkarsa artık maliyet değil emniyet
-konuşulur. Bu yüzden akran gözden geçirmesi (peer review), gereksinim sürecinin
+konuşulur. Bu yüzden peer review, gereksinim sürecinin
 süsü değil çekirdeğidir.
 
 DO-178C, yüksek seviyeli gereksinimlerin doğrulanmasında yedi şeye bakılmasını ister:
@@ -390,13 +390,13 @@ kendisi sorun değildir — kontrolsüz değişim sorundur. Bu yüzden gereksini
 konfigürasyon yönetiminin (configuration management) kapsamına giren birer
 konfigürasyon öğesi olarak ele alınır:
 her gereksinim kümesinin bir sürümü vardır ve belirli bir olgunluk noktasında
-**temel çizgi (baseline)** olarak dondurulur.
+**baseline** olarak dondurulur.
 
-Temel çizgi alındıktan sonra işleyiş değişir:
+Baseline alındıktan sonra işleyiş değişir:
 
-- Temel çizgi öncesinde yazar, gereksinimi görece serbestçe düzenleyebilir; gözden
+- Baseline öncesinde yazar, gereksinimi görece serbestçe düzenleyebilir; gözden
   geçirme bulguları gözden geçirme kaydında izlenip kapatılır.
-- Temel çizgi sonrasında her değişiklik bir değişiklik talebi ya da problem raporu
+- Baseline sonrasında her değişiklik bir değişiklik talebi ya da problem raporu
   ile başlar, etkisi analiz edilir, yetkili bir kurul (çoğu projede değişiklik kontrol
   kurulu, change control board) tarafından onaylanır ve ancak ondan sonra uygulanır.
 
@@ -505,8 +505,8 @@ zordur.
 - İzlenebilirlik iki yönlüdür: aşağı yön unutulmuş işlevi, yukarı yön dayanaksız
   gereksinimi yakalar; iz verisi güncel tutulursa değişiklik etki analizi bir sorguya
   iner.
-- Akran gözden geçirmesi kontrol listesiyle yapılır, kayıtları sertifikasyon kanıtıdır;
+- Peer review kontrol listesiyle yapılır, kayıtları sertifikasyon kanıtıdır;
   yedi doğrulama hedefinden üçünde Seviye A ve B'de bağımsızlık şarttır, yazar dışı
   gözden geçirme ise her seviyede iyi uygulamadır.
-- Temel çizgi sonrası her değişiklik etki analizi ve onaydan geçer; prototipin çıktısı
+- Baseline sonrası her değişiklik etki analizi ve onaydan geçer; prototipin çıktısı
   kod değil bilgidir ve ürüne sızması yönetilmesi gereken bir risktir.

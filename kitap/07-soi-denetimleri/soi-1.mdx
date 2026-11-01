@@ -90,7 +90,7 @@ güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değild
 
 - [ ] Yaşam döngüsü modeli ve her sürecin geçiş kriterleri (transition criteria)
       ölçülebilir biçimde tanımlı mı? ([Ek A](../06-ekler/01-ek-a-ornek-gecis-kriterleri.mdx))
-- [ ] SDP, kullanılan dili, derleyiciyi, bağlayıcıyı ve geliştirme ortamını
+- [ ] SDP, kullanılan dili, derleyiciyi, linker'ı ve geliştirme ortamını
       sürümleriyle belirtiyor; gereksinim, tasarım ve kodlama kuralları için ilgili
       standartlara atıf yapıyor mu?
 - [ ] Yazılım doğrulama planı (Software Verification Plan, SVP), yazılım seviyesinin
@@ -103,7 +103,7 @@ güvencesinin plan ve standartlara ilişkin güvencesi bu seviyede hedef değild
 - [ ] Kapsam boşluklarının, ölü kodun (dead code) ve devre dışı bırakılmış kodun nasıl
       ele alınacağı planlanmış mı?
 - [ ] Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan,
-      SCMP), konfigürasyon öğelerini, temel çizgi (baseline) kurallarını, değişiklik
+      SCMP), konfigürasyon öğelerini, baseline kurallarını, değişiklik
       kontrolünü ve problem raporlama (problem reporting) akışını tanımlıyor mu?
 - [ ] SCMP, hangi yaşam döngüsü verisinin hangi kontrol kategorisinde (control
       category; CC1 ya da CC2) yönetileceğini, arşivleme ve geri getirme yöntemini ve
@@ -157,7 +157,7 @@ PSAC'ta otoriteyle kararlaştırılır.
 | Kalite güvencesi kayıtları | Denetimde gösterilir | Kalite güvencesinin plan ve standartları gözden geçirdiğinin, bulduğu uygunsuzlukları izleyip kapattığının kanıtı |
 | Araç kalifikasyon planları (varsa) | Sunulur (TQL-1 – TQL-4); TQL-5'te ayrı plan beklenmez, yaklaşım PSAC'ta anlatılır | Araç kredisinin baştan doğru kurgulandığını gösterir; kalifikasyon yaklaşımı üzerindeki mutabakatın dayanağıdır |
 | Emniyet değerlendirmesinden ilgili çıktılar | Denetimde gösterilir | Yazılım seviyesinin gerekçesi |
-| Konfigürasyon kayıtları | Denetimde gösterilir | Denetlenen plan ve standartların hangi sürüm olduğunu, temel çizgiye alındığını ve sonraki değişikliklerin kontrol altında olduğunu gösterir |
+| Konfigürasyon kayıtları | Denetimde gösterilir | Denetlenen plan ve standartların hangi sürüm olduğunu, baseline'a alındığını ve sonraki değişikliklerin kontrol altında olduğunu gösterir |
 
 ## Sık görülen bulgular
 
@@ -168,7 +168,7 @@ PSAC'ta otoriteyle kararlaştırılır.
 | Planlar arasında çelişki (araç, sürüm, sorumluluk) | Planların farklı kişilerce, birbirinden habersiz yazılması | Planları birlikte gözden geçirmek; tek bir terim ve araç listesi tutmak |
 | Bağımsızlık gerekliliği planda yok ya da belirsiz | Ekip yapısının sonradan belirlenmesi | Bağımsızlığın arandığı hedefleri seviyeye göre çıkarıp her biri için kimin sağlayacağını SVP'ye yazmak |
 | Kalifikasyon gerektiren bir araç hiç anılmamış | Araç envanterinin çıkarılmaması | Geliştirme ve doğrulama zincirindeki her aracı listeleyip tek tek değerlendirmek |
-| Planlar konfigürasyon yönetimi altında değil | Planların "belge" değil "taslak" gibi görülmesi | Planları ilk temel çizginin parçası yapmak |
+| Planlar konfigürasyon yönetimi altında değil | Planların "belge" değil "taslak" gibi görülmesi | Planları ilk baseline'ın parçası yapmak |
 
 ## Denetimden sonra
 

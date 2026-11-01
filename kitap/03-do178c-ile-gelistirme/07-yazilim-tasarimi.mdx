@@ -189,7 +189,7 @@ sınanabileceği, hangi arayüzün entegrasyon testinde işletileceği burada ke
 ortak hizmetler ortada, uygulama mantığı üsttedir. Uygulama katmanı da kendi içinde
 işleve göre ayrılır; veri toplama, girdi doğrulama, karar mantığı, çıktı üretimi ve
 hata yönetimi ayrı bileşenlerdir. Bu düzeni değerli kılan çizimi değil, kurallarıdır:
-bağımlılık yalnızca üstten alta doğrudur, katman atlanmaz ve donanım yazmaçlarına
+bağımlılık yalnızca üstten alta doğrudur, katman atlanmaz ve donanım register'larına
 (register) yalnızca sürücü katmanı erişir. Kural tutulduğunda donanım değişikliği sürücü
 katmanında kalır, bir bileşendeki hata komşusuna ancak tanımlı arayüzden yayılabilir
 ve değişiklik etki analizinin (change impact analysis) kapsamı küçülür.
@@ -246,7 +246,7 @@ Durum diyagramının değeri eksikleri görünür kılmasıdır. Her durum için
 karşılığı sorulur ("kısıtlı çalışmadayken ikinci kaynak da bozulursa?") ve tanımsız
 kalan her çift ya bir düşük seviyeli gereksinimle doldurulur ya da bilerek yok
 sayıldığı yazılır. Diyagramdaki her geçiş bir düşük seviyeli gereksinime, o da en az
-bir test durumuna (test case) karşılık gelir; izin verilmeyen geçişler ise gürbüzlük
+bir test case'e karşılık gelir; izin verilmeyen geçişler ise gürbüzlük
 (robustness) testlerinin konusudur.
 
 ## Hata davranışının tasarımı
@@ -280,22 +280,22 @@ koddan öğrenmek zorunda kalır; bu da gereksinim tabanlı testin mantığına 
 
 ## İyi tasarımın nitelikleri
 
-İyi tasarımın en klasik iki ölçütü, **bağlaşım** (coupling) ve **iç uyum** (cohesion)
-kavramlarıdır. Bağlaşım, iki modülün birbirine ne kadar bağımlı olduğunu; iç uyum, bir
+İyi tasarımın en klasik iki ölçütü, **coupling** (coupling) ve **iç uyum** (cohesion)
+kavramlarıdır. Coupling, iki modülün birbirine ne kadar bağımlı olduğunu; iç uyum, bir
 modülün içindeki parçaların ne kadar tek bir amaca hizmet ettiğini anlatır. Hedef
-her zaman aynıdır: **bağlaşım düşük, iç uyum yüksek** olmalıdır.
+her zaman aynıdır: **coupling düşük, iç uyum yüksek** olmalıdır.
 
-Bağlaşım düşükse bir modüldeki değişiklik komşularını daha az etkiler; değişiklik
+Coupling düşükse bir modüldeki değişiklik komşularını daha az etkiler; değişiklik
 etki analizi ve yeniden doğrulama kapsamı küçülür. İç uyum yüksekse modülün ne yaptığı
 tek cümleyle anlatılabilir; gözden geçirme ve test tasarımı kolaylaşır.
 
-Bağlaşımın en sorunlu biçimi, modüllerin ortak global değişkenler üzerinden örtük
+Coupling'in en sorunlu biçimi, modüllerin ortak global değişkenler üzerinden örtük
 haberleşmesidir. Aşağıdaki C örneği farkı gösterir:
 
 ```c
 /* float32_t: projenin sabit genişlikli kayan nokta tipi. */
 
-/* Sıkı bağlaşım: iki modül global durumu paylaşıyor. */
+/* Sıkı coupling: iki modül global durumu paylaşıyor. */
 extern float32_t g_havahizi_knot;      /* sensör modülü yazar, herkes okur */
 
 void uyari_kontrol_global(void)
@@ -305,7 +305,7 @@ void uyari_kontrol_global(void)
     }
 }
 
-/* Gevşek bağlaşım: veri, açık bir arayüzden parametreyle taşınıyor. */
+/* Gevşek coupling: veri, açık bir arayüzden parametreyle taşınıyor. */
 void uyari_kontrol(float32_t havahizi_knot)
 {
     if (havahizi_knot > VNE_LIMIT) {
@@ -320,13 +320,13 @@ başka modüllerin yan etkilerini dışlamak zorundadır.
 
 Global veri yasak değildir; kesme ile görev arasında paylaşılan veri gibi durumlarda
 kaçınılmaz da olabilir. Ancak paylaşılan her verinin yazanı, okuyanları ve erişim
-koruması mimaride tanımlanmalıdır. Bileşenler arasındaki veri ve kontrol bağlaşımı
+koruması mimaride tanımlanmalıdır. Bileşenler arasındaki data ve control coupling
 tasarım verisinin parçasıdır; Seviye A, B ve C'de gereksinim tabanlı testlerin bu
-bağlaşımları ne ölçüde işlettiği ayrıca analiz edilir (bkz.
-[9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx)). Mimaride görünmeyen bir bağlaşım, o
+coupling'ler ne ölçüde işlettiği ayrıca analiz edilir (bkz.
+[9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx)). Mimaride görünmeyen bir coupling, o
 analizde de görünmez.
 
-Bağlaşım ve iç uyumun ötesinde, emniyet-kritik tasarımda aranan nitelikler şunlardır:
+Coupling ve iç uyumun ötesinde, emniyet-kritik tasarımda aranan nitelikler şunlardır:
 
 - **Doğrulanabilirlik**: Her düşük seviyeli gereksinim, gözlemlenebilir bir davranışa
   karşılık gelmeli; "test edilemeyen tasarım" bir tasarım hatasıdır.
@@ -345,11 +345,11 @@ Bu nitelikler ölçülebilir de kılınabilir. Pratikte kullanılan göstergeler
 
 | Nitelik | Tipik gösterge |
 |---|---|
-| Bağlaşım | Modül başına dış bağımlılık sayısı, global veri erişim sayısı |
+| Coupling | Modül başına dış bağımlılık sayısı, global veri erişim sayısı |
 | İç uyum | Modülün tek sorumlulukla tarif edilebilmesi (gözden geçirme ölçütü) |
-| Basitlik | Çevrimsel karmaşıklık (cyclomatic complexity) üst sınırı |
+| Basitlik | Cyclomatic complexity üst sınırı |
 | Doğrulanabilirlik | Test edilemeyen düşük seviyeli gereksinim sayısı (hedef: sıfır) |
-| Öngörülebilirlik | Statik olarak hesaplanabilen en derin çağrı zinciri ve yığın kullanımı |
+| Öngörülebilirlik | Statik olarak hesaplanabilen en derin çağrı zinciri ve stack kullanımı |
 
 Bu eşikler proje standartlarında (tasarım ve kodlama standartları) sayısal olarak
 tanımlanır; gözden geçirmelerde ve statik analizde otomatik denetlenebilir hâle
@@ -495,7 +495,7 @@ bölümünün konusudur.
 - Arayüz tanımı birim, aralık, güncelleme hızı ve geçerlilik bilgisini içerir; normal
   çalışma, kısıtlı çalışma ve güvenli durum arasındaki geçişler ile hata algılama ve
   tepki kuralları tasarımda yazılıdır.
-- Bağlaşım düşük, iç uyum yüksek tutulur; doğrulanabilirlik, basitlik ve
+- Coupling düşük, iç uyum yüksek tutulur; doğrulanabilirlik, basitlik ve
   öngörülebilirlik proje standartlarında ölçülebilir eşiklere bağlanır.
 - Tasarım, gözden geçirme ve analizle doğrulanır; beklenti yazılım seviyesine göre
   değişir ve Seviye D'de tasarım doğrulamasından yalnızca bölümleme bütünlüğü kalır.

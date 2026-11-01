@@ -99,7 +99,7 @@ az esnek olduğu anda yapılır.
 SDP, geliştirme ekibinin çalışma kılavuzudur ve üç şeyi tanımlar: yazılım yaşam
 döngüsünü (süreçler, aralarındaki ilişki ve geçiş kriterleri), kullanılacak standartları
 ve geliştirme ortamını (gereksinim ve tasarım yöntemleri, programlama dili, derleyici,
-bağlayıcı, yükleyici, diğer araçlar ve bunların çalıştığı donanım platformları).
+linker, yükleyici, diğer araçlar ve bunların çalıştığı donanım platformları).
 Gereksinim, tasarım ve kod kurallarının kendisi SDP'de değil standartlarda yer alır; SDP
 onlara atıf yapar. Küçük projelerde standartlar SDP ile aynı belgede paketlenebilir; o
 durumda da kurallar numaralı ve atıf yapılabilir kalmalıdır.
@@ -119,7 +119,7 @@ yapısal kapsam (structural coverage) hangi araçla ölçülecek, kapsanmayan ko
 
 ### Yazılım konfigürasyon yönetimi planı (SCMP)
 
-SCMP; konfigürasyon tanımlama kurallarını (adlandırma, sürümleme), temel çizgileri
+SCMP; konfigürasyon tanımlama kurallarını (adlandırma, sürümleme), baseline'ları
 (baseline), problem raporlama (problem reporting) ve değişiklik kontrolü akışını,
 konfigürasyon durum muhasebesini (configuration status accounting), arşivleme, geri
 getirme ve sürüm teslimini, yazılım yükleme kontrolünü ve yaşam döngüsü ortamının
@@ -138,7 +138,7 @@ review), sertifikasyona sunulan sürüm için süreçlerin tamamlandığını, v
 olduğunu ve çalıştırılabilir nesne kodunun kontrol altında ve yeniden üretilebilir
 olduğunu gösteren kapanış denetimidir. Tipik zayıflık ölçülemeyen taahhüttür: "kalite
 güvencesi tüm faaliyetleri izler" cümlesi ne planlanabilir ne de denetlenebilir; "her
-temel çizgi öncesinde geçiş kriterleri kontrol listesiyle denetlenir" cümlesi ikisini
+baseline öncesinde geçiş kriterleri kontrol listesiyle denetlenir" cümlesi ikisini
 de sağlar.
 
 ### Planlar arasındaki ilişki
@@ -183,7 +183,7 @@ Sırayı belirleyen araç geçiş kriterleridir (transition criteria): bir süre
 için sağlanması gereken koşullar. İyi bir kriter, bir kaydın varlığıyla denetlenebilir.
 "Gereksinimler yeterince olgunlaşınca tasarıma başlanır" cümlesi denetlenemez; "tasarımı
 yapılacak işlevin yüksek seviyeli gereksinimleri gözden geçirilmiş, bulguları kapatılmış
-ve temel çizgiye alınmıştır" cümlesi denetlenebilir.
+ve baseline'a alınmıştır" cümlesi denetlenebilir.
 
 Kriter yazarken iki noktaya dikkat edilir:
 
@@ -192,7 +192,7 @@ Kriter yazarken iki noktaya dikkat edilir:
   bazında tanımlanabilir. Kâğıt üzerinde katı bir şelale tarif edip fiilen artımlı
   çalışan ekip, her denetimde planından sapmış görünür.
 - **Kriterler yalnızca geliştirme süreçleri için yazılmaz.** Kredi alınacak testlerin
-  hangi koşulda başlayabileceği (kod temel çizgiye alınmış mı, test prosedürleri gözden
+  hangi koşulda başlayabileceği (kod baseline'a alınmış mı, test prosedürleri gözden
   geçirilmiş mi, test ortamı kayıtlı mı) en az tasarıma geçiş kadar önemlidir.
 
 Kriterlerin sağlandığını izlemek kalite güvencesinin işidir; bu yüzden her kriterin
@@ -268,10 +268,10 @@ alınır ve projeye özgü eklemelerle genişletilir. Kural kümesinin hangi sü
 alındığı standartta açıkça yazılır ve statik analiz aracının o sürümü desteklediği
 planlama sırasında kontrol edilir. Tipik içerik şöyledir:
 
-- dil alt kümesi: hangi dil özelliklerinin yasak olduğu (örn. `goto`, işaretçi
+- dil alt kümesi: hangi dil özelliklerinin yasak olduğu (örn. `goto`, pointer
   aritmetiğinin sınırlanması, örtük tip dönüşümleri),
 - adlandırma, dosya düzeni ve yorum kuralları,
-- karmaşıklık sınırları (örn. fonksiyon başına çevrimsel karmaşıklık (cyclomatic
+- karmaşıklık sınırları (örn. fonksiyon başına cyclomatic complexity (cyclomatic
   complexity) üst sınırı),
 - derleyici uyarılarının nasıl ele alınacağı,
 - sapma (deviation) mekanizması: bir kural ihlalinin hangi gerekçeyle, kimin onayıyla
@@ -322,7 +322,7 @@ bütün doğrulama işinin maliyetini belirlediği için planlama kararıdır.
 
 - **Dil, derleyici ve derleme seçenekleri.** Uçağa yüklenen ve doğrulanması gereken
   ürün çalıştırılabilir nesne kodu olduğundan, derleyicinin sürümü kadar hangi
-  seçeneklerle ve hangi eniyileme (optimization) düzeyinde kullanılacağı da planlanır. Seviye A'da kaynak
+  seçeneklerle ve hangi optimizasyon düzeyinde kullanılacağı da planlanır. Seviye A'da kaynak
   koda doğrudan izlenemeyen nesne kodu ek doğrulama gerektirdiği için bu seçim doğrudan
   iş yüküne dönüşür.
 - **Geliştirme araçları.** Gereksinim yönetimi, modelleme ve kod üretimi araçları hem
@@ -407,7 +407,7 @@ gerekçenin yazılması iyi bir alışkanlıktır; çünkü otoritenin ilk sorul
 genellikle "bu araca neden güveniyorsunuz?" olur.
 
 Deneyimden gelen bir uyarı: en çok gözden kaçan araçlar, gösterişli geliştirme
-araçları değil, arka plandaki küçük betiklerdir. Test sonuçlarını toplayan bir betik,
+araçları değil, arka plandaki küçük script'lerdir. Test sonuçlarını toplayan bir script,
 izlenebilirlik matrisini üreten bir makro ya da yapılandırma dosyalarını dönüştüren
 bir araç da aynı sorgulamadan geçmelidir. Planlama aşamasında eksiksiz bir araç
 envanteri çıkarmak, bu sürprizleri önlemenin en ucuz yoludur.
@@ -498,7 +498,7 @@ kötü kurgulanmış bir sette ise aynı cevabın üç farklı sürümü üç fa
 - Dil, derleyici, derleme seçenekleri ve test ortamı planlama kararıdır; ortam kayıt
   altına alınır ve proje ortasındaki değişikliği yeniden doğrulama gerektirebilir.
 - Araç kalifikasyonu, araç hata ekleyebiliyor ya da gözden kaçırabiliyor ve çıktısı
-  ayrıca doğrulanmıyorsa gerekir; karar gerekçesiyle PSAC'a yazılır ve küçük betikler de
+  ayrıca doğrulanmıyorsa gerekir; karar gerekçesiyle PSAC'a yazılır ve küçük script'ler de
   araç envanterine dahildir.
 - Planlar gözden geçirilir ve kontrollü değişir; plandan sapma kayda geçer. Ek planlar
   beş planı tamamlar; her konu tek belgede tanımlanır, diğerleri ona atıf yapar.

@@ -67,7 +67,7 @@ da devre dışı bırakılmış kod üretmez. Sahada en çok karıştırılan ya
 | Savunmacı programlama (defensive programming) yapısı; ör. ulaşılmaması gereken `default` dalı | Ölü kod sayıp silmek | Ölü kod değildir; gereksinim ya da tasarım dayanağı gösterilir, testle ulaşılamayan kısım analizle gerekçelendirilir |
 | Gömülü tanımlayıcı (embedded identifier); ör. imaja (image) yerleştirilmiş parça numarası, sürüm dizgesi | Kullanılmayan veri diye ölü kod saymak | Ölü kod değildir; varlık nedeni tasarımda açıklanır |
 | Bağlanan ama çağrılmayan kütüphane ya da işletim sistemi işlevi | Ölü kod saymak ya da hiç anmamak | Gereksinime izleniyor ve tasarım gereği çalıştırılmıyorsa devre dışı bırakılmış koddur; planlarda beyan edilir ve etkinleşemeyeceği gösterilir. Hiçbir gereksinime izlenmiyorsa gereksiz koddur |
-| Derleyicinin ya da bağlayıcının imaja almadığı kaynak kod | "İmajda yok, sorun yok" deyip bırakmak | Gereksinime izlenmiyorsa kaynak düzeyinde gereksiz koddur; kaldırılır ya da aşağıdaki iki koşul sağlanır |
+| Derleyicinin ya da linker'ın imaja almadığı kaynak kod | "İmajda yok, sorun yok" deyip bırakmak | Gereksinime izlenmiyorsa kaynak düzeyinde gereksiz koddur; kaldırılır ya da aşağıdaki iki koşul sağlanır |
 | Koşullu derleme (conditional compilation) ile dışarıda bırakılan kod | Çalışma zamanında kapatılan kodla aynı kanıtı yeterli saymak | İmajda bulunmaz; sözlük tanımı çalıştırılabilir nesne kodunu esas aldığından tanımın harfiyle devre dışı bırakılmış kod değildir, ama uygulamada o başlık altında planlandığı da görülür. Her derleme varyantı ayrı doğrulanır |
 | Derleyicinin eklediği, kaynak koda doğrudan izlenemeyen nesne kodu | Gereksiz ya da devre dışı bırakılmış kod saymak | Aralık ve dizi indisi denetimi gibi eklemeler gerçekleştirmenin parçasıdır; Seviye A'da belirlenir ve doğruluğu ek doğrulamayla gösterilir |
 
@@ -77,7 +77,7 @@ tasarım kararı ya da kodlama standardının hangi kuralı istiyor? Yanıt yoks
 değil, gereksizdir.
 
 Kütüphane ve gerçek zamanlı işletim sistemi (real-time operating system, RTOS) işlevleri
-ayrı bir dikkat ister, çünkü bağlayıcı çoğu zaman projenin çağırmadığı işlevleri de imaja
+ayrı bir dikkat ister, çünkü linker çoğu zaman projenin çağırmadığı işlevleri de imaja
 çeker. Bunların hangi sınıfa girdiğini kullanılmamaları değil, ardındaki veri belirler;
 ayrıntısı [20. Gerçek Zamanlı İşletim Sistemleri](./20-gercek-zamanli-isletim-sistemleri.mdx)
 bölümünde ve
@@ -88,8 +88,8 @@ kullanılmayan kısımları için aynı soru
 
 Kaynakta bulunan ama imaja girmeyen gereksiz kod için DO-178C dar bir kapı bırakır: kodun
 çalıştırılabilir nesne kodunda bulunmadığı analizle gösterilir ve sonraki derlemelere
-girmesini önleyen prosedürler tanımlanırsa kod kaynakta kalabilir. Eniyileme düzeyi ya da
-bağlayıcı seçeneği değiştiğinde aynı kod imaja geri dönebileceği için ikinci koşul
+girmesini önleyen prosedürler tanımlanırsa kod kaynakta kalabilir. Optimizasyon düzeyi ya da
+linker seçeneği değiştiğinde aynı kod imaja geri dönebileceği için ikinci koşul
 birincisi kadar önemlidir. Temiz çözüm yine kaldırmaktır.
 
 ## Ölü ve gereksiz kodun ele alınması
@@ -103,8 +103,7 @@ Buradaki kritik nokta şudur: kapsanmayan kod, kendi başına bir sonuç değil,
 
 DO-178C, kapsanmayan kod için dört olası neden sayar:
 
-1. **Test eksikliği** — Kod bir gereksinimi gerçekliyor, ama gereksinim tabanlı test
-   durumları ya da prosedürleri o yolu tetiklememiş. Çözüm: test durumu (test case)
+1. **Test eksikliği** — Kod bir gereksinimi gerçekliyor, ama gereksinim tabanlı test case'ler ya da prosedürleri o yolu tetiklememiş. Çözüm: test case
    eklemek ya da mevcut testi güçlendirmek; boşluğu gereksinim kapsam analizinin neden
    yakalamadığına da bakılır.
 2. **Gereksinim eksikliği** — Kod gerekli bir davranışı gerçekliyor, ama bu davranış
@@ -184,7 +183,7 @@ Kapsam raporunda bu durum iki izle görünür: son atama deyimi hiç çalışmam
 içeride unutulmuş bir kalıntıdır; hiçbir gereksinim "varsayılan kazanç" diye bir
 davranış tanımlamaz. Çözüm ikinci koşulu ve ölü dalı silmektir. Aynı satırlar bir
 tasarım kararına dayansaydı savunmacı yapı sayılırdı; sınıfı belirleyen kodun biçimi
-değil, dayanağıdır. Derleyici bu dalı eniyileme sırasında atabilir; o zaman kod imajda
+değil, dayanağıdır. Derleyici bu dalı optimizasyon sırasında atabilir; o zaman kod imajda
 yoktur ama kaynakta gereksiz kod olarak durmaya devam eder.
 
 İkincisi ölü olmayan gereksiz kod. Bakım portundan gelen komutları işleyen tabloda bir
@@ -227,7 +226,7 @@ anlatılır.
 
 | Durum | Tipik karar | Beklenen kanıt |
 |---|---|---|
-| Test eksikliği | Test durumu ekle | Yeni test durumu ve prosedürü, güncel kapsam sonucu |
+| Test eksikliği | Test case ekle | Yeni test case ve prosedürü, güncel kapsam sonucu |
 | Gereksinim eksikliği | Gereksinim ve test ekle | Güncel gereksinim, izlenebilirlik kaydı, test |
 | Gereksiz kod (ölü kod dahil) | Kaldır | Problem raporu, değişiklik etki analizi, yeniden doğrulama |
 | Savunmacı yapı | Analizle gerekçelendir | Gereksinim ya da tasarım dayanağı, yazılı analiz, gözden geçirme kaydı |
@@ -269,7 +268,7 @@ Sahada en sık karşılaşılan durumlar şunlardır:
   etkinleşen test ve kalibrasyon işlevleri.
 - **Yeniden kullanılan bileşenler ve kütüphaneler**: Başka bir proje için geliştirilmiş
   bileşenin ya da bir kütüphanenin, bu projenin çağırmadığı ama imaja giren işlevleri.
-- **Gelecek sürüm işlevleri**: Kodda hazır bekleyen ama bu sertifikasyon temel çizgisinde
+- **Gelecek sürüm işlevleri**: Kodda hazır bekleyen ama bu sertifikasyon baseline'ında
   (baseline) etkinleştirilmeyen özellikler. Bu senaryo meşru olmakla birlikte en
   riskli olanıdır ve otoriteyle erken konuşulmalıdır.
 
@@ -356,9 +355,9 @@ hedeflere (objective) tabidir: gereksinimi, tasarımı ve gözden geçirmesi var
   değerlendirme sürecinden, doğrulaması hafifletilecekse gerekçesi yazılım geliştirme
   süreçlerinden gelir; ikisi de PSAC'a yazılır.
 - **İkinci kategori için kendi doğrulaması**: Kodun çalıştığı konfigürasyon kurulur ve
-  kapsam hedefleri ek test durumları ve prosedürleriyle o konfigürasyonda karşılanır.
+  kapsam hedefleri ek test case'ler ve prosedürleriyle o konfigürasyonda karşılanır.
   Hedef konfigürasyon için ise yolun kapalı kaldığı gösterilir.
-- **Konfigürasyon yönetimi kaydı**: Hangi temel çizgide hangi konfigürasyonun geçerli
+- **Konfigürasyon yönetimi kaydı**: Hangi baseline'da hangi konfigürasyonun geçerli
   olduğu ve hangi kodun devre dışı kaldığı izlenebilir olmalıdır.
 
 Gelecek sürüm işlevleri birinci kategoriye girer; bu sürümde yapısal kapsam açısından
@@ -375,7 +374,7 @@ mekanizması** vardır. Bu izlenebilirlik yoksa kod gereksiz kod — çalışmas
 ## Önleme: sorunu kapsam analizinden önce yakalamak
 
 Kapsam analizi bu kodları bulmanın son ve en pahalı yeridir; bulgu oraya kaldığında
-testler yazılmış, temel çizgiler atılmıştır. Daha erken ve ucuz üç denetim noktası
+testler yazılmış, baseline'lar atılmıştır. Daha erken ve ucuz üç denetim noktası
 vardır:
 
 - **Kod gözden geçirmesinde izlenebilirlik denetimi.** Her işlevin, hatta her dalın
@@ -383,8 +382,7 @@ vardır:
   silinir (bkz.
   [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx)).
 - **Statik analiz ve derleyici uyarıları.** Erişilemeyen kod, hiç çağrılmayan işlev ve
-  kullanılmayan değişken, araçların iyi bulduğu kusurlardır. Bağlayıcının harita
-  dosyası da imaja hangi işlevlerin gerçekten girdiğini gösterir.
+  kullanılmayan değişken, araçların iyi bulduğu kusurlardır. Linker'ın map dosyası da imaja hangi işlevlerin gerçekten girdiğini gösterir.
 - **Kapsamın geliştirme boyunca izlenmesi.** Kapsam verisi testler yazıldıkça
   toplanırsa her boşluk, bağlamı tazeyken tek tek çözülür.
 

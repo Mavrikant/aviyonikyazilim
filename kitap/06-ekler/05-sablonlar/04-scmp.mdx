@@ -2,16 +2,16 @@
 title: "SCMP Şablonu ve Yazım Rehberi"
 sidebar_label: SCMP
 sidebar_position: 4
-description: "SCMP şablonu: konfigürasyon yönetimi planının içindekileri, temel çizgi, problem raporu ve CC1/CC2 kararları, DO-178C §11.4 uyum tablosu."
+description: "SCMP şablonu: konfigürasyon yönetimi planının içindekileri, baseline, problem raporu ve CC1/CC2 kararları, DO-178C §11.4 uyum tablosu."
 ---
 
 Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP), projede
-yaşam döngüsü verisinin nasıl kimlik alacağını, temel çizgiye (baseline) alınacağını,
+yaşam döngüsü verisinin nasıl kimlik alacağını, baseline'a alınacağını,
 değiştirileceğini, arşivleneceğini ve hedefe yükleneceğini tanımlayan plandır. Okurları iş
 ürünü üreten bütün ekip, konfigürasyon yönetimi sorumlusu, kalite güvencesi (quality
 assurance) ve denetimde sertifikasyon otoritesidir (certification authority). Planı
 genellikle konfigürasyon yönetimi sorumlusu yazar; yazılım proje yöneticisi ve kalite
-güvencesi onaylar. Diğer planlarla birlikte planlama sürecinde yazılır ve ilk temel çizgiden
+güvencesi onaylar. Diğer planlarla birlikte planlama sürecinde yazılır ve ilk baseline'dan
 önce yürürlüğe girer, çünkü planların kendisi de onun kurallarıyla kontrol altına alınır.
 
 Planın neden erken yazıldığı [5. Yazılım Planlama](../../03-do178c-ile-gelistirme/05-yazilim-planlama.mdx),
@@ -56,10 +56,10 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 3.2 Kimlik, sürüm ve parça numarası kuralları
 3.3 Yazılım kimliğinin sistem ve ekipman kimliğiyle ilişkisi
 3.4 İmaja gömülü kimlik
-4 Temel çizgiler ve izlenebilirlik
-4.1 Temel çizgi listesi ve kurulma anları
+4 Baseline'lar ve izlenebilirlik
+4.1 Baseline listesi ve kurulma anları
 4.2 Yazılım kütüphaneleri ve erişim hakları
-4.3 Öğe ve temel çizgi izlenebilirliği
+4.3 Öğe ve baseline izlenebilirliği
 4.4 Önceden geliştirilmiş yazılım
 5 Problem raporlama
 5.1 Kapsam ve gözden geçirme bulgusuyla sınır
@@ -147,15 +147,15 @@ tarafından okunacağını söyler.
 |---|---|
 | Tüm dosyalar sürüm kontrol sisteminde tutulur. | Her konfigürasyon öğesi `<proje>-<tür>-<sıra no>` kimliği ve harf sürümü alır; yüklenebilir her imaj ve PDI dosyası ayrıca parça numarası taşır ve içeriği değişen dosyaya yeni parça numarası verilir. |
 
-### 4. Temel çizgiler ve izlenebilirlik
+### 4. Baseline'lar ve izlenebilirlik
 
-Temel çizgi listesi, yazılım geliştirme planı (Software Development Plan, SDP) ile yazılım
+Baseline listesi, yazılım geliştirme planı (Software Development Plan, SDP) ile yazılım
 doğrulama planındaki (Software Verification Plan, SVP) geçiş kriterleriyle (transition
-criteria) aynı adları kullanır. Listenin ilk satırı genellikle planlama temel çizgisidir:
-planlar ve standartlar, gözden geçirmeleri kapanınca bu temel çizgiye alınır ve geliştirme
+criteria) aynı adları kullanır. Listenin ilk satırı genellikle planlama baseline'ıdır:
+planlar ve standartlar, gözden geçirmeleri kapanınca bu baseline'a alınır ve geliştirme
 ona dayanarak başlar. Yazılım kütüphaneleri (software library) genellikle üç katmanlıdır:
 serbest çalışılan geliştirme, yalnızca onaylı değişikliği kabul eden kontrollü ve teslim
-edilen sürümlerin değişmeden durduğu sürüm kütüphanesi. Ürün temel çizgisi yazılım konfigürasyon
+edilen sürümlerin değişmeden durduğu sürüm kütüphanesi. Ürün baseline'ı yazılım konfigürasyon
 indeksinde (Software Configuration Index, SCI) tanımlanır; kullanıcı tarafından
 değiştirilebilir yazılımın (user-modifiable software) yalnızca koruma ve sınır bileşenleri
 ona girer. Önceden geliştirilmiş yazılım (previously developed software, PDS) varsa önceki
@@ -163,27 +163,27 @@ uygulamadan yenisine izlenebilirlik (traceability) de burada kurulur.
 
 **Verilecek kararlar:**
 
-- Hangi temel çizgiler kurulacak, her biri hangi geçiş kriterine bağlı; planlar ve standartlar
-  hangi temel çizgiyle, SOI-1'den önce mi kontrol altına girer?
-- Temel çizgi hangi araç işleviyle dondurulur: etiket, içerik listesi, sağlama toplamı
-  (checksum)? Gereksinim ya da model aracındaki "Onaylı" kayıt durumu tek başına temel çizgi
+- Hangi baseline'lar kurulacak, her biri hangi geçiş kriterine bağlı; planlar ve standartlar
+  hangi baseline ile, SOI-1'den önce mi kontrol altına girer?
+- Baseline hangi araç işleviyle dondurulur: etiket, içerik listesi, checksum
+  (checksum)? Gereksinim ya da model aracındaki "Onaylı" kayıt durumu tek başına baseline
   sayılır mı, yoksa araçta ayrıca etiket ya da anlık görüntü mü alınır?
 - Kontrollü kütüphaneye kim yazabilir; onaysız değişiklik teknik olarak engelleniyor mu?
 - Dal (branch) yapısı nasıl; birleştirme (merge) isteğinin araçtaki onayı değişiklik onayı ya
-  da akran gözden geçirmesi (peer review) kaydı yerine geçer mi, geçerse hangi alanları taşır?
-- İki temel çizgi arasındaki fark hangi raporla, hangi kayıtlara bağlanarak gösterilir?
+  da peer review kaydı yerine geçer mi, geçerse hangi alanları taşır?
+- İki baseline arasındaki fark hangi raporla, hangi kayıtlara bağlanarak gösterilir?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Gerektiğinde temel çizgi alınır. | Gereksinim temel çizgisi, yüksek seviyeli gereksinimlerin gözden geçirme bulguları kapandığında kurulur; kurulma kaydı temel çizgi kimliğini, içerdiği öğe sürümlerini ve onaylayanı gösterir. |
+| Gerektiğinde baseline alınır. | Gereksinim baseline'ı, yüksek seviyeli gereksinimlerin gözden geçirme bulguları kapandığında kurulur; kurulma kaydı baseline kimliğini, içerdiği öğe sürümlerini ve onaylayanı gösterir. |
 
 ### 5. Problem raporlama
 
 Kapsam üç türdür: yazılımın anormal davranışı, yaşam döngüsü verisindeki kusur ve plana ya
 da standarda uygunsuzluk (nonconformance). Bölüm önce sınırı çizer: hangi bulgu problem
 raporuna (problem report), hangisi gözden geçirme kaydına gider? Savunulabilir bir kural
-şudur: temel çizgiye alınmış bir öğedeki her kusur problem raporudur; temel çizgi öncesindeki
-akran gözden geçirmesi bulgusu gözden geçirme kaydında kapanır. Süreç uygunsuzlukları aynı
+şudur: baseline'a alınmış bir öğedeki her kusur problem raporudur; baseline öncesindeki
+peer review bulgusu gözden geçirme kaydında kapanır. Süreç uygunsuzlukları aynı
 sistemde ya da ayrı bir kalite güvencesi kaydında tutulabilir; seçim ne olursa olsun yazılım
 kalite güvencesi planı (Software Quality Assurance Plan, SQAP) bu akışa atıf yapar ve yalnızca
 kalite güvencesine özgü adımları ekler.
@@ -226,7 +226,7 @@ tanımlanabilir; bu raporlar her yazılım uygunluk gözden geçirmesinde (softw
 review) yeniden değerlendirilir. SVP, SQAP ve PSAC bu durum adlarını aynen kullanır.
 
 :::warning[Bulgu ile problem raporu sınırı]
-Sınır yazılmazsa iki uç birlikte görülür: temel çizgideki koddaki bir hata "küçük" diye
+Sınır yazılmazsa iki uç birlikte görülür: baseline'daki koddaki bir hata "küçük" diye
 e-postayla düzeltilir, erken taslaklardaki her yazım hatası için ise rapor açılıp sistem
 anlamsız kayıtlarla dolar. Sınır, bir öğenin hangi andan itibaren rapora tabi olduğunu tek
 cümleyle söyler; kalite güvencesi bunu örnek kayıtlar üzerinden denetler.
@@ -234,7 +234,7 @@ cümleyle söyler; kalite güvencesi bunu örnek kayıtlar üzerinden denetler.
 
 **Verilecek kararlar:**
 
-- Problem raporu hangi andan zorunlu: ilk temel çizgiyle mi, ilk kredi amaçlı kullanımla mı?
+- Problem raporu hangi andan zorunlu: ilk baseline ile mi, ilk kredi amaçlı kullanımla mı?
 - Süreç uygunsuzlukları aynı sistemde mi, ayrı kalite güvencesi kaydında mı tutulacak?
 - Proje içi sınıflar teslimde dört sınıfa hangi kuralla eşlenecek; eşlemeyi kim yapar?
 - Durum akışı hangi adımlardan oluşur, Ertelendi durumu var mı; kapanışı ve reddi hangi rol,
@@ -245,7 +245,7 @@ cümleyle söyler; kalite güvencesi bunu örnek kayıtlar üzerinden denetler.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Hatalar problem raporlama aracında takip edilir. | Temel çizgideki bir öğede bulunan her kusur, plana ya da standarda her uygunsuzluk ve hedefte görülen her anormal davranış için problem raporu açılır; temel çizgi öncesi akran gözden geçirmesi bulguları gözden geçirme kaydında kapanır, onaylı sapmalar ayrı sapma kaydında tutulur. |
+| Hatalar problem raporlama aracında takip edilir. | Baseline'daki bir öğede bulunan her kusur, plana ya da standarda her uygunsuzluk ve hedefte görülen her anormal davranış için problem raporu açılır; baseline öncesi peer review bulguları gözden geçirme kaydında kapanır, onaylı sapmalar ayrı sapma kaydında tutulur. |
 
 ### 6. Değişiklik kontrolü
 
@@ -302,7 +302,7 @@ tutulacağını ve kurula hangi biçimde geleceğini söyler.
 
 Konfigürasyon durum muhasebesi (configuration status accounting), herhangi bir gün
 sorulabilecek "ürün şu an tam olarak hangi durumda?" sorusuna kayıttan verilen cevaptır: bir
-temel çizgide hangi sürümler duruyor, hangi raporlar açık, son teslimden bu yana ne değişti.
+baseline'da hangi sürümler duruyor, hangi raporlar açık, son teslimden bu yana ne değişti.
 Plan bu cevabın hangi araçtan, hangi sorguyla üretildiğini ve kimin önüne ne sıklıkla
 geldiğini yazar; elle güncellenen bir liste, araçtaki kayıtla çeliştiği ilk denetimde
 güvenini yitirir. Teslimde SAS, SCI ve sürüm notundaki açık rapor listeleri aynı tarihte ve
@@ -310,7 +310,7 @@ aynı kaynaktan, tercihen araç sorgusuyla üretilir.
 
 **Verilecek kararlar:**
 
-- Hangi raporlar üretilecek (temel çizgi içeriği, açık rapor listesi, iki sürüm farkı)?
+- Hangi raporlar üretilecek (baseline içeriği, açık rapor listesi, iki sürüm farkı)?
 - Raporlar hangi araçtan, hangi sorguyla üretiliyor; elle tutulan liste kalıyor mu?
 - Raporlar hangi sıklıkla kime dağıtılıyor; kurul toplantısına hangisi giriyor?
 
@@ -335,11 +335,11 @@ değiştirilebilir kaldıkça erişilebilir olmalıdır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Arşiv düzenli olarak yedeklenir. | Her sürüm tesliminde arşivden temiz bir ortamda yeniden derleme yapılır ve imajın sağlama toplamı SCI'deki değerle karşılaştırılır; sonuç sürüm teslim kaydına eklenir. |
+| Arşiv düzenli olarak yedeklenir. | Her sürüm tesliminde arşivden temiz bir ortamda yeniden derleme yapılır ve imajın checksum SCI'deki değerle karşılaştırılır; sonuç sürüm teslim kaydına eklenir. |
 
 Dikkat: güçlü ifade DO-178C'nin dayattığı bir yöntem değil, iyi uygulama örneğidir; standart
 geri getirilebilirliği ve kopyalamanın doğrulanmasını ister, yöntemi projeye bırakır.
-Karşılaştırma ancak derleme bit düzeyinde belirlenimciyse (deterministic) anlamlıdır; değilse
+Karşılaştırma ancak derleme bit düzeyinde deterministikse anlamlıdır; değilse
 farkın kaynağı analizle gösterilir.
 
 ### 10. Yazılım yükleme kontrolü
@@ -348,7 +348,7 @@ Yazılım yükleme kontrolü (software load control), arşivde teslim edilmiş i
 dosyalarıyla ekipmana yüklenenlerin aynı olduğunu gösteren zincirdir. Yükleme üretim hattında
 da bakımda da yapılsa plan aynı soruları yanıtlar: yüklenecek şeyin parça numarası ve medya ya
 da paket kimliği ne, hangi donanım sürümüyle uyumlu olduğu hangi kayıtta yazılı? Uygulamada
-buna sağlama toplamı ya da döngüsel artıklık denetimi (cyclic redundancy check, CRC) gibi
+buna checksum ya da döngüsel artıklık denetimi (cyclic redundancy check, CRC) gibi
 bir bütünlük denetimi, SCI'deki yükleme talimatları ve PDI ile nesne kodu
 sürümlerinin uyumluluk kaydı eklenir (bkz.
 [18. Sahada Yüklenebilir Yazılım](../../05-ozel-konular/18-sahada-yuklenebilir-yazilim.mdx),
@@ -372,10 +372,10 @@ konfigürasyon öğeleri listesidir. İmajı üreten ya da hedefe taşıyan zinc
 edilmemiş araçlar için asgari rejim CC2'dir; kalifiye bir aracın kendisi ve kalifikasyon
 verisi ise DO-330'da araç kalifikasyon seviyesine (tool qualification level, TQL) bağlı
 kategoride tutulur. Plan, 3–9. bölümlerdeki faaliyetlerin araçlara nasıl uygulandığını tek
-tek yazar. CC2 araçta temel çizgi ve problem raporu asgari değildir; ama resmî derleme
-ortamını temel çizgiye almak ve derleyici sürümü değişikliğini kod değişikliği gibi kurula
+tek yazar. CC2 araçta baseline ve problem raporu asgari değildir; ama resmî derleme
+ortamını baseline'a almak ve derleyici sürümü değişikliğini kod değişikliği gibi kurula
 getirmek iyi uygulamadır. Resmî derleme ortamı ayrıca tanımlanır: temiz ortamda sıfırdan
-derleme, betiğe gömülü derleme seçenekleri ve her resmî derlemede üretilen derleme kaydı (bkz.
+derleme, script'e gömülü derleme seçenekleri ve her resmî derlemede üretilen derleme kaydı (bkz.
 [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx)).
 
 **Verilecek kararlar:**
@@ -396,7 +396,7 @@ derleme, betiğe gömülü derleme seçenekleri ve her resmî derlemede üretile
 ### 12. Yaşam döngüsü verisi kontrolleri: CC1 ve CC2
 
 Bu bölüm her verinin kontrol kategorisini (control category) tablo olarak verir. CC1 tam
-kontroldür: temel çizgi, problem raporlama, değişikliğin kaydı ve onayı, değişiklik gözden
+kontroldür: baseline, problem raporlama, değişikliğin kaydı ve onayı, değişiklik gözden
 geçirmesi ve durum muhasebesi dahil bütün faaliyetler uygulanır. CC2 bunun alt kümesidir:
 tanımlama, türetildiği öğeye izlenebilirlik, kimliğin ve bütünlüğün korunması, yetkisiz
 değişikliğe karşı koruma, geri getirme ve saklama yeterlidir; düzeltme problem raporu
@@ -411,7 +411,7 @@ bölümündedir.
 | PSAC, SCI, SAS | CC1 | CC1 |
 | Gereksinim verisi, tasarım tanımı, kaynak kod | CC1 | CC1 |
 | Nesne kodu, PDI dosyası, SECI, geliştirme iz verisi | CC1 | CC1 |
-| SDP, SVP, SCMP, SQAP, üç standart | CC2 | CC1: planlar tek temel çizgide yönetilir |
+| SDP, SVP, SCMP, SQAP, üç standart | CC2 | CC1: planlar tek baseline'da yönetilir |
 | Doğrulama durumları ve prosedürleri, test iz verisi | CC2 | CC2 |
 | Doğrulama sonuçları, problem raporları, SCM ve kalite güvencesi kayıtları | CC2 | CC2 |
 | Ek A'da olmayan kanıt verisi | CC2 (§11.0.c) | CC2 |
@@ -420,7 +420,7 @@ bölümündedir.
 
 - CC2 veride düzeltme hangi kayıtla yapılır; değişiklik notu nerede durur?
 - Hangi veriler bilerek daha sıkı tutulacak, neden?
-- Ek A'da adı geçmeyen hangi veri kanıt olarak kullanılıyor (analiz betikleri, test günlükleri)?
+- Ek A'da adı geçmeyen hangi veri kanıt olarak kullanılıyor (analiz script'leri, test günlükleri)?
 
 ### 13. Geçiş kriterleri
 
@@ -432,12 +432,12 @@ aynı kayıtlara dayanır; örnekler
 **Verilecek kararlar:**
 
 - Bir öğe kontrollü kütüphaneye hangi koşulla girer (kimlik verilmiş, gözden geçirme kapalı)?
-- Temel çizgi kurmanın ön koşulları neler; kalite güvencesinin kontrolü gerekli mi?
+- Baseline kurmanın ön koşulları neler; kalite güvencesinin kontrolü gerekli mi?
 - Sürüm teslimine giriş koşulları neler (açık rapor değerlendirmesi, uygunluk gözden geçirmesi)?
 
 ### 14. SCM verisi: kayıtlar, SCI ve SECI
 
-SCM kayıtları faaliyetlerin fiilen yapıldığını gösterir: kimlik listeleri, temel çizgi ve
+SCM kayıtları faaliyetlerin fiilen yapıldığını gösterir: kimlik listeleri, baseline ve
 kütüphane kayıtları, değişiklik geçmişi raporları, sürüm teslim ve arşiv kayıtları; projeler
 bunlara kurul tutanaklarını da ekler. DO-178C bu türleri örnek olarak anar, her birinin ayrı
 bir kayıt olarak üretilmesini şart koşmaz; SCM çıktıları çoğu zaman başka verilerin içinde
@@ -455,9 +455,9 @@ gününe bırakılan indeks eksik çıktığı için mümkün olan kısmı derle
 
 Faaliyetlerin bir kısmı tedarikçideyse SCM gerekleri ona da uygulanır. Gözetim yaklaşımı
 PSAC'ta, tedarikçi denetimi SQAP'ta durur; SCMP tedarikçi verisinin nasıl teslim alınıp
-kontrol altına alınacağını söyler. Her teslimat tedarikçinin tanımlı bir temel çizgisinden
-çıkar ve bir teslimat notuyla gelir: içerik listesi ve sürümler, sağlama toplamları, esas
-alınan girdi temel çizgisi, bilinen problemler ve onaylı sapmalar (bkz.
+kontrol altına alınacağını söyler. Her teslimat tedarikçinin tanımlı bir baseline'ından
+çıkar ve bir teslimat notuyla gelir: içerik listesi ve sürümler, checksum'lar, esas
+alınan girdi baseline'ı, bilinen problemler ve onaylı sapmalar (bkz.
 [26. Yazılım Yaşam Döngüsü Faaliyetlerinde Dış Kaynak Kullanımı](../../05-ozel-konular/26-dis-kaynak-kullanimi.mdx)).
 
 **Verilecek kararlar:**
@@ -499,7 +499,7 @@ Tablo, §11.4'ün her maddesini ve SCMP'yi ilgilendiren §4, §7, §11 ve §12 m
 |---|---|---|
 | §11.4.a | SCM ortamı ve sorumluluklar | 2 SCM ortamı |
 | §11.4.b.1 | Konfigürasyon tanımlama yöntemi | 3 Konfigürasyon tanımlama |
-| §11.4.b.2 | Temel çizgiler ve kütüphane kontrolleri | 4 Temel çizgiler ve izlenebilirlik |
+| §11.4.b.2 | Baseline'lar ve kütüphane kontrolleri | 4 Baseline'lar ve izlenebilirlik |
 | §11.4.b.3 | Problem raporu içeriği ve kapanışı | 5 Problem raporlama |
 | §11.4.b.4 | Sertifikasyon öncesi ve sonrası kontrol | 6 Değişiklik kontrolü |
 | §11.4.b.5 | Değerlendirme, önceliklendirme ve onay | 7 Değişiklik gözden geçirmesi |
@@ -511,7 +511,7 @@ Tablo, §11.4'ün her maddesini ve SCMP'yi ilgilendiren §4, §7, §11 ve §12 m
 | §11.4.c | SCM sürecine giriş kriterleri | 13 Geçiş kriterleri |
 | §11.4.d | SCM verisinin tanımı | 14 SCM verisi: kayıtlar, SCI ve SECI |
 | §11.4.e | Tedarikçiye uygulama | 15 Tedarikçi kontrolü |
-| §4.2.g | Planların değişiklik kontrolü | 4.1 Temel çizgi listesi ve kurulma anları |
+| §4.2.g | Planların değişiklik kontrolü | 4.1 Baseline listesi ve kurulma anları |
 | §4.2.j.4 | PDI yükleme ve uyumluluk | 10.2 Uyumluluk kayıtları: donanım ve PDI |
 | §4.3.c | Onay öncesi değişiklik prosedürleri | 6.2 Sertifikasyon öncesi kontroller |
 | §7.2 | Servis ömrü boyunca süreklilik | 6.3 Sertifikasyon sonrası kontroller |
@@ -539,10 +539,10 @@ Tablo, §11.4'ün her maddesini ve SCMP'yi ilgilendiren §4, §7, §11 ve §12 m
 | Ek | Madde | Şablona etkisi |
 |---|---|---|
 | DO-331 | MB.11.4.b.2 | 4.2'ye model öğe kütüphanelerinin (model element library) kontrolü eklenir |
-| DO-331 | MB.7.2.2.c | Temel çizgiler model öğe kütüphanelerinde de kurulur (4.1, 4.2) |
+| DO-331 | MB.7.2.2.c | Baseline'lar model öğe kütüphanelerinde de kurulur (4.1, 4.2) |
 | DO-331 | MB.11.15.c | SECI simülasyon ortamlarını ve ayarlarını da tanımlar (14) |
 | DO-331 | MB.11.16 | Gereksinim ya da mimari taşıyan modelin konfigürasyonu SCI'de tanımlanır (14) |
-| DO-331 | MB.11.18 | Kayıtlara model temel çizgi ve kütüphane kayıtları girer (14) |
+| DO-331 | MB.11.18 | Kayıtlara model baseline ve kütüphane kayıtları girer (14) |
 | DO-332 | OO.7, OO.11.4 | Değişiklik yok; §7 ve §11.4 aynen geçerlidir |
 | DO-333 | FM.7, FM.11.0 | Değişiklik yok; §7 ve §11.4 aynen geçerlidir |
 
@@ -558,8 +558,8 @@ Bu eşleme bir başvuru aracıdır; maddelerin tam anlamı için standart ve ekl
 |---|---|---|
 | Problem raporu, uygunsuzluk ve onaylı sapma sınırı | [SQAP](05-sqap.mdx): uygunsuzluklar ve onaylı sapmalar; [kodlama standardı](08-kodlama-standardi.mdx): sapma süreci | Örnek bir uygunsuzluk ve bir sapma belgelere göre ayrı ayrı yürütülür; her biri aynı kayıt türüne varmalıdır |
 | Test hatasının problem raporuna girişi | [SVP](03-svp.mdx): test hatası akışı ve yeniden doğrulama | SVP'deki adımlar SCMP'deki durum akışına bire bir bağlanıyor mu |
-| Temel çizgi adları | [SDP](02-sdp.mdx) ve [SVP](03-svp.mdx): geçiş kriterleri | Kriterlerde geçen her temel çizgi adı SCMP listesinde var mı |
-| Kayıt durumları ve temel çizgi | [Gereksinim standardı](06-gereksinim-standardi.mdx): durum değerleri ve onay akışı | "Onaylı" durumunun temel çizgiyle ilişkisi iki belgede aynı mı |
+| Baseline adları | [SDP](02-sdp.mdx) ve [SVP](03-svp.mdx): geçiş kriterleri | Kriterlerde geçen her baseline adı SCMP listesinde var mı |
+| Kayıt durumları ve baseline | [Gereksinim standardı](06-gereksinim-standardi.mdx): durum değerleri ve onay akışı | "Onaylı" durumunun baseline ile ilişkisi iki belgede aynı mı |
 | Araç envanteri ve ortam kontrolü | [SDP](02-sdp.mdx), [SVP](03-svp.mdx): geliştirme ve doğrulama ortamı; [kodlama standardı](08-kodlama-standardi.mdx): statik analiz yapılandırması | Aynı araç her yerde aynı adla geçiyor mu; sürüm anılan her yerde SECI'dekiyle (esas kayıt) aynı mı |
 | Açık problem raporu sınıfları | [PSAC](01-psac.mdx): açık rapor yaklaşımı | Sınıf adları ve eşleme kuralı iki belgede aynı mı |
 | Kontrol kategorisi tablosu | [PSAC](01-psac.mdx): üretilecek veri listesi | PSAC'taki her veri tabloda bir kategoriyle yer alıyor mu |
@@ -571,10 +571,10 @@ Bu eşleme bir başvuru aracıdır; maddelerin tam anlamı için standart ve ekl
 |---|---|---|
 | Plan sürüm kontrol aracının kullanım kılavuzuna dönmüş; durum muhasebesi ve yükleme kontrolü hiç yok | Plan araçtan yola çıkılarak yazılmış | Uyum tablosundan başlayıp her maddeye bir araç işlevi ya da prosedür eşlemek |
 | Bütün veri CC1 yazılmış, uygulamada test sonuçları için rapor açılmıyor | Ayrım yapmaktan kaçınmak | Gerçekte uygulanacak rejimi yazmak; CC2'nin neyi gerektirmediğini açıkça söylemek |
-| Temel çizgi adları geçiş kriterleriyle uyuşmuyor | SCMP ve SDP ayrı zamanlarda yazılmış | Listeyi SCMP'de tanımlamak; SDP ve SVP'de yalnızca ada atıf yapmak |
+| Baseline adları geçiş kriterleriyle uyuşmuyor | SCMP ve SDP ayrı zamanlarda yazılmış | Listeyi SCMP'de tanımlamak; SDP ve SVP'de yalnızca ada atıf yapmak |
 | Saklama süresi "proje süresince" | Arşivin teslimle biteceği varsayımı | Süreyi ürünün servis ömrüne ve uçuşa elverişlilik gereklerine bağlamak |
 | Sertifikasyon sonrası kontroller ve sorumlu yok | Plan yalnızca geliştirme dönemini düşünmüş | Servis dönemindeki sahibi, devir kaydını ve değişiklik akışını yazmak |
-| Ortam kontrolü derleyici sürümünden ibaret | Derleme seçenekleri, betikler ve işletim ortamı unutulmuş | Resmî derleme ortamını bütünüyle SECI'ye bağlamak; elle derlemeyi kapatmak |
+| Ortam kontrolü derleyici sürümünden ibaret | Derleme seçenekleri, script'ler ve işletim ortamı unutulmuş | Resmî derleme ortamını bütünüyle SECI'ye bağlamak; elle derlemeyi kapatmak |
 | Tedarikçi teslimatı doğrudan depoya kopyalanıyor | Kabul adımı tanımsız | Teslimat notu ve kabul kaydı olmadan kontrollü kütüphaneye giriş olmaması |
 | Problem raporu emniyet etkisini değerlendirmeye yetmiyor | Rapor yalnızca hata takibi için tasarlanmış | Tanımda etki sorusunu zorunlu kılmak; emniyet etkili raporu sistem süreçlerine yönlendirmek |
 
@@ -583,7 +583,7 @@ Bu eşleme bir başvuru aracıdır; maddelerin tam anlamı için standart ve ekl
 - [ ] Uyum tablosundaki her §11.4 maddesi planda somut bir kararla karşılanıyor mu?
 - [ ] Gözden geçirme bulgusu ile problem raporu arasındaki sınır tek cümleyle yazılmış ve
       SQAP'taki akışla aynı mı?
-- [ ] Temel çizgi listesi, SDP ve SVP geçiş kriterlerindeki adların hepsini içeriyor mu?
+- [ ] Baseline listesi, SDP ve SVP geçiş kriterlerindeki adların hepsini içeriyor mu?
 - [ ] Kontrol kategorisi tablosu projenin yazılım seviyesine göre Ek A ile karşılaştırılmış,
       hiçbir veri asgarinin altında kalmamış mı?
 - [ ] Sürüm teslim yetkisi, arşiv kopyalarının yeri ve saklama süresi açıkça yazılmış mı?

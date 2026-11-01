@@ -45,18 +45,17 @@ UMS en çok, yine "sahada bir şeyin değiştiği" üç kavramla karıştırıl�
 |---|---|---|---|
 | Kullanıcı tarafından değiştirilebilir yazılım (UMS) | Kısıtlar içinde kodu ya da veriyi kendisi değiştirir | Hayır; onaylanan, kısıtlar ve korumadır | Bu bölüm |
 | Parametre verisi öğesi (PDI) | Onaylı veri dosyasını kullanır; içeriği kendisi belirlemez | Evet; her PDI dosyası doğrulanır ve onaylı konfigürasyonun parçasıdır | [22. Konfigürasyon Verisi](./22-konfigurasyon-verisi.mdx) |
-| Seçenekle seçilebilir yazılım (option-selectable software) | Seçimi çoğu zaman uçak üreticisi ya da kurulumu yapan kuruluş yapar; kullanıcı yapsa bile yalnızca önceden onaylanmış seçeneklerden birini etkinleştirir, yeni davranış tanımlamaz | Seçenekler ve izin verilen birleşimleri baştan doğrulanıp onaylanmıştır | [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](./17-kapsanmayan-kodlar.mdx) |
+| Option-selectable yazılım | Seçimi çoğu zaman uçak üreticisi ya da kurulumu yapan kuruluş yapar; kullanıcı yapsa bile yalnızca önceden onaylanmış seçeneklerden birini etkinleştirir, yeni davranış tanımlamaz | Seçenekler ve izin verilen birleşimleri baştan doğrulanıp onaylanmıştır | [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](./17-kapsanmayan-kodlar.mdx) |
 | Sahada yüklenebilir yazılım (field-loadable software, FLS) | Onaylı imajı, donanımı sökmeden uçakta yükler | Evet; her sürüm kendi geliştirme, doğrulama ve onay sürecinden geçer | [18. Sahada Yüklenebilir Yazılım](./18-sahada-yuklenebilir-yazilim.mdx) |
 
-Seçenekle seçilebilir yazılımda seçilmeyen seçeneğin kodu birimde durmaya devam eder
+Option-selectable yazılımda seçilmeyen seçeneğin kodu birimde durmaya devam eder
 ve devre dışı bırakılmış kod (deactivated code) olarak ele alınır; seçimi kim yaparsa
 yapsın, yalnızca hazır seçenekler arasından seçilir ve DO-178C onaylanmamış bir
 konfigürasyonun yanlışlıkla seçilmesini önleyen bir önlem ister (§2.5.4). Sahada
 yüklenebilirlik ise içeriğin kimin sorumluluğunda olduğunu değil, birime nasıl ulaştığını
 anlatır: bir UMS tablosu da bir PDI dosyası da sahada yüklenebilir.
 
-Bu kavramlar birbirini dışlamaz: standart, kullanımına göre bir PDI için UMS, seçenekle
-seçilebilir yazılım ve FLS rehberliğinin de ele alınmasını ister (§2.5.1) ve iki ekipman
+Bu kavramlar birbirini dışlamaz: standart, kullanımına göre bir PDI için UMS, option-selectable yazılım ve FLS rehberliğinin de ele alınmasını ister (§2.5.1) ve iki ekipman
 seçeneğinden birini seçen tek bir bellek bitini UMS örneği sayar (§5.2.3). Ayırt edici
 soru bu yüzden biçim değil, her zaman şudur: bu içeriği kim belirliyor ve belirlenen
 içerik kimin gözden geçirmesinden geçiyor?
@@ -120,7 +119,7 @@ eklemek yeni bir sertifikasyon tartışması başlatır.
 Sonraki veriler aynı kararı izler. Koruma mekanizması ve değiştirilebilir bileşenle
 arayüz, tasarım tanımında yer alır. Yazılım konfigürasyon indeksi (Software
 Configuration Index, SCI) kullanıcı değişikliği için öngörülen prosedür, yöntem ve
-araçları tanımlar (§11.16). SCI'de tanımlanan yazılım ürünü temel çizgisi (baseline) ise
+araçları tanımlar (§11.16). SCI'de tanımlanan yazılım ürünü baseline'ı ise
 UMS'nin yalnızca koruma ve sınır bileşenlerini içerir, değiştirilebilir içeriğin kendisini
 içermez (§7.2.2); kullanıcı değişikliğinin onaylı ürünün konfigürasyon kimliğini
 değiştirmemesini sağlayan da budur. Yazılım başarım özeti (Software Accomplishment
@@ -365,13 +364,13 @@ gözden geçirirken kontrol listesi olarak da kullanılabilir:
 
 - UMS'yi belirleyen içeriğin türü değil, ilk sertifikasyonda belirlenen kısıtlar içinde
   otorite ve üretici gözden geçirmesi olmadan değiştirilmek üzere tasarlanmış olmasıdır.
-  PDI, seçenekle seçilebilir yazılım ve FLS ile sınırı içeriğin biçimi değil, içeriği
+  PDI, option-selectable yazılım ve FLS ile sınırı içeriğin biçimi değil, içeriği
   kimin belirlediği ve kimin gözden geçirdiği çizer; kavramlar birbirini dışlamaz.
 - Kısıtlar içindeki her değişiklik, yanlış yapılmış olsa bile emniyeti etkilememelidir;
   aralık denetimi bu yüzden "geçerli" değil "zararsız" zarfı tanımlar ve bu iddia sistem
   düzeyinde savunulur.
 - UMS kararı PSAC'ta beyan edilip otoriteyle baştan kararlaştırılır; SCI kullanıcı
-  değişikliği için öngörülen prosedür ve araçları tanımlar. Ürün temel çizgisi UMS'nin
+  değişikliği için öngörülen prosedür ve araçları tanımlar. Ürün baseline'ı UMS'nin
   yalnızca koruma ve sınır bileşenlerini içerir.
 - Onay; değiştirilemeyen bileşeni, koruma mekanizmasını ve değişiklik kısıtlarını kapsar.
   Koruma donanımla, yazılımla ya da araçla sağlanabilir ama kullanıcının değiştiremeyeceği

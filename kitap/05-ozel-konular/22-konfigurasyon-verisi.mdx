@@ -89,7 +89,7 @@ veri de ayrı bir konfigürasyon öğesi olarak tutulabilir ve DO-178C, kullanı
 gerektirdiğinde PDI'ye UMS rehberliğinin de uygulanmasını ister.
 
 **Seçenek verisi.** DO-178C, opsiyonel işlevlerin donanım pinleri yerine yazılımla
-programlanan seçeneklerle seçildiği durumu seçenekle seçilebilir yazılım
+programlanan seçeneklerle seçildiği durumu option-selectable yazılım
 (option-selectable software) adıyla anar ve onaylanmamış bir konfigürasyonun istem dışı
 seçilememesini bekler. Seçenek kapalıyken çalışmayan kod, devre dışı bırakılmış kod
 (deactivated code) olarak ele alınır. Seçenekler koddan ayrı bir dosyada tutuluyorsa o
@@ -186,7 +186,7 @@ flowchart TD
 
 ### Veri zarfına göre doğrulama pratikte ne demektir?
 
-Veri zarfı, gereksinimlerdeki öznitelik sınırlarının toplamıdır ve test durumlarına
+Veri zarfı, gereksinimlerdeki öznitelik sınırlarının toplamıdır ve test case'lere
 doğrudan çevrilir: her öğe için alt sınır, üst sınır ve tipik değer; birbirine bağlı
 öğeler için uç bileşimler (en küçük ve en büyük tablo boyutu gibi). Bu testler uçağa
 gidecek dosyayla değil, zarfın köşelerini bilerek zorlayan **test PDI dosyalarıyla**
@@ -216,7 +216,7 @@ kurulmalıdır.
 ### PDI dosyasının üretimi ve değerlerin kaynağı
 
 Pratikte en sık görülen hata, PDI'yi "sadece veri" sayıp doğrulamasını üretim
-betiklerine gömülü birkaç otomatik kontrole indirgemektir. Değerin *kaynağının*
+script'lerine gömülü birkaç otomatik kontrole indirgemektir. Değerin *kaynağının*
 doğrulanması — örneğin bir frekans tablosundaki her satırın onaylı bir sistem
 verisine dayandığının gösterilmesi — otomatik biçim kontrolünün yapamayacağı,
 gözden geçirme gerektiren bir iştir. Denetimde sorulan soru da genellikle budur: "Bu

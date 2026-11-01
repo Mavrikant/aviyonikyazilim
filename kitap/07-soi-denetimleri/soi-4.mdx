@@ -32,7 +32,7 @@ sürüm belirlendiğinde yapılır. Tipik giriş kriterleri:
 
 - [ ] SOI-1, SOI-2 ve SOI-3 bulgularının tamamı kapatılmış ve kapanış kanıtları
       dosyalanmıştır.
-- [ ] Sertifikasyona esas yazılım sürümü son temel çizgiye (baseline) alınmıştır.
+- [ ] Sertifikasyona esas yazılım sürümü son baseline'a alınmıştır.
 - [ ] Doğrulama bu sürüm için tamamlanmış, sonuçları gözden geçirilmiştir.
 - [ ] SAS ve yazılım konfigürasyon indeksi (Software Configuration Index, SCI)
       yayımlanmıştır.
@@ -55,7 +55,7 @@ flowchart TD
     PSAC[PSAC] -- "başlık düzeni, sapmalar" --> SAS[SAS]
     SAS -- "sürüm, parça numarası" --> SCI[SCI]
     SCI -- "derleme ortamı" --> SECI[SECI]
-    SCI -- "yeniden derleme, sağlama toplamı" --> EOC[Çalıştırılabilir nesne kodu]
+    SCI -- "yeniden derleme, checksum" --> EOC[Çalıştırılabilir nesne kodu]
     SAS -- "açık rapor listesi" --> PR[Problem raporlama aracı]
 ```
 
@@ -72,13 +72,13 @@ SOI-3 doğrulamanın bir kesitini görür; SOI-4'te sorulan, o günden sonra yap
 değişikliklerle birlikte doğrulamanın teslim edilen sürüm için hâlâ geçerli olup
 olmadığıdır.
 
-- [ ] Kredi için sunulan test ve analiz sonuçları son temel çizgideki çalıştırılabilir
+- [ ] Kredi için sunulan test ve analiz sonuçları son baseline'daki çalıştırılabilir
       nesne kodu (executable object code) için mi geçerli; daha eski bir derlemede
       koşulan testler için değişiklik etki analizine (change impact analysis) dayanan
       bir yeniden test gerekçesi yazılmış mı?
 - [ ] SOI-3'te açık kalan gereksinim kapsamı ve yapısal kapsam boşluklarının hepsi
       kapanmış mı?
-- [ ] En kötü durum yürütme süresi (worst-case execution time, WCET), yığın ve bellek
+- [ ] En kötü durum yürütme süresi (worst-case execution time, WCET), stack ve bellek
       kullanımı analizleri son sürüm için güncel mi; kalan paylar SAS'ta yazılı mı?
 - [ ] Kalifiye araçların kalifikasyon verisi tamamlanmış mı; kullanılan araç sürümleri
       SECI'dekilerle aynı mı; araçların bilinen problemleri ve işlevsel kısıtları
@@ -98,10 +98,10 @@ olmadığıdır.
 
 - [ ] SCI, çalıştırılabilir nesne kodunu ve onu üreten kaynak dosyalarını sürümleriyle
       tanımlıyor mu?
-- [ ] SECI, derleyiciyi, bağlayıcıyı, derleme seçeneklerini ve kalifiye araçları
+- [ ] SECI, derleyiciyi, linker'ı, derleme seçeneklerini ve kalifiye araçları
       sürümleriyle listeliyor mu?
 - [ ] Belgelenen talimatlarla temiz bir ortamda yeniden derleme yapıldığında aynı
-      çalıştırılabilir nesne kodu elde ediliyor mu (sağlama toplamı karşılaştırmasıyla);
+      çalıştırılabilir nesne kodu elde ediliyor mu (checksum karşılaştırmasıyla);
       fark varsa kaynağı belirlenip açıklanmış mı?
 - [ ] Yükleme talimatları ve yüklenebilir yazılım parçasının (loadable software part,
       LSP) tanımlaması doğru mu; hedefe yüklenen sürümün doğruluğu nasıl kontrol
@@ -138,15 +138,15 @@ tutarlı olduğunu üç yönden teyit eder:
 | Veri | Yaşam döngüsü verisi planlara ve standartlara göre üretilmiş, kaynaklandığı gereksinimlere izlenebilir ve konfigürasyon kontrolü altında mı; problem raporları (önceki bir uygunluk gözden geçirmesinden ertelenenler dahil) değerlendirilmiş ve durumları kayıtlı mı? |
 | Ürün | Çalıştırılabilir nesne kodu ile varsa parametre verisi öğesi (parameter data item, PDI) dosyaları arşivlenmiş kaynak koddan yeniden üretilebiliyor ve yayımlanmış yükleme talimatıyla yüklenebiliyor mu? |
 
-Bu yüzden son temel çizgiden önce yapılan bir uygunluk gözden geçirmesi, sunulan sürüm
+Bu yüzden son baseline'dan önce yapılan bir uygunluk gözden geçirmesi, sunulan sürüm
 hakkında bir şey söylemez.
 
-- [ ] Uygunluk gözden geçirmesi son temel çizgi üzerinde mi yapılmış; ondan sonra
+- [ ] Uygunluk gözden geçirmesi son baseline üzerinde mi yapılmış; ondan sonra
       değişiklik olmuşsa gözden geçirme tekrarlanmış mı?
 - [ ] Kalite güvencesinin açtığı uygunsuzlukların hepsi kapanmış mı?
 - [ ] Tedarikçilerden gelen veri için gözetim kayıtları tamam mı?
 - [ ] Önceden geliştirilmiş yazılımdan (previously developed software, PDS) kredi
-      alınıyorsa, güncel temel çizgi önceki temel çizgiye ve onaylı değişikliklere
+      alınıyorsa, güncel baseline önceki baseline'a ve onaylı değişikliklere
       izlenebiliyor mu?
 
 ## Hazırlanacak veri paketi
@@ -156,7 +156,7 @@ hakkında bir şey söylemez.
 | Yazılım başarım özeti (SAS) | Projenin PSAC'a göre nasıl tamamlandığının özeti |
 | Yazılım konfigürasyon indeksi (SCI) ve SECI | Teslim edilen yazılımın ve yaşam döngüsü ortamının tam tanımı |
 | Araç konfigürasyon indeksi (Tool Configuration Index, TCI) ve araç başarım özeti (Tool Accomplishment Summary, TAS) | Araç kalifikasyon seviyesi (tool qualification level, TQL) TQL-1 ile TQL-4 arasında olan araç varsa: kalifikasyonun planlandığı gibi tamamlandığı; DO-330 bu ikisinin otoriteye sunulmasını bekler |
-| Son temel çizgiye ait doğrulama sonuçları ve kapsam analizi | Doğrulamanın teslim edilen sürüm için tamamlandığı |
+| Son baseline'a ait doğrulama sonuçları ve kapsam analizi | Doğrulamanın teslim edilen sürüm için tamamlandığı |
 | Açık problem raporları ve değerlendirmeleri | Bilinen kusurların kabul edilebilirliği |
 | Önceki SOI bulgularının kapanış kayıtları | Sürecin tutarlı işletildiği |
 | Uygunluk gözden geçirmesi kaydı | Kalite güvencesinin son kontrolü |
@@ -168,9 +168,9 @@ hakkında bir şey söylemez.
 | Bulgu | Tipik nedeni | Önlem |
 |---|---|---|
 | SAS ile SCI arasında sürüm ya da parça numarası farkı | Belgelerin farklı zamanlarda elle güncellenmesi | SCI'yi derleme altyapısından üretmek; SAS'ı SCI'ye başvurarak yazmak |
-| Açık problem raporu listesi SAS'ta ve araçta farklı | Listenin araçtan bir kez çekilip sonra güncellenmemesi | Listeyi tek kaynaktan, son temel çizgi tarihinde üretmek |
+| Açık problem raporu listesi SAS'ta ve araçta farklı | Listenin araçtan bir kez çekilip sonra güncellenmemesi | Listeyi tek kaynaktan, son baseline tarihinde üretmek |
 | Açık raporların sınıfı ya da kabul gerekçesi eksik | Değerlendirmenin son haftaya bırakılması | Raporları açıldıkları anda sınıflandırmak; açık kalacakları düzenli gözden geçirmek |
-| Zamanlama ya da yığın analizi eski bir sürüme ait | Son değişikliklerden sonra analizin yenilenmemesi | Değişiklik etki analizinde analiz raporlarını da etkilenen veri olarak listelemek |
+| Zamanlama ya da stack analizi eski bir sürüme ait | Son değişikliklerden sonra analizin yenilenmemesi | Değişiklik etki analizinde analiz raporlarını da etkilenen veri olarak listelemek |
 | Uygunluk gözden geçirmesi son değişiklikten önce yapılmış | Takvim baskısıyla gözden geçirmenin öne çekilmesi | Son değişiklikten sonra gözden geçirmenin tekrarını giriş kriteri yapmak |
 | Yeniden derleme aynı çalıştırılabilir nesne kodunu üretmiyor | Kayıt dışı derleme seçeneği, ortam farkı, zaman damgası | Yeniden derlemeyi SOI-4'ten önce temiz ortamda denemek |
 | Plan sapması SAS'ta yok | Sapmanın proje sırasında kayda alınmaması | Sapmaları oluştukları anda kalite güvencesi kaydına bağlamak |

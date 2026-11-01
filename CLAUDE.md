@@ -108,15 +108,97 @@ CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gös
 ## Dil kuralı
 
 - **Tüm içerik Türkçedir.** Arayüz de Türkçedir (`i18n.defaultLocale: 'tr'`).
-- Bir teknik terim ilk kez kullanıldığında **parantez içinde İngilizcesi** verilir:
+- **Terim dili sektördeki kullanımı izler.** Türkiye'de aviyonik yazılım ekiplerinin İngilizce
+  söyleyip yazdığı terim İngilizce kalır (baseline, test case, linker); Türkçesi daha yaygın
+  olan terim Türkçe yazılır (gereksinim, izlenebilirlik, derleyici). Sektörde kullanılmayan,
+  sözlük çevirisi kokan ya da başka bir anlamla karışan karşılık yazılmaz; Türkçeleşmiş yazımı
+  yerleşmiş terim o yazımla kullanılır (optimizasyon, deterministik). Karar aşağıdaki
+  sözlüktedir. Sözlükte olmayan terimde aynı ölçüt uygulanır ve terim sözlüğe eklenir.
+- Türkçe yazılan teknik terim ilk kez kullanıldığında **parantez içinde İngilizcesi** verilir:
   örn. "yapısal kapsam analizi (structural coverage analysis)". Sonraki kullanımlarda
-  yalnızca Türkçesi (veya yerleşik kısaltması, örn. SCA) yeterlidir.
+  yalnızca Türkçesi (veya yerleşik kısaltması, örn. SCA) yeterlidir. İngilizce kalan terim
+  parantezsiz yazılır, Türkçe karşılık eklenmez; gerekiyorsa cümleyle tanımlanır.
+- İngilizce terim düz yazılır (tırnak, italik yok) ve eki kesme işaretiyle, **okunuşuna göre**
+  alır: baseline'ı, baseline'da, baseline'lar; test case'i, test case'te, test case'ler;
+  script'i, script'te; stack'i, stack'te; linker'ı, linker'da; build'i, build'de; peer review'yu,
+  peer review'nun, peer review'da; assembly'yi, assembly'nin; mutex'i, mutex'te. Ayrı yazılan
+  "de/da" ve "mi" de okunuşa uyar: baseline da, test case de. Birleşik addaki iyelik eki de
+  böyle yazılır: konfigürasyon baseline'ı, test script'i, linker script'i.
 - Dosya ve klasör adları **ASCII** olmalıdır (`giris`, `dogrulama`); Türkçe karakterler
-  yalnızca frontmatter `title` ve `_category_.json` `label` alanlarında kullanılır.
+  yalnızca frontmatter `title` ve `_category_.json` `label` alanlarında kullanılır. Terim
+  değişince dosya adı ve sayfa adresi değiştirilmez (`07-test-durumlari-ve-prosedurleri.mdx`).
 
 ## Terminoloji sözlüğü (tutarlı kullanım)
 
-Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
+Genişletildikçe buraya eklenmelidir. Kural bütün içerik içindir; kitap bu kurala göre
+geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düzenlenirken düzeltilir.
+
+### İngilizce kalan terimler
+
+| Böyle yazılır | Bu anlamda yazılmaz |
+|---|---|
+| baseline | temel çizgi, baz çizgi, taban çizgisi, temel hat |
+| test case | test durumu |
+| peer review | akran gözden geçirmesi |
+| gap analizi | boşluk analizi |
+| dry run | kuru koşu |
+| branch (konfigürasyon yönetiminde) | dal (koddaki dal, "if'in iki dalı" kalır) |
+| snapshot, rollback | anlık görüntü, geri dönüş |
+| position paper, suspect link | tutum belgesi, şüpheli bağ |
+| build (derleme ve bağlamanın bütünü ya da çıktısı: build ortamı, build kaydı, build script'i, full build, instrumented build) | derleme (derleyicinin kendi adımı için "derleme" kalır: derleme seçeneği, derleme zamanı, koşullu derleme, yeniden derleme) |
+| linker, linker script, linker map, map dosyası | bağlayıcı, bağlayıcı betiği, bağlama haritası ("bağlama" adımı ve zorunluluk anlamında "bağlayıcı kural" kalır) |
+| loader, data loader, bootloader | yükleyici, veri yükleyici, önyükleyici |
+| assembly, assembler, assembly listesi, inline assembly, disassembly | çevirici dili, çevirici, çevirici listesi, ters çevirme |
+| instrumentation, instrumented | donatma, donatılmış |
+| hardware trace, basic block | donanım izleme, temel blok |
+| pseudo-instruction, literal pool, calling convention | sözde komut, sabit havuzu, çağrı kuralı |
+| script | betik |
+| debugger | hata ayıklayıcı ("hata ayıklama" kalır) |
+| firmware | ürün yazılımı |
+| checksum, hash, metadata | sağlama toplamı, içerik özeti, üst veri |
+| optimizer, inlining, loop unrolling, padding, weak symbol | eniyileyici, satır içine alma, döngü açma, dolgu, zayıf sembol |
+| formatter, wrapper, solver, host | biçimlendirici, sarmalayıcı, çözücü, ana bilgisayar |
+| stack, heap, buffer, pointer, register, string | yığın, öbek, tampon, işaretçi, yazmaç, dizge |
+| reentrant, polling | yeniden girilebilir, yoklama |
+| cyclomatic complexity | çevrimsel karmaşıklık |
+| short-circuit evaluation | kısa devre değerlendirmesi |
+| unique-cause MC/DC, masking MC/DC, coupled condition | benzersiz neden MC/DC, maskeleme MC/DC, bağlı koşul |
+| data coupling, control coupling, coupling | veri bağlaşımı, kontrol bağlaşımı, bağlaşım |
+| scheduler | çizelgeleyici ("çizelgeleme" kalır) |
+| deadline | zaman sınırı, son tarih, termin |
+| jitter | titreşim |
+| context switch, critical section | bağlam değiştirme, kritik kesit |
+| mutex, deadlock, race condition | muteks, kilitlenme, yarış durumu |
+| priority inversion, priority inheritance, priority ceiling | öncelik terslenmesi, öncelik kalıtımı, öncelik tavanı |
+| preemptive, non-preemptive | kesintili, kesintisiz |
+| rate-monotonic (RM), deadline-monotonic (DM) | hız-monoton, zaman sınırı-monoton |
+| blocking time | engellenme süresi |
+| cyclic executive, major frame, minor frame | döngüsel yürütücü, ana çerçeve, küçük çerçeve |
+| timer, watchdog, watchdog timer, tick, tickless | zamanlayıcı, bekçi köpeği, tık, tıksız |
+| partition, sampling port, queuing port | bölüm ("kitap bölümü" ile karışır), bölme, örnekleme portu, kuyruk portu ("bölümleme" kalır) |
+| kernel, kernel mode, user mode | çekirdek, çekirdek kipi, kullanıcı kipi (işlemci çekirdeği "çekirdek" kalır) |
+| BSP (board support package) | kart destek paketi |
+| throughput, pipeline (işlemci) | iş çıkarma, boru hattı |
+| theorem proving, model checking, abstract interpretation | teorem ispatı, model kontrolü, soyut yorumlama |
+| proof obligation, proof assistant, soundness | ispat yükümlülüğü, ispat asistanı, sağlamlık |
+| precondition, postcondition, invariant | önkoşul, artkoşul, değişmez (genel anlamda "ön koşul" kalır) |
+| weight-on-wheels | tekerleklerde ağırlık |
+| option-selectable yazılım | seçenekle seçilebilir yazılım |
+| reset (donanım ve işlemci için) | sıfırlama (değişkeni sıfırlama kalır) |
+| single event upset (SEU) | tek olay bozulması |
+| fail-safe, interlock, rate limiter, thrust reverser | arıza emniyetli, emniyet kilitlemesi, oran sınırlayıcı, itki ters çevirici |
+| fuzzing, root of trust, jamming, spoofing | bulanık test, güven kökü, karıştırma, aldatma |
+
+### Türkçeleşmiş yazımla kullanılan terimler
+
+optimizasyon (eniyileme değil), deterministik ve determinizm (belirlenimci, belirlenimcilik
+değil), spesifikasyon (belirtim değil), simülatör (benzetici değil), emülatör (öykünücü değil),
+aktüatör (eyleyici değil), sensör (algılayıcı değil), mod (kip değil; dilbilgisindeki "bağlayıcı
+kip" kalır), veri tabanı (veritabanı değil).
+
+### Türkçe yazılan terimler
+
+Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde parantez içinde verilir.
 
 | Türkçe | İngilizce |
 |---|---|
@@ -154,8 +236,6 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | geliştirme güvencesi | development assurance |
 | türetilmiş gereksinim | derived requirement |
 | gürbüzlük | robustness |
-| akran gözden geçirmesi | peer review |
-| temel çizgi | baseline |
 | önceden geliştirilmiş yazılım | previously developed software (PDS) |
 | ticari hazır yazılım | commercial off-the-shelf (COTS) |
 | ürün servis geçmişi | product service history |
@@ -166,10 +246,8 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | sahada yüklenebilir yazılım | field-loadable software |
 | kullanıcı tarafından değiştirilebilir yazılım | user-modifiable software |
 | yazılım başarım özeti | Software Accomplishment Summary (SAS) |
-| veri yükleyici | data loader |
 | yüklenebilir yazılım parçası | loadable software part (LSP) |
 | elektronik parça işaretleme | electronic part marking |
-| tekerleklerde ağırlık | weight-on-wheels |
 | istem dışı etkinleşme | inadvertent enabling |
 | uçuşa elverişlilik güvenliği | airworthiness security |
 | uçuşa elverişlilik güvenlik süreci | airworthiness security process (AWSP; DO-326A) |
@@ -189,11 +267,10 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | kabul edilebilirlik matrisi | airworthiness acceptability matrix |
 | kalan risk | residual risk |
 | çürütme | refutation (DO-356A) |
-| sızma testi / bulanık test | penetration testing / fuzzing |
+| sızma testi | penetration testing |
 | güvenlik rehberi | security guidance (operatöre: ASOG; sistem entegratörüne: SSIG) |
 | uçuşa elverişliliğin sürdürülmesi talimatları | instructions for continued airworthiness (ICA) |
 | tasarım onayı sahibi | design approval holder (DAH) |
-| güven kökü | root of trust |
 | fabrika yüklemeli yazılım | factory-loadable software |
 | tam yetkili sayısal motor kontrolü | full authority digital engine control (FADEC) |
 | radyo seyrüsefer yardımcısı | radio navigation aid (navaid) |
@@ -221,11 +298,7 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | güç yoğunluğu | power density |
 | alıcı hassasiyeti | receiver sensitivity |
 | eşdeğer izotropik yayılan güç | equivalent isotropically radiated power (EIRP) |
-| benzersiz neden MC/DC | unique-cause MC/DC |
-| maskeleme MC/DC | masking MC/DC |
-| bağlı koşul | coupled condition |
 | bağımsızlık çifti | independence pair |
-| kısa devre değerlendirmesi | short-circuit evaluation |
 | yazılım seviyesi | software level (Seviye A–E) |
 | geliştirme güvence seviyesi | development assurance level (DAL; fonksiyon için FDAL, öğe için IDAL) |
 | hedef | objective (DO-178C) |
@@ -250,31 +323,18 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | problem raporu | problem report |
 | düzeltici faaliyet | corrective action |
 | gereksinim tabanlı test | requirements-based testing |
-| test durumu / test prosedürü | test case / test procedure |
-| veri ve kontrol bağlaşımı | data and control coupling |
+| test prosedürü | test procedure |
 | en kötü durum yürütme süresi | worst-case execution time (WCET) |
-| çizelgeleme / çizelgeleyici | scheduling / scheduler |
+| çizelgeleme | scheduling |
 | çizelgelenebilirlik analizi | schedulability analysis |
-| zamanlayıcı | timer |
 | kesme servis rutini | interrupt service routine (ISR) |
-| belirlenimci | deterministic |
 | iş (bir görevin tek çalışması) | job |
-| zaman sınırı | deadline |
 | kullanım | utilization |
 | hiperperiyot | hyperperiod |
-| hız-monoton / zaman sınırı-monoton | rate-monotonic (RM) / deadline-monotonic (DM) |
-| kesintili / kesintisiz | preemptive / non-preemptive |
 | en kötü tepki süresi | worst-case response time |
 | tepki süresi analizi | response-time analysis |
 | işlemci talep ölçütü | processor demand criterion |
-| engellenme süresi | blocking time |
-| kritik kesit | critical section |
-| bağlam değiştirme | context switch |
-| titreşim | jitter |
-| döngüsel yürütücü | cyclic executive |
-| ana çerçeve / küçük çerçeve | major frame / minor frame |
 | alan bölümlemesi / zaman bölümlemesi | spatial / temporal partitioning |
-| bölüm (bölümleme bağlamında) | partition |
 | entegre modüler aviyonik | integrated modular avionics (IMA) |
 | çok çekirdekli işlemci | multi-core processor |
 | kod üreteci | code generator |
@@ -286,26 +346,15 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | bulgu (gözden geçirme bulgusu) | finding |
 | çok sürümlü benzemez yazılım | multiple-version dissimilar software |
 | kaynak koddan nesne koduna izlenebilirlik analizi | source to object code traceability analysis |
-| çevirici dili / çevirici | assembly language / assembler |
-| çevirici listesi | assembly listing |
-| ters çevirme (nesne kodundan çevirici diline) | disassembly |
-| donatma (kapsam için koda sayaç ekleme) | instrumentation |
-| donanım izleme | hardware trace |
-| temel blok | basic block |
-| sözde komut / sabit havuzu | pseudo-instruction / literal pool |
-| çağrı kuralı | calling convention |
 | hata enjeksiyonu | fault injection |
-| derleme | build |
+| derleme (yalnızca derleyicinin adımı) | compile |
 | imaj | image (executable image) |
-| sağlama toplamı | checksum |
 | döngüsel artıklık denetimi | cyclic redundancy check (CRC) |
 | yedeklilik / yedekleme | redundancy |
-| çevrimsel karmaşıklık | cyclomatic complexity |
 | güvenli durum | safe state |
 | emniyet / güvenlik | safety / security |
 | uçuşa elverişlilik | airworthiness |
 | mürettebat | flight crew |
-| seçenekle seçilebilir yazılım | option-selectable software |
 | yeniden kullanılabilir yazılım bileşeni | reusable software component (RSC) |
 | yazılım sertifikasyon planı | Plan for Software Aspects of Certification (PSAC) |
 | yazılım konfigürasyon indeksi | Software Configuration Index (SCI) |
@@ -318,19 +367,17 @@ Mevcut yazılardaki kullanımla uyumlu; genişletildikçe buraya eklenmelidir.
 | operasyonel doğrulama ve geçerleme | tool operational verification and validation |
 | araç geliştiricisi / araç kullanıcısı | tool developer / tool user |
 
-Aynı kavram için şu varyantlar **kullanılmaz**: "baz çizgi", "taban çizgisi", "temel hat"
-(temel çizgi); objective anlamında "amaç" (hedef); review anlamında "inceleme" (gözden
-geçirme); DO-178C yazılım seviyesi anlamında "güvence seviyesi/düzeyi"; "sertifikasyon
-makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal bölümleme"; partition anlamında
-"bölme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4); scheduling anlamında "zamanlama"
-(çizelgeleme; "zamanlama" timing içindir); deadline anlamında "son tarih" ya da "termin";
-SAS/TAS anlamında "başarı özeti" (yazılım/araç başarım özeti); requirement anlamında
-"ister" (gereksinim); IMA için "tümleşik modüler aviyonik" (entegre modüler aviyonik);
-redundancy anlamında "artıklık" ya da "redundans" (yedeklilik/yedekleme; CRC'nin yerleşik
-adı "döngüsel artıklık denetimi" bunun dışındadır). Uçuşa elverişlilik güvenliğinde
-security perimeter anlamında "güvenlik çevresi" (güvenlik sınırı; "ortam" ile karışır),
-vulnerability anlamında "güvenlik açığı" (zafiyet) ve SAL anlamında öneksiz "güvence
-seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
+Aynı kavram için şu varyantlar da **kullanılmaz**: objective anlamında "amaç" (hedef); review
+anlamında "inceleme" (gözden geçirme); DO-178C yazılım seviyesi anlamında "güvence
+seviyesi/düzeyi"; "sertifikasyon makamı"; "kod üreticisi"; "artefakt"; "mekânsal/zamansal
+bölümleme"; "SOI 1" gibi tiresiz yazım (SOI-1 … SOI-4); scheduling anlamında "zamanlama"
+(çizelgeleme; "zamanlama" timing içindir); SAS/TAS anlamında "başarı özeti" (yazılım/araç
+başarım özeti); requirement anlamında "ister" (gereksinim); IMA için "tümleşik modüler
+aviyonik" (entegre modüler aviyonik); redundancy anlamında "artıklık" ya da "redundans"
+(yedeklilik/yedekleme; CRC'nin yerleşik adı "döngüsel artıklık denetimi" bunun dışındadır).
+Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik çevresi" (güvenlik sınırı;
+"ortam" ile karışır), vulnerability anlamında "güvenlik açığı" (zafiyet) ve SAL anlamında öneksiz
+"güvence seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 
 ## Yeni blog yazısı ekleme
 
@@ -400,7 +447,7 @@ seviyesi" (güvenlik güvence seviyesi) kullanılmaz.
 - Seviye, kontrol kategorisi ve Ek A hedef numaraları `src/components/HedefGezgini/veri.ts`
   ile aynı tutulur. Hedef Gezgini'ndeki plan ve standart çipleri bu sayfalara bağlanır
   (`VERILER` içindeki `yol`); sayfa adresi değişirse orası da güncellenir.
-- `kitap/06-ekler/06-kontrol-listeleri/` (Ek F) akran gözden geçirmesi ve süreç denetimi
+- `kitap/06-ekler/06-kontrol-listeleri/` (Ek F) peer review ve süreç denetimi
   listeleridir (gözden geçirilen iş ürününün içeriğine bakar); yazarın öz denetimi şablonlardaki
   "Yayımlamadan önce", otorite denetimine hazırlık SOI-1…4 sayfalarıdır. Sayfalar birbirini
   tekrarlamaz.

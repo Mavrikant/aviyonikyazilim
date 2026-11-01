@@ -35,7 +35,7 @@ gereksinim ve tasarımın kurulmasını ele alır. Buna başvurulan tipik duruml
 
 Üçü de önceden geliştirilmiş yazılımın (previously developed software, PDS) yeniden
 kullanımının özel hâlleridir. [24. Yazılım Yeniden Kullanımı](./24-yazilim-yeniden-kullanimi.mdx)
-bölümünde anlatılan boşluk analizi (gap analysis) hangi verinin eksik olduğunu gösterir;
+bölümünde anlatılan gap analizi hangi verinin eksik olduğunu gösterir;
 tersine mühendislik bu boşluğu kapatmanın yollarından yalnızca biridir. Bileşeni yeniden
 geliştirmek, onu koruyucu bir mimariyle çevrelemek ya da ürün servis geçmişi (product
 service history) kredisi talep etmek
@@ -70,12 +70,12 @@ niyeti güvenle kurmak çoğu zaman yeniden yazmaktan pahalıdır.
 ## Dayanak dokümanlar
 
 Tersine mühendisliği ayrıntılı biçimde düzenleyen bağlayıcı bir belge yoktur. DO-178C'de
-terim yalnızca sözlükte ve geliştirme temel çizgisinin (baseline) yükseltilmesini anlatan
+terim yalnızca sözlükte ve geliştirme baseline'ının yükseltilmesini anlatan
 maddede (12.1.4) geçer. Beklentiler üç kaynaktan izlenebilir:
 
 | Doküman | Statüsü | Bu konuda söylediği |
 |---|---|---|
-| DO-178C'nin önceden geliştirilmiş yazılıma ilişkin hükümleri, özellikle madde 12.1.4 (AC 20-115D ve AMC 20-115D ile tanınır) | Kabul edilebilir uyum yöntemi | Bir geliştirme temel çizgisi yükseltilirken eksik ya da yetersiz yaşam döngüsü verisinin tersine mühendislikle yeniden üretilebileceğini kabul eder; veriyi üretmenin tek başına yetmeyebileceğini, doğrulama hedefleri için ek faaliyet gerekebileceğini de belirtir. Amaç yine aynı hedefleri karşılamaktır |
+| DO-178C'nin önceden geliştirilmiş yazılıma ilişkin hükümleri, özellikle madde 12.1.4 (AC 20-115D ve AMC 20-115D ile tanınır) | Kabul edilebilir uyum yöntemi | Bir geliştirme baseline'ı yükseltilirken eksik ya da yetersiz yaşam döngüsü verisinin tersine mühendislikle yeniden üretilebileceğini kabul eder; veriyi üretmenin tek başına yetmeyebileceğini, doğrulama hedefleri için ek faaliyet gerekebileceğini de belirtir. Amaç yine aynı hedefleri karşılamaktır |
 | CAST-18, "Reverse Engineering in Certification Projects" (2003) | Sertifikasyon otoritelerinin yazılım uzmanlarından oluşan ekibin (Certification Authorities Software Team, CAST) tutum belgesi; resmî politika değildir, DO-178B döneminden kalma tarihî bir başvuru kaynağıdır | Otoritelerin kaygılarını sıralar: yetersiz planlama, yaklaşımın maliyeti kısmak ya da aksayan projeyi kurtarmak için seçilmesi, yazılımın niyetini bilen uzmana erişilememesi, anlaşılması güç kod, soyutlama ve izlenebilirlik (traceability) güçlüğü, geç kalan otorite irtibatı |
 | DOT/FAA/TC-15/27, "Reverse Engineering for Software and Digital Systems" (2016) | FAA'nın desteklediği araştırma raporu; FAA politikası değildir, DO-178B ve DO-254 esas alınarak yazılmıştır | Tersine mühendisliğin ne zaman kabul edilebilir olduğuna dair bir çerçeve önerir ve bunu biri yazılım, biri donanım üzerinde iki vaka çalışmasıyla sınar: veri akışının ve verinin ne zaman konfigürasyon kontrolüne alınacağının plan ve standartlarda açıkça anlatılması; alan uzmanlarının (subject matter expert) gerçekleştirilmiş davranışı amaçlanan kullanım açısından değerlendirmesi ve alan bilgisinin gereksinim ile tasarıma işlenmesi |
 
@@ -90,7 +90,7 @@ Tersine mühendislik genellikle şu akışla işler:
 
 ```mermaid
 flowchart TD
-    A["Temel çizgiye alınmış kaynak kod ve eski dokümanlar"] --> B["Kod analizi ve davranış çıkarımı"]
+    A["Baseline'a alınmış kaynak kod ve eski dokümanlar"] --> B["Kod analizi ve davranış çıkarımı"]
     B --> C["Düşük seviyeli gereksinim ve mimari taslağı"]
     C --> D["Yüksek seviyeli gereksinimlerin kurulması"]
     D --> E["Bağımsız referansla geçerleme"]
@@ -167,7 +167,7 @@ yeniden kurulacağını, yazılım doğrulama planı (Software Verification Plan
 verinin nasıl gözden geçirilip doğrulanacağını tanımlar
 ([5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.mdx)). DO-178C'nin
 bu konuda açıkça istediği PSAC tarafıdır: önceden geliştirilmiş yazılım kullanma niyeti ve
-temel çizgi yükseltilirken izlenecek uyum stratejisi bu planda belirtilir. Asgari olarak
+baseline yükseltilirken izlenecek uyum stratejisi bu planda belirtilir. Asgari olarak
 planlarda şunlar yer almalıdır:
 
 | Plan içeriği | Cevaplaması gereken soru |
@@ -195,11 +195,11 @@ belirsiz kaynak ağaçları. Bu malzeme konfigürasyon yönetimi altına alınma
 başlarsa, üç ay sonra "hangi kodu tersine mühendislikten geçirdik?" sorusuna cevap
 verilemez.
 
-- Analize başlamadan önce kaynak kodun **tek ve tanımlı bir temel çizgisi**
+- Analize başlamadan önce kaynak kodun **tek ve tanımlı bir baseline'ı**
   oluşturulmalı; sahadaki çalıştırılabilir nesne kodu ile bu kaynağın eşleştiği, örneğin
   kayıtlı derleme ortamında yeniden üretip karşılaştırarak gösterilebilmelidir. Eşleşme
   gösterilemiyorsa sahadaki ürünün geçmişi bu kaynak için kanıt değeri taşımaz.
-- Eski dokümanlar, test kayıtları ve ürün servis geçmişi de aynı temel çizgiye referansla
+- Eski dokümanlar, test kayıtları ve ürün servis geçmişi de aynı baseline'a referansla
   saklanmalıdır; bunlar "güvenilir gerçek" değil, **girdi verisi** statüsündedir.
 - Önceki projeden devralınan açık problem raporları da girdidir. DO-178C, önceden
   geliştirilmiş yazılımın çözülmemiş problem raporlarının etkisinin değerlendirilmesini ve
@@ -208,7 +208,7 @@ verilemez.
   ve değişiklik kontrol mekanizmasından geçmelidir; "nasılsa her şeyi yeniden
   yazıyoruz" rahatlığıyla kontrolsüz düzenleme yapılmamalıdır.
 
-Temel çizgi, değişiklik kontrolü ve problem raporlamanın işleyişi
+Baseline, değişiklik kontrolü ve problem raporlamanın işleyişi
 [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
 bölümünde anlatılır; tersine mühendislikte fark, bu mekanizmanın ilk çıkarım yapılmadan
 önce kurulmuş olması gerektiğidir.
@@ -269,7 +269,7 @@ ise başka bir şey söylemektedir:
 işlevi gösterir. İkincisi daha sinsidir: kod ne kadar dikkatle okunursa okunsun, orada
 olmayan bir davranış koddan çıkarılamaz; eksikliği yalnızca bağımsız referans gösterir.
 
-Geçerleme atlanıp testler soldaki ifadelerden yazılsaydı üç test durumu yeterdi: geçerli
+Geçerleme atlanıp testler soldaki ifadelerden yazılsaydı üç test case yeterdi: geçerli
 99 ft, geçerli 100 ft ve geçersiz 99 ft. Üçü de geçer; üstelik bu üç durum, tek karardaki
 iki koşul için MC/DC'yi de sağlar. Elde eksiksiz izlenebilirlik, geçen testler ve tam
 yapısal kapsam olur; yazılım ise iki noktada sistemin istediğini yapmıyordur. Yapısal

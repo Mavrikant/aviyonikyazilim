@@ -84,7 +84,7 @@ Yazılım gereksinimlerinin kalitesi, kaynağı olan sistem gereksinimlerinin ka
 aşamaz. Yazılıma tahsis edilen iyi bir sistem gereksinimi kümesi şu nitelikleri taşır:
 
 - **Atomik ve tekil:** her gereksinim tek bir beklentiyi ifade eder; "ve/veya"
-  yığınlarıyla birden çok beklenti tek cümleye sıkıştırılmaz.
+  stack'leriyle birden çok beklenti tek cümleye sıkıştırılmaz.
 - **Doğrulanabilir:** gereksinim, test veya analizle gösterilebilecek biçimde ölçülü
   yazılır ("hızlı olmalı" değil, "50 ms içinde yanıt vermeli").
 - **Belirsizlikten arınmış:** "uygun", "yeterli", "mümkünse" gibi yoruma açık ifadeler
@@ -237,15 +237,15 @@ değildir.
 ### Donanım/yazılım arayüzü
 
 Yazılımın en yakın komşusu, üzerinde koştuğu donanımdır. Donanım/yazılım arayüzü tanımı
-tipik olarak bellek haritasını, çevre birimi yazmaçlarının adreslerini ve bit
-anlamlarını, kesme kaynaklarını ve önceliklerini, saat ve zamanlayıcıları, güç
+tipik olarak bellek haritasını, çevre birimi register'larının adreslerini ve bit
+anlamlarını, kesme kaynaklarını ve önceliklerini, saat ve timer'lar, güç
 verildiğinde ve yeniden başlatmada donanımın hangi durumda olduğunu ve donanımın kendi
 sağladığı arıza algılama mekanizmalarını içerir.
 
 Bu arayüz iki nedenle özel dikkat ister. Birincisi, türetilmiş gereksinimlerin başlıca
-kaynağıdır: bekçi köpeği zamanlayıcısının (watchdog timer) hangi aralıkla yenileneceği
+kaynağıdır: watchdog timer'ının hangi aralıkla yenileneceği
 ya da bir çevre biriminin hangi sırayla başlatılacağı hiçbir sistem gereksiniminde
-yazmaz, seçilen donanımdan doğar. İkincisi, donanım geliştirme boyunca değişir; yazmaç
+yazmaz, seçilen donanımdan doğar. İkincisi, donanım geliştirme boyunca değişir; register
 düzeni ya da kesme ataması değiştiğinde yazılımın bundan haberdar olması, arayüz
 tanımının sürümlenmiş ve değişiklik kontrolü altında olmasına bağlıdır. Yazılımın bu
 arayüzle uyumu, sonunda hedef donanım üzerinde koşulan donanım/yazılım entegrasyon

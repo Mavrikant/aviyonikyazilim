@@ -170,7 +170,7 @@ toplamak, okuyanın işini kolaylaştıran yaygın bir uygulamadır.
 
 Yazılım karakteristikleri, otoritenin SAS'ta özellikle aradığı bilgidir: en kötü durum
 yürütme süresi (worst-case execution time, WCET) dahil zamanlama payları, bellek ve
-yığın payları ve kaynak sınırlamaları, ölçüm ya da analiz yöntemiyle birlikte verilir.
+stack payları ve kaynak sınırlamaları, ölçüm ya da analiz yöntemiyle birlikte verilir.
 Bu sayılar [9. Yazılım Doğrulama](09-yazilim-dogrulama.mdx) bölümünde anlatılan
 analizlerin sertifikasyona esas sürüm için güncellenmiş sonuçlarıdır; aylar önceki bir
 derlemenin payını SAS'a taşımak sık görülen bir hatadır.
@@ -321,7 +321,7 @@ Sertifikasyon uçuşuna aday bir yazılım sürümünden pratikte beklenenler ş
   Uçaktaki çalıştırılabilir nesne kodunun hangi kaynak koddan, hangi araç zinciriyle
   üretildiği kesin olarak izlenebilmelidir.
 - **Yükleme ve uygunluk kontrolü yapılmış olmalıdır.** Uçaktaki birimde gerçekten
-  beyan edilen sürümün yüklü olduğu (parça numarası, sağlama toplamı) uçuş öncesi
+  beyan edilen sürümün yüklü olduğu (parça numarası, checksum) uçuş öncesi
   doğrulanır; buna uygunluk denetimi (conformity inspection) eşlik eder. Bu denetim
   uçaktaki fiziksel konfigürasyonun beyan edilenle aynı olduğuna bakar; kalite
   güvencesinin yazılım uygunluk gözden geçirmesiyle karıştırılmamalıdır. Yüklemenin
