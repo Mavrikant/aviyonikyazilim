@@ -106,7 +106,7 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
       gelmeyen sensör verisi. *(A–D · §6.4.2.2.b)*
 - [ ] **TDP-12** Dış sistemden gelen her veri akışının bozulma biçimleri listelenmiş ve her biri
       bir test case ile sınanıyor mu? Örneğin eksik ya da gecikmiş mesaj, bayat veri, eşlik
-      hatası, işaret/durum matrisi (sign/status matrix, SSM) geçersiz olan ARINC 429 kelimesi.
+      hatası, SSM'si (Sign/Status Matrix) Normal Operation olmayan ARINC 429 kelimesi.
       *(A–D · §6.4.2.2.c)*
 - [ ] **TDP-13** Döngü sayısı çalışma anında hesaplanan döngülerde, hesaplanan değeri sıfıra,
       negatife ya da dizi boyunu aşan bir değere zorlayan test case var mı?
@@ -217,7 +217,7 @@ toplantıya dönmeden işe başlayabilmesi için yeterlidir.
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "Gürbüzlük testleri eksik." | "TDP-12: TD-ADC-031 … 035, SRD-210'un (statik basınç girişi) yalnızca aralık dışı değerlerini sınıyor; SSM'si 'arıza uyarısı' olan ve eşliği hatalı kelime için test case yok. SRD-210'un bu iki durum için tanımladığı 'son geçerli değeri üç çevrim tut' davranışı sınanmalı." |
+| "Gürbüzlük testleri eksik." | "TDP-12: TD-ADC-031 … 035, SRD-210'un (statik basınç girişi) yalnızca aralık dışı değerlerini sınıyor; SSM'si Failure Warning olan ve parity'si hatalı kelime için test case yok. SRD-210'un bu iki durum için tanımladığı 'son geçerli değeri üç çevrim tut' davranışı sınanmalı." |
 | "Beklenen sonuç yanlış." | "TDP-20: TP-NAV-12 adım 7'de beklenen değer 3200 LSB; TD-NAV-12'deki 100 knot, gereksinimdeki 0,0625 knot/LSB ölçeğiyle 1600 LSB olmalı. Prosedürde 0,03125 knot/LSB kullanılmış." |
 | "Prosedür anlaşılmıyor." | "TDP-21: TP-FCS-04 adım 3 'düzeneği uygun moda alın' diyor; mod adı ve yapılandırma dosyası verilmemiş. Adım, SECI'deki düzenek kimliğini ve yapılandırma dosyasının sürümünü anmalı." |
 
