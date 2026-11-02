@@ -425,6 +425,20 @@ const config: Config = {
       darkTheme: prismThemes.nightOwl,
       additionalLanguages: ['c', 'armasm'],
     },
+    // Mermaid 12'nin yeni varsayılanları yerine Mermaid 11'in çizimi korunur. Diyagramlar dagre
+    // yerleşimi ve klasik görünüme göre yazılıp içerik sütununa sığacak biçimde ölçülmüştür
+    // (CLAUDE.md, "Diyagram içerik sütununa okunur boyutta sığmalıdır"). Mermaid 12 ise akış
+    // ve durum diyagramlarını ELK ile yerleştirir, "neo" görünümüyle çizer, etiketi 120 px'te
+    // kırar ve her düğümü en az 120 px yapar: diyagramlar genişler, küçülünce yazı ufalır.
+    // Tek bir diyagram kendi `config` bloğunda başka bir değer seçebilir.
+    mermaid: {
+      options: {
+        layout: 'dagre',
+        look: 'classic',
+        flowchart: {wrappingWidth: 200, minNodeWidth: 0},
+        state: {minNodeWidth: 0},
+      },
+    },
   } satisfies Preset.ThemeConfig,
 };
 

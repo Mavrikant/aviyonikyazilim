@@ -39,7 +39,7 @@ Tüm iletişim yolları ve hangi konu için hangisinin uygun olduğu sitedeki
 
 ## Yerelde çalışmak
 
-Node.js 22 veya üzeri gerekir; önerilen sürüm `.nvmrc` dosyasındadır.
+Node.js 22.12 veya üzeri gerekir; önerilen sürüm `.nvmrc` dosyasındadır.
 
 ```bash
 npm ci           # bağımlılıkları kur
