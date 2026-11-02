@@ -95,6 +95,8 @@ static/CNAME              Yayın alan adı (aviyonikyazilim.com)
 static/robots.txt         Tarayıcı kuralları + sitemap adresi
 static/<anahtar>.txt      IndexNow anahtar dosyası (adı = içeriği) — SİLME
 docusaurus.config.ts      Ana yapılandırma
+.nvmrc                    CI'da ve yerelde önerilen Node.js sürümü (etkin LTS)
+.npmrc                    npm betiklerine Node seçeneği (Node 25+ localStorage uyarısını kapatır)
 sidebars.ts               kitapSidebar (otomatik üretilir)
 i18n/tr/code.json         Site içi arama eklentisinin Türkçe arayüz metinleri; blog arşivinin açıklaması
 CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gösterir)
@@ -468,6 +470,11 @@ Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik ç
   `config: flowchart: nodeSpacing` verilir. Yön değişince metindeki "soldan sağa" gibi
   atıflar da güncellenir. Telefonda her geniş şekil küçülür; okur onu "Büyüt" düğmesiyle
   tam ekranda açar (`src/components/SekilBuyutme`).
+- Mermaid sürümü 12'dir; çizim ise Mermaid 11'inkidir. `docusaurus.config.ts` içindeki
+  `themeConfig.mermaid.options` dagre yerleşimini ve klasik görünümü sabitler, etiketi 200 px'te
+  kırar ve en küçük düğüm genişliğini kapatır. Mermaid 12'nin kendi varsayılanları (ELK, "neo",
+  120 px) diyagramları genişletir. Bu ayar değişirse tüm diyagramların doğal genişliği yeniden
+  ölçülür.
 - Kod örnekleri ağırlıklı olarak **C** dilindedir (aviyonik yaygınlığı nedeniyle).
 - Her bölüm dosyası `NN-slug.mdx` biçiminde adlandırılır; `sidebar_position` klasör içi
   sırayı belirler. Bölüm başlığı frontmatter `title` alanında verilir.
@@ -785,6 +792,12 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
 - **Bağımlılıklar:** Dependabot haftalık PR açar (`.github/dependabot.yml`); tüm
   `@docusaurus/*` paketleri tek grupta ve aynı sürümde kalır. Docusaurus güncellemesinde
   eject edilmiş tema dosyaları upstream ile karşılaştırılır (bkz. `src/theme/` satırı).
+  `package.json` `overrides` alanı, üst paketin izin verdiği aralıkta yaması olmayan güvenlik
+  açıkları ve Mermaid'in ana sürümü içindir. Dependabot bu alanı güncellemez; alan elle
+  güncellenir, gerekçesi kalmayan override kaldırılır.
+- **Node.js:** CI'daki sürüm `.nvmrc`'dedir (etkin LTS). `.npmrc` npm betiklerine
+  `--no-experimental-webstorage` verir: Node 25 ve sonrasında Docusaurus 3'ün SSG aşaması her
+  derlemede `localStorage` uyarısı basar.
 
 ## Performans ve arama motoru
 
