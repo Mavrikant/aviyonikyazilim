@@ -167,12 +167,12 @@ arayüz kontrol dokümanından alınır):
 | Öznitelik | Tanım |
 |---|---|
 | Sinyal ve kaynağı | Hesaplanmış hava hızı; hava veri bilgisayarı, ARINC 429 alıcı kanalı 1 |
-| Etiket (label) ve kodlama | Etiket 206 (sekizli); ikili (binary, BNR) kodlama |
+| Etiket (label) ve kodlama | Etiket 206 (sekizli); BNR kodlama |
 | Birim ve çözünürlük | Knot; 0,0625 knot |
 | Geçerli aralık | 0–450 knot; aralık dışındaki değer geçersiz sayılır |
 | Yenileme periyodu | 100 ms'de bir kelime (word) |
 | Bayatlama süresi | 300 ms boyunca yeni kelime alınmazsa veri bayat sayılır |
-| Geçerlilik göstergesi | İşaret/durum matrisi (sign/status matrix, SSM): yalnızca "normal çalışma" değeri geçerlidir; "arıza uyarısı", "hesaplanmış veri yok" ve "işlevsel test" değerleri geçersiz veri anlamına gelir |
+| Geçerlilik göstergesi | SSM (Sign/Status Matrix): yalnızca Normal Operation değeri geçerlidir; Failure Warning, No Computed Data ve Functional Test değerleri geçersiz veri anlamına gelir |
 | Geçersiz ya da bayat veride davranış | Değer kullanılmaz, son geçerli değer tutulmaz; hava hızı "geçersiz" olarak işaretlenir ve göstergeden kaldırılır |
 
 Tablonun ilk satırları çoğu projede eksiksiz yazılır; eksik kalanlar genellikle son üç

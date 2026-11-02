@@ -158,7 +158,7 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | instrumentation, instrumented | donatma, donatılmış |
 | hardware trace, trace birimi, trace buffer'ı, trace portu, trace verisi | donanım izleme, izleme birimi, izleme verisi (DO-178C'nin "iz verisi" kalır) |
 | basic block | temel blok |
-| binary | ikili (ARINC 429 BNR için "ikili" ve "ikili yapı" gibi genel anlam kalır) |
+| binary | ikili ("ikili yapı", "ikili sayı" gibi genel anlam kalır; ARINC 429 veri türü BNR yazılır) |
 | stub, test hook, breakpoint, happy path | yer tutucu kod, test kancası, kesme noktası, mutlu yol |
 | pseudo-instruction, literal pool, calling convention | sözde komut, sabit havuzu, çağrı kuralı |
 | script | betik |
@@ -202,6 +202,11 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | fuzzing, root of trust, jamming, spoofing | bulanık test, güven kökü, karıştırma, aldatma |
 | fly-by-wire | telle uçuş, telle kumanda |
 | transponder | cevaplayıcı, yanıtlayıcı |
+| switch, end system, virtual link (VL), BAG, frame (Ethernet) | anahtar, uç sistem, sanal bağlantı, bant genişliği tahsis aralığı, çerçeve |
+| parity (ARINC 429), SDI | eşlik biti, kaynak/hedef tanımlayıcısı |
+| BNR, BCD, Discrete (ARINC 429 veri türleri) | ikili, ikili kodlanmış ondalık, ayrık |
+| SSM (Sign/Status Matrix) ve durumları: Normal Operation, Failure Warning, No Computed Data, Functional Test; BCD'de Plus/Minus, North/South … | işaret/durum matrisi, normal çalışma, arıza uyarısı, hesaplanmış veri yok, işlevsel test |
+| bus drop (ARINC 429 topolojisi), stub (kablo) | veri yolu boyunca dallanma, saplama |
 
 ### Türkçeleşmiş yazımla kullanılan terimler
 
@@ -421,6 +426,16 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | birincil uçuş göstergesi | primary flight display (PFD) |
 | trafik uyarı ve çarpışma önleme sistemi | traffic alert and collision avoidance system (TCAS) |
 | arazi uyarı sistemi | terrain awareness and warning system (TAWS) |
+| (ekranlı) bükümlü çift kablo / ekran | (shielded) twisted pair / shield |
+| yıldız (topoloji) | star |
+| sonlandırma direnci | termination |
+| yükselme süresi / düşme süresi | rise time / fall time |
+| ikiye tümleyen | two's complement |
+| anlamlı bit / çözünürlük | significant bit / resolution |
+| iki kutuplu sıfıra dönüşlü kodlama | bipolar return-to-zero |
+| arayüz kontrol dokümanı | interface control document (ICD) |
+| tam çift yönlü | full-duplex |
+| ağ geçidi | gateway |
 
 Aynı kavram için şu varyantlar da **kullanılmaz**: objective anlamında "amaç" (hedef); review
 anlamında "inceleme" (gözden geçirme); DO-178C yazılım seviyesi anlamında "güvence
