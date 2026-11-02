@@ -200,13 +200,15 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | fail-safe, interlock, rate limiter, thrust reverser | arıza emniyetli, emniyet kilitlemesi, oran sınırlayıcı, itki ters çevirici |
 | localizer (LOC), glide path / glide slope (GP/GS), glide path açısı (GP açısı) | yön verici, süzülüş yolu, süzülüş açısı |
 | fuzzing, root of trust, jamming, spoofing | bulanık test, güven kökü, karıştırma, aldatma |
+| fly-by-wire | telle uçuş, telle kumanda |
+| transponder | cevaplayıcı, yanıtlayıcı |
 
 ### Türkçeleşmiş yazımla kullanılan terimler
 
 optimizasyon (eniyileme değil), deterministik ve determinizm (belirlenimci, belirlenimcilik
 değil), spesifikasyon (belirtim değil), simülatör (benzetici değil), emülatör (öykünücü değil),
 aktüatör (eyleyici değil), sensör (algılayıcı değil), mod (kip değil; dilbilgisindeki "bağlayıcı
-kip" kalır), veri tabanı (veritabanı değil).
+kip" kalır), veri tabanı (veritabanı değil), otopilot (otomatik pilot değil).
 
 ### Türkçe yazılan terimler
 
@@ -411,6 +413,14 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | sürekli uçuşa elverişlilik | continuing airworthiness |
 | derinlemesine savunma | defense in depth |
 | özel anahtar | private key |
+| cam kokpit | glass cockpit |
+| federe mimari | federated architecture |
+| veri bağlantısı | data link |
+| ataletsel seyrüsefer sistemi | inertial navigation system (INS) |
+| uçuş yönetim sistemi | flight management system (FMS) |
+| birincil uçuş göstergesi | primary flight display (PFD) |
+| trafik uyarı ve çarpışma önleme sistemi | traffic alert and collision avoidance system (TCAS) |
+| arazi uyarı sistemi | terrain awareness and warning system (TAWS) |
 
 Aynı kavram için şu varyantlar da **kullanılmaz**: objective anlamında "amaç" (hedef); review
 anlamında "inceleme" (gözden geçirme); DO-178C yazılım seviyesi anlamında "güvence
