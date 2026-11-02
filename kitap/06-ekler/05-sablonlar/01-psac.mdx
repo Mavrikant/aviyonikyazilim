@@ -64,7 +64,7 @@ bölümler [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 3 Yazılım tanıtımı
 3.1 Yazılım bileşenleri ve işlevleri
 3.2 Bölümleme ve kaynak paylaşımı
-3.3 Yedeklilik, hata toleransı ve tekil olay bozulmasına karşı önlemler
+3.3 Yedeklilik, hata toleransı ve single event upset'e karşı önlemler
 3.4 Zamanlama ve çizelgeleme yaklaşımı
 4 Sertifikasyon hususları
 4.1 Sertifikasyon temeli ve uyum yöntemi
@@ -93,7 +93,7 @@ bölümler [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 8.3 Önceden geliştirilmiş yazılım ve COTS
 8.4 Ürün servis geçmişi
 8.5 Alternatif yöntemler
-8.6 PDI, seçenekle seçilebilir, UMS ve sahada yüklenebilir yazılım
+8.6 PDI, option-selectable, UMS ve sahada yüklenebilir yazılım
 8.7 Devre dışı bırakılmış kod
 8.8 Çok sürümlü benzemez yazılım
 8.9 Çok çekirdekli işlemci
@@ -123,13 +123,13 @@ hususları ve otoritenin daha önce görmediği araçları ayrıntının bulundu
 
 **Verilecek kararlar:**
 
-- PSAC tek parçayı mı, birimdeki bütün parçaları (uygulama, yükleyici, PDI) mı kapsayacak?
+- PSAC tek parçayı mı, birimdeki bütün parçaları (uygulama, loader, PDI) mı kapsayacak?
 - Onay çerçevesi ne: tip sertifikası (type certificate), ek tip sertifikası, teknik standart
   emri (Technical Standard Order, TSO) ya da Avrupa'daki karşılığı ETSO, onaylı ürünün
   değişikliği?
 - Değişiklikse önceki sürüm, SAS'ı ve yazılım konfigürasyon indeksi (Software Configuration
   Index, SCI) hangi kimlikle anılacak?
-- Otoritenin ilk okumada görmesi gereken üç beş konu hangisi?
+- Otoritenin ilk okumada görmesi gereken üç beş konu hangileri?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
@@ -152,7 +152,7 @@ kısmı 3. bölümde söylenir. SAS bu tanıtımı farklarıyla yeniden yazacağ
 - Arayüzler hangi ayrıntıda anılacak: veri yolları, ayrık girişler, bellek eşlemli aygıtlar?
 
 Dikkat: buradaki işlemci ve kart bilgisi, yazılım geliştirme planında (Software Development
-Plan, SDP) derleyici ve bağlayıcının hedef aldığı işlemciyle ve yazılım doğrulama planındaki
+Plan, SDP) derleyici ve linker'ın hedef aldığı işlemciyle ve yazılım doğrulama planındaki
 (Software Verification Plan, SVP) test düzeneklerinin hedef donanım tanımıyla (parça numarası
 ve revizyon) aynı olmalıdır; test ortamının sürümleri yazılım yaşam döngüsü ortam
 konfigürasyon indeksinde (Software Life Cycle Environment Configuration Index, SECI) durur.
@@ -166,22 +166,22 @@ bileşenler yalıtılıyor, yalıtımı ne sağlıyor ve iddia hangi seviye atam
 ([21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx)); bütünlüğün
 nasıl doğrulanacağı SVP'ye bırakılır. 3.2–3.4 için birer paragraf yazılır: işlemci, bellek
 ve veri yolu gibi paylaşılan kaynakların nasıl korunduğu; kanal ve izleyici düzeni gibi
-yedeklilik (redundancy) ve hata toleransı (fault tolerance) önlemleri; sistemin tekil olay
-bozulmasına (single event upset, SEU) karşı yazılıma verdiği görevler; çizelgeleme
+yedeklilik (redundancy) ve hata toleransı (fault tolerance) önlemleri; sistemin single event
+upset'e (SEU) karşı yazılıma verdiği görevler; çizelgeleme
 (scheduling) biçimi ve zamanlama payı. Her paragraf tasarımı değil, iddianın dayanağını ve
 ayrıntının bulunduğu belgeyi söyler.
 
 **Verilecek kararlar:**
 
 - Yazılım kaç bileşenden oluşuyor ve hepsi aynı seviyede mi?
-- Bölümlemede koruma yalnız donanımla mı, donanım ve yazılımla birlikte mi sağlanıyor?
-- Çizelgeleme döngüsel yürütücüyle (cyclic executive) mi, kesintili (preemptive) bir gerçek
+- Bölümlemede koruma yalnızca donanımla mı, donanım ve yazılımla birlikte mi sağlanıyor?
+- Çizelgeleme cyclic executive ile mi, preemptive bir gerçek
   zamanlı işletim sistemiyle (real-time operating system, RTOS) mi yapılacak?
 - Sistem SEU'ya karşı yazılıma bir görev (ör. bellek tarama) tahsis ediyor mu?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Yazılım bölümlenmiştir ve bölümler birbirini etkilemez. | Uygulama iki bölümde çalışır: Seviye B gösterge bölümü ve Seviye D bakım bölümü. Alan bölümlemesi (spatial partitioning) bellek yönetim birimiyle, zaman bölümlemesi (temporal partitioning) 50 ms'lik sabit pencere çizelgesiyle sağlanır; bütünlüğün doğrulanması SVP'dedir. |
+| Yazılım bölümlenmiştir ve partition'lar birbirini etkilemez. | Uygulama iki partition'da çalışır: Seviye B gösterge partition'ı ve Seviye D bakım partition'ı. Alan bölümlemesi (spatial partitioning) bellek yönetim birimiyle, zaman bölümlemesi (temporal partitioning) 50 ms'lik sabit pencere çizelgesiyle sağlanır; bütünlüğün doğrulanması SVP'dedir. |
 
 ### 4. Sertifikasyon hususları
 
@@ -259,7 +259,7 @@ ulaşacağını verir. Liste DO-178C'nin Ek A tablolarındaki çıktılarla kar�
 Ek A'da sayılmayan ama kanıt olarak üretilen veri en az CC2 ile yönetilir. Biçim de burada
 belirtilir: hangi veri belge, hangisi araçtaki kayıt; otorite ona nasıl erişecek ve veri
 servis ömrü boyunca nasıl okunabilir kalacak. Asgari sunulan veri ile tip tasarımı verisinin
-saklanması 6.3'te anılır. PSAC içeriği başka bir belgeye gömülürse o belge de CC1 yönetilir.
+saklanması 6.3'te anılır. PSAC içeriği başka bir belgeye gömülürse o belge de CC1 olarak yönetilir.
 
 Örnek bir Seviye C projesinde veri listesinin birkaç satırı:
 
@@ -268,7 +268,7 @@ saklanması 6.3'te anılır. PSAC içeriği başka bir belgeye gömülürse o be
 | PSAC | PRJ-PSAC-001 | CC1 | Sunulur |
 | SDP, SVP, SCMP, SQAP | PRJ-SDP-001 … PRJ-SQAP-001 | CC2 | Denetimde gösterilir |
 | Üç geliştirme standardı | PRJ-STD-001 … PRJ-STD-003 | CC2 | Denetimde gösterilir |
-| Yazılım gereksinim verisi | Araçtaki modül ve temel çizgi (baseline) adı | CC1 | Denetimde gösterilir |
+| Yazılım gereksinim verisi | Araçtaki modül ve baseline adı | CC1 | Denetimde gösterilir |
 | SCI ve SAS | PRJ-SCI-001, PRJ-SAS-001 | CC1 | Sunulur |
 
 Proje daha sıkı bir kategori seçebilir; PSAC'taki değer SCMP'deki proje kararıyla aynı olur.
@@ -282,7 +282,7 @@ Proje daha sıkı bir kategori seçebilir; PSAC'taki değer SCMP'deki proje kara
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Tüm yaşam döngüsü verisi istendiğinde otoriteye sunulacaktır. | PSAC, SCI ve SAS otoriteye sunulur; kalifiye araçlar nedeniyle SECI ile kod üretecinin TQP, TCI ve TAS'ı da sunulur (8.2). Diğer veri denetim günü SCMP'de tanımlı depodan, kontrol altındaki sürümüyle açılır; masa başı değerlendirme için istenen veri temel çizgi etiketiyle dışa aktarılıp gönderilir. |
+| Tüm yaşam döngüsü verisi istendiğinde otoriteye sunulacaktır. | PSAC, SCI ve SAS otoriteye sunulur; kalifiye araçlar nedeniyle SECI ile kod üretecinin TQP, TCI ve TAS'ı da sunulur (8.2). Diğer veri denetim günü SCMP'de tanımlı depodan, kontrol altındaki sürümüyle açılır; masa başı değerlendirme için istenen veri baseline etiketiyle dışa aktarılıp gönderilir. |
 
 ### 7. Otoriteye görünürlük ve takvim
 
@@ -296,7 +296,7 @@ Dönem kayarsa otorite ara bilgilendirmeyle haberdar edilir. Katılım düzeyi (
 involvement) projeye göre değiştiği için hangi denetimin yerinde, hangisinin masa başı
 yapılacağı otoriteye sorulup yazılır ([SW SOI-1](../../07-soi-denetimleri/soi-1.mdx) … [SW SOI-4](../../07-soi-denetimleri/soi-4.mdx)).
 Takvim, yazılım uygunluk gözden geçirmesinin (software conformity review) yerini de gösterir:
-son temel çizgiden sonra, SCI ve SAS sunulmadan önce kalite güvencesi tarafından yapılır;
+son baseline'dan sonra, SCI ve SAS sunulmadan önce kalite güvencesi yapar;
 ayrıntısı [SQAP](05-sqap.mdx)'tadır.
 
 **Verilecek kararlar:**
@@ -307,7 +307,7 @@ ayrıntısı [SQAP](05-sqap.mdx)'tadır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| SOI-2 Mart 2027'de yapılacaktır. | SOI-2, işlevlerin en az yarısında yüksek seviyeli gereksinim, tasarım ve kod gözden geçirilip temel çizgiye alındığında talep edilir (eşik otoriteyle kararlaştırılmıştır); planlanan dönem 2027'nin ilk çeyreğidir. Veri paketi denetimden en az üç hafta önce gönderilir; güncel tahmini tarih aylık durum raporunda bildirilir. |
+| SOI-2 Mart 2027'de yapılacaktır. | SOI-2, işlevlerin en az yarısında yüksek seviyeli gereksinim, tasarım ve kod gözden geçirilip baseline'a alındığında talep edilir (eşik otoriteyle kararlaştırılmıştır); planlanan dönem 2027'nin ilk çeyreğidir. Veri paketi denetimden en az üç hafta önce gönderilir; güncel tahmini tarih aylık durum raporunda bildirilir. |
 
 ### 8. Ek hususlar
 
@@ -320,12 +320,12 @@ bulunursa tartışma değişikliğin en zor olduğu anda yapılır. Aşağıdaki
 | Husus | Uygulanır mı? | Yaklaşım / atıf |
 |---|---|---|
 | Araç kalifikasyonu | Evet | Üç araç kalifiye edilir; araç tablosu 8.2'de |
-| Önceden geliştirilmiş yazılım | Evet | Önceki projeden ARINC 429 sürücüsü; boşluk analizi 8.3'te |
+| Önceden geliştirilmiş yazılım | Evet | Önceki projeden ARINC 429 sürücüsü; gap analizi 8.3'te |
 | Ticari hazır yazılım | Evet | RTOS ve sertifikasyon paketi; eksiklerin kapatılması 8.3'te |
-| Seçenekle seçilebilir yazılım | Hayır | Her kurulumda bütün işlevler etkindir |
+| Option-selectable yazılım | Hayır | Her kurulumda bütün işlevler etkindir |
 | Kullanıcı tarafından değiştirilebilir yazılım | Hayır | Kullanıcının değiştirebileceği bileşen yoktur |
 | Devre dışı bırakılmış kod | Evet | Sürücünün kullanılmayan kanalları, birinci kategori; 8.7'de |
-| Sahada yüklenebilir yazılım | Evet | Uçakta veri yükleyiciyle yükleme; 8.6'da |
+| Sahada yüklenebilir yazılım | Evet | Uçakta data loader ile yükleme; 8.6'da |
 | Parametre verisi öğesi | Evet | Uçak tipine özgü gösterge sınırları; 8.6'da |
 | Çok sürümlü benzemez yazılım | Hayır | Mimaride benzemez sürüm yoktur |
 | Ürün servis geçmişi | Hayır | Servis geçmişinden kredi istenmez |
@@ -341,7 +341,7 @@ dönüşmeye başlarsa PSAC güncellenir ve otoriteye bildirilir.
 
 **Verilecek kararlar:**
 
-- Araç envanteri tam mı: derleyiciden test sonucu toplayan betiğe kadar her araç bakıldı mı?
+- Araç envanteri tam mı: derleyiciden test sonucu toplayan script'e kadar her araca bakıldı mı?
 - Yeniden kullanılan ya da satın alınan her bileşen için hangi kanıt var, hangisi eksik?
 - Kalibrasyon ve uçak tipine özgü tablolar PDI mı olacak, kodun parçası mı? Navigasyon ya da
   arazi veri tabanı gibi havacılık verisi varsa DO-200B rejiminde mi ele alınacak
@@ -366,10 +366,10 @@ bölümündedir. Seviye B örneği:
 
 | Araç ve sürümü | Rol; çıktıyı doğrulayan faaliyet | Karar | Kalifikasyon verisinin yeri |
 |---|---|---|---|
-| `<derleyici ve bağlayıcı, sürüm>` | Nesne kodu üretir; gereksinim tabanlı testler hedefte doğrular | Gerekmez | Gerekçe bu tabloda; ortam SECI'de |
+| `<derleyici ve linker, sürüm>` | Nesne kodu üretir; gereksinim tabanlı testler hedefte doğrular | Gerekmez | Gerekçe bu tabloda; ortam SECI'de |
 | `<kod üreteci, sürüm>` | Tasarım modelinden kod üretir; üretilen kodun gözden geçirmesi kaldırılmıştır | Ölçüt 1, TQL-2 | TQP (PSAC ile sunulur); TCI ve TAS (sonda sunulur) |
 | `<yapısal kapsam aracı, sürüm>` | Kapsam ölçer; raporu ayrıca doğrulanmaz | Ölçüt 3, TQL-5 | TOR ve operasyonel doğrulama verisi (CC2); özeti PSAC, SECI ve SAS'ta |
-| `<test sonucu karşılaştırma betiği, sürüm>` | Geçti/kaldı kararı verir; sonuçlara ayrıca bakılmaz | Ölçüt 3, TQL-5 | TOR ve operasyonel doğrulama verisi (CC2); özeti PSAC, SECI ve SAS'ta |
+| `<test sonucu karşılaştırma script'i, sürüm>` | Geçti/kaldı kararı verir; sonuçlara ayrıca bakılmaz | Ölçüt 3, TQL-5 | TOR ve operasyonel doğrulama verisi (CC2); özeti PSAC, SECI ve SAS'ta |
 
 **8.3 Önceden geliştirilmiş yazılım ve COTS.** Önceden geliştirilmiş yazılım (previously
 developed software, PDS) kullanma niyeti yazılır, bu yazılımın çözülmemiş problem
@@ -389,19 +389,19 @@ ve düzeltilecek hataları verir. Önce
 ile ön eleme yapmak, reddedilecek bir argümana yatırım yapmaktan ucuzdur.
 
 **8.5 Alternatif yöntemler.** Önerilen her yöntem için kısa bir özet yeter, ayrıntı
-otoriteyle yapılan yazılı mutabakattadır. Özet; yöntemle hangi hedefin karşılandığını, olağan
+otoriteyle yapılan yazılı mutabakattadır. Özet, yöntemle hangi hedefin karşılandığını, olağan
 yolun hangi faaliyetinin ve hangi verisinin değiştiğini ve kredinin emniyet açısından neden
 yeterli olduğunun hangi belgede savunulduğunu söyler. Bu savunma çoğu zaman ayrı bir belgede,
 bir güvence argümanı (assurance case) olarak tutulur; PSAC onun kimliğini ve mutabakat
 belgesini (issue paper ya da CRI) anar.
 
-**8.6 PDI, seçenekle seçilebilir, UMS ve sahada yüklenebilir yazılım.** Ortak soru, onaydan
+**8.6 PDI, option-selectable, UMS ve sahada yüklenebilir yazılım.** Ortak soru, onaydan
 sonra değişebilen içeriğin nasıl sınırlandığı ve yüklü olanın nasıl bilindiğidir. PDI için
 kullanımı, seviyesi, ayrı doğrulama yolunun seçilip seçilmediği, üretim, doğrulama ve
 değişiklik süreçleri, dosyayı üreten ya da denetleyen aracın kalifikasyon ihtiyacı (8.2) ile
 yükleme ve uyumluluk kontrolü
 ([22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx));
-seçenekle seçilebilir yazılımda (option-selectable software) onaysız seçeneğin istem dışı
+option-selectable yazılımda onaysız seçeneğin istem dışı
 seçilemeyeceği; kullanıcı tarafından değiştirilebilir yazılımda (user-modifiable software,
 UMS) bileşenin kapsamı, koruması ve kullanıcının aracı; sahada yüklenebilir yazılımda
 (field-loadable software, FLS) yükleme stratejisi, bütünlük kontrolünün yeterliliği ve
@@ -448,11 +448,11 @@ belirlenir
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Tedarikçi DO-178C'ye uygun çalışacaktır. | Tedarikçi, yükleme uygulamasını başvuru sahibinin SDP'si ve standartlarıyla geliştirir. Başvuru sahibinin kalite güvencesi her temel çizgiden önce tedarikçide süreç denetimi yapar; teslimler SCMP'deki kabul kontrol listesiyle alınır, tedarikçinin problem raporları haftalık olarak ortak kayıt sistemine aktarılır. |
+| Tedarikçi DO-178C'ye uygun çalışacaktır. | Tedarikçi, yükleme uygulamasını başvuru sahibinin SDP'si ve standartlarıyla geliştirir. Başvuru sahibinin kalite güvencesi her baseline'dan önce tedarikçide süreç denetimi yapar; teslimler SCMP'deki kabul kontrol listesiyle alınır, tedarikçinin problem raporları haftalık olarak ortak kayıt sistemine aktarılır. |
 
 ## Seviyeye göre farklar
 
-PSAC her seviyede yazılır, sunulur ve CC1 yönetilir; değişen, başlıkların altında taahhüt
+PSAC her seviyede yazılır, sunulur ve CC1 olarak yönetilir; değişen, başlıkların altında taahhüt
 edilen işin miktarıdır. İki değerli hücrelerde ilk değer Seviye A, ikincisi Seviye B içindir.
 
 | Konu | Seviye A ve B | Seviye C | Seviye D |
@@ -467,7 +467,7 @@ edilen işin miktarıdır. İki değerli hücrelerde ilk değer Seviye A, ikinci
 | Ölçüt 2 aracın TQL'i | TQL-4 | TQL-5 | TQL-5 |
 
 - **Seviye A ve B.** 5.2'deki doğrulama özeti yapısal kapsam ölçütünü (Seviye A'da
-  değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC) dahil) ve
+  değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC) dâhil) ve
   bağımsızlığın kimle sağlanacağını açıkça söyler. Seviye A'da kaynak koddan nesne koduna
   izlenebilirlik analizinin (source to object code traceability analysis) yöntemi (temsilî
   örnek ya da tam analiz) ve dayandığı derleyici seçenekleri de özetlenir; ayrıntı SVP'dedir.
@@ -501,8 +501,8 @@ doğrudan anan irtibat ve ek husus maddelerini önerilen içindekilerdeki yerler
 | §4.2.e | Planların revizyon yolu | 5.6 Planların ve bu belgenin değişikliği |
 | §4.2.f | Benzemezlik yöntem ve araçları | 8.8 Çok sürümlü benzemez yazılım |
 | §4.2.h | Devre dışı kod mekanizması | 8.7 Devre dışı bırakılmış kod |
-| §4.2.i | UMS süreç, araç ve verisi | 8.6 PDI, seçenekle seçilebilir, UMS ve sahada yüklenebilir yazılım |
-| §4.2.j.1–4 | PDI kullanımı, seviyesi, süreçleri, yüklemesi | 8.6 PDI, seçenekle seçilebilir, UMS ve sahada yüklenebilir yazılım |
+| §4.2.i | UMS süreç, araç ve verisi | 8.6 PDI, option-selectable, UMS ve sahada yüklenebilir yazılım |
+| §4.2.j.1–4 | PDI kullanımı, seviyesi, süreçleri, yüklemesi | 8.6 PDI, option-selectable, UMS ve sahada yüklenebilir yazılım |
 | §4.2.l | Tedarikçi gözetiminin planlanması | 9 Tedarikçi gözetimi |
 | §6.4.4.3.d.1 | Devre dışı kod: seviye, hafifletme | 8.7 Devre dışı bırakılmış kod |
 | §9.1.a–c | PSAC'ın sunulması ve mutabakat | 5.5 Sertifikasyon irtibatı sorumlulukları; 7.2 Ara bilgilendirme |
@@ -518,7 +518,7 @@ doğrudan anan irtibat ve ek husus maddelerini önerilen içindekilerdeki yerler
 |---|---|---|
 | DO-331 | MB.11.1.d | 5.2: özetler ekin hedeflerini de kapsar; DO-178C ile ekin hedefleri çelişirse çözüm yolu önerilir |
 | DO-331 | MB.11.1.e | 6.1 ve 6.2: modeller ve modelden üretilen veri listeye ve ilişkilere girer |
-| DO-331 | MB.4.2.m, o | 4.5: hangi bileşende hangi model türü (belirtim ya da tasarım modeli), temsil ettiği veri, modelin doğrulama yöntemi ve tasarım modeli kapsam ölçütü, simülasyon kredisi; ayrıntı SDP ve SVP'de |
+| DO-331 | MB.4.2.m, o | 4.5: hangi bileşende hangi model türü (spesifikasyon ya da tasarım modeli), temsil ettiği veri, modelin doğrulama yöntemi ve tasarım modeli kapsam ölçütü, simülasyon kredisi; ayrıntı SDP ve SVP'de |
 | DO-332 | OO.11.1.d, e | 5.2, 6.1 ve 6.2: DO-331'deki eklemelerle aynı |
 | DO-332 | OO.4.3, OO.11.1.i | 4.5: nesne yönelimli teknolojinin nerede ve nasıl kullanılacağı; ondan doğan zafiyetlerin (ekin OO.D kısmı) nasıl ele alınacağı |
 | DO-332 | OO.4.2.m, n | 4.5 ve 8.3: sanallaştırma kullanımı; yeniden kullanılan bileşenin tip tutarlılığı ve istisna yönetimiyle entegrasyonu |
@@ -539,7 +539,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendi metninin yeri
 | Bu belgede | Örtüşmesi gereken belge | Nasıl denetlenir |
 |---|---|---|
 | Süreç özetleri (5.2) | [SDP](02-sdp.mdx), [SVP](03-svp.mdx), [SCMP](04-scmp.mdx) ve [SQAP](05-sqap.mdx) | Her özet cümlesinin ilgili planda karşılığı aranır; planda olmayan taahhüt özetten çıkarılır |
-| Yazılım seviyesi ve gerekçesi (4.3, 4.4) | Sistem emniyet değerlendirmesi (FHA, PSSA); bkz. [kitabın 3. bölümü](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.mdx) | Atıf yapılan sürüm, sistemin güncel temel çizgisindeki sürümle karşılaştırılır |
+| Yazılım seviyesi ve gerekçesi (4.3, 4.4) | Sistem emniyet değerlendirmesi (FHA, PSSA); bkz. [kitabın 3. bölümü](../../02-baglam/03-sistem-emniyet-degerlendirmesi-baglaminda-yazilim.mdx) | Atıf yapılan sürüm, sistemin güncel baseline'ındaki sürümle karşılaştırılır |
 | Organizasyon ve bağımsızlık (5.3) | [SVP](03-svp.mdx)'nin bağımsızlık anlatımı, [SQAP](05-sqap.mdx)'ın kalite güvencesi organizasyonu | Roller üç belgede aynı adla geçer; bağımsızlık iddiası organizasyon şemasıyla çelişmez |
 | Veri listesi, kategoriler ve problem raporu sınıfları (6.1, 8.10) | [SCMP](04-scmp.mdx)'nin konfigürasyon öğeleri, kategori ataması ve problem raporlama akışı | İki liste satır satır karşılaştırılır; kimlikler, kategoriler ve sınıf adları aynıdır |
 | Araç tablosu (8.2) | [SDP](02-sdp.mdx)'nin geliştirme ortamı, [SVP](03-svp.mdx)'nin doğrulama ortamı, [SCMP](04-scmp.mdx)'nin konfigürasyon yönetimi araçları, SECI | Araç adı, sürümü ve rolü her yerde aynıdır; SECI'deki sürüm günceldir |
@@ -557,7 +557,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendi metninin yeri
 | PSAC mutabakattan sonra sessizce değişmiş | Revizyonun iç belge değişikliği sayılması | 5.6'da özü etkileyen değişiklik listesi; otoriteye bildirim kaydı |
 | Takvim bölümünde yalnızca tarihler var ve kısa sürede eskiyor | Proje planının kopyalanması | Olay tabanlı SOI tetikleyicileri ve yaklaşık dönem; kesin tarihler proje planında |
 | PSAC'ta söz verilen faaliyet hiç yapılmamış | Planı iyi göstermek için iddialı yazmak | Yalnızca kanıtlanabilecek taahhüt; her cümle için "SAS'ta nasıl kapanır?" sorusu |
-| PSAC içeriği SDP'ye gömülmüş, SDP CC2 yönetiliyor (Seviye C/D) | Paketlemenin kontrol kategorisine etkisinin düşünülmemesi | PSAC içeriği taşıyan belgeyi CC1 yönetmek, gerekirse otoriteye sunmak |
+| PSAC içeriği SDP'ye gömülmüş, SDP CC2 olarak yönetiliyor (Seviye C/D) | Paketlemenin kontrol kategorisine etkisinin düşünülmemesi | PSAC içeriği taşıyan belgeyi CC1 olarak yönetmek, gerekirse otoriteye sunmak |
 | Tedarikçinin belgesi başvuru sahibinin PSAC'ının yerine konmuş | Sorumluluğun tedarikçiye geçtiği varsayımı | PSAC başvuru sahibinindir; tedarikçi belgesine yalnızca atıf yapılır |
 
 ## Yayımlamadan önce
@@ -570,7 +570,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendi metninin yeri
       kalifikasyon gerekmeyen araçların gerekçesi yazılmış mı?
 - [ ] 5.2'deki her özet ilgili planda karşılık buluyor ve hiçbiri planla çelişmiyor mu?
 - [ ] Her verinin kategorisi DO-178C Ek A ve SCMP ile tutarlı, sunulan veri (kalifiye araç
-      varsa SECI ile TQP, TCI ve TAS dahil) denetimde gösterilenden ayrılmış mı?
+      varsa SECI ile TQP, TCI ve TAS dâhil) denetimde gösterilenden ayrılmış mı?
 - [ ] Her taahhüt için "SAS'ta bunu hangi kayıtla kapatacağım?" sorusunun cevabı var mı?
 
 Otoritenin planlama denetiminde PSAC'ta baktığı noktalar: [SW SOI-1](../../07-soi-denetimleri/soi-1.mdx).

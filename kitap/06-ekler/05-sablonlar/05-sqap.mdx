@@ -12,7 +12,7 @@ denetlenecek proje ekipleri ve planı ilk katılım aşaması (Stage of Involvem
 denetiminde, yani SOI-1'de değerlendiren sertifikasyon otoritesidir (certification
 authority). Planı kalite güvencesi sorumlusu yazar; kalite güvencesi yöneticisi ile yazılım
 proje yöneticisi onaylar. Plan, planlama sürecinde diğer planlarla birlikte yazılır ve ilk
-temel çizgiden ve kalite güvencesinin ilk denetiminden önce yürürlüğe girer.
+baseline'dan ve kalite güvencesinin ilk denetiminden önce yürürlüğe girer.
 
 Kalite güvencesinin doğrulamadan farkı, bağımsızlığı ve uygunsuzlukların (nonconformance)
 kapatılışı [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx)
@@ -112,7 +112,7 @@ projede değiştirilir ya da uygulanmaz. Atıf yapılan her prosedürün kimliğ
 
 Ortam bölümü, kalite güvencesinin nerede ve neyle çalıştığını anlatır. Kapsam, hangi
 süreçlerin, yaşam döngüsü verisinin (software life cycle data) ve kuruluşların
-(tedarikçiler dahil) denetleneceğini söyler. Organizasyon ve arayüzler, kalite güvencesinin
+(tedarikçiler dâhil) denetleneceğini söyler. Organizasyon ve arayüzler, kalite güvencesinin
 geliştirme, doğrulama, konfigürasyon yönetimi, sertifikasyon irtibatı ve sistem emniyeti
 ekipleriyle hangi kanaldan çalıştığını tarif eder. Standartlar ve prosedürler kısmı kalite
 güvencesinin kendi iş tariflerini kimlikleriyle listeler: denetim, uygunsuzluk ve yazılım
@@ -154,7 +154,7 @@ neyi beyan ettiği de bu bölümdedir.
   yazarı ya da doğrulayıcısı olması nasıl önlenir?
 - Kalite güvencesine kaç kişi ya da ne kadar efor ayrılıyor, hangi yetkinlik (DO-178C ve
   denetçi eğitimi) aranıyor; tek kişilik kalite güvencesinde kişi yokken yetki kime geçer?
-- Kalite güvencesi hangi durumda temel çizgiyi (baseline), kredi amaçlı bir koşuyu ya da
+- Kalite güvencesi hangi durumda baseline alınmasını, kredi amaçlı bir koşuyu ya da
   teslimi durdurabilir; bu engeli kim, hangi kayıtla kaldırabilir?
 - Kalite güvencesi hangi ürünü ya da kaydı onaylar (sürüm teslimi, uygunluk gözden
   geçirmesi kaydı) ve bu onay neyi beyan eder?
@@ -165,7 +165,7 @@ söylemez; aradığı yetki, sorumluluk ve bağımsızlıktır (§8.2.a, §11.5.
 firmadan alınabilir, ama iş devredilir, sorumluluk devredilmez. Dış firma da kalite
 güvencesi sürecini yürüten bir tedarikçidir ve bütün tedarikçilerin gözetimi başvuru
 sahibindedir (§1.4.c). Bu durumda plan, firmanın yetkisini (düzeltici faaliyeti sağlatma ve
-ürün onayı dahil), kime raporladığını ve dayandığı sözleşme maddesini adıyla yazar. Yalnızca
+ürün onayı dâhil), kime raporladığını ve dayandığı sözleşme maddesini adıyla yazar. Yalnızca
 rapor yazan, bulguyu kapattırma yetkisi olmayan bir hizmet, kalite güvencesindeki
 bağımsızlığın tanımını karşılamaz. Firmanın işini başvuru sahibinde kimin gözettiği de
 yazılır; bu gözetim için sözleşmede ayrı bir madde yer alır.
@@ -178,9 +178,9 @@ yazılır; bu gözetim için sözleşmede ayrı bir madde yer alır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Kalite güvencesi hizmeti `<firma>` firmasından alınır." | "Kalite güvencesini sözleşmenin `<ek ve madde>` kısmına göre `<firma>` yürütür; firmanın kalite güvencesi mühendisi başvuru sahibinin kalite yöneticisine raporlar, uygunsuzluk açma, temel çizgiyi durdurma ve teslim onayı yetkisi vardır. Firmanın işini kalite yöneticisi her çeyrekte kayıt örnekleyerek gözetir." |
+| "Kalite güvencesi hizmeti `<firma>` firmasından alınır." | "Kalite güvencesini sözleşmenin `<ek ve madde>` kısmına göre `<firma>` yürütür; firmanın kalite güvencesi mühendisi başvuru sahibinin kalite yöneticisine raporlar, uygunsuzluk açma, baseline alınmasını durdurma ve teslim onayı yetkisi vardır. Firmanın işini kalite yöneticisi her çeyrekte kayıt örnekleyerek gözetir." |
 | "Kalite güvencesi bağımsızdır." | "Kalite güvencesi mühendisi kalite güvencesi yöneticisine raporlar; yazılım proje yöneticisine raporlama hattı yoktur. Denetlediği hiçbir verinin yazarı ya da doğrulayıcısı olamaz." |
-| "Kalite güvencesi gerektiğinde müdahale eder." | "Açık büyük uygunsuzluk varken temel çizgi alınmaz ve kredi amaçlı test koşulmaz; bu engeli yalnızca kalite güvencesi yöneticisi, gerekçesini kayda yazarak kaldırabilir." |
+| "Kalite güvencesi gerektiğinde müdahale eder." | "Açık büyük uygunsuzluk varken baseline alınmaz ve kredi amaçlı test koşulmaz; bu engeli yalnızca kalite güvencesi yöneticisi, gerekçesini kayda yazarak kaldırabilir." |
 
 ### 4. Kalite güvencesi faaliyetleri
 
@@ -192,7 +192,7 @@ standartların yazıldığına, DO-178C ve uygulanan eklerle uyumunun ve birbirl
 tutarlılığının gözden geçirildiğine dair güvence elde eder (A-9 #1). Bu, planları ikinci
 kez yazmak değildir: gözden geçirmenin tanımlı yöntemle yapıldığını, hedefleri plan
 bölümleriyle eşleyen uyum matrisinin bulunduğunu, bulguların kapandığını ve planların
-temel çizgiye alındığını görmektir. Plan değişikliğinde güvencenin nasıl yenileneceği de
+baseline'a alındığını görmektir. Plan değişikliğinde güvencenin nasıl yenileneceği de
 yazılır.
 
 **4.2 Süreç ve veri denetimleri, örnekleme.** Denetimin (audit) konusu bellidir: ekip
@@ -210,15 +210,15 @@ doğrulama sürecinde eksiksiz karşılanır, kalite güvencesi bunun planlandı
 örnekleyerek görür (DO-248C, FAQ #75).
 
 **4.3 Gözden geçirmelere katılım ve tanıklık.** Kalite güvencesinin hangi gözden
-geçirmelere katılacağı (ör. her sürecin ilk gözden geçirmesi, temel çizgi öncesi
-gözden geçirmeler) ve hangi kredi amaçlı koşulara, derlemelere ya da yüklemelere tanıklık
+geçirmelere katılacağı (ör. her sürecin ilk gözden geçirmesi, baseline öncesi
+gözden geçirmeler) ve hangi kredi amaçlı koşulara, build'lere ya da yüklemelere tanıklık
 (witnessing) edeceği yazılır. Tanıklık ancak kalite güvencesine önceden haber verilirse
 mümkündür; bildirim süresi ve kanalı da plana girer.
 
 **4.4 Geçiş kriterlerinin izlenmesi.** Yazılım geliştirme planı (Software Development Plan,
 SDP) ve yazılım doğrulama planı (Software Verification Plan, SVP) gibi diğer planlardaki
-geçiş kriterlerinin (transition criteria) sağlandığına dair güvence, kriter listesini
-kayıtlarla karşılaştırarak elde edilir (A-9 #4). Plan, her geçişin mi yoksa bir örneklemin
+geçiş kriterlerinin (transition criteria) sağlandığına dair güvence, kriter listesi
+kayıtlarla karşılaştırılarak elde edilir (A-9 #4). Plan, her geçişin mi yoksa bir örneklemin
 mi denetleneceğini ve değerlendirmenin nasıl kayda geçeceğini söyler; artımlı projelerde
 denetim artım bazında yapılır. Örnek kriterler
 [Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)
@@ -231,7 +231,7 @@ görülüyor mu, ertelenenler yeniden değerlendiriliyor mu?
 
 **4.6 Yazılım uygunluk gözden geçirmesi.** Sertifikasyon başvurusunun parçası olarak
 sunulacak her yazılım sürümü için teslimden önce yapılır ve her seviyede beklenir (A-9 #5).
-Plan; gözden geçirmenin ne zaman yapılacağını, giriş koşullarını, kontrol listesinin
+Plan, gözden geçirmenin ne zaman yapılacağını, giriş koşullarını, kontrol listesinin
 kimliğini ve sonucun nasıl kayda geçeceğini tanımlar. Gözden geçirmenin aradığı tespitler
 ve tipik kanıtları
 [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx#yazılım-uygunluk-gözden-geçirmesi)
@@ -245,8 +245,8 @@ grup için projede hangi kaydın neyle karşılaştırılacağını yazar. Örne
   Index, SCI) her öğe arşivdeki sürümle karşılaştırılır; iz verisinden örneklem alınır;
   onaylı gereksinim sapmalarının listesi çıkarılır.
 - Nesne kodu kontrollü: yeniden derleme kaydı ve yükleme denemesi kaydı incelenir.
-- Varsa önceden geliştirilmiş yazılım: önceki temel çizgiden bu yana onaylanan
-  değişikliklerin listesi güncel temel çizgiyle karşılaştırılır.
+- Varsa önceden geliştirilmiş yazılım: önceki baseline'dan bu yana onaylanan
+  değişikliklerin listesi güncel baseline ile karşılaştırılır.
 
 Uygunluk gözden geçirmesini kim yürütürse yürütsün (kurum içi ya da dış kaynaklı kalite
 güvencesi), yapanın bağımsızlığı her seviyede aranır (A-9 #5) ve sonuç, başvuru sahibinin
@@ -257,21 +257,21 @@ bu beyanın sorumluluğu başvuru sahibindedir (§11.20.l).
 (parameter data item, PDI) dosyalarının yeniden üretilebilirliğinin gösterilme yolu da
 yazılır. Sağlam bir yöntem: kaynak kod arşivden temiz bir çalışma alanına geri getirilir,
 yazılım yaşam döngüsü ortam konfigürasyon indeksinde (Software Life Cycle Environment
-Configuration Index, SECI) kayıtlı ortamla yeniden derlenir ve çıktıların sağlama toplamı
-(checksum) SCI'daki değerlerle karşılaştırılır; zaman damgası gibi beklenen farklar
+Configuration Index, SECI) kayıtlı ortamla yeniden derlenir ve çıktıların checksum'ları
+SCI'daki değerlerle karşılaştırılır; zaman damgası gibi beklenen farklar
 önceden gerekçelendirilir. Sertifikasyon sonrası
 değişikliklerde yapılacak alt kümenin değişikliğin önemine göre nasıl seçileceği de yazılır.
 
-:::warning[Uygunluk gözden geçirmesi son temel çizgi üzerinde yapılır]
+:::warning[Uygunluk gözden geçirmesi son baseline üzerinde yapılır]
 Gözden geçirmeyi takvim baskısıyla öne çekip ardından "küçük bir düzeltme" yapmak, son
 denetimin tipik bulgusunu üretir: kayıt, sunulan sürümü anlatmaz. Planda, sonradan veri ya
 da kod değişirse gözden geçirmenin en azından etkilenen kalemler için tekrarlanacağı ve son
-temel çizgiden önce bir prova yapılacağı yazılmalıdır.
+baseline'dan önce bir prova yapılacağı yazılmalıdır.
 :::
 
 **4.7 Önceden geliştirilmiş yazılım için ek faaliyetler.** Önceden geliştirilmiş yazılım
 (previously developed software, PDS) kullanılıyorsa kalite güvencesi iki şeyi ayrıca
-denetler. Birincisi, PSAC'taki PDS boşluk analizinde yeni seviye için belirlenen eksiklerin
+denetler. Birincisi, PSAC'taki PDS gap analizinde yeni seviye için belirlenen eksiklerin
 kapatıldığını gösteren kayıtlardır (ör. ek doğrulama ya da kapsam analizi). İkincisi,
 planlarda PDS için tanımlanan farklı ya da ek süreç adımlarının gerçekten uygulandığıdır
 (ör. değişiklik etki analizi). PDS yoksa "uygulanmaz" notu düşülür.
@@ -290,7 +290,7 @@ planlarda PDS için tanımlanan farklı ya da ek süreç adımlarının gerçekt
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Kalite güvencesi tüm faaliyetleri izler." | "Her temel çizgiden önce SDP'deki geçiş kriterleri, kontrol listesiyle ve kayıtlar karşısında tek tek denetlenir; sonuç temel çizgi kimliğiyle kayda geçer." |
+| "Kalite güvencesi tüm faaliyetleri izler." | "Her baseline'dan önce SDP'deki geçiş kriterleri, kontrol listesiyle ve kayıtlar karşısında tek tek denetlenir; sonuç baseline kimliğiyle kayda geçer." |
 | "Süreçler düzenli olarak denetlenir." | "Etkin her süreç üç ayda en az bir kez denetlenir; dönemin denetim takvimi dönem başında yayımlanır." |
 | "Yeterli sayıda kayıt örneklenir." | "Her denetimde dönem içinde kapanan kayıtlardan en az 10'u (azsa tamamı) örneklenir; en az yarısı riske göre seçilir ve seçim gerekçesi kayda yazılır." |
 
@@ -302,8 +302,8 @@ olmalıdır: koyduğu oranı tutturamayan kalite güvencesi kendi planından sap
 Geçiş kriterleri yalnızca geliştirme süreçleri için yazılmaz; bütünleyici süreçlerin
 (integral processes) de girdisi ve tetikleyicisi vardır. Bu bölüm, kalite güvencesinin
 sürece ne zaman girdiğini ve her faaliyeti için neyin hazır olması gerektiğini yazar: süreç
-denetimine, denetlenecek veri temel çizgideyken ya da gözden geçirmesi kapanmışken; uygunluk
-gözden geçirmesine son temel çizgi alınıp SCI hazırlandığında ve açık problem raporu listesi
+denetimine, denetlenecek veri baseline'dayken ya da gözden geçirmesi kapanmışken; uygunluk
+gözden geçirmesine son baseline alınıp SCI hazırlandığında ve açık problem raporu listesi
 dondurulduğunda girilir. 4.4'te kalite güvencesi başkalarının kriterlerini denetler; burada
 kendi giriş koşullarını yazar.
 
@@ -318,7 +318,7 @@ kendi giriş koşullarını yazar.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Kalite güvencesi proje başından itibaren sürece dahildir." | "Kalite güvencesi, planların ilk taslağı gözden geçirmeye sunulduğunda sürece girer; uygunluk gözden geçirmesine son temel çizgi alınıp açık problem raporu listesi dondurulduğunda başlanır." |
+| "Kalite güvencesi proje başından itibaren sürece dâhildir." | "Kalite güvencesi, planların ilk taslağı gözden geçirmeye sunulduğunda sürece girer; uygunluk gözden geçirmesine son baseline alınıp açık problem raporu listesi dondurulduğunda başlanır." |
 
 ### 6. Faaliyet takvimi
 
@@ -331,11 +331,11 @@ dönemsel denetimler olaysız geçen uzun dönemleri kapsar. Bir başlangıç no
 |---|---|---|
 | Planlar gözden geçirmeye sunuldu | Plan ve standart gözden geçirmesine güvence | Plan güvence kaydı |
 | Bir sürecin ilk çıktıları üretildi | O sürecin ilk denetimi | Denetim raporu |
-| Her temel çizgiden önce | Geçiş kriterlerinin denetimi | Geçiş denetim kaydı |
+| Her baseline'dan önce | Geçiş kriterlerinin denetimi | Geçiş denetim kaydı |
 | Kredi amaçlı test koşusu | Tanıklık ya da koşu kayıtlarının denetimi | Tanıklık kaydı |
 | Tedarikçi teslimatı | Teslimat ve tedarikçi süreç denetimi | Tedarikçi denetim raporu |
 | SOI denetiminden birkaç hafta önce | İç ön denetim (mock audit) | Ön denetim raporu |
-| Son temel çizgi alındı | Yazılım uygunluk gözden geçirmesi | Uygunluk gözden geçirmesi kaydı |
+| Son baseline alındı | Yazılım uygunluk gözden geçirmesi | Uygunluk gözden geçirmesi kaydı |
 | Her üç ayda bir | Uygunsuzluk durumunun yönetime raporlanması | Durum raporu |
 
 **Verilecek kararlar:**
@@ -344,8 +344,8 @@ dönemsel denetimler olaysız geçen uzun dönemleri kapsar. Bir başlangıç no
 - Artımlı ya da çok bileşenli projede denetim artım ya da bileşen başına mı yapılıyor?
 - İç ön denetimler hangi SOI denetimlerinden önce, ne kadar önce yapılıyor?
 
-Dikkat: Takvimdeki her olay başka bir planda da tanımlı olmalıdır; "her temel çizgiden önce"
-yazan satır temel çizgilerin SCMP'de, iç ön denetim satırı SOI tetikleyicilerinin PSAC'ta
+Dikkat: Takvimdeki her olay başka bir planda da tanımlı olmalıdır; "her baseline'dan önce"
+yazan satır baseline'ların SCMP'de, iç ön denetim satırı SOI tetikleyicilerinin PSAC'ta
 tanımlı olmasına dayanır.
 
 ### 7. Kalite güvencesi kayıtları
@@ -359,7 +359,7 @@ kaydı, işi başkasının yeniden izleyebileceği kadar ayrıntılı olmalıdı
 
 - denetim kimliği, tarihi ve denetçi,
 - kapsam ve dayanak: denetlenen süreç ya da veri, ölçüt alınan plan ya da standart maddesi
-  ve sürümü, denetlenen temel çizgi ya da dönem,
+  ve sürümü, denetlenen baseline ya da dönem,
 - örneklenen öğeler ve seçim gerekçesi,
 - bulgular ve açılan uygunsuzlukların kimlikleri,
 - düzeltici faaliyet, sorumlusu, hedef tarihi, kapanış tarihi ve kapanış kanıtı.
@@ -377,7 +377,7 @@ saklama süresi ve arşiv yöntemi SCMP'deki kurallarla aynıdır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Denetim yapıldı, uygunsuzluk bulunmadı." | "KG-DEN-014: kod gözden geçirme süreci, temel çizgi YB-2.3. SVP madde 4.1'e göre 12 kayıt örneklendi (liste ekte); 1 uygunsuzluk açıldı (UY-031)." |
+| "Denetim yapıldı, uygunsuzluk bulunmadı." | "KG-DEN-014: kod gözden geçirme süreci, baseline YB-2.3. SVP madde 4.1'e göre 12 kayıt örneklendi (liste ekte); 1 uygunsuzluk açıldı (UY-031)." |
 | "Kayıtlar uygun biçimde saklanır." | "Kalite güvencesi kayıtları `<araç adı ve sürümü>` üzerinde CC2 olarak tutulur ve SCMP'de tanımlı arşiv süresince saklanır." |
 
 ### 8. Uygunsuzlukların ele alınması
@@ -392,8 +392,8 @@ karara atıf yapar ve yalnızca kalite güvencesine özgü adımları ekler: uyg
 hedef süreler, üst yönetime taşıma ve kapanışın kalite güvencesince teyidi.
 
 Onaylı sapma (approved deviation) ise faaliyetten önce istenmiş ve yetkili kişice onaylanmış
-bir plandan ayrılmadır; kayda geçer ve proje sonunda yazılım başarım özetinin (Software
-Accomplishment Summary, SAS) sapmaları anlatan kısmına kaynak olur. Standart kuralından
+bir plandan ayrılmadır; kayda geçer ve proje sonunda yazılım başarım özetinin (SAS)
+sapmaları anlatan kısmına kaynak olur. Standart kuralından
 sapma (ör. kodlama standardındaki bir kurala tekil sapma) bu bölümün değil, ilgili
 standardın sapma sürecinin konusudur: akışın ayrıntısı kodlama standardındadır, gereksinim
 ve tasarım standardı ona atıf yapar. Kalite güvencesi bu kayıtların eksiksiz ve onaylı
@@ -403,7 +403,7 @@ olduğunu örnekleyerek denetler (A-9 #3, Seviye A–C).
 
 - Uygunsuzluk sınıfları neler, her sınıfın hedef kapanış süresi ne; süreyi aşan kayıt kime,
   hangi aşamalarla taşınır?
-- SCMP'de seçilen kayıt yeri bu planda nasıl uygulanıyor; temel çizgideki bir veri
+- SCMP'de seçilen kayıt yeri bu planda nasıl uygulanıyor; baseline'daki bir veri
   değişecekse uygunsuzluk hangi problem raporuna bağlanır?
 - Kapanış için hangi kanıt istenir; tekrarın önlendiği nasıl görülür?
 - Plandan sapmayı kim onaylar; hangi sapma plan değişikliği gerektirir? Standart sapma
@@ -455,7 +455,7 @@ hizmeti almaktan farklıdır; o durum 3. bölümde ele alınır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Tedarikçi gerektiğinde denetlenir." | "Her tedarikçi ilk teslimattan önce yerinde, sonra her temel çizgiden önce denetlenir; her denetimde tedarikçinin kalite güvencesi kayıtlarından en az beşi örneklenir. Denetim ve kayıt erişim hakkı sözleşmenin `<ek ve madde>` kısmındadır." |
+| "Tedarikçi gerektiğinde denetlenir." | "Her tedarikçi ilk teslimattan önce yerinde, sonra her baseline'dan önce denetlenir; her denetimde tedarikçinin kalite güvencesi kayıtlarından en az beşi örneklenir. Denetim ve kayıt erişim hakkı sözleşmenin `<ek ve madde>` kısmındadır." |
 
 ### 10. Ölçümler ve süreç iyileştirme (isteğe bağlı)
 
@@ -534,7 +534,7 @@ SQAP'ını olduğu gibi kopyalamak, uygulanmayacak sözler vermek demektir.
 | §8.3.a, d, h | Faaliyetlerin tamamlanması, raporların değerlendirilmesi | 4.6 Yazılım uygunluk gözden geçirmesi |
 | §8.3.b, c, e | Veri uyumu, izlenebilirlik ve sapmalar | 4.6 Yazılım uygunluk gözden geçirmesi |
 | §8.3.f, g | Yeniden üretme ve yükleme | 4.6 Yazılım uygunluk gözden geçirmesi |
-| §8.3.i | PDS temel çizgisine izlenebilirlik | 4.6; 4.7 |
+| §8.3.i | PDS baseline'ına izlenebilirlik | 4.6; 4.7 |
 | §8.3 Not | Sertifikasyon sonrası değişiklikte alt küme | 4.6 Yazılım uygunluk gözden geçirmesi |
 | §11.19 | Kalite güvencesi kayıtlarının içeriği | 7.1 Kayıt türleri ve asgari içerik |
 | §12.1.6.a | PDS'nin yeni seviyeye uygunluğu | 4.7 Önceden geliştirilmiş yazılım için ek faaliyetler |
@@ -558,7 +558,7 @@ içeriği için standardın kendisine bakılmalıdır.
 | Bu belgede | Örtüşmesi gereken belge | Nasıl denetlenir |
 |---|---|---|
 | 3 Yetki ve raporlama hattı | [PSAC](01-psac.mdx): organizasyon ve sorumluluklar | İki belgedeki rol adları ve raporlama hattı karşılaştırılır |
-| 4.4 Geçiş kriterlerinin izlenmesi | [SDP](02-sdp.mdx) ve [SVP](03-svp.mdx): yaşam döngüsü ve doğrulamaya giriş kriterleri | Planlardaki her kriterin SQAP takviminde bir denetim noktası var mı bakılır |
+| 4.4 Geçiş kriterlerinin izlenmesi | [SDP](02-sdp.mdx) ve [SVP](03-svp.mdx): yaşam döngüsü ve doğrulamaya giriş kriterleri | Planlardaki her kriterin SQAP takviminde bir denetim noktası var mı diye bakılır |
 | 4.3 Tanıklık | [SVP](03-svp.mdx): kredi amaçlı test koşuları | SVP'nin koşuları kalite güvencesine önceden bildirmeyi söylediği görülür |
 | 4.5 ve 8 Uygunsuzluk akışı | [SCMP](04-scmp.mdx): problem raporlama ve değişiklik kontrolü | SQAP'ın SCMP'deki kayıt yerine ve durum akışına atıf yaptığı, kapanışı doğrulayan rolün iki planda aynı olduğu görülür |
 | 7.2 Kayıtların yönetimi | [SCMP](04-scmp.mdx): kontrol kategorileri ve arşiv | Kalite güvencesi kayıtlarının SCMP listesinde CC2 olarak yer aldığı ve saklama süresinin aynı olduğu görülür |
@@ -571,7 +571,7 @@ içeriği için standardın kendisine bakılmalıdır.
 | Hata | Tipik nedeni | Önlem |
 |---|---|---|
 | Kalite güvencesi proje yöneticisine raporluyor | Organizasyonun plan yazılırken düşünülmemesi | Proje yönetiminden ayrı bir raporlama hattı kurmak; mümkün değilse düzeltici faaliyet yetkisini ve proje yöneticisinin üstüne taşıma yolunu adıyla yazmak |
-| Denetim takvimi yalnızca takvim tarihlerine bağlı | Kurum planından kopyalama | Temel çizgi, teslimat ve SOI gibi olaylara bağlı denetim tetikleyicileri tanımlamak |
+| Denetim takvimi yalnızca takvim tarihlerine bağlı | Kurum planından kopyalama | Baseline, teslimat ve SOI gibi olaylara bağlı denetim tetikleyicileri tanımlamak |
 | Örneklem tanımsız ya da "yeterli sayıda" | Taahhüdün sonradan tutturulamayacağı kaygısı | Asgari sayı, seçim ölçütü ve genişletme kuralı yazmak; uygulanabilir bir sayı seçmek |
 | SQAP ile SCMP iki ayrı uygunsuzluk akışı anlatıyor | İki planın farklı kişilerce yazılması | Akışı SCMP'de tanımlayıp SQAP'tan atıf yapmak; SQAP yalnızca kalite güvencesine özgü adımları ekler |
 | Uygunluk gözden geçirmesi yalnızca "yapılır" diye geçiyor | Proje sonunun planlamada uzak görünmesi | Zamanını, giriş koşullarını, kontrol listesini ve yeniden derleme yöntemini yazmak |
@@ -587,7 +587,7 @@ içeriği için standardın kendisine bakılmalıdır.
       olmayacağı açıkça söyleniyor mu?
 - [ ] Her denetim türü için sıklık ya da tetikleyici olay, örneklem büyüklüğü, seçim
       ölçütü ve genişletme kuralı tanımlı mı?
-- [ ] Faaliyet takvimindeki her olay (temel çizgi, teslimat, kredi amaçlı koşu) diğer
+- [ ] Faaliyet takvimindeki her olay (baseline, teslimat, kredi amaçlı koşu) diğer
       planlarda da tanımlı mı?
 - [ ] Uygunsuzluk akışı SCMP'deki problem raporlama akışına atıf yapıyor mu; sınıflar,
       hedef süreler ve üst yönetime taşıma yolu yazılı mı?

@@ -60,14 +60,14 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 4 Doğrulama yöntemleri
   4.1 Gözden geçirmeler ve kontrol listeleri
   4.2 Analizler
-  4.3 Test durumu seçimi
+  4.3 Test case seçimi
   4.4 Test seviyeleri ve ortam ataması
   4.5 Test prosedürleri ve sonuç verisi
   4.6 Teknoloji eklerinden gelen yöntemler
 5 Kapsam analizleri
   5.1 Gereksinim kapsam analizi
   5.2 Yapısal kapsam ölçütü ve ölçüm yöntemi
-  5.3 Veri ve kontrol bağlaşımı analizi
+  5.3 Data ve control coupling analizi
   5.4 Kaynak koda izlenemeyen nesne kodu
   5.5 Kapsam boşluklarının çözümü
 6 Doğrulama ortamı
@@ -78,7 +78,7 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
   7.1 Doğrulama faaliyetlerine giriş
   7.2 Kredi amaçlı test koşusu
 8 Bölümleme bütünlüğünün doğrulanması
-9 Derleyici, bağlayıcı ve yükleyici varsayımları
+9 Derleyici, linker ve loader varsayımları
 10 Yeniden doğrulama
   10.1 Doğrulama eksenindeki etki analizi
   10.2 Regresyon seçimi
@@ -107,14 +107,14 @@ belgede tanımlandığı da söylenir: her konu tek belgede tanımlanır, diğer
 - Ayrı bir test planı ya da kurum prosedürü var mı; hangi konu SVP'de, hangisi orada?
 - Sistem düzeyindeki testlerden ya da donanım doğrulamasından bir hedef için kredi
   alınacak mı?
-- Plan hangi temel çizgi (baseline) için geçerli, hangi değişiklikte yeniden yayımlanır?
+- Plan hangi baseline için geçerli, hangi değişiklikte yeniden yayımlanır?
 
 ### 2. Doğrulama organizasyonu
 
 Gözden geçiren, test geliştiren, testi koşan, kapsam analizini yapan ve sonuçları onaylayan
 kim? Kişi adı yerine rol yazılır; rol–kişi eşlemesi proje kaydında tutulur. Arayüzler dört
 yöne bakar: bulgular geliştirmeye döner; türetilmiş gereksinimler (derived requirement) ve
-emniyet etkili bulgular sistem süreçlerine bildirilir; temel çizgiler ve problem raporu
+emniyet etkili bulgular sistem süreçlerine bildirilir; baseline'lar ve problem raporu
 (problem report) akışı konfigürasyon yönetiminden gelir; kalite güvencesi tanıklık eder ve
 denetler.
 
@@ -140,11 +140,11 @@ Aşağıdaki örnek tablonun değerleri Ek A tablolarından alınmıştır.
 | A-5 #1: kodun gereksinimlere uyumu | Bağımsız | Bağımsız | Kodu yazmamış biri |
 | A-5 #2, #6: kodun mimariye uyumu, doğruluğu | Bağımsız | Gerekmez | Kodu yazmamış biri |
 | A-5 #8, #9: parametre verisi öğesi (PDI) dosyası | Bağımsız | Bağımsız | #8 dosyayı üretmemiş, #9 #8'i yapmamış biri |
-| A-6 #3: düşük seviyeli gereksinim testleri | Bağımsız | Bağımsız | Test durumlarını (test case) yazan, o kodu yazmamış olmalı |
+| A-6 #3: düşük seviyeli gereksinim testleri | Bağımsız | Bağımsız | Test case'leri yazan, o kodu yazmamış olmalı |
 | A-6 #4: düşük seviyeli gürbüzlük (robustness) testleri | Bağımsız | Gerekmez | Aynı kural |
 | A-7 #1, #2: test prosedürleri ve sonuçları | Bağımsız | Gerekmez | #1 prosedürü yazmamış, #2 testi koşmamış biri |
-| A-7 #3, #4: gereksinim kapsamı | Bağımsız | Gerekmez | Test durumlarını yazmamış biri |
-| A-7 #5 … #8: yapısal kapsam ve bağlaşım | Bağımsız | #6 … #8 bağımsız | Analiz edilen testleri yazmamış biri ya da araç |
+| A-7 #3, #4: gereksinim kapsamı | Bağımsız | Gerekmez | Test case'leri yazmamış biri |
+| A-7 #5 … #8: yapısal kapsam ve coupling | Bağımsız | #6 … #8 bağımsız | Analiz edilen testleri yazmamış biri ya da araç |
 | A-7 #9: izlenemeyen nesne kodu | Bağımsız | Hedef yok | Ek kodu derleyici ürettiğinden elle yapılan doğrulama bağımsız sayılır |
 
 Seviye C ve D'de doğrulama hedeflerinde bağımsızlık aranmaz; kalite güvencesinin
@@ -174,10 +174,9 @@ Yöntem adları bu planda tanımlanır; gereksinimlerin doğrulama yöntemi özn
 [gereksinim standardında](06-gereksinim-standardi.mdx) aynı üç değeri alır: Test, Analiz,
 Gözden geçirme. Gözden geçirmeler (4.1) için kontrol listelerinin (checklist) adı, sürümü ve
 standart kurallarına numarayla atfı; analizler (4.2) için izlenebilirlik (traceability), en
-kötü durum yürütme süresi (worst-case execution time, WCET), yığın, bellek haritası, bağlantı
+kötü durum yürütme süresi (worst-case execution time, WCET), stack, bellek haritası, bağlama
 ve yükleme analizlerinin yöntemi yazılır; testle gösterilemeyen gereksinimlerin hangi analizle
-karşılandığı da buraya girer. Test tarafında (4.3–4.5) normal aralık ve gürbüzlük test
-durumlarının nasıl türetileceği, hangi gereksinimin hangi seviye ve ortamda sınanacağı, test
+karşılandığı da buraya girer. Test tarafında (4.3–4.5) normal aralık ve gürbüzlük test case'lerinin nasıl türetileceği, hangi gereksinimin hangi seviye ve ortamda sınanacağı, test
 prosedürlerinin (test procedure) biçimi ve sonuç kaydının alanları tanımlanır. Teknoloji
 ekleri kullanılıyorsa model simülasyonu, biçimsel analiz ve nesne yönelimli tasarımın ek
 hedefleri için yöntem 4.6'ya; model izlenebilirlik ve model kapsam analizi 4.2 ve 5'e yazılır
@@ -189,7 +188,7 @@ sorusunun cevabı tek satırda bulunur:
 | Hedef | Yöntem | Kayıt |
 |---|---|---|
 | A-3 #1 | Gereksinim gözden geçirmesi, gereksinim kontrol listesi | Gözden geçirme kaydı |
-| A-5 #6 | Kod gözden geçirmesi; yığın ve WCET analizi | Gözden geçirme kaydı, analiz raporları |
+| A-5 #6 | Kod gözden geçirmesi; stack ve WCET analizi | Gözden geçirme kaydı, analiz raporları |
 | A-6 #5 | Hedefte donanım/yazılım entegrasyon testi | Test sonuçları |
 
 **Verilecek kararlar:**
@@ -199,28 +198,28 @@ sorusunun cevabı tek satırda bulunur:
   güncelliyor; bir aykırılıkta onaylı sapma kaydı nasıl aranıyor?
 - Doğrulama yöntemi Analiz ya da Gözden geçirme olan gereksinimin gerekçesi ve kanıtı hangi
   kayıtta durur?
-- Normal aralık test durumları hangi kuralla seçiliyor (eşdeğerlik sınıfı, sınır değer ve
-  çözünürlüğü); gürbüzlük test durumları hangi anormal koşulları (geçersiz değer, bozuk veri,
-  anormal başlatma, çerçeve süresi aşımı, izinsiz durum geçişi) kapsıyor?
+- Normal aralık test case'leri hangi kuralla seçiliyor (eşdeğerlik sınıfı, sınır değer ve
+  çözünürlüğü); gürbüzlük test case'leri hangi anormal koşulları (geçersiz değer, bozuk veri,
+  anormal başlatma, frame süresi aşımı, izinsiz durum geçişi) kapsıyor?
 - Hangi gereksinim hangi test seviyesinde sınanıyor; hangi testler yalıtılmış bileşen
   üzerinde, hangileri tümleşik hedefte koşuyor?
-- Geçti/kaldı kararı otomatik mi; otomatikse karşılaştırmayı yapan betik araç envanterinde mi?
+- Geçti/kaldı kararı otomatik mi; otomatikse karşılaştırmayı yapan script araç envanterinde mi?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Yazılım test edilecektir." | "Her yüksek seviyeli gereksinim için normal aralık test durumu; girdi aralığı, giriş verisi geçerliliği, başlatma ya da durum geçişi tanımlayan her gereksinim için ayrıca gürbüzlük test durumu yazılır; anormal koşul türleri 4.3'te listelidir. Donanım/yazılım entegrasyon testlerinin tamamı `<hedef kart ve revizyonu>` üzerinde koşar." |
+| "Yazılım test edilecektir." | "Her yüksek seviyeli gereksinim için normal aralık test case'i; girdi aralığı, giriş verisi geçerliliği, başlatma ya da durum geçişi tanımlayan her gereksinim için ayrıca gürbüzlük test case'i yazılır; anormal koşul türleri 4.3'te listelidir. Donanım/yazılım entegrasyon testlerinin tamamı `<hedef kart ve revizyonu>` üzerinde koşar." |
 | "Gerekli analizler yapılacaktır." | "WCET `<araç adı ve sürümü>` ile statik olarak hesaplanır, hedefte ölçümle karşılaştırılır; her görev için kalan pay sonuç raporunda verilir." |
 
 ### 5. Kapsam analizleri
 
-Gereksinim kapsam analizi iki adımlıdır: her gereksinimin karşısında test durumu var mı
+Gereksinim kapsam analizi iki adımlıdır: her gereksinimin karşısında test case var mı
 (eşleme) ve testler gereksinimin bütün koşullarını sınıyor mu (yeterlilik)? Yapısal kapsam
 analizinin (structural coverage analysis) ölçütü seviyeye bağlıdır: Seviye C'de satır kapsama
 (statement coverage), B'de buna ek olarak karar kapsama (decision coverage), A'da ayrıca
 değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC). Plan dört
 şeyi söylemelidir: seviyenin ölçütü, ölçümün aracı ve sürümü, ölçülen kod biçimi (kaynak ya
-da nesne kodu) ve donatılmış (instrumented) kodla toplanan verinin uçacak koda nasıl
-bağlandığı. Veri ve kontrol bağlaşımı (data and control coupling) analizi mimarideki arayüz
+da nesne kodu) ve instrumented kodla toplanan verinin uçacak koda nasıl
+bağlandığı. Data ve control coupling analizi mimarideki arayüz
 listesine dayanır. Seviye A'da kaynak koda izlenemeyen nesne kodunun ele alınışı 5.4'tedir
 ([seçenekler](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#kaynak-koda-izlenemeyen-nesne-kodu)).
 Boşluklar dört sınıfa göre çözülür: test eksikliği, gereksinim eksikliği, gereksiz kod
@@ -229,8 +228,7 @@ türünün ve savunmacı kodun nasıl ele alınacağı da buradadır
 ([Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx)).
 
 :::warning[Kapsam boşluğu koda bakılarak yazılan testle kapatılmaz]
-Test eksikliği sınıfında çözüm, gereksinimden türetilen yeni ya da genişletilmiş test
-durumudur. Koda bakıp gereksinime dayanmayan test yazmak ise yöntemi tersine çevirir: kapsam
+Test eksikliği sınıfında çözüm, gereksinimden türetilen yeni ya da genişletilmiş test case'tir. Koda bakıp gereksinime dayanmayan test yazmak ise yöntemi tersine çevirir: kapsam
 verisi yalnızca gereksinim tabanlı testlerden toplanır. SVP her boşlukta önce kök nedenin
 bulunacağını ve yapısal kapsam için kullanılan her testin bir gereksinime izleneceğini açıkça
 yazmalıdır.
@@ -238,28 +236,28 @@ yazmalıdır.
 
 **Verilecek kararlar:**
 
-- Yapısal kapsam hangi araçla, hangi kod biçiminde ve hangi derlemeden ölçülüyor?
-- Donatılmış koddan alınan kapsamın donatılmamış koddaki kredi koşusuna geçerliliği nasıl
+- Yapısal kapsam hangi araçla, hangi kod biçiminde ve hangi build'den ölçülüyor?
+- Instrumented koddan alınan kapsamın instrumented olmayan koddaki kredi koşusuna geçerliliği nasıl
   gösteriliyor?
-- Çevirici dili (assembly language) modülleri ve başlatma kodu için ölçütün karşılığı ve
+- Assembly modülleri ve başlatma kodu için ölçütün karşılığı ve
   ölçüm yolu ne?
 - Seviye A'da izlenemeyen nesne kodu analizi temsilî örnekle mi, tüm kodla mı yapılıyor?
 - Gerekçeli analizle kapatılan boşlukları kim gözden geçiriyor ve kim kabul ediyor?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Yapısal kapsam ölçülecektir." | "MC/DC, `<araç adı ve sürümü>` ile kaynak kod düzeyinde, donatılmış derlemeden toplanır; kredi koşusu donatılmamış imajla yapılır ve iki koşunun geçti/kaldı sonuçlarının aynı olduğu gösterilir." |
+| "Yapısal kapsam ölçülecektir." | "MC/DC, `<araç adı ve sürümü>` ile kaynak kod düzeyinde, instrumented build'den toplanır; kredi koşusu instrumented olmayan imajla yapılır ve iki koşunun geçti/kaldı sonuçlarının aynı olduğu gösterilir." |
 | "Kapsanmayan kod gerekçelendirilecektir." | "Her boşluk dört sınıftan birine atanır; gerekçeli analizle kapatılan boşluk, analizi yazmamış biri tarafından gözden geçirilir ve kapsam raporunda satır satır listelenir." |
 
 ### 6. Doğrulama ortamı
 
 Test düzenekleri (6.1), hedef donanımın parça numarası ve revizyonuyla, uyaran üreten yazılım
-ve veri yolu benzeticisi gibi bileşenleriyle anılır; düzeneğin kendisinin nasıl doğrulandığı
+ve veri yolu simülatörü gibi bileşenleriyle anılır; düzeneğin kendisinin nasıl doğrulandığı
 ve konfigürasyon kontrolüne alındığı da söylenir. Emülatör ya da simülatörden kredi alınacaksa
 (6.2) hedeften farkları, her farkın hata yakalama yeteneğine etkisi ve o farkı kapatan
 doğrulama faaliyeti bir tabloda listelenir. Araçlar (6.3) için rol, çıktısının ayrıca
 doğrulanıp doğrulanmadığı ve gerekiyorsa araç kalifikasyon seviyesi (tool qualification
-level, TQL) verilir; kapsam araçları ve sonuç karşılaştıran betikler tipik TQL-5 adayıdır
+level, TQL) verilir; kapsam araçları ve sonuç karşılaştıran script'ler tipik TQL-5 adayıdır
 ([DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 Sürümlerin asıl kaydı yazılım yaşam döngüsü ortam konfigürasyon indeksidir (Software Life
 Cycle Environment Configuration Index, SECI); SVP sürüm yazıyorsa SECI ile aynı olmalıdır.
@@ -279,8 +277,8 @@ Cycle Environment Configuration Index, SECI); SVP sürüm yazıyorsa SECI ile ay
 
 Her doğrulama faaliyetinin hangi koşulla başlayacağı, bir kayıtla denetlenebilir biçimde
 yazılır. En kritik geçiş kredi amaçlı (for-credit) test koşusudur. Geliştirme boyunca
-koşulan testler kuru koşudur (dry run) ve kanıt sayılmaz. Kredi koşusu için en az üç koşul
-yazılır: kod temel çizgide, test durumları ve prosedürleri gözden geçirilmiş, test ortamı
+koşulan testler dry run'dır ve kanıt sayılmaz. Kredi koşusu için en az üç koşul
+yazılır: kod baseline'da, test case'ler ve prosedürleri gözden geçirilmiş, test ortamı
 kayıtlı. Kredi koşusunda başarısız olan test problem raporuna dönüşür; raporun yaşam döngüsü
 yazılım konfigürasyon yönetimi planında (Software Configuration Management Plan, SCMP)
 tanımlanır ([SCMP şablonu](04-scmp.mdx)), SVP ona atıf yapar
@@ -290,19 +288,19 @@ tanımlanır ([SCMP şablonu](04-scmp.mdx)), SVP ona atıf yapar
 
 - Her doğrulama faaliyetinin (gözden geçirme, analiz, test geliştirme, kredi koşusu) giriş
   koşulu ne ve kim kontrol ediyor?
-- Kuru koşu zorunlu mu; kuru koşu kayıtları nerede tutuluyor?
+- Dry run zorunlu mu; dry run kayıtları nerede tutuluyor?
 - Kredi koşusunda bir test başarısız olursa koşu sürüyor mu; ne zaman bütün set yeniden
   koşulur?
 - Kalite güvencesi hangi koşulara tanıklık ediyor ve nasıl haberdar ediliyor?
-- Artımlı çalışmada kriter yapı başına mı, bileşen başına mı uygulanıyor?
+- Artımlı çalışmada kriter build başına mı, bileşen başına mı uygulanıyor?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Kod hazır olduğunda resmî testlere başlanır." | "Kredi amaçlı koşuya şu koşullarla girilir: yazılım sürümü temel çizgide; test durumları ve prosedürleri gözden geçirilmiş, bulguları kapalı; ortam SECI'deki tanımla aynı; kuru koşudaki başarısızlıklar problem raporuna bağlı; kalite güvencesi `<n>` iş günü önce bilgilendirilmiş." |
+| "Kod hazır olduğunda resmî testlere başlanır." | "Kredi amaçlı koşuya şu koşullarla girilir: yazılım sürümü baseline'da; test case'ler ve prosedürleri gözden geçirilmiş, bulguları kapalı; ortam SECI'deki tanımla aynı; dry run'daki başarısızlıklar problem raporuna bağlı; kalite güvencesi `<n>` iş günü önce bilgilendirilmiş." |
 
 ### 8. Bölümleme bütünlüğünün doğrulanması
 
-Yazılım bölümlemesi (software partitioning) kullanılıyorsa bölümlerin birbirini bellek ve
+Yazılım bölümlemesi (software partitioning) kullanılıyorsa partition'ların birbirini bellek ve
 zaman yönünden etkileyemediği analiz ve testle gösterilir; ikisi birbirinin yerini tutmaz.
 Plan, paylaşılan kaynak listesine dayanan bölümleme analizini, hedefte koşan ihlal testlerini
 ve bölümleme konfigürasyon tablolarının doğrulanmasını tanımlar. Bu hedef (A-4 #13) her
@@ -319,23 +317,23 @@ Bölümleme yoksa başlık kalır, altına gerekçesiyle "uygulanmaz" yazılır
 - Platform tedarikçisinin kanıtı kullanılıyorsa kullanım kısıtlarına uyulduğu nasıl
   gösteriliyor?
 
-### 9. Derleyici, bağlayıcı ve yükleyici varsayımları
+### 9. Derleyici, linker ve loader varsayımları
 
 Derleyiciye duyulan güven, bu ürünün nesne kodunun doğrulanmasından gelir ve başka bir ürüne
 taşınmaz; derleyicinin kalifiye edilmemesinin gerekçesi de budur ve PSAC'taki araç kararıyla
-aynı olmalıdır. Bağlayıcı ve yükleyici için de varsayımlar ayrı ayrı yazılır. Plan neyin
+aynı olmalıdır. Linker ve loader için de varsayımlar ayrı ayrı yazılır. Plan neyin
 varsayıldığını ve varsayımın hangi faaliyetle sınandığını yazar: yazılım geliştirme planında
-(Software Development Plan, SDP) dondurulan sürüm ve seçenekler, eniyileme (optimization)
+(Software Development Plan, SDP) dondurulan sürüm ve seçenekler, optimizasyon
 düzeyinin yapısal kapsama etkisi, Seviye A'da 5.4'teki analiz, üreticinin bilinen hata
 listesi, bellek haritası analizi ve yükleme imajının bütünlük denetimi. Seçeneklerin kendisi
 [SDP](02-sdp.mdx)'de tanımlanır; SVP onlara atıf yapar.
 
 **Verilecek kararlar:**
 
-- SDP'de dondurulan seçenekler ve eniyileme düzeyi hangi varsayıma dayanıyor; biri
+- SDP'de dondurulan seçenekler ve optimizasyon düzeyi hangi varsayıma dayanıyor; biri
   değişirse hangi test ve analiz yenilenir?
 - Derleyicinin bilinen hata listesi kim tarafından, ne sıklıkla değerlendiriliyor?
-- Bağlayıcı ve yükleyicinin çıktısı (bellek haritası, imaj, CRC) hangi analizle doğrulanıyor?
+- Linker ve loader'ın çıktısı (bellek haritası, imaj, CRC) hangi analizle doğrulanıyor?
 - Çalışma zamanı kütüphanesi ve başlatma kodu hangi kanıtla doğrulanıyor?
 
 | Zayıf ifade | Güçlü ifade |
@@ -346,7 +344,7 @@ listesi, bellek haritası analizi ve yükleme imajının bütünlük denetimi. S
 
 Değişiklik etki analizinin (change impact analysis) süreci [SCMP](04-scmp.mdx) şablonunda
 tanımlanır; SVP onun doğrulama eksenini doldurur: etkilenen testler iz verisiyle nasıl
-seçilir, hangi analizler yenilenir, hangi testler her derlemede koşar? Derleyici sürümü ya da
+seçilir, hangi analizler yenilenir, hangi testler her build'de koşar? Derleyici sürümü ya da
 seçeneği değişirse önceki test ve kapsam sonuçlarının geçerliliği ayrıca değerlendirilir.
 Problem raporunun kapanışı da yeniden doğrulamadır: sorunu bulan test ve etkilenen testler
 yeniden koşar.
@@ -355,18 +353,18 @@ yeniden koşar.
 
 - Etkilenen testler iz verisinden nasıl seçiliyor; seçimi kim gözden geçiriyor?
 - Her değişiklikte koşan asgari bir regresyon (regression) seti var mı, içeriği ne?
-- WCET, yığın ve kapsam analizleri hangi değişiklik türünde yenileniyor?
-- Kapsam verisi farklı derleme sürümlerinden birleştirilebilir mi; hangi koşulla?
+- WCET, stack ve kapsam analizleri hangi değişiklik türünde yenileniyor?
+- Kapsam verisi farklı build sürümlerinden birleştirilebilir mi; hangi koşulla?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Değişiklikten sonra gerekli testler tekrarlanır." | "Etkilenen gereksinimlerin testleri, iz verisiyle bulunan bağlı bileşenlerin entegrasyon testleri ve `<asgari setin adı>` her yeni derlemede koşar; derleyici seçeneği değişirse yapısal kapsam ve 5.4 analizi yenilenir." |
+| "Değişiklikten sonra gerekli testler tekrarlanır." | "Etkilenen gereksinimlerin testleri, iz verisiyle bulunan bağlı bileşenlerin entegrasyon testleri ve `<asgari setin adı>` her yeni build'de koşar; derleyici seçeneği değişirse yapısal kapsam ve 5.4 analizi yenilenir." |
 
 ### 11. Önceden geliştirilmiş yazılım
 
 Önceden geliştirilmiş yazılımın (previously developed software, PDS) doğrulama verisi bu
 projenin seviyesini ve bağlamını karşılamıyorsa, eksik hedeflerin nasıl karşılanacağı burada
-yazılır. Önce boşluk analizi yapılır: hangi hedef mevcut kanıtla karşılanıyor, hangisi eksik?
+yazılır. Önce gap analizi yapılır: hangi hedef mevcut kanıtla karşılanıyor, hangisi eksik?
 Bağlam farkları (işlemci, derleyici, birlikte çalıştığı yazılım) da boşluk sayılır ve ilgili
 testlerin yeni hedefte yeniden koşulmasını gerektirebilir. Kullanma niyeti ve strateji PSAC'ta,
 uygulanışı SVP'dedir ([24. Yazılım Yeniden Kullanımı](../../05-ozel-konular/24-yazilim-yeniden-kullanimi.mdx)).
@@ -374,7 +372,7 @@ uygulanışı SVP'dedir ([24. Yazılım Yeniden Kullanımı](../../05-ozel-konul
 **Verilecek kararlar:**
 
 - Hangi PDS bileşenleri var; mevcut doğrulama verileri hangi seviyeye ve bağlama ait?
-- Boşluk analizinde eksik çıkan hedefler hangi faaliyetle kapatılacak?
+- Gap analizinde eksik çıkan hedefler hangi faaliyetle kapatılacak?
 - Bağlam değişikliği hangi testlerin yeniden koşulmasını gerektiriyor?
 - Kullanılmayan PDS işlevleri devre dışı bırakılmış kod olarak mı ele alınıyor?
 
@@ -415,21 +413,21 @@ kontrolü SCMP'nin konusudur
 ### 14. Doğrulama verisi
 
 Yazılım doğrulama durumları ve prosedürleri (Software Verification Cases and Procedures,
-SVCP) gözden geçirme ve analiz prosedürlerini, test durumlarını ve prosedürlerini; yazılım
+SVCP) gözden geçirme ve analiz prosedürlerini, test case'leri ve prosedürlerini; yazılım
 doğrulama sonuçları (Software Verification Results, SVR) her faaliyetin sonucunu ve hangi
 konfigürasyon sürümüne ait olduğunu içerir. SVCP Seviye A ve B'de CC1, C ve D'de CC2;
-SVR her seviyede CC2'dir. İz verisi (trace data) gereksinim, test durumu, prosedür ve sonuç
+SVR her seviyede CC2'dir. İz verisi (trace data) gereksinim, test case, prosedür ve sonuç
 arasında iki yönlü kurulur. Beklenen ile gerçekleşen arasındaki her fark problem raporuyla
 izlenir; bulgu ile problem raporu arasındaki sınırı [SCMP](04-scmp.mdx) çizer, SVP hangi
 doğrulama bulgusunun bu akışa ne zaman girdiğini söyler.
 
 **Verilecek kararlar:**
 
-- Doğrulama verisi hangi biçimde tutuluyor: belge mi, temel çizgiye alınmış araç veritabanı mı?
+- Doğrulama verisi hangi biçimde tutuluyor: belge mi, baseline'a alınmış araç veri tabanı mı?
 - Her sonuç kaydı hangi alanları zorunlu taşıyor (yazılım, prosedür ve ortam sürümü, koşan
   kişi, tarih)?
 - İz verisinin iki yönlü ve eksiksiz olduğu nasıl denetleniyor?
-- SCMP'deki bulgu–problem raporu sınırı doğrulamada nasıl uygulanıyor; kuru koşudaki
+- SCMP'deki bulgu–problem raporu sınırı doğrulamada nasıl uygulanıyor; dry run'daki
   başarısızlık ne zaman problem raporu açar?
 
 ## Seviyeye göre farklar
@@ -442,7 +440,7 @@ bağımsızlıktır. Aşağıdaki sayılar Ek A'nın doğrulama tablolarından (
 | Doğrulama hedefi sayısı | A: 43; B: 41 | 34 | 9 |
 | Bağımsız karşılanan hedef | A: 25; B: 13 | Yok | Yok |
 | Yapısal kapsam ölçütü | A: MC/DC, karar, satır; B: karar, satır | Satır kapsama | Aranmaz |
-| Veri ve kontrol bağlaşımı | Aranır | Aranır | Aranmaz |
+| Data ve control coupling | Aranır | Aranır | Aranmaz |
 | Düşük seviyeli gereksinim testleri ve kapsamı | Aranır | Aranır | Aranmaz |
 | Gereksinim, mimari ve kod gözden geçirmeleri | Tümü | Hedef bilgisayarla uyum ve tasarım/kod doğrulanabilirliği düşer | Yalnız yüksek seviyeli gereksinimlerin üç hedefi ve bölümleme |
 | İzlenemeyen nesne kodu | Yalnız Seviye A | Aranmaz | Aranmaz |
@@ -460,19 +458,19 @@ kriterleri ve ortam tanımı hedef değildir, ama yazılırlarsa bağlayıcıdı
 | §11.3.a | Organizasyon ve süreç arayüzleri | 2 Doğrulama organizasyonu |
 | §11.3.b | Bağımsızlığın sağlanma yöntemi | 3 Bağımsızlık |
 | §11.3.c.1 | Gözden geçirme yöntemleri ve yardımcıları | 4.1 Gözden geçirmeler ve kontrol listeleri |
-| §11.3.c.2 | İzlenebilirlik ve kapsam dahil analizler | 4.2 Analizler; 5 Kapsam analizleri |
-| §11.3.c.3 | Test durumu seçimi, prosedür, veri | 4.3 Test durumu seçimi; 4.4 Test seviyeleri ve ortam ataması; 4.5 Test prosedürleri ve sonuç verisi |
+| §11.3.c.2 | İzlenebilirlik ve kapsam dâhil analizler | 4.2 Analizler; 5 Kapsam analizleri |
+| §11.3.c.3 | Test case seçimi, prosedür, veri | 4.3 Test case seçimi; 4.4 Test seviyeleri ve ortam ataması; 4.5 Test prosedürleri ve sonuç verisi |
 | §11.3.d | Test donanımı ve doğrulama araçları | 6 Doğrulama ortamı |
 | §11.3.e | Doğrulamaya giriş kriterleri | 7 Geçiş kriterleri |
 | §11.3.f | Bölümleme bütünlüğünün doğrulanması | 8 Bölümleme bütünlüğünün doğrulanması |
-| §11.3.g | Derleyici, bağlayıcı, yükleyici varsayımları | 9 Derleyici, bağlayıcı ve yükleyici varsayımları |
+| §11.3.g | Derleyici, linker, loader varsayımları | 9 Derleyici, linker ve loader varsayımları |
 | §11.3.h | Değişiklikte yeniden doğrulama yöntemi | 10 Yeniden doğrulama |
-| §11.3.i | Uyumsuz temel çizgili PDS | 11 Önceden geliştirilmiş yazılım |
+| §11.3.i | Uyumsuz baseline'lı PDS | 11 Önceden geliştirilmiş yazılım |
 | §11.3.j | Benzemez sürümlerin doğrulanması | 12 Çok sürümlü benzemez yazılım |
 | §4.2.h | Devre dışı kodun doğrulanması | 5.5 Kapsam boşluklarının çözümü |
 | §4.2.j.3 | PDI doğrulama süreci | 13 PDI doğrulaması |
 | §4.3.b | Geçiş kriterinin üç öğesi | 7.1 Doğrulama faaliyetlerine giriş |
-| §4.4.2.a | Eniyileme ve yapısal kapsam | 9 Derleyici, bağlayıcı ve yükleyici varsayımları |
+| §4.4.2.a | Optimizasyon ve yapısal kapsam | 9 Derleyici, linker ve loader varsayımları |
 | §4.4.2.b | İzlenemeyen nesne kodunun saptanması | 5.4 Kaynak koda izlenemeyen nesne kodu |
 | §4.4.2.c | Derleyici değişikliğinde yeniden doğrulama | 10 Yeniden doğrulama |
 | §4.4.3.a | Emülatör ve simülatör kalifikasyonu | 6.3 Doğrulama araçları ve kalifikasyon |
@@ -508,7 +506,7 @@ yerine geçmez.
 |---|---|---|
 | Bağımsızlık rolleri (3) | [SDP](02-sdp.mdx): ekip yapısı ve geliştirme rolleri | Bağımsız her hedefte yazar ve doğrulayıcı farklı kişilere mi düşüyor? |
 | Doğrulama araçları ve TQL kararları (6.3) | [PSAC](01-psac.mdx): araç listesi; SECI | Araç adı, sürümü ve kalifikasyon kararı üç yerde aynı mı? |
-| Derleyici varsayımları (9) | [SDP](02-sdp.mdx): geliştirme ortamı, derleyici seçenekleri | Varsayımlar SDP'de dondurulan seçeneklere ve eniyileme düzeyine mi dayanıyor? |
+| Derleyici varsayımları (9) | [SDP](02-sdp.mdx): geliştirme ortamı, derleyici seçenekleri | Varsayımlar SDP'de dondurulan seçeneklere ve optimizasyon düzeyine mi dayanıyor? |
 | Kapsam yaklaşımı, devre dışı kod, ek yöntemler (5, 4.6) | [PSAC](01-psac.mdx): ek hususlar ve teknoloji ekleri | PSAC'ta kredi istenen her yöntemin SVP'de uygulanışı var mı? |
 | Doğrulamaya giriş kriterleri (7) | [SDP](02-sdp.mdx): kodlama çıkış kriterleri | SDP'nin çıkış koşulu SVP'nin giriş koşulunu karşılıyor mu? |
 | Kredi koşusu ve tanıklık (7.2) | [SQAP](05-sqap.mdx): denetim ve tanıklık planı | Tanıklık edilecek koşular ve bildirim yolu SQAP'ta da var mı? |
@@ -520,10 +518,10 @@ yerine geçmez.
 | Hata | Tipik nedeni | Önlem |
 |---|---|---|
 | Plan faaliyetleri sayıyor; hangi hedefin nasıl karşılandığı çıkmıyor | Plan ekibin iş listesinden yazılmış | Yöntemler bölümüne hedef–yöntem–kayıt eşlemesi koymak |
-| Kapsamın hangi kod biçiminde, hangi derlemeden ölçüldüğü yazılmamış | Kapsam aracı plandan sonra seçilmiş | Aracı planlamada seçmek, ölçüm düzenini küçük bir denemeyle sınamak |
-| Çevirici dili modülleri ve başlatma kodu kapsam planının dışında | Aracın desteklemediği kod unutulmuş | Ölçütün çevirici dilindeki karşılığını ve ölçüm yolunu yazmak |
+| Kapsamın hangi kod biçiminde, hangi build'den ölçüldüğü yazılmamış | Kapsam aracı plandan sonra seçilmiş | Aracı planlamada seçmek, ölçüm düzenini küçük bir denemeyle sınamak |
+| Assembly modülleri ve başlatma kodu kapsam planının dışında | Aracın desteklemediği kod unutulmuş | Ölçütün assembly'deki karşılığını ve ölçüm yolunu yazmak |
 | Simülatör farkları "önemsiz" diye geçilmiş | Fark analizi yapılmamış | Fark tablosu; her farkı kapatan faaliyeti adlandırmak |
-| Geliştirme sırasında koşulan sonuçlar kanıt diye sunuluyor | Kuru koşu ile kredi koşusu ayrılmamış | Kredi koşusunun giriş koşullarını 7.2'ye yazmak |
+| Geliştirme sırasında koşulan sonuçlar kanıt diye sunuluyor | Dry run ile kredi koşusu ayrılmamış | Kredi koşusunun giriş koşullarını 7.2'ye yazmak |
 | Derleyici varsayımı tek cümle: "derleyici güvenilirdir" | Varsayım ile gerekçe karıştırılmış | Varsayımı bir doğrulama faaliyetine bağlamak; bilinen hata listesini değerlendirmek |
 | Regresyon "gerekli testler tekrarlanır" diye bırakılmış | Seçim yöntemi tanımlanmamış | İz verisine dayalı seçim kuralı ve asgari regresyon seti |
 
@@ -533,7 +531,7 @@ yerine geçmez.
       adıyla belirtilmiş mi?
 - [ ] Bağımsızlık tablosu seviyenin bağımsız hedeflerinin tamamını içeriyor ve her satırda
       "kim olamaz" sorusu bir rolle yanıtlanmış mı?
-- [ ] Yapısal kapsamın aracı, ölçüldüğü kod biçimi ve donatılmış kodla ilişkisi yazılı mı;
+- [ ] Yapısal kapsamın aracı, ölçüldüğü kod biçimi ve instrumented kodla ilişkisi yazılı mı;
       Seviye A'da izlenemeyen nesne kodu yöntemi seçilmiş mi?
 - [ ] Hangi testlerin hedef donanımda koşacağı ve hedef dışı ortamların farkları listelenmiş mi?
 - [ ] Kredi amaçlı koşunun giriş koşulları bir kayıtla denetlenebilir mi?

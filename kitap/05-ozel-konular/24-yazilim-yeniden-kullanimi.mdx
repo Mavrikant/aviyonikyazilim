@@ -9,7 +9,7 @@ Yazılım yeniden kullanımı, başka bir proje için geliştirilmiş ya da haz�
 bileşeni kodu ve kanıtıyla birlikte yeni bir sisteme taşımaktır; ancak bir yerde
 doğrulanmış olmak, yeni bağlamda kendiliğinden sertifikasyon kredisi sağlamaz. Bu bölüm
 bağlamın kanıtı neden geçersiz kılabildiğini, yeniden kullanılabilir bileşenin nasıl
-tasarlandığını, önceden geliştirilmiş ve ticari hazır yazılımın boşluk analiziyle nasıl
+tasarlandığını, önceden geliştirilmiş ve ticari hazır yazılımın gap analiziyle nasıl
 değerlendirildiğini ve ürün servis geçmişinin ne zaman kredi sağladığını anlatır.
 
 ## Bağlam neden belirleyicidir?
@@ -27,10 +27,10 @@ Aşağıdaki tablo en sık değişen bağlam boyutlarını ve her birinin sarst�
 
 | Bağlam boyutu | Neden önemlidir? | Yeniden ele alınan kanıt |
 |---|---|---|
-| İşlemci, derleyici ve derleme seçenekleri | Çalıştırılabilir nesne kodu değişir; kayan nokta, hizalama ve eniyileme davranışı farklılaşabilir | Testlerin yeni hedefte yeniden koşulması; yığın (stack) ve en kötü durum yürütme süresi (worst-case execution time, WCET) analizleri; Seviye A'da derleyicinin ürettiği ve kaynak koda doğrudan izlenemeyen ek kodun doğrulanması |
+| İşlemci, derleyici ve derleme seçenekleri | Çalıştırılabilir nesne kodu değişir; kayan nokta, hizalama ve optimizasyon davranışı farklılaşabilir | Testlerin yeni hedefte yeniden koşulması; stack ve en kötü durum yürütme süresi (worst-case execution time, WCET) analizleri; Seviye A'da derleyicinin ürettiği ve kaynak koda doğrudan izlenemeyen ek kodun doğrulanması |
 | RTOS ve sürücüler | Çizelgeleme, kesme ve bellek hizmetlerinin davranışı ve süresi değişir | Uyarlama katmanının doğrulaması; donanım-yazılım entegrasyon testleri |
-| Arayüzler | Birim, ölçek, değer aralığı, güncellenme hızı ve geçersizlik işareti farklı olabilir | Arayüz gereksinimleri; veri ve kontrol bağlaşımı (data and control coupling) analizi; entegrasyon testleri |
-| Zamanlama | Çağrı sıklığı, işlemci yükü ve süre sınırları değişir | WCET ve çizelgelenebilirlik (schedulability) analizi; zamana bağlı test durumları (test case) |
+| Arayüzler | Birim, ölçek, değer aralığı, güncellenme hızı ve geçersizlik işareti farklı olabilir | Arayüz gereksinimleri; data ve control coupling analizi; entegrasyon testleri |
+| Zamanlama | Çağrı sıklığı, işlemci yükü ve deadline'lar değişir | WCET ve çizelgelenebilirlik (schedulability) analizi; zamana bağlı test case'ler |
 | Girdi aralığı ve çalışma modları | Yeni sistem, bileşeni daha önce hiç görmediği değerlere ya da modlara itebilir | Normal aralık ve gürbüzlük (robustness) testlerinin kapsadığı aralık; gereksinimlerdeki aralık varsayımları |
 | Yazılım seviyesi | Daha yüksek seviye ek hedef ve daha fazla hedefte bağımsızlık getirir | Eksik hedeflerin kanıtı, ör. karar kapsama ya da değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC); bağımsızlık kayıtları |
 | Konfigürasyon | Etkin özellik kümesi ve parametre verisi farklıdır; eski projede çalışan kod yeni projede kullanılmayabilir | Devre dışı bırakılmış kod (deactivated code) analizi; konfigürasyon ve parametre verisinin doğrulanması |
@@ -72,7 +72,7 @@ kırılma olasılığı o kadar yüksektir. Yeniden kullanılabilir bir bileşen
 - Arayüzün davranışı düşük seviyeli gereksinimlerde tanımlıdır: değer aralıkları,
   birimler, hata durumlarında dönen kodlar, çağrı sıklığı ve zamanlama beklentileri
   yazılıdır.
-- Arayüz sözleşmesine girmeyen davranışlar (örneğin iç tamponların boyutu) belgede
+- Arayüz sözleşmesine girmeyen davranışlar (örneğin iç buffer'ların boyutu) belgede
   "garanti edilmez" olarak işaretlenir; yeni proje bunlara dayanamaz.
 
 Bu disiplinin sertifikasyon açısından karşılığı doğrudan izlenebilirliktir: arayüz
@@ -147,10 +147,9 @@ kalırdı. "Sayaç 32 bitin tamamını kullanır" koşulu artık arayüz sözle�
 parçasıdır ve her yeni uyarlama katmanı bunu sağlamak zorundadır.
 
 Yeni platforma taşımada `platform_zaman.c` gibi uyarlama dosyaları yeniden yazılır ve
-kendi gereksinimlerine göre doğrulanır. Çekirdeğin gereksinimleri, tasarımı, test
-durumları ve beklenen sonuçları büyük ölçüde olduğu gibi kalır; **test sonuçları ise
+kendi gereksinimlerine göre doğrulanır. Çekirdeğin gereksinimleri, tasarımı, test case'leri ve beklenen sonuçları büyük ölçüde olduğu gibi kalır; **test sonuçları ise
 kalmaz**. İşlemci ya da derleyici değiştiğinde çekirdeğin çalıştırılabilir nesne kodu da
-değişir: gereksinim tabanlı testler yeni hedefte yeniden koşulur, yığın kullanımı ve en
+değişir: gereksinim tabanlı testler yeni hedefte yeniden koşulur, stack kullanımı ve en
 kötü durum yürütme süresi gibi derleyiciye ve işlemciye bağlı analizler yenilenir.
 Yalıtımın kazancı işi sıfırlamak değil, öngörülebilir kılmaktır: neyin yeniden
 yazılacağı, neyin yalnızca yeniden koşulacağı baştan bellidir.
@@ -162,11 +161,11 @@ verisidir. Bileşenle birlikte taşınabilir bir kanıt paketi şunları içerir
 
 - bileşene ait gereksinimler ve tasarım verisi (sistem belgelerinden ayrıştırılmış,
   kendi başına anlamlı),
-- test durumları, test prosedürleri ve beklenen sonuçlar; mümkünse hedef
+- test case'ler, test prosedürleri ve beklenen sonuçlar; mümkünse hedef
   donanımdan bağımsız çalıştırılabilir biçimde,
 - yapısal kapsam analizi sonuçları ve kapsam boşluklarının gerekçeleri,
 - bileşenin hangi varsayımlar altında doğrulandığını listeleyen bir kullanım
-  bildirimi: hedef işlemci, derleyici ve seçenekleri, yığın/bellek bütçesi, çağrı
+  bildirimi: hedef işlemci, derleyici ve seçenekleri, stack/bellek bütçesi, çağrı
   bağlamı, yazılım seviyesi,
 - açık problem raporları (problem report) ve bilinen sınırlamalar.
 
@@ -196,7 +195,7 @@ bölümünde anlatılır.
 Önceden geliştirilmiş yazılım (previously developed software, PDS), yeni projeden
 önce var olan ve olduğu gibi ya da değiştirilerek alınmak istenen yazılımı
 tanımlar. Daha önce sertifiye edilmiş bir uçaktaki uygulama, şirket içi bir
-kütüphane, başka bir sektör için yazılmış bir protokol yığını veya ticari hazır
+kütüphane, başka bir sektör için yazılmış bir protokol stack'i veya ticari hazır
 yazılım (commercial off-the-shelf, COTS) — hepsi bu şemsiyenin altındadır.
 Değerlendirmenin özü tek sorudur: **mevcut kanıt, yeni sistemin gerektirdiği
 güvenceyi hangi ölçüde karşılıyor?**
@@ -205,7 +204,7 @@ DO-178C konuyu ek hususlar arasında (12.1) ele alır ve yeniden kullanımın bi
 farklı durumlar ayırır: yazılımın değiştirilmesi, yazılımın başka bir hava aracına ya da
 kuruluma alınması, uygulama ya da geliştirme ortamının değişmesi (yeni işlemci, derleyici
 ya da birlikte entegre edilen başka yazılım) ve eldeki yaşam döngüsü verisi yeni
-kullanımın hedeflerini karşılamadığında geliştirme temel çizgisinin (baseline)
+kullanımın hedeflerini karşılamadığında geliştirme baseline'ının
 yükseltilmesi. Yeni kurulum için ölçüt açıktır: sistem emniyet değerlendirme süreci
 kurulumu değerlendirir; yazılım seviyesi ve sertifikasyon temeli (certification basis)
 öncekiyle aynıysa, işlev ve ortam da değişmiyorsa standart ek çaba istemez. Aynı kısım,
@@ -221,16 +220,16 @@ sertifikasyon planında (Plan for Software Aspects of Certification, PSAC) bildi
 arasında sayar. Yazılıma ait çözülmemiş problem raporlarının etkisi de değerlendirilir.
 
 Yeniden kullanım öteki veride de iz bırakır: tasarım tanımı devralınan bileşenin alındığı
-temel çizgiyi belirtir, yazılım konfigürasyon indeksi (Software Configuration Index, SCI)
+baseline'ı belirtir, yazılım konfigürasyon indeksi (Software Configuration Index, SCI)
 üründeki önceden geliştirilmiş yazılımı tanımlar, yazılım uygunluk gözden geçirmesi de
-güncel temel çizginin önceki temel çizgiye ve onaylı değişikliklere izlenebildiğini arar.
+güncel baseline'ın önceki baseline'a ve onaylı değişikliklere izlenebildiğini arar.
 
 ### Değerlendirmenin adımları
 
-Pratikte PDS değerlendirmesi bir boşluk analizi (gap analysis) olarak yürütülür:
+Pratikte PDS değerlendirmesi bir gap analizi olarak yürütülür:
 
 1. **Yeni bağlamdaki yazılım seviyesi belirlenir.** Sistem emniyet değerlendirme süreci (system
-   safety assessment process), yazılımın yeni sistemdeki yazılım seviyesini belirler; bu
+   safety assessment process), yazılımın yeni sistemdeki seviyesini belirler; bu
    seviye eski projedekinden yüksek olabilir.
 2. **Eldeki kanıt envanteri çıkarılır.** Planlar, gereksinimler, tasarım, testler,
    kapsam sonuçları, konfigürasyon kayıtları ve problem raporları toplanır.
@@ -266,12 +265,12 @@ Pratikte PDS değerlendirmesi bir boşluk analizi (gap analysis) olarak yürüt�
 
 | Senaryo | Ana zorluk | Tipik yaklaşım |
 |---|---|---|
-| Aynı seviyede, değişmeden taşıma | Bağlam farkı (işlemci, derleyici, RTOS, arayüzler) | Değişen bağlam boyutuna göre: testlerin yeni hedefte yeniden koşulması, entegrasyon testleri, zamanlama ve yığın analizinin yenilenmesi |
+| Aynı seviyede, değişmeden taşıma | Bağlam farkı (işlemci, derleyici, RTOS, arayüzler) | Değişen bağlam boyutuna göre: testlerin yeni hedefte yeniden koşulması, entegrasyon testleri, zamanlama ve stack analizinin yenilenmesi |
 | Değiştirilerek taşıma | Değişikliğin değişmeyen kısma etkisi | Değişiklik etki analizi + etkilenen kısmın yeniden doğrulanması |
-| Daha yüksek seviyeye taşıma | Eksik hedefler (ör. MC/DC, bağımsızlık) | Boşluk analizi + eksik doğrulamanın tamamlanması |
-| Önceki DO-178 sürümüyle (ör. DO-178B) onaylanmış yazılım | İlk onayın yeni kurulum için yeterliliği | Servis kaydının ve açık problem raporlarının değerlendirilmesi; seviye yeterliyse ilk onaya dayanma, değilse temel çizginin yükseltilmesi |
+| Daha yüksek seviyeye taşıma | Eksik hedefler (ör. MC/DC, bağımsızlık) | Gap analizi + eksik doğrulamanın tamamlanması |
+| Önceki DO-178 sürümüyle (ör. DO-178B) onaylanmış yazılım | İlk onayın yeni kurulum için yeterliliği | Servis kaydının ve açık problem raporlarının değerlendirilmesi; seviye yeterliyse ilk onaya dayanma, değilse baseline'ın yükseltilmesi |
 | DO-178 ailesi dışında geliştirilmiş yazılım | Yaşam döngüsü verisi hiç yok ya da farklı biçimde | Tersine mühendislik, yeniden belgeleme, kapsamlı yeniden doğrulama |
-| COTS yazılım | Kaynak koda ve geliştirme sürecine sınırlı erişim | Tedarikçi verisi + ek doğrulama + koruyucu mimari (sarmalayıcı, izleme, bölümleme) |
+| COTS yazılım | Kaynak koda ve geliştirme sürecine sınırlı erişim | Tedarikçi verisi + ek doğrulama + koruyucu mimari (wrapper, izleme, bölümleme) |
 
 ### Önceki DO-178 sürümleriyle onaylanmış yazılım
 
@@ -287,7 +286,7 @@ ayrıca ele alır. Yaklaşımın özü üç sorudur:
   değişiklikten ya da yeniden kullanımdan önce giderilir.
 - **Yazılım seviyesi yeni kurulum için yeterli mi?** Yeterliyse, servis kaydı temizse ve
   yazılım değişmiyorsa ilk onay yeni kurulumun dayanağı olabilir. Yetersizse geliştirme
-  temel çizgisi yükseltilir; yani eksik hedeflerin kanıtı tamamlanır.
+  baseline'ı yükseltilir; yani eksik hedeflerin kanıtı tamamlanır.
 - **Değişiklik hangi süreçle yapılacak?** Rehber, ilk onayda esas alınan DO-178 sürümüyle
   ve mevcut süreçlerle devam etmeye koşullu olarak izin verir: planlar, süreçler ve
   yaşam döngüsü ortamı hâlâ sürdürülüyor olmalıdır; model tabanlı geliştirme, nesne
@@ -295,7 +294,7 @@ ayrıca ele alır. Yaklaşımın özü üç sorudur:
   otoritece önceki bir sertifikasyon projesinde kabul edilmiş olmalıdır. Bu yolda
   yazılımın DO-178C'yi karşıladığı beyan edilmez; uyum ilk onayın esas aldığı sürüme
   göre kalır. Koşullar sağlanmıyorsa ya da DO-178C'ye uyum beyan edilecekse geliştirme
-  temel çizgisi DO-178C'ye göre yükseltilir; otoritenin daha önce kabul etmediği bir
+  baseline'ı DO-178C'ye göre yükseltilir; otoritenin daha önce kabul etmediği bir
   teknik giriyorsa ilgili teknoloji eki de devreye girer. Hangi yol seçilirse seçilsin
   yeniden doğrulamanın kapsamını değişiklik etki analizi belirler.
 
@@ -313,7 +312,7 @@ gelmez; eşleme tek tek hedef düzeyinde yapılmalı ve boşluklar kapatılmalı
 
 DO-178C, COTS yazılıma ayrı bir kolaylık tanımaz (2.5.3): hava aracı sistemine giren COTS
 yazılım da standardın hedeflerini karşılar, yaşam döngüsü verisindeki eksikler
-tamamlanır; standart bunun için temel çizginin yükseltilmesine ve ürün servis geçmişine
+tamamlanır; standart bunun için baseline'ın yükseltilmesine ve ürün servis geçmişine
 işaret eder. Uygulamada sorun genellikle erişimdir: kaynak kod, geliştirme kayıtları ve
 problem geçmişi tedarikçinin elindedir. Bu durumda yaygın çözümler şunlardır:
 
@@ -322,7 +321,7 @@ problem geçmişi tedarikçinin elindedir. Bu durumda yaygın çözümler şunla
   [Ek C: Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular](../06-ekler/03-ek-c-rtos-secim-sorulari.mdx)
   içindedir),
 - COTS bileşeni emniyet etkisi düşük işlevlerle sınırlamak, yani daha düşük bir yazılım
-  seviyesinde tutmak ve kritik işlevleri kendi geliştirilen kodda bırakmak,
+  seviyesinde tutmak ve kritik işlevleri kendi geliştirdiğiniz kodda bırakmak,
 - [21. Yazılım Bölümlemesi](21-yazilim-bolumlemesi.mdx) bölümünde anlatılan bölümleme ve
   izleme (monitoring) gibi mimari önlemlerle COTS bileşenin arıza etkisini sınırlamak.
 
@@ -332,7 +331,7 @@ bileşenin arızasının kritik işlevlere yayılamayacağının gösterilmesine
 
 Deneyim şunu gösterir: DO-178 dışı bir yazılımı yüksek seviyeye taşımanın maliyeti,
 çoğu zaman aynı işlevi baştan geliştirmeye yaklaşır. Bu nedenle PDS kararı, proje
-başında dürüst bir boşluk analiziyle verilmeli; "kod hazır, ucuz olur" varsayımıyla
+başında dürüst bir gap analiziyle verilmeli; "kod hazır, ucuz olur" varsayımıyla
 plan yapılmamalıdır.
 
 ## Ürün servis geçmişi
@@ -348,7 +347,7 @@ DO-178C servis geçmişini alternatif yöntemler arasında (12.3.4) ele alır: g
 kullanımla ilgisi, birikmiş sürenin yeterliliği, servis sırasında bulunan problemlerin
 toplanıp analiz edilmesi ve PSAC'ta bildirilecek bilgiler ayrı ayrı değerlendirilir.
 Değerlendirme yalnızca yazılım ekibinin işi de değildir: servis geçmişinin nasıl
-kullanıldığı ve ne gösterdiği, sistem emniyet değerlendirme süreci dahil sistem
+kullanıldığı ve ne gösterdiği, sistem emniyet değerlendirme süreci dâhil sistem
 süreçlerinin önünden geçer ve otoriteye sunulur. Konunun kamuya açık ayrıntılı bir
 kaynağı, FAA'nın DO-178B döneminde yayımladığı Software Service History Handbook'tur
 (DOT/FAA/AR-01/116).
@@ -363,7 +362,7 @@ ilk üçü ön koşul gibi işler: biri eksikse geçmişin neyi kanıtladığı 
 sağlanmaz. Dördüncüsü kredinin ölçüsünü belirler: yetersizse kredi kısmi kalır ve boşluk
 ek doğrulamayla kapatılır.
 
-- **Benzer kullanım bağlamı.** Geçmişteki kullanım ile yeni kullanım; işlev,
+- **Benzer kullanım bağlamı.** Geçmişteki kullanım ile yeni kullanım işlev,
   arayüzler, çalışma modları ve ortam açısından karşılaştırılabilir olmalıdır.
   Yer sisteminde çalışmış bir yazılımın geçmişi, uçuş bağlamı için doğrudan
   kredi sağlamaz. Ortamlar yalnızca kısmen farklıysa standart, farkın hedef ortamda ek
@@ -408,7 +407,7 @@ ek doğrulamayla kapatılır.
   geçmişi geçersiz kılacak problem ölçütü ve servis geçmişiyle karşılanacak hedefler.
 
 Bu nedenle pratikte servis geçmişi, tek başına bir güvence yolu olmaktan çok,
-boşluk analizinde belirli hedefler için **destekleyici** bir argüman olarak
+gap analizinde belirli hedefler için **destekleyici** bir argüman olarak
 kullanılır ve hemen her zaman ek doğrulama faaliyetleriyle birleştirilir.
 Değerlendirmeye başlarken sorulması gereken soruların derli toplu bir listesi
 [Ek D: Yazılım Servis Geçmişi Soruları](../06-ekler/04-ek-d-servis-gecmisi-sorulari.mdx)
@@ -423,9 +422,9 @@ aylar sonra reddedilecek bir argümana yatırım yapmaktan çok daha ucuzdur.
   değildir.
 - Yeniden kullanılabilirlik sonradan eklenmez; dar arayüzler, platform
   yalıtımı ve bileşen sınırında paketlenmiş kanıtla baştan tasarlanır.
-- Platform yalıtımı gereksinimleri, tasarımı ve test durumlarını korur; yeni işlemci ya
-  da derleyicide testler yine yeniden koşulur, yığın ve zamanlama analizleri yenilenir.
-- PDS değerlendirmesi bir boşluk analizidir: strateji PSAC'ta bildirilir, kullanılmayan
+- Platform yalıtımı gereksinimleri, tasarımı ve test case'leri korur; yeni işlemci ya
+  da derleyicide testler yine yeniden koşulur, stack ve zamanlama analizleri yenilenir.
+- PDS değerlendirmesi bir gap analizidir: strateji PSAC'ta bildirilir, kullanılmayan
   işlevler ve devralınan açık problem raporları analizin parçasıdır.
 - Önceki bir DO-178 sürümüyle alınmış onay başlangıç noktasıdır; servis kaydı ve yazılım
   seviyesinin yeni kurulum için yeterliliği yeniden değerlendirilir.

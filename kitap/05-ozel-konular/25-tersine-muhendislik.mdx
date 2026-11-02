@@ -35,7 +35,7 @@ gereksinim ve tasarımın kurulmasını ele alır. Buna başvurulan tipik duruml
 
 Üçü de önceden geliştirilmiş yazılımın (previously developed software, PDS) yeniden
 kullanımının özel hâlleridir. [24. Yazılım Yeniden Kullanımı](./24-yazilim-yeniden-kullanimi.mdx)
-bölümünde anlatılan boşluk analizi (gap analysis) hangi verinin eksik olduğunu gösterir;
+bölümünde anlatılan gap analizi hangi verinin eksik olduğunu gösterir;
 tersine mühendislik bu boşluğu kapatmanın yollarından yalnızca biridir. Bileşeni yeniden
 geliştirmek, onu koruyucu bir mimariyle çevrelemek ya da ürün servis geçmişi (product
 service history) kredisi talep etmek
@@ -52,8 +52,8 @@ büyüklüğü, elde koddan bağımsız ne kadar bilgi bulunduğuna bağlıdır:
 |---|---|---|---|
 | Gereksinim ve tasarım var ama kodla uyumsuz | Güncel gereksinim, tasarım ve iz verisi (trace data) | Her farkta "kod doğrudur" diye karar vermek | Genellikle makul; her fark tek tek problem raporuyla (problem report) çözülür |
 | Kaynak kod ve sistem gereksinimleri var; yazılım gereksinimi ve tasarım yok | Yüksek ve düşük seviyeli gereksinimler, mimari, iz verisi | Gereksinimin kodun yeniden anlatımına dönüşmesi; tasarım gerekçelerinin kaybı | Makul; yazılımın niyetini bilen uzman ve bağımsız referans şarttır |
-| Kaynak kod var; niyeti anlatan belge de bilen kişi de yok | Sistem düzeyindeki niyet dahil bütün zincir | Geçerlemenin (validation) dayanacağı referans yok; koddaki hata gereksinime taşınır | Önce sistem düzeyinde niyet kurulur; kurulamıyorsa yeniden geliştirme daha sağlamdır |
-| Yalnızca çalıştırılabilir nesne kodu (executable object code) var | Kaynak kod dahil her şey | Kod gözden geçirmesi ve kaynak düzeyinde kapsam analizi için güvenilir bir kaynak yoktur | Tanım gereği bu da tersine mühendisliktir, ama uygulamada savunulması en güç hâldir; yeniden geliştirme ya da 24. bölümdeki COTS yaklaşımları düşünülür |
+| Kaynak kod var; niyeti anlatan belge de bilen kişi de yok | Sistem düzeyindeki niyet dâhil bütün zincir | Geçerlemenin (validation) dayanacağı referans yok; koddaki hata gereksinime taşınır | Önce sistem düzeyinde niyet kurulur; kurulamıyorsa yeniden geliştirme daha sağlamdır |
+| Yalnızca çalıştırılabilir nesne kodu (executable object code) var | Kaynak kod dâhil her şey | Kod gözden geçirmesi ve kaynak düzeyinde kapsam analizi için güvenilir bir kaynak yoktur | Tanım gereği bu da tersine mühendisliktir, ama uygulamada savunulması en güç hâldir; yeniden geliştirme ya da 24. bölümdeki COTS yaklaşımları düşünülür |
 | Kod bu projede, gereksinim beklenmeden yazılmış | Geriye dönük "tamamlanan" gereksinim ve tasarım | Planlara uyulmadığının üstünün örtülmesi | Bilgi kurtarma değil, süreç sapmasıdır; otoritenin de böyle değerlendirmesi beklenir |
 
 Yazılım seviyesi yükseldikçe hem iş hem risk büyür. Seviye A ve B'de bağımsızlık aranan
@@ -70,13 +70,13 @@ niyeti güvenle kurmak çoğu zaman yeniden yazmaktan pahalıdır.
 ## Dayanak dokümanlar
 
 Tersine mühendisliği ayrıntılı biçimde düzenleyen bağlayıcı bir belge yoktur. DO-178C'de
-terim yalnızca sözlükte ve geliştirme temel çizgisinin (baseline) yükseltilmesini anlatan
+terim yalnızca sözlükte ve geliştirme baseline'ının yükseltilmesini anlatan
 maddede (12.1.4) geçer. Beklentiler üç kaynaktan izlenebilir:
 
 | Doküman | Statüsü | Bu konuda söylediği |
 |---|---|---|
-| DO-178C'nin önceden geliştirilmiş yazılıma ilişkin hükümleri, özellikle madde 12.1.4 (AC 20-115D ve AMC 20-115D ile tanınır) | Kabul edilebilir uyum yöntemi | Bir geliştirme temel çizgisi yükseltilirken eksik ya da yetersiz yaşam döngüsü verisinin tersine mühendislikle yeniden üretilebileceğini kabul eder; veriyi üretmenin tek başına yetmeyebileceğini, doğrulama hedefleri için ek faaliyet gerekebileceğini de belirtir. Amaç yine aynı hedefleri karşılamaktır |
-| CAST-18, "Reverse Engineering in Certification Projects" (2003) | Sertifikasyon otoritelerinin yazılım uzmanlarından oluşan ekibin (Certification Authorities Software Team, CAST) tutum belgesi; resmî politika değildir, DO-178B döneminden kalma tarihî bir başvuru kaynağıdır | Otoritelerin kaygılarını sıralar: yetersiz planlama, yaklaşımın maliyeti kısmak ya da aksayan projeyi kurtarmak için seçilmesi, yazılımın niyetini bilen uzmana erişilememesi, anlaşılması güç kod, soyutlama ve izlenebilirlik (traceability) güçlüğü, geç kalan otorite irtibatı |
+| DO-178C'nin önceden geliştirilmiş yazılıma ilişkin hükümleri, özellikle madde 12.1.4 (AC 20-115D ve AMC 20-115D ile tanınır) | Kabul edilebilir uyum yöntemi | Bir geliştirme baseline'ı yükseltilirken eksik ya da yetersiz yaşam döngüsü verisinin tersine mühendislikle yeniden üretilebileceğini kabul eder; veriyi üretmenin tek başına yetmeyebileceğini, doğrulama hedefleri için ek faaliyet gerekebileceğini de belirtir. Amaç yine aynı hedefleri karşılamaktır |
+| CAST-18, "Reverse Engineering in Certification Projects" (2003) | Sertifikasyon otoritelerinin yazılım uzmanlarından oluşan ekibin (Certification Authorities Software Team, CAST) position paper'ı; resmî politika değildir, DO-178B döneminden kalma tarihî bir başvuru kaynağıdır | Otoritelerin kaygılarını sıralar: yetersiz planlama, yaklaşımın maliyeti kısmak ya da aksayan projeyi kurtarmak için seçilmesi, yazılımın niyetini bilen uzmana erişilememesi, anlaşılması güç kod, soyutlama ve izlenebilirlik (traceability) güçlüğü, geç kalan otorite irtibatı |
 | DOT/FAA/TC-15/27, "Reverse Engineering for Software and Digital Systems" (2016) | FAA'nın desteklediği araştırma raporu; FAA politikası değildir, DO-178B ve DO-254 esas alınarak yazılmıştır | Tersine mühendisliğin ne zaman kabul edilebilir olduğuna dair bir çerçeve önerir ve bunu biri yazılım, biri donanım üzerinde iki vaka çalışmasıyla sınar: veri akışının ve verinin ne zaman konfigürasyon kontrolüne alınacağının plan ve standartlarda açıkça anlatılması; alan uzmanlarının (subject matter expert) gerçekleştirilmiş davranışı amaçlanan kullanım açısından değerlendirmesi ve alan bilgisinin gereksinim ile tasarıma işlenmesi |
 
 Üç kaynağın ortak noktası, tersine mühendisliğin ayrı bir uyum yolu olmadığıdır: veri
@@ -90,7 +90,7 @@ Tersine mühendislik genellikle şu akışla işler:
 
 ```mermaid
 flowchart TD
-    A["Temel çizgiye alınmış kaynak kod ve eski dokümanlar"] --> B["Kod analizi ve davranış çıkarımı"]
+    A["Baseline'a alınmış kaynak kod ve eski dokümanlar"] --> B["Kod analizi ve davranış çıkarımı"]
     B --> C["Düşük seviyeli gereksinim ve mimari taslağı"]
     C --> D["Yüksek seviyeli gereksinimlerin kurulması"]
     D --> E["Bağımsız referansla geçerleme"]
@@ -126,7 +126,7 @@ geliştirilmiş gibi gereksinimlerden koda doğru yapılır.
 
 Tersine mühendislik bir sertifikasyon projesinde "kodu okuduk,
 dokümanları yazdık" diye özetlenebilecek gayriresmî bir faaliyet olarak kalamaz.
-Otorite gözünde bu yaklaşım, normal geliştirme akışının tersine işletilmesidir ve
+Otorite bu yaklaşımı normal geliştirme akışının tersine işletilmesi olarak görür ve
 tam da bu yüzden dört konunun baştan netleştirilmesini bekler: otoritenin
 bilgilendirilmesi, sürecin planlarda tanımlanması, kaynak malzemenin konfigürasyon
 yönetimi (configuration management) altına alınması ve çıkarılan gereksinimlerin
@@ -167,7 +167,7 @@ yeniden kurulacağını, yazılım doğrulama planı (Software Verification Plan
 verinin nasıl gözden geçirilip doğrulanacağını tanımlar
 ([5. Yazılım Planlama](../03-do178c-ile-gelistirme/05-yazilim-planlama.mdx)). DO-178C'nin
 bu konuda açıkça istediği PSAC tarafıdır: önceden geliştirilmiş yazılım kullanma niyeti ve
-temel çizgi yükseltilirken izlenecek uyum stratejisi bu planda belirtilir. Asgari olarak
+baseline yükseltilirken izlenecek uyum stratejisi bu planda belirtilir. Asgari olarak
 planlarda şunlar yer almalıdır:
 
 | Plan içeriği | Cevaplaması gereken soru |
@@ -180,7 +180,7 @@ planlarda şunlar yer almalıdır:
 | Doğrulama ve geçerleme | Çıkarılan gereksinimler kime, hangi yöntemle onaylatılacak? |
 | Araçlar | Statik analiz veya kod anlama araçları kullanılacaksa araç kalifikasyonu (tool qualification) gerekiyor mu? |
 
-Son satırın cevabı çoğu zaman "hayır"dır: kod anlama aracının çıktısı (çağrı çizgesi,
+Son satırın cevabı çoğu zaman "hayır"dır: kod anlama aracının çıktısı (çağrı grafiği,
 veri akış özeti) gözden geçirmeyle ayrıca doğrulanıyorsa kalifikasyon gerekmez. Aracın
 çıktısına doğrulanmadan güvenilecekse durum değişir; ölçütler
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
@@ -195,11 +195,11 @@ belirsiz kaynak ağaçları. Bu malzeme konfigürasyon yönetimi altına alınma
 başlarsa, üç ay sonra "hangi kodu tersine mühendislikten geçirdik?" sorusuna cevap
 verilemez.
 
-- Analize başlamadan önce kaynak kodun **tek ve tanımlı bir temel çizgisi**
+- Analize başlamadan önce kaynak kodun **tek ve tanımlı bir baseline'ı**
   oluşturulmalı; sahadaki çalıştırılabilir nesne kodu ile bu kaynağın eşleştiği, örneğin
-  kayıtlı derleme ortamında yeniden üretip karşılaştırarak gösterilebilmelidir. Eşleşme
+  kayıtlı build ortamında yeniden üretip karşılaştırarak gösterilebilmelidir. Eşleşme
   gösterilemiyorsa sahadaki ürünün geçmişi bu kaynak için kanıt değeri taşımaz.
-- Eski dokümanlar, test kayıtları ve ürün servis geçmişi de aynı temel çizgiye referansla
+- Eski dokümanlar, test kayıtları ve ürün servis geçmişi de aynı baseline'a referansla
   saklanmalıdır; bunlar "güvenilir gerçek" değil, **girdi verisi** statüsündedir.
 - Önceki projeden devralınan açık problem raporları da girdidir. DO-178C, önceden
   geliştirilmiş yazılımın çözülmemiş problem raporlarının etkisinin değerlendirilmesini ve
@@ -208,7 +208,7 @@ verilemez.
   ve değişiklik kontrol mekanizmasından geçmelidir; "nasılsa her şeyi yeniden
   yazıyoruz" rahatlığıyla kontrolsüz düzenleme yapılmamalıdır.
 
-Temel çizgi, değişiklik kontrolü ve problem raporlamanın işleyişi
+Baseline, değişiklik kontrolü ve problem raporlamanın işleyişi
 [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
 bölümünde anlatılır; tersine mühendislikte fark, bu mekanizmanın ilk çıkarım yapılmadan
 önce kurulmuş olması gerektiğidir.
@@ -269,7 +269,7 @@ ise başka bir şey söylemektedir:
 işlevi gösterir. İkincisi daha sinsidir: kod ne kadar dikkatle okunursa okunsun, orada
 olmayan bir davranış koddan çıkarılamaz; eksikliği yalnızca bağımsız referans gösterir.
 
-Geçerleme atlanıp testler soldaki ifadelerden yazılsaydı üç test durumu yeterdi: geçerli
+Geçerleme atlanıp testler soldaki ifadelerden yazılsaydı üç test case yeterdi: geçerli
 99 ft, geçerli 100 ft ve geçersiz 99 ft. Üçü de geçer; üstelik bu üç durum, tek karardaki
 iki koşul için MC/DC'yi de sağlar. Elde eksiksiz izlenebilirlik, geçen testler ve tam
 yapısal kapsam olur; yazılım ise iki noktada sistemin istediğini yapmıyordur. Yapısal
@@ -306,7 +306,7 @@ türetilmiş gereksinime bağlanamayan her yapı için yapılır:
 
 | Bulgu | Karar | Sonuç |
 |---|---|---|
-| Kod gerekli bir davranışı gerçekliyor ama karşılığı olan gereksinim yok | Eksik gereksinim | Gereksinim yazılır, bağımsız referansla geçerlenir, testi eklenir |
+| Kod gerekli bir davranışı gerçekleştiriyor ama karşılığı olan gereksinim yok | Eksik gereksinim | Gereksinim yazılır, bağımsız referansla geçerlenir, testi eklenir |
 | Kod bir gereksinime izlenebiliyor ama tasarım gereği bu konfigürasyonda çalışmıyor (ör. başka bir uçak tipine ait seçenek) | Devre dışı bırakılmış kod | Planlarda beyan edilir; istem dışı etkinleşmeyi (inadvertent enabling) önleyen mekanizma doğrulanır. Kod başka bir onaylı konfigürasyonda çalışıyorsa kapsamı o konfigürasyon kurularak yapılan testlerle sağlanır |
 | Kod hiçbir gereksinime izlenemiyor; ölü kod bunun hiç çalıştırılamayan özel hâlidir | Gereksiz kod | Kaldırılır |
 
@@ -334,4 +334,4 @@ geçmişine dayanan bir argüman varsa ona etkisi de ayrıca değerlendirilir.
 - Testler koddan değil geçerlenmiş gereksinimden yazılır; düşük seviyeli gereksinim
   kodun yeniden anlatımı olamaz.
 - Gereksinime bağlanamayan her kod için karar verilir: eksik gereksinim yazılır, devre
-  dışı bırakılmış kodun mekanizması doğrulanır, gereksiz kod (ölü kod dahil) kaldırılır.
+  dışı bırakılmış kodun mekanizması doğrulanır, gereksiz kod (ölü kod dâhil) kaldırılır.

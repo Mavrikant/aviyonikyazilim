@@ -31,7 +31,7 @@ Plan seti birlikte okunduğunda şu soruların cevabı bulunabilmelidir:
 - Konfigürasyon öğeleri nasıl korunacak, problemler ve plandan sapmalar nasıl ele
   alınacak?
 
-Bu soruların net olması, özellikle ekip büyüdükçe önem kazanır. Çünkü planlar sadece
+Bu soruların net olması, özellikle ekip büyüdükçe önem kazanır; çünkü planlar sadece
 sertifikasyon için değil, ekip içi koordinasyon için de gereklidir.
 
 ## Neden erken yazılmalı?
@@ -99,7 +99,7 @@ az esnek olduğu anda yapılır.
 SDP, geliştirme ekibinin çalışma kılavuzudur ve üç şeyi tanımlar: yazılım yaşam
 döngüsünü (süreçler, aralarındaki ilişki ve geçiş kriterleri), kullanılacak standartları
 ve geliştirme ortamını (gereksinim ve tasarım yöntemleri, programlama dili, derleyici,
-bağlayıcı, yükleyici, diğer araçlar ve bunların çalıştığı donanım platformları).
+linker, loader, diğer araçlar ve bunların çalıştığı donanım platformları).
 Gereksinim, tasarım ve kod kurallarının kendisi SDP'de değil standartlarda yer alır; SDP
 onlara atıf yapar. Küçük projelerde standartlar SDP ile aynı belgede paketlenebilir; o
 durumda da kurallar numaralı ve atıf yapılabilir kalmalıdır.
@@ -119,8 +119,8 @@ yapısal kapsam (structural coverage) hangi araçla ölçülecek, kapsanmayan ko
 
 ### Yazılım konfigürasyon yönetimi planı (SCMP)
 
-SCMP; konfigürasyon tanımlama kurallarını (adlandırma, sürümleme), temel çizgileri
-(baseline), problem raporlama (problem reporting) ve değişiklik kontrolü akışını,
+SCMP; konfigürasyon tanımlama kurallarını (adlandırma, sürümleme), baseline'ları,
+problem raporlama (problem reporting) ve değişiklik kontrolü akışını,
 konfigürasyon durum muhasebesini (configuration status accounting), arşivleme, geri
 getirme ve sürüm teslimini, yazılım yükleme kontrolünü ve yaşam döngüsü ortamının
 kontrolünü tanımlar. Hangi verinin hangi kontrol kategorisinde (control category)
@@ -138,13 +138,13 @@ review), sertifikasyona sunulan sürüm için süreçlerin tamamlandığını, v
 olduğunu ve çalıştırılabilir nesne kodunun kontrol altında ve yeniden üretilebilir
 olduğunu gösteren kapanış denetimidir. Tipik zayıflık ölçülemeyen taahhüttür: "kalite
 güvencesi tüm faaliyetleri izler" cümlesi ne planlanabilir ne de denetlenebilir; "her
-temel çizgi öncesinde geçiş kriterleri kontrol listesiyle denetlenir" cümlesi ikisini
+baseline öncesinde geçiş kriterleri kontrol listesiyle denetlenir" cümlesi ikisini
 de sağlar.
 
 ### Planlar arasındaki ilişki
 
-Bu planlar birbirinden bağımsız belgeler gibi görünse de gerçekte aynı sistemin farklı
-bakış açılarıdır. SVP'nin vaat ettiği bağımsızlık organizasyon yapısıyla, SDP'deki geçiş
+Bu planlar birbirinden bağımsız belgeler gibi görünse de gerçekte aynı sisteme farklı
+açılardan bakar. SVP'nin vaat ettiği bağımsızlık organizasyon yapısıyla, SDP'deki geçiş
 kriterleri SQAP'taki denetim noktalarıyla, SVP'deki test hatası akışı SCMP'deki problem
 raporlamayla örtüşmelidir. Bir plandaki değişiklik bu yüzden diğer planları da
 etkileyebilir.
@@ -183,7 +183,7 @@ Sırayı belirleyen araç geçiş kriterleridir (transition criteria): bir süre
 için sağlanması gereken koşullar. İyi bir kriter, bir kaydın varlığıyla denetlenebilir.
 "Gereksinimler yeterince olgunlaşınca tasarıma başlanır" cümlesi denetlenemez; "tasarımı
 yapılacak işlevin yüksek seviyeli gereksinimleri gözden geçirilmiş, bulguları kapatılmış
-ve temel çizgiye alınmıştır" cümlesi denetlenebilir.
+ve baseline'a alınmıştır" cümlesi denetlenebilir.
 
 Kriter yazarken iki noktaya dikkat edilir:
 
@@ -192,7 +192,7 @@ Kriter yazarken iki noktaya dikkat edilir:
   bazında tanımlanabilir. Kâğıt üzerinde katı bir şelale tarif edip fiilen artımlı
   çalışan ekip, her denetimde planından sapmış görünür.
 - **Kriterler yalnızca geliştirme süreçleri için yazılmaz.** Kredi alınacak testlerin
-  hangi koşulda başlayabileceği (kod temel çizgiye alınmış mı, test prosedürleri gözden
+  hangi koşulda başlayabileceği (kod baseline'a alınmış mı, test prosedürleri gözden
   geçirilmiş mi, test ortamı kayıtlı mı) en az tasarıma geçiş kadar önemlidir.
 
 Kriterlerin sağlandığını izlemek kalite güvencesinin işidir; bu yüzden her kriterin
@@ -208,7 +208,7 @@ Bunlar ekibin iş ürünlerini hangi kurallara göre yazacağını belirler ve g
 geçirmelerin nesnel ölçütü hâline gelir.
 
 Bu üç standart, planların "nasıl çalışacağız?" sorusuna verdiği cevabın teknik
-karşılığıdır. Planlar süreci tarif ederken standartlar, üretilen her bir iş ürününün
+karşılığıdır. Planlar süreci tarif ederken standartlar, üretilen her iş ürününün
 kendisine bakar: gereksinim nasıl yazılır, tasarım nasıl ifade edilir, kod hangi
 kurallara uyar. Gözden geçirme yapan kişi elinde bu standartlar olmadan "bence böyle
 daha iyi olurdu" düzeyinde kalır; standart varsa "bu madde 4.2'ye aykırı" diyebilir.
@@ -220,7 +220,7 @@ Fark, öznel görüş ile nesnel bulgu arasındaki farktır. Örnek kurallarla b
 ### Gereksinim standardı
 
 Gereksinim standardı (requirements standard), yüksek seviyeli gereksinimlerin nasıl
-yazılacağını tanımlar. Tipik içeriği şunlardır:
+yazılacağını tanımlar. Tipik içeriği şöyledir:
 
 - kullanılacak gereksinim yazım biçimi (örn. "Yazılım, ... olduğunda ... yapmalıdır"
   kalıbı),
@@ -230,7 +230,7 @@ yazılacağını tanımlar. Tipik içeriği şunlardır:
   ifadeler),
 - gereksinim kimliklendirme ve izlenebilirlik (traceability) kuralları,
 - türetilmiş gereksinimlerin (derived requirements) nasıl işaretleneceği ve sistem
-  emniyet değerlendirme süreci dahil sistem süreçlerine nasıl iletileceği,
+  emniyet değerlendirme süreci dâhil sistem süreçlerine nasıl iletileceği,
 - tolerans, birim ve zamanlama değerlerinin nasıl belirtileceği.
 
 Sık yapılan hata, standardın "iyi gereksinim yazma" üzerine genel öğütlerle dolu olup
@@ -247,7 +247,7 @@ gereksinimlerin ifade biçimini belirler. Tipik olarak şunları kapsar:
 
 - mimari gösterim yöntemi (blok diyagramları, veri/kontrol akışı gösterimi),
 - modülleşme ve arayüz tanımlama kuralları,
-- düşük seviyeli gereksinimlerin (low-level requirement) ayrıntı düzeyi: koddan bire bir kopya olmayacak
+- düşük seviyeli gereksinimlerin (low-level requirement) ayrıntı düzeyi: koddan birebir kopya olmayacak
   kadar soyut, kodlayıcıya yorum payı bırakmayacak kadar somut,
 - kesme (interrupt) kullanımı, görev önceliklendirme, çizelgeleme ve zamanlama
   tasarımına dair sınırlar,
@@ -268,11 +268,10 @@ alınır ve projeye özgü eklemelerle genişletilir. Kural kümesinin hangi sü
 alındığı standartta açıkça yazılır ve statik analiz aracının o sürümü desteklediği
 planlama sırasında kontrol edilir. Tipik içerik şöyledir:
 
-- dil alt kümesi: hangi dil özelliklerinin yasak olduğu (örn. `goto`, işaretçi
+- dil alt kümesi: hangi dil özelliklerinin yasak olduğu (örn. `goto`, pointer
   aritmetiğinin sınırlanması, örtük tip dönüşümleri),
 - adlandırma, dosya düzeni ve yorum kuralları,
-- karmaşıklık sınırları (örn. fonksiyon başına çevrimsel karmaşıklık (cyclomatic
-  complexity) üst sınırı),
+- karmaşıklık sınırları (örn. fonksiyon başına cyclomatic complexity üst sınırı),
 - derleyici uyarılarının nasıl ele alınacağı,
 - sapma (deviation) mekanizması: bir kural ihlalinin hangi gerekçeyle, kimin onayıyla
   kabul edilebileceği.
@@ -322,14 +321,14 @@ bütün doğrulama işinin maliyetini belirlediği için planlama kararıdır.
 
 - **Dil, derleyici ve derleme seçenekleri.** Uçağa yüklenen ve doğrulanması gereken
   ürün çalıştırılabilir nesne kodu olduğundan, derleyicinin sürümü kadar hangi
-  seçeneklerle ve hangi eniyileme (optimization) düzeyinde kullanılacağı da planlanır. Seviye A'da kaynak
+  seçeneklerle ve hangi optimizasyon düzeyinde kullanılacağı da planlanır. Seviye A'da kaynak
   koda doğrudan izlenemeyen nesne kodu ek doğrulama gerektirdiği için bu seçim doğrudan
   iş yüküne dönüşür.
 - **Geliştirme araçları.** Gereksinim yönetimi, modelleme ve kod üretimi araçları hem
   standartlarla (araç hangi gösterimi destekliyor?) hem de araç kalifikasyonu kararıyla
   birlikte düşünülür.
-- **Test ortamı.** Hangi testin hedef donanımda, hangisinin emülatör ya da ana
-  bilgisayar simülasyonunda koşulacağı SVP'de belirlenir. Hedef dışı bir ortamdan kredi
+- **Test ortamı.** Hangi testin hedef donanımda, hangisinin emülatör ya da
+  host simülasyonunda koşulacağı SVP'de belirlenir. Hedef dışı bir ortamdan kredi
   alınacaksa, o ortamla hedef arasındaki farkların hata yakalama ve işlevi doğrulama
   yeteneğine etkisi değerlendirilir; o ortamda yakalanamayacak hataların hangi doğrulama
   faaliyetiyle yakalanacağı SVP'ye yazılır. Donanım arayüzleri ve zamanlama gibi yalnızca
@@ -361,7 +360,7 @@ Planlama aşamasında her araç için sorulacak iki temel soru vardır:
    gider; bir test aracı başarısız bir testi başarılı gösterebilir.
 2. **Aracın çıktısı başka bir faaliyetle zaten doğrulanıyor mu?** Üretilen kod, elle
    yazılmış kodla aynı gözden geçirme ve test sürecinden geçiyorsa ya da test aracının
-   sonuçları bir mühendis tarafından ayrıca kontrol ediliyorsa aracın hatası yakalanır;
+   sonuçlarını bir mühendis ayrıca kontrol ediyorsa aracın hatası yakalanır;
    kalifikasyon gerekmez.
 
 Kalifikasyon yalnızca ilk sorunun cevabı "evet", ikincisinin cevabı "hayır" olduğunda
@@ -407,7 +406,7 @@ gerekçenin yazılması iyi bir alışkanlıktır; çünkü otoritenin ilk sorul
 genellikle "bu araca neden güveniyorsunuz?" olur.
 
 Deneyimden gelen bir uyarı: en çok gözden kaçan araçlar, gösterişli geliştirme
-araçları değil, arka plandaki küçük betiklerdir. Test sonuçlarını toplayan bir betik,
+araçları değil, arka plandaki küçük script'lerdir. Test sonuçlarını toplayan bir script,
 izlenebilirlik matrisini üreten bir makro ya da yapılandırma dosyalarını dönüştüren
 bir araç da aynı sorgulamadan geçmelidir. Planlama aşamasında eksiksiz bir araç
 envanteri çıkarmak, bu sürprizleri önlemenin en ucuz yoludur.
@@ -430,7 +429,7 @@ gözden geçirildiğine dair güvence beklenir.
 SCI) ve yazılım başarım özeti (Software Accomplishment Summary, SAS) ile birlikte
 otoriteye asgari olarak sunulan veriyi oluşturur. Diğer dört plan ve üç standart
 otoritenin erişimine açık tutulur ve uygulamada ilk katılım aşaması (Stage of
-Involvement, SOI) denetiminde incelenir. Bu denetimin giriş koşulları ve otoritenin
+Involvement, SOI) denetiminde gözden geçirilir. Bu denetimin giriş koşulları ve otoritenin
 planlarda baktığı noktalar [SW SOI-1](../07-soi-denetimleri/soi-1.mdx) kontrol listesindedir.
 
 **Değişiklik** kaçınılmazdır; önemli olan kontrollü olmasıdır. Plan değişikliği
@@ -479,7 +478,7 @@ Bu belgelerle beş plan arasındaki ilişkiyi kurarken iki hataya dikkat edilmel
    denetimde "tanımsız süreç" izlenimi verir.
 
 Özetle ek planlar, beş planın alternatifi değil tamamlayıcısıdır. İyi kurgulanmış bir
-plan setinde okuyucu, hangi sorunun cevabının hangi belgede olduğunu tahmin edebilir;
+plan setinde okur, hangi sorunun cevabının hangi belgede olduğunu tahmin edebilir;
 kötü kurgulanmış bir sette ise aynı cevabın üç farklı sürümü üç farklı belgede yaşar.
 
 ## Bu bölümden akılda kalması gerekenler
@@ -488,7 +487,7 @@ kötü kurgulanmış bir sette ise aynı cevabın üç farklı sürümü üç fa
   yapıldığında doğrulama ve sertifikasyon riskini azaltır.
 - Beş plan (PSAC, SDP, SVP, SCMP, SQAP) ayrı sorulara cevap verir ama birlikte okunur.
   PSAC otoriteye sunulur; diğer planlar ve standartlar erişime açık tutulur ve SOI-1
-  denetiminde incelenir. Planlar her seviyede beklenir; Seviye D'de yedi planlama
+  denetiminde gözden geçirilir. Planlar her seviyede beklenir; Seviye D'de yedi planlama
   hedefinden yalnızca ikisi aranır.
 - DO-178C yaşam döngüsü modeli dayatmaz; süreçler arası sırayı planlardaki, kayıtla
   denetlenebilen geçiş kriterleri belirler.
@@ -498,7 +497,7 @@ kötü kurgulanmış bir sette ise aynı cevabın üç farklı sürümü üç fa
 - Dil, derleyici, derleme seçenekleri ve test ortamı planlama kararıdır; ortam kayıt
   altına alınır ve proje ortasındaki değişikliği yeniden doğrulama gerektirebilir.
 - Araç kalifikasyonu, araç hata ekleyebiliyor ya da gözden kaçırabiliyor ve çıktısı
-  ayrıca doğrulanmıyorsa gerekir; karar gerekçesiyle PSAC'a yazılır ve küçük betikler de
-  araç envanterine dahildir.
+  ayrıca doğrulanmıyorsa gerekir; karar gerekçesiyle PSAC'a yazılır ve küçük script'ler de
+  araç envanterine dâhildir.
 - Planlar gözden geçirilir ve kontrollü değişir; plandan sapma kayda geçer. Ek planlar
   beş planı tamamlar; her konu tek belgede tanımlanır, diğerleri ona atıf yapar.

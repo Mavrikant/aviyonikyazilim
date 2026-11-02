@@ -63,7 +63,7 @@ Bu gereksinimin nasıl türetileceğini ve hangi ek kanıtın gerektiğini DO-17
 
 Sistem tarafındaki belgeler de konuyu dışarıya bırakır: ARP4754B ve ARP4761A (ikisi de
 2023) uçuşa elverişlilik güvenliğini kapsam dışı sayar ve okuru DO-326A ailesine
-yönlendirir; tıpkı yazılımı DO-178C'ye yönlendirdikleri gibi. Boşluğu dolduran belge
+yönlendirir; tıpkı yazılım için DO-178C'ye yönlendirdikleri gibi. Boşluğu dolduran belge
 ailesi bu bölümün konusudur.
 
 ## Belge ailesi ve sürümler
@@ -120,15 +120,15 @@ FAA hem EASA, daha hafif bir yol olarak ASTM F3532 standardını tanımaya başl
 
 **Ürün güvenliği ile kuruluş güvenliği.** Bu iki konu sık karıştırılır.
 
-- **Ürün güvenliği**, uçağın ve sistemlerinin kendisinin korunmasıdır: CS 25.1319, AMC 20-42
+- **Ürün güvenliği**, uçağın ve sistemlerinin kendilerinin korunmasıdır: CS 25.1319, AMC 20-42
   ve DO-326A bu düzeydedir; sonucu tip sertifikasının bir parçasıdır.
-- **Kuruluş güvenliği**, havacılık kuruluşlarının kendi bilgi sistemlerini yönetmesidir.
+- **Kuruluş güvenliği**, havacılık kuruluşlarının kendi bilgi sistemlerinin güvenliğini yönetmesidir.
   AB'de Part-IS adıyla anılan iki yönetmelik, (AB) 2022/1645 ve (AB) 2023/203, bunu bir
   bilgi güvenliği yönetim sistemi (information security management system, ISMS) olarak
   ister. Tasarım ve üretim kuruluşları 16 Ekim 2025'ten, operatörler, bakım kuruluşları
   ve hava seyrüsefer hizmet sağlayıcıları 22 Şubat 2026'dan beri kapsamdadır.
 
-İkisi birbirinin yerine geçmez, ama yazılım ekibinin dünyasında buluşur: derleme
+İkisi birbirinin yerine geçmez, ama yazılım ekibinin dünyasında buluşur: build
 sunucusu, kaynak kod deposu ve imzalama anahtarları kuruluş güvenliğinin konusudur; bu
 ortamda üretilen yazılımın uçakta taşıdığı güvenlik önlemleri (security measure) ise ürün
 güvenliğinin. Sınır keskin değildir: DO-326A, havacılık bilgi sistemi tanımına uçuş
@@ -152,9 +152,9 @@ bağlanan bir dış sistemin sahte veri göndermesi de bu tanıma girer.
 Tanımın sınırları da en az kapsadıkları kadar öğreticidir. Şunlar DO-326A'nın konusu
 değildir:
 
-- **Emniyete dokunmayan bilgi güvenliği**, örneğin yolcu kayıtlarının gizliliği,
+- **emniyete dokunmayan bilgi güvenliği**, örneğin yolcu kayıtlarının gizliliği,
 - **fiziksel saldırı**: kutuyu sökmek, kabloyu kesmek,
-- **elektromanyetik karıştırma (jamming)**,
+- **elektromanyetik jamming**,
 - **havayolu ve havalimanı işletmesinin kendi güvenliği**, örneğin tesislere erişim,
 - **ulusal kurumların işlettiği haberleşme, seyrüsefer ve gözetim hizmetleri**, örneğin
   GNSS ve ADS-B.
@@ -167,13 +167,13 @@ zincirine ait bir anahtarın ya da ayrıntılı mimari bilgisinin açığa çık
 sistemlerinde ilk ikisi ağır basar; gizlilik, açığa çıkan bilgi bir sonraki saldırının
 anahtarı olduğunda emniyet konusu olur.
 
-:::note[GNSS aldatma: kapsamın gri alanı]
-Doğu Akdeniz ve Karadeniz, son yıllarda GNSS karıştırma ve aldatma (spoofing)
+:::note[GNSS spoofing: kapsamın gri alanı]
+Doğu Akdeniz ve Karadeniz, son yıllarda GNSS jamming ve spoofing
 olaylarının yoğun yaşandığı bölgeler arasındadır. OPSGROUP'un aktardığı Kasım 2023 tarihli
 bir olayda, Adana'dan Larnaka'ya giden bir uçağın GNSS konumu, uçak Ankara FIR'ındayken
 Beyrut'u göstermeye başladı. EASA, konuyla ilgili güvenlik bilgi bültenini (SIB 2022-02)
 Temmuz 2026'da dördüncü kez güncelledi ve bu bölgeleri de saydı; bülten konuyu siber
-güvenlik olarak değil, operasyonel emniyet meselesi olarak ele alır. Karıştırma IUEI'nin
+güvenlik olarak değil, operasyonel emniyet meselesi olarak ele alır. Jamming IUEI'nin
 dışında kaldığı hâlde sahte sinyal yayınının bu tanıma girip girmediği tartışmalıdır.
 Kapsam tartışmasından bağımsız olarak tasarımın sorumluluğu değişmez: kimliği
 doğrulanmamış bir kaynaktan gelen konum, yazılım için güvenilmez bir girdidir ve
@@ -204,11 +204,11 @@ flowchart TD
 ```
 
 - **Planlama ve kanıt (adım 1 ve 7)** sertifikasyonun kendisini yönetir. Güvenlik
-  sertifikasyon planı (Plan for Security Aspects of Certification, PSecAC) başvuru sahibi
-  tarafından hazırlanır ve otoriteyle üzerinde anlaşılır; süreç sonunda PSecAC özeti
+  sertifikasyon planını (Plan for Security Aspects of Certification, PSecAC) başvuru sahibi
+  hazırlar ve üzerinde otoriteyle anlaşır; süreç sonunda PSecAC özeti
   (PSecAC Summary) planın nasıl yerine getirildiğini gösterir. Rolleri, yazılım tarafındaki
   PSAC ile yazılım başarım özetinin (Software Accomplishment Summary, SAS) rolüne benzer.
-- **Risk değerlendirmesi (adım 2–4)** neyin, neye karşı korunacağını belirler ve her
+- **Risk değerlendirmesi (adım 2–4)** neyin neye karşı korunacağını belirler ve her
   riski bir **kabul edilebilirlik matrisinde** (airworthiness acceptability matrix)
   konumlandırır. Matrisin satırları şiddeti, sütunları tehdit seviyesini gösterir; her
   hücre o birleşimin kabul edilip edilemeyeceğini söyler. Bir yönetmelik matrisi
@@ -287,7 +287,7 @@ kullanılır.
 ```mermaid
 flowchart TD
     YER["Yer istasyonları<br/>(VOR ve ILS yayınları)"]
-    BKM["Bakım bilgisayarı ve<br/>veri yükleyici"]
+    BKM["Bakım bilgisayarı ve<br/>data loader"]
     UCK["Uçaktaki diğer sistemler<br/>(ekran, uçuş yönetimi, otopilot)"]
     subgraph SNR["Güvenlik sınırı: navigasyon alıcısı"]
         VAR["Varlıklar: uygulama yazılımı,<br/>konfigürasyon verisi, arıza kayıtları,<br/>sapma ve kerteriz hesabı"]
@@ -322,13 +322,13 @@ görünür:
 yazılır. Bu, sınırın dışındaki dünyaya dair varsayımların kaydıdır: alıcıya kimlerin,
 hangi yetkiyle ve hangi araçla ulaşabildiği; yetkili kullanıcıların (bakım teknisyeni)
 ve yetkisiz olası kaynakların kim olduğu; havayolunun bakım kuruluşuyla yaptığı
-sözleşmenin neyi güvence altına aldığı; yazılımın üreticiden uçağa hangi sunucular ve
+sözleşmenin neyi güvence altına aldığı; yazılımın üreticiden uçağa hangi sunuculardan ve
 hangi ellerden geçerek geldiği. Örneğin varsayımlardan biri "bakım bilgisayarı havayolunun
 yönettiği, internete doğrudan açık olmayan bir cihazdır" olabilir. Bu varsayım bir dış
 anlaşmaya dönüşür ve sonunda operatöre giden güvenlik rehberinde yer alır. Yazılmayan
 varsayım ise sonradan doğrulanamaz.
 
-Sistem seviyesindeki ortam, uçak seviyesindeki ortamın inceltilmesidir: alıcıya frekans
+Sistem seviyesindeki ortam, uçak seviyesindeki ortamın ayrıntılandırılmasıdır: alıcıya frekans
 gönderen uçuş yönetim sistemi, uçağın içinde olduğu hâlde alıcı açısından "dışarıdadır".
 
 ### Uçak ağ alanları
@@ -348,7 +348,7 @@ AISD'den ACD'ye taşıyan bir köprü) güvenlik değerlendirmesinin odak noktas
 
 ## Güvenlik risk değerlendirmesi
 
-Bir tehdit senaryosunun riski iki şeye bakar: senaryonun gerçekleşme ihtimalinin nitel
+Bir tehdit senaryosunun riski iki şeye bağlıdır: senaryonun gerçekleşme ihtimalinin nitel
 ölçüsü olan tehdit seviyesine ve yol açtığı tehdit durumunun şiddetine.
 
 ### Tehdit durumları ve şiddetleri
@@ -413,7 +413,7 @@ güvenlik önlemidir. Önlemler etkilerine göre beş türe ayrılır:
 | Caydırıcı | Saldırganı vazgeçirmek | Bakım arayüzünde erişim kaydı tutulduğunun ve yasal yaptırımın bildirilmesi |
 | Tespit edici | Yetkisiz olayı fark edip raporlamak | Reddedilen yükleme denemelerinin arıza kaydına yazılması |
 | Düzeltici | Tespit edilen olaya karşılık vermek | Art arda başarısız denemeden sonra bakım portunun kilitlenmesi |
-| Kurtarıcı | Sistemi olaydan sonra bilinen iyi duruma döndürmek | Çift bankalı mimaride önceki onaylı imaja dönüş |
+| Kurtarıcı | Sistemi olaydan sonra bilinen iyi duruma döndürmek | Çift bankalı mimaride önceki onaylı imaja rollback |
 
 Önlemler yalnızca teknik değildir. Bakım bilgisayarının yönetimi, imzalama anahtarlarının
 korunması ve yazılım dağıtım zincirinin denetimi prosedürel önlemlerdir; uçak tasarımcısı
@@ -498,7 +498,7 @@ nihai risk değerlendirmesine geri dönecek zafiyetleri arar. İmza doğrulama �
 - **Güvenlik gürbüzlük testleri** anormal girdi ve koşullara bakar: bozuk başlık, sınır
   değerleri, yarıda kesilen aktarım. Birimin bu durumlarda güvensiz bir duruma, örneğin
   doğrulanmamış bir imajla açılışa, düşmediği gösterilir. Bu testler DO-178C'nin
-  gürbüzlük test durumlarıyla örtüşür
+  gürbüzlük test case'leriyle örtüşür
   (bkz. [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)).
 - **Zafiyet testleri (vulnerability testing)** güvenliğe özgüdür. Testi yapan gereksinime
   değil saldırgana göre düşünür. İmza denetimine uğramayan bir yükleme yolu var mıdır?
@@ -518,7 +518,7 @@ bellek taşmasına sürüklenebilir.
 
 DO-356A bu boşluğu **çürütme (refutation)** kavramıyla daraltır: gereksinim
 doğrulamasından ayrı yürütülen, saldırgan bakışıyla zafiyet arayan faaliyetler. Kamuya
-açık değerlendirmelerde örnek teknikler olarak bulanık test (fuzzing), sızma testi
+açık değerlendirmelerde örnek teknikler olarak fuzzing, sızma testi
 (penetration testing), güvenlik odaklı statik analiz ve biçimsel ispat anılır. Bu
 faaliyetlerin sonucu çoğu zaman önceden yazılmış bir beklenen değerle
 karşılaştırılamaz; her anlamlı bulgu analiz edilip etkisi değerlendirilir. Bulunan
@@ -533,7 +533,7 @@ Araç kalifikasyonu sorusu burada da doğar
 (bkz. [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 Ayrım aracın türünden değil, sonucun nasıl kullanıldığından gelir. Bir aracın bulduğu
 zafiyet zaten ayrıca analiz edilir. Kredi alınan şey "bulunamadı" sonucuysa, statik
-analizde de bulanık testte de aracın bir zafiyeti gözden kaçırma riski ele alınmalıdır.
+analizde de fuzzing'de de aracın bir zafiyeti gözden kaçırma riski ele alınmalıdır.
 
 ## DO-178C projesine yansıması
 
@@ -550,7 +550,7 @@ alışılmış biçimde koda ve teste uzanır.
 Ters yön daha az bilinir ama aynı ölçüde önemlidir. Yazılım ekibinin tasarım sırasında
 eklediği her **türetilmiş gereksinim**, emniyet sürecine olduğu gibi güvenlik risk
 değerlendirmesine de geri bildirilmelidir. Hata ayıklama için bırakılan bir seri komut
-kümesi, üretimde kapatılan ama kodda duran bir test kipi ya da bakım için eklenen yeni bir
+kümesi, üretimde kapatılan ama kodda duran bir test modu ya da bakım için eklenen yeni bir
 mesaj, güvenlik sınırını değiştiren yeni bir arayüzdür. Devre dışı bırakılmış kod da bu
 açıdan yeniden değerlendirilir: emniyet açısından etkinleşmesi engellenmiş bir işlev, bir
 saldırgan için etkinleştirilmeyi bekleyen bir yetenek olabilir
@@ -564,9 +564,9 @@ derinlemesine savunma (defense in depth), yani tek bir önleme güvenmemek; en a
 girdinin sınırda doğrulanması. Bölümleme
 (bkz. [21. Yazılım Bölümlemesi](./21-yazilim-bolumlemesi.mdx)) güçlü bir güvenlik önlemi
 olabilir. Yine de bölümlemenin emniyet kanıtı kazara girişime karşı kurulmuştur. Kötü
-niyetle yazılmış bir bölüm, paylaşılan kaynakları (önbellek, veri yolu, çok çekirdekte
+niyetle yazılmış bir partition, paylaşılan kaynakları (önbellek, veri yolu, çok çekirdekte
 bellek denetleyicisi) bilerek en kötü duruma zorlayabilir ya da işletim sistemi
-çağrılarına bilerek bozuk parametre verebilir. Kazara arıza modelleri bu davranışı
+çağrılarına bozuk parametre verebilir. Kazara arıza modelleri bu davranışı
 varsaymaz; bölümleme güvenlik önlemi olarak kullanılıyorsa yalıtımın bu davranışa karşı
 da yeterli olduğu ayrıca gösterilir.
 
@@ -588,25 +588,25 @@ değerlidir, ama belirli bir işletim ortamı için geçerlidir ve DO-178C'nin s
 güvencesinin yerini tutmaz; tersi de geçerlidir. İkisi farklı soruları cevaplar.
 
 **Anahtar yönetimi.** Yazılım imzası için uçakta yalnızca doğrulamaya yarayan açık anahtar
-(ya da onun özeti) bulunur ve değiştirilemeyen bir bellek bölgesinde, bir güven kökü (root
-of trust) olarak saklanır. İmzalamada kullanılan özel anahtar (private key) hiçbir zaman
+(ya da onun hash'i) bulunur ve değiştirilemeyen bir bellek bölgesinde, bir root of trust
+olarak saklanır. İmzalamada kullanılan özel anahtar (private key) hiçbir zaman
 uçağa ya da yazılım geliştirme ortamına inmez; üretici tarafında, genellikle bir donanım
-güvenlik modülünde (hardware security module, HSM) kalır. Kökün değiştirilemez olması ile
+güvenlik modülünde (hardware security module, HSM) kalır. Root of trust'ın değiştirilemez olması ile
 anahtarların zamanla yenilenmesi ihtiyacı arasındaki gerilim, bir anahtar hiyerarşisiyle
-çözülür: değiştirilemez bellekte yalnızca kök durur; imzalamada kullanılan anahtarlar kökün
-onayladığı sertifikalarla döner ve gerektiğinde iptal edilir.
+çözülür: değiştirilemez bellekte yalnızca root of trust durur; imzalamada kullanılan anahtarlar
+onun onayladığı sertifikalarla döner ve gerektiğinde iptal edilir.
 
 ### Örnek: yüklenebilir parçanın imza doğrulaması
 
 18. bölümdeki açılış kontrolü CRC ile bütünlüğü denetliyordu. Aynı noktaya imza
 doğrulaması eklendiğinde, kod kısa olsa da tuzakları çoktur. Aşağıdaki kavramsal örnekte
-kriptografi işlevleri (`ozet_hesapla`, `imza_dogrula`) DO-178C verisiyle gelen bir
+kriptografi işlevleri (`ozet_hesapla`, `imza_dogrula`) DO-178C verisiyle sunulan bir
 kütüphaneden gelir; odak, onları çağıran kodun yapması gerekenlerdir:
 
 ```c
 /* Yüklenebilir parçanın etkinleştirilmeden önce doğrulanması (kavramsal örnek).
    Başlık düzeni: [0..3] parça boyutu, [4..7] güvenlik sürüm numarası, [8..] imza.
-   Başlık bir C yapısına kopyalanmaz: yapının bellek düzeni (dolgu, bayt sırası)
+   Başlık bir C yapısına kopyalanmaz: yapının bellek düzeni (padding, bayt sırası)
    derleyiciye bağlıdır; alanlar tanımlı bayt sırasıyla tek tek çözülür. */
 #define IMZALI_KISIM     8U                             /* boyut + sürüm      */
 #define BASLIK_UZUNLUGU  (IMZALI_KISIM + IMZA_UZUNLUGU)
@@ -639,19 +639,19 @@ dogrulama_t parca_dogrula(const uint8_t *kaynak, uint32_t kaynak_boyutu)
             (parca_boyutu <= CALISMA_BOLGESI_BOYUTU) &&
             (parca_boyutu <= (kaynak_boyutu - BASLIK_UZUNLUGU)))
         {
-            /* 2. İmaj, yükleyicinin yazamadığı (MPU ile korunan) çalışma
+            /* 2. İmaj, loader'ın yazamadığı (MPU ile korunan) çalışma
                   bölgesine bir kez kopyalanır; bundan sonra yalnızca bu
                   kopya kullanılır. */
             (void)memcpy(calisma_bolgesi, &kaynak[BASLIK_UZUNLUGU], parca_boyutu);
 
-            /* 3. Özet, imzalı başlık baytlarını (boyut ve sürüm) ve imajı
+            /* 3. Hash, imzalı başlık baytlarını (boyut ve sürüm) ve imajı
                   kapsar; sürüm imzasız kalsaydı değiştirilebilirdi. */
             ozet_hesapla(baslik, IMZALI_KISIM, calisma_bolgesi, parca_boyutu, ozet);
 
             if (imza_dogrula(GUVEN_KOKU_ACIK_ANAHTARI, ozet,
                              &baslik[IMZALI_KISIM]) == IMZA_GECERLI)
             {
-                /* 4. Geri dönüş denetimi: imzası geçerli ama yasaklanmış bir
+                /* 4. Rollback denetimi: imzası geçerli ama yasaklanmış bir
                       sürüm de reddedilir; sayaç okunamazsa sonuç yine rettir. */
                 if ((kalici_sayac_oku(&en_dusuk_surum) == SAYAC_OKUNDU) &&
                     (surum >= en_dusuk_surum))
@@ -673,21 +673,21 @@ dogrulama_t parca_dogrula(const uint8_t *kaynak, uint32_t kaynak_boyutu)
 
 Örnekteki her adım bilinen bir hata sınıfına karşılık gelir:
 
-- **Uzunluk alanı saldırganın elindedir.** Sınırlanmadan kopyalamada ya da özet hesabında
+- **Uzunluk alanı saldırganın elindedir.** Sınırlanmadan kopyalamada ya da hash hesabında
   kullanılırsa bellek taşmasına yol açar.
 - **Denetlenen bayt ile kullanılan bayt aynı olmalıdır.** İmaj, saldırganın yazabildiği bir
   yerde doğrulanıp aynı yerden yeniden okunarak çalıştırılırsa, iki okuma arasında
   değiştirilebilir. Bu hataya denetim anı ile kullanım anı farkı (time-of-check to
-  time-of-use, TOCTOU) denir. Kopya ancak doğrulamadan sonra yükleyicinin, doğrudan bellek
-  erişiminin (DMA) ya da başka bir bölümün yazamadığı bir bölgedeyse işe yarar; başlık da
+  time-of-use, TOCTOU) denir. Kopya ancak doğrulamadan sonra loader'ın, doğrudan bellek
+  erişiminin (DMA) ya da başka bir partition'ın yazamadığı bir bölgedeyse işe yarar; başlık da
   kaynaktan yalnızca bir kez okunur.
-- **İmza, kararı etkileyen her alanı kapsar.** Özet ham başlık baytlarından alınır;
-  böylece imzalayanın imzaladığı baytlar ile doğrulayanın özetlediği baytlar birebir
+- **İmza, kararı etkileyen her alanı kapsar.** Hash ham başlık baytlarından alınır;
+  böylece imzalayanın imzaladığı baytlar ile doğrulayanın hash'ini aldığı baytlar birebir
   aynıdır.
 - **Geçerli imza tek başına yetmez.** Bilinen bir zafiyeti taşıyan eski ama imzası geçerli
   bir sürüme dönmek de bir saldırıdır. Başlıktaki numara her sürümde artan bir sürüm
   numarası değil, **güvenlik sürüm numarasıdır**: yalnızca eski bir sürüm güvenlik
-  nedeniyle yasaklandığında artar. Sayaç eşitken 18. bölümde anlatılan bilinçli geri dönüş
+  nedeniyle yasaklandığında artar. Sayaç eşitken 18. bölümde anlatılan bilinçli rollback
   serbesttir; kalıcı sayaç bu işlevde değil, yeni parça başarıyla etkinleştirildikten sonra
   güncellenir.
 - **Sonuç tek bitlik bir değer olmamalıdır.** `if (sonuc)` biçiminde sınanan bir değerde
@@ -698,19 +698,19 @@ dogrulama_t parca_dogrula(const uint8_t *kaynak, uint32_t kaynak_boyutu)
 
 Kod MISRA C'nin tek çıkış kuralına uyar ve "varsayılan ret" kalıbını kullanır: her yol,
 açıkça "geçti"ye ulaşmadıkça rettir. Elle yazılan karşılaştırmalar ise ayrı bir tuzaktır.
-İmzalı bir bildirimdeki dosya özeti hesaplanan özetle karşılaştırılırken iki kural
-uygulanır. Birincisi, karşılaştırma sabit ve tam uzunlukta yapılır. Dizgi işlevleri ilk
-sıfır baytında durur ve ikili bir özetin yalnızca bir kısmını karşılaştırır. Dışarıdan
+İmzalı bir bildirimdeki dosya hash'i hesaplanan hash'le karşılaştırılırken iki kural
+uygulanır. Birincisi, karşılaştırma sabit ve tam uzunlukta yapılır. String işlevleri ilk
+sıfır baytında durur ve ikili bir hash'in yalnızca bir kısmını karşılaştırır. Dışarıdan
 gelen bir uzunluk da sıfır olabilir; sıfır uzunlukta karşılaştırma ise her zaman "eşit"
 sonucunu verir. İkincisi, karşılaştırılan değer gizli bir anahtardan türüyorsa (örneğin bir
 mesaj doğrulama kodu), karşılaştırma ilk farkta bitmemelidir. Yoksa geçen süre, değerin ne
-kadarının tuttuğunu dışarıya sızdırır. Açık bir özette bu ikinci risk yoktur; ama kuralı
+kadarının tuttuğunu dışarıya sızdırır. Açık bir hash'te bu ikinci risk yoktur; ama kuralı
 tek yerde ve her durumda uygulamak, kodlama standardına yazmayı ve denetlemeyi
 kolaylaştırır:
 
 ```c
 /* Sabit süreli karşılaştırma: ilk farkta çıkmaz, her baytı inceler.
-   Uzunluk dış veriden değil, sabit özet uzunluğundan gelir. */
+   Uzunluk dış veriden değil, sabit hash uzunluğundan gelir. */
 static dogrulama_t ozet_esit_mi(const uint8_t a[OZET_UZUNLUGU],
                                 const uint8_t b[OZET_UZUNLUGU])
 {
@@ -731,13 +731,13 @@ static dogrulama_t ozet_esit_mi(const uint8_t a[OZET_UZUNLUGU],
 }
 ```
 
-C dili geçen süreyi gözlenebilir davranış saymaz. Bu yüzden derleyicinin eniyileme
-(optimization) yaparken döngüyü erken çıkan bir biçime çevirmesi mümkündür. Seviye A'daki
+C dili geçen süreyi gözlenebilir davranış saymaz. Bu yüzden derleyicinin optimizasyon
+yaparken döngüyü erken çıkan bir biçime çevirmesi mümkündür. Seviye A'daki
 kaynak koddan nesne koduna izlenebilirlik analizi bunu görmenin doğal yeridir; kullanılan
 kriptografi kütüphanesi böyle bir işlev sunuyorsa o tercih edilir.
 
 DO-178C açısından `parca_dogrula` sıradan bir fonksiyondur: gereksinimlerden izlenir,
-kararları yazılım seviyesinin istediği kapsam ölçütüyle sınanır. Gürbüzlük test durumları
+kararları yazılım seviyesinin istediği kapsam ölçütüyle sınanır. Gürbüzlük test case'leri
 kendiliğinden ortaya çıkar:
 
 - başlıktan kısa kaynak,
@@ -746,22 +746,22 @@ kendiliğinden ortaya çıkar:
 - sayaçtan küçük, sayaca eşit ve sayaçtan büyük sürüm,
 - okunamayan sayaç.
 
-Başlık çözücüsüne bulanık testle rastgele başlıklar vermek ise güvenlik tarafındaki çürütme
+Başlık ayrıştırıcısına fuzzing ile rastgele başlıklar vermek ise güvenlik tarafındaki çürütme
 faaliyetidir.
 
 ### Geliştirme ortamı ve tedarik zinciri
 
 İmza, yazılımın üreticinin elinden çıktığı andan uçağa yüklendiği ana kadar korunmasını
-sağlar. İmzalanan şeyin kendisi ise imzadan önce, derleme ortamında oluşur. Kaynak kod
-deposu, derleme sunucusu ve imzalama altyapısı ele geçirilirse imza yalnızca
+sağlar. İmzalanan şeyin kendisi ise imzadan önce, build ortamında oluşur. Kaynak kod
+deposu, build sunucusu ve imzalama altyapısı ele geçirilirse imza yalnızca
 değiştirilmiş yazılımı onaylamış olur. DO-178C'nin konfigürasyon yönetimi yetkisiz
 değişikliğe karşı koruma ister (bkz. [10. Yazılım Konfigürasyon Yönetimi](../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx));
 güvenlik bu korumanın kasta karşı da işlemesini bekler. DO-178C zaten çalıştırılabilir
 nesne kodunun yeniden üretilebilmesini ister. İmajı bağımsız bir makinede bayt bayt aynı
-üretebilmek, ele geçirilmiş bir derleme sunucusuna karşı ucuz ve güçlü bir kanıttır.
+üretebilmek, ele geçirilmiş bir build sunucusuna karşı ucuz ve güçlü bir kanıttır.
 
 Üçüncü taraf bileşenler aynı soruyu yaşam döngüsünün tamamına taşır. Gerçek zamanlı
-işletim sistemi, ağ yığını ve kriptografi kütüphanesi için yayımlanan zafiyet bildirimleri
+işletim sistemi, ağ stack'i ve kriptografi kütüphanesi için yayımlanan zafiyet bildirimleri
 izlenir. Bunu sağlamak için hangi bileşenin hangi sürümünün hangi parçada bulunduğunu
 gösteren bir yazılım malzeme listesi (software bill of materials, SBOM) tutulur. Ancak
 havacılıkta bir yama, BT dünyasındaki gibi hızlı uygulanamaz: her yama bir DO-178C
@@ -808,7 +808,7 @@ olmayan bir değişiklikte bu verinin hiçbiri gerekmez.
 DO-326B ve ED-202B'nin (2024) ağırlık noktası tam da bu alandır. Taslak sürecinde
 yayımlanan kapsama göre yeni sürüm, güvenlik açısından değişiklik etki analizini ve bir
 değişikliğin güvenlik bakımından küçük ya da büyük sayılmasını ayrıntılandırır. Güvenlik
-şartı olmadan sertifikalanmış bir ürüne tehdit getiren değişiklikte yapılacak en az
+şartı olmadan sertifikalanmış bir ürüne tehdit getiren değişiklikte yapılacak asgari
 faaliyetleri ve sertifikalı bir ürüne güvenlik güncellemesinin uygulanmasını tanımlar;
 yöntem belgesiyle tutarlılığı da sağlar.
 
@@ -833,7 +833,7 @@ dağıtılacağını ve birim hurdaya ayrılırken içindeki anahtar malzemesini
 silineceğini anlatır.
 
 Uçuşa elverişliliğin sürdürülmesi talimatları (instructions for continued airworthiness,
-ICA) da güvenlik içerir. DO-326A özellikle güncelleme yolunun ve yükleme zincirinin
+ICA) da güvenliği kapsar. DO-326A özellikle güncelleme yolunun ve yükleme zincirinin
 korunmasını ister (§4.3.1). Alıcı örneğinde bu, yükleme öncesinde ve sonrasında yapılacak
 imza ve parça numarası denetimlerinin ve reddedilen yüklemelerin raporlanmasının bakım
 talimatına girmesi demektir.
@@ -844,10 +844,10 @@ emniyetsiz bir durum varsa oradan otoriteye ulaşmasını öngörür. Güvenlik 
 tespiti ve yönetimi için ayrıca DO-392 / ED-206 rehberlik eder; FAA tarafında operatörün
 uçak ağ güvenliği programı AC 119-1A'dadır.
 
-Yazılım ekibi için sürekli uçuşa elverişliliğin somut anlamı şudur. Sertifikasyondan
+Yazılım ekibi için sürekli uçuşa elverişliliğin somut anlamı şudur: sertifikasyondan
 yıllar sonra bir zafiyet bildirimi geldiğinde, hangi parçanın etkilendiği, riskin
 yeniden nasıl değerlendirileceği ve düzeltmenin hangi değişiklik süreciyle uçağa ulaşacağı
-hazır olmalıdır. Bu hazırlık sertifikasyon sırasında, PSecAC'ta ve konfigürasyon
+sorularının cevabı hazır olmalıdır. Bu hazırlık sertifikasyon sırasında, PSecAC'ta ve konfigürasyon
 yönetimi planında yapılır; olay günü yapılamaz.
 
 ## Planlama: PSecAC
@@ -882,7 +882,7 @@ iddia iç içedir. Aşağıdaki tablo yalnızca doğrulanmış olgulara dayanır
 ## Bu bölümden akılda kalması gerekenler
 
 - Uçuşa elverişlilik güvenliği, kasıtlı yetkisiz elektronik etkileşimin emniyete etkisini
-  yönetir. Fiziksel saldırı, elektromanyetik karıştırma ve emniyete dokunmayan bilgi
+  yönetir. Fiziksel saldırı, elektromanyetik jamming ve emniyete dokunmayan bilgi
   güvenliği kapsam dışıdır.
 - DO-178C güvenliği yalnızca sistemden gelen bir gereksinim olarak görür. Gereksinimin
   nasıl türetileceğini ve hangi ek kanıtın gerektiğini DO-326A (süreç) ve DO-356A

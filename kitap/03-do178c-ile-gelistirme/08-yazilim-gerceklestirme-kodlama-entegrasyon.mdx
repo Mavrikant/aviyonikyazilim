@@ -23,7 +23,7 @@ kendi başına karar veren süreçler değildir: ne üretileceğini önceki sür
 | Süreç | Girdiler | Çıktılar |
 |---|---|---|
 | Kodlama | Düşük seviyeli gereksinimler (low-level requirements), yazılım mimarisi (software architecture), kodlama standardı, yazılım geliştirme planı (Software Development Plan, SDP) | Kaynak kod (source code); kaynak kod ile düşük seviyeli gereksinimler arasındaki iz verisi (trace data) |
-| Entegrasyon | Kaynak kod, yazılım mimarisi | Nesne kodu (object code) ve çalıştırılabilir nesne kodu (executable object code); varsa parametre verisi öğesi (parameter data item, PDI) dosyaları; derleme, bağlama ve yükleme verisi (tipik olarak derleme ve bağlama betikleri ile seçenekleri, bağlayıcı haritası (linker map), derleme kaydı ve yükleme talimatı) |
+| Entegrasyon | Kaynak kod, yazılım mimarisi | Nesne kodu (object code) ve çalıştırılabilir nesne kodu (executable object code); varsa parametre verisi öğesi (parameter data item, PDI) dosyaları; derleme, bağlama ve yükleme verisi (tipik olarak build ve linker script'leri ile seçenekleri, linker map, build kaydı ve yükleme talimatı) |
 
 Düşük seviyeli gereksinimlerin ve mimarinin nasıl ortaya çıktığı
 [7. Yazılım Tasarımı](./07-yazilim-tasarimi.mdx) bölümünde anlatıldı. Tablodan iki kural
@@ -47,7 +47,7 @@ her birinin kurala bağlanma nedeni şöyle özetlenebilir:
 | Dil alt kümesi ve yasaklı yapılar | Tanımsız davranışı (undefined behavior) ve derleyiciye bağlı davranışı kodun dışında tutmak |
 | Veri tipleri ve dönüşümler | Sabit genişlikli tiplerle taşınabilirliği sağlamak; örtük dönüşümlerden doğan işaret ve taşma hatalarını önlemek |
 | Hata dönüşleri | Her dönüş değerinin denetlenmesini, hatanın sessizce yutulmamasını sağlamak |
-| Sabitler ve değişkenler | Anlamı belirsiz sayılar yerine adlandırılmış sabit kullanmak; global veriyi sınırlayarak bileşenler arası veri bağlaşımını (data coupling) görünür tutmak |
+| Sabitler ve değişkenler | Anlamı belirsiz sayılar yerine adlandırılmış sabit kullanmak; global veriyi sınırlayarak bileşenler arası data coupling'i görünür tutmak |
 | Döngü, koşul ve karmaşıklık sınırları | Kontrol akışını gözden geçirilebilir ve test edilebilir tutmak |
 | Adlandırma, dosya düzeni ve yorum | Gözden geçirmeyi hızlandırmak; izlenebilirlik etiketinin nereye ve nasıl yazılacağını belirlemek |
 
@@ -62,16 +62,16 @@ zayıftır, çünkü doğruluğu kimseye gösterilemez.
 Programlama dili seçimi, projenin en kalıcı kararlarından biridir. Dil bir kez
 seçildiğinde kodlama standardı, statik analiz araçları, derleyici, test ortamı ve
 ekip eğitimi hep bu seçimin etrafında şekillenir. Aviyonikte bu seçim çoğunlukla dört
-dil arasında yapılır: çevirici dili, Ada, C ve C++.
+dil arasında yapılır: assembly, Ada, C ve C++.
 
-**Çevirici dili (assembly language)**, işlemciye en yakın dildir. Donanım yazmaçlarına
-(register) doğrudan erişim, kesin zamanlama ve başlatma (boot) kodu gibi yerlerde hâlâ
+**Assembly**, işlemciye en yakın dildir. Donanım register'larına
+doğrudan erişim, kesin zamanlama ve başlatma (boot) kodu gibi yerlerde hâlâ
 vazgeçilmezdir. Ancak taşınabilirliği yoktur, okunması ve gözden geçirilmesi zordur;
 bu yüzden modern projelerde yalnızca donanıma dokunan dar bir katmanla sınırlandırılır.
-Çevirici diliyle yazılan modüller de C koduyla aynı doğrulama hedeflerine tabidir;
-kodlama standardı onları da kapsar ve yapısal kapsamları, C için kullanılan donatma
+Assembly ile yazılan modüller de C koduyla aynı doğrulama hedeflerine tabidir;
+kodlama standardı onları da kapsar ve yapısal kapsamları, C için kullanılan instrumentation
 yöntemi burada çoğunlukla işlemediğinden, ayrıca planlanır (bkz.
-[9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx), "Çevirici diliyle yazılmış
+[9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx), "Assembly ile yazılmış
 modüllerde yapısal kapsam").
 
 **Ada**, emniyet-kritik sistemler düşünülerek tasarlanmış bir dildir. Güçlü tip
@@ -86,7 +86,7 @@ daha zordur.
 
 **C**, bugün aviyonikte en yaygın dildir. Derleyici ve araç desteği geniştir, gömülü
 donanımların hemen hepsinde olgun bir araç zinciri vardır. Ancak dilin kendisi
-emniyetli değildir: tanımsız davranışlar, serbest işaretçi aritmetiği ve zayıf tip
+emniyetli değildir: tanımsız davranışlar, serbest pointer aritmetiği ve zayıf tip
 denetimi ciddi tuzaklar barındırır. Bu yüzden C, hemen her projede **MISRA C** gibi
 bir alt küme (subset) ile birlikte kullanılır; alt küme, dilin tehlikeli
 özelliklerini yasaklayarak kalan kısmı öngörülebilir kılar. Kodlama standardında
@@ -103,7 +103,7 @@ kullanılır; nesne yönelimli özellikler devredeyse DO-332'nin ek hedefleri (o
 gündeme gelir (bkz.
 [15. DO-332 ve Nesne Yönelimli Teknoloji ve İlgili Teknikler](../04-arac-kalifikasyonu-ve-ekler/15-do332-nesne-yonelimli-teknoloji.mdx)).
 
-| Ölçüt | Çevirici dili | Ada / SPARK | C (+MISRA C) | C++ (kısıtlı alt küme) |
+| Ölçüt | Assembly | Ada / SPARK | C (+MISRA C) | C++ (kısıtlı alt küme) |
 |---|---|---|---|---|
 | Donanım denetimi | Çok yüksek | Orta | Yüksek | Yüksek |
 | Tip güvenliği | Yok | Çok güçlü | Zayıf (alt kümeyle iyileşir) | Orta (alt kümeyle iyileşir) |
@@ -123,8 +123,8 @@ Dil kadar **derleyici seçimi** de önemlidir; çünkü yazılım açısından u
 gösterildiği nihai ürün kaynak kod değil, uçakta çalışan çalıştırılabilir nesne
 kodudur. Derleyici değerlendirilirken şu ölçütlere bakılır:
 
-- **Belirlenimcilik (determinism):** aynı kaynak ve aynı seçeneklerle her derlemede
-  aynı çıktının üretilmesi; agresif eniyileme (optimization) seviyelerinden kaçınılması.
+- **Determinizm:** aynı kaynak ve aynı seçeneklerle her derlemede
+  aynı çıktının üretilmesi; agresif optimizasyon seviyelerinden kaçınılması.
 - **Hedef işlemci desteği:** kullanılan işlemci ve çalışma ortamı için kanıtlanmış,
   hatası bilinen ve belgelenmiş bir sürümün bulunması.
 - **Hata geçmişi:** derleyici üreticisinin bilinen hata listesi yayımlaması ve
@@ -137,7 +137,7 @@ kodudur. Derleyici değerlendirilirken şu ölçütlere bakılır:
   bu kodun belirlenmesi ve doğruluğunun ek doğrulamayla gösterilmesi beklenir; yani
   aranan, böyle bir kodun yokluğunu kanıtlamak değil, var olanı bulup doğrulamaktır.
   Kodun hangi yöntemle saptanacağı planlama aşamasında belirlenir ve ilgili plana
-  yazılır. Bu işi kolaylaştıran ya da zorlaştıran, seçilen derleyici ve seçenekleridir
+  yazılır. Bu işi kolaylaştıran ya da zorlaştıran, seçilen derleyici ve seçenekleridir.
   Analizin adımları ve bir örnek 9. bölümde, "Kaynak koda izlenemeyen nesne kodu"
   başlığı altındadır (bkz.
   [9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx) ve [SW SOI-3](../07-soi-denetimleri/soi-3.mdx)).
@@ -147,7 +147,7 @@ testlerle hedef ortamda zaten doğrulandığı için araç kalifikasyonu (tool
 qualification) koşulu oluşmaz (bkz.
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
 DO-178C de derleyiciyi, yazılım ürününün doğrulaması başarıyla tamamlandığında kabul
-edilebilir sayar; ama yalnızca o ürün için. Derleyicinin, bağlayıcının ve yükleyicinin
+edilebilir sayar; ama yalnızca o ürün için. Derleyicinin, linker'ın ve loader'ın
 doğruluğuna ilişkin varsayımlar da yazılım doğrulama planında (Software Verification
 Plan, SVP) yazılır. Bu yaklaşımın bedeli şudur: doğrulama, o derleyicinin o seçeneklerle
 ürettiği koda bağlıdır. Bu nedenle derleyici sürümü ve derleme seçenekleri projenin ömrü
@@ -175,7 +175,7 @@ Tipik bir standardın davranışa dokunan kuralları şöyle örneklenebilir:
 
 /* Kurallar: tek çıkış noktası; if ... else if zinciri else ile kapanır;
    sabit genişlikli tipler kullanılır.
-   Ön koşul: alt <= ust; çağıran taraf sağlar (LLR-31-4). */
+   Precondition: alt <= ust; çağıran taraf sağlar (LLR-31-4). */
 int32_t hiz_sinirla(int32_t hiz, int32_t alt, int32_t ust)
 {
     int32_t sonuc;
@@ -208,7 +208,7 @@ tavsiye kurallarından hangilerinin projede bağlayıcı olduğunu kodlama stand
 
 İki ayrıntı daha gözden geçirenin işini kolaylaştırır. `sonuc` her dalda atandığı
 için tanımda ayrıca başlatılmamıştır; fazladan bir ilk atama, statik analizin
-"kullanılmayan atama" diye işaretleyeceği bir bulgu olurdu. `alt <= ust` ön koşulu
+"kullanılmayan atama" diye işaretleyeceği bir bulgu olurdu. `alt <= ust` precondition'ı
 ise kodlama kuralının değil tasarımın konusudur: ya çağıran tarafın bunu sağladığı
 gereksinimde yazılır ya da işlev kendisi denetler. Yorumdaki tek satır, hangi seçimin
 yapıldığını ve dayanağını gösterir.
@@ -221,7 +221,7 @@ kütüphanelerinden** (runtime library) kod ekler. Bu kod da uçakta çalışır
 yazılımın geri kalanıyla aynı seviyenin hedeflerine tabidir. Pratikte üç yaklaşım
 görülür:
 
-- kullanılan kütüphane işlevlerini belirleyip her birini gereksinimlendirerek test
+- kullanılan kütüphane işlevlerini belirleyip her biri için gereksinim yazarak test
   etmek,
 - sertifikasyona hazır (önceden doğrulanmış) bir kütüphane paketi tedarik etmek,
 - kütüphane kullanımını tamamen yasaklayıp gereken işlevleri projede yazmak.
@@ -264,7 +264,7 @@ bölümünde, kalifikasyonun kendisi 13. bölümde anlatılıyor.
 
 Karma projelerde (üretilen kod ve elle yazılmış kod birlikte) en sık yapılan hata,
 ikisinin arayüzünü belirsiz bırakmaktır. Hangi dosyalara elle dokunulmasının yasak
-olduğu, üretim adımının derleme sürecinin neresinde çalıştığı ve model sürümü ile kod
+olduğu, üretim adımının build sürecinin neresinde çalıştığı ve model sürümü ile kod
 sürümü arasındaki izlenebilirlik (traceability) baştan tanımlanmalıdır.
 
 ## Kaynak kodun doğrulanması
@@ -288,8 +288,8 @@ Kod gözden geçirmesinde (code review) yanıtlanması beklenen temel sorular ş
   her fonksiyon en az bir gereksinime bağlanabiliyor mu? Bağlanamayan kod, ölü kodu
   (dead code) da içeren gereksiz kod şüphesidir ve açıklanmak zorundadır; ayrımları
   17. bölümde yapılıyor.
-- Kod **doğru ve tutarlı** mı: taşma, sıfıra bölme, başlatılmamış değişken, yığın
-  (stack) kullanımı, en kötü durum yürütme süresi (worst-case execution time, WCET)
+- Kod **doğru ve tutarlı** mı: taşma, sıfıra bölme, başlatılmamış değişken, stack
+  kullanımı, en kötü durum yürütme süresi (worst-case execution time, WCET)
   gibi konular ele alınmış mı?
 
 Gözden geçirmenin işe yaraması için birkaç pratik koşul vardır: gözden geçirme bir
@@ -320,7 +320,7 @@ ve gözden geçirmeyi tamamlar:
 | Veri akışı analizi | Başlatılmamış değişken, kullanılmayan atama |
 | Kontrol akışı analizi | Erişilemeyen kod, sonsuz döngü riski |
 | Değer aralığı analizi | Taşma, dizi sınırı aşımı, sıfıra bölme |
-| Kaynak analizi | Yığın kullanımı, özyineleme, bellek sınırları |
+| Kaynak analizi | Stack kullanımı, özyineleme, bellek sınırları |
 
 Statik analiz aracının çıktısı da tek başına kanıt değildir: her bulgu bir mühendis
 tarafından değerlendirilir; gerçek hata ise düzeltilir, yanlış alarm (false positive)
@@ -329,7 +329,7 @@ kullanılıyorsa (örneğin bir kuralın denetimini tamamen araca bırakmak ve �
 ayrıca doğrulamamak), aracın kalifikasyonu gündeme gelir.
 
 Kaynak kod doğrulaması, sonuç olarak üç şeyi görünür kılmalıdır: kodun gereksinimlere
-uyumu, standarda uygunluğu ve doğruluk/tutarlılık analizlerinin yapıldığı. Bu üç
+uyumunu, standarda uygunluğunu ve doğruluk/tutarlılık analizlerinin yapıldığını. Bu üç
 kanıt tamamlanmadan koda "doğrulandı" damgası vurulmaz; test bu kanıtların üzerine
 inşa edilir.
 
@@ -366,8 +366,7 @@ altındaki çalışan temelin üzerinde denenir. Gömülü bir aviyonik birimde 
 aşağıdan yukarıdır: önce başlatma kodu ve donanıma dokunan sürücüler, sonra işletim
 sistemi ve çizelgeleme, ardından haberleşme ve giriş/çıkış katmanı, en sonda uygulama
 işlevleri. Sıra ve her artımın içeriği önceden yazılır; her artım, konfigürasyonu
-belli bir derleme sürümüdür. Henüz hazır olmayan bileşenlerin yerini tutan yer tutucu
-kod (stub) ve test sürücüleri uçuş koduyla aynı yerde tutulmaz ve nihai imaja girmediği
+belli bir build sürümüdür. Henüz hazır olmayan bileşenlerin yerine kullanılan stub ve test sürücüleri uçuş koduyla aynı yerde saklanmaz ve nihai imaja girmediği
 gösterilir.
 
 Entegrasyonun ortaya çıkardığı uyumsuzluklar, tek tek bileşenlere bakılarak görülemeyen
@@ -379,29 +378,29 @@ türdendir:
 | Veri sırası ve zamanlama | Bir bileşenin, diğerinin o çerçevede henüz güncellemediği veriyi okuması |
 | Başlatma sırası | Henüz başlatılmamış sürücünün ya da verinin kullanılması |
 | Hata yayılımı | Alt katmanın bildirdiği hata kodunun üst katmanda yok sayılması |
-| Sürüm uyumu | Farklı temel çizgilerden (baseline) alınmış bileşenlerin aynı imajda buluşması |
+| Sürüm uyumu | Farklı baseline'lardan alınmış bileşenlerin aynı imajda buluşması |
 
 Bu tür bir bulgunun düzeltmesi çoğu kez kodda değil, arayüz tanımında ya da
 gereksinimdedir. Entegrasyon masasında koda hızlıca eklenen bir dönüşüm sorunu o gün
 çözer, ama tasarım verisi yanlış kalır; doğru yol, bulguyu kaynaklandığı sürece geri
 beslemektir.
 
-### Derleme sürecinin tekrarlanabilirliği
+### Build sürecinin tekrarlanabilirliği
 
-Uçakta çalışan nesne kodu olduğuna göre, kaynak kodu nesne koduna çeviren derleme
-(build) süreci de mühendislik ürünüdür ve doğrulamanın parçasıdır. Temel beklenti
-tek cümledir: **aynı kaynaktan, aynı araçlarla, her zaman aynı ikili (binary)
-üretilebilmelidir.** İkili birebir aynı çıkmıyorsa — örneğin imaja gömülen bir zaman
+Uçakta çalışan nesne kodu olduğuna göre, kaynak kodu nesne koduna çeviren build
+süreci de mühendislik ürünüdür ve doğrulamanın parçasıdır. Temel beklenti
+tek cümledir: **aynı kaynaktan, aynı araçlarla, her zaman aynı binary
+üretilebilmelidir.** Binary birebir aynı çıkmıyorsa — örneğin imaja gömülen bir zaman
 damgası yüzünden — farkın kaynağı bilinmeli, açıklanmalı ve tercihen giderilmelidir.
 
-Bunu sağlamak için derleme sürecine giren her şey konfigürasyon yönetimi altında
+Bunu sağlamak için build sürecine giren her şey konfigürasyon yönetimi altında
 tutulur:
 
 - kaynak dosyaların sürümleri,
-- derleme betikleri (makefile vb.) ve bağlayıcı (linker) betikleri,
-- derleyici, bağlayıcı ve yardımcı araçların tam sürümleri,
+- build script'leri (makefile vb.) ve linker script'leri,
+- derleyici, linker ve yardımcı araçların tam sürümleri,
 - derleme seçenekleri ve tanımlı makrolar,
-- derleme ortamının kendisi (işletim sistemi, kurulum paketleri).
+- build ortamının kendisi (işletim sistemi, kurulum paketleri).
 
 Bu bilgilerin resmî adresi iki yaşam döngüsü verisidir: ortamı yazılım yaşam döngüsü
 ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index,
@@ -409,51 +408,51 @@ SECI), üretilen sürümün bileşenlerini ve yeniden derleme talimatını yazı
 konfigürasyon indeksi (Software Configuration Index, SCI) kayıt altına alır (bkz.
 [10. Yazılım Konfigürasyon Yönetimi](./10-yazilim-konfigurasyon-yonetimi.mdx)).
 
-Derleme seçenekleri özellikle kritiktir: bir eniyileme bayrağının değişmesi, test
+Derleme seçenekleri özellikle kritiktir: bir optimizasyon bayrağının değişmesi, test
 edilmiş nesne kodundan farklı bir nesne kodu üretir. Bu nedenle seçenekler planlarda
-belgelenir, betiğe gömülür ve elle geçersiz kılınamaz hâle getirilir. Mühendisin
-kendi makinesinde "elle derleyip" ürettiği ikili, ne kadar doğru görünürse görünsün,
+belgelenir, script'e gömülür ve elle geçersiz kılınamaz hâle getirilir. Mühendisin
+kendi makinesinde "elle derleyip" ürettiği binary, ne kadar doğru görünürse görünsün,
 resmî bir konfigürasyon değildir.
 
 ```mermaid
 flowchart TB
     subgraph S1["Yazılım entegrasyonu"]
-        K["Sürümlü<br/>kaynak kod"] --> D["Konfigürasyon kontrollü<br/>derleme betiği"]
-        A["Derleyici ve bağlayıcı<br/>(sürümü sabit)"] --> D
-        B["Bağlayıcı betiği ve<br/>derleme seçenekleri"] --> D
+        K["Sürümlü<br/>kaynak kod"] --> D["Konfigürasyon kontrollü<br/>build script'i"]
+        A["Derleyici ve linker<br/>(sürümü sabit)"] --> D
+        B["Linker script'i ve<br/>derleme seçenekleri"] --> D
         D --> N["Çalıştırılabilir<br/>nesne kodu"]
-        D --> H["Bağlayıcı haritası<br/>ve derleme kaydı"]
+        D --> H["Linker map<br/>ve build kaydı"]
     end
     subgraph S2["Donanım ve yazılım entegrasyonu"]
-        S["Sağlama değeri:<br/>CRC ya da özet"] --> Y["Hedefe yükleme"]
-        Y --> DK["Yükleme doğrulama:<br/>kimlik ve bütünlük"]
+        S["Sağlama değeri:<br/>CRC ya da hash"] --> Y["Hedefe yükleme"]
+        Y --> DK["Yükleme doğrulaması:<br/>kimlik ve bütünlük"]
     end
     N --> S
 ```
 
-Resmî derlemeler tipik olarak temiz bir ortamda, sıfırdan (full build) alınır ve bir
-**derleme kaydı** üretilir: hangi sürümlerden, hangi araçlarla, hangi seçeneklerle
+Resmî build'ler tipik olarak temiz bir ortamda, full build olarak alınır ve bir
+**build kaydı** üretilir: hangi sürümlerden, hangi araçlarla, hangi seçeneklerle
 üretildiği bu kayıtta yer alır. Tekrarlanabilirlik, sertifikasyondan yıllar sonra bir
 hata düzeltmesi gerektiğinde aynı ortamı yeniden kurabilmek için de gereklidir; bu
-yüzden derleme ortamının arşivlenmesi (hatta sanal makine olarak saklanması) yaygın
+yüzden build ortamının arşivlenmesi (hatta sanal makine olarak saklanması) yaygın
 bir uygulamadır.
 
 ### Entegrasyon çıktılarının gözden geçirilmesi
 
-Derlemenin hatasız bitmesi, çıktının doğru olduğunu göstermez. Entegrasyon çıktıları
+Build'in hatasız bitmesi, çıktının doğru olduğunu göstermez. Entegrasyon çıktıları
 da gözden geçirilir ve analiz edilir; aranan hatalar yanlış donanım adresi, çakışan ya
 da taşan bellek bölgeleri ve eksik ya da fazladan bileşendir. Başlıca kaynak, derleyici
-ve bağlayıcı uyarıları ile bağlayıcı haritasıdır. Çıktıların eksiksiz ve doğru olduğunu
+ve linker uyarıları ile linker map'tir. Çıktıların eksiksiz ve doğru olduğunu
 gösterme hedefi Seviye A, B ve C'de geçerlidir ve hiçbirinde bağımsızlık aranmaz;
 Seviye D'de uygulanmaz. Sadeleştirilmiş bir bellek özeti şöyle görünebilir:
 
 ```text
 Bölge       Başlangıç    Bitiş        Uzunluk    Kullanılan
-ONYUKLEME   0x08000000   0x08007FFF   0x008000   0x0061C0
+BOOTLOADER  0x08000000   0x08007FFF   0x008000   0x0061C0
 UYGULAMA    0x08008000   0x08077FFF   0x070000   0x04A2C0
 PARAMETRE   0x08078000   0x0807FFFF   0x008000   0x001200
 RAM_VERI    0x20000000   0x2000DFFF   0x00E000   0x006F40
-RAM_YIGIN   0x2000E000   0x2000FFFF   0x002000   (analizle)
+RAM_STACK   0x2000E000   0x2000FFFF   0x002000   (analizle)
 ```
 
 Böyle bir çıktının karşısında sorulan sorular şunlardır:
@@ -464,12 +463,12 @@ Böyle bir çıktının karşısında sorulan sorular şunlardır:
   planlarda öngörülen bellek payı korunuyor mu?
 - Haritada beklenmeyen bir nesne dosyası ya da kütüphane işlevi var mı; beklenen bir
   bileşen eksik mi; çözülmemiş sembol kalmış mı?
-- Yığın bölgesi, yığın kullanımı analizinin en kötü durum sonucunu karşılıyor mu?
-- Derleyici ve bağlayıcı uyarıları sıfırlanmış ya da her biri gerekçesiyle kapatılmış
+- Stack bölgesi, stack kullanımı analizinin en kötü durum sonucunu karşılıyor mu?
+- Derleyici ve linker uyarıları sıfırlanmış ya da her biri gerekçesiyle kapatılmış
   mı?
 
 Bu soruların yöntem tarafı, yani bellek haritası analizi ile bağlantı ve yükleme
-analizi, 9. bölümde anlatılıyor. Analiz belirli bir derleme sürümü üzerinde yapılır;
+analizi, 9. bölümde anlatılıyor. Analiz belirli bir build sürümü üzerinde yapılır;
 sürüm değiştiğinde yinelenir ya da değişikliğin sonucu etkilemediği gerekçelendirilir.
 
 ### Yamalar
@@ -486,7 +485,7 @@ doğrulama yinelenir.
 
 Yamanın savunulabildiği durum, geliştirme ortamından kaynaklanan bilinen bir kusurun —
 örneğin belgelenmiş bir derleyici hatasının — başka türlü aşılamamasıdır. O zaman da
-üç şey gösterilir: yamanın konfigürasyon yönetimi altında tanımlandığı ve izlendiği,
+üç şey gerekir: yamanın konfigürasyon yönetimi altında tanımlanıp izlenmesi,
 yamalı yazılımın uygulanabilir bütün hedefleri hâlâ karşıladığını gösteren analiz ve
 yazılım başarım özetinde (Software Accomplishment Summary, SAS) yamanın gerekçesi.
 
@@ -497,7 +496,7 @@ aktarılması sırasında iki soru yanıtlanmalıdır:
 
 - **Doğru yazılım mı yüklendi?** Parça numarası ve sürüm kimliği, yüklenen imaj ile
   belgelenen konfigürasyon arasında birebir eşleşmelidir.
-- **Eksiksiz ve bozulmadan mı yüklendi?** Sağlama toplamı (checksum) veya döngüsel
+- **Eksiksiz ve bozulmadan mı yüklendi?** Checksum veya döngüsel
   artıklık denetimi (cyclic redundancy check, CRC) gibi bütünlük kontrolleri, aktarım
   sırasında bozulma olmadığını göstermelidir.
 
@@ -505,8 +504,8 @@ Sahada yüklenebilir yazılım (field-loadable software) söz konusuysa yükleme
 mekanizması — hedefteki yükleme yazılımı ve bütünlük kontrolleri — ile yükleme
 prosedürü de doğrulanır; yarım kalan yüklemede sistemin güvenli bir durumda kalması
 (örneğin önceki geçerli imaja dönmesi veya kendini geçersiz sayması) ayrıca gösterilir.
-Bütünlük güvencesi hedefteki bu kontrollere değil yer tarafındaki yükleyiciye
-dayanıyorsa, yükleyicinin kendisinin güvenceye alınması (araç kalifikasyonu ya da
+Bütünlük güvencesi hedefteki bu kontrollere değil yer tarafındaki loader'a
+dayanıyorsa, loader'ın kendisinin güvenceye alınması (araç kalifikasyonu ya da
 DO-178C'ye göre geliştirme) gündeme gelir; ayrıntısı
 [18. Sahada Yüklenebilir Yazılım](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.mdx)
 bölümündedir.
@@ -588,8 +587,8 @@ gözden geçirme kaydında kalır; geliştirme denetiminde ([SW SOI-2](../07-soi
 | Tasarımdan sapma | Kodda gereksinime izlenemeyen işlev; mimaride tanımlı olmayan çağrı ya da veri erişimi | İz verisini kodla birlikte güncellemek; gözden geçirmede mimari uyumu ayrı madde olarak sormak |
 | Arayüzü yanlış yorumlama | Bileşen testleri geçer, entegrasyon testinde birim, ölçek ya da sıra uyuşmazlığı çıkar | Arayüzü tip, birim ve aralıkla tanımlamak; erken ve artımlı entegrasyon |
 | Hata durumunu eksik ele alma | Denetlenmeyen dönüş değerleri; gürbüzlük testlerinde beklenmeyen davranış | Dönüş değeri denetimini kural yapıp statik analizle denetlemek; hata davranışını gereksinimde tanımlamak |
-| Tanımsız davranışa dayanan kod | Eniyileme seviyesi ya da derleyici değişince davranışın değişmesi | Dil alt kümesi, değer aralığı analizi, dondurulmuş derleyici ve seçenekler |
-| Belgelenmemiş entegrasyon ve elle derleme | Aynı kaynaktan farklı ikili; yalnız bir mühendisin makinesinde üretilebilen sürüm | Betikle derleme, derleme kaydı, SECI ve SCI ile kayıt altına alınmış ortam |
+| Tanımsız davranışa dayanan kod | Optimizasyon seviyesi ya da derleyici değişince davranışın değişmesi | Dil alt kümesi, değer aralığı analizi, dondurulmuş derleyici ve seçenekler |
+| Belgelenmemiş entegrasyon ve elle build | Aynı kaynaktan farklı binary; yalnız bir mühendisin makinesinde üretilebilen sürüm | Script ile build, build kaydı, SECI ve SCI ile kayıt altına alınmış ortam |
 | Gereksiz karmaşık kod | Aşılan karmaşıklık sınırı; uzayan gözden geçirmeler; yapısal kapsamı tamamlamanın zorlaşması | Karmaşıklık sınırını otomatik denetlemek; işlevi bölmek, gerekiyorsa tasarıma dönmek |
 
 Bu risklerin ortak yanı, geç fark edildiklerinde bedellerinin doğrulama aşamasında
@@ -611,8 +610,8 @@ günler süren bir hata ayıklamadır.
   Bağımsızlık seviyeye ve hedefe göre aranır; yazar dışı gözden geçirme her seviyede
   iyi uygulamadır.
 - Entegrasyon süreci çalıştırılabilir nesne kodunu üretir ve hedefe yükler; artımlı
-  yürütülür, bağlayıcı haritası gibi çıktıları da gözden geçirilir.
-- Derleme tekrarlanabilir ve konfigürasyon kontrollü olmalıdır; yama dar bir
+  yürütülür, linker map gibi çıktıları da gözden geçirilir.
+- Build tekrarlanabilir ve konfigürasyon kontrollü olmalıdır; yama dar bir
   istisnadır ve gerekçesi SAS'ta yer alır.
 - Yükleme, kimlik ve bütünlük kontrolleriyle doğrulanır; güvencenin hedefteki
-  kontrollere mi yükleyiciye mi dayandığı, neyin doğrulanacağını belirler.
+  kontrollere mi loader'a mı dayandığı, neyin doğrulanacağını belirler.

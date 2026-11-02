@@ -8,11 +8,11 @@ description: "Test sonuçlarının gözden geçirilmesi için kontrol listesi: k
 import ListeIndir from '@site/src/components/KontrolListesi';
 
 Bu liste, kredi amaçlı (for-credit) test koşusundan çıkan test sonuçlarının (test results)
-gözden geçirilmesi (review) içindir: kayıt, temel çizgideki (baseline) yazılımın gözden
+gözden geçirilmesi (review) içindir: kayıt, baseline'daki yazılımın gözden
 geçirilmiş prosedürlerle ve kayıtlı ortamda koşulduğunu gösteriyor mu, her geçti/kaldı kararı
 doğru mu, beklenenden her sapma açıklanıp problem raporuna (problem report) bağlanmış mı?
 Gözden geçirme, koşu bitip sonuçlar kayda girdikten sonra ve yazılım doğrulama sonuçları
-(Software Verification Results, SVR) temel çizgiye alınmadan önce yapılır. Gözden geçiren,
+(Software Verification Results, SVR) baseline'a alınmadan önce yapılır. Gözden geçiren,
 tercihen değerlendirdiği testleri koşmamış bir doğrulama mühendisidir; Seviye A'da bu
 zorunludur.
 
@@ -21,8 +21,8 @@ geçti/kaldı kararının savunulabilir olduğunu ve beklenmeyen her gözlemin b
 problem raporuna bağlandığını göstermek. Sonuç kaydının içeriği §11.14'te tanımlanır; aynı
 kayıt, çalıştırılabilir nesne kodunun (executable object code) gereksinimlere uyduğunu, gürbüz
 (robust) olduğunu ve hedef bilgisayarla (target computer) uyumlu olduğunu söyleyen A-6
-hedeflerinin de kanıtıdır. Test durumlarının ve prosedürlerinin kendisi
-[test durumu ve prosedürü](07-test-durumlari-ve-prosedurleri.mdx) listesinin, sonuçlar
+hedeflerinin de kanıtıdır. Test case'lerin ve prosedürlerinin kendisi
+[test case ve prosedürü](07-test-durumlari-ve-prosedurleri.mdx) listesinin, sonuçlar
 üzerinden yürütülen gereksinim ve yapısal kapsam analizleri
 [kapsam analizi](09-kapsam-analizleri.mdx) listesinin konusudur. Kredi koşusunun ne olduğu
 [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#test-planlama-ve-test-geliştirme)
@@ -33,10 +33,10 @@ bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasınd
 | Özellik | Değer |
 |---|---|
 | DO-178C maddesi | §6.4.5.c; sonuç kaydının içeriği §11.14; prosedür ile sonuç arasındaki iz verisi §6.5.c |
-| Ek A hedefleri | A-7 #2: A'da bağımsızlıkla, B ve C'de gerekli, D'de aranmaz. Sonuç kaydı ayrıca A-6 hedeflerinin çıktısıdır; A-6 #1, #2 ve #5 D dahil her seviyede gerekli |
+| Ek A hedefleri | A-7 #2: A'da bağımsızlıkla, B ve C'de gerekli, D'de aranmaz. Sonuç kaydı ayrıca A-6 hedeflerinin çıktısıdır; A-6 #1, #2 ve #5 D dâhil her seviyede gerekli |
 | Gözden geçirilen veri | Kredi koşusunun sonuç kayıtları: koşu kaydı, test günlükleri ve ham çıktılar, geçti/kaldı özeti, fark açıklamaları |
-| Başvuru verisi | Gözden geçirilmiş test durumları ve prosedürleri (Software Verification Cases and Procedures, SVCP) ve beklenen sonuçları; yazılım konfigürasyon indeksindeki (Software Configuration Index, SCI) yazılım kimliği; yazılım yaşam döngüsü ortam konfigürasyon indeksindeki (Software Life Cycle Environment Configuration Index, SECI) test ortamı; prosedür–sonuç iz verisi (trace data); problem raporları; yazılım doğrulama planındaki (Software Verification Plan, SVP) kredi koşusu ve yeniden koşu kuralları |
-| Kaydın gideceği yer | Gözden geçirme kaydı → SVR; bulgular → gözden geçirme kaydı ya da, sonuç verisi temel çizgideyse, problem raporu; kredi koşusundaki her kaldı sonucu → problem raporu |
+| Başvuru verisi | Gözden geçirilmiş doğrulama durumları ve prosedürleri (Software Verification Cases and Procedures, SVCP) ve beklenen sonuçları; yazılım konfigürasyon indeksindeki (Software Configuration Index, SCI) yazılım kimliği; yazılım yaşam döngüsü ortam konfigürasyon indeksindeki (Software Life Cycle Environment Configuration Index, SECI) test ortamı; prosedür–sonuç iz verisi (trace data); problem raporları; yazılım doğrulama planındaki (Software Verification Plan, SVP) kredi koşusu ve yeniden koşu kuralları |
+| Kaydın gideceği yer | Gözden geçirme kaydı → SVR; bulgular → gözden geçirme kaydı ya da, sonuç verisi baseline'daysa, problem raporu; kredi koşusundaki her kaldı sonucu → problem raporu |
 | İlgili şablon | [SVP](../05-sablonlar/03-svp.mdx): kredi koşusu, sonuç kaydının alanları, yeniden doğrulama; [yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP)](../05-sablonlar/04-scmp.mdx): bulgu ile problem raporu sınırı |
 | Madde öneki | `TSN` |
 
@@ -44,9 +44,8 @@ bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasınd
 
 - [ ] Gözden geçirilecek koşu, bir koşu kimliğiyle ve kapsadığı prosedür listesiyle
       tanımlanmıştır.
-- [ ] Koşulan yazılım sürümü, test durumları ve prosedürleri ile test ortamı tanımı temel
-      çizgidedir; sürümleri gözden geçirene yazılı olarak verilmiştir.
-- [ ] Test durumlarının ve prosedürlerinin gözden geçirmesi kapanmıştır; açık bulgusu olan
+- [ ] Koşulan yazılım sürümü, test case'ler ve prosedürleri ile test ortamı tanımı baseline'dadır; sürümleri gözden geçirene yazılı olarak verilmiştir.
+- [ ] Test case'lerin ve prosedürlerinin gözden geçirmesi kapanmıştır; açık bulgusu olan
       prosedürün sonucu bu oturumda değerlendirilmez.
 - [ ] Ham çıktılar (test günlükleri, veri yolu kayıtları, araç raporları) gözden geçirenin
       erişimindedir; yalnızca özet tablo verilmemiştir.
@@ -64,21 +63,20 @@ Her madde evet/hayır sorusudur ve sondaki parantez maddenin seviyesini ve dayan
 ### Koşunun kimliği
 
 - [ ] **TSN-01** Sonuç kaydı, koşulan çalıştırılabilir nesne kodunu sürümüyle ya da parça
-      numarası (part number) ve sağlama toplamıyla (checksum) tanımlıyor mu; bu kimlik temel
-      çizgideki derlemeyle aynı mı? *(A–D · §11.14.b)*
+      numarası (part number) ve checksum ile tanımlıyor mu; bu kimlik baseline'daki build'le aynı mı? *(A–D · §11.14.b)*
 - [ ] **TSN-02** Yazılım parametre verisi öğesi (parameter data item, PDI) kullanıyorsa, sonuç
       kaydı koşuda hedefe yüklü PDI dosyalarını kimliği ve sürümüyle tanımlıyor mu? Örneğin
-      aynı imajla farklı bir parametre dosyası yüklenerek koşulan test, temel çizgideki
+      aynı imajla farklı bir parametre dosyası yüklenerek koşulan test, baseline'daki
       yapılandırmanın kanıtı sayılmaz. *(A–D · §11.14.b)*
-- [ ] **TSN-03** Her sonuç, onu üreten test prosedürünün ve ilgili test durumunun sürümünü
-      taşıyor mu; bu sürümler temel çizgideki SVCP'dekilerle aynı mı? *(A–D · §6.5.c)*
+- [ ] **TSN-03** Her sonuç, onu üreten test prosedürünün ve ilgili test case'in sürümünü
+      taşıyor mu; bu sürümler baseline'daki SVCP'dekilerle aynı mı? *(A–D · §6.5.c)*
 - [ ] **TSN-04** Sonuç kaydı test ortamını (düzenek kimliği, hedef donanımın parça numarası ve
       revizyonu, simülatör ve test araçlarının sürümleri) tanımlıyor mu; bu tanım SECI'deki
       kayıtla aynı mı? *(A–D · A-8 #6)*
 - [ ] **TSN-05** Her test, SVP'nin ona atadığı ortamda mı koşulmuş? Örneğin hedef bilgisayarla
       uyumluluk için kredi alınan entegrasyon testlerinin sonuçları emülatörden değil, hedef
       donanımdan mı geliyor? *(A–D · A-6 #5)*
-- [ ] **TSN-06** Koşunun tarihi, koşan kişi ve otomatik koşularda koşuyu başlatan betiğin
+- [ ] **TSN-06** Koşunun tarihi, koşan kişi ve otomatik koşularda koşuyu başlatan script'in
       sürümü kayıtlı mı? *(A–D · iyi uygulama)*
 
 ### Sonuçların eksiksizliği
@@ -89,7 +87,7 @@ Her madde evet/hayır sorusudur ve sondaki parantez maddenin seviyesini ve dayan
 - [ ] **TSN-08** Koşulmayan ya da yarıda kesilen her prosedür için gerekçe ve tamamlanacağı
       koşu kayıtlı mı? *(A–D · §6.5.c)*
 - [ ] **TSN-09** Her prosedürün nihai bir geçti/kaldı kararı var mı ve bu karar prosedürdeki
-      tüm test durumlarının tek tek sonucundan mı çıkıyor? *(A–D · §11.14.a)*
+      tüm test case'lerin tek tek sonucundan mı çıkıyor? *(A–D · §11.14.a)*
 - [ ] **TSN-10** Özet tablodaki her karar ham kanıta (test günlüğü, ölçülen değer, veri yolu
       kaydı) geri izlenebiliyor mu? *(A–C · §6.4.5.c)*
 - [ ] **TSN-11** Sonuç seti birden çok koşudan birleştirildiyse koşuların hepsi aynı yazılım
@@ -98,52 +96,52 @@ Her madde evet/hayır sorusudur ve sondaki parantez maddenin seviyesini ve dayan
 
 ### Geçti/kaldı kararının doğruluğu
 
-- [ ] **TSN-12** Karşılaştırmada kullanılan beklenen sonuç, gözden geçirilmiş test durumundaki
-      değerle aynı mı? Örneğin betiğin okuduğu beklenen sonuç dosyası SVCP'deki sürümden mi
+- [ ] **TSN-12** Karşılaştırmada kullanılan beklenen sonuç, gözden geçirilmiş test case'teki
+      değerle aynı mı? Örneğin script'in okuduğu beklenen sonuç dosyası SVCP'deki sürümden mi
       geliyor? *(A–C · §6.4.5.c)*
 - [ ] **TSN-13** Toleranslı karşılaştırmalarda (kayan nokta, süre, analog değer) uygulanan
-      tolerans, gözden geçirilmiş test durumundaki toleransla aynı mı? *(A–C · §6.4.5.c)*
-- [ ] **TSN-14** Zaman ilişkili sonuçlarda ölçüm çözünürlüğü ve belirsizliği, ölçülen değer
+      tolerans, gözden geçirilmiş test case'teki toleransla aynı mı? *(A–C · §6.4.5.c)*
+- [ ] **TSN-14** Zamanla ilgili sonuçlarda ölçüm çözünürlüğü ve belirsizliği, ölçülen değer
       ile sınır arasındaki paydan küçük mü? Örneğin 5 ms'lik bir tepki süresi sınırı, 10 ms
       aralıklı zaman damgalarıyla doğrulanmış sayılmaz. *(A–C · §6.4.5.c)*
 - [ ] **TSN-15** Geçti kararı, gözlem kanalının koşu boyunca çalıştığını da gösteriyor mu?
       Örneğin "çıkış değişmez" beklentisinde veri yolu kaydı koşu süresince güncel veri
       içeriyor mu? *(A–C · iyi uygulama)*
-- [ ] **TSN-16** Geçti/kaldı kararını bir betik ya da araç veriyorsa sürümü kayıtlı mı ve elle
+- [ ] **TSN-16** Geçti/kaldı kararını bir script ya da araç veriyorsa sürümü kayıtlı mı ve elle
       karşılaştırılan örnek sonuçlar onun kararıyla aynı mı? *(A–C · §6.4.5.c)*
 - [ ] **TSN-17** Elle değiştirilen her geçti/kaldı kararının gerekçesi, değiştiren kişi ve
       tarihi kayıtlı mı? *(A–C · §6.4.5.c)*
 
 ### Farklar ve başarısızlıklar
 
-- [ ] **TSN-18** Kaldı sonuçlanan her test durumunda gözlenen ve beklenen değer yan yana yazılı
+- [ ] **TSN-18** Kaldı sonuçlanan her test case'te gözlenen ve beklenen değer yan yana yazılı
       ve aradaki fark açıklanmış mı? *(A–C · §6.4.5.c)*
 - [ ] **TSN-19** Geçti sonuçlanan testlerde gözlenen beklenmeyen davranışlar da fark olarak
-      kayda geçmiş mi? Örneğin beklenmeyen yeniden başlama, bekçi köpeği zamanlayıcısının
-      (watchdog timer) tetiklenmesi, hata günlüğüne düşen kayıt ya da beklenmeyen veri yolu
+      kayda geçmiş mi? Örneğin beklenmeyen yeniden başlama, watchdog timer'ının
+      tetiklenmesi, hata günlüğüne düşen kayıt ya da beklenmeyen veri yolu
       mesajı. *(A–D · §11.14)*
-- [ ] **TSN-20** Her açıklama farkın kaynağını (kod, gereksinim, test durumu ya da prosedür,
+- [ ] **TSN-20** Her açıklama farkın kaynağını (kod, gereksinim, test case ya da prosedür,
       test ortamı) adlandırıyor mu; "ortam kaynaklı" denen fark bir kanıtla (düzenek arıza
       kaydı, aynı sürümle tekrar koşu) destekleniyor mu? *(A–C · §6.4.5.c)*
 - [ ] **TSN-21** Kredi koşusundaki her kaldı sonucu ve açıklanan her fark bir problem raporuna
       bağlı mı; rapor numarası sonuç kaydında yazılı mı? *(A–D · §11.14)*
 - [ ] **TSN-22** Bir başarısızlık test değiştirilerek kapatıldıysa (beklenen sonuç, tolerans ya
-      da prosedür düzeltildiyse) değişiklik gereksinime dayanıyor ve test durumu yeniden
+      da prosedür düzeltildiyse) değişiklik gereksinime dayanıyor ve test case yeniden
       gözden geçirilmiş mi? Örneğin yeni beklenen sonucun kaynağı kodun gözlenen çıktısı
       değil, gereksinim mi? *(A–C · §6.4.5.c)*
 - [ ] **TSN-23** Düzeltmeden sonraki yeniden koşu düzeltilmiş sürümle yapılmış mı ve yinelenen
       testlerin seçimi (başarısız test ve etkilenenler) değişiklik etki analizine dayanıyor
       mu? *(A–D · §7.2.4.d)*
-- [ ] **TSN-24** Aynı test durumu birden çok kez koşulduysa kredi için hangi koşunun sayıldığı
+- [ ] **TSN-24** Aynı test case birden çok kez koşulduysa kredi için hangi koşunun sayıldığı
       kayıtlı ve öteki koşuların sonuçları açıklanmış mı? Örneğin üç koşudan yalnız geçeni
       sayıldıysa diğer ikisinin başarısızlığı bir problem raporunda mı? *(A–C · §6.4.5.c)*
 
-### Kuru koşu ve kredi koşusu
+### Dry run ve kredi koşusu
 
-- [ ] **TSN-25** Sonuç kaydı kredi koşusu olarak açıkça işaretli mi ve kredi seti kuru koşu
-      (dry run) sonucu içermiyor mu? *(A–D · iyi uygulama)*
+- [ ] **TSN-25** Sonuç kaydı kredi koşusu olarak açıkça işaretli mi ve kredi seti dry run
+      sonucu içermiyor mu? *(A–D · iyi uygulama)*
 - [ ] **TSN-26** Sonuç kaydı, koşunun giriş koşullarını karşıladığını gösteren kayıtlara atıf
-      yapıyor mu? Örneğin yazılımın temel çizgi kimliği ve prosedür gözden geçirme kaydı
+      yapıyor mu? Örneğin yazılımın baseline kimliği ve prosedür gözden geçirme kaydı
       anılmış ve ikisinin tarihi de koşu tarihinden önce mi? *(A–C · A-9 #4)*
 
 Geçiş kriterinin süreç olarak denetimi
@@ -153,9 +151,7 @@ Geçiş kriterinin süreç olarak denetimi
 
 - [ ] **TSN-27** Sonuç kayıtları ve ham çıktılar konfigürasyon yönetimi (configuration
       management) altında, benzersiz kimlik ve sürümle saklanıyor mu? *(A–D · A-8 #1)*
-- [ ] **TSN-28** Ham çıktılar sonradan değiştirilemeyecek biçimde (salt okunur arşiv, sağlama
-      toplamı) korunuyor mu? Örneğin özet tablonun dayandığı günlük dosyalarının sağlama
-      toplamı arşivdekilerle aynı mı? *(A–D · A-8 #4)*
+- [ ] **TSN-28** Ham çıktılar sonradan değiştirilemeyecek biçimde (salt okunur arşiv, checksum) korunuyor mu? Örneğin özet tablonun dayandığı günlük dosyalarının checksum'ı arşivdekilerle aynı mı? *(A–D · A-8 #4)*
 
 ### Kalite güvencesi tanıklığı
 
@@ -169,15 +165,15 @@ Geçiş kriterinin süreç olarak denetimi
 
 | Madde | Araç türü | Gözden geçirene kalan |
 |---|---|---|
-| TSN-01, TSN-02, TSN-04 | Koşu başında imajın ve yüklü PDI dosyalarının sağlama toplamını ve düzenek kimliğini kaydeden test çerçevesi; bunları SCI ve SECI ile karşılaştıran betik | Karşılaştırmanın doğru temel çizgiye yapıldığı; okunan kimliğin gerçekten hedefe yüklenmiş imajdan geldiği |
+| TSN-01, TSN-02, TSN-04 | Koşu başında imajın ve yüklü PDI dosyalarının checksum'ını ve düzenek kimliğini kaydeden test çerçevesi; bunları SCI ve SECI ile karşılaştıran script | Karşılaştırmanın doğru baseline'a yapıldığı; okunan kimliğin gerçekten hedefe yüklenmiş imajdan geldiği |
 | TSN-07, TSN-08 | Test yönetim aracı ya da iz aracı sorgusu: sonucu olmayan prosedür, prosedürü olmayan sonuç | Koşulmayan prosedürlerin gerekçesinin yeterliliği |
-| TSN-12, TSN-13 | Koşuda okunan beklenen sonuç ve tolerans dosyalarının sağlama toplamını SVCP temel çizgisindeki dosyalarla karşılaştıran betik | Prosedüre gömülü, dosyadan okunmayan beklenen değer ve toleranslar; karşılaştırmanın doğru yapıldığının örnek sonuçlarla elle denetlenmesi (TSN-16) |
-| TSN-21 | Sonuç veritabanı ile problem raporlama aracı arasında çapraz sorgu: raporu olmayan kaldı sonucu | Farkın açıklamasının ve kaynağının doğruluğu (TSN-18, TSN-20) |
-| TSN-27, TSN-28 | Konfigürasyon yönetim aracı: sürüm geçmişi, değişiklik kaydı, sağlama toplamı | Ham çıktının özetle tutarlılığı (TSN-10) |
+| TSN-12, TSN-13 | Koşuda okunan beklenen sonuç ve tolerans dosyalarının checksum'ını SVCP baseline'ındaki dosyalarla karşılaştıran script | Prosedüre gömülü, dosyadan okunmayan beklenen değer ve toleranslar; karşılaştırmanın doğru yapıldığının örnek sonuçlarla elle denetlenmesi (TSN-16) |
+| TSN-21 | Sonuç veri tabanı ile problem raporlama aracı arasında çapraz sorgu: raporu olmayan kaldı sonucu | Farkın açıklamasının ve kaynağının doğruluğu (TSN-18, TSN-20) |
+| TSN-27, TSN-28 | Konfigürasyon yönetim aracı: sürüm geçmişi, değişiklik kaydı, checksum | Ham çıktının özetle tutarlılığı (TSN-10) |
 
 Bir maddeye araç çıktısına güvenilerek bakılmıyorsa, özellikle geçti/kaldı kararını yalnız bir
-betik veriyorsa, aracın çıktısı bir doğrulama adımının yerine geçer ve araç kalifikasyonu (tool
-qualification) sorusu doğar. Sonuç karşılaştıran betikler SVP şablonunda da tipik araç
+script veriyorsa, aracın çıktısı bir doğrulama adımının yerine geçer ve araç kalifikasyonu (tool
+qualification) sorusu doğar. Sonuç karşılaştıran script'ler SVP şablonunda da tipik araç
 kalifikasyon seviyesi (tool qualification level, TQL) TQL-5 adayı olarak anılır. Karar SVP'de
 verilir; ölçütleri
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
@@ -187,21 +183,21 @@ bölümündedir.
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| Sonuç kaydında yazılım kimliği olarak yalnız dal adı ya da "son derleme" yazıyor | Kimliğin elle yazılması; test çerçevesinin imajın sağlama toplamını kaydetmemesi | TSN-01 |
+| Sonuç kaydında yazılım kimliği olarak yalnız branch adı ya da "son build" yazıyor | Kimliğin elle yazılması; test çerçevesinin imajın checksum'ını kaydetmemesi | TSN-01 |
 | Özet "tümü geçti" diyor, ama SVCP'deki bazı prosedürlerin sonucu yok | Koşu listesinin iz verisinden değil, elle derlenmesi | TSN-07 |
-| Betik eski beklenen sonuç dosyasını okumuş; karar SVCP'deki değerle verilmemiş | Beklenen sonuç dosyasının prosedürden ayrı sürümlenmesi | TSN-12 |
-| Tolerans koşudan sonra genişletilmiş, test durumu güncellenmemiş | Kaldı sonucunun "ölçüm gürültüsü" sayılıp çabucak kapatılması | TSN-13, TSN-22 |
+| Script eski beklenen sonuç dosyasını okumuş; karar SVCP'deki değerle verilmemiş | Beklenen sonuç dosyasının prosedürden ayrı sürümlenmesi | TSN-12 |
+| Tolerans koşudan sonra genişletilmiş, test case güncellenmemiş | Kaldı sonucunun "ölçüm gürültüsü" sayılıp çabucak kapatılması | TSN-13, TSN-22 |
 | Başarısızlık "ortam sorunu" diye kapatılmış, kanıt yok | Açıklamanın tek kişiye bırakılması; düzenek arızalarının kaydedilmemesi | TSN-20 |
 | Aynı test birkaç kez koşulmuş, kayıtta yalnız geçen koşu var | Süreye ya da koşu sırasına bağlı kararsız test; başarısızlığın problem raporuna dönüşmemesi | TSN-24, TSN-21 |
 | Hedef donanımda koşması gereken test emülatörde koşulmuş | Düzeneğin yetişmemesi; ortam atamasının sonuçta denetlenmemesi | TSN-05 |
-| Kuru koşu sonuçları kredi setine girmiş | İki koşu türü için aynı sonuç klasörünün kullanılması | TSN-25 |
+| Dry run sonuçları kredi setine girmiş | İki koşu türü için aynı sonuç klasörünün kullanılması | TSN-25 |
 
 ### İyi yazılmış bulgu
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
 | "Sonuçlar eksik." | "TSN-07: KR-14 koşusunun özeti, SVCP'deki HSIT-NAV-041, -042 ve -057 prosedürlerinin sonucunu içermiyor; koşu listesinde de yoklar. Beklenen: üçü koşulmalı ya da koşulmama gerekçesi ve tamamlanacağı koşu kayda yazılmalı." |
-| "Tolerans uygun değil." | "TSN-13: HSIT-ADC-112 sonucunda irtifa ±5 ft ile karşılaştırılmış; test durumu ±2 ft tanımlıyor ve değişiklik kaydı yok. Beklenen: karar test durumundaki toleransla yeniden verilmeli; tolerans değişecekse gereksinime dayanan bir test durumu değişikliğiyle." |
+| "Tolerans uygun değil." | "TSN-13: HSIT-ADC-112 sonucunda irtifa ±5 ft ile karşılaştırılmış; test case ±2 ft tanımlıyor ve değişiklik kaydı yok. Beklenen: karar test case'teki toleransla yeniden verilmeli; tolerans değişecekse gereksinime dayanan bir test case değişikliğiyle." |
 | "Başarısız test açıklanmamış." | "TSN-18: LLT-FMS-208 kaldı; gözlenen durum kelimesi 0x0003, beklenen 0x0007. Açıklama sütunu boş, problem raporu numarası da yok (TSN-21). Beklenen: farkın kaynağı yazılmalı, rapor açılıp sonuca bağlanmalı." |
 
 ## Seviyeye göre uyarlama
@@ -243,7 +239,7 @@ yazıldıysa bağlayıcıdır.
   [SQAP](../05-sablonlar/05-sqap.mdx)
 - Otorite denetimine hazırlık: [SW SOI-3](../../07-soi-denetimleri/soi-3.mdx), [SW SOI-4](../../07-soi-denetimleri/soi-4.mdx)
 - Komşu listeler:
-  [test durumu ve prosedürü](07-test-durumlari-ve-prosedurleri.mdx),
+  [test case ve prosedürü](07-test-durumlari-ve-prosedurleri.mdx),
   [kapsam analizi](09-kapsam-analizleri.mdx),
   [konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx),
   [problem raporu](11-problem-raporu-ve-degisiklik.mdx),

@@ -103,7 +103,7 @@ involvement) risk temelli belirlenir: yazılım seviyesi, kullanılan teknolojin
 yöntemin yeniliği, tasarımın karmaşıklığı, başvuru sahibinin deneyimi ve geçmiş
 performansı. Seviye A yazılımı ilk kez geliştiren bir kuruluş her denetimde otorite
 uzmanını karşısında bulur; olgun bir kuruluşun türev projesinde otorite işin büyük
-kısmını yetkili temsilciye bırakıp yalnızca PSAC ile SAS'ı kendisi inceleyebilir. Hangi
+kısmını yetkili temsilciye bırakıp yalnızca PSAC ile SAS'ı kendisi gözden geçirebilir. Hangi
 durumun geçerli olduğu tahmin edilmez; proje başında otoriteye sorulur ve otoritenin
 katılacağı noktalar PSAC'a yazılır.
 
@@ -113,7 +113,7 @@ katılacağı noktalar PSAC'a yazılır.
 |---|---|---|
 | Tanışma ve planlama toplantıları | Proje başında, PSAC gönderilmeden önce | Sistem, yazılım seviyesi, yenilikler ve takvim üzerine ilk ortak anlayış |
 | PSAC | Geliştirme verisinin üretimi hızlanmadan | Uyum yöntemi, yaşam döngüsü, ek hususlar ve otoritenin katılım noktaları üzerine mutabakat |
-| Konuya özel yazılı mutabakat belgesi | Genel rehberin doğrudan cevaplamadığı bir konu çıktığında | Otoritenin beklentisi ile başvuru sahibinin önerisinin aynı belgede kayda geçmesi: FAA'da "issue paper", EASA'da sertifikasyon gözden geçirme maddesi (Certification Review Item, CRI) |
+| Konuya özel yazılı mutabakat belgesi | Genel rehberin doğrudan cevaplamadığı bir konu çıktığında | Otoritenin beklentisi ile başvuru sahibinin önerisinin aynı belgede kayda geçmesi: FAA'da issue paper, EASA'da sertifikasyon gözden geçirme maddesi (Certification Review Item, CRI) |
 | SOI denetimleri | Yaşam döngüsünün tipik olarak dört durağında | Sürecin planlara göre işlediğinin örneklemeyle görülmesi |
 | SCI ve SAS | Sertifikasyona esas sürüm belirlendiğinde | Uyum kanıtının sunulması |
 
@@ -151,7 +151,7 @@ kolaylaşır.
 |---|---|
 | Sistem ve yazılıma genel bakış | Bu yazılım ne yapar, hangi sistemin parçasıdır? |
 | Sertifikasyon hususları | Hangi yazılım seviyesi atandı, sistem emniyet değerlendirme süreciyle uyumlu mu; uyum hangi belgelere göre gösterildi? |
-| Ek hususlar (additional considerations) | Hangi özel durumlar (araç kalifikasyonu, önceden geliştirilmiş yazılım (previously developed software, PDS), alternatif yöntemler) kullanıldı? |
+| Ek hususlar (additional considerations) | Hangi özel durumlar (araç kalifikasyonu, önceden geliştirilmiş yazılım (previously developed software, PDS), alternatif yöntemler) söz konusu oldu? |
 | Yaşam döngüsü özeti | Süreçler planlandığı gibi mi yürüdü? |
 | Planlardan sapmalar | Nerede, neden ve hangi onayla plandan ayrılındı? |
 | Yaşam döngüsü verisi | Hangi veri üretildi; geçerli SCI ve SECI hangi kimlik ve sürümde; otorite bu veriye nasıl erişir? |
@@ -169,11 +169,11 @@ yerde geçmeyen sapmalar uyum beyanında ele alınır. Sapmaları ayrıca tek bi
 toplamak, okuyanın işini kolaylaştıran yaygın bir uygulamadır.
 
 Yazılım karakteristikleri, otoritenin SAS'ta özellikle aradığı bilgidir: en kötü durum
-yürütme süresi (worst-case execution time, WCET) dahil zamanlama payları, bellek ve
-yığın payları ve kaynak sınırlamaları, ölçüm ya da analiz yöntemiyle birlikte verilir.
+yürütme süresi (worst-case execution time, WCET) dâhil zamanlama payları, bellek ve
+stack payları ve kaynak sınırlamaları, ölçüm ya da analiz yöntemiyle birlikte verilir.
 Bu sayılar [9. Yazılım Doğrulama](09-yazilim-dogrulama.mdx) bölümünde anlatılan
 analizlerin sertifikasyona esas sürüm için güncellenmiş sonuçlarıdır; aylar önceki bir
-derlemenin payını SAS'a taşımak sık görülen bir hatadır.
+build'in payını SAS'a taşımak sık görülen bir hatadır.
 
 SAS'ın yayımlanması tek başına bir yazı işi değildir. Kalite güvencesi, sertifikasyona
 sunulan sürüm için yazılım uygunluk gözden geçirmesini (software conformity review)
@@ -191,7 +191,7 @@ Deneyimden birkaç öneri:
   Denetimde ortaya çıkan gizli sapma, belgede açıkça yazılmış on sapmadan daha çok
   güven kaybettirir.
 - **Açık problem raporlarını tek tek değerlendirin.** Her açık rapor, planlarda tanımlı
-  şemaya göre tek bir sınıfa atanır; FAA AC 20-189 ve EASA AMC 20-189 bu şemanın en az
+  şemaya göre tek bir sınıfa atanır; FAA AC 20-189 ve EASA AMC 20-189 bu şemanın en azından
   önemli (significant), işlevsel (functional), süreç (process) ve yaşam döngüsü verisi
   (life-cycle data) sınıflarını içermesini bekler. Sınıfın yanında etkilenen işlev,
   getirdiği kısıt ve neden bu hâliyle kabul edilebilir olduğu yazılır. Etki
@@ -199,8 +199,8 @@ Deneyimden birkaç öneri:
   emniyet ekibiyle birlikte yapılır. Sınıfların tanımı ve değerlendirme soruları
   [9. Yazılım Doğrulama](09-yazilim-dogrulama.mdx) bölümündedir. "Önemsiz olduğu için açık
   bırakıldı" gibi genel bir cümle, otoritenin ek soru sormasını garanti eder.
-- **Konfigürasyon tanımlamasını derleme (build) kanıtına bağlayın.** SAS'ta beyan
-  edilen sürüm, SCI'de ve gerçek derleme çıktısında birebir aynı olmalıdır; buradaki
+- **Konfigürasyon tanımlamasını build kanıtına bağlayın.** SAS'ta beyan
+  edilen sürüm, SCI'de ve gerçek build çıktısında birebir aynı olmalıdır; buradaki
   bir yazım hatası bile son denetimde zaman kaybettirir. SCI'nin içeriği
   [10. Yazılım Konfigürasyon Yönetimi](10-yazilim-konfigurasyon-yonetimi.mdx) bölümünde
   anlatılır.
@@ -227,7 +227,7 @@ temsilciye bırakılabilir; büyük projelerde bir aşama birden çok oturuma da
 
 SOI denetimlerinin mantığı basittir: otorite, kanıtın tamamını proje sonunda tek
 seferde görmek yerine, yaşam döngüsünün doğal duraklarında örnekleme yaparak
-inceler. Böylece sistematik bir sorun varsa erken yakalanır; proje sonunda "her şeyi
+gözden geçirir. Böylece sistematik bir sorun varsa erken yakalanır; proje sonunda "her şeyi
 yeniden yap" riskine girilmez. Her aşamanın kabaca giriş kriteri ve odağı şöyle
 özetlenebilir:
 
@@ -286,7 +286,7 @@ Hazırlık için sahada işe yarayan birkaç öneri:
   daha ilk saatte güven sorununa dönüşür. SOI-4'te ise önceki bulguların hepsinin
   kapanmış olması beklenir.
 - **Denetim kayıtlarını konfigürasyon yönetimi altına alın.** Sorulan sorular,
-  verilen yanıtlar ve taahhütler; sonraki aşamalarda "bunu konuşmuştuk" diyebilmenin
+  verilen yanıtlar ve taahhütler, sonraki aşamalarda "bunu konuşmuştuk" diyebilmenin
   tek dayanağıdır.
 
 ## Sertifikasyon uçuş testlerinden önce yazılım olgunluğu
@@ -321,7 +321,7 @@ Sertifikasyon uçuşuna aday bir yazılım sürümünden pratikte beklenenler ş
   Uçaktaki çalıştırılabilir nesne kodunun hangi kaynak koddan, hangi araç zinciriyle
   üretildiği kesin olarak izlenebilmelidir.
 - **Yükleme ve uygunluk kontrolü yapılmış olmalıdır.** Uçaktaki birimde gerçekten
-  beyan edilen sürümün yüklü olduğu (parça numarası, sağlama toplamı) uçuş öncesi
+  beyan edilen sürümün yüklü olduğu (parça numarası, checksum) uçuş öncesi
   doğrulanır; buna uygunluk denetimi (conformity inspection) eşlik eder. Bu denetim
   uçaktaki fiziksel konfigürasyonun beyan edilenle aynı olduğuna bakar; kalite
   güvencesinin yazılım uygunluk gözden geçirmesiyle karıştırılmamalıdır. Yüklemenin

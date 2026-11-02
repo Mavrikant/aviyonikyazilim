@@ -18,7 +18,7 @@ Tablo A-9'un ilk dört hedefine (objective) karşılık gelir.
 Liste tek bir sürece bağlı değildir: sorular aynı kalır, denetlenen sürece göre ölçüt alınan
 plan bölümü ve örnekleme (sampling) için seçilen kayıtlar değişir. Kalite güvencesi doğrulamayı
 tekrarlamaz; bir tasarım verisinin teknik doğruluğunu değil, gözden geçirmesinin (review)
-planda yazıldığı gibi yapıldığını ve kanıtın bütün olduğunu sınar. Planların içeriğini
+planda yazıldığı gibi yapıldığını ve kanıtın eksiksiz olduğunu sınar. Planların içeriğini
 [Planlar ve Standartlar](01-planlar-ve-standartlar.mdx) listesi gözden geçirir, bu liste o
 gözden geçirmenin yapıldığına dair güvenceyi arar. Problem raporlarının (problem report) tek
 tek ele alınışı [Problem Raporu](11-problem-raporu-ve-degisiklik.mdx), teslim öncesi yazılım
@@ -34,8 +34,8 @@ bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasınd
 |---|---|
 | DO-178C maddesi | §8.1.a–c; §8.2.a–f, h ve i; kayıtlar §11.19. Uygunluk gözden geçirmesi (§8.1.d, §8.2.g, §8.3) [Uygunluk Gözden Geçirmesi](13-uygunluk-gozden-gecirmesi.mdx) listesindedir |
 | Ek A hedefleri | A-9 #1: A, B ve C'de bağımsızlıkla. A-9 #2: A, B, C ve D'de bağımsızlıkla. A-9 #3: A, B ve C'de bağımsızlıkla. A-9 #4: A, B ve C'de bağımsızlıkla |
-| Gözden geçirilen veri | Denetlenen sürecin kayıtları: gözden geçirme ve analiz kayıtları, temel çizgi (baseline) ve değişiklik kayıtları, problem raporları, sapma kayıtları, tedarikçi kayıtları |
-| Başvuru verisi | Temel çizgideki sürümleriyle onaylı planlar: yazılım sertifikasyon planı (Plan for Software Aspects of Certification, PSAC), yazılım geliştirme planı (Software Development Plan, SDP), yazılım doğrulama planı (Software Verification Plan, SVP), yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP), yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP); standartlar; planlardaki geçiş kriterleri; yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI); önceki denetimlerin açık uygunsuzlukları |
+| Gözden geçirilen veri | Denetlenen sürecin kayıtları: gözden geçirme ve analiz kayıtları, baseline ve değişiklik kayıtları, problem raporları, sapma kayıtları, tedarikçi kayıtları |
+| Başvuru verisi | Baseline'daki sürümleriyle onaylı planlar: yazılım sertifikasyon planı (Plan for Software Aspects of Certification, PSAC), yazılım geliştirme planı (Software Development Plan, SDP), yazılım doğrulama planı (Software Verification Plan, SVP), yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP), yazılım kalite güvencesi planı (Software Quality Assurance Plan, SQAP); standartlar; planlardaki geçiş kriterleri; yazılım yaşam döngüsü ortam konfigürasyon indeksi (Software Life Cycle Environment Configuration Index, SECI); önceki denetimlerin açık uygunsuzlukları |
 | Kaydın gideceği yer | Denetim kaydı → kalite güvencesi kayıtları (§11.19; CC2); bulgular → uygunsuzluk kaydı ya da SCMP'deki sınıra göre problem raporu |
 | İlgili şablon | [SQAP Şablonu](../05-sablonlar/05-sqap.mdx); uygunsuzluk ve problem raporu akışı için [SCMP Şablonu](../05-sablonlar/04-scmp.mdx) |
 | Madde öneki | `KGD` |
@@ -43,7 +43,7 @@ bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasınd
 ## Gözden geçirmeye giriş koşulları
 
 - [ ] Denetlenecek süreç ya da geçiş, ölçüt alınan plan ve standart bölümleri sürümleriyle
-      ve denetlenen dönem ya da temel çizgi denetim kaydına yazılmıştır.
+      ve denetlenen dönem ya da baseline denetim kaydına yazılmıştır.
 - [ ] Örneklemin büyüklüğü ve seçim ölçütü SQAP'tan alınmış, seçilen öğeler ve gerekçesi
       kayda geçirilmiştir.
 - [ ] Önceki denetimlerin açık uygunsuzlukları ve bu süreçteki onaylı sapmalar listelenmiştir.
@@ -56,14 +56,14 @@ Denetlenen sürece göre ölçüt ve örneklem şöyle seçilebilir:
 | Denetlenen süreç | Ölçüt alınan plan | Örneklenecek kayıtlar |
 |---|---|---|
 | Planlama | PSAC ve SQAP'taki plan gözden geçirme yöntemi | Plan ve standartların gözden geçirme kayıtları, uyum matrisi |
-| Gereksinim, tasarım, kodlama | SDP, ilgili standart, SVP'deki gözden geçirme yöntemi | Gözden geçirme kayıtları ve kullanılan kontrol listeleri, iz verisi (trace data), temel çizgi kayıtları |
-| Entegrasyon | SDP'deki derleme ve yükleme tarifi, SECI | Derleme kayıtları, ortam envanteri |
+| Gereksinim, tasarım, kodlama | SDP, ilgili standart, SVP'deki gözden geçirme yöntemi | Gözden geçirme kayıtları ve kullanılan kontrol listeleri, iz verisi (trace data), baseline kayıtları |
+| Entegrasyon | SDP'deki build ve yükleme tarifi, SECI | Build kayıtları, ortam envanteri |
 | Doğrulama | SVP | Test ve analiz gözden geçirme kayıtları, kredi amaçlı koşu kayıtları, tanıklık (witnessing) kayıtları |
-| Konfigürasyon yönetimi | SCMP | Temel çizgi ve değişiklik kayıtları, problem raporları, arşiv kayıtları |
+| Konfigürasyon yönetimi | SCMP | Baseline ve değişiklik kayıtları, problem raporları, arşiv kayıtları |
 | Tedarikçi | Sözleşme, SQAP'taki gözetim bölümü, tedarikçinin planları | Tedarikçinin gözden geçirme ve kalite güvencesi kayıtları, teslimat kayıtları |
 
 :::note[Örneklem doğrulamanın yerine geçmez]
-Doğrulama hedefleri, standarda uyum dahil, doğrulama sürecinde eksiksiz karşılanır.
+Doğrulama hedefleri, standarda uyum dâhil, doğrulama sürecinde eksiksiz karşılanır.
 Kalite güvencesinin örneklemi bunun planlandığı gibi yapıldığını gösterir; eksik kalan
 doğrulamayı tamamlamaz (DO-248C, FAQ #75). Örneklemde bir eksik çıkarsa denetçi kapsamı
 genişletir, çünkü birkaç kayıttan birinde görülen eksik çoğu zaman sürecin bir açığıdır.
@@ -83,15 +83,15 @@ Her madde evet/hayır sorusudur: "Evet" planlara ve standartlara uygun durumu g�
       *(A–C · §8.2.b)*
 - [ ] **KGD-02** Dönem içinde değişen bir plan ya da standart, ekip yeni sürümü kullanmaya
       başlamadan önce etkilediği öteki planlarla birlikte yeniden gözden geçirilmiş ve
-      temel çizgiye alınmış mı? *(A–C · A-9 #1)*
+      baseline'a alınmış mı? *(A–C · A-9 #1)*
 
 ### Planlara uyum
 
-- [ ] **KGD-03** Ekip, denetlenen süreçte planların temel çizgideki güncel sürümüyle mi
+- [ ] **KGD-03** Ekip, denetlenen süreçte planların baseline'daki güncel sürümüyle mi
       çalışıyor? Örneğin ekip alanındaki bir kopya ya da yazdırılmış bir sürüm geçersiz bir
       revizyona ait değil. *(A–D · §8.2.d.1)*
 - [ ] **KGD-04** Örneklenen her iş ürününde planın tarif ettiği adımlar (gözden geçirme,
-      analiz, onay, temel çizgiye alma) planın tanımladığı yöntemle ve sırayla yapılmış mı?
+      analiz, onay, baseline'a alma) planın tanımladığı yöntemle ve sırayla yapılmış mı?
       *(A–D · §8.2.c)*
 - [ ] **KGD-05** Örneklenen kayıtlarda işi yapanın ve gözden geçirenin rolü, planlardaki
       sorumluluk tanımıyla ve seviyenin gerektirdiği doğrulama bağımsızlığıyla örtüşüyor mu?
@@ -105,7 +105,7 @@ Her madde evet/hayır sorusudur: "Evet" planlara ve standartlara uygun durumu g�
       kayda bağlanmış mı? Örneğin değişen bir sistem gereksiniminin ya da türetilmiş bir
       gereksinime emniyet sürecinden gelen yanıtın karşılığı bulunuyor. *(A–D · §8.2.d.6)*
 - [ ] **KGD-08** Örneklenen veri, kontrol kategorisinin (control category) gerektirdiği
-      biçimde yönetiliyor mu? Örneğin CC1 bir veri temel çizgiden sonra yalnızca onaylı bir
+      biçimde yönetiliyor mu? Örneğin CC1 bir veri baseline'dan sonra yalnızca onaylı bir
       problem raporu ya da değişiklik talebiyle değişmiş. *(A–D · §8.2.f)*
 
 ### Standartlara uyum
@@ -171,11 +171,10 @@ Her madde evet/hayır sorusudur: "Evet" planlara ve standartlara uygun durumu g�
       genişletilmiş mi? Örneğin yeni ekip üyesinin işi, yeni devreye alınan bir araç ve son
       anda değişen öğeler örnekleme girmiş. *(A–D · A-9 #2)*
 - [ ] **KGD-25** Denetim kaydı, işi başkasının yeniden izleyebileceği ayrıntıda mı? Örneğin
-      kapsam, ölçüt alınan plan maddesi ve sürümü, temel çizgi ya da dönem, örneklenen öğeler
+      kapsam, ölçüt alınan plan maddesi ve sürümü, baseline ya da dönem, örneklenen öğeler
       ve açılan uygunsuzlukların kimlikleri yazılı. *(A–D · §8.2.h)*
 - [ ] **KGD-26** Bu süreç için SQAP'taki takvimin öngördüğü her denetim zamanında yapılmış ya
-      da ertelenmesi gerekçesi ve yeni tarihiyle kayda geçmiş mi? Örneğin takvimde her temel
-      çizgiden önce geçiş denetimi öngörülen bir süreçte son temel çizgi denetimsiz alınmamış.
+      da ertelenmesi gerekçesi ve yeni tarihiyle kayda geçmiş mi? Örneğin takvimde her baseline'dan önce geçiş denetimi öngörülen bir süreçte son baseline denetimsiz alınmamış.
       *(A–D · A-9 #2)*
 
 ### Bağımsızlık ve yetki
@@ -185,10 +184,10 @@ Her madde evet/hayır sorusudur: "Evet" planlara ve standartlara uygun durumu g�
       katılmış olması bunu bozmaz, bulgu yazan bir gözden geçiren olarak katılmış olması bozar.
       *(A–D · §8.2.a)*
 - [ ] **KGD-28** SQAP'taki durdurma kuralının kapsadığı bir durumda (ör. açık büyük
-      uygunsuzluk varken) alınan her temel çizgi ve başlatılan her kredi amaçlı koşu, kuralı
+      uygunsuzluk varken) alınan her baseline ve başlatılan her kredi amaçlı koşu, kuralı
       kaldırmaya yetkili kişinin gerekçeli kaydına dayanıyor mu? *(A–D · §8.2.a)*
 - [ ] **KGD-29** Kalite güvencesi, SQAP'ta katılacağı yazılan gözden geçirmelere katılmış mı?
-      Örneğin her sürecin ilk gözden geçirmesinde ve temel çizgi öncesi gözden geçirmelerde
+      Örneğin her sürecin ilk gözden geçirmesinde ve baseline öncesi gözden geçirmelerde
       katılım kaydı bulunuyor. *(A–D · §8.2.a)*
 - [ ] **KGD-30** Kredi amaçlı koşular, tanıklık edilebilsin diye kalite güvencesine SQAP'taki
       bildirim süresine ve kanalına uyularak önceden haber verilmiş mi? Örneğin koşu tarihi
@@ -198,10 +197,10 @@ Her madde evet/hayır sorusudur: "Evet" planlara ve standartlara uygun durumu g�
 
 | Madde | Araç türü | Gözden geçirene kalan |
 |---|---|---|
-| KGD-03 | Belge yönetim ya da sürüm kontrol aracı sorgusu: ekibin eriştiği plan sürümleri ile temel çizgidekiler | Yerel kopyaların, yazdırılmış sürümlerin ve wiki sayfalarının fiilen kullanılıp kullanılmadığı |
+| KGD-03 | Belge yönetim ya da sürüm kontrol aracı sorgusu: ekibin eriştiği plan sürümleri ile baseline'dakiler | Yerel kopyaların, yazdırılmış sürümlerin ve wiki sayfalarının fiilen kullanılıp kullanılmadığı |
 | KGD-05 | Gözden geçirme aracında yazar ve gözden geçiren alanlarının karşılaştırılması | Grup gözden geçirmesinde bağımsız kişinin fiilen katkı verip vermediği |
-| KGD-06 | Ortam envanteri betiği: kurulu araç sürümleri, derleme seçenekleri ve sağlama toplamları SECI ile karşılaştırılır | Farkın kredi alınan kanıta etkisi; sapma kaydı ya da plan değişikliği gerekip gerekmediği |
-| KGD-13 | Kayıt tarihlerinin karşılaştırılması: gözden geçirme kapanışı, temel çizgi ve sonraki faaliyetin başlangıcı | Kaydın içeriğinin kriteri gerçekten sağlayıp sağlamadığı, ör. açık büyük bulgu kalıp kalmadığı |
+| KGD-06 | Ortam envanteri script'i: kurulu araç sürümleri, derleme seçenekleri ve checksum'lar SECI ile karşılaştırılır | Farkın kredi alınan kanıta etkisi; sapma kaydı ya da plan değişikliği gerekip gerekmediği |
+| KGD-13 | Kayıt tarihlerinin karşılaştırılması: gözden geçirme kapanışı, baseline ve sonraki faaliyetin başlangıcı | Kaydın içeriğinin kriteri gerçekten sağlayıp sağlamadığı, ör. açık büyük bulgu kalıp kalmadığı |
 | KGD-15 | Sürüm kontrol geçmişi sorgusu: problem raporu kimliği taşımayan değişiklikler | Kimliksiz değişikliğin SCMP'nin izin verdiği bir istisna olup olmadığı |
 | KGD-16 | Problem raporu aracında durum akışı sorgusu: atlanan durumlar, boş zorunlu alanlar, uzun süredir değişmeyen kayıtlar | Sınıflandırmanın ve etki analizinin içerikçe yerinde olup olmadığı |
 
@@ -215,7 +214,7 @@ bölümündedir.
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| Gözden geçirme kaydındaki sürüm, temel çizgiye alınan sürümden eski | Onaydan sonra yapılan değişikliğin onayı düşürmemesi | KGD-04 |
+| Gözden geçirme kaydındaki sürüm, baseline'a alınan sürümden eski | Onaydan sonra yapılan değişikliğin onayı düşürmemesi | KGD-04 |
 | Kredi amaçlı test koşusu, test prosedürlerinin gözden geçirmesi kapanmadan başlamış | Takvim baskısı; kriterin kimin onayına bağlı olduğunun yazılı olmaması | KGD-13 |
 | Ekip planın eski bir sürümüyle çalışıyor | Plan değişikliğinin ekibe duyurulmaması; yerel kopyalar | KGD-03 |
 | Derleyici ya da test aracı sürümü SECI'dekinden farklı | Araç güncellemesinin plan değişikliği sayılmaması | KGD-06 |
@@ -228,9 +227,9 @@ bölümündedir.
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "Geçiş kriterine uyulmamış." | "KGD-13: SDP'deki tasarımdan kodlamaya geçiş kriteri, tasarım gözden geçirmesinin kapanmış olmasını istiyor. Yakıt ölçüm bileşeninin kodu 3 Mart'ta temel çizgiye girmiş; tasarım gözden geçirmesi 17 Mart'ta, tasarımı değiştiren iki büyük bulguyla kapanmış. Kodun güncel tasarıma göre yeniden gözden geçirilmesi ve kriterin neden aşıldığının kayda geçmesi beklenir." |
-| "Ortam planla uyumsuz." | "KGD-06: Derleme sunucusundaki derleyici 7.2.1 sürümünde, SECI ise 7.1.4 diyor. Derleme kayıtlarına göre 2 Mayıs'tan bu yana 14 derleme yeni sürümle yapılmış. Ya ortam SECI'deki sürüme döndürülmeli ya da sürüm değişikliği plan değişikliği olarak işlenip etkilenen doğrulama kanıtı belirlenmeli." |
-| "Problem raporu akışı işlemiyor." | "KGD-15: YB-2.3 ve YB-2.4 temel çizgileri arasındaki 40 kaynak kod değişikliğinden 6'sı problem raporu kimliği taşımıyor; SCMP, temel çizgideki kodun yalnızca onaylı bir problem raporuyla değişmesini istiyor. Altı değişiklik için rapor açılmalı ve etki analizi yapılmalı; depo, kimliksiz değişikliği reddedecek biçimde ayarlanmalı." |
+| "Geçiş kriterine uyulmamış." | "KGD-13: SDP'deki tasarımdan kodlamaya geçiş kriteri, tasarım gözden geçirmesinin kapanmış olmasını istiyor. Yakıt ölçüm bileşeninin kodu 3 Mart'ta baseline'a girmiş; tasarım gözden geçirmesi 17 Mart'ta, tasarımı değiştiren iki büyük bulguyla kapanmış. Kodun güncel tasarıma göre yeniden gözden geçirilmesi ve kriterin neden aşıldığının kayda geçmesi beklenir." |
+| "Ortam planla uyumsuz." | "KGD-06: Build sunucusundaki derleyici 7.2.1 sürümünde, SECI ise 7.1.4 diyor. Build kayıtlarına göre 2 Mayıs'tan bu yana 14 build yeni sürümle yapılmış. Ya ortam SECI'deki sürüme döndürülmeli ya da sürüm değişikliği plan değişikliği olarak işlenip etkilenen doğrulama kanıtı belirlenmeli." |
+| "Problem raporu akışı işlemiyor." | "KGD-15: YB-2.3 ve YB-2.4 baseline'ları arasındaki 40 kaynak kod değişikliğinden 6'sı problem raporu kimliği taşımıyor; SCMP, baseline'daki kodun yalnızca onaylı bir problem raporuyla değişmesini istiyor. Altı değişiklik için rapor açılmalı ve etki analizi yapılmalı; depo, kimliksiz değişikliği reddedecek biçimde ayarlanmalı." |
 
 İyi bulgu denetçinin kanaatine değil, bir plan ya da standart maddesine dayanır ve ölçülebilir
 yazılır: "bazı değişiklikler" değil, "40 değişiklikten 6'sı".

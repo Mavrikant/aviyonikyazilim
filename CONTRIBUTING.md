@@ -52,8 +52,11 @@ tanımlanmamış etiket ve `{/* truncate */}` işareti olmayan blog yazısı der
 
 ## İçerik kuralları (özet)
 
-- Tüm içerik **Türkçedir**. Teknik bir terim ilk geçtiğinde İngilizcesi parantez içinde
-  verilir: “yapısal kapsam analizi (structural coverage analysis)”.
+- Tüm içerik **Türkçedir**. Sektörde İngilizcesiyle yerleşmiş terimler İngilizce kalır (baseline,
+  test case, linker); ek kesme işaretiyle alır (baseline'ı, test case'ler). Türkçesi yaygın olan
+  terim Türkçe yazılır ve ilk geçtiğinde İngilizcesi parantez içinde verilir: “yapısal kapsam
+  analizi (structural coverage analysis)”. Hangi terimin nasıl yazılacağı `CLAUDE.md` içindeki
+  terminoloji sözlüğündedir.
 - İçerik **özgündür**: hiçbir kitaptan ya da standarttan (DO-178C dahil) birebir çeviri ya da
   alıntı yapılmaz; kavramlar kendi cümlelerinizle anlatılır.
 - Diyagramlar **Mermaid** ile metin olarak yazılır; kod örnekleri ağırlıklı olarak **C**

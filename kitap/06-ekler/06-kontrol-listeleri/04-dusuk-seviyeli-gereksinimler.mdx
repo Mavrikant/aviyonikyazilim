@@ -7,10 +7,10 @@ description: "Düşük seviyeli gereksinimlerin gözden geçirilmesi için DO-17
 
 import ListeIndir from '@site/src/components/KontrolListesi';
 
-Bu kontrol listesi (checklist), tasarım sürecinin ürettiği düşük seviyeli gereksinimlerin
-(low-level requirements) akran gözden geçirmesinde (peer review) kullanılır. Gözden geçirme,
+Bu kontrol listesi (checklist), tasarım sürecinin ürettiği düşük seviyeli gereksinimler
+(low-level requirements) için yapılan peer review'da kullanılır. Gözden geçirme,
 bir bileşenin düşük seviyeli gereksinimleri yazıldıktan ve mimarisi gözden geçirildikten sonra,
-o bileşenin kodlamasına geçmeden önce yapılır. Masada gereksinimlerin yazarı, tasarım ekibinden
+o bileşenin kodlamasına geçilmeden önce yapılır. Masada gereksinimlerin yazarı, tasarım ekibinden
 en az bir gözden geçiren ve bir test mühendisi bulunur; türetilmiş gereksinim (derived
 requirement) varsa sistem ya da emniyet temsilcisi de çağrılır.
 
@@ -35,8 +35,8 @@ birlikte uygulanır.
 | DO-178C maddesi | §6.3.2 a–g; türetilmiş gereksinimler için §5.2.1.b ve §5.2.2.b, girdi eksiklerinin bildirimi için §5.2.2.g, iz verisi için §5.5.b |
 | Ek A hedefleri | A-4 #1, #2, #7: A ve B'de bağımsızlıkla (independence), C'de gerekli; A-4 #3, #4: A ve B'de gerekli; A-4 #5, #6: A, B ve C'de gerekli; A-2 #5 (türetilmiş gereksinimlerin iletimi): A, B ve C'de gerekli. D'de bu hedeflerin hiçbiri aranmaz. |
 | Gözden geçirilen veri | Tasarım tanımındaki (design description) düşük seviyeli gereksinimler: metin ve öznitelikler, algoritmalar, veri sözlüğü (data dictionary), tasarım parametreleri |
-| Başvuru verisi | Temel çizgideki (baseline) yüksek seviyeli gereksinimler; gözden geçirilmiş yazılım mimarisi; tasarım standardı; donanım/yazılım arayüz tanımı; yüksek ve düşük seviyeli gereksinimler arasındaki iz verisi |
-| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → kayıt içinde, temel çizgideki veriye dokunuyorsa problem raporu (problem report), sınırı [yazılım konfigürasyon yönetimi planı](../05-sablonlar/04-scmp.mdx) (Software Configuration Management Plan, SCMP) çizer; türetilmiş gereksinim iletimi → sistem süreçlerine giden iletim kaydı |
+| Başvuru verisi | Baseline'daki yüksek seviyeli gereksinimler; gözden geçirilmiş yazılım mimarisi; tasarım standardı; donanım/yazılım arayüz tanımı; yüksek ve düşük seviyeli gereksinimler arasındaki iz verisi |
+| Kaydın gideceği yer | Gözden geçirme kaydı → yazılım doğrulama sonuçları (Software Verification Results, SVR); bulgular → kayıt içinde, baseline'daki veriye dokunuyorsa problem raporu (problem report), sınırı [yazılım konfigürasyon yönetimi planı](../05-sablonlar/04-scmp.mdx) (Software Configuration Management Plan, SCMP) çizer; türetilmiş gereksinim iletimi → sistem süreçlerine giden iletim kaydı |
 | İlgili şablon | [Tasarım standardı](../05-sablonlar/07-tasarim-standardi.mdx); yasaklı ifadeler için [gereksinim standardı](../05-sablonlar/06-gereksinim-standardi.mdx) |
 | Madde öneki | `DGR` |
 
@@ -44,7 +44,7 @@ birlikte uygulanır.
 
 - [ ] Gözden geçirilecek düşük seviyeli gereksinimler belirli bir sürümle tanımlanmış; kapsam
       (bileşen ve gereksinim kimlikleri) kayda yazılmış.
-- [ ] Yüksek seviyeli gereksinimler temel çizgide; aynı bileşenin mimarisi gözden geçirilmiş
+- [ ] Yüksek seviyeli gereksinimler baseline'da; aynı bileşenin mimarisi gözden geçirilmiş
       ve açık büyük bulgusu (finding) yok.
 - [ ] Yüksek ve düşük seviyeli gereksinimler arasındaki iz raporu, gözden geçirilen sürümden
       alınmış ve katılımcılara dağıtılmış.
@@ -66,7 +66,7 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
       koşulu düşük seviyede "büyük" olarak daraltılmamış mı; teyit çevrimi sayısı ile çevrim
       süresinin çarpımı üst gereksinimdeki tepki süresini aşmıyor mu? *(A–C · §6.3.2.a)*
 - [ ] **DGR-02** Üst gereksinimde tanımlı arıza ve geçersiz girdi davranışı, düşük seviyede
-      algılama koşulu, teyit süresi ve tepkiyle somutlaştırılmış mı? Örneğin "geçersiz havahızı
+      algılama koşulu, teyit süresi ve tepkiyle somutlaştırılmış mı? Örneğin "geçersiz hava hızı
       kullanılmaz" kuralı bir tazelik sınırına ve geçersizken çıktının alacağı değere bağlanmış
       mı? *(A–C · §6.3.2.a)*
 - [ ] **DGR-03** Üst gereksinimdeki bir eksiği ya da çelişkiyi kapatmak için yazılmış düşük
@@ -86,12 +86,12 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
 ### Doğruluk ve tutarlılık
 
 - [ ] **DGR-06** Gereksinimde geçen her girdi ve çıktının adı, birimi ve aralığı veri
-      sözlüğündeki tanımla aynı mı? Örneğin veri sözlüğünde knot olan havahızı gereksinimde
+      sözlüğündeki tanımla aynı mı? Örneğin veri sözlüğünde knot olan hava hızı gereksinimde
       metre/saniye varsayılarak kullanılmamış mı? *(A–C · §6.3.2.b)*
 - [ ] **DGR-07** Her çıktının belirli bir koşuldaki değeri tek anlamlı mı; iki gereksinim aynı
       koşulda aynı çıktıya farklı değer vermiyor mu? Örneğin bir gereksinim uyarıyı ETKİN
       yaparken bir başkası aynı çevrimde PASİF yapmıyor mu? *(A–C · §6.3.2.b)*
-- [ ] **DGR-08** Kipe bağlı davranışta her durum ve olay çifti için ya bir gereksinim var ya da
+- [ ] **DGR-08** Moda bağlı davranışta her durum ve olay çifti için ya bir gereksinim var ya da
       çiftin bilerek yok sayıldığı yazılı mı? Örneğin kısıtlı çalışmadayken kalan kaynağın da
       bozulması tanımlı mı? *(A–C · §6.3.2.b)*
 - [ ] **DGR-09** Başlangıç değerleri ile ilk çevrimdeki ve yeniden başlatma sonrasındaki
@@ -104,7 +104,7 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
       mimarideki zaman bütçesiyle uyumlu mu? Örneğin gereksinimin varsaydığı 50 ms'lik çevrim,
       mimaride bileşenin koştuğu görevin periyoduyla aynı mı? *(A–B · §6.3.2.c)*
 - [ ] **DGR-11** Giriş/çıkış donanımına dayanan gereksinimler donanımın çözünürlüğü, örnekleme
-      hızı ve yazmaç düzeniyle bağdaşıyor mu? Örneğin 0–450 knot aralığını 12 bitle
+      hızı ve register düzeniyle bağdaşıyor mu? Örneğin 0–450 knot aralığını 12 bitle
       sayısallaştıran bir dönüştürücüden 0,01 knot çözünürlük beklenmiyor mu?
       *(A–B · §6.3.2.c)*
 - [ ] **DGR-12** Gereksinimin gerektirdiği veri yolu yükü, mesaj sıklığı, bellek ve işlemci
@@ -122,7 +122,7 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
       test ortamından erişilebilen bir değerden okunabiliyor mu? Örneğin yalnızca bir iç sayaçta
       görünen davranış için gözlem noktası tasarımda tanımlı mı? *(A–B · §6.3.2.d)*
 - [ ] **DGR-15** Bir test mühendisi bu gereksinimden, kodun yapısına bakmadan, normal aralık ve
-      gürbüzlük (robustness) test durumları (test case) yazabilir mi? Örneğin geçersiz aralığın
+      gürbüzlük (robustness) test case'leri yazabilir mi? Örneğin geçersiz aralığın
       sınırları ve o sınırlardaki beklenen tepki gereksinimde yazılı mı? *(A–B · §6.3.2.d)*
 - [ ] **DGR-16** Gereksinim her bekleme ve yinelemeyi bir üst sınırla tanımlıyor mu? Örneğin
       "yanıt gelene kadar bekler" ifadesi bir zaman aşımıyla sınırlanmış mı?
@@ -147,14 +147,14 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
 ### İzlenebilirlik
 
 - [ ] **DGR-21** Bileşene tahsis edilen her yüksek seviyeli gereksinim, türetilmiş olanlar
-      dahil, en az bir düşük seviyeli gereksinime iniyor mu? Örneğin iz aracının "alt izi
+      dâhil, en az bir düşük seviyeli gereksinime iniyor mu? Örneğin iz aracının "alt izi
       olmayan üst gereksinim" sorgusu boş dönüyor mu? *(A–C · §6.3.2.f)*
 - [ ] **DGR-22** Her düşük seviyeli gereksinim, karşıladığı üst gereksinime tek tek kurulmuş bir
       bağla mı bağlı; bağı olmayan gereksinim türetilmiş olarak işaretli mi? Örneğin bir üst
       gereksinim, bileşenin bütün düşük seviyeli gereksinimlerine toptan bağlanmamış mı?
       *(A–C · §5.5.b)*
 - [ ] **DGR-23** İz bağlantıları gözden geçirilen gereksinim sürümüne mi ait; üst ya da alt
-      gereksinim değiştikten sonra araçta açılan şüpheli bağlar (suspect link) kapatılmış mı?
+      gereksinim değiştikten sonra araçta açılan suspect link'ler kapatılmış mı?
       *(A–C · §6.3.2.f)*
 
 ### Algoritmalar
@@ -167,9 +167,9 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
 - [ ] **DGR-26** Süreksizlik (discontinuity) noktalarında davranış tanımlı ve doğru mu? Örneğin
       sıfıra bölme, açının 359 dereceden 0 dereceye geçişi, tablo enterpolasyonunun uç değerleri
       ve eşik çevresindeki dalgalanma ele alınmış mı? *(A–C · §6.3.2.g)*
-- [ ] **DGR-27** Filtre, integratör ve oran sınırlayıcı (rate limiter) gibi önceki çevrimlerden
+- [ ] **DGR-27** Filtre, integratör ve rate limiter gibi önceki çevrimlerden
       durum taşıyan algoritmalarda katsayıların hangi çevrim süresi için hesaplandığı, doyma
-      (saturation) sınırları ve kip geçişinde durumun alacağı değer tanımlı mı? Örneğin çıktı
+      (saturation) sınırları ve mod geçişinde durumun alacağı değer tanımlı mı? Örneğin çıktı
       doyma sınırına dayandığında integratörün iç durumu birikmeye devam etmiyor mu?
       *(A–C · §6.3.2.g)*
 
@@ -182,7 +182,7 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
       neden gerektiğini ve üst gereksinimlerin karşılanmasını bozmadığını gösteriyor mu?
       *(A–C · §6.3.2.a)*
 - [ ] **DGR-30** Türetilmiş düşük seviyeli gereksinimler, sistem emniyet değerlendirme süreci
-      (system safety assessment process) dahil, sistem süreçlerine iletilmiş mi ve iletimin
+      (system safety assessment process) dâhil, sistem süreçlerine iletilmiş mi ve iletimin
       kaydı (tarih, alıcı, varsa yanıt) gözden geçirmede görülebiliyor mu? *(A–C · A-2 #5)*
 
 ## Araçla denetlenebilecek maddeler
@@ -190,9 +190,9 @@ Her madde evet/hayır sorusudur; "Hayır" yanıtı bir bulgudur ve kayda madde n
 | Madde | Araç türü | Gözden geçirene kalan |
 |---|---|---|
 | DGR-21, DGR-22 | Gereksinim yönetim aracında iz sorgusu: alt izi olmayan üst gereksinim; üst izi de türetilmiş işareti de olmayan alt gereksinim | Bağlantının anlamca doğru olması, yani bağlı gereksinimin o üst gereksinimi gerçekten karşılaması (DGR-01) |
-| DGR-23 | Gereksinim yönetim aracının şüpheli bağ raporu | Üst gereksinimdeki değişikliğin bağlı gereksinimi gerçekten etkileyip etkilemediği kararı |
+| DGR-23 | Gereksinim yönetim aracının suspect link raporu | Üst gereksinimdeki değişikliğin bağlı gereksinimi gerçekten etkileyip etkilemediği kararı |
 | DGR-17, DGR-18 | Öznitelik doluluk sorgusu; yasaklı ifade listesiyle metin taraması | Öznitelik değerlerinin doğru olması; listede olmayan ama belirsiz kalan ifadeler |
-| DGR-06 | Veri sözlüğündeki adları gereksinim metniyle karşılaştıran betik | Adı doğru yazılmış verinin birimine ve aralığına uygun kullanılması |
+| DGR-06 | Veri sözlüğündeki adları gereksinim metniyle karşılaştıran script | Adı doğru yazılmış verinin birimine ve aralığına uygun kullanılması |
 | DGR-28 | Tasarım parametre listesinin türetilmiş işaretiyle ve üst gereksinimlerdeki sayısal değerlerle karşılaştırılması | Değerin üst gereksinimde karşılığı olup olmadığı ve gerekçenin yeterliliği |
 | DGR-12 | Veri yolu yükü ve kaynak bütçesi hesap tablosu | Hesabın varsayımlarının (en sık yayın, en kötü durum yükü) gereksinimle tutarlı olması |
 
@@ -219,8 +219,8 @@ bölümündedir.
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "Gereksinim eksik." | "DGR-09: LLR-UYR-02, ilk geçerli havahızı örneği gelmeden uyarı çıkışının değerini tanımlamıyor; tasarım standardı arayüz verisinin başlangıç değerini zorunlu öznitelik sayıyor. Beklenen: çıkışın başlangıç değeri (ör. PASİF) ve geçerlilik bayrağı gereksinimde yazılı olmalı." |
-| "Histerezis sorunlu." | "DGR-28: LLR-UYR-03'teki 3 knot histerezis HLR-42'de yok, ama türetilmiş işareti ve gerekçe alanı boş; tasarım standardının türetilmiş gereksinim kuralı. Beklenen: işaret ve gerekçe eklenmeli, gereksinim sistem süreçlerine iletilmeli (DGR-30)." |
+| "Gereksinim eksik." | "DGR-09: LLR-UYR-02, ilk geçerli hava hızı örneği gelmeden uyarı çıkışının değerini tanımlamıyor; tasarım standardı arayüz verisinin başlangıç değerini zorunlu öznitelik sayıyor. Beklenen: çıkışın başlangıç değeri (ör. PASİF) ve geçerlilik bayrağı gereksinimde yazılı olmalı." |
+| "Histerezis sorunlu." | "DGR-28: LLR-UYR-03'teki 3 knot histerezis HLR-42'de yok, ama türetilmiş işareti ve gerekçe alanı boş; tasarım standardının türetilmiş gereksinim kuralına aykırı. Beklenen: işaret ve gerekçe eklenmeli, gereksinim sistem süreçlerine iletilmeli (DGR-30)." |
 | "Süre tutmuyor." | "DGR-01: LLR-UYR-04 teyit için art arda 5 çevrim istiyor; 50 ms çevrimle bu 250 ms eder ve HLR-42'deki 200 ms tepki süresini aşar. Beklenen: teyit sayısı ya da çevrim süresi yeniden seçilmeli; mümkün değilse çelişki problem raporuyla gereksinim sürecine bildirilmeli." |
 
 ## Seviyeye göre uyarlama
@@ -242,7 +242,7 @@ faaliyetidir; bağımsızlık gerektirmez.
 Seviye C'de hedef bilgisayarla uyum ve doğrulanabilirlik hedefleri düşer; DGR-10 – DGR-16
 "Uygulanmaz" olarak işaretlenir. Bu, zaman ve kaynak sorularının önemsiz olduğu anlamına
 gelmez. Üst gereksinimdeki tepki süresinin karşılanıp karşılanmadığı bir uyum sorusudur ve C'de
-de DGR-01'de sorulur. Kaynak kullanımını ise yığın kullanımı ve en kötü durum yürütme süresi
+de DGR-01'de sorulur. Kaynak kullanımını ise stack kullanımı ve en kötü durum yürütme süresi
 (worst-case execution time, WCET) gibi C'de de aranan kaynak kod analizleri ile hedef donanımda
 koşulan testler yakalar; ama bu gözden geçirmenin hedefi değildir.
 
@@ -268,5 +268,5 @@ kayıt sertifikasyon kanıtı sayılmaz. Bölümleme kullanılıyorsa bütünlü
 - Otorite denetimine hazırlık: [SW SOI-2](../../07-soi-denetimleri/soi-2.mdx)
 - Komşu listeler: [Yüksek seviyeli gereksinimler](02-yuksek-seviyeli-gereksinimler.mdx) ·
   [Yazılım mimarisi](03-yazilim-mimarisi.mdx) · [Kaynak kod](05-kaynak-kod.mdx) ·
-  [Test durumları ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) ·
+  [Test case'ler ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) ·
   [Genel bakış](index.mdx)

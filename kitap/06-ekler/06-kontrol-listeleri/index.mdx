@@ -1,6 +1,6 @@
 ---
 title: "Ek F: Kontrol Listeleri"
-description: "DO-178C akran gözden geçirmesi ve süreç denetimi için numaralı, seviye etiketli, CSV olarak indirilebilir 13 kontrol listesi; SOI hazırlık listelerine yol gösterir."
+description: "DO-178C peer review ve süreç denetimi için numaralı, seviye etiketli, CSV olarak indirilebilir 13 kontrol listesi; SOI hazırlık listelerine yol gösterir."
 ---
 
 Bu ek, DO-178C projesinde yaşam döngüsü verisinin (software life cycle data) gözden
@@ -19,10 +19,10 @@ masasında kullanılabilir sorulara çevirir. Kitapta kontrol listesi üç ayrı
 | Tür | Kim, ne zaman | Nerede |
 |---|---|---|
 | Yazarın öz denetimi | Yazar; planı ya da standardı gözden geçirmeye sunmadan önce | [Ek E](../05-sablonlar/index.mdx) şablon sayfalarının sonundaki "Yayımlamadan önce" listeleri |
-| Akran gözden geçirmesi (peer review) ve süreç denetimi | Gözden geçirenler, değişiklik kontrol kurulu (change control board) ve kalite güvencesi (quality assurance); iş ürünü temel çizgiye (baseline) girmeden, geçiş kriterlerinde (transition criteria) ve her değişiklikte | Bu ek: aşağıdaki on üç liste |
+| Peer review ve süreç denetimi | Gözden geçirenler, değişiklik kontrol kurulu (change control board) ve kalite güvencesi (quality assurance); iş ürünü baseline'a girmeden, geçiş kriterlerinde (transition criteria) ve her değişiklikte | Bu ek: aşağıdaki on üç liste |
 | Otorite denetimine hazırlık | Proje ekibi ve kalite güvencesi; katılım aşaması (Stage of Involvement, SOI) denetiminden birkaç hafta önce, iç ön denetimde (mock audit) | SW SOI-1 … SW SOI-4; bu ekte değil, eklerden sonraki SOI Denetimleri başlığındadır |
 
-İkinci ve üçüncü tür kolayca karışır. Akran gözden geçirmesi listesi ürünün kendisini sorar:
+İkinci ve üçüncü tür kolayca karışır. Peer review listesi ürünün kendisini sorar:
 bu gereksinim doğrulanabilir mi? SOI listesi süreç kanıtını sorar: gereksinimin gözden
 geçirildiğini gösteren kayıt var mı, yazar ile gözden geçiren ayrı mı? Yazar listeyi kendi
 işine önceden de uygulayabilir; bağımsızlığın (independence) arandığı hedeflerde bu, yazar
@@ -54,7 +54,7 @@ hatayı yakalamak için eklenmiştir.
 | [Düşük seviyeli gereksinimler](04-dusuk-seviyeli-gereksinimler.mdx) | §6.3.2 | A-4 #1–#7 | DGR |
 | [Kaynak kod](05-kaynak-kod.mdx) | §6.3.4 | A-5 #1–#6 | KOD |
 | [Entegrasyon çıktıları](06-entegrasyon-ciktilari.mdx) | §6.3.5 | A-5 #7 | ENT |
-| [Test durumları ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) | §6.4.2, §6.4.3, §6.4.5.a–b | A-7 #1 (A-6 hedeflerine kanıt) | TDP |
+| [Test case'ler ve prosedürleri](07-test-durumlari-ve-prosedurleri.mdx) | §6.4.2, §6.4.3, §6.4.5.a–b | A-7 #1 (A-6 hedeflerine kanıt) | TDP |
 | [Test sonuçları](08-test-sonuclari.mdx) | §6.4.5.c | A-7 #2 | TSN |
 | [Kapsam analizleri](09-kapsam-analizleri.mdx) | §6.4.4 | A-7 #3–#9 | KAP |
 | [Konfigürasyon denetimi](10-konfigurasyon-denetimi.mdx) | §7.2.1–§7.2.2, §7.2.4.a–b, §7.2.6–§7.2.7, §7.3–§7.5 | A-8 (#3'te yalnız durum muhasebesi) | KYD |
@@ -96,7 +96,7 @@ bağımsızlıkla karşılanması gerekenler şunlardır:
 | Yazılım mimarisi (MIM) | A-4 #8, #9, #13 | – | – |
 | Düşük seviyeli gereksinimler (DGR) | A-4 #1, #2, #7 | A-4 #1, #2, #7 | – |
 | Kaynak kod (KOD) | A-5 #1, #2, #6 | A-5 #1 | – |
-| Test durumları ve prosedürleri (TDP) | A-7 #1; A-6 #3, #4 | A-6 #3 | – |
+| Test case'ler ve prosedürleri (TDP) | A-7 #1; A-6 #3, #4 | A-6 #3 | – |
 | Test sonuçları (TSN) | A-7 #2 | – | – |
 | Kapsam analizleri (KAP) | A-7 #3–#9 | A-7 #6, #7, #8 | – |
 | Kalite güvencesi denetimi (KGD) | A-9 #1–#4 | A-9 #1–#4 | A-9 #1–#4 |
@@ -109,7 +109,7 @@ aranmaz. Seviye D'de bağımsızlık yalnızca iki kalite güvencesi hedefinde k
 hedefi eklendiğinde 9. bölümdeki sayılar (Seviye A'da 30, B'de 18, C'de 5) elde edilir.
 
 TDP satırındaki A-6 #3 ve #4'ün bağımsızlığı gözden geçirene değil test yazarına ilişkindir:
-düşük seviyeli gereksinimlerden test durumu yazan kişi, aynı gereksinimlerden kaynak kodu
+düşük seviyeli gereksinimlerden test case yazan kişi, aynı gereksinimlerden kaynak kodu
 yazan kişi olmamalıdır (§6.2.e). Bir listede bağımsızlık gerektiren ve gerektirmeyen maddeler
 bir aradadır; uygulamada listenin tamamı yazar dışındaki gözden geçirene verilir, maddeleri
 kişilere bölmek kaydı karmaşıklaştırır.
@@ -117,7 +117,7 @@ kişilere bölmek kaydı karmaşıklaştırır.
 ## Gözden geçirme nasıl yürütülür?
 
 Toplantının nasıl yönetileceği
-[9. bölümdeki pratiklerde](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#etkili-akran-gözden-geçirmesi-için-pratikler)
+[9. bölümdeki pratiklerde](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#etkili-peer-review-için-pratikler)
 anlatılır. Listelerle çalışırken akış üç adımdır:
 
 ```mermaid
@@ -181,17 +181,15 @@ tekrarlıyorsa listeye yeni madde adayıdır. Sınıflar 9. bölümdekilerdir:
 |---|---|---|
 | Büyük | Öğenin doğruluğunu, bir hedefin karşılanmasını ya da üst ve alt veriyle tutarlılığı bozan kusur; ör. eksik ya da yanlış gereksinim, izlenmeyen kod, gereksinimden türetilmemiş beklenen sonuç | Bulguyu açan gözden geçiren yeni sürümde teyit eder; ilgili madde grubu yeniden uygulanır |
 | Küçük | Anlamı ve doğrulanabilirliği değiştirmeyen kusur; ör. biçim, yazım, adlandırma, eksik belge ya da standart atıf numarası (eksik iz bağlantısı büyük bulgudur) | Düzeltme yapılır; gözden geçirme lideri ya da bulguyu açan kişi teyit eder |
-| Öneri | Kusur değil, iyileştirme | Yazar kabul ya da ret eder; ret gerekçesi kayda yazılır, düzeltme şart değildir |
+| Öneri | Kusur değil, iyileştirme | Yazar kabul eder ya da reddeder; ret gerekçesi kayda yazılır, düzeltme şart değildir |
 
 Proje standardına aykırılık, kuralın amacına göre sınıflanır: doğrulanabilirliği bozan bir
 ifade büyük, biçim kuralına aykırılık küçük bulgudur. Büyük ya da küçük, açık bulgusu olan
-gözden geçirme kapanmış sayılmaz ve öğe temel çizgiye girmez; öneri, kabul ya da ret kararıyla
+gözden geçirme kapanmış sayılmaz ve öğe baseline'a girmez; öneri, kabul ya da ret kararıyla
 kapanır. Bağımsızlığın arandığı yerde kapanışı teyit eden de yazar dışında biridir.
 
 Bir bulgunun ne zaman problem raporuna dönüştüğü yazılım konfigürasyon yönetimi planında
-tanımlanır ([SCMP şablonu](../05-sablonlar/04-scmp.mdx)). Savunulabilir bir kural şudur: temel
-çizgi öncesindeki akran gözden geçirmesi bulgusu gözden geçirme kaydında kapanır; temel
-çizgiye alınmış bir öğedeki kusur problem raporudur. Öğe problem raporu ya da değişiklik
+tanımlanır ([SCMP şablonu](../05-sablonlar/04-scmp.mdx)). Savunulabilir bir kural şudur: baseline öncesindeki peer review bulgusu gözden geçirme kaydında kapanır; baseline'a alınmış bir öğedeki kusur problem raporudur. Öğe problem raporu ya da değişiklik
 talebiyle değiştiğinde liste yeniden uygulanır (§6.2.d); listenin tamamının mı, yalnız
 değişiklik etki analizinin (change impact analysis) gösterdiği grupların mı uygulandığı
 gerekçesiyle kayda yazılır ([PRD listesi](11-problem-raporu-ve-degisiklik.mdx)). Kalite güvencesi
@@ -224,7 +222,7 @@ Listeler başlangıç noktasıdır; proje uyarlanmış hâlini kendi belgesi ola
   CC2 ([10. bölüm](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx#kontrol-kategorileri-cc1-ve-cc2)).
   SCMP ve SQAP'ın atıf yaptığı denetim listeleri en az CC2 altında tutulur.
 - **Araçla denetlenen maddeler.** Bazı maddeler araçla yanıtlanabilir (statik analiz, iz
-  aracı sorgusu, bellek haritası betiği); her listenin "Araçla denetlenebilecek maddeler"
+  aracı sorgusu, bellek haritası script'i); her listenin "Araçla denetlenebilecek maddeler"
   tablosu bunları gösterir. Madde araç raporuna bakılarak işaretleniyor ve rapor ayrıca
   doğrulanmıyorsa araç bir doğrulama faaliyetini üstlenmiş olur; kalifikasyon gereği
   [13. bölümdeki](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx#kalifikasyon-ihtiyacının-ve-seviyesinin-belirlenmesi)
@@ -253,7 +251,7 @@ adresini verir; ardından başlık satırı ve her madde için bir satır gelir:
 | Bulgu ya da not | Boş; bulgu numarası, Uygulanmaz gerekçesi, araç raporu ya da (denetim listelerinde) örneklem |
 
 Dosya UTF-8 (BOM'lu) kodlanmış ve noktalı virgülle ayrılmıştır. Liste ayırıcısı noktalı
-virgül olan bölge ayarlarında (Türkçe dahil) Excel onu doğrudan sütunlara böler; satırlar tek
+virgül olan bölge ayarlarında (Türkçe dâhil) Excel onu doğrudan sütunlara böler; satırlar tek
 sütunda görünürse ayırıcı olarak noktalı virgül seçilerek içe aktarılır. Numarasız giriş
 koşulları dışa aktarılmaz; onlar kaydın başında bir kez teyit edilir.
 

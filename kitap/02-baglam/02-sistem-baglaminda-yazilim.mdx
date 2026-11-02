@@ -31,7 +31,7 @@ sistem gereksinimlerinde, arayüz tanımında ve emniyet değerlendirmesindedir.
 ## Sistem geliştirmeye genel bakış
 
 Sivil havacılıkta sistem geliştirmenin çerçevesini, sivil uçak ve sistemlerin
-geliştirilmesine ilişkin kılavuz olan SAE ARP4754B (Avrupa'daki karşılığı EUROCAE
+geliştirilmesine ilişkin kılavuz SAE ARP4754B (Avrupa'daki karşılığı EUROCAE
 ED-79B; Aralık 2023) çizer. Önceki sürüm ARP4754A (2010) hâlâ sık karşınıza çıkar:
 FAA'nın AC 20-174 genelgesi (2011) bu sürümü kabul edilebilir yöntem olarak tanımıştır
 ve hizmetteki pek çok program ona göre yürütülmüştür. Bir programda hangi sürümün
@@ -45,7 +45,7 @@ mutabakatla belirlenir. Bu çerçevede uçak, birbirine bağlı üç seviyede el
 3. **Öğe (item) seviyesi:** her sistemin fonksiyonları donanım ve yazılım öğelerine
    tahsis edilir (allocation). DO-178C, bu tahsisin **yazılım tarafını** ele alır;
    donanım tarafındaki karşılığı, havacılık elektronik donanımı için tasarım güvencesi
-   kılavuzu olan DO-254 / ED-80'dir (2000).
+   kılavuzu DO-254 / ED-80'dir (2000).
 
 Gereksinimlerle birlikte geliştirmenin ne kadar sıkı yürütüleceği de yukarıdan aşağı
 iner. Sistem tarafında bunun adı geliştirme güvence seviyesidir (development assurance
@@ -84,7 +84,7 @@ Yazılım gereksinimlerinin kalitesi, kaynağı olan sistem gereksinimlerinin ka
 aşamaz. Yazılıma tahsis edilen iyi bir sistem gereksinimi kümesi şu nitelikleri taşır:
 
 - **Atomik ve tekil:** her gereksinim tek bir beklentiyi ifade eder; "ve/veya"
-  yığınlarıyla birden çok beklenti tek cümleye sıkıştırılmaz.
+  zincirleriyle birden çok beklenti tek cümleye sıkıştırılmaz.
 - **Doğrulanabilir:** gereksinim, test veya analizle gösterilebilecek biçimde ölçülü
   yazılır ("hızlı olmalı" değil, "50 ms içinde yanıt vermeli").
 - **Belirsizlikten arınmış:** "uygun", "yeterli", "mümkünse" gibi yoruma açık ifadeler
@@ -146,7 +146,7 @@ seviyesindeki uygulamaların birbirini etkileyemediği ise yazılım bölümleme
 
 ## Arayüzler
 
-Arayüzler, sistemin en hassas noktalarıdır. Çünkü veri biçimi, zamanlama, hata
+Arayüzler, sistemin en hassas noktalarıdır; çünkü veri biçimi, zamanlama, hata
 işaretleri ve sınır değerler burada tanımlanır. Net olmayan bir arayüz, testin tekrar
 edilebilirliğini azaltır ve bakım sırasında beklenmeyen yan etkilere yol açar.
 
@@ -237,15 +237,15 @@ değildir.
 ### Donanım/yazılım arayüzü
 
 Yazılımın en yakın komşusu, üzerinde koştuğu donanımdır. Donanım/yazılım arayüzü tanımı
-tipik olarak bellek haritasını, çevre birimi yazmaçlarının adreslerini ve bit
-anlamlarını, kesme kaynaklarını ve önceliklerini, saat ve zamanlayıcıları, güç
+tipik olarak bellek haritasını, çevre birimi register'larının adreslerini ve bit
+anlamlarını, kesme kaynaklarını ve önceliklerini, saatleri ve timer'ları, güç
 verildiğinde ve yeniden başlatmada donanımın hangi durumda olduğunu ve donanımın kendi
 sağladığı arıza algılama mekanizmalarını içerir.
 
 Bu arayüz iki nedenle özel dikkat ister. Birincisi, türetilmiş gereksinimlerin başlıca
-kaynağıdır: bekçi köpeği zamanlayıcısının (watchdog timer) hangi aralıkla yenileneceği
+kaynağıdır: watchdog timer'ının hangi aralıkla yenileneceği
 ya da bir çevre biriminin hangi sırayla başlatılacağı hiçbir sistem gereksiniminde
-yazmaz, seçilen donanımdan doğar. İkincisi, donanım geliştirme boyunca değişir; yazmaç
+yazmaz, seçilen donanımdan doğar. İkincisi, donanım geliştirme boyunca değişir; register
 düzeni ya da kesme ataması değiştiğinde yazılımın bundan haberdar olması, arayüz
 tanımının sürümlenmiş ve değişiklik kontrolü altında olmasına bağlıdır. Yazılımın bu
 arayüzle uyumu, sonunda hedef donanım üzerinde koşulan donanım/yazılım entegrasyon
@@ -263,7 +263,7 @@ kullanabilir, ama bu kendiliğinden olmaz:
   gösterilmişse sistem doğrulaması bu kanıta dayanabilir. Bunun için testin hangi
   ortamda ve hangi yazılım sürümüyle koşulduğu bilinmelidir.
 - **Sistemden yazılıma:** bazı yazılım gereksinimleri ancak gerçek sensörler ve
-  eyleyicilerle anlamlı biçimde sınanabilir (uçtan uca gecikme gibi). Bunların sistem
+  aktüatörlerle anlamlı biçimde sınanabilir (uçtan uca gecikme gibi). Bunların sistem
   düzeyi teste bırakılması bir boşluk değil, plandır — yeter ki hangi gereksinimin
   nerede doğrulanacağı önceden yazılmış ve otoriteyle paylaşılmış olsun. DO-178C bu
   krediye bir koşul bağlar: kredi alınan sistem faaliyeti ilgili DO-178C hedeflerini
@@ -289,7 +289,7 @@ başlamadan önce sistem seviyesinde verilir. Deneyimin öne çıkardığı uygu
   kaydedileceği baştan belli olmalıdır.
 - **Belirsizliği prosedüre değil, tanıma dönüştürün.** "Bunu entegrasyonda çözeriz"
   cümlesi çoğu zaman "bunu en pahalı aşamada keşfedeceğiz" anlamına gelir.
-- **Yazılım ekibini sistem gözden geçirmelerine dahil edin**; uygulanabilirlik
+- **Yazılım ekibini sistem gözden geçirmelerine dâhil edin**; uygulanabilirlik
   sorunları en ucuz bu aşamada yakalanır.
 
 Sonraki bölüm, bu ilişkinin emniyet tarafını — tehlikelerin nasıl belirlendiğini ve

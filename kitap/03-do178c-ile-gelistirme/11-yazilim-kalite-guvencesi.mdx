@@ -14,7 +14,7 @@ geçirmesini anlatır.
 Kalite güvencesi yazılım üretmez, yazılımı doğrulamaz da. Ürettiği şey güvendir: planda
 yazanın gerçekten yapıldığına, yapılanın kaydının durduğuna ve sapmaların görülüp
 kapatıldığına dair güven. Sertifikasyon kanıta dayandığı için bu küçük bir iş değildir.
-Bugün atlanan bir gözden geçirme (review) kaydı ya da temel çizgiye (baseline)
+Bugün atlanan bir gözden geçirme (review) kaydı ya da baseline'a
 alınmadan koşulan bir test, aylar sonra kapatılması pahalı bir kanıt boşluğuna dönüşür.
 Kalite güvencesi; doğrulama, konfigürasyon yönetimi (configuration management) ve
 sertifikasyon irtibatıyla birlikte bütünleyici süreçlerden (integral processes) biridir:
@@ -84,8 +84,8 @@ kapattıramayan bir kalite güvencesi, tanım gereği bağımsız sayılmaz.
 
 | | Doğrulama bağımsızlığı | Kalite güvencesi bağımsızlığı |
 |---|---|---|
-| Anlamı | Ürünü doğrulayan, onu geliştiren kişi değildir; insan faaliyetine denk güvence veren bir araç da kullanılabilir | Geliştirme faaliyetlerinden ayrı durmanın yanında düzeltici faaliyeti sağlatacak yetkiye sahip olmak |
-| Nerede aranır | Hedef tablolarında bağımsızlıkla işaretli doğrulama hedeflerinde; fiilen Seviye A ve B'de | Seviyeye uygulanan bütün kalite güvencesi hedeflerinde; Seviye A'dan D'ye |
+| Anlamı | Ürünü doğrulayan, onu geliştiren kişi değildir; insan faaliyetine denk güvence veren bir araç da kullanılabilir | Geliştirme faaliyetlerinden ayrı durmanın yanında düzeltici faaliyeti sağlatacak yetkiyi taşımak |
+| Nerede aranır | Hedef tablolarında bağımsızlıkla işaretli doğrulama hedeflerinde; fiilen Seviye A ve B'de | Seviyede geçerli bütün kalite güvencesi hedeflerinde; Seviye A'dan D'ye |
 | Nasıl sağlanır | Aynı ekipten başka bir mühendis yeterlidir; ayrı organizasyon birimi şart değildir | Yaygın yol, proje yönetiminden ayrı bir raporlama hattıdır |
 | Tipik zaafı | Yazarın kendi işini gözden geçirmesi | Takvimden sorumlu yöneticiye bağlı olmak; bulguyu kapattıracak yetkinin bulunmaması |
 
@@ -108,7 +108,7 @@ kalite güvencesinin gözünden bakıyoruz. İyi bir SQAP şu soruları cevaplar
   hattı ve onay yetkisi.
 - **Ne yapılacak, nasıl?** Her yaşam döngüsü süreci için kullanılacak yöntemler:
   denetim, gözden geçirmelere katılım, tanıklık, izleme ve raporlama.
-- **Ne zaman?** Faaliyetlerin yaşam döngüsündeki yeri: hangi temel çizgiden önce,
+- **Ne zaman?** Faaliyetlerin yaşam döngüsündeki yeri: hangi baseline'dan önce,
   hangi geçişte, hangi sıklıkta.
 - **Sapma bulunursa ne olur?** Uygunsuzluğun kaydı, sınıflandırılması, izlenmesi,
   kapanış ölçütü ve üst yönetime taşıma yolu; problem raporlama (problem reporting)
@@ -133,8 +133,7 @@ raporları ve toplantı tutanakları da çoğunlukla buradadır. Bu kayıtlar da
 döngüsü verisidir (software life cycle data) ve ikinci kontrol kategorisiyle (control
 category 2, CC2) yönetilir; kontrol kategorileri
 [10. Yazılım Konfigürasyon Yönetimi](10-yazilim-konfigurasyon-yonetimi.mdx) bölümünde
-açıklanır. İşe yarar bir denetim kaydı en azından şunları söyler: neyin, hangi temel
-çizgi üzerinde, hangi ölçüte göre denetlendiği; hangi kayıtların örnek olarak seçildiği;
+açıklanır. İşe yarar bir denetim kaydı en azından şunları söyler: neyin, hangi baseline üzerinde, hangi ölçüte göre denetlendiği; hangi kayıtların örnek olarak seçildiği;
 ne bulunduğu ve hangi uygunsuzlukların açıldığı. "Denetim yapıldı, sorun yok" yazan bir
 kayıt, yapılan işi başkasının yeniden izlemesine imkân vermez.
 
@@ -146,9 +145,9 @@ aracı denetimdir (audit), ama tek aracı değildir:
 | Faaliyet | Neye bakar | Örnek soru |
 |---|---|---|
 | Süreç denetimi | Bir sürecin planda tarif edildiği gibi işletildiğine | "Plan her değişiklik için etki analizi istiyor; son beş değişikliğin analizini görebilir miyim?" |
-| Veri denetimi | Bir çıktının standarda uyduğuna ve kontrol kategorisine göre yönetildiğine | "Bu tasarım verisi tasarım standardının zorunlu tuttuğu kısımları içeriyor mu, hangi temel çizgide?" |
+| Veri denetimi | Bir çıktının standarda uyduğuna ve kontrol kategorisine göre yönetildiğine | "Bu tasarım verisi tasarım standardının zorunlu tuttuğu kısımları içeriyor mu, hangi baseline'da?" |
 | Gözden geçirmelere katılım | Gözden geçirmenin tanımlı yöntemle ve doğru sürüm üzerinde yapıldığına | "Kontrol listesi kullanıldı mı; bulgular kapanmadan kayıt kapatılmış mı?" |
-| Tanıklık (witnessing) | Kredi amaçlı test koşusunun, derlemenin ya da yüklemenin prosedüre göre ve kayıtlı ortamda yapıldığına | "Test edilen imajın (image) kimliği temel çizgideki imajla aynı mı?" |
+| Tanıklık (witnessing) | Kredi amaçlı test koşusunun, build'in ya da yüklemenin prosedüre göre ve kayıtlı ortamda yapıldığına | "Test edilen imajın (image) kimliği baseline'daki imajla aynı mı?" |
 | Tedarikçi denetimi | Tedarikçinin süreç ve çıktılarının onaylı plan ve standartlara uyduğuna | "Tedarikçideki gözden geçirme kayıtları bizim planımızın istediği içeriği taşıyor mu?" |
 
 Kalite güvencesinin güvence altına alacağı, projeden projeye değişmeyen konuları
@@ -183,8 +182,8 @@ Planlar, bir süreçten diğerine hangi koşulda geçileceğini geçiş kriterle
 Kalite güvencesinin ayrı bir hedefi, bu kriterlerin yalnızca yazılmış değil, proje
 boyunca sağlanmış olduğuna dair güvence elde etmektir. Uygulamada bu, kriter listesini
 kayıtlarla karşılaştırmak demektir: "gereksinimler gözden geçirilmiş, açık büyük bulgu
-yok, temel çizgiye alınmış" diyen bir kriter için gözden geçirme kaydına, bulgu
-listesine ve temel çizgi kaydına bakılır.
+yok, baseline'a alınmış" diyen bir kriter için gözden geçirme kaydına, bulgu
+listesine ve baseline kaydına bakılır.
 
 Kriter sağlanmadan sonraki faaliyete başlanmışsa bu bir uygunsuzluktur. Aynı kriter
 tekrar tekrar aşılıyorsa sorun ekipte değil kriterde olabilir; o zaman doğru çözüm
@@ -232,7 +231,7 @@ kayda geçmeyen sapmadır.
 İyi bir uygunsuzluk kaydı dört şeyi açık yazar: neyin gözlendiği ve hangi plan ya da
 standart maddesine aykırı olduğu; etkisinin ne olduğu ve nereye kadar uzandığı;
 sorumlusu ve hedef tarihi; kapanış için hangi kanıtın isteneceği. Etki sorusu en çok
-atlanandır. Bir süreç sapması çoğu zaman bir kanıtı da geçersiz kılar: temel çizgiye
+atlanandır. Bir süreç sapması çoğu zaman bir kanıtı da geçersiz kılar: baseline'a
 alınmamış kod üzerinde koşulan test yalnızca bir süreç hatası değildir, o testin
 sonucundan kredi alınamayacağı anlamına da gelir.
 
@@ -256,13 +255,13 @@ flowchart TD
 
 DO-178C'de problem raporu yalnızca yazılım hatasının kaydı değildir. Problem raporlama
 üç tür sorunu kapsar: yazılımın anormal davranışı, yaşam döngüsü verisindeki kusur ve
-plan ya da standartlara süreç uyumsuzluğu. Kalite güvencesinin bulduğu uygunsuzluk
+sürecin plan ya da standartlara uymaması. Kalite güvencesinin bulduğu uygunsuzluk
 üçüncü türe girer; kayıt hangi sistemde tutulursa tutulsun, problem raporlamanın süreç
 tarafıdır.
 
 | | Ürün ya da veri kusuru | Süreç uygunsuzluğu |
 |---|---|---|
-| Örnek | Test başarısız olur; tasarım ile gereksinim çelişir | Test, temel çizgiye alınmamış kod üzerinde koşulmuştur; gözden geçirme kontrol listesi kullanılmamıştır |
+| Örnek | Test başarısız olur; tasarım ile gereksinim çelişir | Test, baseline'a alınmamış kod üzerinde koşulmuştur; gözden geçirme kontrol listesi kullanılmamıştır |
 | Çoğunlukla kim bulur | Doğrulama, entegrasyon, saha | Kalite güvencesi denetimi; ekipten herkes de bildirebilir |
 | Düzeltme neyi değiştirir | Verinin kendisini, değişiklik kontrolünden geçerek | Çalışma biçimini; gerekirse etkilenen faaliyet tekrarlanır |
 | Kapanışı kim doğrular | Doğrulama: düzeltme yeniden doğrulanır | Kalite güvencesi: kapanış kanıtı ve tekrarın önlendiği görülür |
@@ -283,13 +282,13 @@ işlendiğini gösterir.
 
 | Alan | İçerik |
 |---|---|
-| Kaynak | Kod gözden geçirme sürecinin denetimi; son temel çizgiye giren dosyalardan 12 gözden geçirme kaydı örneklenmiştir |
-| Gözlem | 3 kayıtta gözden geçirilen dosya sürümü, temel çizgiye alınan sürümden eskidir; dosyalar gözden geçirmeden sonra değişmiş, yeniden gözden geçirilmemiştir |
+| Kaynak | Kod gözden geçirme sürecinin denetimi; son baseline'a giren dosyalardan 12 gözden geçirme kaydı örneklenmiştir |
+| Gözlem | 3 kayıtta gözden geçirilen dosya sürümü, baseline'a alınan sürümden eskidir; dosyalar gözden geçirmeden sonra değişmiş, yeniden gözden geçirilmemiştir |
 | Dayanak | Yazılım doğrulama planı: gözden geçirme kaydı gözden geçirilen sürümü tanımlar; onaydan sonra yapılan değişiklik yeniden gözden geçirilir |
-| Etki | Üç dosyada kod gözden geçirmesi kanıtı temel çizgideki kodu kapsamıyor; aynı dönemde birleştirilen diğer dosyalar da şüphelidir |
+| Etki | Üç dosyada kod gözden geçirmesi kanıtı baseline'daki kodu kapsamıyor; aynı dönemde merge edilen diğer dosyalar da şüphelidir |
 | Sınıf | Büyük: kredi alınan doğrulama kanıtını etkiliyor |
-| Sorumlu ve hedef | Yazılım geliştirme lideri; bir sonraki temel çizgiden önce |
-| Düzeltici faaliyet | Üç dosya güncel sürüm üzerinde yeniden gözden geçirilir; aynı dönemde birleştirilen bütün dosyalar için kayıttaki sürüm ile temel çizgideki sürüm karşılaştırılır; kök neden olarak depo, onaydan sonraki değişiklikte onayı düşürecek biçimde ayarlanır |
+| Sorumlu ve hedef | Yazılım geliştirme lideri; bir sonraki baseline'dan önce |
+| Düzeltici faaliyet | Üç dosya güncel sürüm üzerinde yeniden gözden geçirilir; aynı dönemde merge edilen bütün dosyalar için kayıttaki sürüm ile baseline'daki sürüm karşılaştırılır; kök nedeni gidermek için depo, onaydan sonraki değişiklikte onayı düşürecek biçimde ayarlanır |
 | Kapanış kanıtı | Yeniden gözden geçirme kayıtları, sürüm karşılaştırma listesi, depo ayarının kaydı; bir sonraki denetimde yeni örneklemde tekrar görülmemesi |
 
 Kayıtta dikkat edilecek üç nokta var: gözlem ölçülebilir biçimde yazılmıştır ("bazı
@@ -323,17 +322,17 @@ beklediği tespitleri yukarıdaki üç güvenceye göre gruplar:
 | Kod kontrollü ve yeniden üretilebilir | Onaylı yazılım, yayımlanmış yükleme talimatıyla yüklenebiliyor mu? | Yükleme denemesinin kaydı, kimlik denetimi |
 
 Önceden geliştirilmiş yazılım (previously developed software) için kredi alınıyorsa bir
-soru daha eklenir: güncel ürün temel çizgisi, önceki temel çizgiye ve ona yapılan onaylı
+soru daha eklenir: güncel ürün baseline'ı, önceki baseline'a ve ona yapılan onaylı
 değişikliklere izlenebiliyor mu? Plan ve standartlardan sapmalar ise bu listenin değil,
 yaşam döngüsü boyunca yapılan denetimlerin konusudur. Sertifikasyondan sonraki
 değişikliklerde standart, gözden geçirmenin değişikliğin önemiyle gerekçelendirilen bir
 alt kümesinin yapılmasına izin verir.
 
 Zamanlama bu gözden geçirmenin en hassas yanıdır. Gözden geçirme, sertifikasyona esas
-son temel çizgi üzerinde yapılır; ondan sonra veri ya da kod değişirse en azından
+son baseline üzerinde yapılır; ondan sonra veri ya da kod değişirse en azından
 etkilenen kalemler için tekrarlanır. Takvim sıkıştığında gözden geçirmeyi öne çekip
 ardından "küçük bir düzeltme" yapmak, son denetimin tipik bulgularından birini üretir:
-kayıt, sunulan sürümü anlatmıyordur. Sürprizleri azaltmanın yolu, son temel çizgiden
+kayıt, sunulan sürümü anlatmıyordur. Sürprizleri azaltmanın yolu, son baseline'dan
 önce bir prova yapmaktır: yeniden derlemenin aynı çıktıyı vermemesi ya da yükleme
 talimatındaki eksik adım gibi sorunlar düzeltmeye zaman varken ortaya çıkar.
 
@@ -347,19 +346,19 @@ veride nelere baktığı [SW SOI-4](../07-soi-denetimleri/soi-4.mdx) kontrol lis
 
 Aynı standardı, aynı planları uygulayan iki projede kalite güvencesinin katkısı çok
 farklı olabilir. Fark çoğu zaman ekibin büyüklüğünde değil; teknik yetkinliğinde,
-bağımsızlığında ve projeye ne zaman dahil olduğundadır.
+bağımsızlığında ve projeye ne zaman dâhil olduğundadır.
 
 ### Etkili kalite güvencesinin özellikleri
 
 Etkili bir kalite güvencesi ekibini sahada üç özelliğiyle tanırsınız:
 
-- **Teknik yetkinlik.** Denetlediği işi anlayacak kadar mühendislik bilgisine sahiptir.
+- **Teknik yetkinlik.** Denetlediği işi anlayacak kadar mühendislik bilir.
   Bir gözden geçirme kaydına baktığında yalnızca imzaların tam olup olmadığını değil,
   gözden geçirmenin gerçekten yapılıp yapılmadığını da sorgulayabilir. Yazılım ekibi,
   teknik konuşabildiği bir kalite güvencesi mühendisini ciddiye alır.
 - **Bağımsızlık.** Kalite güvencesi, denetlediği ekibin takviminden sorumlu yöneticiye
   bağlı değildir ve bulgusunu kapattıracak yetkiyi taşır. Bu yetki kâğıt üzerinde
-  kalmamalıdır: açık bir uygunsuzlukla temel çizgi alınamadığını bir kez gören ekip,
+  kalmamalıdır: açık bir uygunsuzlukla baseline alınamadığını bir kez gören ekip,
   mekanizmanın gerçek olduğunu anlar.
 - **Erken katılım.** Planlama aşamasından itibaren projededir. Planları, standartları
   ve geçiş kriterlerini daha yazılırken gözden geçirir; ilk denetimini proje sonunda
@@ -373,13 +372,13 @@ kanıtın yeniden üretilmesi gerekir.
 
 ### Etkisiz kalite güvencesinin belirtileri
 
-Etkisiz kalite güvencesi de kendini belli eden desenler üretir:
+Etkisiz kalite güvencesi de kendini belli eden kalıplar üretir:
 
 - **Salt evrak kontrolü.** Denetim, "belge var mı, imza var mı" sorusuna indirgenir.
   İçerik hiç sorgulanmadığı için süreç kâğıt üstünde kusursuz, sahada bozuk olabilir.
-- **Geç katılım.** Kalite güvencesi projeye teslimat yaklaşırken dahil olur; artık
+- **Geç katılım.** Kalite güvencesi projeye teslimat yaklaşırken dâhil olur; artık
   sapmaları önleme değil, yalnızca belgeleme şansı vardır.
-- **Yaptırım gücü eksikliği.** Uygunsuzluk kayıtları açılır ama kimse kapatmak zorunda
+- **Yaptırım gücü eksikliği.** Uygunsuzluk kayıtları açılır ama kimse kendini kapatmak zorunda
   hissetmez; kayıtlar aylarca açık kalır ve mekanizma inandırıcılığını yitirir.
 - **Damgacılık (rubber-stamping).** Ekip, kalite güvencesini bir onay damgası gibi
   görür; kalite güvencesi de bu role razı olursa bağımsız gözetim fiilen ortadan kalkar.
@@ -415,11 +414,11 @@ kayıtlarıyla yakalamış ve kapatmış olur. Bu denetimlerin işleyişi
   tanıklık, geçiş kriterlerinin denetimi ve tedarikçi gözetimi SQAP'ta planlanır,
   sonuçları kalite güvencesi kayıtlarına geçer.
 - Uygunsuzluk, plan ya da standarda aykırılıktır; problem raporlamanın süreç tarafıdır.
-  Kaydı, etkisinin değerlendirilmesi, kök nedenin giderilmesi ve kanıtla kapatılması
+  Kayda geçirilmesi, etkisinin değerlendirilmesi, kök nedenin giderilmesi ve kanıtla kapatılması
   bu disiplinin merkezindedir.
 - Yazılım uygunluk gözden geçirmesi teslimden önceki son kapıdır: süreçlerin
-  tamamlandığını, verinin eksiksiz olduğunu ve nesne kodun yeniden üretilip
-  yüklenebildiğini son temel çizgi üzerinde gösterir.
+  tamamlandığını, verinin eksiksiz olduğunu ve nesne kodunun yeniden üretilip
+  yüklenebildiğini son baseline üzerinde gösterir.
 - Etkili kalite güvencesi teknik yetkinlik, bağımsızlık ve erken katılımla tanınır;
   salt evrak kontrolü, geç katılım ve yaptırım gücü eksikliği etkisizliğin
   belirtileridir.
