@@ -26,7 +26,7 @@ export type Kanal = {
   tur: Tur;
   /** VOR ya da LOC frekansı, kHz */
   vhf?: number;
-  /** Süzülüş yolu (GS) frekansı, kHz */
+  /** Glide slope (GS) frekansı, kHz */
   gs?: number;
   /** DME sorgu (uçak → yer) ve cevap (yer → uçak) frekansı, MHz */
   sorgu: number;
