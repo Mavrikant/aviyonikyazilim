@@ -1,48 +1,97 @@
 ---
-title: "Havacılığın Kalbindeki İletişim: ARINC 429 Protokolü"
-description: "ARINC 429 nedir, nasıl çalışır? Aviyonik sistemler arasında veri taşıyan seri protokolün 32 bitlik kelime yapısı: etiket, SDI, veri, SSM ve parity alanları."
+title: "ARINC 429 Nedir? Aviyoniğin Ortak Dili"
+description: "ARINC 429 nedir, nasıl çalışır? Tek yönlü aviyonik veri yolunun elektriksel yapısı ve 32 bitlik kelimesi: etiket, SDI, veri, SSM ve parity alanları."
 slug: arinc-429
 authors: [serdar]
 tags: [a429, aviyonik]
-keywords: ["ARINC 429", "ARINC 429 nedir", "ARINC 429 kelime formatı", "aviyonik veri yolu", "avionics data bus"]
+keywords: ["ARINC 429", "ARINC 429 nedir", "ARINC 429 kelime formatı", "aviyonik veri yolu", "avionics data bus", "SSM", "BNR"]
 ---
 
 ![Osiloskop ekranında çözümlenmiş bir ARINC 429 kelimesi: etiket (label) 260, SDI, veri alanları ve durum bitleri](/img/blog/arinc-429/gorsel-1.jpg)
 
-Havacılık alanında, sorunsuz iletişim uçuşların güvenliği ve verimliliği açısından kritik bir rol oynar. Bu arenadaki önemli protokollerden biri de ARINC 429 protokolüdür. Yıllardır havacılık verilerinin iletişiminde temel bir rol oynamış olan bu protokol, aviyonik sistemler, enstrümanlar ve sensörler arasında hayati bir bağlantı sağlamaktadır. Bu blog yazısında, ARINC 429 dünyasına yüzeysel bir bakış atarak, önemini, çalışma prensiplerini ve modern havacılıktaki kalıcı önemini inceleyeceğiz.
+Bir yolcu uçağında hava veri bilgisayarı hava hızını hesapladığında bu değeri tek başına kullanmaz: birincil uçuş göstergesi, otopilot ve uçuş yönetim sistemi de aynı değeri ister. Bu birimler farklı üreticilerden gelir, ama hepsi aynı dili konuşur. Sivil havacılıkta kırk yılı aşkın süredir bu dilin adı ARINC 429'dur.
+
+Bu yazıda ARINC 429'un nasıl bir veri yolu olduğunu, 32 bitlik kelimesinin nasıl okunduğunu ve neden bugün de yaygın olduğunu anlatıyoruz.
 
 {/* truncate */}
 
-Aeronautical Radio, Inc. (ARINC) tarafından geliştirilen ARINC 429, özellikle aviyonik uygulamalar için tasarlanmış seri veri iletişim protokolüdür. Bu protokol, aviyonik sistemler arasındaki veri iletişiminin fiziksel ve elektriksel özelliklerini tanımlar.
+## ARINC 429 nedir?
 
-**ARINC 429’un Önemi**
+ARINC 429, sivil uçaklarda aviyonik birimler arasında sayısal veri taşımak için tanımlanmış bir veri yolu standardıdır. Havayollarının ortak standart kuruluşu ARINC (Aeronautical Radio, Inc.) tarafından 1977'de yayımlandı ve 1980'lerin başında hizmete giren ilk sayısal aviyonikli uçak kuşağıyla yaygınlaştı. Bugün hizmetteki sivil uçakların büyük çoğunluğunda bulunur.
 
-Havacılığın merkezinde, hassasiyet ve doğruluk son derece önemlidir. ARINC 429, veri doğruluğunu ve bütünlüğünü sağlama konusundaki başarısıyla, aviyonik iletişimde vazgeçilmez bir araçtır. ARINC 429’un neden bu kadar önemli olduğuna bir bakalım:
+## Nasıl çalışır?
 
-**Güvenlik ve Güvenilirlik:** Havacılıkta iletişim hataları felaket sonuçlara yol açabilir. ARINC 429’un sağlam hata kontrol mekanizmaları ve yerleşik yedekliliği, veri iletiminin güvenilir ve bozulmasız olmasını sağlar.
+ARINC 429'un temel kuralı basittir: **bir hat, bir verici.** Her verici kendi bükümlü çift kablosunu (twisted pair) sürer ve bu hatta en çok 20 alıcı bağlanabilir. Veri yalnızca tek yönde akar; iki birimin karşılıklı konuşması için iki ayrı hat gerekir.
 
-**Basitlik ve Evrensellik:** ARINC 429’un basitliği, farklı üreticilerden gelen farklı aviyonik sistemler arasında etkileşim sağlamayı kolaylaştırır. Bu evrensellik, havacılık endüstrisinde geniş ölçüde benimsenmesine katkıda bulunmuştur.
+```mermaid
+flowchart LR
+    T["Hava veri bilgisayarı<br/>(verici)"] --> R1["Birincil uçuş göstergesi"]
+    T --> R2["Uçuş yönetim sistemi"]
+    T --> R3["Otopilot"]
+```
 
-**Gerçek Zamanlı Performans:** ARINC 429, gerçek zamanlı olarak çalışır; bu da kritik uçuş verilerinin sistemler arasında hızlı ve doğru iletilmesini sağlar. Bu, uçuş kontrolü, navigasyon ve izleme gibi faaliyetler için elzemdir.
+Bu yaklaşımın iyi yanı, hatta çakışma olmamasıdır. Hatta konuşan tek bir verici olduğu için sırayı yöneten bir hakeme gerek yoktur ve verinin ne zaman geleceği önceden bellidir. Bedeli ise kablodur: her verici için ayrı bir hat çekilir.
 
-**ARINC 429 Nasıl Çalışır?**
+Sinyal, iki kutuplu sıfıra dönüşlü (bipolar return-to-zero) kodlamayla taşınır: 1 biti için hattaki gerilim farkı yaklaşık +10 V'a, 0 biti için −10 V'a çıkar ve her bitin ikinci yarısında sıfıra döner. Her bitte sıfıra dönüldüğü için ayrı bir saat hattı gerekmez; alıcı zamanlamayı sinyalin kendisinden çıkarır. Hız iki seçenekten biridir: yüksek hızda 100 kbit/s, düşük hızda 12,5 kbit/s.
 
-ARINC 429, noktadan-noktaya iletişim modelini kullanır, yani bir verici bir veya daha fazla alıcıya veri gönderir. Veri 32 bitlik kelimelere (word) kodlanır; bu kelimeler 5 bölümden oluşur:
+![ARINC 429 sinyalinin gerilim-zaman görünümü: artı ve eksi darbelerle etiket, SDI, veri, SSM ve parity alanları, ardından kelimeler arası boşluk](/img/blog/arinc-429/gorsel-3.png)
+
+## 32 bitlik kelime
+
+ARINC 429'da veri 32 bitlik kelimeler (word) hâlinde gönderilir. Kelimeler arasında en az 4 bit süresi boşluk bırakılır; alıcı yeni kelimenin başladığını bu boşluktan anlar. Her kelime beş alandan oluşur:
 
 ![ARINC 429 32 bitlik kelime formatı: parity, SSM, veri, SDI ve etiket alanlarının bit konumları](/img/blog/arinc-429/gorsel-2.png)
 
-**Etiket (Label):** Gönderilen verinin türünü belirleyen 8 bitlik bir alan. Farklı etiketler, irtifa, hava hızı ve motor parametreleri gibi çeşitli parametrelere karşılık gelir.
+| Bitler | Alan | Ne işe yarar? |
+|---|---|---|
+| 1–8 | Etiket (label) | Kelimenin hangi parametreyi taşıdığını söyler; sekizlik tabanda yazılır |
+| 9–10 | SDI | Aynı veriyi gönderen birden çok kaynak varsa (örneğin sol ve sağ sistem) hangisinin kastedildiğini belirtir |
+| 11–29 | Veri | Asıl değer; türüne göre BNR, BCD ya da ayrık bitler |
+| 30–31 | SSM | Verinin geçerli olup olmadığını, gerekirse işaretini söyler |
+| 32 | Parity | Hata denetim biti |
 
-**Kaynak Hedef Göstergesi (SDI):** 2 bitlik bir alandir. Verinin nereden geldiğini ve nereye gittiğini anlamak için kullanılır.
+### Etiket
 
-**Veri (Data):** Gönderilen gerçek veriyi içeren 19 bitlik bir alan; bu veri alani BCD, BNR yada discrete tipinde olabilir.
+Etiket, alıcının kelimeyi tanımasını sağlar. Örneğin etiket 206 hesaplanmış hava hızını, etiket 260 tarihi taşır; yazının başındaki osiloskop görüntüsünde çözümlenen kelime bir tarih kelimesidir. Bir ekipmanın hangi etiketleri hangi sıklıkla gönderdiği, o ekipmanın arayüz kontrol dokümanında (interface control document, ICD) yazılır.
 
-**İşaret/Durum Matrisi (SSM):** Verinin önemini belirten 2 bitlik bir alan; işaretini, geçerli veya geçersiz olup olmadığını ve diğer durum bilgilerini içerir.
+Yeni başlayanların en sık takıldığı nokta gönderim sırasıdır: kelimenin geri kalanı en düşük anlamlı bitten başlayarak gönderilir, ama etiket en anlamlı bitinden başlayarak, yani ters sırayla gider.
 
-**Parity:** Istek uzerine Odd ya da Even tipinde olabilir. Tek bit hatayi tespit edebilir.
+### SSM
 
-![ARINC 429 sinyalinin gerilim-zaman görünümü: etiket, SDI, veri, SSM ve parity alanları ile kelimeler arası boşluk](/img/blog/arinc-429/gorsel-3.png)
+İşaret/durum matrisi (sign/status matrix, SSM), alıcıya veriye güvenip güvenemeyeceğini söyler. BNR verisi için dört durum vardır:
 
-Protokol sabit bir bit hızında (12.5 Kbps yada 100 Kbps) çalışır ve bir kelimenin her bir biti sırayla iletilir; en az anlamlı bit (LSB) ilk olarak iletilir. Veri kelimeleri sıralı bir şekilde gönderilir. 2 kelime arasinda en az 4 bit uzunlugunda bosluk olmalidir.
+| SSM | Anlamı |
+|---|---|
+| 11 | Normal çalışma: veri geçerli |
+| 10 | İşlevsel test: veri test amaçlı, gerçek ölçüm değil |
+| 01 | Hesaplanmış veri yok: kaynak şu an değer üretemiyor |
+| 00 | Arıza uyarısı: kaynak arızalı |
 
-ARINC 429'dan farklı olarak Ethernet tabanlı bir aviyonik ağ olan AFDX'i [AFDX Nedir?](2023-08-23-afdx-nedir.mdx) yazısında okuyabilirsiniz. ARINC 429 ve AFDX dahil birçok aviyonik alt sistemi bölüm bölüm ele alan *Digital Avionics Handbook* için kütüphanedeki [tanıtım sayfasına](/kutuphane/aviyonik-sistemler/spitzer-digital-avionics-handbook) bakabilirsiniz.
+Yazılım açısından kelimenin en önemli iki biti bunlardır: değer ne kadar makul görünürse görünsün, SSM "normal çalışma" demiyorsa kullanılmaz. Tek bir ARINC 429 sinyalinin arayüz tanımı kitaptaki [Sistem Bağlamında Yazılım](/kitap/baglam/sistem-baglaminda-yazilim) bölümünde bu gözle incelenir.
+
+### Veri türleri
+
+- **BNR (ikili, binary):** Değer ikiye tümleyen ikili sayıdır, bit 29 işarettir. Her parametrenin bir çözünürlüğü vardır: hava hızı 0,0625 knot çözünürlükle gönderiliyorsa 250 knot, 250 / 0,0625 = 4000 sayısı olarak yazılır.
+- **BCD (ikili kodlanmış ondalık, binary-coded decimal):** Her ondalık basamak ayrı bir bit grubunda tutulur; telsiz frekansı ve tarih gibi doğrudan gösterilen değerlerde kullanılır.
+- **Ayrık (discrete):** Her bit ayrı bir açık/kapalı durumu bildirir; örneğin bir sistemin hangi modda olduğunu.
+
+### Parity
+
+Bit 32, kelimedeki 1'lerin toplam sayısını tek yapacak biçimde ayarlanır (tek parity). Alıcı tek sayıyı bulamazsa kelimeyi atar. Parity tek bitlik hataları yakalar ama düzeltemez; ARINC 429'da hata düzeltme yoktur. Veriler belirli aralıklarla yeniden gönderildiği için bozuk kelimenin yerini kısa süre sonra yenisi alır.
+
+## Neden hâlâ kullanılıyor?
+
+ARINC 429 yavaştır ve çok kablo ister; yeni nesil uçaklarda büyük veri trafiği bu yüzden Ethernet tabanlı [AFDX](2023-08-23-afdx-nedir.mdx) ağlarına taşındı. Ama ARINC 429 kaybolmadı. Basitliği, her yerde bulunan test ekipmanı ve kırk yılı aşkın hizmet deneyimi onu hâlâ cazip kılıyor. AFDX kullanan uçaklarda bile birçok sensör ve ekipman ARINC 429 ile bağlanır; veriyi ağa aktarma işini ağ geçitleri (gateway) yapar.
+
+## Özet
+
+- Bir hatta tek verici, en çok 20 alıcı; veri tek yönde akar.
+- Hız 100 ya da 12,5 kbit/s; saat hattı yoktur, zamanlama sinyalin içindedir.
+- 32 bitlik kelime beş alandan oluşur: etiket, SDI, veri, SSM, parity.
+- SSM "normal çalışma" demiyorsa veri kullanılmaz.
+
+## Daha fazla okumak için
+
+- [Aviyonik Nedir?](2023-08-21-aviyonik-nedir.mdx): ARINC 429'un bağladığı sistemlere genel bir bakış.
+- [AFDX Nedir?](2023-08-23-afdx-nedir.mdx): ARINC 429'un yerini alan Ethernet tabanlı aviyonik ağ.
+- Cary R. Spitzer, Uma Ferrell, Thomas Ferrell (ed.) — [Digital Avionics Handbook](/kutuphane/aviyonik-sistemler/spitzer-digital-avionics-handbook): ARINC 429'u ve öteki veri yollarını ayrı bölümlerde anlatan başvuru kitabı.

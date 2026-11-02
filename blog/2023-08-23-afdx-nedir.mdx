@@ -1,62 +1,94 @@
 ---
-title: "AFDX Nedir?"
-description: "AFDX (Avionics Full-Duplex Switched Ethernet) nedir? Deterministik iletişim, yedeklilik ve QoS özellikleriyle aviyonik Ethernet'e ve A380 ağ topolojisine giriş."
+title: "AFDX Nedir? Aviyonik Ethernet'e Giriş"
+description: "AFDX nedir, nasıl çalışır? Virtual link, BAG ile bant genişliği garantisi, A/B ağlarıyla yedeklilik ve AFDX'i sıradan Ethernet'ten ayıran özellikler."
 slug: afdx-nedir
 authors: [serdar]
-tags: [afdx]
-keywords: ["AFDX", "AFDX nedir", "ARINC 664", "Avionics Full-Duplex Switched Ethernet", "aviyonik Ethernet"]
+tags: [afdx, aviyonik]
+keywords: ["AFDX", "AFDX nedir", "ARINC 664", "ARINC 664 Part 7", "Avionics Full-Duplex Switched Ethernet", "aviyonik Ethernet", "virtual link", "BAG"]
 ---
 
-![AFDX anahtarlarını, Ethernet kablolarını ve ağ cihazlarını gösteren aviyonik ağ illüstrasyonu](/img/blog/afdx-nedir/gorsel-1.webp)
+![AFDX switch'lerini, Ethernet kablolarını ve ağ cihazlarını gösteren temsilî bir çizim](/img/blog/afdx-nedir/gorsel-1.webp)
 
-Havacılık endüstrisi, günümüzde giderek artan talepler ve karmaşık sistemlerle karşı karşıyadır. Bu sistemlerin etkin ve güvenilir bir şekilde iletişim kurması, uçuş güvenliği ve operasyonel verimlilik açısından kritik önem taşır. AFDX (Avionics Full-Duplex Switched Ethernet), havacılık endüstrisinde veri iletişimini iyileştirmek ve karmaşık sistemler arasında güvenilir bağlantılar sağlamak için kullanılan bir teknolojidir. Bu yazıda, AFDX'in ne olduğunu, nasıl çalıştığını, havacılık endüstrisindeki kullanım alanlarını, sağladığı avantajları ve teknik özelliklerini detaylı bir şekilde inceleyeceğiz.
+[ARINC 429](2023-08-21-arinc-429.mdx) her verici için ayrı bir kablo çeker ve saniyede en çok 100 kilobit taşır. Uçaklardaki sistem sayısı ve veri miktarı arttıkça bu yaklaşım hem ağırlık hem bant genişliği açısından sınırına dayandı. Çözüm, ofis ağlarından tanıdığımız Ethernet'i aviyoniğe uyarlamaktı. Ama sıradan Ethernet'in bir eksiği vardı: verinin ne zaman ulaşacağını garanti etmez.
+
+AFDX, Ethernet'e bu garantiyi ekleyen aviyonik ağdır. Bu yazıda AFDX'in nasıl çalıştığını ve sıradan Ethernet'ten neyle ayrıldığını anlatıyoruz.
 
 {/* truncate */}
 
-**AFDX Nedir?**
+## AFDX nedir?
 
-AFDX, uçak içi sistemler arasında güvenilir ve yüksek hızlı veri iletişimi sağlamak için kullanılan bir iletişim protokolüdür. Bu teknoloji, Ethernet tabanlı bir ağ kullanarak verilerin değişimini kolaylaştırır. AFDX, uçuş kontrol sistemleri, yolcu eğlence sistemleri, motor kontrol sistemleri ve daha birçok kritik uçak sistemlerinin entegrasyonunu destekler.
+AFDX (Avionics Full-Duplex Switched Ethernet), Airbus'ın A380 için geliştirdiği, switch'li Ethernet tabanlı aviyonik ağdır. Standart hâli ARINC 664 Part 7'dir; AFDX adı Airbus'ındır, başka üreticiler aynı standardı başka adlarla anar. A380, A400M ve A350 ile Boeing 787 bu ağı kullanır.
 
-**AFDX'in Çalışma Prensibi**
+Fiziksel katmanda bildiğimiz Ethernet vardır: 100 Mbit/s hız, bakır kablo, standart Ethernet frame'leri. Fark, ağın kurallarındadır.
 
-AFDX, tam çift yönlü iletişimi destekleyen anahtarlama yapısıyla karakterizedir. Bu yapı, verilerin düşük gecikme ve yüksek bant genişliği ile iletilmesini sağlar. Temel olarak, AFDX birçok uçak sistemini birbirine bağlayan bir ağ topolojisi oluşturur. Bu topoloji, verilerin kesintisiz ve güvenilir bir şekilde iletilmesini garanti eder.
+## Sıradan Ethernet neden yetmez?
 
-**AFDX'in Teknik Özellikleri**
+Bir ofis ağında birçok bilgisayar aynı anda veri gönderdiğinde switch'in kuyrukları dolar, frame'ler bekler ya da düşer. Ortalamada her şey hızlıdır, ama tek bir frame'in en kötü durumda ne kadar gecikeceği bilinmez. Bir video görüşmesi için bu kabul edilebilir; uçuş kontrol bilgisayarına giden hava hızı verisi için değil.
 
-Deterministik İletişim: AFDX, belirli bir zaman diliminde veri iletimini garanti eden deterministik bir iletişim sağlar. Bu sayede, kritik verilerin hızlı ve güvenilir bir şekilde iletilmesi mümkün olur.
+Aviyonikte asıl soru "ne kadar hızlı?" değil, "en geç ne zaman?" sorusudur. Bu, [gerçek zamanlı sistemler](2026-07-03-gercek-zamanli-sistemler.mdx) yazısında anlatılan determinizmin ağdaki karşılığıdır. AFDX bu soruyu üç fikirle cevaplar: tam çift yönlü bağlantılar, virtual link'ler ve çift ağ.
 
-**Yedeklilik ve Güvenilirlik:** AFDX, veri yollarında meydana gelebilecek kesintilere karşı yüksek düzeyde dayanıklılık ve güvenilirlik sunar. Çift hat ve çift anahtar yapısıyla ağın kesintisiz çalışması sağlanır.
+## Tam çift yönlü bağlantılar
 
-**Geniş Bant Genişliği:** AFDX ağı, yüksek bant genişliği sunar. Bu özellik, büyük veri miktarlarının hızlı ve etkili bir şekilde iletilmesini sağlar.
+AFDX'te ağa bağlanan her aviyonik birime end system denir. Her end system bir switch'e kendi kablosuyla bağlanır ve bu kablo iki yönde aynı anda veri taşır (tam çift yönlü, full-duplex). Kabloyu paylaşan başka cihaz olmadığından çarpışma (collision) yaşanmaz.
 
-**Zaman Bölümlü Protokoller:** AFDX, zaman bölümlü protokoller kullanarak veri iletimini düzenler. Bu, veri çarpışmalarını engeller ve veri iletimini daha verimli hale getirir.
+Switch'ler de ofistekilerden farklıdır: hangi verinin nereye gideceğini kendiliğinden öğrenmez, uçak tasarlanırken hazırlanıp yüklenen sabit tablolara göre yönlendirir. Ağda tasarımda öngörülmemiş hiçbir trafik dolaşmaz.
 
-**Quality of Service (QoS) Desteği:** AFDX, farklı veri türlerinin farklı öncelik seviyelerine sahip olabileceği bir Quality of Service (Hizmet Kalitesi) desteği sunar. Bu, kritik verilerin öncelikli olarak iletilmesini sağlar.
+## Virtual link: ağın içindeki ARINC 429 hatları
 
-**Etkin Bant Genişliği Kullanımı:** AFDX, veri paketlerini düşük gecikme süreleriyle birleştirerek bant genişliğini daha etkili kullanır.
+AFDX'in kalbi virtual link'tir (VL). Bir virtual link, bir end system'den bir ya da daha çok end system'e giden, tek yönlü mantıksal bir bağlantıdır. Tanıdık geldiyse sebebi var: virtual link, ARINC 429 hattının ağdaki karşılığıdır. Farkı, ayrı bir kablo gerektirmemesidir; aynı Ethernet bağlantısından çok sayıda virtual link geçebilir.
 
-![Airbus A380 uçağındaki AFDX ağ topolojisi: uçuş kontrol, kokpit, motor, enerji, yakıt ve kabin bölgelerini bağlayan yedekli anahtarlar](/img/blog/afdx-nedir/gorsel-2.png)
+Her virtual link'e uçak tasarlanırken iki sınır verilir:
 
-**Airbus A380 ucaginda AFDX topolojisi**
+- **BAG (bandwidth allocation gap):** Aynı virtual link'te art arda gönderilen iki frame arasındaki en kısa süre. 1, 2, 4, 8, 16, 32, 64 ya da 128 ms olabilir.
+- **Lmax:** Bu virtual link'teki en büyük frame boyu (en çok 1518 bayt).
 
-Boulanger, Frédéric & Marcadet, Dominique & Rayrole, Martin & Taha, Safouan & Valiron, Benoît. (2018). A time synchronization protocol for A664-P7. 1-9. 10.1109/DASC.2018.8569837. 
+Bu iki sayı virtual link'in kullanabileceği bant genişliğini belirler. Örneğin BAG'i 8 ms, Lmax'ı 200 bayt olan bir virtual link en çok 200 × 8 bit / 8 ms = 200 kbit/s kullanabilir. End system bu sınırı aşmamak için frame'leri sıraya koyar. Switch de her virtual link'i denetler ve sınırı aşan frame'i atar; böylece arızalanıp kontrolsüz veri basan bir birim ağın geri kalanını boğamaz.
 
-**Kullanıldığı Uçaklar ve Avantajları**
+Her virtual link'in bant genişliği ve her switch'in kuyruğu bilindiği için bir frame'in en kötü durumda ne kadar gecikeceği uçak uçmadan önce hesaplanabilir. AFDX'i deterministik yapan budur: garanti, ağın tasarımında verilir.
 
-AFDX teknolojisi, özellikle büyük ticari yolcu uçaklarında ve askeri uçaklarda geniş çapta kullanılmaktadır. Airbus A380, Boeing 787 Dreamliner gibi modern yolcu uçaklarında AFDX teknolojisi kullanılarak uçak içi sistemlerin entegrasyonu ve veri iletişimi sağlanmaktadır. AFDX'in sağladığı avantajlar şunlardır:
+## Çift ağ: A ve B
 
-**Güvenilir Veri İletişimi:** AFDX, kesintisiz ve güvenilir bir veri iletişimi sağlayarak uçak içi sistemlerin koordinasyonunu ve işbirliğini destekler.
+AFDX'te aslında iki bağımsız ağ vardır. Her end system iki ayrı kabloyla iki ayrı switch'e bağlıdır: A ağına ve B ağına. Verici her frame'i iki ağdan aynı anda gönderir ve frame'e bir sıra numarası ekler. Alıcı, aynı sıra numaralı iki kopyadan ilk gelen geçerli kopyayı kullanır, ötekini atar.
 
-**Düşük Gecikme Süresi:** Deterministik iletişim yapısı, düşük gecikme süreleriyle kritik verilerin hızlı bir şekilde iletilmesini sağlar.
+```mermaid
+flowchart LR
+    V["End system<br/>hava veri bilgisayarı"] -- "A ağı" --> SA["Switch A"]
+    V -- "B ağı" --> SB["Switch B"]
+    SA --> G["End system<br/>gösterge"]
+    SB --> G
+    SA --> U["End system<br/>uçuş kontrol"]
+    SB --> U
+```
 
-**Kablo ve Ağ Altyapısında Tasarruf:** AFDX, tek bir Ethernet ağı üzerinden birden fazla sistem için iletişim sağladığı için kablo ve ağ altyapısı maliyetlerini düşürür.
+Bir kablo kopsa ya da bir switch arızalansa veri öteki ağdan gelmeye devam eder; alıcıdaki uygulama bunu fark etmez bile.
 
-**Kolay Entegrasyon:** AFDX, farklı uçak sistemlerinin entegrasyonunu kolaylaştırır, bu da üretim sürecini hızlandırır ve maliyetleri düşürür.
+## Gerçek bir uçakta: A380
 
-**Bakım ve Onarım Kolaylığı:** AFDX, hata izleme ve teşhis yetenekleri sayesinde bakım ekiplerinin sorunları tespit etmesini ve çözmesini kolaylaştırır.
+![Airbus A380'deki AFDX ağı: kırmızı kutular switch'ler, beyaz kutular end system'ler; uçuş kontrol, kokpit, motor, enerji, yakıt ve kabin bölgeleri yedekli bağlantılarla birbirine bağlı](/img/blog/afdx-nedir/gorsel-2.png)
 
-**Sonuç**
+Şekil, A380'in AFDX ağını gösterir (kaynak: Boulanger vd., "A time synchronization protocol for A664-P7", DASC 2018). Kırmızı kutular switch'ler, beyaz kutular end system'lerdir; ağ uçuş kontrolü, kokpit, motorlar, enerji, yakıt ve kabin bölgelerini birbirine bağlar.
 
-AFDX teknolojisi, havacılık endüstrisinde veri iletişimini güvenilir, hızlı ve etkili bir şekilde sağlayarak uçuş güvenliği ve operasyonel verimliliği artırır. Kullanıldığı uçaklarda, uçuş kontrolünden yolcu eğlence sistemlerine kadar geniş bir yelpazede kritik roller üstlenir. Havacılık endüstrisi, AFDX sayesinde daha güvenli ve entegre bir şekilde faaliyet gösterebilirken, yolcular da daha keyifli ve konforlu bir uçuş deneyimi yaşayabilirler. Bu teknolojinin gelecekteki gelişmeleri ve daha fazla uygulama alanıyla havacılık sektöründe daha da büyük bir rol oynaması beklenmektedir.
+Bu ağ, entegre modüler aviyoniğin (integrated modular avionics, IMA) omurgasıdır. Ortak bilgisayarlarda çalışan uygulamalar birbirleriyle ve sensörlerle AFDX üzerinden haberleşir; uygulamanın kendi tarafında bu haberleşme ARINC 653'ün sampling port ve queuing port'ları olarak görünür. Ayrıntısı kitaptaki [Yazılım Bölümlemesi](/kitap/ozel-konular/yazilim-bolumlemesi) bölümündedir.
 
-Aviyonikte uzun yıllardır yaygın olan noktadan-noktaya seri veri yolunu merak ediyorsanız [ARINC 429](2023-08-21-arinc-429.mdx) yazısına göz atabilirsiniz.
+## ARINC 429 ile karşılaştırma
+
+| Özellik | ARINC 429 | AFDX |
+|---|---|---|
+| Hız | 12,5 ya da 100 kbit/s | 100 Mbit/s |
+| Yapı | Her verici için ayrı hat | Switch'li yıldız ağ |
+| Veri yolu | Fiziksel hat | Virtual link |
+| Determinizm | Tek verici olduğu için kendiliğinden | BAG ve switch denetimiyle tasarımda |
+| Yedeklilik | Gerekirse ayrı hat çekilir | A ve B ağları yerleşik |
+
+## Özet
+
+- AFDX, deterministik olacak biçimde kuralları sıkılaştırılmış, switch'li Ethernet'tir (ARINC 664 Part 7).
+- Her bağlantı tek yönlü bir virtual link'tir; bant genişliğini BAG ve Lmax belirler.
+- Switch'ler sabit tablolarla çalışır ve sınırı aşan trafiği atar.
+- Her frame A ve B ağlarından birlikte gider; alıcı ilk gelen geçerli kopyayı kullanır.
+
+## Daha fazla okumak için
+
+- [ARINC 429 Nedir?](2023-08-21-arinc-429.mdx): AFDX'ten önceki ve hâlâ yaygın olan aviyonik veri yolu.
+- [Aviyonik Nedir?](2023-08-21-aviyonik-nedir.mdx): federe mimariden IMA'ya geçiş ve aviyonik sistemlere genel bakış.
+- Cary R. Spitzer, Uma Ferrell, Thomas Ferrell (ed.) — [Digital Avionics Handbook](/kutuphane/aviyonik-sistemler/spitzer-digital-avionics-handbook): AFDX'i ve öteki veri yollarını ayrı bölümlerde anlatan başvuru kitabı.

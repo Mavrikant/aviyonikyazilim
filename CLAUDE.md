@@ -202,6 +202,8 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | fuzzing, root of trust, jamming, spoofing | bulanık test, güven kökü, karıştırma, aldatma |
 | fly-by-wire | telle uçuş, telle kumanda |
 | transponder | cevaplayıcı, yanıtlayıcı |
+| switch, end system, virtual link (VL), BAG, frame (Ethernet) | anahtar, uç sistem, sanal bağlantı, bant genişliği tahsis aralığı, çerçeve |
+| parity, SDI (ARINC 429) | eşlik biti, kaynak/hedef tanımlayıcısı |
 
 ### Türkçeleşmiş yazımla kullanılan terimler
 
@@ -421,6 +423,14 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | birincil uçuş göstergesi | primary flight display (PFD) |
 | trafik uyarı ve çarpışma önleme sistemi | traffic alert and collision avoidance system (TCAS) |
 | arazi uyarı sistemi | terrain awareness and warning system (TAWS) |
+| bükümlü çift kablo | twisted pair |
+| iki kutuplu sıfıra dönüşlü kodlama | bipolar return-to-zero |
+| işaret/durum matrisi | sign/status matrix (SSM; ARINC 429) |
+| ikili kodlanmış ondalık | binary-coded decimal (BCD) |
+| ayrık (ARINC 429 veri türü) | discrete |
+| arayüz kontrol dokümanı | interface control document (ICD) |
+| tam çift yönlü | full-duplex |
+| ağ geçidi | gateway |
 
 Aynı kavram için şu varyantlar da **kullanılmaz**: objective anlamında "amaç" (hedef); review
 anlamında "inceleme" (gözden geçirme); DO-178C yazılım seviyesi anlamında "güvence
