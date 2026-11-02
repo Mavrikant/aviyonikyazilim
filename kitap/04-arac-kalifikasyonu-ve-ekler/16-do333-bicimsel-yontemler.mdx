@@ -10,7 +10,7 @@ ifade edip istenen özelliklerin sağlandığını örnek denemelerle değil isp
 DO-333 bu tür bir analizin hangi koşullarda gözden geçirme, analiz ve bazı testlerin
 yerine doğrulama kanıtı sayılabileceğini tanımlar. Bu bölüm DO-333'ün getirdiklerini;
 model checking, theorem proving ve abstract interpretation
-(abstract interpretation) yaklaşımlarını; biçimsel analiz testin yerini aldığında
+yaklaşımlarını; biçimsel analiz testin yerini aldığında
 değişenleri; pratikteki zorlukları ve iki küçük örneği ele alır.
 
 DO-333'ün tam adı "Formal Methods Supplement to DO-178C and DO-278A"dır; 2011'de DO-178C
@@ -27,7 +27,7 @@ ulaşmaktır.
 
 ## Neden biçimsel yöntem?
 
-Test, doğası gereği örneklemedir: mümkün girdilerin ve durumların küçük bir alt kümesi
+Test, doğası gereği örneklemedir: olası girdilerin ve durumların küçük bir alt kümesi
 seçilir, yazılım bu noktalarda çalıştırılır ve sonuç beklenenle karşılaştırılır. 32 bitlik
 iki girdisi olan durumsuz bir fonksiyonun bile 2⁶⁴ farklı girdi çifti vardır; iç durum,
 zamanlama ve eşzamanlılık (concurrency) eklendiğinde uzay pratikte sayılamaz hâle gelir.
@@ -39,7 +39,7 @@ Biçimsel analiz soruyu tersinden sorar: "şu girdide ne oluyor?" yerine "bu öz
 bozulduğu herhangi bir girdi ya da durum var mı?". Cevap, modelin ve yazılı varsayımların
 kapsadığı uzayın tamamı için geçerlidir. Bu fark en çok şu tür mantıkta karşılığını verir:
 çok sayıda durumu ve geçişi olan mod mantığı; "şu koşul yokken bu komut asla verilmez"
-türünden emniyet kilitlemeleri (interlock); yedeklilik yönetimi (redundancy management)
+türünden interlock'lar; yedeklilik yönetimi (redundancy management)
 ve oylama mantığı; taşma ya
 da sıfıra bölme gibi yalnızca dar bir girdi aralığında ortaya çıkan aritmetik hatalar.
 Ortak yanları, hatanın nadir bir olay sıralamasında ya da bir sınırda saklanması ve
@@ -55,7 +55,7 @@ kısmı bu iki sınırın nasıl yönetileceğiyle ilgilidir.
 
 DO-333'e göre bir biçimsel yöntem iki parçadan oluşur; DO-178C'nin sözlüğü de biçimsel
 yöntemi aynı ikiliyle tanımlar. **Biçimsel model (formal model)**, yazılımın bir yönünün
-— gereksinimlerin, tasarımın ya da kodun — sözdizimi ve anlamı matematiksel olarak
+— gereksinimlerin, tasarımın ya da kodun — söz dizimi ve anlamı matematiksel olarak
 tanımlı, tek biçimde yorumlanabilen bir gösterimle (formal notation) ifadesidir.
 **Biçimsel analiz (formal analysis)**, bu modelin belirli bir özelliği sağladığını
 matematiksel akıl yürütmeyle gösterir. Anlamı araçtan araca ya da okurdan okura değişen
@@ -68,15 +68,15 @@ bundandır.
 Bir analizin doğrulama kanıtı sayılabilmesi için ek, yöntemin türünden bağımsız üç şey
 ister:
 
-- **Kesin gösterim.** Kullanılan her biçimsel gösterimin sözdizimi ve anlamı matematiksel
+- **Kesin gösterim.** Kullanılan her biçimsel gösterimin söz dizimi ve anlamı matematiksel
   olarak tanımlı ve belirsizlikten uzak olmalıdır.
-- **Sağlamlık (soundness).** Sağlam bir analiz yöntemi, özelliğin sağlanmadığı bir durumda
+- **Soundness.** Sound bir analiz yöntemi, özelliğin sağlanmadığı bir durumda
   asla "sağlanıyor" demez. Tersi serbesttir: gerçekte sorun yokken uyarı verebilir. Her
-  yöntemin sağlamlığı gerekçelendirilir. Aradığı hatayı kaçırabilen sezgisel statik
+  yöntemin soundness'ı gerekçelendirilir. Aradığı hatayı kaçırabilen sezgisel statik
   analiz araçları yararlı olabilir, ama bu anlamda biçimsel analiz değildir. Buradaki
-  sağlamlık yönteme ilişkindir; yöntemi uygulayan aracın hatasız çalışıp çalışmadığı
+  soundness yönteme ilişkindir; yöntemi uygulayan aracın hatasız çalışıp çalışmadığı
   ayrı bir sorudur ve araç kalifikasyonuyla (tool qualification) ele alınır.
-- **Yazılı ve gerekçeli varsayımlar.** Girdi aralıkları, hedef işlemcideki tamsayı
+- **Yazılı ve gerekçeli varsayımlar.** Girdi aralıkları, hedef işlemcideki tam sayı
   genişlikleri ve kayan nokta davranışı, kesme ve çizelgeleme düzeni gibi analizin
   dayandığı her kabul kayda geçirilir ve gerekçelendirilir. Gerekçesi olmayan varsayım,
   ispatın sessizce dışarıda bıraktığı bir durum demektir.
@@ -157,14 +157,14 @@ model checking ayrı bir model kurmadan doğrudan tasarım modeli üzerinde çal
 
 Theorem proving, sistemi ve istenen özelliği bir mantık dilinde ifade eder; ardından
 özelliğin sistem tanımından mantıksal çıkarım kurallarıyla türetilebildiğini gösterir.
-İspat, çoğunlukla bir ispat asistanı (proof assistant) eşliğinde, insan yönlendirmesiyle
+İspat, çoğunlukla bir proof assistant eşliğinde, insan yönlendirmesiyle
 kurulur. Durum uzayını saymadığı için sonsuz durumlu sistemlerde ve genel (parametrik)
 özelliklerde çalışabilir: "her N için bu buffer taşmaz" türünden bir iddia, tek bir
 ispatla kapatılabilir.
 
 Kod düzeyindeki yaygın biçimi sözleşme (contract) tabanlı ispattır: her fonksiyona bir
-önkoşul (precondition) ve bir artkoşul (postcondition) yazılır; araç bunlardan ispat
-yükümlülükleri (proof obligation) üretir ve çoğunu otomatik çözücülerle kapatır. Nesne
+precondition ve bir postcondition yazılır; araç bunlardan
+proof obligation'lar üretir ve çoğunu otomatik solver'larla kapatır. Nesne
 yönelimli tasarımda alt sınıfın temel sınıf sözleşmesini bozmadığı da bu yolla
 gösterilebilir (bkz.
 [15. DO-332 ve Nesne Yönelimli Teknoloji ve İlgili Teknikler](15-do332-nesne-yonelimli-teknoloji.mdx)).
@@ -177,8 +177,8 @@ gösterilebilir (bkz.
 
 ### Abstract interpretation
 
-Abstract interpretation, programın somut çalışmasını her tek tek yürütmeyi izlemeden, değer
-kümelerini soyut alanlar (örneğin değer aralıkları) üzerinden **aşırı-yaklaşık**
+Abstract interpretation, programın somut yürütmelerini tek tek izlemeden, değer
+kümelerini soyut alanlar (örneğin değer aralıkları) üzerinden **aşırı yaklaşık**
 (over-approximation) biçimde hesaplar. Tipik hedefi, çalışma zamanı hatası
 (run-time error) sınıflarının — taşma, sıfıra bölme, dizi sınırı aşımı, tanımsız
 davranış — **yokluğunu** kaynak kod üzerinde doğrudan göstermektir. En kötü durum
@@ -231,7 +231,7 @@ yüzden, yalnızca biçimsel analizle doğrulanan kısım için dört şeyin gö
 | Her gereksinimin tam kapsandığı | Gereksinim, varsayımlarla daraltılmış bir alt kümede değil, geçerli olduğu tüm koşullarda ispatlanmıştır; ispatın dayandığı her varsayım ayrıca doğrulanmıştır |
 | Gereksinim kümesinin tam olduğu | Olası her girdi koşulu için beklenen çıktı tanımlıdır; tanımsız bırakılmış davranış yoktur |
 | İstenmeyen veri akışının bulunmadığı | Kodda, gereksinimlerin öngörmediği bir girdi–çıktı bağımlılığı yoktur |
-| Gereksiz kodun bulunmadığı | Ölü kod (dead code) dahil gereksiz kod (extraneous code) yoktur; devre dışı bırakılmış kod (deactivated code) belirlenmiştir |
+| Gereksiz kodun bulunmadığı | Ölü kod (dead code) dâhil gereksiz kod (extraneous code) yoktur; devre dışı bırakılmış kod (deactivated code) belirlenmiştir |
 
 Son satırdaki kavramlar
 [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](../05-ozel-konular/17-kapsanmayan-kodlar.mdx)
@@ -251,10 +251,10 @@ gösterilmelidir.
 
 Bunun tek bir reçetesi yoktur. Analiz doğrudan nesne kodu üzerinde yapılabilir;
 derleyicinin ilgili özellikleri koruduğuna ilişkin kanıt sunulabilir (kısıtlı optimizasyon
-(optimization) seçenekleri, derleyici çıktısının ek doğrulaması); ya da kaynak düzeyinde
+seçenekleri, derleyici çıktısının ek doğrulaması); ya da kaynak düzeyinde
 ispatlanan özellikler hedefte koşulan testlerle örneklenerek çapraz denetlenebilir. Hangi
 yolun izleneceği planlama aşamasında otoriteyle kararlaştırılır. Her durumda, analizin
-hedefe ilişkin kabulleri — tamsayı genişlikleri, kayan nokta yuvarlama kipi, hizalama —
+hedefe ilişkin kabulleri — tam sayı genişlikleri, kayan nokta yuvarlama modu, hizalama —
 gerçek derleyici ve işlemciyle aynı olmalıdır; farklı bir hedef modeliyle yapılmış ispat,
 başka bir programın ispatıdır.
 
@@ -276,7 +276,7 @@ plana yazmadan önce dört pratik engelin dürüstçe değerlendirilmesi gerekir
 ### Uzmanlık gereksinimi
 
 Biçimsel bir özellik yazmak, gereksinim yazmaktan farklı bir beceridir: zamansal
-mantık (temporal logic), önkoşul/artkoşul sözleşmeleri veya ispat taktikleri gibi
+mantık (temporal logic), precondition/postcondition sözleşmeleri veya ispat taktikleri gibi
 kavramlara hâkimiyet ister. Ekipte bu birikim yoksa iki tipik sonuç görülür: ya
 özellikler o kadar zayıf yazılır ki ispat neredeyse hiçbir şey söylemez, ya da
 çalışma birkaç uzmanın darboğazına dönüşür. İşe yarayan yaklaşım, yöntemi dar ve
@@ -312,7 +312,7 @@ insan işi olarak kalır. DO-333'ün ek hedefleri tam da bu boşluğa bakar.
 
 Biçimsel analiz pratikte neredeyse her zaman araçla yürütülür ve çıktısına çoğu zaman
 elle yeniden denetlenmeden güvenilir; bu da araç kalifikasyonu sorusunu açar. Yöntemin
-sağlamlığını gerekçelendirmek aracın doğru çalıştığını göstermez; bu güven DO-330'a göre
+soundness'ını gerekçelendirmek aracın doğru çalıştığını göstermez; bu güven DO-330'a göre
 kalifikasyonla kurulur. DO-330 ayrıca araçta uygulanan kuramın olgunluğunun ve bu işe
 uygunluğunun PSAC'ta gerekçelendirilmesini bekler. Kalifikasyonun derinliğini aracın
 türü değil, sonucundan alınan kredi belirler. Araç yalnızca kendi otomatikleştirdiği
@@ -323,7 +323,7 @@ geçirmeleri yapmamanın gerekçesi yapılıyorsa Ölçüt 2'ye geçer; Seviye A
 Seviye C ve D'de TQL-5 gerekir. Ölçütler ve kalifikasyon verisi
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](13-do330-arac-kalifikasyonu.mdx) bölümünde
 anlatılmıştır. Bu, lisans maliyetinin üzerine ek bir planlama ve kanıt yükü getirir.
-Bazı ispat asistanlarında, ispatın küçük ve bağımsız bir çekirdek tarafından yeniden
+Bazı proof assistant'larda, ispatın küçük ve bağımsız bir çekirdek tarafından yeniden
 denetlenebilmesi bu yükü hafifletebilir; ama bu strateji de sertifikasyon otoritesiyle
 erken aşamada konuşulmalıdır.
 
@@ -369,7 +369,7 @@ int32_t kalan_sure_dk(int32_t yakit_kg, int32_t akis_kg_saat)
 ```
 
 Kod gözden geçirmede masum görünür ve tipik değerlerle yazılmış testlerden geçer. Girdiler
-hakkında hiçbir bilgi verilmeden çalıştırılan sağlam bir abstract interpretation aracı ise en az
+hakkında hiçbir bilgi verilmeden çalıştırılan sound bir abstract interpretation aracı ise en az
 şu iki uyarıyı üretir:
 
 | Uyarı | İfade | Hangi koşulda |
@@ -378,7 +378,7 @@ hakkında hiçbir bilgi verilmeden çalıştırılan sağlam bir abstract interp
 | Sıfıra bölme olabilir | `/ akis_kg_saat` | `akis_kg_saat` sıfırsa |
 
 İlki, gerçek yakıt miktarları düşünüldüğünde bir yanlış alarmdır; ama araç bu aralığı
-bilemez. İkincisi gerçek bir hatadır: motor durduğunda ya da algılayıcı arızasında akış
+bilemez. İkincisi gerçek bir hatadır: motor durduğunda ya da sensör arızasında akış
 sıfır okunabilir. Çözüm, koda gömülü örtük kabulleri sözleşmeye dönüştürmektir. Aşağıda
 sözleşme, C için bir spesifikasyon dili olan ACSL (ANSI/ISO C Specification Language)
 gösterimiyle özel bir yorum bloğuna yazılmıştır:
@@ -403,21 +403,21 @@ int32_t kalan_sure_dk(int32_t yakit_kg, int32_t akis_kg_saat)
 }
 ```
 
-`requires` satırları önkoşul, `ensures` satırları artkoşuldur. Sözleşmedeki aritmetik
-matematiksel tamsayılar üzerindedir; dolayısıyla ilk artkoşul "sonuç, taşma olmadan
-hesaplanan değere eşittir" demektir. Bu önkoşullar altında her iki uyarı da kapanır ve
-artkoşullar ispatlanabilir.
+`requires` satırları precondition, `ensures` satırları postcondition'dır. Sözleşmedeki aritmetik
+matematiksel tamsayılar üzerindedir; dolayısıyla ilk postcondition "sonuç, taşma olmadan
+hesaplanan değere eşittir" demektir. Bu precondition'lar altında her iki uyarı da kapanır ve
+postcondition'lar ispatlanabilir.
 
 İş burada bitmez: yükümlülük çağıran tarafa geçmiştir. Araç her çağrı noktasında
-önkoşulun sağlandığını göstermek zorundadır; değer bir algılayıcıdan geliyorsa bu ancak
+precondition'ın sağlandığını göstermek zorundadır; değer bir sensörden geliyorsa bu ancak
 arayüz sınırındaki bir aralık denetimiyle ve akış alt sınırın altındayken hesabın hiç
 çağrılmamasıyla mümkündür. DO-333'ün "varsayımlar yazılır ve gerekçelendirilir" koşulunun
 pratikteki karşılığı budur: bir girdi aralığı, ya başka bir ispatla ya da çalışan bir
 denetim koduyla kapatılana kadar açık kalemdir.
 
-### Kilitleme özelliği ve karşı örnek
+### Interlock özelliği ve karşı örnek
 
-Gereksinim şöyle olsun: "İtki ters çevirici (thrust reverser) açma komutu yalnızca uçak
+Gereksinim şöyle olsun: "Thrust reverser açma komutu yalnızca uçak
 yerdeyken verilir." Doğrusal zamansal mantıkla (linear temporal logic, LTL) bu özellik
 tek satırdır; `G` "her zaman" işlecidir:
 
@@ -443,11 +443,11 @@ verir:
 | 1 | doğru | doğru | yanlış | doğru | doğru | sağlanıyor |
 | 2 | yanlış | doğru | doğru | doğru | doğru | **ihlal** |
 
-İkinci çevrimde uçak yerden kesilmiş, kol hâlâ çekilidir ve mandal komutu ayakta
+İkinci çevrimde uçak yerden kesilmiş, kol hâlâ çekilidir ve latch komutu ayakta
 tutmaktadır. Bu senaryo, "kol çekiliyken yerde bilgisi düşerse" diye düşünülmediği sürece
 test listesinde yer almaz; araç ise sormadan bulur.
 
-Karşı örnek aynı zamanda gereksinimdeki bir boşluğu açığa çıkarır. Mandal havada açma
+Karşı örnek aynı zamanda gereksinimdeki bir boşluğu açığa çıkarır. Latch havada açma
 komutuna izin vermektedir; ama sekme sırasında komutun anında kesilmesi de istenmeyebilir.
 Yazılmamış karar şudur: yerde bilgisi ne kadar süre kesilirse komut düşmelidir? Gereksinim
 bir doğrulama süresiyle netleştirilir, özellik buna göre yeniden yazılır ve model yeniden
@@ -456,14 +456,14 @@ gereksinimi kesinleştirmeye zorlaması.
 
 ## Bu bölümden akılda kalması gerekenler
 
-- DO-333 biçimsel yöntemi, biçimsel model ile sağlam bir biçimsel analizin
-  birleşimi olarak tanımlar; gösterim kesin, yöntem sağlam, varsayımlar yazılı ve
+- DO-333 biçimsel yöntemi, biçimsel model ile sound bir biçimsel analizin
+  birleşimi olarak tanımlar; gösterim kesin, yöntem sound, varsayımlar yazılı ve
   gerekçeli olmalıdır.
 - Biçimsel analiz bazı gözden geçirme, analiz ve testlerin yerine kanıt olabilir; testi
   tümüyle ortadan kaldırmaz. Hedef bilgisayarla uyumluluğu gösteren donanım/yazılım
   entegrasyon testleri her durumda kalır.
 - Testin yerini alan ispatta yapısal kapsam yerine gereksinimlerin tam kapsandığı,
-  gereksinim kümesinin tamlığı, istenmeyen veri akışının ve gereksiz kodun bulunmadığı
+  gereksinim kümesinin tam olduğu, istenmeyen veri akışının ve gereksiz kodun bulunmadığı
   gösterilir; kaynak kodda ispatlanan özelliğin nesne kodunda korunduğu da
   gerekçelendirilir.
 - Üç ana yaklaşım — model checking, theorem proving ve abstract interpretation — rakip değil,

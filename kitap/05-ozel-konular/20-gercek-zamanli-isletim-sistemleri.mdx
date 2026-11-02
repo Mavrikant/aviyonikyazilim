@@ -10,7 +10,7 @@ import AracKarti from '@site/src/components/AracKarti';
 Gerçek zamanlı işletim sistemi (real-time operating system, RTOS), aviyonik yazılımda
 görev çizelgeleme, kesme işleme ve paylaşılan kaynakların korunması için öngörülebilir
 mekanizmalar sunar. Bu bölüm RTOS'u oluşturan katmanları, emniyet-kritik bir RTOS'ta
-aranan nitelikleri, RTOS seçimini ve hazır çekirdeğin sertifikasyondaki konumunu,
+aranan nitelikleri, RTOS seçimini ve hazır kernel'in sertifikasyondaki konumunu,
 RTOS'un mimariye etkilerini, çok çekirdekli işlemcileri ve doğrulamada projeye kalan
 işleri ele alır.
 
@@ -26,10 +26,10 @@ Yine de RTOS zamanında çalışmayı tek başına güvence altına almaz. Sundu
 davranışı önceden hesaplanabilen mekanizmalardır; görevlerin deadline'ları
 tuttuğunu gösteren ise bu mekanizmaların üzerine kurulan tasarım ve analizdir. Bu
 yüzden işletim sisteminin seçimi ve kullanım biçimi bir altyapı ayrıntısı değil,
-emniyet mimarisinin parçasıdır: çekirdek, üzerinde çalışan her uygulamayla birlikte
+emniyet mimarisinin parçasıdır: kernel, üzerinde çalışan her uygulamayla birlikte
 uçar ve onun hatası bütün uygulamaların hatasıdır.
 
-## RTOS çekirdeği ve destek yazılımları
+## RTOS kernel'i ve destek yazılımları
 
 Günlük dilde "RTOS" tek bir üründen söz eder gibi kullanılır; oysa hedef karta yüklenen
 yazılım stack'i birkaç ayrı katmandan oluşur ve her katmanın güvence açısından konumu
@@ -38,11 +38,11 @@ kanıtının kimin tarafından, hangi kapsamla üretileceği bu sınırlara gör
 
 Tipik katmanlar şunlardır:
 
-- **Çekirdek (kernel):** Scheduler, görev (task) yönetimi, kesme
+- **Kernel:** Scheduler, görev (task) yönetimi, kesme
   dağıtımı, senkronizasyon nesneleri (semafor, kuyruk, mutex) ve zaman hizmetlerini
   sağlayan ana bileşen. RTOS tedarikçisinin ürünüdür ve çoğu zaman sertifikasyon
   paketiyle birlikte gelir.
-- **BSP (board support package):** Çekirdeği belirli bir işlemci
+- **BSP (board support package):** Kernel'i belirli bir işlemci
   kartına bağlayan başlatma kodu, saat ve kesme denetleyicisi yapılandırması, bellek
   haritası tanımları. Tedarikçi bir referans BSP verse bile, hedef karta uyarlanması
   genellikle proje ekibine düşer.
@@ -51,13 +51,13 @@ Tipik katmanlar şunlardır:
   projede yazılır; kaynağı ne olursa olsun uçuşta çalışan koddur.
 - **Kütüphaneler ve çalışma zamanı desteği:** C çalışma zamanı, matematik
   kütüphaneleri, derleyicinin eklediği yardımcı rutinler. Görünmez oldukları için en
-  sık ihmal edilen katmandır; bağlanan her fonksiyon güvence kapsamına girer.
+  sık ihmal edilen katmandır; bağlanan her işlev güvence kapsamına girer.
 
 ```mermaid
 flowchart TB
     APP["Uygulama yazılımı<br/>(görevler, uygulama mantığı)"]
     LIB["Kütüphaneler / C çalışma zamanı"]
-    KRN["RTOS çekirdeği<br/>(scheduler, senkronizasyon, zaman hizmetleri)"]
+    KRN["RTOS kernel'i<br/>(scheduler, senkronizasyon, zaman hizmetleri)"]
     DRV["Aygıt sürücüleri"]
     BSP["BSP"]
     HW["Donanım (işlemci, bellek, arayüzler)"]
@@ -77,12 +77,12 @@ anlama gelir:
 
 | Katman | Tipik kaynak | Güvence kanıtının tipik sahibi |
 |---|---|---|
-| Çekirdek | RTOS tedarikçisi | Tedarikçinin sertifikasyon paketi + projenin entegrasyon doğrulaması |
+| Kernel | RTOS tedarikçisi | Tedarikçinin sertifikasyon paketi + projenin entegrasyon doğrulaması |
 | BSP | Tedarikçi şablonu + proje uyarlaması | Büyük ölçüde proje ekibi |
 | Sürücüler | Karışık | Kaynağına göre; uyarlanan kısım proje ekibinde |
 | Kütüphaneler | Derleyici/tedarikçi | Kullanılan alt küme için proje ekibi |
 
-Deneyimle sabittir: sertifikasyon paketli bir çekirdek satın almak, işin yalnızca bir
+Deneyimle sabittir: sertifikasyon paketli bir kernel satın almak, işin yalnızca bir
 bölümünü kapatır. BSP uyarlaması, projeye özgü sürücüler ve kullanılan kütüphane alt
 kümesi çoğu projede tedarikçi paketinin dışında kalır ve planlama aşamasında ayrı iş
 kalemleri olarak görünmelidir; aksi hâlde bu boşluk genellikle katılım aşaması (Stage
@@ -95,11 +95,11 @@ emniyet-kritik bir aviyonik projede kullanılamayabilir. Fark, ortalama performa
 değil, **en kötü durumun öngörülebilirliğindedir**. Emniyet-kritik bir RTOS'ta aranan
 başlıca nitelikler şunlardır:
 
-**Deterministik çizelgeleme (deterministic scheduling).** Her çekirdek hizmetinin en
+**Deterministik çizelgeleme (deterministic scheduling).** Her kernel hizmetinin en
 kötü durum yürütme süresi (worst-case execution time, WCET) bilinmeli ve belgelenmiş
 olmalıdır. "Genellikle 5 mikrosaniyede döner" ifadesi yeterli değildir; zamanlama
-analizi ancak üst sınırlar üzerine kurulabilir. Öncelik tabanlı, kesintiye izin veren
-(preemptive) scheduler'lar bu alanda yaygındır; bazı mimariler ise görevleri
+analizi ancak üst sınırlar üzerine kurulabilir. Öncelik tabanlı, preemptive
+scheduler'lar bu alanda yaygındır; bazı mimariler ise görevleri
 önceden tanımlı zaman pencerelerine yerleştiren zaman tetiklemeli (time-triggered)
 çizelgeleme kullanır.
 
@@ -112,34 +112,34 @@ alanına yazmasını engelleyebilir. Bu koruma yalnızca bellek içindir; bir g�
 işlemciyi gereğinden uzun tutmasını MPU engellemez.
 
 **Öngörülebilir kesme işleme.** Kesme gecikmesinin (interrupt latency) üst sınırı
-bilinmeli, kesme servis rutinlerinin (interrupt service routine, ISR) çekirdek
+bilinmeli, kesme servis rutinlerinin (interrupt service routine, ISR) kernel
 hizmetleriyle etkileşimi net kurallara bağlanmış olmalıdır. Kesmelerin kapalı
 tutulduğu en uzun süre, sistemin zamanlama bütçesine doğrudan girer.
 
 **Priority inversion'a karşı koruma.** Düşük öncelikli bir
 görevin tuttuğu kaynağı bekleyen yüksek öncelikli görev, araya giren orta öncelikli
 görevler yüzünden süresiz gecikebilir. Olgun bir RTOS bunun için priority inheritance
-(priority inheritance) veya priority ceiling protokollerini sunar.
+veya priority ceiling protokollerini sunar.
 
 **Gürbüz bölümleme (robust partitioning).** Aynı işlemci üzerinde farklı yazılım
-seviyelerinden bileşenler barındırılacaksa, bir bölümdeki (partition) hatanın
+seviyelerinden bileşenler barındırılacaksa, bir partition'daki hatanın
 diğerlerinin ne belleğini ne de zaman bütçesini etkileyemeyeceği gösterilmelidir.
 Bu alandaki yaygın başvuru ARINC 653'tür: bölümlemeli bir işletim sistemi ile üzerinde
-çalışan uygulamalar arasındaki arayüzü (application/executive, APEX) ve bölümlerin
+çalışan uygulamalar arasındaki arayüzü (application/executive, APEX) ve partition'ların
 alan ile zaman bakımından ayrılmasına dayanan çalışma modelini tanımlar. ARINC 653
-tarzı işletim sistemleri, her bölüme ayrılmış bellek alanı ve garanti edilmiş zaman
+tarzı işletim sistemleri, her partition'a ayrılmış bellek alanı ve garanti edilmiş zaman
 pencereleri sağlar; ayrıntı [21. Yazılım Bölümlemesi](21-yazilim-bolumlemesi.mdx)
 bölümündedir.
 
 **Hata tespiti ve sağlık izleme (health monitoring).** Zaman aşımı, izinsiz bellek
 erişimi, stack taşması gibi olayların tespit edilmesi ve yapılandırılabilir bir
-tepkiye (bölümü yeniden başlatma, güvenli duruma geçme, kaydetme) bağlanabilmesi
+tepkiye (partition'ı yeniden başlatma, güvenli duruma geçme, kaydetme) bağlanabilmesi
 beklenir.
 
 **Sertifiye edilebilirlik.** Teknik nitelikler kadar önemlisi, RTOS'un DO-178C
 yaşam döngüsü verisiyle birlikte gelmesidir: gereksinimler, tasarım, kaynak kod,
 doğrulama sonuçları, yapısal kapsam analizi (structural coverage analysis) kanıtı ve
-izlenebilirlik (traceability). Kanıtı olmayan "hızlı ve küçük" bir çekirdek,
+izlenebilirlik (traceability). Kanıtı olmayan "hızlı ve küçük" bir kernel,
 sertifikasyon açısından sıfırdan geliştirilen koddan farksızdır.
 
 | Nitelik | Yokluğunda tipik belirti |
@@ -155,13 +155,13 @@ sertifikasyon açısından sıfırdan geliştirilen koddan farksızdır.
 ## RTOS seçimi
 
 RTOS seçimi teknik bir karşılaştırma gibi görünse de aslında bir **risk yönetimi**
-kararıdır: proje, çekirdeğin davranışına ilişkin kanıt üretme yükünün ne kadarını
+kararıdır: proje, kernel'in davranışına ilişkin kanıt üretme yükünün ne kadarını
 tedarikçiye devredebilecek, ne kadarını kendi üzerine alacaktır? Seçim üç eksende
 değerlendirilmelidir.
 
 **Teknik riskler.** Önceki başlıkta sayılan nitelikler burada tek bir soruya iner:
 tedarikçi en kötü durum davranışını *hedef işlemci ailesi için* sayıyla ve kanıtıyla
-verebiliyor mu? Çekirdek hizmetlerinin WCET değerleri, kesmelerin kapalı kaldığı en
+verebiliyor mu? Kernel hizmetlerinin WCET değerleri, kesmelerin kapalı kaldığı en
 uzun süre, kilit bekleme sürelerinin sınırı ve priority inversion'a karşı uygulanan
 protokol belgelenmemişse, zamanlama analizinin girdileri eksik demektir ve bu boşluğu
 proje ölçümle ve analizle kendisi kapatmak zorunda kalır.
@@ -170,13 +170,13 @@ proje ölçümle ve analizle kendisi kapatmak zorunda kalır.
 yazılımdır (previously developed software, PDS). Katalogdan satılan ve müşteriye göre
 uyarlanmayan bir ürün olduğu ölçüde ticari hazır yazılım (commercial off-the-shelf,
 COTS) tanımına da girer; belirli bir uygulama için sözleşmeyle geliştirilen yazılımı
-standart COTS saymaz. Hazır olması ona bir ayrıcalık kazandırmaz: çekirdek uçuşa giden
+standart COTS saymaz. Hazır olması ona bir ayrıcalık kazandırmaz: kernel uçuşa giden
 çalıştırılabilir nesne kodunun parçasıdır ve üzerinde çalışan en yüksek seviyeli
 uygulamanın yazılım seviyesine ait hedefler (objective) onun için de karşılanmış
 olmalıdır. Tedarikçinin sattığı sertifikasyon paketi bu kanıtın hazır üretilmiş
 kısmıdır; paketin verisi hedefleri karşılamaya yetmiyorsa eksik tamamlanır. Hazır
 yazılımın kullanılacağı ve uyumun nasıl sağlanacağı yazılım sertifikasyon planında
-(Plan for Software Aspects of Certification, PSAC) açıklanır; çekirdeğin çözülmemiş
+(Plan for Software Aspects of Certification, PSAC) açıklanır; kernel'in çözülmemiş
 problem raporlarının projeye etkisi de değerlendirilir. Önceden geliştirilmiş
 yazılımın genel değerlendirme yöntemi
 [24. Yazılım Yeniden Kullanımı](24-yazilim-yeniden-kullanimi.mdx) bölümündedir.
@@ -229,7 +229,7 @@ deneme uygulamasının kapsamı
 ## Mimari etkiler
 
 RTOS seçildikten sonra asıl iş, onun üzerine analiz edilebilir bir yapı kurmaktır.
-Çekirdek pek çok hizmet sunar; emniyet-kritik bir tasarım bunların küçük ve
+Kernel pek çok hizmet sunar; emniyet-kritik bir tasarım bunların küçük ve
 öngörülebilir bir alt kümesiyle yetinir. Aşağıdaki kararlar tasarım tanımında yer alır
 ve tasarım gözden geçirmesinin konusudur
 ([7. Yazılım Tasarımı](../03-do178c-ile-gelistirme/07-yazilim-tasarimi.mdx)).
@@ -238,8 +238,8 @@ ve tasarım gözden geçirmesinin konusudur
 
 İşlevleri görevlere ayırmanın ölçütü kod düzeni değil, zaman davranışıdır: aynı
 periyotla çalışan ve aynı deadline'a bağlı işler tek görevde toplanır, farklı
-hızlar ayrı görevlere dağıtılır. Görev sayısı arttıkça context switch (context
-switch) yükü ve analiz edilecek etkileşim sayısı da artar; bu yüzden görev sayısı
+hızlar ayrı görevlere dağıtılır. Görev sayısı arttıkça context switch
+yükü ve analiz edilecek etkileşim sayısı da artar; bu yüzden görev sayısı
 gerektiği kadar tutulur. Her görev için periyot, deadline, öncelik, yürütme süresi
 bütçesi ve stack boyutu tasarım verisinde tablo hâlinde verilir; zamanlama
 analizi bu tabloyu girdi alır.
@@ -247,7 +247,7 @@ analizi bu tabloyu girdi alır.
 Sabit öncelikli çizelgelemede yaygın kural rate-monotonic atamadır:
 periyodu kısa olan görev daha yüksek öncelik alır. Sık yapılan hata, önceliği işlevin
 önemine göre vermektir; öncelik bir önem sıralaması değil, deadline'ları tutturma
-aracıdır. Kritik ama yavaş bir görevin emniyeti yüksek öncelikle değil, deadline'ın analizle gösterilmesi ve gerekiyorsa bölümlemeyle sağlanır. Periyodik
+aracıdır. Kritik ama yavaş bir görevin emniyeti yüksek öncelikle değil, deadline'ın tutulduğunun analizle gösterilmesi ve gerekiyorsa bölümlemeyle sağlanır. Periyodik
 olmayan olaylar, ardışık iki olay arasındaki en kısa süre sınırlandırılarak modele
 katılır; sınırı bilinmeyen bir olay kaynağı analiz edilemez. Görevler, kuyruklar ve
 mutex'ler başlatma sırasında bir kez yaratılır; çalışma sırasında görev yaratmak ya da
@@ -259,11 +259,11 @@ Kesme servis rutini yalnızca ertelenemeyecek işi yapar: veriyi alır, kesme ka
 temizler ve işlemeyi yapacak görevi uyandırır. Uzun süren işlem görev düzeyine
 taşındığında hem scheduler'ın öncelik kurallarına tabi olur hem de olağan
 yöntemlerle test edilebilir. Kesme bağlamında yalnızca beklemeyen (non-blocking)
-çekirdek çağrılarına izin verilir; hangi çağrıların kesme içinden yapılabileceği
+kernel çağrılarına izin verilir; hangi çağrıların kesme içinden yapılabileceği
 RTOS belgesinden alınıp tasarım standardına yazılır. Kesme ile görev arasında
 paylaşılan veri mutex ile korunamaz, çünkü kesme rutini bekleyemez; bunun yerine
-kuyruk ya da kesmelerin çok kısa süreyle kapatıldığı bir critical section (critical
-section) kullanılır ve bu süre zamanlama bütçesine eklenir.
+kuyruk ya da kesmelerin çok kısa süreyle kapatıldığı bir critical section
+kullanılır ve bu süre zamanlama bütçesine eklenir.
 
 ### Paylaşılan verinin korunması
 
@@ -292,11 +292,11 @@ sequenceDiagram
 Y'nin gecikmesi D'nin kısa critical section'ıyla değil, O'nun ne kadar çalışacağıyla
 belirlenir; yani üst sınırı yoktur. Priority inheritance'ta D, Y beklemeye başladığı anda
 Y'nin önceliğine yükseltilir; O araya giremez ve Y'nin beklemesi D'nin critical section'ının
-uzunluğuyla sınırlanır. Bu sınır, zamanlama analizinde engellenme süresi (blocking
-time) olarak hesaba girer.
+uzunluğuyla sınırlanır. Bu sınır, zamanlama analizinde blocking
+time olarak hesaba girer.
 
 Aşağıdaki örnek, iki görevin paylaştığı hava verisinin priority inheritance'lı bir mutex ile
-okunmasını gösterir. `os_` önekli çağrılar örnek için uydurulmuş bir çekirdek
+okunmasını gösterir. `os_` önekli çağrılar örnek için uydurulmuş bir kernel
 arayüzüdür:
 
 ```c
@@ -312,24 +312,24 @@ typedef struct {
     uint32_t zaman_damgasi_ms;
 } hava_verisi_t;
 
-static hava_verisi_t g_hava_verisi;          /* iki görev paylaşır     */
-static os_mutex_t   g_hava_verisi_mutex'i;  /* priority inheritance etkin */
+static hava_verisi_t g_hava_verisi;        /* iki görev paylaşır         */
+static os_mutex_t    g_hava_verisi_mutex;  /* priority inheritance etkin */
 
 bool hava_verisi_oku(hava_verisi_t *hedef)
 {
     bool basarili = false;
 
     if (hedef != NULL) {
-        if (os_mutex_al(&g_hava_verisi_mutex'i,
-                         HAVA_VERISI_KILIT_SURESI_MS) == OS_TAMAM) {
+        if (os_mutex_al(&g_hava_verisi_mutex,
+                        HAVA_VERISI_KILIT_SURESI_MS) == OS_TAMAM) {
             *hedef = g_hava_verisi;   /* üç alan tek tutarlı kopya olarak alınır */
-            if (os_mutex_birak(&g_hava_verisi_mutex'i) == OS_TAMAM) {
+            if (os_mutex_birak(&g_hava_verisi_mutex) == OS_TAMAM) {
                 basarili = true;
             } else {
-                saglik_izleme_bildir(HATA_MUTEKS_BIRAKMA);
+                saglik_izleme_bildir(HATA_MUTEX_BIRAKMA);
             }
         } else {
-            saglik_izleme_bildir(HATA_MUTEKS_ZAMAN_ASIMI);
+            saglik_izleme_bildir(HATA_MUTEX_ZAMAN_ASIMI);
         }
     }
 
@@ -338,14 +338,14 @@ bool hava_verisi_oku(hava_verisi_t *hedef)
 ```
 
 Örnekte üç tasarım kuralı görülür. Bekleme süresiz değildir; zaman aşımı, mutex'in
-tutulabileceği en uzun critical section'dan türetilmiş adlandırılmış bir sabittir. Çekirdek
+tutulabileceği en uzun critical section'dan türetilmiş adlandırılmış bir sabittir. Kernel
 çağrılarının dönüş değeri her seferinde denetlenir ve başarısızlık sessizce
 yutulmaz, sağlık izlemeye bildirilir. Critical section yalnızca kopyalamayı içerir;
-hesaplama, giriş/çıkış ya da başka bir çekirdek çağrısı kilidin dışında kalır. Birden
-çok mutex'in iç içe alınması gerekiyorsa, kilitlenmeyi (deadlock) dışlamak için bütün
+hesaplama, giriş/çıkış ya da başka bir kernel çağrısı kilidin dışında kalır. Birden
+çok mutex'in iç içe alınması gerekiyorsa, deadlock'u dışlamak için bütün
 görevlerin uyduğu tek bir alma sırası tanımlanır.
 
-### İzin verilen çekirdek hizmetleri ve soyutlama katmanı
+### İzin verilen kernel hizmetleri ve soyutlama katmanı
 
 Tasarım standardı, RTOS'un hangi hizmetlerinin hangi koşulla kullanılabileceğini
 açıkça listelemelidir: izin verilen senkronizasyon nesneleri, süresiz beklemenin
@@ -354,12 +354,12 @@ yasak olması, başlatma sonrasında nesne yaratılmaması, kesme içinden yapı
 kullanılan hizmetlerin sertifikasyon paketinin kapsadığı yapılandırmanın içinde
 kalmasını sağlar.
 
-Uygulamanın çekirdek arayüzünü doğrudan çağırması yerine ince bir soyutlama katmanı
+Uygulamanın kernel arayüzünü doğrudan çağırması yerine ince bir soyutlama katmanı
 üzerinden çağırması, hem bu kısıtları tek noktada zorlar hem de RTOS değiştiğinde
 etkilenen kodu sınırlar; örneği, uyarlama katmanı (adaptation layer) adıyla
 [24. Yazılım Yeniden Kullanımı](24-yazilim-yeniden-kullanimi.mdx) bölümünde
 verilmiştir. Katmanın kendisi de uçuş yazılımıdır: gereksinimi, tasarımı ve testi
-vardır. Ayrıca zaman davranışını gizlememelidir; bir sarmalayıcı çağrının bekleyip
+vardır. Ayrıca zaman davranışını gizlememelidir; bir wrapper çağrısının bekleyip
 beklemeyeceği ve en kötü durum süresi arayüzünde yazılı olmalıdır.
 
 ## Çok çekirdekli işlemciler
@@ -374,13 +374,13 @@ değeri çok çekirdekli hedefe taşınamaz ve alan ile zaman bölümlemesi, yaz
 gerçekten eşzamanlı çalıştığı için yeniden gösterilmek zorundadır.
 
 Otoritelerin beklentisi FAA AC 20-193 (2024) ve EASA AMC 20-193 (2022)
-belgelerindedir; bu belgeler daha önce başvurulan CAST-32A görüş belgesinin yerini
+belgelerindedir; bu belgeler daha önce başvurulan CAST-32A position paper'ının yerini
 almıştır. Beklentinin özü, girişim kanallarının belirlenmesi, her birinin ya
 kapatılması ya da etkisinin sınırlandırılması ve zamanlama kanıtının bu etki altında
 üretilmesidir. RTOS burada
-belirleyicidir: görevlerin ya da bölümlerin işlemci çekirdeklerine nasıl atandığı,
+belirleyicidir: görevlerin ya da partition'ların işlemci çekirdeklerine nasıl atandığı,
 kullanılmayan çekirdeklerin kapalı tutulup tutulmadığı ve paylaşılan kaynak
-kullanımını sınırlayan mekanizmalar çekirdeğin sunduklarına bağlıdır. Seçim sırasında
+kullanımını sınırlayan mekanizmalar kernel'in sunduklarına bağlıdır. Seçim sırasında
 tedarikçiden, sertifikasyon paketinin hangi çok çekirdekli yapılandırmayı kapsadığını
 ve hangi girişim analizinin entegratöre kaldığını açıkça söylemesi istenmelidir.
 Konunun risk başlıkları [Ek B](../06-ekler/02-ek-b-rtos-endise-alanlari.mdx) içinde
@@ -395,9 +395,9 @@ düşüktür; kanıtın omurgasını analiz oluşturur, test ve ölçüm onu des
 
 **Çizelgelenebilirlik analizi (schedulability analysis).** Görev tablosundaki periyot,
 deadline ve öncelik bilgisi; her görevin WCET değeri, en uzun critical section'dan
-gelen engellenme süresi, çekirdek hizmetlerinin ve context switch'in süresi ve
+gelen blocking time, kernel hizmetlerinin ve context switch'in süresi ve
 kesme yükü ile birleştirilerek her görevin en kötü tepki süresi hesaplanır. Sonuç,
-deadline ile karşılaştırılır ve kalan pay raporlanır. Tedarikçinin verdiği çekirdek
+deadline ile karşılaştırılır ve kalan pay raporlanır. Tedarikçinin verdiği kernel
 süreleri yalnızca paketin kapsadığı işlemci ve yapılandırma için geçerlidir.
 
 <AracKarti yol="/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme" />
@@ -414,12 +414,12 @@ kullandığı (ayrı bir kesme stack'i mi, kesilen görevin stack'i mi) hesaba k
 Yöntemler [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx)
 bölümünde anlatılmıştır.
 
-**Hedefte ölçüm.** Tepki süreleri, titreşim (jitter), kesmelerin kapalı kaldığı en
+**Hedefte ölçüm.** Tepki süreleri, jitter, kesmelerin kapalı kaldığı en
 uzun süre ve stack kullanımının ulaştığı en yüksek düzey hedef donanımda ölçülür.
 Ölçüm analizin yerine geçmez; analizin varsayımlarını sınar ve analizle ölçüm
 arasındaki açıklanamayan fark bir bulgu olarak ele alınır.
 
-**Gürbüzlük (robustness) testleri.** Uygulamanın çekirdek hata dönüşlerine tepkisi
+**Gürbüzlük (robustness) testleri.** Uygulamanın kernel hata dönüşlerine tepkisi
 gereksinim tabanlı testlerle gösterilir: zaman aşımına uğrayan mutex, dolu kuyruk,
 süresini aşan görev. Sağlık izleme için de aynısı geçerlidir; stack taşması, izinsiz
 bellek erişimi ve deadline aşımı bilinçli olarak tetiklenir ve
@@ -431,10 +431,10 @@ doğrulama planında açıkça ayrılmalıdır:
 
 | Konu | Tedarikçi paketinden gelen | Projenin ürettiği |
 |---|---|---|
-| Çekirdek hizmetlerinin işlevi | Çekirdek gereksinimlerine dayalı test ve yapısal kapsam sonuçları | Paketin geçerlilik koşullarının (işlemci, derleyici, yapılandırma) sağlandığının gösterimi; entegrasyon testleri |
-| Zamanlama | Çekirdek hizmetlerinin ve kesme kapalı süresinin üst sınırları | Görev WCET değerleri, çizelgelenebilirlik analizi, hedefte ölçüm |
-| Bellek | Çekirdeğin kendi bellek ve stack ihtiyacı | Görev stack'lerinin analizi, bellek haritası, MPU yapılandırmasının doğrulanması |
-| Hata davranışı | Çekirdek hata dönüşlerinin tanımı ve testi | Uygulamanın bu dönüşlere tepkisinin ve sağlık izleme tepkilerinin testi |
+| Kernel hizmetlerinin işlevi | Kernel gereksinimlerine dayalı test ve yapısal kapsam sonuçları | Paketin geçerlilik koşullarının (işlemci, derleyici, yapılandırma) sağlandığının gösterimi; entegrasyon testleri |
+| Zamanlama | Kernel hizmetlerinin ve kesme kapalı süresinin üst sınırları | Görev WCET değerleri, çizelgelenebilirlik analizi, hedefte ölçüm |
+| Bellek | Kernel'in kendi bellek ve stack ihtiyacı | Görev stack'lerinin analizi, bellek haritası, MPU yapılandırmasının doğrulanması |
+| Hata davranışı | Kernel hata dönüşlerinin tanımı ve testi | Uygulamanın bu dönüşlere tepkisinin ve sağlık izleme tepkilerinin testi |
 | BSP, sürücüler, kütüphane alt kümesi | Varsa referans uygulama | Gereksinimden yapısal kapsama kadar bütün yaşam döngüsü verisi |
 
 Kullanım sırasında izlenecek risk alanları ve her biri için sorulacak sorular
@@ -445,7 +445,7 @@ Kullanım sırasında izlenecek risk alanları ve her biri için sorulacak sorul
 - RTOS zamanında çalışmayı güvence altına almaz; öngörülebilir mekanizmalar sunar.
   Deadline'ların tutulduğunu gösteren, bu mekanizmalar üzerine kurulan tasarım ve
   analizdir.
-- Çekirdek, BSP, sürücüler ve kütüphaneler ayrı katmanlardır; bağlanan her katman
+- Kernel, BSP, sürücüler ve kütüphaneler ayrı katmanlardır; bağlanan her katman
   güvence kapsamına girer ve kanıt sahipliği en baştan netleşmelidir.
 - Emniyet-kritik bir RTOS'un ölçüsü ortalama performans değil, en kötü durumun
   öngörülebilirliğidir: deterministik çizelgeleme, deterministik bellek yönetimi,
@@ -455,7 +455,7 @@ Kullanım sırasında izlenecek risk alanları ve her biri için sorulacak sorul
 - Hazır RTOS önceden geliştirilmiş yazılımdır; sertifikasyon paketi ancak projenin
   seviyesini, işlemcisini, derleyicisini ve yapılandırmasını kapsadığı ölçüde kredi
   sağlar, gerisi entegratörün işidir.
-- Mimari, çekirdek hizmetlerinin kısıtlı bir alt kümesine dayanır: başlatmada
+- Mimari, kernel hizmetlerinin kısıtlı bir alt kümesine dayanır: başlatmada
   yaratılan görevler, işlevin önemine göre değil periyoda göre atanan öncelikler,
   kısa kesme rutinleri,
   zaman aşımlı ve priority inheritance'lı kilitler. Bu kurallar tasarım standardına yazılır.

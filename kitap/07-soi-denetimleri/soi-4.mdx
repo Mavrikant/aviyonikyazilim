@@ -54,14 +54,14 @@ bağların her birini sınar.
 flowchart TD
     PSAC[PSAC] -- "başlık düzeni, sapmalar" --> SAS[SAS]
     SAS -- "sürüm, parça numarası" --> SCI[SCI]
-    SCI -- "derleme ortamı" --> SECI[SECI]
+    SCI -- "build ortamı" --> SECI[SECI]
     SCI -- "yeniden derleme, checksum" --> EOC[Çalıştırılabilir nesne kodu]
     SAS -- "açık rapor listesi" --> PR[Problem raporlama aracı]
 ```
 
 ### Önceki aşamaların kapanışı
 
-- [ ] Her önceki bulgu için ne yapıldığı, hangi kanıtla kapatıldığı ve kimin onayladığı
+- [ ] Önceki her bulgu için ne yapıldığı, hangi kanıtla kapatıldığı ve kimin onayladığı
       tek bir listede görülebiliyor mu?
 - [ ] Bir bulgunun düzeltilmesi başka bir veriyi değiştirdiyse o veri yeniden
       doğrulanmış mı?
@@ -73,7 +73,7 @@ değişikliklerle birlikte doğrulamanın teslim edilen sürüm için hâlâ ge�
 olmadığıdır.
 
 - [ ] Kredi için sunulan test ve analiz sonuçları son baseline'daki çalıştırılabilir
-      nesne kodu (executable object code) için mi geçerli; daha eski bir derlemede
+      nesne kodu (executable object code) için mi geçerli; daha eski bir build'de
       koşulan testler için değişiklik etki analizine (change impact analysis) dayanan
       bir yeniden test gerekçesi yazılmış mı?
 - [ ] SOI-3'te açık kalan gereksinim kapsamı ve yapısal kapsam boşluklarının hepsi
@@ -135,7 +135,7 @@ tutarlı olduğunu üç yönden teyit eder:
 | Yön | Sorulan |
 |---|---|
 | Süreç | Kredi için planlanan faaliyetler tamamlanmış ve kayıtları duruyor mu; kayda geçmemiş ya da onaylanmamış bir gereksinim sapması kalmış mı? |
-| Veri | Yaşam döngüsü verisi planlara ve standartlara göre üretilmiş, kaynaklandığı gereksinimlere izlenebilir ve konfigürasyon kontrolü altında mı; problem raporları (önceki bir uygunluk gözden geçirmesinden ertelenenler dahil) değerlendirilmiş ve durumları kayıtlı mı? |
+| Veri | Yaşam döngüsü verisi planlara ve standartlara göre üretilmiş, kaynaklandığı gereksinimlere izlenebilir ve konfigürasyon kontrolü altında mı; problem raporları (önceki bir uygunluk gözden geçirmesinden ertelenenler dâhil) değerlendirilmiş ve durumları kayıtlı mı? |
 | Ürün | Çalıştırılabilir nesne kodu ile varsa parametre verisi öğesi (parameter data item, PDI) dosyaları arşivlenmiş kaynak koddan yeniden üretilebiliyor ve yayımlanmış yükleme talimatıyla yüklenebiliyor mu? |
 
 Bu yüzden son baseline'dan önce yapılan bir uygunluk gözden geçirmesi, sunulan sürüm
@@ -167,7 +167,7 @@ hakkında bir şey söylemez.
 
 | Bulgu | Tipik nedeni | Önlem |
 |---|---|---|
-| SAS ile SCI arasında sürüm ya da parça numarası farkı | Belgelerin farklı zamanlarda elle güncellenmesi | SCI'yi derleme altyapısından üretmek; SAS'ı SCI'ye başvurarak yazmak |
+| SAS ile SCI arasında sürüm ya da parça numarası farkı | Belgelerin farklı zamanlarda elle güncellenmesi | SCI'yi build altyapısından üretmek; SAS'ı SCI'ye başvurarak yazmak |
 | Açık problem raporu listesi SAS'ta ve araçta farklı | Listenin araçtan bir kez çekilip sonra güncellenmemesi | Listeyi tek kaynaktan, son baseline tarihinde üretmek |
 | Açık raporların sınıfı ya da kabul gerekçesi eksik | Değerlendirmenin son haftaya bırakılması | Raporları açıldıkları anda sınıflandırmak; açık kalacakları düzenli gözden geçirmek |
 | Zamanlama ya da stack analizi eski bir sürüme ait | Son değişikliklerden sonra analizin yenilenmemesi | Değişiklik etki analizinde analiz raporlarını da etkilenen veri olarak listelemek |

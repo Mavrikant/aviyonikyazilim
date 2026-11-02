@@ -70,14 +70,14 @@ sorun, çoğu zaman gerekçenin arkasındaki varsayımların sorgulanmadan kabul
 
 **Maliyet.** En sık dile getirilen gerekçe, saat ücreti daha düşük bir tedarikçiyle
 toplam geliştirme maliyetini düşürmektir. Ancak emniyet-kritik yazılımda maliyetin
-büyük kısmı kod yazmaktan değil; gereksinim (requirement) geliştirme, doğrulama, gözden
+büyük kısmı kod yazmaktan değil, gereksinim (requirement) geliştirme, doğrulama, gözden
 geçirme ve sertifikasyon kanıtı üretiminden gelir. Saat ücreti üzerinden yapılan
 karşılaştırma, bu faaliyetlerin tedarikçi tarafında ne kadar verimli yürütüleceğini
 hesaba katmazsa yanıltıcı olur.
 
 **Kapasite.** Proje takvimi sıkıştığında veya aynı anda birden fazla program
 yürütüldüğünde, iç ekip yetmez ve iş dışarıya taşınır. Bu gerekçe kısa vadede geçerli
-olsa da, tedarikçiye aktarılan işin tanımlanması, aktarılması ve geri geldiğinde
+olsa da, tedarikçiye verilen işin tanımlanması, aktarılması ve geri geldiğinde
 projeye alınması da kapasite tüketir. "Dışarı verdik, yükümüz azaldı" varsayımı,
 koordinasyon yükü ölçülmeden doğrulanamaz.
 
@@ -116,9 +116,9 @@ bir iş bölümünü gösterir; satırlar kural değil, karar verirken sorulacak
 
 | Faaliyet | Dışarı verilmeye uygunluk | Tedarikçinin teslim ettiği | Ana yüklenicide kalan rol ve kanıt |
 |---|---|---|---|
-| Yüksek seviyeli gereksinimler (high-level requirements) | Düşük: sistem bilgisi ve sistem süreçleriyle sürekli geri bildirim ister | Gereksinim taslağı, sistem gereksinimlerine izlenebilirlik | Gereksinimlerin sahipliği; türetilmiş gereksinimlerin (derived requirement) sistem emniyet değerlendirme süreci dahil sistem süreçlerine iletilmesi; gözden geçirme kaydı |
+| Yüksek seviyeli gereksinimler (high-level requirements) | Düşük: sistem bilgisi ve sistem süreçleriyle sürekli geri bildirim ister | Gereksinim taslağı, sistem gereksinimlerine izlenebilirlik | Gereksinimlerin sahipliği; türetilmiş gereksinimlerin (derived requirement) sistem emniyet değerlendirme süreci dâhil sistem süreçlerine iletilmesi; gözden geçirme kaydı |
 | Tasarım ve düşük seviyeli gereksinimler | Orta: mimari kısıtlar ve arayüzler yazılı ve kararlıysa | Tasarım tanımı, düşük seviyeli gereksinimler, iz verisi (trace data) | Arayüz ve mimari uyumunun gözden geçirilmesi; yeni türetilmiş gereksinimlerin değerlendirilmesi |
-| Kodlama | Yüksek: girdi gereksinimler olgun, kodlama standardı ortaksa | Kaynak kod, kod gözden geçirme kayıtları | Örneklemli kod gözden geçirmesi; derlemenin kendi ortamında yinelenmesi |
+| Kodlama | Yüksek: girdi gereksinimler olgun, kodlama standardı ortaksa | Kaynak kod, kod gözden geçirme kayıtları | Örneklemli kod gözden geçirmesi; build'in kendi ortamında yinelenmesi |
 | Gereksinim tabanlı test (requirements-based testing) | Yüksek: gereksinimler kararlı, test ortamı iki tarafta eşdeğerse | Test case'ler, test prosedürleri, sonuçlar, gereksinim–test izlenebilirliği | Testin gereksinimi gerçekten sınadığının örneklemli gözden geçirmesi; seçilmiş testlerin yeniden koşulması |
 | Yapısal kapsam analizi (structural coverage analysis) | Orta: ölçüm devredilir, kapsanmayan kodun çözümlenmesi gereksinim ve tasarım bilgisi ister | Kapsam raporu, her boşluk için gerekçe önerisi | Her kapsam boşluğunun nedeninin ve çözümünün onaylanması |
 | Donanım-yazılım entegrasyonu | Düşük: hedef donanıma ve sistem test ortamına erişim gerekir | Entegrasyon desteği, sorun çözümü | Hedef ortamdaki testlerin yürütülmesi ya da yakından izlenmesi |
@@ -147,7 +147,7 @@ anlaşılması, gözden geçirmede geç fark edilen tutarsızlıklara yol açar.
 **Alan bilgisi eksikliği.** Genel yazılım geliştirme becerisi ile aviyonik alan
 bilgisi aynı şey değildir. ARINC 429 etiket (label) yapısını, yazılım bölümlemesi
 (software partitioning) kısıtlarını veya donanım-yazılım arayüzünün zamanlama davranışını
-bilmeyen bir ekip, sözdizimsel olarak doğru ama alan açısından hatalı iş üretebilir. Bu
+bilmeyen bir ekip, söz dizimsel olarak doğru ama alan açısından hatalı iş üretebilir. Bu
 tür hatalar birim seviyesindeki doğrulamadan kaçar ve genellikle entegrasyon testinde —
 yani düzeltmenin en pahalı olduğu yerde — ortaya çıkar.
 
@@ -262,7 +262,7 @@ verinin yeniden işlenmesi demektir.
 Planların ayrıca neyin **gözetim kaydı** sayılacağını söylemesi gerekir, çünkü son
 denetimde gözetimin yapıldığı ancak kayıtla gösterilebilir. Tipik kayıtlar şunlardır:
 tedarikçi denetim raporları, teslimat kabul tutanakları, gözden geçirme kayıtları,
-bulgu ve düzeltici faaliyet (corrective action) takibi, sapma onayları. Kitabın denetim
+bulgu ve düzeltici faaliyet (corrective action) takibi, sapma onayları. Kitabın kontrol
 listeleri bu iki ucu sorar: planlama denetiminde gözetim yaklaşımının tanımlı olup
 olmadığı ([SW SOI-1](../07-soi-denetimleri/soi-1.mdx)), son denetimde gözetim kayıtlarının tamam
 olup olmadığı ([SW SOI-4](../07-soi-denetimleri/soi-4.mdx)).
@@ -309,7 +309,7 @@ flowchart TD
 
 Pilot teslimatın amacı ürünü onaylamak değil, tedarikçinin beklentiyi anlayıp
 anlamadığını görmektir. Bu yüzden kabul kriterleri biçime değil içeriğe bakmalıdır.
-Küçük bir pilot paket (birkaç gereksinim, onları gerçekleyen kod ve testleri) için örnek
+Küçük bir pilot paket (birkaç gereksinim, onları gerçekleştiren kod ve testleri) için örnek
 bir kontrol listesi:
 
 - Gereksinimler ortak gereksinim standardına uyuyor mu; her biri tek anlamlı ve
@@ -321,7 +321,7 @@ bir kontrol listesi:
   bakıldığını ve bulguların nasıl kapandığını gösteriyor mu? Hiç bulgusu olmayan kayıt
   ayrıca sorgulanmalıdır.
 - Test prosedürü ana yüklenicinin ortamında yeniden koşulduğunda aynı sonucu veriyor mu?
-- Teslimat tanımlı bir baseline'dan mi çıkmış; paketteki her öğenin kimliği
+- Teslimat tanımlı bir baseline'dan mı çıkmış; paketteki her öğenin kimliği
   ve sürümü teslimat listesiyle eşleşiyor mu?
 - Tedarikçinin yaptığı varsayımlar ve açık problemler teslimatla birlikte bildirilmiş mi?
 

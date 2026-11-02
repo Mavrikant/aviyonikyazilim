@@ -8,7 +8,7 @@ import SoiAsamalari from '@site/src/components/SoiAsamalari';
 
 <SoiAsamalari aktif={3} />
 
-SOI-3, otoritenin doğrulama kanıtını incelediği denetimdir: testler gereksinimlerden
+SOI-3, otoritenin doğrulama kanıtını gözden geçirdiği denetimdir: testler gereksinimlerden
 mi türetilmiş, normal ve gürbüzlük durumlarını kapsıyor mu, sonuçlar doğru yazılım
 sürümüne ait mi ve kapsam analizi geride açıklanamamış bir boşluk bırakıyor mu? Bu
 sayfa, SOI-3 öncesinde doğrulama verisini sınamak için bir kontrol listesi sunar.
@@ -34,7 +34,7 @@ her halkasıyla gösterebilmek, SOI-3 hazırlığının özüdür.
 SOI-3 için doğrulamanın bitmesi beklenmez; denetim, doğrulama verisinin temsil edici
 bir bölümü tamamlanıp gözden geçirildiğinde ve yapısal kapsam analizi (structural
 coverage analysis) sonuç üretmeye başladığında yapılır. "Temsil edici bölüm" için
-FAA'nın yazılım onay yönergesi (Order 8110.49) tipik olarak en az yarısını, EASA'nın
+FAA'nın yazılım onay yönergesi (Order 8110.49) tipik olarak en az yarısını anar, EASA'nın
 artık yürürlükte olmayan CM-SWCEH-002 sertifikasyon notu ise en az dörtte üçünü
 anıyordu; projede geçerli eşik, yazılım sertifikasyon planında (Plan for Software
 Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kriterleri:
@@ -60,8 +60,7 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
 - [ ] Beklenen sonuçlar gereksinimden mi türetilmiş, yoksa kodun gerçek çıktısından mı
       kopyalanmış?
 - [ ] Normal aralık testlerinin yanında gürbüzlük (robustness) testleri var mı:
-      geçersiz ve sınır dışı girdiler, bozuk veri, anormal başlatma, aşılan çerçeve
-      süresi, izin verilmeyen durum geçişleri?
+      geçersiz ve sınır dışı girdiler, bozuk veri, anormal başlatma, aşılan frame süresi, izin verilmeyen durum geçişleri?
 - [ ] Normal aralık testlerinde geçerli eşdeğerlik sınıfları (equivalence classes) ve
       sınır değerleri (boundary values) bilinçli olarak seçilmiş mi?
 - [ ] Testler ve prosedürler gözden geçirilmiş; gözden geçirme kaydı var mı?
@@ -74,7 +73,7 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
       testler problem raporuyla (problem report) ilişkilendirilmiş mi?
 - [ ] Kod değiştikten sonra hangi testlerin yeniden koşulduğu bir regresyon analiziyle
       (regression analysis) gerekçelendirilmiş mi?
-- [ ] Yazılım–donanım entegrasyon testleri hedef donanımda mı yapılmış; benzetici ya da
+- [ ] Yazılım–donanım entegrasyon testleri hedef donanımda mı yapılmış; simülatör ya da
       emülatörden kredi alındıysa hedeften farkların hata yakalama yeteneğine etkisi
       değerlendirilmiş, orada yakalanamayacak hatalar için planda belirtilen başka
       doğrulama faaliyeti yapılmış mı?
@@ -96,8 +95,8 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
       (deactivated code)?
 - [ ] Her boşluk için çözüm (yeni test, gereksinim değişikliği, kod kaldırma ya da
       gerekçeli analiz) kayıt altında mı?
-- [ ] Kapsam ölçümü kodu donatarak (instrumentation) yapıldıysa, donatılmış ve
-      donatılmamış kod arasındaki farkın etkisi tartışılmış mı?
+- [ ] Kapsam ölçümü instrumentation ile yapıldıysa, instrumented kod ile instrumented
+      olmayan kod arasındaki farkın etkisi tartışılmış mı?
 - [ ] Seviye A'da, derleyicinin ya da linker'ın ürettiği ve kaynak koda doğrudan
       izlenemeyen nesne kodu belirlenmiş ve doğruluğu ek doğrulamayla gösterilmiş mi;
       böyle kod yoksa bunu gösteren analiz var mı? Analiz temsilî örnek kodla
@@ -106,9 +105,8 @@ Aspects of Certification, PSAC) otoriteyle kararlaştırılır. Tipik giriş kri
 - [ ] Elle yazılmış assembly modüllerinde kapsam ölçütünün
       karşılığı (koşullu dallar, koşullu yürütülen komutlar, dolaylı atlamalar, giriş
       noktaları) planda tanımlanmış ve bu modüllerin kapsamı ölçülmüş mü?
-- [ ] Seviye A, B ve C'de data coupling ve control coupling (data coupling and
-      control coupling) analizi, mimaride tanımlı bileşen arası ilişkilerin testlerde
-      gerçekten işletildiğini gösteriyor mu?
+- [ ] Seviye A, B ve C'de data coupling ve control coupling analizi, mimaride tanımlı
+      bileşen arası ilişkilerin testlerde gerçekten işletildiğini gösteriyor mu?
 
 Seviye D'de yapısal kapsam hedefi yoktur; bu grupta yalnızca yüksek seviyeli
 gereksinimlerin test kapsamı sorulur (düşük seviyeli gereksinimlerin test kapsamı Seviye
@@ -186,9 +184,9 @@ flowchart TD
 | Bulgu | Tipik nedeni | Önlem |
 |---|---|---|
 | Beklenen sonuçlar kodun çıktısından alınmış | Testin kod yazıldıktan sonra, koda bakarak yazılması | Beklenen sonucun kaynağını test case'te gereksinime bağlamak; gözden geçirmede sormak |
-| Gürbüzlük testleri yetersiz | Testin yalnızca "mutlu yol" için yazılması | Gürbüzlük kategorilerini doğrulama planına ve test gözden geçirme kontrol listesine koymak |
+| Gürbüzlük testleri yetersiz | Testin yalnızca "happy path" için yazılması | Gürbüzlük kategorilerini doğrulama planına ve test gözden geçirme kontrol listesine koymak |
 | Sonuçlar baseline'daki sürümle eşleşmiyor | Kod değiştikten sonra testlerin yeniden koşulmaması | Kredi amaçlı koşuları yalnızca baseline'a alınmış sürümlerle yapmak |
-| Kapsam boşlukları "analizle karşılandı" deyip geçilmiş | Analiz kaydının ve gerekçenin yazılmaması | Her boşluk için tekil, gözden geçirilmiş bir çözüm kaydı |
+| Kapsam boşlukları "analizle karşılandı" denip geçilmiş | Analiz kaydının ve gerekçenin yazılmaması | Her boşluk için tekil, gözden geçirilmiş bir çözüm kaydı |
 | Yapısal kapsam, koda bakarak yazılmış testlerle doldurulmuş | Boşluğun nedenini aramak yerine yüzdeyi kapatma isteği | Boşluğu önce sınıflandırmak; eklenen her testi bir gereksinime izlemek |
 | Başarısız test yeniden koşulup geçmiş, geride kayıt yok | Hatanın testte mi kodda mı olduğu kaydedilmeden düzeltilmesi | Kredi amaçlı koşudaki her başarısızlığa problem raporu; kapanışta yeniden doğrulama kaydı |
 | Hedef dışı ortamda test, gerekçesiz | Hedef donanımın geç gelmesi | Ortam farklarını analiz eden ve kritik testleri hedefte tekrarlayan bir plan |

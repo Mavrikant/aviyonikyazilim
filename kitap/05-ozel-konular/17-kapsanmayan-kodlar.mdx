@@ -19,11 +19,11 @@ burada o sınıflandırmanın ayrıntısına ve pratikteki kararlara inilir.
 
 Yapısal kapsam analizi iki soruya yanıt arar: gereksinim tabanlı testler
 (requirements-based testing) kod yapısını yazılım seviyesinin istediği ölçüde çalıştırdı
-mı, ve kodda gereksinimlere dayanmayan, niyet edilmemiş bir işlev var mı? Kapsanmayan
+mı ve kodda gereksinimlere dayanmayan, amaçlanmamış bir işlev var mı? Kapsanmayan
 kod iki soruyu da açık bırakır: ya testler eksiktir ya da kodda gereksinimlerin
 istemediği bir şey vardır. Hangisi olursa olsun, çalıştırılabilir nesne kodunda
 (executable object code) bulunan ama hiçbir testte çalışmamış bir parçanın davranışı
-bilinmez. O parça bir gün çalışırsa — bozulmuş bir işlev göstericisi, hatalı bir
+bilinmez. O parça bir gün çalışırsa — bozulmuş bir fonksiyon pointer'ı, hatalı bir
 konfigürasyon değeri ya da onu erişilebilir kılan sonraki bir değişiklik yüzünden — ne
 yapacağını gösteren kanıt yoktur.
 
@@ -65,10 +65,10 @@ da devre dışı bırakılmış kod üretmez. Sahada en çok karıştırılan ya
 | Yapı | Sık yapılan hata | Doğru ele alış |
 |---|---|---|
 | Savunmacı programlama (defensive programming) yapısı; ör. ulaşılmaması gereken `default` dalı | Ölü kod sayıp silmek | Ölü kod değildir; gereksinim ya da tasarım dayanağı gösterilir, testle ulaşılamayan kısım analizle gerekçelendirilir |
-| Gömülü tanımlayıcı (embedded identifier); ör. imaja (image) yerleştirilmiş parça numarası, sürüm dizgesi | Kullanılmayan veri diye ölü kod saymak | Ölü kod değildir; varlık nedeni tasarımda açıklanır |
+| Gömülü tanımlayıcı (embedded identifier); ör. imaja (image) yerleştirilmiş parça numarası, sürüm string'i | Kullanılmayan veri diye ölü kod saymak | Ölü kod değildir; varlık nedeni tasarımda açıklanır |
 | Bağlanan ama çağrılmayan kütüphane ya da işletim sistemi işlevi | Ölü kod saymak ya da hiç anmamak | Gereksinime izleniyor ve tasarım gereği çalıştırılmıyorsa devre dışı bırakılmış koddur; planlarda beyan edilir ve etkinleşemeyeceği gösterilir. Hiçbir gereksinime izlenmiyorsa gereksiz koddur |
 | Derleyicinin ya da linker'ın imaja almadığı kaynak kod | "İmajda yok, sorun yok" deyip bırakmak | Gereksinime izlenmiyorsa kaynak düzeyinde gereksiz koddur; kaldırılır ya da aşağıdaki iki koşul sağlanır |
-| Koşullu derleme (conditional compilation) ile dışarıda bırakılan kod | Çalışma zamanında kapatılan kodla aynı kanıtı yeterli saymak | İmajda bulunmaz; sözlük tanımı çalıştırılabilir nesne kodunu esas aldığından tanımın harfiyle devre dışı bırakılmış kod değildir, ama uygulamada o başlık altında planlandığı da görülür. Her derleme varyantı ayrı doğrulanır |
+| Koşullu derleme (conditional compilation) ile dışarıda bırakılan kod | Çalışma zamanında kapatılan kodla aynı kanıtı yeterli saymak | İmajda bulunmaz; sözlük tanımı çalıştırılabilir nesne kodunu esas aldığından tanımın harfiyle devre dışı bırakılmış kod değildir, ama uygulamada o başlık altında planlandığı da görülür. Her build varyantı ayrı doğrulanır |
 | Derleyicinin eklediği, kaynak koda doğrudan izlenemeyen nesne kodu | Gereksiz ya da devre dışı bırakılmış kod saymak | Aralık ve dizi indisi denetimi gibi eklemeler gerçekleştirmenin parçasıdır; Seviye A'da belirlenir ve doğruluğu ek doğrulamayla gösterilir |
 
 Savunmacı yapı etiketi kolayca kötüye kullanılır: açıklanamayan her boşluğa "savunmacı"
@@ -87,7 +87,7 @@ kullanılmayan kısımları için aynı soru
 [24. Yazılım Yeniden Kullanımı](./24-yazilim-yeniden-kullanimi.mdx) bölümünde ele alınır.
 
 Kaynakta bulunan ama imaja girmeyen gereksiz kod için DO-178C dar bir kapı bırakır: kodun
-çalıştırılabilir nesne kodunda bulunmadığı analizle gösterilir ve sonraki derlemelere
+çalıştırılabilir nesne kodunda bulunmadığı analizle gösterilir ve sonraki build'lere
 girmesini önleyen prosedürler tanımlanırsa kod kaynakta kalabilir. Optimizasyon düzeyi ya da
 linker seçeneği değiştiğinde aynı kod imaja geri dönebileceği için ikinci koşul
 birincisi kadar önemlidir. Temiz çözüm yine kaldırmaktır.
@@ -103,13 +103,13 @@ Buradaki kritik nokta şudur: kapsanmayan kod, kendi başına bir sonuç değil,
 
 DO-178C, kapsanmayan kod için dört olası neden sayar:
 
-1. **Test eksikliği** — Kod bir gereksinimi gerçekliyor, ama gereksinim tabanlı test case'ler ya da prosedürleri o yolu tetiklememiş. Çözüm: test case
+1. **Test eksikliği** — Kod bir gereksinimi gerçekliyor, ama gereksinim tabanlı test case'ler ya da test prosedürleri o yolu tetiklememiş. Çözüm: test case
    eklemek ya da mevcut testi güçlendirmek; boşluğu gereksinim kapsam analizinin neden
    yakalamadığına da bakılır.
 2. **Gereksinim eksikliği** — Kod gerekli bir davranışı gerçekliyor, ama bu davranış
    hiçbir yüksek ya da düşük seviyeli gereksinimde yazmıyor. Çözüm: gereksinimi yazmak,
    izlenebilirliği (traceability) kurmak ve ardından testi eklemek.
-3. **Gereksiz kod (ölü kod dahil)** — Kod hiçbir gereksinime izlenemiyor: kopyala-yapıştır
+3. **Gereksiz kod (ölü kod dâhil)** — Kod hiçbir gereksinime izlenemiyor: kopyala-yapıştır
    kalıntısı, terk edilmiş bir tasarım denemesi, unutulmuş bir hata ayıklama işlevi.
    Çözüm: kaldırmak.
 4. **Devre dışı bırakılmış kod** — Kod gereksinime izleniyor ve tasarım gereği bu
@@ -138,7 +138,7 @@ flowchart TD
     C -- Hayır --> E["Savunmacı yapı:<br/>analizle gerekçelendir,<br/>kaydını oluştur"]
     B -- Hayır --> F{"Davranış<br/>aslında<br/>gerekli mi?"}
     F -- Evet --> G["Gereksinim eksikliği:<br/>gereksinimi yaz,<br/>izlenebilirliği kur,<br/>test ekle"]
-    F -- Hayır --> H["Gereksiz kod,<br/>ölü kod dahil:<br/>kaldır, yeniden<br/>doğrula"]
+    F -- Hayır --> H["Gereksiz kod,<br/>ölü kod dâhil:<br/>kaldır, yeniden<br/>doğrula"]
 ```
 
 "Davranış aslında gerekli mi?" sorusuna kolayca "evet" denmemelidir. Kodu haklı çıkarmak
@@ -219,7 +219,7 @@ geç bir aşamasında bulunan, işlevsel etkisi olmayan küçük bir artık. Kod
 bırakmak standardın öngördüğü bir çözüm değildir; standarttan sapma olarak ele alınır
 ve uygulamada üç şey gerektirir: sertifikasyon otoritesiyle önceden mutabakat, kodun
 hiçbir koşulda emniyeti etkilemeyeceğini gösteren ve sistem emniyet değerlendirme
-süreciyle desteklenen bir analiz, ve konunun açık problem raporu olarak sunulması.
+süreciyle desteklenen bir analiz ve konunun açık problem raporu olarak sunulması.
 Gerekçe "vakit yoktu"dan fazlasını söylemelidir. Açık raporların nasıl sınıflandırıldığı
 [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx) bölümünde
 anlatılır.
@@ -269,7 +269,7 @@ Sahada en sık karşılaşılan durumlar şunlardır:
 - **Yeniden kullanılan bileşenler ve kütüphaneler**: Başka bir proje için geliştirilmiş
   bileşenin ya da bir kütüphanenin, bu projenin çağırmadığı ama imaja giren işlevleri.
 - **Gelecek sürüm işlevleri**: Kodda hazır bekleyen ama bu sertifikasyon baseline'ında
-  (baseline) etkinleştirilmeyen özellikler. Bu senaryo meşru olmakla birlikte en
+  etkinleştirilmeyen özellikler. Bu senaryo meşru olmakla birlikte en
   riskli olanıdır ve otoriteyle erken konuşulmalıdır.
 
 ### İstem dışı etkinleşmeye karşı önlemler
@@ -287,7 +287,7 @@ koşullarından doğan istem dışı çalışmayı ise standart, etkin kodun ist
    devre dışı bırakılmış kod sayılmaz; standart bu durumu ayrıca ele almaz, uygulamada
    ise yine bu başlık altında planlandığı sık görülür. Adı ne olursa olsun kanıt yükü
    etkinleşememeyi göstermekten, kodun imajda gerçekten bulunmadığını teyit etmeye, her
-   derleme varyantını ayrı bir çalıştırılabilir nesne kodu olarak doğrulamaya ve derleme
+   build varyantını ayrı bir çalıştırılabilir nesne kodu olarak doğrulamaya ve derleme
    seçeneklerini konfigürasyon kontrolünde tutmaya kayar.
 2. **Çalışma zamanı ayrımı** — Kod nesne kodunda vardır; bir konfigürasyon
    parametresi (pin programlama, konfigürasyon dosyası, strap girişi) onu kapalı
@@ -349,7 +349,7 @@ hedeflere (objective) tabidir: gereksinimi, tasarımı ve gözden geçirmesi var
 - **Tasarımda tanım**: Hangi kodun hangi konfigürasyonda devre dışı olduğu ve onu kapalı
   tutan mekanizma, yazılım mimarisi ve tasarım tanımında açıkça belirtilir.
 - **Birinci kategori için etkinleşememe kanıtı**: Kodu çalıştırabilecek yollar (çağrı,
-  işlev göstericisi, konfigürasyon değeri) tek tek çıkarılır; her birinin kapalı,
+  fonksiyon pointer'ı, konfigürasyon değeri) tek tek çıkarılır; her birinin kapalı,
   yalıtılmış ya da hiç var olmadığı analizle ortaya konur ve kapatma mekanizması testle
   sınanır. Bu koda farklı bir yazılım seviyesi atanacaksa gerekçesi sistem emniyet
   değerlendirme sürecinden, doğrulaması hafifletilecekse gerekçesi yazılım geliştirme
@@ -394,7 +394,7 @@ boşluklarında baktığı noktalar [SW SOI-3](../07-soi-denetimleri/soi-3.mdx) 
 ## Bu bölümden akılda kalması gerekenler
 
 - Kapsanmayan kod bir belirtidir; önce kök neden bulunur: test eksikliği, gereksinim
-  eksikliği, gereksiz kod (ölü kod dahil) ya da devre dışı bırakılmış kod.
+  eksikliği, gereksiz kod (ölü kod dâhil) ya da devre dışı bırakılmış kod.
 - Sınıfı kodun görünüşü değil üç soru belirler: gereksinime izleniyor mu, tasarım
   gereği mi var, çalıştırılabilir mi? Aynı ölçütler veri için de geçerlidir.
 - Ölü kod gereksiz kodun özel hâlidir. İkisi de kaldırılır; kaldırma da bir

@@ -111,7 +111,7 @@ sınıfıyla yazılır; sondaki parantez maddenin geçerli olduğu seviyeleri ve
 - [ ] **PLS-14** Planlar gözden geçirme, analiz ve test kayıtlarının hangi alanları
       taşıyacağını tanımlıyor mu? Örneğin her kayıt bakılan verinin kimliğini ve sürümünü,
       faaliyeti yapan kişiyi ve verinin yazarını (bağımsızlık kayıttan görülebilsin diye),
-      kullanılan yöntemi (kontrol listesi ve sürümü dahil) ve ortamın sürümünü gösterecek.
+      kullanılan yöntemi (kontrol listesi ve sürümü dâhil) ve ortamın sürümünü gösterecek.
       *(A–C · §4.6.c)*
 - [ ] **PLS-15** SDP'deki yaşam döngüsü modeli, PSAC'taki takvimde ve proje planında görünen
       artım ve teslim yapısıyla örtüşüyor mu? Örneğin artımlı çalışılacaksa geçiş kriterleri
@@ -155,18 +155,18 @@ sınıfıyla yazılır; sondaki parantez maddenin geçerli olduğu seviyeleri ve
 
 ### Ortam ve araçlar
 
-- [ ] **PLS-25** Plan setinde ve SECI taslağında adı geçen her araç (derleme ve test script'leri
-      dahil) araç envanterinde bulunuyor ve araç kalifikasyonu (tool qualification) gerekmediği
+- [ ] **PLS-25** Plan setinde ve SECI taslağında adı geçen her araç (build ve test script'leri
+      dâhil) araç envanterinde bulunuyor ve araç kalifikasyonu (tool qualification) gerekmediği
       söylenen her aracın çıktısını doğrulayan faaliyet SVP'de gösteriliyor mu? Örneğin test
       sonuçlarını toplayan script'in çıktısını kimin, neye bakarak denetleyeceği yazılı.
       *(A–D · A-1 #4)*
 - [ ] **PLS-26** Derleyici, linker ve kod üreteci (code generator) için kullanılacak
-      seçenekler, optimizasyon düzeyi dahil, planda yazılı ve bu seçeneklerin
+      seçenekler, optimizasyon düzeyi dâhil, planda yazılı ve bu seçeneklerin
       yapısal kapsam analizine ve nesne kodu doğrulamasına etkisi SVP'de ele alınmış mı?
       *(A–C · §4.4.1.e)*
-- [ ] **PLS-27** Derleyici, linker ya da yükleyici (loader) sürümü veya seçenekleri proje
+- [ ] **PLS-27** Derleyici, linker ya da loader sürümü veya seçenekleri proje
       ortasında değişirse hangi testlerin yeniden koşulacağına ve kapsamın yeniden ölçülüp
-      ölçülmeyeceğine nasıl karar verileceği SVP'de yazılı mı? Örneğin eski ve yeni derlemenin
+      ölçülmeyeceğine nasıl karar verileceği SVP'de yazılı mı? Örneğin eski ve yeni build'in
       nesne kodu karşılaştırılıyor, fark çıkan bileşenlerin testleri ve kapsam analizi
       yenileniyor. *(A–C · §4.4.2.c)*
 - [ ] **PLS-28** Hedef dışı bir test ortamından (emülatör, simülatör) kredi alınacaksa SVP bu
@@ -193,7 +193,7 @@ script ile hızlanır.
 |---|---|---|
 | PLS-04, PLS-05 | Hedef–bölüm eşlemesini tutan gereksinim ya da belge yönetim aracında boş eşleme sorgusu | Eşlenen bölümün hedefi gerçekten karşılayıp karşılamadığı; eşleme dolu, içerik boş olabilir |
 | PLS-08 | Belge numarası ve bölüm atıflarının hedef belgede var olduğunu denetleyen çapraz atıf script'i | Atıf yapılan bölümün, atıf yapanın söylediğini gerçekten söyleyip söylemediği |
-| PLS-09, PLS-25 | Belgelerdeki araç adı ve sürüm dizgelerini SECI taslağıyla ve araç envanteriyle karşılaştıran script | Farkın bilinçli mi (ör. doğrulama ortamında başka sürüm) yoksa hata mı olduğu; kalifikasyon gerekmez denen aracın çıktısını doğrulayan faaliyetin o çıktıyı gerçekten kapsadığı |
+| PLS-09, PLS-25 | Belgelerdeki araç adı ve sürüm string'lerini SECI taslağıyla ve araç envanteriyle karşılaştıran script | Farkın bilinçli mi (ör. doğrulama ortamında başka sürüm) yoksa hata mı olduğu; kalifikasyon gerekmez denen aracın çıktısını doğrulayan faaliyetin o çıktıyı gerçekten kapsadığı |
 | PLS-11 | Baseline ve kayıt türü adlarını belgelerden çıkarıp karşılaştıran script | Aynı adın aynı içeriği ve aynı zamanı anlatıp anlatmadığı |
 | PLS-16 | Belirsiz ifade listesiyle metin taraması | Bulunan ifadenin bağlamında gerçekten belirsiz olup olmadığı; listede olmayan ama ölçülemeyen taahhütler |
 
@@ -213,7 +213,7 @@ bölümündeki ölçütlerle değerlendirilir.
 | PSAC'ta kod üreteci kullanılmadığı yazıyor, SDP'nin araç tablosunda bir kod üretim aracı var | Araç envanterinin tek yerde tutulmaması | PLS-17, PLS-25 |
 | Devre dışı bırakılmış kod PSAC'ta anılmış, SVP'de doğrulama yaklaşımı yok | Ek hususların yalnızca PSAC yazılırken düşünülmesi | PLS-18 |
 | Karmaşıklık sınırı tasarım ve kodlama standardında farklı sayıyla geçiyor | Aynı kuralın iki belgede ayrı ayrı tanımlanması | PLS-08 |
-| Kapsamın ölçüldüğü derleme ile uçuş derlemesinin seçenekleri farklı, fark değerlendirilmemiş | Kapsam aracının donatma (instrumentation) için ayrı derleme istemesi | PLS-26 |
+| Kapsamın ölçüldüğü build ile uçuş build'inin seçenekleri farklı, fark değerlendirilmemiş | Kapsam aracının instrumentation için ayrı build istemesi | PLS-26 |
 
 ### İyi yazılmış bulgu
 

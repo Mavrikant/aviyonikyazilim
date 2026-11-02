@@ -7,7 +7,7 @@ description: "Yazılım mimarisinin gözden geçirilmesi için DO-178C §6.3.3 k
 
 import ListeIndir from '@site/src/components/KontrolListesi';
 
-Bu kontrol listesi (checklist), yazılım mimarisinin (software architecture) peer review'da kullanılır. Bileşenler ve katmanlar, arayüzler, veri ve kontrol akışı,
+Bu kontrol listesi (checklist), yazılım mimarisi (software architecture) için yapılan peer review'da kullanılır. Bileşenler ve katmanlar, arayüzler, veri ve kontrol akışı,
 görev yapısı ve çizelgeleme (scheduling), kaynak bütçeleri ve varsa yazılım bölümlemesi
 (software partitioning) düzeni; yüksek seviyeli gereksinimlere (high-level requirements), tasarım
 standardına (software design standards) ve hedef bilgisayara (target computer) karşı denetlenir.
@@ -76,13 +76,13 @@ verir.
       hiçbir gereksinimin gerektirmediği bir bileşen ya da işlev kalmamış mı?
       *(A–C · §6.3.3.a)*
 - [ ] **MIM-02** Verinin girişten çıkışa geçtiği bileşen ve görev zinciri, gereksinimlerdeki
-      tepki süresi, güncelleme hızı ve kip davranışıyla çelişmiyor mu? Örneğin 200 ms'lik bir
+      tepki süresi, güncelleme hızı ve mod davranışıyla çelişmiyor mu? Örneğin 200 ms'lik bir
       tepki süresi, aradaki çevrim sayısı ve görev periyotları toplandığında karşılanıyor mu?
       *(A–C · §6.3.3.a)*
 - [ ] **MIM-03** Mimari kararlardan doğan ve üst seviyede karşılığı olmayan davranışlar (yeni bir
-      kip, bileşen ayrımının getirdiği gecikme) ile bileşenlerin yazılım seviyesini değiştiren
+      mod, bileşen ayrımının getirdiği gecikme) ile bileşenlerin yazılım seviyesini değiştiren
       bölümleme gibi önlemler, türetilmiş gereksinim (derived requirement) olarak işaretlenip
-      emniyet değerlendirmesi dahil sistem süreçlerine iletilmiş mi? *(A–C · §5.2.2.c)*
+      emniyet değerlendirmesi dâhil sistem süreçlerine iletilmiş mi? *(A–C · §5.2.2.c)*
 
 ### Veri akışı, kontrol akışı ve arayüzler
 
@@ -90,8 +90,8 @@ verir.
       hızı, tazelik sınırı, geçerlilik bilgisi ve başlangıç değeri tek bir tanımda yazılı mı ve
       iki uç bu tanımı aynı biçimde kullanıyor mu? Örneğin üreten knot gönderirken tüketen
       metre/saniye beklemiyor mu? *(A–C · §6.3.3.b)*
-- [ ] **MIM-05** Bileşenlerin çağrı ilişkileri, kip seçimi gibi kontrol etkileri ve okuyup
-      yazdığı global veriler bileşen arayüz tablosunda eksiksiz mi; mimaride görünmeyen bir veri
+- [ ] **MIM-05** Bileşenlerin çağrı ilişkileri, mod seçimi gibi kontrol etkileri ve okuyup
+      yazdığı global veriler bileşen arayüz tablosunda eksiksiz mi; mimaride görünmeyen bir data
       ya da control coupling yok mu? *(A–C · §6.3.3.b)*
 - [ ] **MIM-06** Kontrol akışındaki çalışma sırası veri akışıyla uyumlu mu; her bileşen okuduğu
       veriyi üreten bileşenden sonra çalışıyor ya da bayat veriyi tazelik bilgisiyle ayırt
@@ -99,7 +99,7 @@ verir.
 - [ ] **MIM-07** Birden çok görevin ya da kesmenin eriştiği her verinin tek bir yazanı var mı ve
       okuyanları ile koruma yöntemi (priority inheritance'lı mutex, kuyruk, çift buffer) tasarımda
       belirtilmiş mi? *(A–C · §6.3.3.b)*
-- [ ] **MIM-08** Daha düşük yazılım seviyesindeki bir bileşenden ya da bölümden veri alan
+- [ ] **MIM-08** Daha düşük yazılım seviyesindeki bir bileşenden ya da partition'dan veri alan
       bileşen, bu veriyi kullanmadan önce aralık, tazelik ve tutarlılık denetiminden geçiriyor
       mu ve bu denetim bir gereksinime bağlanmış mı? *(A–C · §6.3.3.b)*
 
@@ -118,7 +118,7 @@ verir.
       paylaşılan buffer'lar önbelleksiz bölgede ya da açık önbellek (cache) eşitlemesiyle mi
       tutuluyor? *(A–B · §6.3.3.c)*
 - [ ] **MIM-12** Çok çekirdekli işlemci (multi-core processor) kullanılıyorsa görevlerin ve
-      bölümlerin çekirdeklere ataması, kullanılmayan çekirdeklerin durumu ve paylaşılan önbellek,
+      partition'ların çekirdeklere ataması, kullanılmayan çekirdeklerin durumu ve paylaşılan önbellek,
       bellek denetleyicisi ve veri yolu üzerinden oluşan girişim kanalları (interference
       channels) mimaride ele alınmış mı? *(A–B · §6.3.3.c)*
 
@@ -131,9 +131,8 @@ verir.
       mutex'ler yalnızca başlatmada yaratılıyor; görevlerin taban öncelikleri, kilit protokolünün
       getirdiği geçici yükseltme, yani priority inheritance ya da priority ceiling dışında çalışma sırasında değiştirilmiyor; her bekleme zaman
       aşımıyla sınırlı ve kuyruk taşması tanımlı bir tepkiye bağlı mı? *(A–B · §6.3.3.d)*
-- [ ] **MIM-15** Her bileşenin davranışı test ya da analizle gözlenebilir mi: kip, hata sayaçları
-      ve geçerlilik bayrakları gibi iç durumlar tanımlı bir arayüzden okunabiliyor ve test
-      kancalarının uçuş imajındaki durumu (kaldırılmış ya da devre dışı) belli mi?
+- [ ] **MIM-15** Her bileşenin davranışı test ya da analizle gözlenebilir mi: mod, hata sayaçları
+      ve geçerlilik bayrakları gibi iç durumlar tanımlı bir arayüzden okunabiliyor ve test hook'larının uçuş imajındaki durumu (kaldırılmış ya da devre dışı) belli mi?
       *(A–B · §6.3.3.d)*
 
 ### Tasarım standardına uyum
@@ -143,29 +142,28 @@ verir.
       (deviation) kaydı var mı? *(A–C · §6.3.3.e)*
 - [ ] **MIM-17** Kullanılan RTOS hizmetleri, tasarım standardının izin verdiği hizmet listesinde ve
       tedarikçinin sertifikasyon paketinin kapsadığı yapılandırmanın içinde mi? Örneğin kesme
-      bağlamından yalnızca beklemeyen çekirdek çağrıları yapılıyor mu? *(A–C · §6.3.3.e)*
+      bağlamından yalnızca beklemeyen kernel çağrıları yapılıyor mu? *(A–C · §6.3.3.e)*
 
 ### Bölümleme ve koruma
 
 - [ ] **MIM-18** Bölümleme kullanılıyorsa alan bölümlemesi (spatial partitioning) için her
-      bölümün her bellek bölgesine erişim hakkı (oku, yaz, çalıştır, erişim yok) boş hücre
+      partition'ın her bellek bölgesine erişim hakkı (oku, yaz, çalıştır, erişim yok) boş hücre
       bırakılmadan tanımlı mı ve hiçbir bölge aynı anda yazılabilir ve çalıştırılabilir değil mi?
       *(A–D · §6.3.3.f)*
-- [ ] **MIM-19** Zaman bölümlemesinde (temporal partitioning) pencerelerin toplamı ana çerçeveye
-      (major frame) eşit mi, her pencere bölümün WCET değerini ve context switch (context
-      switch) süresini karşılıyor mu ve penceresini aşan bölümün kesilmesi tanımlı mı?
+- [ ] **MIM-19** Zaman bölümlemesinde (temporal partitioning) pencerelerin toplamı major frame'e
+      eşit mi, her pencere partition'ın WCET değerini ve context switch süresini karşılıyor mu
+      ve penceresini aşan partition'ın kesilmesi tanımlı mı?
       *(A–D · §6.3.3.f)*
 - [ ] **MIM-20** Bellek korumasının ve pencere çizelgesinin etrafından dolaşabilen yollar (DMA,
       paylaşılan giriş/çıkış ve çevre birimi register'ları, önbellek, kesmeler) paylaşılan kaynak
       matrisinde tek tek ele alınmış ve her satır için önlem ile kanıt gösterilmiş mi?
       *(A–D · §6.3.3.f)*
-- [ ] **MIM-21** Bölümler arası kanallar konfigürasyonla statik tanımlı mı, bloklayan çağrılar
-      zaman aşımlı mı ve kuyruk portunun (queuing port) dolması ya da örnekleme portundaki
-      (sampling port) verinin bayatlaması gibi kanal durumlarına alıcı bölümün tepkisi tanımlı
-      mı? *(A–D · §6.3.3.f)*
-- [ ] **MIM-22** Bölümlemeyi sağlayan yazılım (çekirdek, koruma tablolarını kuran başlatma kodu,
+- [ ] **MIM-21** Partition'lar arası kanallar konfigürasyonla statik tanımlı mı, bloklayan çağrılar
+      zaman aşımlı mı ve queuing port'un dolması ya da sampling port'taki verinin bayatlaması
+      gibi kanal durumlarına alıcı partition'ın tepkisi tanımlı mı? *(A–D · §6.3.3.f)*
+- [ ] **MIM-22** Bölümlemeyi sağlayan yazılım (kernel, koruma tablolarını kuran başlatma kodu,
       pencere geçişini yapan scheduler, ortak sürücüler) ve bölümleme konfigürasyon
-      tabloları, koruduğu en yüksek seviyeli bölümün yazılım seviyesinde geliştirilip
+      tabloları, koruduğu en yüksek seviyeli partition'ın yazılım seviyesinde geliştirilip
       doğrulanıyor mu? *(A–D · §6.3.3.f)*
 - [ ] **MIM-23** Kullanıcı tarafından değiştirilebilir yazılım (user-modifiable software) varsa
       değiştirilemeyen bileşeni koruyan mekanizma mimaride tanımlı mı ve değiştirilebilir
@@ -173,34 +171,34 @@ verir.
 
 ### Emniyet mekanizmaları ve hata yönetimi
 
-- [ ] **MIM-24** Emniyet gereksinimlerinin istediği her izleme işlevi, örneğin watchdog timer'ı, mimaride hangi bileşende ve görevde, hangi periyotla
+- [ ] **MIM-24** Emniyet gereksinimlerinin istediği her izleme işlevi, örneğin watchdog timer, mimaride hangi bileşende ve görevde, hangi periyotla
       çalıştığıyla gösterilmiş mi; izleyen ile izlenen aynı hatadan (aynı görev, aynı saat
       kaynağı) birlikte etkilenmiyor mu? *(A–C · §6.3.3.a)*
 - [ ] **MIM-25** Hata algılama ve bildirim yolları ile normal çalışma, kısıtlı çalışma (degraded
       mode) ve güvenli durum (safe state) arasındaki geçişler tek bir hata yönetimi bileşeninde
-      toplanmış mı ve işlemci istisnaları dahil her arıza türü için seçilen tepki (yeniden
+      toplanmış mı ve işlemci istisnaları dâhil her arıza türü için seçilen tepki (yeniden
       başlatma, kısıtlı çalışma, güvenli durum), onu isteyen emniyet gereksinimine izlenebiliyor
       mu? *(A–C · §6.3.3.a)*
 
 ### Çizelgeleme ve zaman bütçesi
 
-- [ ] **MIM-26** Her görevin periyodu, deadline, önceliği, WCET bütçesi ve stack
+- [ ] **MIM-26** Her görevin periyodu, deadline'ı, önceliği, WCET bütçesi ve stack
       boyutu görev tablosunda verilmiş mi ve öncelikler tasarım standardındaki atama kuralına,
       örneğin rate-monotonic (RM) kurala göre mi atanmış? *(A–B · §6.3.3.c)*
 - [ ] **MIM-27** İşlemci zamanı, bellek ve veri yolu için bütçe, pay (margin) ve payın nasıl
       ölçüleceği tasarımda yazılı mı ve en kötü durumdaki kullanım tasarım standardındaki en az
       payı koruyor mu? *(A–B · §6.3.3.c)*
 - [ ] **MIM-28** Çizelgelenebilirlik analizi (schedulability analysis) ya da cyclic executive
-      (cyclic executive) için çerçeve tablosu; context switch, kesme yükü ve critical section'lardan gelen engellenme süresi (blocking time) dahil edilerek mimarinin gözden
-      geçirilen sürümü için yapılmış mı? *(A–B · §6.3.3.c)*
+      için frame tablosu; context switch, kesme yükü ve critical section'lardan gelen blocking
+      time dâhil edilerek mimarinin gözden geçirilen sürümü için yapılmış mı? *(A–B · §6.3.3.c)*
 
 ### Devre dışı bırakılmış kod
 
 - [ ] **MIM-29** Devre dışı bırakılmış kod (deactivated code) ya da option-selectable yazılım
-      (option-selectable software) varsa, etkin işlevleri etkilemesini ve istem dışı
+      varsa, etkin işlevleri etkilemesini ve istem dışı
       etkinleşmesini (inadvertent enabling) önleyen mekanizma mimaride tanımlı mı ve tanımsız ya
       da bozuk seçim verisi işlevi kapalı tutuyor mu? *(A–C · §5.2.4)*
-- [ ] **MIM-30** Koşullu derleme anahtarları ve derleme varyantları tasarımda listelenmiş mi ve
+- [ ] **MIM-30** Koşullu derleme anahtarları ve build varyantları tasarımda listelenmiş mi ve
       her varyantın hangi imaja hangi bileşenleri soktuğu belli mi? *(A–C · §5.2.4)*
 
 ## Araçla denetlenebilecek maddeler
@@ -215,7 +213,7 @@ geçirmesinde yinelenir.
 | MIM-04 | Tasarım aracında ya da veri sözlüğünde boş alan ve uç eşleşmesi (tip, birim) sorgusu | Değerlerin anlamı: aralığın ve tazelik sınırının gereksinimle uyumu |
 | MIM-05, MIM-13 | Kod varsa statik analizin çağrı grafiği ve global erişim raporu; çağrı grafiğinde döngü taraması | Raporla tablo arasındaki farkın hangisinde hata olduğu; fonksiyon pointer'ıyla yapılan çağrıların hedefleri |
 | MIM-18, MIM-19 | Bölümleme konfigürasyon tablosunu denetleyen script: bölge örtüşmesi, hem yazılabilir hem çalıştırılabilir bölge, pencere toplamı | Hakların tasarımda öngörülenle örtüşmesi; tablonun dışında kalan DMA ve aygıt yolları (MIM-20) |
-| MIM-28 | Çizelgelenebilirlik analiz aracı | Girdilerin (WCET, kesme sıklığı, engellenme süresi) kaynağı ve güncelliği; aracın modelinin kullanılan RTOS'un davranışıyla uyumu |
+| MIM-28 | Çizelgelenebilirlik analiz aracı | Girdilerin (WCET, kesme sıklığı, blocking time) kaynağı ve güncelliği; aracın modelinin kullanılan RTOS'un davranışıyla uyumu |
 
 Görev kümesi denemeleri için sitedeki
 [Görev Çizelgeleme Analiz Aracı](/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme)
@@ -230,7 +228,7 @@ gerektirip gerektirmediği sorusu doğar
 |---|---|---|
 | Arayüz tablosunda birim, tazelik sınırı ya da geçerlilik bilgisi boş | Tablonun yalnızca ad ve tiple doldurulması; anlamın koda bırakılması | MIM-04 |
 | Kodda mimaride gösterilmeyen global veri erişimi var; coupling analizinde bulgu olarak dönüyor | Arayüz tablosunun kod değiştikçe güncellenmemesi | MIM-05 |
-| Düşük seviyeli bölümden gelen değer denetimsiz kullanılıyor | Gönderenin geçerlilik bayrağına ya da zaman damgasına güvenilmesi | MIM-08 |
+| Düşük seviyeli partition'dan gelen değer denetimsiz kullanılıyor | Gönderenin geçerlilik bayrağına ya da zaman damgasına güvenilmesi | MIM-08 |
 | Öncelikler işlevin önemine göre verilmiş | Önceliğin bir önem sıralaması sanılması | MIM-26 |
 | Çizelgelenebilirlik analizi eski sürüme ait ya da kesme yükünü içermiyor | Analizin bir kez yapılıp mimari değiştikçe yenilenmemesi | MIM-28 |
 | Bölümleme matrisinde DMA ya da çevre birimi register'ları yok | "Kimse oraya yazmaz" varsayımı | MIM-20 |
@@ -241,9 +239,9 @@ gerektirip gerektirmediği sorusu doğar
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "Arayüzler eksik." | "MIM-04: Tasarım tanımı sürüm 1.3, havahızı arayüzü: tazelik sınırı ve geçerlilik bilgisi tanımsız; tasarım standardının arayüz tanımı kuralı bütün öznitelikleri istiyor; uyarı mantığının bayat veriyi nasıl ayırt edeceği yazılmalı." |
+| "Arayüzler eksik." | "MIM-04: Tasarım tanımı sürüm 1.3, hava hızı arayüzü: tazelik sınırı ve geçerlilik bilgisi tanımsız; tasarım standardının arayüz tanımı kuralı bütün öznitelikleri istiyor; uyarı mantığının bayat veriyi nasıl ayırt edeceği yazılmalı." |
 | "Zaman bütçesi riskli görünüyor." | "MIM-28: Çizelgelenebilirlik analizi (rev. B) bakım veri yolu kesmesini içermiyor; kesme tablosuna göre bu kesme en sık 2 ms'de bir gelebilir; kontrol görevinin en kötü tepki süresi bu yükle yeniden hesaplanmalı ve pay raporlanmalı." |
-| "Bölümleme yeterli değil." | "MIM-20: Paylaşılan kaynak matrisinde DMA denetleyicisi satırı yok; bellek koruma tablosu bakım bölümüne DMA register'larında yazma hakkı veriyor; DMA'yı yalnızca çekirdeğin programlayabildiği gösterilmeli ya da bu erişim kapatılmalı." |
+| "Bölümleme yeterli değil." | "MIM-20: Paylaşılan kaynak matrisinde DMA denetleyicisi satırı yok; bellek koruma tablosu bakım partition'ına DMA register'larında yazma hakkı veriyor; DMA'yı yalnızca kernel'in programlayabildiği gösterilmeli ya da bu erişim kapatılmalı." |
 
 ## Seviyeye göre uyarlama
 

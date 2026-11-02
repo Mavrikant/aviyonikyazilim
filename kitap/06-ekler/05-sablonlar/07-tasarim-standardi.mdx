@@ -74,7 +74,7 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 6.2 Kesmeler
 6.3 Olay güdümlü mimari
 6.4 Dinamik görev oluşturma
-6.5 Yeniden girilebilirlik
+6.5 Reentrancy
 6.6 Global veri ve paylaşılan kaynaklar
 6.7 İstisna yönetimi
 7 Tasarım kısıtları
@@ -104,8 +104,8 @@ işlemciden, işletim sisteminden ve önceki ölçümlerden çıkarılır.
 ### 1. Amaç ve kapsam
 
 Bu bölüm standardın hangi bileşenlere, hangi seviyelerde ve hangi tasarım verisine
-uygulandığını söyler. Kapsam dışı bırakılanlar (işletim sistemi çekirdeği, BSP
-(board support package, BSP), önceden geliştirilmiş bileşenler, otomatik üretilen kod)
+uygulandığını söyler. Kapsam dışı bırakılanlar (işletim sistemi kernel'i, BSP
+(board support package), önceden geliştirilmiş bileşenler, otomatik üretilen kod)
 adlarıyla ve tabi oldukları standartla yazılır; yazılmazsa her gözden geçirmede "bu bileşen
 bu kurala tabi mi?" sorusu yeniden açılır. Bağlayıcı kural ile tavsiye arasındaki dil farkı
 da burada tanımlanır, çünkü sapma süreci yalnızca bağlayıcı kurallar için işler. Çok sürümlü
@@ -121,7 +121,7 @@ standartlarıyla geliştirilecekse bu da kapsamda yazılır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Bu standart projedeki tüm tasarımlar için geçerlidir." | "Bu standart `<ürün adı>` uçuş yazılımının Seviye B ve C bileşenlerine uygulanır; `<işletim sistemi adı ve sürümü>` çekirdeği ve BSP, tedarikçinin tasarım verisiyle birlikte kapsam dışıdır." |
+| "Bu standart projedeki tüm tasarımlar için geçerlidir." | "Bu standart `<ürün adı>` uçuş yazılımının Seviye B ve C bileşenlerine uygulanır; `<işletim sistemi adı ve sürümü>` kernel'i ve BSP, tedarikçinin tasarım verisiyle birlikte kapsam dışıdır." |
 
 ### 2. Tasarım tanımlama yöntemi ve gösterimler
 
@@ -130,7 +130,7 @@ görünümlerle (bileşen, veri akışı, kontrol akışı, durum, görev tablos
 diyagram türünde öğelerin anlamını ve tasarım verisinin nerede durduğunu (mimari belgesi,
 gereksinim aracı, veri sözlüğü (data dictionary)) belirler. Tasarım modeli (design model)
 kullanılıyorsa modelleme kuralları ayrı bir model standardına (software model standards)
-gider; biçimsel yöntemlerle (formal methods) analiz edilecek gösterimin sözdizimi ve anlamı
+gider; biçimsel yöntemlerle (formal methods) analiz edilecek gösterimin söz dizimi ve anlamı
 matematiksel olarak tanımlı olmalıdır.
 
 **Verilecek kararlar:**
@@ -146,8 +146,8 @@ geçirene iki farklı şey söyler; data ve control coupling analizi de bu belir
 
 Bu bölüm bileşenlerin nasıl bölüneceğini, nasıl bağlanacağını ve arıza karşısında nasıl
 davranacağını sınırlar; mimarinin tutarlılığı ve hedef bilgisayarla uyumu gözden geçirmede bu
-kurallarla değerlendirilir. Bölüm sınırını geçen verinin doğrulanması, değiştirilemeyen
-bileşenin kullanıcı tarafından değiştirilebilir bileşenden korunması, watchdog timer'ı ve makullük denetimi (reasonableness check) gibi izleme
+kurallarla değerlendirilir. Partition sınırını geçen verinin doğrulanması, değiştirilemeyen
+bileşenin kullanıcı tarafından değiştirilebilir bileşenden korunması, watchdog timer ve makullük denetimi (reasonableness check) gibi izleme
 mekanizmaları ve en kötü durum yürütme süresine (worst-case execution time, WCET) bırakılacak
 pay buraya yazılır.
 
@@ -155,7 +155,7 @@ pay buraya yazılır.
 |---|---|---|---|
 | TS-01 | Bağımlılık yalnızca üst katmandan alt katmana doğrudur; donanım register'larına yalnızca sürücü katmanı erişir. | Donanım değişikliği sürücüde kalır; etki analizi daralır. | Statik analizden çıkan bağımlılık grafiği katman tablosuyla karşılaştırılır. |
 | TS-02 | Her arayüz verisi için birim, aralık, çözünürlük, güncelleme hızı, tazelik sınırı, geçerlilik bilgisi ve başlangıç değeri yazılır. | Entegrasyon hatası çoğunlukla aynı verinin iki tarafta farklı yorumlanmasıdır. | Veri sözlüğünde boş alan sorgusu; anlam gözden geçirmede. |
-| TS-03 | Daha düşük seviyeli bir bileşenden ya da başka bir bölümden gelen veri, kullanılmadan önce aralık ve tazelik denetiminden geçer. | Üst seviyeli bileşen hatalı girdiye karşı kendini korur. | Arayüz tablosunda kaynak seviyesi sütunu; denetimi yapan düşük seviyeli gereksinime iz. |
+| TS-03 | Daha düşük seviyeli bir bileşenden ya da başka bir partition'dan gelen veri, kullanılmadan önce aralık ve tazelik denetiminden geçer. | Üst seviyeli bileşen hatalı girdiye karşı kendini korur. | Arayüz tablosunda kaynak seviyesi sütunu; denetimi yapan düşük seviyeli gereksinime iz. |
 | TS-04 | Bileşenler algıladıkları hatayı hata yönetimi bileşenine bildirir; kısıtlı çalışma ya da güvenli duruma geçişe yalnızca o bileşen karar verir. | Aynı arızaya tutarlı tepki; sınanacak yol sayısı azalır. | Durum diyagramı ve çağrı grafiğinin gözden geçirmesi. |
 | TS-05 | En kötü durumda işlemci kullanımı %80'i, her görevin stack kullanımı ayrılan alanın %75'ini aşmaz. | Sonraki değişiklikler ve ölçüm belirsizliği için pay. | WCET ve stack kullanımı analiz raporları. |
 
@@ -163,20 +163,20 @@ pay buraya yazılır.
 
 - Kaç katman var ve donanıma hangi katman erişir?
 - Bölümleme ya da kullanıcı tarafından değiştirilebilir bileşen varsa koruma hangi
-  mekanizmayla sağlanıyor; bölümler arası veri hangi kanallardan geçiyor?
+  mekanizmayla sağlanıyor; partition'lar arası veri hangi kanallardan geçiyor?
 - Hangi izleme mekanizmaları hangi koşulda zorunlu?
 - İşlemci zamanı, bellek ve veri yolu için en az pay kaç, nasıl ölçülür?
-- Çok çekirdekli işlemcide (multi-core processor) görevler ve bölümler çekirdeklere hangi
+- Çok çekirdekli işlemcide (multi-core processor) görevler ve partition'lar çekirdeklere hangi
   kuralla atanıyor; paylaşılan önbellek ve veri yolu girişimi (interference) WCET bütçesine nasıl giriyor
   ([20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx#çok-çekirdekli-işlemciler))?
-- Sistem gereksinimleri tek olay bozulmasına (single event upset) karşı yazılıma önlem
+- Sistem gereksinimleri single event upset'e (SEU) karşı yazılıma önlem
   ayırdıysa saklı veri ve donanım yapılandırması hangi yöntemle denetleniyor: döngüsel
   artıklık denetimi (cyclic redundancy check, CRC), register'ların periyodik tazelenmesi?
 
 ### 4. Düşük seviyeli gereksinim kuralları
 
 Tasarım standardının en çok tartışılan bölümüdür. Ölçüt şudur: düşük seviyeli gereksinim
-(LLR) koddan bire bir kopya olmayacak kadar soyut, kodlayıcıya davranış kararı bırakmayacak
+(LLR) koddan birebir kopya olmayacak kadar soyut, kodlayıcıya davranış kararı bırakmayacak
 kadar somut olmalıdır; kodlayıcı LLR'yi ve mimariyi okuyarak başka bilgiye gerek duymadan kodu
 yazabilmelidir. Bölüm bu ölçütü bir yazım kalıbına, zorunlu özniteliklere (kimlik, üst iz,
 türetilmiş işareti, gerekçe, doğrulama yöntemi) ve kodla iz kurulacak birime çevirir.
@@ -193,14 +193,14 @@ yeterli örnek çifti konmalıdır.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Uyarı mantığı aşırı hız durumunda uyarı verir." (tek cümlelik özet; kararı koda bırakır) | "Havahızı geçerliyse ve `VNE_LIMIT_knot` değerinden büyükse uyarı çıkışı aynı çevrimde ETKİN yapılır." |
-| "`hiz` değişkeni `VNE_LIMIT_knot - VNE_HISTEREZIS_knot`'tan küçükse `sayac` bir artırılır, değilse sıfırlanır; `sayac` `VNE_TEYIT_CEVRIM` olunca `uyari` ve `sayac` sıfırlanır." (sözde kod; kodun kopyası) | "Uyarı ETKİN iken havahızı art arda `VNE_TEYIT_CEVRIM` çevrim boyunca `VNE_LIMIT_knot - VNE_HISTEREZIS_knot` değerinin altında kalırsa uyarı PASİF yapılır." |
+| "Uyarı mantığı aşırı hız durumunda uyarı verir." (tek cümlelik özet; kararı koda bırakır) | "Hava hızı geçerliyse ve `VNE_LIMIT_knot` değerinden büyükse uyarı çıkışı aynı çevrimde ETKİN yapılır." |
+| "`hiz` değişkeni `VNE_LIMIT_knot - VNE_HISTEREZIS_knot`'tan küçükse `sayac` bir artırılır, değilse sıfırlanır; `sayac` `VNE_TEYIT_CEVRIM` olunca `uyari` ve `sayac` sıfırlanır." (sözde kod; kodun kopyası) | "Uyarı ETKİN iken hava hızı art arda `VNE_TEYIT_CEVRIM` çevrim boyunca `VNE_LIMIT_knot - VNE_HISTEREZIS_knot` değerinin altında kalırsa uyarı PASİF yapılır." |
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | TS-06 | Her LLR tek bir davranışı tetikleyici koşul, girdi ve sonuçla tanımlar; yerel değişken, döngü yapısı ya da işlem sırası gibi kod ayrıntısı içermez. | Ayrıntı düzeyi tek biçimli olur; test gereksinimden yazılabilir. | Gözden geçirme kontrol listesi; standarttaki örnek çiftle karşılaştırma. |
 | TS-07 | Tasarımda seçilen her eşik, teyit süresi, zaman aşımı ve filtre katsayısı birimi ve gerekçesiyle adlandırılmış bir tasarım parametresidir; üst gereksinimde yoksa türetilmiş işaretlenir. | Türetilmiş gereksinimin en sık kaynağı; gürbüzlük (robustness) testinin girdisi. | Kodda adsız sayısal sabit taraması; parametre listesinin LLR'lerle karşılaştırılması. |
-| TS-08 | Kipe bağlı davranış durum makinesiyle verilir; her durum ve olay çifti için ya bir LLR vardır ya da çiftin bilerek yok sayıldığı yazılır. | Tanımsız geçiş, kodda gereksinimsiz davranış olarak belirir. | Durum–olay tablosunun tamlık denetimi. |
+| TS-08 | Moda bağlı davranış durum makinesiyle verilir; her durum ve olay çifti için ya bir LLR vardır ya da çiftin bilerek yok sayıldığı yazılır. | Tanımsız geçiş, kodda gereksinimsiz davranış olarak belirir. | Durum–olay tablosunun tamlık denetimi. |
 
 **Verilecek kararlar:**
 
@@ -233,45 +233,45 @@ Birim taşıyan adlar, knot ile metre/saniyenin karışması gibi hataları gör
 ### 6. İzin verilen tasarım yöntemlerinin koşulları
 
 Bu bölüm riskli ama gerekli yöntemleri yasaklamaz; her biri için izin koşulunu ve gerekçesini
-yazar. Çizelgelemede (scheduling) cyclic executive seçilirse ana çerçeve
-(major frame) ve küçük çerçeve (minor frame) kuralları, sabit öncelikli kesintili (preemptive)
-çizelgeleme seçilirse öncelik atama kuralı yazılır. Görevlerin periyodu, deadline
-(deadline) ve WCET bütçesi çizelgelenebilirlik analizinin (schedulability analysis) girdisidir
+yazar. Çizelgelemede (scheduling) cyclic executive seçilirse major frame
+ve minor frame kuralları, sabit öncelikli preemptive
+çizelgeleme seçilirse öncelik atama kuralı yazılır. Görevlerin periyodu, deadline'ı
+ve WCET bütçesi çizelgelenebilirlik analizinin (schedulability analysis) girdisidir
 ([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#en-kötü-durum-yürütme-süresi-analizi),
 [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx));
 görev kümesi denemeleri için
 [Görev Çizelgeleme Analiz Aracı](/araclar/gercek-zamanli-yazilim/gorev-cizelgeleme)
 kullanılabilir. Kesme servis rutini (interrupt service routine, ISR), olay güdümlü mimari
-(event-driven architecture), dinamik görev oluşturma (dynamic tasking), yeniden girilebilirlik
-(re-entrancy), paylaşılan veri ve istisna yönetimi (exception handling) için de koşul yazılır;
+(event-driven architecture), dinamik görev oluşturma (dynamic tasking), reentrancy,
+paylaşılan veri ve istisna yönetimi (exception handling) için de koşul yazılır;
 işletim sisteminin tedarikçi belgesindeki kullanım kısıtları buraya taşınır.
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| TS-10 | Cyclic executive'de ana çerçeve küçük çerçevenin tam katıdır; her küçük çerçevenin en kötü yükü çerçeve süresinin %80'ini aşmaz; taşma algılanıp bildirilir. | Deterministik sıra; taşma sessiz kalmaz. | Çerçeve tablosu ve WCET analizi; taşma için gürbüzlük testi. |
-| TS-11 | Kesintili çizelgelemede öncelikler rate-monotonic (RM) kurala göre, deadline periyottan kısa görev varsa deadline-monotonic (DM) kurala göre atanır; periyot, deadline, WCET bütçesi, öncelik ve stack boyutu görev tablosunda verilir. | Öncelik önem sırası değildir; tablo analizin girdisidir. | Görev tablosu ile işletim sistemi yapılandırmasının karşılaştırılması; çizelgelenebilirlik analizi. |
-| TS-12 | ISR yalnızca veriyi alır, kesme kaynağını temizler ve bir bayrak ya da kuyrukla görevi uyandırır; beklemeli çekirdek çağrısı yapmaz. | Kesme süresi kısa ve sınırlı kalır; işleme olağan testle sınanır. | ISR başına WCET ölçümü; kesme bağlamındaki çekirdek çağrılarının taranması. |
-| TS-13 | Kesmeye ya da olaya bağlanan her kaynağın iki varış arasındaki en kısa süresi tasarımda verilir; sınırı bilinmeyen kaynak yoklamayla (polling) okunur. | Sınırı bilinmeyen olay kaynağı analize girmez. | Kesme tablosundaki en kısa varış aralığı sütununun gözden geçirmesi. |
+| TS-10 | Cyclic executive'de major frame, minor frame'in tam katıdır; her minor frame'in en kötü yükü kendi süresinin %80'ini aşmaz; taşma algılanıp bildirilir. | Deterministik sıra; taşma sessiz kalmaz. | Frame tablosu ve WCET analizi; taşma için gürbüzlük testi. |
+| TS-11 | Preemptive çizelgelemede öncelikler rate-monotonic (RM) kurala göre, deadline'ı periyottan kısa görev varsa deadline-monotonic (DM) kurala göre atanır; periyot, deadline, WCET bütçesi, öncelik ve stack boyutu görev tablosunda verilir. | Öncelik önem sırası değildir; tablo analizin girdisidir. | Görev tablosu ile işletim sistemi yapılandırmasının karşılaştırılması; çizelgelenebilirlik analizi. |
+| TS-12 | ISR yalnızca veriyi alır, kesme kaynağını temizler ve bir bayrak ya da kuyrukla görevi uyandırır; beklemeli kernel çağrısı yapmaz. | Kesme süresi kısa ve sınırlı kalır; işleme olağan testle sınanır. | ISR başına WCET ölçümü; kesme bağlamındaki kernel çağrılarının taranması. |
+| TS-13 | Kesmeye ya da olaya bağlanan her kaynağın iki varış arasındaki en kısa süresi tasarımda verilir; sınırı bilinmeyen kaynak polling ile okunur. | Sınırı bilinmeyen olay kaynağı analize girmez. | Kesme tablosundaki en kısa varış aralığı sütununun gözden geçirmesi. |
 | TS-14 | Olay ve mesaj kuyruklarının derinliği sabittir; taşma algılanır, sayılır ve tanımlı bir tepkiye bağlanır. | Yük patlamasında veri kaybı sessiz kalmaz. | Kuyruk tablosu; taşma için gürbüzlük testi. |
-| TS-15 | Görevler, kuyruklar ve mutex'ler yalnızca başlatmada yaratılır; çalışma sırasında görev yaratılmaz, silinmez, önceliği değişmez. | Analizin dayandığı görev modeli sabit kalır. | Başlatma sonrasında çağrılan çekirdek hizmetlerinin statik taraması. |
+| TS-15 | Görevler, kuyruklar ve mutex'ler yalnızca başlatmada yaratılır; çalışma sırasında görev yaratılmaz, silinmez, önceliği değişmez. | Analizin dayandığı görev modeli sabit kalır. | Başlatma sonrasında çağrılan kernel hizmetlerinin statik taraması. |
 
 Paylaşılan veri mutex ile korunuyorsa priority inheritance ya da priority ceiling kullanılır. Daha düşük öncelikli görevlerin bu görevi bekletebilecek
-critical section'ları analize engellenme süresi (blocking time) olarak girer:
-priority ceiling'de en uzun tek kesit yeterlidir; priority inheritance'ta görev art arda birden çok
-kesitte bekleyebileceğinden her düşük öncelikli görevin en uzun ilgili kesiti toplanır
+critical section'ları analize blocking time olarak girer:
+priority ceiling'de en uzun tek critical section yeterlidir; priority inheritance'ta görev art arda birden çok
+critical section'da bekleyebileceğinden her düşük öncelikli görevin en uzun ilgili critical section'ı toplanır
 ([20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx#paylaşılan-verinin-korunması)).
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| TS-16 | Birden çok görevden ya da kesmeden çağrılan fonksiyon tasarımda yeniden girilebilir diye işaretlenir; statik yerel değişken ve korumasız global yazım içermez. | Eşzamanlı çağrıda iç durum bozulmaz. | Çağrı grafiğinden çoklu bağlam taraması; işaretli fonksiyonların gözden geçirmesi. |
-| TS-17 | Görevler arası paylaşılan her verinin tek yazanı vardır; okuyanlar ve koruma yöntemi (priority inheritance'lı mutex, kuyruk, çift buffer) global veri erişim tablosunda yazılır. | Yarı eski yarı yeni okuma ve yarış durumu dışlanır. | Erişim tablosu ile statik analiz erişim raporunun karşılaştırılması. |
-| TS-18 | Mutex beklemeleri zaman aşımlıdır; süresiz bekleme yasaktır; iç içe kilitler için tek bir alma sırası tanımlanır. | Kilitlenme dışlanır; engellenme süresi sınırlanır. | Çekirdek çağrılarının parametre taraması; kilit sırası tablosu. |
+| TS-16 | Birden çok görevden ya da kesmeden çağrılan fonksiyon tasarımda reentrant diye işaretlenir; statik yerel değişken ve korumasız global yazım içermez. | Eşzamanlı çağrıda iç durum bozulmaz. | Çağrı grafiğinden çoklu bağlam taraması; işaretli fonksiyonların gözden geçirmesi. |
+| TS-17 | Görevler arası paylaşılan her verinin tek yazanı vardır; okuyanlar ve koruma yöntemi (priority inheritance'lı mutex, kuyruk, çift buffer) global veri erişim tablosunda yazılır. | Yarı eski yarı yeni okuma ve race condition dışlanır. | Erişim tablosu ile statik analiz erişim raporunun karşılaştırılması. |
+| TS-18 | Mutex beklemeleri zaman aşımlıdır; süresiz bekleme yasaktır; iç içe kilitler için tek bir alma sırası tanımlanır. | Deadlock dışlanır; blocking time sınırlanır. | Kernel çağrılarının parametre taraması; kilit sırası tablosu. |
 | TS-19 | İşlemci istisnaları (sıfıra bölme, bellek koruma ihlali, tanımsız komut) tek işleyicide yakalanır, kaydedilir ve istisna tablosunda tanımlı tepkiye (güvenli duruma geçiş ya da yeniden başlatma) bağlanır. | Belirsiz durumdan sessizce devam edilmez. | İstisna vektör tablosunun gözden geçirmesi; hata enjeksiyonu testi. |
 
 **Verilecek kararlar:**
 
-- Cyclic executive mi, kesintili çizelgeleme mi; gerekçesi ne?
-- Hangi çekirdek hizmetleri kesme bağlamından çağrılabilir, hangileri hiç kullanılmaz?
+- Cyclic executive mi, preemptive çizelgeleme mi; gerekçesi ne?
+- Hangi kernel hizmetleri kesme bağlamından çağrılabilir, hangileri hiç kullanılmaz?
 - Hangi istisnada yeniden başlatma, hangisinde güvenli duruma geçiş var?
 
 | Zayıf ifade | Güçlü ifade |
@@ -328,7 +328,7 @@ bu bölüm bileşen ve mimari düzeyindeki sınırları koyar, fonksiyon içi s�
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| TS-24 | İç içe çağrı derinliği, kesme rutinleri dahil, en çok 8'dir. | Stack analizi ve en kötü yol izlenebilir kalır. | Statik analiz aracının çağrı grafiği raporu. |
+| TS-24 | İç içe çağrı derinliği, kesme rutinleri dâhil, en çok 8'dir. | Stack analizi ve en kötü yol izlenebilir kalır. | Statik analiz aracının çağrı grafiği raporu. |
 | TS-25 | Koşul yapılarının iç içe derinliği ve bir karardaki koşul sayısı kodlama standardındaki sınırlara uyar (örnekte KS-11: en çok 4 ve 6); LLR'deki karar yapıları bu sınırı aşmayacak biçimde bölünür. | Gözden geçirilebilirlik; değiştirilmiş koşul/karar kapsama (MC/DC) test sayısı denetimde kalır. | LLR gözden geçirme kontrol listesi; kodda KS-11 ölçümü. |
 | TS-26 | Koşulsuz dallanma (`goto`, `setjmp`/`longjmp`) kullanılmaz; her fonksiyonun tek giriş noktası vardır, çıkış noktası sayısı kodlama standardındaki karara uyar (örnekte MISRA C:2012 Kural 15.5 gerekli sayılmış: tek çıkış, erken dönüş yalnızca sapma kaydıyla). | Kontrol akışı tasarımdan okunur; kapsam analizi sadeleşir. | Kodlama standardındaki karşılık kurallar (ör. MISRA C:2012 Kural 15.1, 15.5, 21.4). |
 
@@ -346,11 +346,11 @@ bu bölüm bileşen ve mimari düzeyindeki sınırları koyar, fonksiyon içi s�
 
 Seviye A, B ve C'de bileşenler arası data ve control coupling'in
 gereksinim tabanlı testlerle işletildiği analizle gösterilir. Analiz mimaride tanımlı
-coupling'ler esas alır; mimaride görünmeyen coupling analizde de görünmez ve sonradan bulgu
+coupling'leri esas alır; mimaride görünmeyen coupling analizde de görünmez ve sonradan bulgu
 olarak döner
-([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#veri-bağlaşımı-ve-kontrol-bağlaşımı-analizi)).
+([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#data-coupling-ve-control-coupling-analizi)).
 Bu bölüm coupling'in tasarımda hangi biçimde bildirileceğini tanımlar: bileşen arayüz tablosu
-(dışa açık fonksiyonlar, çağrılan bileşenler, kip seçimi gibi kontrol etkileri) ve global veri
+(dışa açık fonksiyonlar, çağrılan bileşenler, mod seçimi gibi kontrol etkileri) ve global veri
 erişim tablosu; tabloların elle mi tutulduğu, araçtan mı üretildiği de burada yazılır.
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
@@ -378,7 +378,7 @@ parametre verisi öğesi olarak yönetilir
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | TS-29 | Option-selectable her işlev tek bir seçim noktasından yönetilir; seçim verisinin tanımsız ya da bozuk değeri işlevi kapalı tutar ve arıza bildirir. | İstem dışı etkinleşme tek noktada önlenir ve doğrulanır. | Seçim verisinin kullanıldığı yerlerin taraması; tanımsız değer için gürbüzlük testi. |
-| TS-30 | Koşullu derleme anahtarları tasarımda listelenir; listede olmayan anahtar kullanılmaz, her derleme varyantı ayrı imaj olarak tanımlanır. | Hangi kodun imaja girdiği belirsiz kalmaz. | Build script'lerindeki anahtarların listeyle karşılaştırılması. |
+| TS-30 | Koşullu derleme anahtarları tasarımda listelenir; listede olmayan anahtar kullanılmaz, her build varyantı ayrı imaj olarak tanımlanır. | Hangi kodun imaja girdiği belirsiz kalmaz. | Build script'lerindeki anahtarların listeyle karşılaştırılması. |
 
 **Verilecek kararlar:**
 
@@ -512,7 +512,7 @@ konusu olabilir; bu yüzden yalnızca gerçekten uygulanacak kurallar yazılır.
 | DO-332 | OO.11.7.g.5 | İstisna yönetimi kısıtları: 6.7 ve 7.5 |
 | DO-332 | OO.11.7.g.6 | Dinamik bellek yönetimi kısıtları: 7.2 ve 7.5 |
 | DO-332 | OO.6.3.3.a–b | Mimari değerlendirmesine istisna ve bellek yönetimi ile kalıtım ilişkileri eklenir: 9 ve 12.1 |
-| DO-333 | FM.11.7.a | Biçimsel modelde gösterimin sözdizimi ve anlamı matematiksel olarak tanımlıdır; gösterim kısıtları 2.3'e yazılır. |
+| DO-333 | FM.11.7.a | Biçimsel modelde gösterimin söz dizimi ve anlamı matematiksel olarak tanımlıdır; gösterim kısıtları 2.3'e yazılır. |
 
 Bu eşleme bir başvuru aracıdır; standardın kendisinin yerine geçmez, madde metinleri için
 DO-178C ve ilgili ek esas alınır.

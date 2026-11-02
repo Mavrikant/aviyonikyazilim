@@ -74,7 +74,7 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
   7.1 Gereksinim yöntemi ve araçları
   7.2 Tasarım yöntemi ve araçları
   7.3 Programlama dili, kodlama araçları ve kod üreteci
-  7.4 Derleyici, linker ve yükleyici
+  7.4 Derleyici, linker ve loader
   7.5 Araçların çalıştığı donanım platformları
   7.6 Modelleme ortamı
   7.7 Ortam değişikliklerinin yönetimi
@@ -98,7 +98,7 @@ için yönettiğini söyler. SDP yalnızca geliştirme süreçlerini ve onların
 Doğrulama, konfigürasyon yönetimi ve kalite güvencesi kendi planlarındadır: yazılım
 doğrulama planı (Software Verification Plan, SVP), yazılım konfigürasyon yönetimi planı
 (Software Configuration Management Plan, SCMP) ve yazılım kalite güvencesi planı (Software
-Quality Assurance Plan, SQAP). Bu sınır çizilmezse aynı konu, örneğin derleme ortamının
+Quality Assurance Plan, SQAP). Bu sınır çizilmezse aynı konu, örneğin build ortamının
 kontrolü, iki planda iki farklı biçimde anlatılır. DO-178C SDP'nin PSAC'ın içine alınmasına
 izin verir; bu yol seçilse bile içerik ayrı ve bulunabilir bir bölüm olarak kalmalıdır.
 
@@ -115,7 +115,7 @@ Bu bölüm geliştirme işini kimin yaptığını ve geliştirme ekibinin başka
 noktalarda veri alıp verdiğini tanımlar. Rol adları yetmez; her rolün ürettiği ve onayladığı
 veri yazılır. Arayüzler en çok hata çıkan yerdir: sistem gereksinimlerinin nereden geldiği,
 türetilmiş gereksinimlerin (derived requirement) ve girdi hatalarının sistem süreçlerine,
-sistem emniyet değerlendirmesi dahil, hangi kanalla döndüğü ve donanım/yazılım arayüz
+sistem emniyet değerlendirmesi dâhil, hangi kanalla döndüğü ve donanım/yazılım arayüz
 belgesinin kimde olduğu açıkça yazılır. Tedarikçi varsa hangi süreçleri yürüttüğü ve hangi
 veriyi teslim ettiği burada, gözetim yöntemi PSAC ve SQAP'ta yer alır
 ([26. Yazılım Yaşam Döngüsü Faaliyetlerinde Dış Kaynak Kullanımı](../../05-ozel-konular/26-dis-kaynak-kullanimi.mdx)).
@@ -131,7 +131,7 @@ veriyi teslim ettiği burada, gözetim yöntemi PSAC ve SQAP'ta yer alır
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Türetilmiş gereksinimler sistem ekibine bildirilir." | "Türetilmiş gereksinimlerin iletimi gereksinim standardının 8. bölümündeki akışla yürür; iletimi gereksinim sorumlusu yapar, yazılım proje yöneticisi onaylar ve alıcı sistem gereksinimleri ile sistem emniyet ekibidir." |
+| "Türetilmiş gereksinimler sistem ekibine bildirilir." | "Türetilmiş gereksinimlerin iletimi gereksinim standardının 8. bölümündeki akışla yürür; iletimi gereksinim sorumlusu yapar, yazılım proje yöneticisi onaylar; alıcılar sistem gereksinimleri ve sistem emniyet ekipleridir." |
 
 Dikkat: hangi gözden geçirmenin bağımsızlıkla (independence) yapılacağı SVP'nin konusudur;
 SDP'deki iş bölümü, kodu yazan kişiye aynı kodun bağımsız gözden geçirmesini vererek SVP'yle
@@ -189,18 +189,19 @@ kriterin metni iki yerde yazılmaz.
 | 4.1 Gereksinim | Sistem gereksinimleri, arayüz belgeleri → yüksek seviyeli gereksinimler | Gereksinimlerin tutulduğu yer, zorunlu öznitelikler, türetilmiş gereksinimin iletim yolu, parametre verisi öğesi (parameter data item, PDI) yapısının tanımlandığı yer |
 | 4.2 Tasarım | Yüksek seviyeli gereksinimler → yazılım mimarisi, düşük seviyeli gereksinimler | Mimari gösterimi, düşük seviyeli gereksinimlerin tutulduğu yer, veri sözlüğü, işlemci ve bellek bütçeleri |
 | 4.3 Kodlama | Mimari, düşük seviyeli gereksinimler → kaynak kod | Dosya ve dizin düzeni, iz etiketinin yeri, standart denetiminin koşulduğu an, elle düzenlenmesi yasak dosyalar |
-| 4.4 Entegrasyon | Kaynak kod, mimari → çalıştırılabilir nesne kodu, PDI dosyaları | Resmî derleme ortamı ve script'i, linker script'i, bellek yerleşimi, yükleme yöntemi, yama politikası |
+| 4.4 Entegrasyon | Kaynak kod, mimari → çalıştırılabilir nesne kodu, PDI dosyaları | Resmî build ortamı ve script'i, linker script'i, bellek yerleşimi, yükleme yöntemi, yama politikası |
 
 Entegrasyon süreci bir üretim sürecidir: kaynak koddan çalıştırılabilir nesne kodunu
 (executable object code) ve varsa PDI dosyalarını üretir ve hedefe yükler; parçaların
 birlikte doğru çalıştığını göstermek entegrasyon testlerinin, yani SVP'nin işidir. SDP
-burada derlemenin (build) nasıl yeniden üretilebilir kılındığını yazar: derleme ve linker script'leri konfigürasyon öğesidir, derleme ortamı yazılım yaşam döngüsü ortam konfigürasyon
+burada build'in nasıl yeniden üretilebilir kılındığını yazar: build ve linker script'leri
+konfigürasyon öğesidir, build ortamı yazılım yaşam döngüsü ortam konfigürasyon
 indeksine (Software Life Cycle Environment Configuration Index, SECI) kayıtlıdır, resmî
-derleme temiz ortamda sıfırdan alınır ve bir kayıt ile linker map
+build temiz ortamda sıfırdan alınır ve bir kayıt ile linker map
 üretir. Yama (patch) politikası da buradadır: gereksinim ya da mimari değişikliği ve
 doğrulamada bulunan bir hata yamayla kapatılmaz. Yama ancak sınırlı ve tek tek
 gerekçelendirilen durumlarda, örneğin bilinen bir derleyici kusurunu aşmak için düşünülür.
-O durumda yamanın konfigürasyon yönetiminde izlendiği, yamalı yazılımın geçerli bütün
+O durumda yamanın konfigürasyon yönetiminde izlendiğinin teyidi, yamalı yazılımın geçerli bütün
 hedefleri karşıladığını gösteren analiz ve yazılım başarım özetinde (Software
 Accomplishment Summary, SAS) yamanın gerekçesi bulunur
 ([8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx)).
@@ -208,17 +209,17 @@ Accomplishment Summary, SAS) yamanın gerekçesi bulunur
 **Verilecek kararlar:**
 
 - Her sürecin çıktısı hangi araçta, hangi kimlik düzeniyle tutulur?
-- Resmî derleme nerede, kim tarafından, hangi script ile alınır; geliştiricinin makinesinde
-  derlenen ikili hedefe yüklenebilir mi?
+- Resmî build nerede, kim tarafından, hangi script'le alınır; geliştiricinin makinesinde
+  derlenen binary hedefe yüklenebilir mi?
 - Linker script'i ve bellek yerleşimi kimdedir; bellek ve işlemci zamanı payı ne kadardır?
 - Hedefe yükleme hangi araçla ve hangi bütünlük denetimiyle yapılır?
-- Yazılım entegrasyonu geliştirme bilgisayarında mı, hedef öykünücüsünde mi, hedef
+- Yazılım entegrasyonu geliştirme bilgisayarında mı, hedef emülatöründe mi, hedef
   bilgisayarda mı yapılır; donanım/yazılım entegrasyonu hangi donanım sürümüyle?
 - Yamaya hangi koşulda başvurulabilir ve kararı kim verir?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Yazılım derlenir ve hedefe yüklenir." | "Resmî derleme, `<derleme sunucusu kimliği>` üzerinde konfigürasyon kontrollü script ile sıfırdan alınır; derleme kaydı ve linker map derleme kimliğiyle arşivlenir. Elle derlenmiş ikili hedefe yüklenmez." |
+| "Yazılım derlenir ve hedefe yüklenir." | "Resmî build, `<build sunucusu kimliği>` üzerinde konfigürasyon kontrollü script'le sıfırdan alınır; build kaydı ve linker map build kimliğiyle arşivlenir. Elle derlenmiş binary hedefe yüklenmez." |
 
 ### 5. Geçiş kriterleri
 
@@ -239,10 +240,10 @@ kayıtlarına nasıl bağlandığını gösterir:
 | Planlamadan gereksinime | SDP ve gereksinim standardı gözden geçirilmiş, bulguları kapalı ve baseline'da; tahsis edilen sistem gereksinimleri baseline'da, yazılım seviyesi belirli; gereksinim aracı SECI'de kayıtlı | Gözden geçirme ve konfigürasyon kayıtları, SECI |
 | Tasarımdan kodlamaya (bileşen bazında) | Bileşenin mimarisi ve düşük seviyeli gereksinimleri gözden geçirilmiş ve baseline'da; açık bulgu yalnızca "küçük" sınıfta; derleyici seçenekleri onaylı | Gözden geçirme ve konfigürasyon kayıtları, SDP sürümü |
 | Kodlamadan entegrasyona (artım bazında) | Artıma giren dosyalar standart denetiminden ihlalsiz ya da onaylı sapmayla çıkmış; kod gözden geçirmeleri kapalı | Analiz raporu, sapma ve gözden geçirme kayıtları |
-| Entegrasyon çıkışı | Build script ile alınmış; derleyici ve linker uyarıları sıfır ya da gerekçeli; linker map gözden geçirilmiş | Derleme kaydı, harita gözden geçirme kaydı |
+| Entegrasyon çıkışı | Build script'le alınmış; derleyici ve linker uyarıları sıfır ya da gerekçeli; linker map gözden geçirilmiş | Build kaydı, linker map gözden geçirme kaydı |
 
 Kısmi girdiyle başlayan süreç, sonradan gelen ya da değişen girdi karşısında önceki
-çıktılarının hâlâ geçerli olduğunu yeniden değerlendirir; SDP bunu kimin, hangi kayıtla
+çıktılarının hâlâ geçerli olup olmadığını yeniden değerlendirir; SDP bunu kimin, hangi kayıtla
 yaptığını söyler. Baseline'daki bir veri değişecekse sürece yeniden giriş de bir kritere
 bağlanır: değişiklik talebi ya da problem raporu, değişiklik etki analizi (change impact
 analysis) ve etkilenen gözden geçirmelerin yinelenmesi. Akışın kendisi SCMP'dedir.
@@ -284,7 +285,7 @@ geliştirmede modelleme standartları (software model standards) da listeye gire
 ### 7. Geliştirme ortamı
 
 Bu bölüm yöntemleri, araçları, programlama dilini, derleyiciyi, linker'ı,
-yükleyiciyi (loader) ve bunların çalıştığı donanımı tanımlar. Ortam seçimi bir risk
+loader'ı ve bunların çalıştığı donanımı tanımlar. Ortam seçimi bir risk
 kararıdır ve SDP bu kararın gerekçesini taşır. Araçlar tek tek değil bir zincir olarak ele
 alınır: kod üretecinin ya da derleyicinin kaçırdığı bir hatayı zincirin hangi halkası
 (statik analiz, derleme uyarısı, gözden geçirme, test) yakalar? Projede açılan her isteğe
@@ -306,10 +307,10 @@ maddeyi (MB.11.2.c.6) karşılar, 7.7 projeye özgüdür:
   gösterim, mimari diyagram) ve bunları tutan araçlar; gösterimin kuralları standartlardadır.
 - **7.3:** dil ve dil standardının sürümü (ör. C99), kodlama standardını denetleyen statik
   analiz aracı; kod üreteci (code generator) kullanılıyorsa seçenekleri, izin verilen model
-  öğeleri, üretilen dosyalara elle dokunma yasağı ve üretim adımının derlemedeki yeri.
-- **7.4:** derleyici, linker ve yükleyici, sürümleri, aşağıdaki tablodaki seçenekler ve
+  öğeleri, üretilen dosyalara elle dokunma yasağı ve üretim adımının build'deki yeri.
+- **7.4:** derleyici, linker ve loader, sürümleri, aşağıdaki tablodaki seçenekler ve
   bağlanan çalışma zamanı kütüphanesi (runtime library) işlevleri.
-- **7.5:** araçların çalıştığı makineler ve işletim sistemleri; resmî derleme makinesinin
+- **7.5:** araçların çalıştığı makineler ve işletim sistemleri; resmî build makinesinin
   nasıl dondurulduğu (sanal makine ya da kapsayıcı imajı).
 - **7.6:** DO-331 uygulanıyorsa modelleme yöntemi, dili ve aracı; her modelin spesifikasyon modeli
   (specification model) mi tasarım modeli (design model) mi olduğu. Yoksa "uygulanmaz".
@@ -330,7 +331,7 @@ sorgulattığı görünür:
 Seçenekler doğrulamaya da uzanır. Optimizasyon, kaynak kod ile nesne kodu arasındaki ilişkiyi
 ve yapısal kapsam analizinin (structural coverage analysis) yorumunu etkileyebilir; bazı dil
 özellikleri ve ayarlar kaynak koda doğrudan izlenemeyen nesne kodu üretir (başlatma,
-yerleşik hata denetimi, istisna işleme). Derleyici, linker ve yükleyicinin doğruluğuna
+yerleşik hata denetimi, istisna işleme). Derleyici, linker ve loader'ın doğruluğuna
 ilişkin varsayımlar her seviyede SVP'de yazılır; Seviye A'da bu kodun nasıl saptanıp ek
 doğrulamayla güvence altına alınacağı da SVP'dedir. SDP'nin işi o analizi mümkün kılan
 seçenekleri sabitlemek ve SVP'nin dayandığı değerlerle aynı tutmaktır
@@ -338,12 +339,12 @@ seçenekleri sabitlemek ve SVP'nin dayandığı değerlerle aynı tutmaktır
 
 **Verilecek kararlar:**
 
-- Hangi derleyici, linker ve yükleyici, hangi sürümle; seçim hangi ölçüte dayanıyor
+- Hangi derleyici, linker ve loader, hangi sürümle; seçim hangi ölçüte dayanıyor
   (hedef işlemci desteği, bilinen hata listesi, ekip deneyimi)?
 - Optimizasyon seviyesi nedir ve tüm derleme birimleri için aynı mıdır?
 - Derleyici tedarikçisinin bilinen hata listesini kim, hangi sıklıkla izler?
 - Hangi çalışma zamanı kütüphanesi işlevleri bağlanır ve bunlar nasıl doğrulanır?
-- Derleme makinesi ve işletim sistemi nasıl dondurulur ve arşivlenir?
+- Build makinesi ve işletim sistemi nasıl dondurulur ve arşivlenir?
 - Araçların birlikte kullanımından kredi alınıyorsa (ör. kod üreteci ve statik analiz)
   araçlar hangi sırayla çalışır ve biri ötekinin çıktısını nasıl alır?
 
@@ -353,11 +354,11 @@ seçenekleri sabitlemek ve SVP'nin dayandığı değerlerle aynı tutmaktır
 | "Araçlar SECI'de listelenir." | "Bu bölümdeki her araç SECI'de aynı sürümle yer alır; CRC hesaplayan ve imajı birleştiren script'ler de listededir." |
 
 :::warning[Derleyici seçeneği de bir konfigürasyon kararıdır]
-Proje ortasında derleyici, linker, yükleyici ya da kod üreteci sürümünü veya tek bir
+Proje ortasında derleyici, linker, loader ya da kod üreteci sürümünü veya tek bir
 seçeneği değiştirmek çoğu zaman nesne kodunu değiştirir; değişmese bile önceki test ve
 kapsam sonuçlarının hâlâ geçerli olduğu bir analizle gösterilir. SDP böyle bir değişikliğin problem raporu ya da değişiklik talebiyle başladığını,
 etki analizini kimin yaptığını ve yeniden doğrulama kapsamının SVP'deki kurala göre
-belirlendiğini söyler. Değişiklik SECI'ye işlenmeden yeni araçla resmî derleme alınmaz.
+belirlendiğini söyler. Değişiklik SECI'ye işlenmeden yeni araçla resmî build alınmaz.
 :::
 
 ### 8. İzlenebilirlik ve iz verisi
@@ -391,7 +392,7 @@ yaklaşımı PSAC'ta ve SVP'de kalır.
 | Alt başlık | SDP'de yazılacak geliştirme kararı | Ayrıntısı |
 |---|---|---|
 | 9.1 Devre dışı bırakılmış kod (deactivated code) | Etkisizleştirme mekanizmasının tasarımdaki yeri; kodun etkin kodla aynı süreçten geçtiği | [17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx) |
-| 9.2 Yazılım bölümlemesi (software partitioning) | Hangi bileşenin hangi bölümde olduğu; bölümlemeden doğan türetilmiş gereksinimlerin sisteme iletimi | [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx) |
+| 9.2 Yazılım bölümlemesi (software partitioning) | Hangi bileşenin hangi partition'da olduğu; bölümlemeden doğan türetilmiş gereksinimlerin sisteme iletimi | [21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx) |
 | 9.3 Parametre verisi öğeleri | Kullanım biçimi, yazılım seviyesi; üretme, doğrulama ve değiştirme süreçleri; yükleme kontrolü ve uyumluluk | [22. Konfigürasyon Verisi](../../05-ozel-konular/22-konfigurasyon-verisi.mdx) |
 | 9.4 Önceden geliştirilmiş ve yeniden kullanılan bileşenler | Alındığı baseline; uyarlama katmanı; arayüzde tip tutarlılığı ve istisna yönetimi | [20. Gerçek Zamanlı İşletim Sistemleri](../../05-ozel-konular/20-gercek-zamanli-isletim-sistemleri.mdx), [24. Yazılım Yeniden Kullanımı](../../05-ozel-konular/24-yazilim-yeniden-kullanimi.mdx) |
 | 9.5 Kullanıcı tarafından değiştirilebilir yazılım | Değiştirilebilir bileşenin sınırı; değişiklik aracı ve ortamı; koruma mekanizması | [19. Kullanıcı Tarafından Değiştirilebilir Yazılım](../../05-ozel-konular/19-kullanici-tarafindan-degistirilebilir-yazilim.mdx) |
@@ -468,7 +469,7 @@ kriter standart istemese de bağlayıcıdır.
 | §11.2.c.1 | Gereksinim yöntemi ve araçları | 7.1 Gereksinim yöntemi ve araçları |
 | §11.2.c.2 | Tasarım yöntemi ve araçları | 7.2 Tasarım yöntemi ve araçları |
 | §11.2.c.3 | Dil, kodlama araçları, kod üreteci | 7.3 Programlama dili, kodlama araçları ve kod üreteci |
-| §11.2.c.4 | Derleyici, linker, yükleyici | 7.4 Derleyici, linker ve yükleyici |
+| §11.2.c.4 | Derleyici, linker, loader | 7.4 Derleyici, linker ve loader |
 | §11.2.c.5 | Araçların donanım platformları | 7.5 Araçların çalıştığı donanım platformları |
 | §3.2 | Projeye özgü yaşam döngüsü tanımı | 3.1 Yaşam döngüsü modeli; 3.2 Artım ve bileşen planı |
 | §3.3 | Geçiş kriteri, geri besleme, kısmi girdi | 3.3 Geri besleme ve prototipler; 5.1 Kriter tablosu; 5.2 Kısmi girdi ve sürece yeniden giriş |
@@ -483,8 +484,8 @@ kriter standart istemese de bağlayıcıdır.
 | §4.2.l | Tedarikçi gözetimi | 2.3 Tedarikçiler (gözetim yöntemi PSAC ve SQAP'ta) |
 | §4.3.b.1–3 | Kriterin girdi, faaliyet, araç koşulları | 5.1 Kriter tablosu |
 | §4.2.e; §4.3.c | Plan ve yazılım değişikliklerinin yolu | 5.2 Kısmi girdi ve sürece yeniden giriş; 10 Planın güncellenmesi ve plandan sapma |
-| §4.4.1.d–f | Araç sırası, seçenekleri, bilinen sorunları | 4.4 Entegrasyon süreci: derleme, bağlama ve yükleme; 7.3 Programlama dili, kodlama araçları ve kod üreteci; 7.4 Derleyici, linker ve yükleyici |
-| §4.4.2.a–b | Optimizasyon ve izlenemeyen nesne kodu | 7.4 Derleyici, linker ve yükleyici (yöntem SVP'de) |
+| §4.4.1.d–f | Araç sırası, seçenekleri, bilinen sorunları | 4.4 Entegrasyon süreci: derleme, bağlama ve yükleme; 7.3 Programlama dili, kodlama araçları ve kod üreteci; 7.4 Derleyici, linker ve loader |
+| §4.4.2.a–b | Optimizasyon ve izlenemeyen nesne kodu | 7.4 Derleyici, linker ve loader (yöntem SVP'de) |
 | §4.4.2.c; §12.1.3 | Araç sürümü ya da seçenek değişikliği | 7.7 Ortam değişikliklerinin yönetimi |
 | §5.1.2; §5.2.2 | Gereksinim ve tasarım süreçleri | 4.1 Gereksinim süreci; 4.2 Tasarım süreci |
 | §5.3.2 | Kodlama süreci, kod üreteci kısıtları | 4.3 Kodlama süreci; 7.3 Programlama dili, kodlama araçları ve kod üreteci |
@@ -526,8 +527,8 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendisinin yerine g
 | SDP, PSAC'taki özetin genişletilmiş kopyası; araç, kayıt ve kimlik yok | Planın yalnızca otorite için yazıldığı varsayımı | Her süreç için girdi, çıktı, araç ve kayıt adını yazmak; ekibe yeni katılan birine okutmak |
 | Standart kuralları SDP'de de yazılı ve zamanla ayrışmış | Standartlar hazır olmadan SDP'ye kural eklenmesi | Kuralı yalnızca standartta tutmak; SDP'de belge numarası ve sürümle atıf yapmak |
 | Derleyici sürümü var, seçenekler yok | Seçeneklerin "script'te zaten var" sayılması | Seçenek tablosunu plana ya da SECI'ye yazmak; script'i tabloya göre denetlemek |
-| Entegrasyon süreci "derleme" diye geçilmiş; yükleme, PDI üretimi ve yama politikası yok | Entegrasyon sürecinin entegrasyon testiyle karıştırılması | Derleme, bağlama, yükleme ve PDI üretimini ayrı ayrı yazmak; testi SVP'ye bırakmak |
-| İmaj birleştirme, CRC hesaplama gibi derleme zinciri adımları ortam listesinde yok | Ortam listesinin yalnızca lisanslı ürünlerden çıkarılması | Resmî derlemeyi adım adım yürüyüp her adımdaki aracı listeye almak |
+| Entegrasyon süreci "build" diye geçilmiş; yükleme, PDI üretimi ve yama politikası yok | Entegrasyon sürecinin entegrasyon testiyle karıştırılması | Derleme, bağlama, yükleme ve PDI üretimini ayrı ayrı yazmak; testi SVP'ye bırakmak |
+| İmaj birleştirme, CRC hesaplama gibi build zinciri adımları ortam listesinde yok | Ortam listesinin yalnızca lisanslı ürünlerden çıkarılması | Resmî build'i adım adım yürüyüp her adımdaki aracı listeye almak |
 | Kod üreteci ayarları ve elle düzenleme yasağı yazılmamış | Üretilen kodun "araç çıktısı" sayılıp plan dışında görülmesi | Üretim ayarlarını, izin verilen model öğelerini ve üretilen dosyalara dokunma kuralını 7.3'e yazmak |
 
 ## Yayımlamadan önce
@@ -537,7 +538,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendisinin yerine g
 - [ ] Yaşam döngüsü modeli ve artım planı, proje takvimindeki gerçek akışla örtüşüyor mu?
 - [ ] Her geçiş kriteri bir kayda bağlı mı; kalite güvencesi o kayda bakarak "karşılandı /
       karşılanmadı" diyebilir mi?
-- [ ] Derleyici, linker, yükleyici ve varsa kod üreteci sürümleri ile seçenekleri yazılı
+- [ ] Derleyici, linker, loader ve varsa kod üreteci sürümleri ile seçenekleri yazılı
       mı ve SECI'deki değerlerle aynı mı?
 - [ ] Üç standarda belge numarası ve sürümüyle atıf yapılmış, hiçbir kural SDP'de
       tekrarlanmamış mı? (Seviye D'de standart beklenmez.)

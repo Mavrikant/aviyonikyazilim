@@ -2,7 +2,7 @@
 title: "SCMP Şablonu ve Yazım Rehberi"
 sidebar_label: SCMP
 sidebar_position: 4
-description: "SCMP şablonu: konfigürasyon yönetimi planının içindekileri, baseline, problem raporu ve CC1/CC2 kararları, DO-178C §11.4 uyum tablosu."
+description: "SCMP şablonu: konfigürasyon yönetimi planının içindekileri, baseline, problem raporu ve CC1/CC2 kararları; DO-178C §11.4 uyum tablosu."
 ---
 
 Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP), projede
@@ -86,9 +86,9 @@ tanımlar) [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 10.2 Uyumluluk kayıtları: donanım ve PDI
 10.3 Yükleme bütünlüğü ve yükleme talimatları
 11 Yaşam döngüsü ortamının kontrolü
-11.1 Geliştirme, derleme, doğrulama ve yükleme araçları
+11.1 Geliştirme, build, doğrulama ve yükleme araçları
 11.2 Kalifiye araçlar
-11.3 Resmî derleme ortamı
+11.3 Resmî build ortamı
 12 Yaşam döngüsü verisi kontrolleri: CC1 ve CC2
 13 Geçiş kriterleri
 14 SCM verisi: kayıtlar, SCI ve SECI
@@ -122,13 +122,13 @@ geri bildirimler ve tedarikçi teslimatları hangi kayıtla girip çıkıyor?
 - Konfigürasyon yönetimi sorumlusu ve yedeği kim; sürüm teslim (release) yetkisi hangi rolde?
 - Sürüm kontrolü, problem raporlama ve arşiv için hangi araçlar kullanılacak?
 - Gereksinim aracı ya da model deposu gibi kendi sürüm geçmişi olan araçlar nasıl bağlanır?
-- Hangi iş talimatları ayrı belge olacak (derleme, sürüm teslimi, arşivden geri getirme)?
+- Hangi iş talimatları ayrı belge olacak (build, sürüm teslimi, arşivden geri getirme)?
 
 ### 3. Konfigürasyon tanımlama
 
 Pratik ölçüt şudur: bir dosyaya başka bir iş dayanmaya başladığı anda o dosya kimliksiz
 kalamaz ve konfigürasyon öğesi (configuration item) olur. Gözden geçirmeye (review) sunulan
-taslak, başka bir belgede anılan tablo, derlemeye giren kaynak dosya ya da yüklemeye
+taslak, başka bir belgede anılan tablo, build'e giren kaynak dosya ya da yüklemeye
 hazırlanan imaj bu anı çoktan geçmiştir. Plan; belge kimliği, dosya sürümü ve parça
 numarası (part number) arasındaki ilişkiyi çözer: hangisi hangi değişiklikte artar, hangisi
 uçakta görünür? Sahada yüklenebilir yazılımda olduğu gibi cihazın etiketine bakarak hangi
@@ -165,11 +165,11 @@ uygulamadan yenisine izlenebilirlik (traceability) de burada kurulur.
 
 - Hangi baseline'lar kurulacak, her biri hangi geçiş kriterine bağlı; planlar ve standartlar
   hangi baseline ile, SOI-1'den önce mi kontrol altına girer?
-- Baseline hangi araç işleviyle dondurulur: etiket, içerik listesi, checksum
-  (checksum)? Gereksinim ya da model aracındaki "Onaylı" kayıt durumu tek başına baseline
-  sayılır mı, yoksa araçta ayrıca etiket ya da anlık görüntü mü alınır?
+- Baseline hangi araç işleviyle dondurulur: etiket, içerik listesi, checksum?
+  Gereksinim ya da model aracındaki "Onaylı" kayıt durumu tek başına baseline
+  sayılır mı, yoksa araçta ayrıca etiket ya da snapshot mı alınır?
 - Kontrollü kütüphaneye kim yazabilir; onaysız değişiklik teknik olarak engelleniyor mu?
-- Dal (branch) yapısı nasıl; birleştirme (merge) isteğinin araçtaki onayı değişiklik onayı ya
+- Branch yapısı nasıl; merge isteğinin araçtaki onayı değişiklik onayı ya
   da peer review kaydı yerine geçer mi, geçerse hangi alanları taşır?
 - İki baseline arasındaki fark hangi raporla, hangi kayıtlara bağlanarak gösterilir?
 
@@ -226,7 +226,7 @@ tanımlanabilir; bu raporlar her yazılım uygunluk gözden geçirmesinde (softw
 review) yeniden değerlendirilir. SVP, SQAP ve PSAC bu durum adlarını aynen kullanır.
 
 :::warning[Bulgu ile problem raporu sınırı]
-Sınır yazılmazsa iki uç birlikte görülür: baseline'daki koddaki bir hata "küçük" diye
+Sınır yazılmazsa iki uç birlikte görülür: baseline'a alınmış koddaki bir hata "küçük" diye
 e-postayla düzeltilir, erken taslaklardaki her yazım hatası için ise rapor açılıp sistem
 anlamsız kayıtlarla dolar. Sınır, bir öğenin hangi andan itibaren rapora tabi olduğunu tek
 cümleyle söyler; kalite güvencesi bunu örnek kayıtlar üzerinden denetler.
@@ -330,16 +330,16 @@ değiştirilebilir kaldıkça erişilebilir olmalıdır.
 - Sürüm teslimini hangi rol onaylar; üretim yalnızca teslim edilmiş öğeyi nasıl kullanır?
 - Saklama süresi neye dayanıyor; arşiv ortamı hangi aralıkla yenilenecek?
 - Kopyanın doğruluğu ve geri getirilebilirlik nasıl ve hangi sıklıkla gösterilecek?
-- Gereksinim veritabanı ya da model deposu gibi bir araçta tutulan veri arşive hangi açık
+- Gereksinim veri tabanı ya da model deposu gibi bir araçta tutulan veri arşive hangi açık
   biçimde aktarılır; araç ortadan kalktığında servis ömrü boyunca nasıl okunur?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Arşiv düzenli olarak yedeklenir. | Her sürüm tesliminde arşivden temiz bir ortamda yeniden derleme yapılır ve imajın checksum SCI'deki değerle karşılaştırılır; sonuç sürüm teslim kaydına eklenir. |
+| Arşiv düzenli olarak yedeklenir. | Her sürüm tesliminde arşivden temiz bir ortamda yeniden derleme yapılır ve imajın checksum'ı SCI'deki değerle karşılaştırılır; sonuç sürüm teslim kaydına eklenir. |
 
 Dikkat: güçlü ifade DO-178C'nin dayattığı bir yöntem değil, iyi uygulama örneğidir; standart
 geri getirilebilirliği ve kopyalamanın doğrulanmasını ister, yöntemi projeye bırakır.
-Karşılaştırma ancak derleme bit düzeyinde deterministikse anlamlıdır; değilse
+Karşılaştırma ancak build bit düzeyinde deterministikse anlamlıdır; değilse
 farkın kaynağı analizle gösterilir.
 
 ### 10. Yazılım yükleme kontrolü
@@ -359,9 +359,9 @@ sürümlerinin uyumluluk kaydı eklenir (bkz.
 - Yazılım fabrikada mı, sahada mı, ikisinde de mi yüklenecek?
 - Yükleme medyası ve yükleme paketi nasıl kimliklendirilir?
 - Donanım–yazılım ve PDI–nesne kodu uyumluluğu hangi kayıtta tutulur, kim günceller?
-- Yükleme bütünlüğü hedefteki kontrollere mi, yer tarafındaki yükleyiciye mi dayanıyor?
+- Yükleme bütünlüğü hedefteki kontrollere mi, yer tarafındaki loader'a mı dayanıyor?
 
-Dikkat: güvence yer tarafındaki yükleyiciye dayanıyorsa araç kalifikasyonu (tool
+Dikkat: güvence yer tarafındaki loader'a dayanıyorsa araç kalifikasyonu (tool
 qualification) sorusu doğar; karar PSAC'ta verilir.
 
 ### 11. Yaşam döngüsü ortamının kontrolü
@@ -372,17 +372,17 @@ konfigürasyon öğeleri listesidir. İmajı üreten ya da hedefe taşıyan zinc
 edilmemiş araçlar için asgari rejim CC2'dir; kalifiye bir aracın kendisi ve kalifikasyon
 verisi ise DO-330'da araç kalifikasyon seviyesine (tool qualification level, TQL) bağlı
 kategoride tutulur. Plan, 3–9. bölümlerdeki faaliyetlerin araçlara nasıl uygulandığını tek
-tek yazar. CC2 araçta baseline ve problem raporu asgari değildir; ama resmî derleme
+tek yazar. CC2 araçta baseline ve problem raporu asgari rejime girmez; ama resmî build
 ortamını baseline'a almak ve derleyici sürümü değişikliğini kod değişikliği gibi kurula
-getirmek iyi uygulamadır. Resmî derleme ortamı ayrıca tanımlanır: temiz ortamda sıfırdan
-derleme, script'e gömülü derleme seçenekleri ve her resmî derlemede üretilen derleme kaydı (bkz.
+getirmek iyi uygulamadır. Resmî build ortamı ayrıca tanımlanır: temiz ortamda full
+build, script'e gömülü derleme seçenekleri ve her resmî build'de üretilen build kaydı (bkz.
 [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx)).
 
 **Verilecek kararlar:**
 
 - Araç envanteri tek liste mi; SDP ve SVP'deki araçlarla nasıl eşleşiyor?
-- Resmî derleme hangi ortamda alınır; ortam sanal makine olarak arşivleniyor mu?
-- Resmî derleme bit düzeyinde yeniden üretilebilir mi; zaman damgası, mutlak dosya yolu gibi
+- Resmî build hangi ortamda alınır; ortam sanal makine olarak arşivleniyor mu?
+- Resmî build bit düzeyinde yeniden üretilebilir mi; zaman damgası, mutlak dosya yolu gibi
   farklar nasıl giderilir, giderilemeyen fark nasıl gerekçelendirilir?
 - Araç sürümü değişikliği hangi değerlendirmeyle onaylanır?
 - Araç yapılandırma dosyaları (statik analiz kural seti, derleme seçenek dosyası, test aracı
@@ -391,13 +391,13 @@ derleme, script'e gömülü derleme seçenekleri ve her resmî derlemede üretil
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Geliştirme araçları kontrol altındadır. | Resmî derlemeler yalnızca SECI'de kimliği yazılı derleme sanal makinesinde alınır; derleyici sürümü ya da derleme seçeneği değişikliği, etki değerlendirmesi kurulda onaylanmadan resmî derlemeye giremez. |
+| Geliştirme araçları kontrol altındadır. | Resmî build'ler yalnızca SECI'de kimliği yazılı build sanal makinesinde alınır; derleyici sürümü ya da derleme seçeneği değişikliği, etki değerlendirmesi kurulda onaylanmadan resmî build'e giremez. |
 
 ### 12. Yaşam döngüsü verisi kontrolleri: CC1 ve CC2
 
 Bu bölüm her verinin kontrol kategorisini (control category) tablo olarak verir. CC1 tam
 kontroldür: baseline, problem raporlama, değişikliğin kaydı ve onayı, değişiklik gözden
-geçirmesi ve durum muhasebesi dahil bütün faaliyetler uygulanır. CC2 bunun alt kümesidir:
+geçirmesi ve durum muhasebesi dâhil bütün faaliyetler uygulanır. CC2 bunun alt kümesidir:
 tanımlama, türetildiği öğeye izlenebilirlik, kimliğin ve bütünlüğün korunması, yetkisiz
 değişikliğe karşı koruma, geri getirme ve saklama yeterlidir; düzeltme problem raporu
 gerekmeden öğenin yeni sürümüyle yapılabilir. Kategoriler Ek A'dan gelir ve asgaridir: daha
@@ -443,12 +443,12 @@ bunlara kurul tutanaklarını da ekler. DO-178C bu türleri örnek olarak anar, 
 bir kayıt olarak üretilmesini şart koşmaz; SCM çıktıları çoğu zaman başka verilerin içinde
 durur (ör. problem raporundaki durum geçmişi). SCI ürünün konfigürasyonunu,
 SECI onu üreten ve doğrulayan ortamı tanımlar; SECI, SCI'nin bir bölümü de olabilir. Teslim
-gününe bırakılan indeks eksik çıktığı için mümkün olan kısmı derleme altyapısından üretilir.
+gününe bırakılan indeks eksik çıktığı için mümkün olan kısmı build altyapısından üretilir.
 
 **Verilecek kararlar:**
 
 - SECI ayrı belge mi, SCI'nin bölümü mü; SCI tek belge mi, alt indeksli hiyerarşi mi?
-- SCI ve SECI'nin hangi kısmı derleme ve sürüm altyapısından otomatik üretilir?
+- SCI ve SECI'nin hangi kısmı build ve sürüm altyapısından otomatik üretilir?
 - Kayıtlar nerede, hangi kimlikle ve hangi kategoride saklanır?
 
 ### 15. Tedarikçi kontrolü
@@ -525,7 +525,7 @@ Tablo, §11.4'ün her maddesini ve SCMP'yi ilgilendiren §4, §7, §11 ve §12 m
 | §7.3 | Kontrol kategorileri | 12 Yaşam döngüsü verisi kontrolleri: CC1 ve CC2 |
 | §7.4.a | Parça numarası ve medya kimliği | 10.1 Parça numarası ve yükleme medyası kimliği |
 | §7.4.b | Donanımla uyumluluk kayıtları | 10.2 Uyumluluk kayıtları: donanım ve PDI |
-| §7.5.a, §7.5.c | Araç kimliği; derleme/yükleme araçlarında CC2 | 11.1 Geliştirme, derleme, doğrulama ve yükleme araçları |
+| §7.5.a, §7.5.c | Araç kimliği; build/yükleme araçlarında CC2 | 11.1 Geliştirme, build, doğrulama ve yükleme araçları |
 | §7.5.b | Kalifiye araçların kontrolü | 11.2 Kalifiye araçlar |
 | §11.0.c | Ek veride asgari CC2 | 12 Yaşam döngüsü verisi kontrolleri: CC1 ve CC2 |
 | §11.15, §11.16, §11.18 | SECI, SCI ve SCM kayıtları | 14 SCM verisi: kayıtlar, SCI ve SECI |
@@ -557,7 +557,7 @@ Bu eşleme bir başvuru aracıdır; maddelerin tam anlamı için standart ve ekl
 | Bu belgede | Örtüşmesi gereken belge | Nasıl denetlenir |
 |---|---|---|
 | Problem raporu, uygunsuzluk ve onaylı sapma sınırı | [SQAP](05-sqap.mdx): uygunsuzluklar ve onaylı sapmalar; [kodlama standardı](08-kodlama-standardi.mdx): sapma süreci | Örnek bir uygunsuzluk ve bir sapma belgelere göre ayrı ayrı yürütülür; her biri aynı kayıt türüne varmalıdır |
-| Test hatasının problem raporuna girişi | [SVP](03-svp.mdx): test hatası akışı ve yeniden doğrulama | SVP'deki adımlar SCMP'deki durum akışına bire bir bağlanıyor mu |
+| Test hatasının problem raporuna girişi | [SVP](03-svp.mdx): test hatası akışı ve yeniden doğrulama | SVP'deki adımlar SCMP'deki durum akışına birebir bağlanıyor mu |
 | Baseline adları | [SDP](02-sdp.mdx) ve [SVP](03-svp.mdx): geçiş kriterleri | Kriterlerde geçen her baseline adı SCMP listesinde var mı |
 | Kayıt durumları ve baseline | [Gereksinim standardı](06-gereksinim-standardi.mdx): durum değerleri ve onay akışı | "Onaylı" durumunun baseline ile ilişkisi iki belgede aynı mı |
 | Araç envanteri ve ortam kontrolü | [SDP](02-sdp.mdx), [SVP](03-svp.mdx): geliştirme ve doğrulama ortamı; [kodlama standardı](08-kodlama-standardi.mdx): statik analiz yapılandırması | Aynı araç her yerde aynı adla geçiyor mu; sürüm anılan her yerde SECI'dekiyle (esas kayıt) aynı mı |
@@ -574,7 +574,7 @@ Bu eşleme bir başvuru aracıdır; maddelerin tam anlamı için standart ve ekl
 | Baseline adları geçiş kriterleriyle uyuşmuyor | SCMP ve SDP ayrı zamanlarda yazılmış | Listeyi SCMP'de tanımlamak; SDP ve SVP'de yalnızca ada atıf yapmak |
 | Saklama süresi "proje süresince" | Arşivin teslimle biteceği varsayımı | Süreyi ürünün servis ömrüne ve uçuşa elverişlilik gereklerine bağlamak |
 | Sertifikasyon sonrası kontroller ve sorumlu yok | Plan yalnızca geliştirme dönemini düşünmüş | Servis dönemindeki sahibi, devir kaydını ve değişiklik akışını yazmak |
-| Ortam kontrolü derleyici sürümünden ibaret | Derleme seçenekleri, script'ler ve işletim ortamı unutulmuş | Resmî derleme ortamını bütünüyle SECI'ye bağlamak; elle derlemeyi kapatmak |
+| Ortam kontrolü derleyici sürümünden ibaret | Derleme seçenekleri, script'ler ve işletim ortamı unutulmuş | Resmî build ortamını bütünüyle SECI'ye bağlamak; elle build almayı kapatmak |
 | Tedarikçi teslimatı doğrudan depoya kopyalanıyor | Kabul adımı tanımsız | Teslimat notu ve kabul kaydı olmadan kontrollü kütüphaneye giriş olmaması |
 | Problem raporu emniyet etkisini değerlendirmeye yetmiyor | Rapor yalnızca hata takibi için tasarlanmış | Tanımda etki sorusunu zorunlu kılmak; emniyet etkili raporu sistem süreçlerine yönlendirmek |
 

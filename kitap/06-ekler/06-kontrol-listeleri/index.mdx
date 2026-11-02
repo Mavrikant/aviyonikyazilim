@@ -117,7 +117,7 @@ kişilere bölmek kaydı karmaşıklaştırır.
 ## Gözden geçirme nasıl yürütülür?
 
 Toplantının nasıl yönetileceği
-[9. bölümdeki pratiklerde](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#etkili-akran-gözden-geçirmesi-için-pratikler)
+[9. bölümdeki pratiklerde](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#etkili-peer-review-için-pratikler)
 anlatılır. Listelerle çalışırken akış üç adımdır:
 
 ```mermaid
@@ -181,7 +181,7 @@ tekrarlıyorsa listeye yeni madde adayıdır. Sınıflar 9. bölümdekilerdir:
 |---|---|---|
 | Büyük | Öğenin doğruluğunu, bir hedefin karşılanmasını ya da üst ve alt veriyle tutarlılığı bozan kusur; ör. eksik ya da yanlış gereksinim, izlenmeyen kod, gereksinimden türetilmemiş beklenen sonuç | Bulguyu açan gözden geçiren yeni sürümde teyit eder; ilgili madde grubu yeniden uygulanır |
 | Küçük | Anlamı ve doğrulanabilirliği değiştirmeyen kusur; ör. biçim, yazım, adlandırma, eksik belge ya da standart atıf numarası (eksik iz bağlantısı büyük bulgudur) | Düzeltme yapılır; gözden geçirme lideri ya da bulguyu açan kişi teyit eder |
-| Öneri | Kusur değil, iyileştirme | Yazar kabul ya da ret eder; ret gerekçesi kayda yazılır, düzeltme şart değildir |
+| Öneri | Kusur değil, iyileştirme | Yazar kabul eder ya da reddeder; ret gerekçesi kayda yazılır, düzeltme şart değildir |
 
 Proje standardına aykırılık, kuralın amacına göre sınıflanır: doğrulanabilirliği bozan bir
 ifade büyük, biçim kuralına aykırılık küçük bulgudur. Büyük ya da küçük, açık bulgusu olan
@@ -251,7 +251,7 @@ adresini verir; ardından başlık satırı ve her madde için bir satır gelir:
 | Bulgu ya da not | Boş; bulgu numarası, Uygulanmaz gerekçesi, araç raporu ya da (denetim listelerinde) örneklem |
 
 Dosya UTF-8 (BOM'lu) kodlanmış ve noktalı virgülle ayrılmıştır. Liste ayırıcısı noktalı
-virgül olan bölge ayarlarında (Türkçe dahil) Excel onu doğrudan sütunlara böler; satırlar tek
+virgül olan bölge ayarlarında (Türkçe dâhil) Excel onu doğrudan sütunlara böler; satırlar tek
 sütunda görünürse ayırıcı olarak noktalı virgül seçilerek içe aktarılır. Numarasız giriş
 koşulları dışa aktarılmaz; onlar kaydın başında bir kez teyit edilir.
 

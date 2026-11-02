@@ -152,7 +152,7 @@ Ayrımın somut olarak nasıl yapılacağı sistemin mimarisine bağlıdır; yay
   donanım biriminde tutulur; çekirdeğin bulunduğu bellek, kullanıcı arayüzünden
   yazılamaz.
 - **Yazılım bölümlemesi (software partitioning):** Değiştirilebilir bileşen, özellikle
-  kod içeriyorsa, bölümlemeli bir işletim sisteminde ayrı bir bölüme (partition)
+  kod içeriyorsa, bölümlemeli bir işletim sisteminde ayrı bir partition'a
   yerleştirilir. Bellek koruma birimi (memory protection unit, MPU) ya da bellek yönetim
   birimi (memory management unit, MMU) bu bileşenin çekirdeğin belleğine yazmasını,
   işletim sisteminin zaman çizelgesi de çekirdeğe ayrılan işlemci zamanını tüketmesini
@@ -201,7 +201,7 @@ redundancy check, CRC). Basit bir örnek:
 typedef struct {
     uint32_t sema_surumu;       /* çekirdeğin beklediği tablo biçimi      */
     uint16_t rapor_esigi_degc;  /* bakım raporu tetikleme eşiği, °C       */
-    uint16_t ayrilmis;          /* örtük dolgu yerine açık alan; sıfır    */
+    uint16_t ayrilmis;          /* örtük padding yerine açık alan; sıfır  */
     uint32_t crc32;             /* önceki alanlar üzerinden CRC-32        */
 } ums_tablo_t;
 
@@ -232,10 +232,10 @@ bool ums_tablo_gecerli(const ums_tablo_t *tablo)
 ```
 
 Yapıdaki ayrılmış alan süs değildir. Derleyicinin alanlar arasına kendiliğinden
-yerleştirdiği dolgu baytlarının (padding) yeri ve sayısı derleyiciye ve hedef mimariye
+yerleştirdiği padding baytlarının yeri ve sayısı derleyiciye ve hedef mimariye
 göre değişir, içeriği de belirsizdir. Tabloyu üreten yer aracı ile hedef bilgisayar
 yapıyı bellekte farklı yerleştirirse CRC'nin kapsadığı bayt dizisi iki tarafta aynı
-olmaz ve geçerli tablo reddedilir. Bu yüzden yapı örtük dolgu bırakmayacak biçimde
+olmaz ve geçerli tablo reddedilir. Bu yüzden yapı örtük padding bırakmayacak biçimde
 kurulur ya da CRC, alanların tek tek serileştirildiği bayt dizisi üzerinden hesaplanır.
 
 Tablo geçersizse sistemin ne yapacağı da tasarımın parçasıdır: güvenli varsayılan
@@ -251,7 +251,7 @@ bileşendeki hatalardan koruduğu işlevle — **aynı yazılım seviyesinde** t
 doğrulanır (§2.5.2, §5.2.3). Doğrulama yalnızca "geçerli veri kabul
 ediliyor mu" sorusunu değil, asıl olarak olumsuz senaryoları hedefler: bozuk CRC, sınır
 dışı değerler, yanlış sürüm, kesilen yazma işlemi sonrası yarım kalmış tablo,
-değiştirilebilir bileşenden çekirdek belleğe yazma girişimi, yetkisiz ya da yanlış
+değiştirilebilir bileşenden çekirdeğin belleğine yazma girişimi, yetkisiz ya da yanlış
 durumda yapılan yazma isteği. Ayrıca kullanıcı değişikliğinin çekirdeğin **zamanlama ve
 bellek bütçesini** etkileyemediği gösterilmelidir; örneğin değiştirilebilir bir tablo,
 çekirdekte sınırsız bir döngüye ya da taşmaya yol açabiliyorsa ayrım kâğıt üzerinde
@@ -303,10 +303,10 @@ Asgari beklentiler:
   prosedürel kayıt (form, bakım kaydı) tanımlanmalıdır.
 - Değişiklik yapma yetkisi sınırlandırılmalı (fiziksel anahtar, parola, bakım modu) ve
   yetkilendirme prosedürü yazılı olmalıdır.
-- Değişiklik sonrası yapılacak kontrol (geri okuma, özet/CRC karşılaştırması, kısa bir
+- Değişiklik sonrası yapılacak kontrol (geri okuma, hash/CRC karşılaştırması, kısa bir
   işlev testi) prosedürün parçası olmalıdır; "yazdım, olmuştur" kabul edilmez.
 
-Değişikliği üreten bir yer araçsa (örneğin parametre tablosunu derleyip ikili biçime
+Değişikliği üreten bir yer araçsa (örneğin parametre tablosunu derleyip binary biçime
 çeviren bir yer destek aracı), bu aracın çıktısındaki bir hatanın koruma mekanizması
 tarafından yakalanıp yakalanamayacağına bakılır; yakalanamayan hata sınıfları varsa araç
 için araç kalifikasyonu (tool qualification) gündeme gelir (bkz.
@@ -342,7 +342,7 @@ Kullanıcı tarafında tipik sorumluluklar şunlardır:
   yerine üreticiye tasarım değişikliği olarak iletmek,
 - filo genelinde hangi birimde hangi konfigürasyonun yüklü olduğunu izlemek,
 - değişiklik kayıtlarını denetime hazır tutmak,
-- şüpheli davranış raporlarında yüklü konfigürasyonu da olay bilgisine dahil etmek.
+- şüpheli davranış raporlarında yüklü konfigürasyonu da olay bilgisine dâhil etmek.
 
 Bu sorumlulukların belirsiz kaldığı durumlarda değiştirilebilirlik, esneklik yerine
 izlenemeyen bir varyasyon kaynağına dönüşür.

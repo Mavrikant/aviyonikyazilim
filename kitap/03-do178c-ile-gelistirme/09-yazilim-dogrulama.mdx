@@ -30,7 +30,7 @@ tasarımın ve kodun birbirini gerçekten desteklediğini gösterme faaliyetidir
 ## Bağımsızlık
 
 Doğrulama bağımsızlığı (verification independence), bir iş ürününü doğrulayan kişinin
-o ürünü geliştiren kişiden farklı olması demektir. Buradaki amaç basit bir psikolojik
+o ürünü geliştiren kişiden farklı olması demektir. Bu kural basit bir psikolojik
 gerçeğe dayanır: kendi yazdığımız gereksinimi veya kodu okurken, yazarken yaptığımız
 varsayımları farkında olmadan tekrar yaparız. Aynı kör noktaya iki kez bakan göz,
 oradaki hatayı iki kez kaçırır. Bağımsız bir göz ise ürünü kendi varsayımları olmadan,
@@ -62,12 +62,12 @@ işaretlidir. Kaba çizgileriyle:
 
 | Yazılım seviyesi | Doğrulama hedeflerinde bağımsızlık |
 |---|---|
-| Seviye A | En geniş kapsam: 71 hedefin 30'u bağımsızlıkla karşılanır. Kaynak kodun gereksinimlere ve mimariye uygunluğu, test sonuçlarının değerlendirilmesi ve kapsam analizleri dahil pek çok doğrulama hedefi bu gruptadır |
+| Seviye A | En geniş kapsam: 71 hedefin 30'u bağımsızlıkla karşılanır. Kaynak kodun gereksinimlere ve mimariye uygunluğu, test sonuçlarının değerlendirilmesi ve kapsam analizleri dâhil pek çok doğrulama hedefi bu gruptadır |
 | Seviye B | Daha dar: 69 hedefin 18'i. Gereksinimlerin bir üst seviyeye uygunluğu ve doğruluğu, kaynak kodun düşük seviyeli gereksinimlere uygunluğu ve yapısal kapsam gibi hedefler bağımsız kalır; mimari, test prosedürleri ve sonuçları ile gereksinim test kapsamı gibi hedeflerde bağımsızlık yalnızca Seviye A'da aranır |
 | Seviye C | Doğrulama hedeflerinde bağımsızlık aranmaz; 62 hedeften bağımsızlıkla işaretli 5'i kalite güvencesi hedefleridir |
 | Seviye D | Doğrulama hedeflerinde bağımsızlık aranmaz; 26 hedeften bağımsızlıkla işaretli 2'si kalite güvencesi hedefleridir |
 
-Seviye A ve B'deki sayılara kalite güvencesi hedefleri de dahildir. Bağımsızlık
+Seviye A ve B'deki sayılara kalite güvencesi hedefleri de dâhildir. Bağımsızlık
 aranmayan hedeflerde de gözden geçirme ya da analiz yapılır; yalnızca bunu yazarın
 kendisinin yapması standartça yasak değildir. Yine de yazar dışı bir gözün bakması her
 seviyede iyi uygulamadır.
@@ -127,7 +127,7 @@ Verification Results, SVR) verisini oluşturur.
 ## Gözden geçirmeler
 
 Gözden geçirme, bir iş ürününün başka gözler tarafından sistematik biçimde
-incelenmesidir. En ucuz doğrulama yöntemidir, çünkü hatayı ürün henüz kağıt üzerindeyken
+incelenmesidir. En ucuz doğrulama yöntemidir, çünkü hatayı ürün henüz kâğıt üzerindeyken
 yakalar: gereksinimdeki bir belirsizlik gözden geçirmede on dakikada düzeltilir; aynı
 belirsizlik teste kadar yaşarsa kod, test ve izlenebilirlik zinciri birlikte değişir.
 
@@ -169,7 +169,7 @@ Kayıt ise sertifikasyon kanıtıdır. Tipik bir gözden geçirme kaydında şun
 
 ### Etkili peer review için pratikler
 
-Deneyimin gösterdiği birkaç basit kural, gözden geçirmenin verimini belirgin artırır:
+Deneyimin gösterdiği birkaç basit kural, gözden geçirmenin verimini belirgin biçimde artırır:
 
 - Malzemeyi toplantıdan **önce** dağıtın; toplantı bulguları tartışmak içindir,
   ilk kez okumak için değil.
@@ -177,14 +177,14 @@ Deneyimin gösterdiği birkaç basit kural, gözden geçirmenin verimini belirgi
   dokümanları parçalara bölün.
 - Yazarı değil ürünü eleştirin; savunma refleksi başlayan bir gözden geçirme
   bulgu üretmeyi bırakır.
-- Bulguları toplantıda **çözmeye çalışmayın**; kaydedin, sahiplendirin, kapanışını
+- Bulguları toplantıda **çözmeye çalışmayın**; kaydedin, sahiplendirin, kapanışlarını
   ayrıca takip edin.
 - "Gözden geçirildi" damgasını, bulgular kapanmadan basmayın; açık bulgusu olan
   ürün konfigürasyon açısından hâlâ olgunlaşmamıştır.
 
 ## Analizler
 
-Analiz, bir özelliğin **tüm** koşullar için geçerli olduğunu akıl yürütme ile
+Analiz, bir özelliğin **tüm** koşullar için geçerli olduğunu akıl yürütmeyle
 göstermeye çalışır; test ise yalnızca denenen durumlar için kanıt üretir. Bu yüzden
 "her zaman doğru olmalı" türünden özellikler — zamanlama sınırları, bellek sınırları,
 kaynak tüketimi — yalnız testle gösterilemez; analiz gerekir ve ölçümle desteklenir.
@@ -233,7 +233,7 @@ Bellek haritası analizi, linker çıktısındaki yerleşimin tasarımla uyumunu
 denetler: kod, sabit veri ve değişken veri doğru bölgelere mi yerleşmiş; bölgeler
 taşıyor mu ya da birbirine giriyor mu; korumalı bölgelere (örneğin bir bölümleme
 sınırının ötesine) beklenmedik bir yerleşim var mı? Yazılım bölümlemesi (software
-partitioning) kullanan sistemlerde bu analiz, bölümler arası izolasyon iddiasının temel
+partitioning) kullanan sistemlerde bu analiz, partition'lar arası izolasyon iddiasının temel
 dayanaklarındandır (bkz.
 [21. Yazılım Bölümlemesi](../05-ozel-konular/21-yazilim-bolumlemesi.mdx)).
 
@@ -250,8 +250,8 @@ korumalar da doğrulanır; ayrıntısı
 [18. Sahada Yüklenebilir Yazılım](../05-ozel-konular/18-sahada-yuklenebilir-yazilim.mdx)
 bölümündedir.
 
-Tüm bu analizlerin ortak disiplini şudur: analiz **konfigürasyonu belli** bir derleme
-sürümü (build) üzerinde yapılır ve o sürüm değiştiğinde tekrarlanır ya da değişikliğin
+Tüm bu analizlerin ortak disiplini şudur: analiz **konfigürasyonu belli** bir build
+üzerinde yapılır ve o build değiştiğinde tekrarlanır ya da değişikliğin
 analizi etkilemediği gerekçelendirilir. Son sürümde unutulmuş eski bir WCET raporu,
 denetimde kanıt değil bulgu olur.
 
@@ -261,9 +261,10 @@ Test, yazılımın somut davranışını gözlemler. Bir gereksinim ne kadar iyi
 olsun, test ya da gerekçelendirilmiş bir analizle desteklenmiyorsa sertifikasyon
 açısından eksik kalır.
 
-DO-178C'de testler **gereksinim tabanlıdır** (requirements-based testing): her test case bir gereksinime dayanır ve iki tür test case beklenir. **Normal aralık** (normal
-range) test case'ler, geçerli eşdeğerlik sınıflarını ve geçerli sınır değerleri
-kullanarak yazılımın isteneni yaptığını gösterir. **Gürbüzlük** test case'ler ise geçersiz
+DO-178C'de testler **gereksinim tabanlıdır** (requirements-based testing): her test case
+bir gereksinime dayanır ve iki tür test case beklenir. **Normal aralık** (normal
+range) test case'leri, geçerli eşdeğerlik sınıflarını ve geçerli sınır değerleri
+kullanarak yazılımın isteneni yaptığını gösterir. **Gürbüzlük** test case'leri ise geçersiz
 değerler, anormal başlatma, bozuk veri, aşılan çerçeve süresi ve izin verilmeyen durum
 geçişi gibi anormal girdi ve koşullarda yazılımın tanımlı biçimde davrandığını gösterir.
 İkisi de gereksinime dayanır: geçersiz girdide ne olacağı gereksinimde yazmıyorsa,
@@ -288,7 +289,7 @@ girdi uzayını sistematik tekniklerle taramaktır. Yerleşik teknikler şunlard
   göre davranan mantık için koşul kombinasyonları tablo hâlinde yazılır ve her
   anlamlı satır test edilir. Bu teknik, MC/DC hedefiyle doğal olarak örtüşür.
 
-Küçük bir C örneği üzerinden sınır değer düşünelim:
+Küçük bir C örneği üzerinden sınır değerleri düşünelim:
 
 ```c
 #include <stdbool.h>
@@ -305,9 +306,9 @@ bool hiz_gecerli_mi(int32_t hiz_knot)
 ```
 
 Bu işlev için `0`, `1`, `349` ve `350` geçerli sınıfın sınır değerleri, `175` ise
-temsilcisidir; bunlar normal aralık test case'lerdir. `-1` ve `351` geçersiz sınıfların
+temsilcisidir; bunlar normal aralık test case'leridir. `-1` ve `351` geçersiz sınıfların
 sınır değerleri, `INT32_MIN` ve `INT32_MAX` türün uç değerleridir; bunlar gürbüzlük
-test case'lerdir. İşlevin görevi zaten geçerlilik denetimi olduğundan geçersiz girdide
+test case'leridir. İşlevin görevi zaten geçerlilik denetimi olduğundan geçersiz girdide
 beklenen sonuç (yanlış) gereksinimden okunabilir: gürbüzlük testi beklenen sonucu
 tahmin etmez, gereksinimden alır.
 
@@ -328,13 +329,13 @@ birlikte yanlıştır; bunu ancak entegrasyon testi gösterir. Öte yandan üst 
 koşulan bir test düşük seviyeli gereksinimi ve ilgili yapısal kapsamı da karşılıyorsa
 aynı testi alt seviyede yinelemek gerekmez.
 
-Zamanlama, iş çıkarma (throughput) ve kaynak kullanımı gereksinimleri de test edilir:
+Zamanlama, throughput ve kaynak kullanımı gereksinimleri de test edilir:
 performans testleri bu gereksinimlerin hedef donanımda karşılandığını gösterir ve WCET
 analiziyle birbirini tamamlar.
 
 Bazı hatalar yalnız hedef bilgisayar ortamında ortaya çıkar; bu yüzden tercih edilen
 test ortamı hedefe yüklenmiş yazılımdır ve seçilmiş testler her durumda entegre hedef
-ortamında koşulur. Emülatör ya da ana bilgisayar simülasyonundan kredi alınacaksa,
+ortamında koşulur. Emülatör ya da host simülasyonundan kredi alınacaksa,
 ortamın hedeften farklarının hata yakalama yeteneğine etkisi değerlendirilir; o ortamda
 yakalanamayacak hataların hangi başka doğrulama faaliyetiyle yakalanacağı SVP'de
 belirtilir. Emülatör ya da simülatörün kendisi de araç kalifikasyonu gerektirebilir.
@@ -351,12 +352,12 @@ Test faaliyeti üç ayrı iş ürünü üretir ve bu ayrım önemlidir:
 
 Test case'ler gereksinimden türetilir ve gereksinim değişmedikçe kararlıdır; test
 prosedürleri ise test ortamına (yazılım entegrasyon ortamı, hedef donanım) bağlıdır.
-Planlama aşamasında hangi testin hangi ortamda ve hangi seviyede koşacağı ve sonuçların
+Planlama aşamasında hangi testin hangi ortamda ve hangi seviyede koşulacağı ve sonuçların
 nasıl kaydedileceği belirlenir.
 
 Geliştirme boyunca testler defalarca koşulur; uyum kanıtı sayılan ise **kredi amaçlı
 (for-credit) koşudur**: konfigürasyon kontrolündeki yazılım sürümü, gözden geçirilmiş
-test case'ler ve prosedürleri ve kayıtlı bir test ortamıyla yapılan, sonuçları SVR'ye
+test case'ler ile prosedürleri ve kayıtlı bir test ortamıyla yapılan, sonuçları SVR'ye
 giren koşu. Hedef donanımda ya da hedefe denkliği gerekçelendirilmiş bir ortamda
 yapılır. Bu koşuya hangi koşullarla girileceği geçiş kriterlerinde tanımlanır (bkz.
 [Ek A: Örnek Geçiş Kriterleri](../06-ekler/01-ek-a-ornek-gecis-kriterleri.mdx));
@@ -370,7 +371,7 @@ kontrol listesindedir.
   işaretidir.
 - **Beklenen sonucu gereksinimden alır:** Beklenen değer koddan kopyalanırsa test,
   kodun kendi kendine eşit olduğunu kanıtlar — hatayı değil.
-- **Tekrarlanabilirdir:** Aynı derleme sürümü ve aynı ortamda her koşuda aynı sonucu
+- **Tekrarlanabilirdir:** Aynı build'de ve aynı ortamda her koşuda aynı sonucu
   verir; zamanlamaya veya koşu sırasına gizlice bağımlı test güven vermez.
 - **Başarısız olmayı bilir:** Sonucu otomatik ve net biçimde geçti/kaldı olarak
   değerlendirir; "çıktıya göz atın" diyen prosedür kanıt üretmez.
@@ -398,9 +399,9 @@ Analizin iki düzeyi vardır ve ikisi de gereklidir:
    bir test case var mı? Bu, iz verisinden (biçimi ne olursa olsun) mekanik olarak
    okunabilir.
 2. **Yeterlilik kontrolü:** Eşlenen testler gereksinimin *tüm* koşullarını —
-   aralıkları, kipleri, hata durumlarını, gürbüzlük beklentilerini — kapsıyor mu?
+   aralıkları, modları, hata durumlarını, gürbüzlük beklentilerini — kapsıyor mu?
    Bu kısım mekanik değildir; testleri gereksinimle yan yana okuyan bir insan ister.
-   "Gereksinim başına bir test var" demek, gereksinim üç kip tanımlıyorsa ve test
+   "Gereksinim başına bir test var" demek, gereksinim üç mod tanımlıyorsa ve test
    yalnızca birini deniyorsa yeterlilik açısından boşluktur.
 
 Seviye D'de bu analiz yalnızca yüksek seviyeli gereksinimler için aranır; düşük seviyeli
@@ -429,7 +430,7 @@ değil, anlamlı kanıttır. Kapsam verisi, gereksinim tabanlı testlerle birlik
 yorumlanmalıdır.
 
 Hangi kapsam ölçütünün arandığı yazılım seviyesine bağlıdır ve ölçütler birbirinin
-üzerine inşa edilir:
+üzerine kurulur:
 
 | Ölçüt | Neyi ister | Arandığı seviye |
 |---|---|---|
@@ -462,16 +463,16 @@ sonucunu yalnızca o koşulun değiştirdiğini gösteren bir test çifti, yani 
 
 1–2 çifti `basinc_dusuk`, 1–3 çifti `motor_calisiyor`, 3–4 çifti `bakim_kipi` koşulunun
 bağımsız etkisini gösterir. Böylece örneğin `bakim_kipi` teriminin gereksiz (veya
-yanlış) olup olmadığı test kümesinde görünür olur. N koşullu bir karar için MC/DC tipik
+yanlış) olup olmadığı test setinde görünür olur. N koşullu bir karar için MC/DC tipik
 olarak N+1 testle sağlanabilir; üstünlüğü, 2 üzeri N kombinasyonun tamamını denemeden
 koşul düzeyinde duyarlılık sağlamasıdır.
 
-Bu çiftlerde öteki koşullar sabit tutulmuştur; bu biçime unique-cause MC/DC
-(unique-cause MC/DC) denir. Aynı koşul kararda birden çok kez geçiyorsa (bağlı koşul,
-coupled condition) ötekileri sabit tutmak mümkün olmaz; o zaman yalnızca sonucu
-etkileyebilecek koşulların sabit kalmasını arayan masking MC/DC
-kullanılır. DO-178C'nin MC/DC tanımı iki biçimi de kabul eder. C'deki short-circuit evaluation hangi koşulların gerçekten değerlendirildiğini
-değiştirdiğinden test seti buna göre yorumlanır.
+Bu çiftlerde öteki koşullar sabit tutulmuştur; bu biçime unique-cause MC/DC denir. Aynı
+koşul kararda birden çok kez geçiyorsa (coupled condition) ötekileri sabit tutmak mümkün
+olmaz; o zaman yalnızca sonucu etkileyebilecek koşulların sabit kalmasını arayan masking
+MC/DC kullanılır. DO-178C'nin MC/DC tanımı iki biçimi de kabul eder. C'deki short-circuit
+evaluation hangi koşulların gerçekten değerlendirildiğini değiştirdiğinden test seti buna
+göre yorumlanır.
 
 <AracKarti
   yol="/araclar/dogrulama/mcdc-test-seti"
@@ -486,9 +487,9 @@ düşük kapsam, ya testlerin ya gereksinimlerin ya da kodun eksik/fazla olduğu
 işaretidir ve önce bu kök neden bulunur.
 
 Kapsam, kaynak kod ya da nesne kodu düzeyinde ölçülebilir. Çoğu araç bunun için koda
-sayaçlar ekler, yani kodu donatır (instrumentation). Donatılmış kod uçacak kod değildir;
-boyutu ve zamanlaması farklıdır. Bu yüzden yaygın yaklaşım, kapsamı donatılmış derleme
-sürümünden toplamak, kredi amaçlı test sonuçlarını donatılmamış kodla elde etmek ve iki
+sayaçlar ekler; bu işe instrumentation denir. Instrumented kod uçacak kod değildir;
+boyutu ve zamanlaması farklıdır. Bu yüzden yaygın yaklaşım, kapsamı instrumented build'den
+toplamak, kredi amaçlı test sonuçlarını instrumented olmayan kodla elde etmek ve iki
 koşunun aynı sonucu verdiğini göstermektir. Kapsam aracı bir doğrulama faaliyetini
 otomatikleştirdiği ve bir boşluğu gözden kaçırabileceği için, çıktısı ayrıca
 doğrulanmıyorsa kalifiye edilir (bkz.
@@ -527,15 +528,15 @@ olanlar şunlardır:
 | Çalışma zamanı denetimleri | Ada'da aralık ve dizi indisi denetimi; C'de yalnızca böyle bir denetimi açan derleyici seçeneği kullanıldığında | Kaynakta görünmeyen bir karşılaştırma ve normal girdilerle hiç alınmayan hata dalı | Hata dalı gürbüzlük testiyle tetiklenir; tetiklenince ne olacağı (istisna işleyici, güvenli durum) gereksinimde yazılıdır |
 | Örtük ilklendirme | Yerel diziye `= {0}` ataması; `.bss` bölgesini sıfırlayan, `.data` bölgesini kopyalayan başlangıç kodu | Bir döngü ya da `memset`/`memcpy` çağrısı | Başlangıç kodu kendi gereksinimleriyle doğrulanır; işlev içindeki ilklendirmenin sonucu testte gözlenir |
 | Yardımcı kütüphane çağrıları | 32 bit işlemcide 64 bit bölme; kayan nokta birimi olmayan işlemcide kayan nokta işlemleri; büyük yapı ataması | Derleyici kütüphanesine çağrı; çağrılan rutinin kendi dalları ve döngüleri vardır | Rutin bir kütüphane bileşeni olarak ayrıca doğrulanır ya da yapı kodlama standardında yasaklanır |
-| Kontrol akışı dönüşümleri | `switch`'in sınır denetimli atlama tablosuna dönüşmesi; döngü açma (loop unrolling) | Kaynakta tek olan karar birden çok dala bölünür ya da birkaç karar tek dalda birleşir | Dönüşümün anlamı koruduğu listede gözden geçirilir; ortaya çıkan dalların testlerde iki yönde de işletildiği gösterilir |
+| Kontrol akışı dönüşümleri | `switch`'in sınır denetimli atlama tablosuna dönüşmesi; loop unrolling | Kaynakta tek olan karar birden çok dala bölünür ya da birkaç karar tek dalda birleşir | Dönüşümün anlamı koruduğu listede gözden geçirilir; ortaya çıkan dalların testlerde iki yönde de işletildiği gösterilir |
 | Koruma kodu | Stack koruyucu (stack protector) denetimi | Her işlev çıkışında, normalde hiç alınmayan bir hata dalı | Seçenek kapatılır ya da dal hata enjeksiyonuyla (fault injection) işletilir |
-| Kod çoğaltma | Satır içine alma (inlining), işlev kopyalama | Aynı kaynak satırın birden çok kopyası; kaynak düzeyindeki sayaç kopyaları ayırt etmez | Her kopyanın işletildiği nesne kodunda gösterilir ya da satır içine alma sınırlanır |
+| Kod çoğaltma | Inlining, işlev kopyalama | Aynı kaynak satırın birden çok kopyası; kaynak düzeyindeki sayaç kopyaları ayırt etmez | Her kopyanın işletildiği nesne kodunda gösterilir ya da inlining sınırlanır |
 
 Bunun ters yönü de vardır: optimizer kaynakta bulunan bir kararı dalsız komutlara,
 örneğin koşullu atama komutuna çevirebilir. Kod kaynakta izlenebilir kalır, ama kapsam
 nesne kodunda ölçülüyorsa bu karar ölçümde görünmez olur (aşağıya bakınız).
 
-**Bir örnek: `switch` ve atlama tablosu.** Aşağıdaki işlev uçuş kipini bir veri yolu
+**Bir örnek: `switch` ve atlama tablosu.** Aşağıdaki işlev uçuş modunu bir veri yolu
 koduna çevirir:
 
 ```c
@@ -580,14 +581,14 @@ kodundaki karşılığıdır ve izlenebilirdir; karşılaştırma işaretsiz old
 değerler de `default`'a gider, bu da kaynağın anlamıyla uyumludur. (2) Tablonun dört
 baytı dört `case`'in değerleridir; içerikleri her `case`'i işleten testlerle doğrulanır.
 Sonuçta ek kod yoktur, ama yapı değişmiştir ve mevcut testlerin bu yapıyı tam olarak
-işletmesi bir koşula bağlıdır: `default` dalını, yani tanım dışı bir kip değerini
+işletmesi bir koşula bağlıdır: `default` dalını, yani tanım dışı bir mod değerini
 deneyen bir gürbüzlük testi bulunmalıdır. Yoksa `bhi` komutunun alınan yönü hiçbir
 testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savunmacı dalı
 "gerekçeli" saymışsa göstermez.
 
 **Analiz nasıl yapılır?** Yaygın akış şöyledir:
 
-1. **Kapsamı ve yöntemi planlamak.** Derleyici ve linker, sürümleri ve seçenekleri
+1. **Kapsamı ve yöntemi planlamak.** Derleyicinin ve linker'ın sürümleri ile seçenekleri
    (özellikle optimizasyon düzeyi) dondurulur. Yöntem yazılım doğrulama planına, özeti
    PSAC'a yazılır. Analizin sonucu yalnızca bu araç zinciri ve bu seçenekler için
    geçerlidir.
@@ -602,17 +603,17 @@ testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savu
    çevredeki koda bakarak karar verir. Yüksek optimizasyonda tam analiz ya da nesne kodu
    düzeyinde kapsam ölçümü daha savunulabilir hâle gelir.
 3. **Listeyi çıkarmak ve eşlemek.** Derleyicinin assembly listesi
-   ya da hata ayıklama bilgisiyle ters çevrilmiş (disassembled) nesne kodu, kaynak
+   ya da nesne kodunun hata ayıklama bilgisiyle alınmış disassembly'si, kaynak
    satırlarıyla yan yana konur. GNU araç zincirinde `-S` seçeneği ve `objdump -d -S`
    bunun bilinen yollarıdır. Analizin dayandığı listenin uçacak nesne koduyla aynı
    olduğu gösterilir: liste için ayrı bir derleme yapılıyorsa seçeneklerin aynı olduğu,
-   mümkünse doğrudan uçacak imajın ters çevrildiği kayda geçer.
+   mümkünse doğrudan uçacak imajın disassembly'sinin alındığı kayda geçer.
 4. **Sınıflandırmak.** Her komut dizisi üç sınıftan birine konur: doğrudan izlenebilir;
    izlenebilir ama yapısı değişmiş (atlama tablosu, birleştirilmiş koşul); izlenemeyen
    ek kod. Ek kod için hangi yapının onu doğurduğu, nerede olduğu ve ne yaptığı yazılır.
 5. **Ek kodu doğrulamak.** Her ek kod dizisinin doğruluğu liste üzerinde gözden
    geçirilir. İçinde dal varsa her yönünün testlerde işletildiği nesne kodu düzeyinde
-   (izleme ya da debugger ile) gösterilir; normal girdilerle işletilemeyen yön
+   (hardware trace ya da debugger ile) gösterilir; normal girdilerle işletilemeyen yön
    için gürbüzlük testi, hata enjeksiyonu ya da gerekçeli analiz kullanılır. Doğrulaması
    pahalı kalıplar kodlama standardında yasaklanır ya da bir seçenek değiştirilerek
    ortadan kaldırılır; analizin en değerli çıktısı çoğu zaman bu geri beslemedir.
@@ -624,7 +625,7 @@ testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savu
 ```mermaid
 flowchart TD
     A["Derleyici sürümü ve<br/>seçenekleri dondurulur"] --> B["Temsilî örnek kod<br/>ya da tüm proje kodu"]
-    B --> C["Assembly listesi /<br/>ters çevrilmiş<br/>nesne kodu"]
+    B --> C["Assembly listesi /<br/>nesne kodunun<br/>disassembly'si"]
     C --> D{"Komut dizisi<br/>bir kaynak<br/>deyimine izlenebiliyor<br/>mu?"}
     D -- "Evet,<br/>aynı yapıda" --> E["Kaynak<br/>düzeyindeki<br/>doğrulama<br/>kapsar"]
     D -- "Evet,<br/>yapı değişmiş" --> F["Dönüşüm gözden<br/>geçirilir; yeni<br/>dalların işletildiği<br/>gösterilir"]
@@ -638,11 +639,11 @@ flowchart TD
 ```
 
 **Kapsamı doğrudan nesne kodunda ölçmek.** Bir diğer yol, kapsamın kaynak kod yerine
-nesne kodu üzerinde, örneğin işlemcinin izleme donanımıyla ölçülmesidir. Bu yolda
+nesne kodu üzerinde, örneğin hardware trace ile ölçülmesidir. Bu yolda
 derleyicinin eklediği her dal ölçüme kendiliğinden girer ve "ek kod işletildi mi?"
 sorusunun cevabı ölçümden okunur. Ancak ispat yükü yer değiştirir: nesne kodunda
 kullanılan ölçütün, seviyenin kaynak düzeyinde istediği ölçütü karşıladığı gösterilmek
-zorundadır. Nesne kodundaki her koşullu dalın iki yönde de alınması, kısa devre
+zorundadır. Nesne kodundaki her koşullu dalın iki yönde de alınması, short-circuit
 biçiminde derlenmiş kararlarda MC/DC'ye çoğu zaman yaklaşır ama ona kendiliğinden denk
 değildir: optimizer iki koşulu dalsız komutlarla birleştirdiğinde koşullardan biri
 nesne kodunda hiç dal üretmez ve etkisi ölçülemez. Bu yolu seçen proje, denkliği hangi
@@ -666,17 +667,17 @@ aşamasında cevaplanması gereken bir sorudur.
 Assembly kodunu C kodundan ayıran iki şey vardır. Birincisi, kaynak ile nesne kodu
 neredeyse bire bir örtüşür, çünkü assembler derleyici gibi karar vermez; bu
 yüzden kaynak–nesne izlenebilirliği çok daha kolaydır. "Neredeyse" sözcüğü önemlidir:
-makrolar, sözde komutlar (pseudo-instruction; örneğin ARM'da bir sabiti sabit havuzundan,
-literal pool, okuyan `ldr r0, =sabit`) ve linker'ın uzak çağrılar için eklediği ara
+makrolar, pseudo-instruction'lar (örneğin ARM'da bir sabiti literal pool'dan okuyan
+`ldr r0, =sabit`) ve linker'ın uzak çağrılar için eklediği ara
 kod da listede görülür ve analizde hesaba katılır. İkincisi, C için hazır kapsam araçları
-çoğunlukla kaynak kodu donatarak çalışır ve assembly kodunda bu yol kapalıdır; ölçütlerin
+çoğunlukla kaynak koda instrumentation uygulayarak çalışır ve assembly kodunda bu yol kapalıdır; ölçütlerin
 assembly'ye nasıl uygulanacağı da projede tanımlanmalıdır.
 
 **Ölçütleri assembly'ye uyarlamak.** Kaynak düzeyindeki ölçütlerin assembly'deki karşılığı planda yazılı olmalıdır. Tipik bir tanım şöyledir:
 
 | Ölçüt | Assembly'deki karşılığı | Dikkat edilecek nokta |
 |---|---|---|
-| Satır kapsama | Her komut, makro açılımları dahil, en az bir kez çalışmış | Kod içine gömülü sabit havuzu ve tablolar komut değildir; içerikleri gözden geçirmeyle doğrulanır |
+| Satır kapsama | Her komut, makro açılımları dahil, en az bir kez çalışmış | Kod içine gömülü literal pool ve tablolar komut değildir; içerikleri gözden geçirmeyle doğrulanır |
 | Karar kapsama | Her koşullu dal komutu hem alınmış hem alınmamış; her giriş noktası (rutin etiketi, istisna vektörü) ve her çıkış işletilmiş; dolaylı atlamalarda (atlama tablosu, register üzerinden atlama) olası her hedefe gidilmiş | Koşullu yürütülen komutlar (ARM'da `IT` bloğu, koşullu atama) dal olmadan karar verir; koşulun iki sonucu da ayrıca kaydedilir |
 | MC/DC | Tek bir mantıksal kararı birlikte gerçekleyen koşullu dallar bir karar olarak gruplanır ve her koşul için bağımsızlık çifti gösterilir | Hangi dalların aynı karara ait olduğu koddan okunmaz; tasarımda ya da açıklama satırında belirtilir |
 
@@ -692,38 +693,38 @@ ama yalnızca biri etkili olur:
 
 Komut düzeyinde bir sayaç burada satır kapsamayı her zaman tam gösterir; karar
 kapsama için `eq` koşulunun iki sonucunun da en az bir testte gerçekleştiği kaydedilmelidir.
-İzleme donanımı koşulu sağlanmadığı için etkisiz kalan komutu ayrıca işaretleyebiliyorsa
-bu bilgi oradan okunur; okuyamıyorsa koşulun iki sonucunu gösteren test kaydı gerekir.
+Hardware trace, koşulu sağlanmadığı için etkisiz kalan komutu ayrıca işaretleyebiliyorsa
+bu bilgi oradan okunur; işaretleyemiyorsa koşulun iki sonucunu gösteren test kaydı gerekir.
 
-Kısa devre biçimiyle yazılmış bir zincirde, örneğin `(durum & HATA_MASKESI) == 0 &&
+Short-circuit biçiminde yazılmış bir zincirde, örneğin `(durum & HATA_MASKESI) == 0 &&
 sayac < SINIR` kararı için art arda iki koşullu dal varsa, her iki dalın iki yönde de
 alınması bu karar için bağımsızlık çiftlerini de verir. Bu her karar biçiminde
 kendiliğinden doğru değildir; MC/DC iddiası karar başına, dalların gruplanmasıyla birlikte
 gösterilir.
 
-**Ölçüm yöntemleri.** Assembly kodunu donatmak, yani komutların arasına sayaç eklemek,
+**Ölçüm yöntemleri.** Assembly kodunda instrumentation, yani komutların arasına sayaç eklemek,
 çoğu zaman uygulanamaz. Eklenen sayaç koşul bayraklarını ya da bir register'ı bozabilir:
 `cmp` ile `bhi` arasına giren ve bayrakları değiştiren bir sayaç programın anlamını
 değiştirir. Zamanlama ve hizalama değişir; başlatma kodu ise bellek ve stack hazır
 olmadan çalıştığı için sayacı yazacak bir yer bile bulamaz. Bu yüzden assembly modüllerinde koda dokunmayan yöntemler tercih edilir:
 
-- **Donanım izleme (hardware trace).** İşlemcinin izleme birimi (ARM'da ETM, Power
+- **Hardware trace.** İşlemcinin izleme birimi (ARM'da ETM, Power
   Architecture'da Nexus gibi) çalışan komutların adreslerini ve dalların alınıp
   alınmadığını dışarı aktarır; araç bunu linker map ve listeyle eşleştirir. Uçacak
   imaj değiştirilmeden, hedefte ölçülür. İzleme buffer'ı taşar ve veri kaybedilirse o koşu
   kapsam kanıtı olarak kullanılmaz; aracın kaybı bildirdiği ve kaybın raporu nasıl
   etkilediği bilinmelidir. Her işlemcide ve kartta izleme portu bulunmaz; bu yüzden karar
   donanım tasarımı sırasında verilmelidir.
-- **Debugger script'i.** Her temel bloğun (basic block) başına kesme noktası konur
+- **Debugger script'i.** Her basic block'un başına kesme noktası konur
   ve test koşulur; hangi blokların çalıştığı ve dalların hangi yöne gittiği ardışık
   durmalardan çıkarılır. Yavaştır ve donanım kesme noktalarının sayısı sınırlıdır; buna
   karşılık başlatma kodu gibi küçük modüllerde uygulanabilir.
-- **Komut seti benzeticisi (instruction set simulator).** Ayrıntılı kapsam verir ama
-  benzetici hedef bilgisayar değildir. Benzeticinin ilgili komutları doğru modellediği
+- **Komut seti simülatörü (instruction set simulator).** Ayrıntılı kapsam verir ama
+  simülatör hedef bilgisayar değildir. Simülatörün ilgili komutları doğru modellediği
   ve kredi alınan testlerin hedefte de koşulduğu gösterilir; çevre birimine ve
-  zamanlamaya bağlı kod benzeticide farklı davranabilir.
+  zamanlamaya bağlı kod simülatörde farklı davranabilir.
 - **Elle analiz.** Birkaç düzine komutluk modüllerde her testin izlediği yol kontrol
-  akış çizgesi üzerinde işaretlenir ve bağımsız olarak gözden geçirilir. Yalnızca çok
+  akış grafiği üzerinde işaretlenir ve bağımsız olarak gözden geçirilir. Yalnızca çok
   küçük ve dallanması az kodda savunulabilir; kayıt test sonuçlarıyla birlikte saklanır.
 
 Hangi yöntem seçilirse seçilsin, ölçüm aracının ya da izleme verisini ayrıştıran proje
@@ -752,13 +753,13 @@ bss_sifirla:
 ```
 
 Gereksinim tabanlı test hedefte, debugger ile yapılır: belleğe sıfırlamadan önce
-bilinen bir desen yazılır, işlemci sıfırlanır ve `main`'e kadar koşturulur; ardından
+bilinen bir desen yazılır, işlemci reset edilir ve `main`'e kadar koşturulur; ardından
 bölgenin tamamen sıfır olduğu ve bölgenin hemen dışındaki kelimelerin değişmediği
 denetlenir. Bu tek koşu, `.bss` boş olmadığı sürece bütün komutları ve `bhs` dalının
 iki yönünü işletir; satır ve karar kapsama tamamdır. Yine de kapsamın tam olması
 rutinin doğru olduğunu göstermez: sınırlardan biri 4 bayta hizalı değilse döngü son
 kelimeyi bölgenin dışına taşarak yazar. Bu yüzden hizalama ön koşulu gereksinimde
-yazılıdır ve linker script'inin ve linker map'in gözden geçirilmesiyle doğrulanır
+yazılıdır ve linker script'i ile linker map'in gözden geçirilmesiyle doğrulanır
 (bkz. yukarıdaki bağlantı ve yükleme analizi). `.bss` bölgesi boş olan bir
 konfigürasyon varsa döngü gövdesi hiç çalışmaz; kapsam o konfigürasyon için ayrıca
 değerlendirilir.
@@ -782,7 +783,7 @@ Yapısal kapsamın bileşen içi ölçümünü, bileşenler **arası** bir anali
 data coupling ve control coupling analizi.
 Data coupling, bir bileşenin başka bileşenlerle paylaştığı, yani tek başına
 denetlemediği veriye bağımlı olmasıdır; control coupling ise bir bileşenin diğerinin
-çalışmasını etkilemesidir (çağrı, kip seçimi vb.). Analizin amacı, mimaride tanımlanan
+çalışmasını etkilemesidir (çağrı, mod seçimi vb.). Analizin amacı, mimaride tanımlanan
 tüm coupling'lerin gereksinim tabanlı testler sırasında gerçekten **işletildiğini**
 göstermektir: her arayüz en az bir testte veri taşımış mı, her çağrı ilişkisi
 tetiklenmiş mi? Bu analiz,
@@ -822,7 +823,7 @@ bulunur. Kapsanmayan kodun dört olası nedeni vardır; yapılacak iş nedene g�
   kod, o konfigürasyon kurularak test edilir. Koşullu derlemeyle (conditional
   compilation) imajın dışında bırakılan kod çalıştırılabilir nesne kodunda bulunmadığı
   için sözlükteki tanımın dışında kalır; planlarda hangi başlık altında anılırsa anılsın
-  her derleme varyantı ayrıca doğrulanır.
+  her build varyantı ayrıca doğrulanır.
 
 Savunmacı programlama yapıları — normalde ulaşılmaması gereken bir `default` dalı gibi —
 bu ayrımda özel bir yer tutar: tasarım gereği vardır ve ölü kod sayılmaz, ama testle
@@ -848,7 +849,7 @@ planında (Software Configuration Management Plan, SCMP) tanımlanır (bkz.
 kayıtta izlenirse izlensin, sözlü aktarılan ya da e-postada kalan bir bulgu
 sertifikasyon açısından hiç bulunmamış gibidir.
 
-İyi bir problem raporu en azından şunları içerir: sorunun gözlendiği derleme sürümü ve
+İyi bir problem raporu en azından şunları içerir: sorunun gözlendiği build ve
 ortam (konfigürasyon sürümüyle), yeniden üretme adımları, gözlenen ve beklenen davranış,
 etkilenen iş ürünleri ve sorumlu; kapanışta yapılan düzeltici faaliyet de rapora
 işlenir. Tanım, sorunun olası emniyet ve işlev etkisinin değerlendirilmesine yetecek
@@ -889,7 +890,7 @@ etkilenen diğer testler tekrarlanır (regresyon, regression).
 Gerçek projeler sertifikasyon anına sıfır açık raporla varmaz; bu normaldir. Kritik
 olan, açık kalan her raporun **değerlendirilmiş** olmasıdır. Otoritelerin bu konudaki
 güncel beklentisi FAA AC 20-189 ve EASA AMC 20-189'da toplanmıştır: açık raporlar en az
-aşağıdaki dört sınıfla sınıflandırılır ve her rapora, tablodaki öncelik sırasıyla tek
+aşağıdaki dört sınıfa ayrılır ve her rapora, tablodaki öncelik sırasıyla tek
 bir sınıf atanır.
 
 | Sınıf | Kapsadığı açık rapor |
@@ -923,7 +924,7 @@ değerlendirilmemiş rapordur.
 - Test tek başına yeterli değildir; gözden geçirme ve analiz (WCET, stack, bellek
   haritası, bağlantı/yükleme) de gerekir — en kötü durum sınırları yalnız testle
   gösterilemez, analiz gerekir ve ölçümle desteklenir.
-- Testler gereksinim tabanlıdır; normal aralık ve gürbüzlük test case'ler sistematik
+- Testler gereksinim tabanlıdır; normal aralık ve gürbüzlük test case'leri sistematik
   tekniklerle türetilir ve kredi, kontrol altındaki sürümle hedefte ya da denkliği
   gerekçelendirilmiş ortamda yapılan koşudan alınır.
 - Gereksinim kapsamı eşlemeyle bitmez; testlerin gereksinimin tamamını sınadığı da
@@ -934,6 +935,6 @@ değerlendirilmemiş rapordur.
   Seviye A'da kaynak koda izlenemeyen nesne kodu bulunur, sınıflandırılır ve ayrıca
   doğrulanır; amaç böyle bir kodun yokluğunu kanıtlamak değil, var olanı doğrulamaktır.
 - Elle yazılmış assembly modülleri aynı kapsam ölçütüne tabidir; ölçütün assembly'deki karşılığı planda tanımlanır ve kapsam çoğunlukla koda dokunmayan yöntemlerle
-  (donanım izleme, debugger) ölçülür.
+  (hardware trace, debugger) ölçülür.
 - Doğrulama bulguları problem raporuyla yaşar; sertifikasyona açık raporla gidilebilir,
   ama sınıflandırılmamış ve SAS'ta gerekçelendirilmemiş raporla gidilemez.

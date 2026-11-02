@@ -18,7 +18,7 @@ Tablo A-9'un ilk dört hedefine (objective) karşılık gelir.
 Liste tek bir sürece bağlı değildir: sorular aynı kalır, denetlenen sürece göre ölçüt alınan
 plan bölümü ve örnekleme (sampling) için seçilen kayıtlar değişir. Kalite güvencesi doğrulamayı
 tekrarlamaz; bir tasarım verisinin teknik doğruluğunu değil, gözden geçirmesinin (review)
-planda yazıldığı gibi yapıldığını ve kanıtın bütün olduğunu sınar. Planların içeriğini
+planda yazıldığı gibi yapıldığını ve kanıtın eksiksiz olduğunu sınar. Planların içeriğini
 [Planlar ve Standartlar](01-planlar-ve-standartlar.mdx) listesi gözden geçirir, bu liste o
 gözden geçirmenin yapıldığına dair güvenceyi arar. Problem raporlarının (problem report) tek
 tek ele alınışı [Problem Raporu](11-problem-raporu-ve-degisiklik.mdx), teslim öncesi yazılım
@@ -57,13 +57,13 @@ Denetlenen sürece göre ölçüt ve örneklem şöyle seçilebilir:
 |---|---|---|
 | Planlama | PSAC ve SQAP'taki plan gözden geçirme yöntemi | Plan ve standartların gözden geçirme kayıtları, uyum matrisi |
 | Gereksinim, tasarım, kodlama | SDP, ilgili standart, SVP'deki gözden geçirme yöntemi | Gözden geçirme kayıtları ve kullanılan kontrol listeleri, iz verisi (trace data), baseline kayıtları |
-| Entegrasyon | SDP'deki derleme ve yükleme tarifi, SECI | Derleme kayıtları, ortam envanteri |
+| Entegrasyon | SDP'deki build ve yükleme tarifi, SECI | Build kayıtları, ortam envanteri |
 | Doğrulama | SVP | Test ve analiz gözden geçirme kayıtları, kredi amaçlı koşu kayıtları, tanıklık (witnessing) kayıtları |
 | Konfigürasyon yönetimi | SCMP | Baseline ve değişiklik kayıtları, problem raporları, arşiv kayıtları |
 | Tedarikçi | Sözleşme, SQAP'taki gözetim bölümü, tedarikçinin planları | Tedarikçinin gözden geçirme ve kalite güvencesi kayıtları, teslimat kayıtları |
 
 :::note[Örneklem doğrulamanın yerine geçmez]
-Doğrulama hedefleri, standarda uyum dahil, doğrulama sürecinde eksiksiz karşılanır.
+Doğrulama hedefleri, standarda uyum dâhil, doğrulama sürecinde eksiksiz karşılanır.
 Kalite güvencesinin örneklemi bunun planlandığı gibi yapıldığını gösterir; eksik kalan
 doğrulamayı tamamlamaz (DO-248C, FAQ #75). Örneklemde bir eksik çıkarsa denetçi kapsamı
 genişletir, çünkü birkaç kayıttan birinde görülen eksik çoğu zaman sürecin bir açığıdır.
@@ -228,7 +228,7 @@ bölümündedir.
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
 | "Geçiş kriterine uyulmamış." | "KGD-13: SDP'deki tasarımdan kodlamaya geçiş kriteri, tasarım gözden geçirmesinin kapanmış olmasını istiyor. Yakıt ölçüm bileşeninin kodu 3 Mart'ta baseline'a girmiş; tasarım gözden geçirmesi 17 Mart'ta, tasarımı değiştiren iki büyük bulguyla kapanmış. Kodun güncel tasarıma göre yeniden gözden geçirilmesi ve kriterin neden aşıldığının kayda geçmesi beklenir." |
-| "Ortam planla uyumsuz." | "KGD-06: Derleme sunucusundaki derleyici 7.2.1 sürümünde, SECI ise 7.1.4 diyor. Derleme kayıtlarına göre 2 Mayıs'tan bu yana 14 derleme yeni sürümle yapılmış. Ya ortam SECI'deki sürüme döndürülmeli ya da sürüm değişikliği plan değişikliği olarak işlenip etkilenen doğrulama kanıtı belirlenmeli." |
+| "Ortam planla uyumsuz." | "KGD-06: Build sunucusundaki derleyici 7.2.1 sürümünde, SECI ise 7.1.4 diyor. Build kayıtlarına göre 2 Mayıs'tan bu yana 14 build yeni sürümle yapılmış. Ya ortam SECI'deki sürüme döndürülmeli ya da sürüm değişikliği plan değişikliği olarak işlenip etkilenen doğrulama kanıtı belirlenmeli." |
 | "Problem raporu akışı işlemiyor." | "KGD-15: YB-2.3 ve YB-2.4 baseline'ları arasındaki 40 kaynak kod değişikliğinden 6'sı problem raporu kimliği taşımıyor; SCMP, baseline'daki kodun yalnızca onaylı bir problem raporuyla değişmesini istiyor. Altı değişiklik için rapor açılmalı ve etki analizi yapılmalı; depo, kimliksiz değişikliği reddedecek biçimde ayarlanmalı." |
 
 İyi bulgu denetçinin kanaatine değil, bir plan ya da standart maddesine dayanır ve ölçülebilir

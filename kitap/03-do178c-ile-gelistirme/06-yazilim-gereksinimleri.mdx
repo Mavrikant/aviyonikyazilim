@@ -77,9 +77,9 @@ edildiklerinde katman ayrımı aynen geçerlidir, ama ek beklentiler doğar
 ### Türetilmiş gereksinimler
 
 Türetilmiş gereksinim (derived requirement), yazılım geliştirme süreçlerinin kendi
-ürettiği ve şu iki koşuldan en az birini taşıyan gereksinimdir:
+ürettiği ve şu iki koşuldan en az birini sağlayan gereksinimdir:
 
-- bir üst seviye gereksinime doğrudan izlenemez, ya da
+- bir üst seviye gereksinime doğrudan izlenemez ya da
 - izlenebilse bile üst seviyede belirtilenin ötesinde bir davranış tanımlar.
 
 Terimin Türkçesi yanıltıcı olabilir: gündelik dilde "yüksek seviyeli gereksinimler
@@ -100,7 +100,7 @@ yazılıma tahsis edilen bir gereksinim de türetilmiş değildir; onun kaynağ�
 Türetilmiş gereksinim hem yüksek hem düşük seviyede doğabilir; birincisi gereksinim
 sürecinde, ikincisi tasarım sırasında ortaya çıkar. Her birinin **gerekçesi** yazılır
 ve gereksinim, sistem süreçlerine — sistem emniyet değerlendirme süreci (system safety
-assessment process) dahil — iletilir. Nedeni basittir: emniyet
+assessment process) dâhil — iletilir. Nedeni basittir: emniyet
 değerlendirmesi, yazılımın ne yaptığına dair varsayımlar üzerine kuruludur ve sistemin
 haberi olmayan bir davranış bu varsayımları bozabilir. Yukarıdaki makullük denetimi,
 hava hızının gerçekten hızla değiştiği bir anda geçerli veriyi reddedebilir; bunun
@@ -111,7 +111,7 @@ bölümünde anlatılır.
 
 Gözden geçirmede iki uç da soru doğurmalıdır: hiç türetilmiş gereksinimi olmayan bir
 yazılımda büyük olasılıkla türetilmiş gereksinimler işaretlenmemiştir; gereksinimlerinin
-çoğu türetilmiş olan bir yazılım ise çoğu kez sistem gereksinimlerinin eksik kaldığına
+çoğu türetilmiş olan bir yazılım ise genellikle sistem gereksinimlerinin eksik kaldığına
 işaret eder.
 
 ## Gereksinim geliştirme süreci
@@ -120,7 +120,7 @@ Gereksinim geliştirme, tek oturuşta biten bir yazım işi değil; girdilerin t
 analiz, yazım, belgeleme ve geri bildirimden oluşan yinelemeli bir süreçtir. DO-178C
 terminolojisiyle bu, yazılım gereksinim sürecinin (software requirements process)
 çıktısı olan yüksek seviyeli gereksinimlerin üretilmesidir; girdisi ise emniyetle
-ilgili olanlar dahil yazılıma tahsis edilen sistem gereksinimleri, donanım arayüzü ve
+ilgili olanlar dâhil yazılıma tahsis edilen sistem gereksinimleri, donanım arayüzü ve
 sistem mimarisi ile planlama sürecinden gelen yazılım geliştirme planı (Software
 Development Plan, SDP) ve gereksinim standardıdır.
 
@@ -133,7 +133,7 @@ flowchart TD
     D -- "türetilmiş gereksinimler" --> H["Sistem ve emniyet<br/>süreçleri"]
     E -- "eksik ya da çelişkili girdi" --> F["Sisteme geri bildirim<br/>(problem raporu)"]
     F --> A
-    E -- "kabul" --> G[Baseline'a alma]
+    E -- "kabul" --> G["Baseline'a alma"]
 ```
 
 **Girdilerin toplanması ve analizi.** İlk adım, yazılıma tahsis edilen sistem
@@ -188,13 +188,13 @@ gereksinim kümesinin şu başlıkların her birine yanıt vermesi beklenir:
 
 | Kategori | Yanıtladığı soru | Örnek gereksinim |
 |---|---|---|
-| İşlevsel davranış ve çalışma kipleri | Yazılım hangi kipte ne yapar? | Yazılım, bakım verisi indirme isteğini yalnızca YER kipinde kabul etmelidir. |
+| İşlevsel davranış ve çalışma modları | Yazılım hangi modda ne yapar? | Yazılım, bakım verisi indirme isteğini yalnızca YER modunda kabul etmelidir. |
 | Performans | Ne kadar doğru, ne kadar hassas? | Yazılım, gösterilen hava hızını 40–450 knot aralığında ±1 knot doğrulukla hesaplamalıdır. |
 | Zamanlama | Ne sıklıkta, ne kadar sürede? | Yazılım, hava hızı çıktısını 50 ms (±5 ms) aralıkla güncellemelidir. |
 | Bellek kısıtları | Hangi bütçenin içinde? | Yazılım, arıza kayıtları için kalıcı bellekte en çok 64 kB yer kullanmalıdır. |
 | Donanım ve yazılım arayüzleri | Hangi veri, hangi biçimde, hangi hızda? | Yazılım, hava hızını çıkış veri kelimesinde 0,25 knot çözünürlükle kodlamalıdır. |
-| Arıza tespiti ve emniyet izleme | Yazılım arızayı nasıl fark eder, ne yapar? | Yazılım, açılışta hesapladığı program belleği checksum beklenen değerle uyuşmazsa çıkışlarını etkinleştirmemelidir. |
-| Bölümleme | Hangi yazılım parçası hangisinden korunur? | Yazılım, bakım bölümünün (partition) gösterge bölümüne ait belleğe yazmasını engellemelidir. |
+| Arıza tespiti ve emniyet izleme | Yazılım arızayı nasıl fark eder, ne yapar? | Yazılım, açılışta hesapladığı program belleği checksum'ı beklenen değerle uyuşmazsa çıkışlarını etkinleştirmemelidir. |
+| Bölümleme | Hangi yazılım parçası hangisinden korunur? | Yazılım, bakım partition'ının gösterge partition'ına ait belleğe yazmasını engellemelidir. |
 | Anormal girdi ve koşullar | Beklenmeyen durumda ne olur? | Yazılım, 0–512 knot aralığının dışındaki hava hızı değerini geçersiz saymalıdır. |
 
 Bir kategori projeye uygulanmıyorsa (örneğin bölümleme yoksa) bunun açıkça söylenmesi,
@@ -238,7 +238,7 @@ yazamaz:
 - Hangi sensör? "Geçersiz" neye göre?
 - 500 ms'nin toleransı yoktur: 480 ms'de geçiş hata mıdır, 520 ms'de geçmemek hata mıdır?
 - Koşul oluştuktan sonra tepkinin ne kadar sürede gelmesi gerektiği yazmaz.
-- "Güvenli mod" tanımlı bir kip midir, yoksa okurun hayal gücüne mi bırakılmıştır?
+- "Güvenli mod" tanımlı bir mod mudur, yoksa okurun hayal gücüne mi bırakılmıştır?
 
 Eksikler tamamlandığında bölümün başındaki katman tablosunda yer alan yüksek seviyeli
 gereksinime varılır: özne
@@ -285,7 +285,7 @@ flowchart LR
     S["Yazılıma tahsis edilen<br/>sistem gereksinimleri"] <--> H["Yüksek seviyeli<br/>gereksinimler"]
     H <--> L["Düşük seviyeli<br/>gereksinimler"]
     L <--> K[Kaynak kod]
-    H <--> T[Test case'ler]
+    H <--> T["Test case'ler"]
     L <--> T
 ```
 
@@ -340,7 +340,7 @@ yedisini de somut sorulara çevirir.
 - **Hazırlık süresi:** Katılımcıların malzemeyi toplantıdan önce okuması. Toplantıda
   ilk kez okunan gereksinim, gözden geçirilmiş sayılmaz.
 - **Makul kapsam:** Tek oturumda yüzlerce gereksinim "geçirilmez". Yorgun gözden
-  geçirici her şeyi onaylar; kısa ve odaklı oturumlar daha çok hata bulur.
+  geçiren kişi her şeyi onaylar; kısa ve odaklı oturumlar daha çok hata bulur.
 - **Kontrol listesi (checklist):** Değerlendirmenin kişisel zevke değil ölçüte
   dayanmasını sağlar.
 
@@ -354,7 +354,7 @@ Tipik bir gereksinim gözden geçirme kontrol listesinden satırlar:
 | Ölçülebilir sınır/tolerans verilmiş mi? | Test edilemezlik |
 | Kaynağına izlenebilir mi; izlenemiyorsa türetilmiş olarak işaretli mi? | Dayanaksız gereksinim, bildirilmemiş türetilmiş gereksinim |
 | Başka bir gereksinimle çelişiyor veya çakışıyor mu? | Tutarsızlık, tekrar |
-| Hata ve sınır koşulları ele alınmış mı? | Yalnızca "mutlu yol" tanımı |
+| Hata ve sınır koşulları ele alınmış mı? | Yalnızca "happy path" tanımı |
 | Hedef donanımın yetenekleriyle bağdaşıyor mu (çözünürlük, hız, bellek)? | Gerçekleştirilemeyecek gereksinim |
 | Formül, ölçekleme ve sınır geçişleri doğru mu? | Yanlış algoritma, süreksizlik noktasında hatalı davranış |
 | Gereksinim standardına ve terim sözlüğüne uyuyor mu? | Standart sapması, aynı kavrama iki ad |
@@ -370,7 +370,7 @@ D'de bu hedeflerde bağımsızlık şart değildir. Bağımsızlığın nasıl s
 kayıtlarda nasıl gösterildiği
 [9. Yazılım Doğrulama](./09-yazilim-dogrulama.mdx) bölümünde ele alınır.
 
-Gözden geçirmenin ikinci işlevi kanıt üretmektir. Bulunan her bulgu, verilen karar
+Gözden geçirmenin ikinci işlevi kanıt üretmektir. Her bulgu, verilen karar
 (düzeltildi, reddedildi, ertelendi) ve kapanış durumu kayda geçirilir. Bu kayıtlar,
 sertifikasyon otoritesine ve kalite güvencesine "gereksinimler gerçekten gözden
 geçirildi" iddiasının nesnel kanıtıdır; katılım aşaması (Stage of Involvement, SOI)
@@ -424,8 +424,8 @@ gereksinim belirsizliğini erkenden azaltır.
 
 Riski de aynı yerde başlar: prototip kodunun sertifikasyon kanıtı olmadan ürüne
 sızması. Prototip, gereksinim ve tasarım disiplini uygulanmadan, hızla yazılmış
-koddur; DO-178C süreç kanıtlarına (gözden geçirme, izlenebilirlik, yapısal kapsam)
-sahip değildir. "Zaten çalışıyor, baştan yazmak israf" cümlesi duyulduğunda proje
+koddur; arkasında DO-178C süreç kanıtları (gözden geçirme, izlenebilirlik, yapısal kapsam)
+yoktur. "Zaten çalışıyor, baştan yazmak israf" cümlesi duyulduğunda proje
 tehlikeli bir yola girmiştir. Sağlıklı kullanım için:
 
 - Prototipin amacı baştan yazılı olarak sınırlanır: neyi öğrenmek için yapılıyor?
@@ -449,7 +449,7 @@ oysa emniyet-kritik yazılımda bu, projenin kaderini belirleyen görevlerden bi
 Gereksinim mühendisi (requirements engineer), sistem ekibi ile yazılım ekibi arasındaki
 tercümandır: bir yanda uçuş mekaniği, sensör davranışı ve emniyet hedefleriyle konuşan
 sistem mühendisleri, diğer yanda veri yapıları ve zamanlama kısıtlarıyla düşünen yazılım
-geliştiriciler vardır. İkisinin de dilini konuşamayan bir gereksinim, iki tarafın da
+geliştiricileri vardır. İkisinin de dilini konuşmayan bir gereksinim, iki tarafın da
 yanlış anlayacağı bir metne dönüşür.
 
 Deneyim, iyi bir gereksinim mühendisinde şu becerilerin bir arada bulunduğunu
@@ -495,7 +495,7 @@ zordur.
   sürecinin, ikincisi tasarım sürecinin çıktısıdır.
 - Türetilmiş gereksinim, üst seviyeye izlenemeyen ya da üst seviyede belirtilenin
   ötesinde davranış tanımlayan gereksinimdir; gerekçesi yazılır ve sistem emniyet
-  değerlendirme süreci dahil sistem süreçlerine iletilir.
+  değerlendirme süreci dâhil sistem süreçlerine iletilir.
 - Gereksinim kümesi yalnızca işlevleri değil performansı, zamanlamayı, arayüzleri,
   arıza tespitini ve anormal koşullardaki davranışı da kapsar; gürbüzlük testlerinin
   dayanağı bu son gruptur.

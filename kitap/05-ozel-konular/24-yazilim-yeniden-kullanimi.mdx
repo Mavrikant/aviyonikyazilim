@@ -30,7 +30,7 @@ Aşağıdaki tablo en sık değişen bağlam boyutlarını ve her birinin sarst�
 | İşlemci, derleyici ve derleme seçenekleri | Çalıştırılabilir nesne kodu değişir; kayan nokta, hizalama ve optimizasyon davranışı farklılaşabilir | Testlerin yeni hedefte yeniden koşulması; stack ve en kötü durum yürütme süresi (worst-case execution time, WCET) analizleri; Seviye A'da derleyicinin ürettiği ve kaynak koda doğrudan izlenemeyen ek kodun doğrulanması |
 | RTOS ve sürücüler | Çizelgeleme, kesme ve bellek hizmetlerinin davranışı ve süresi değişir | Uyarlama katmanının doğrulaması; donanım-yazılım entegrasyon testleri |
 | Arayüzler | Birim, ölçek, değer aralığı, güncellenme hızı ve geçersizlik işareti farklı olabilir | Arayüz gereksinimleri; data ve control coupling analizi; entegrasyon testleri |
-| Zamanlama | Çağrı sıklığı, işlemci yükü ve süre sınırları değişir | WCET ve çizelgelenebilirlik (schedulability) analizi; zamana bağlı test case'ler |
+| Zamanlama | Çağrı sıklığı, işlemci yükü ve deadline'lar değişir | WCET ve çizelgelenebilirlik (schedulability) analizi; zamana bağlı test case'ler |
 | Girdi aralığı ve çalışma modları | Yeni sistem, bileşeni daha önce hiç görmediği değerlere ya da modlara itebilir | Normal aralık ve gürbüzlük (robustness) testlerinin kapsadığı aralık; gereksinimlerdeki aralık varsayımları |
 | Yazılım seviyesi | Daha yüksek seviye ek hedef ve daha fazla hedefte bağımsızlık getirir | Eksik hedeflerin kanıtı, ör. karar kapsama ya da değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC); bağımsızlık kayıtları |
 | Konfigürasyon | Etkin özellik kümesi ve parametre verisi farklıdır; eski projede çalışan kod yeni projede kullanılmayabilir | Devre dışı bırakılmış kod (deactivated code) analizi; konfigürasyon ve parametre verisinin doğrulanması |
@@ -147,7 +147,7 @@ kalırdı. "Sayaç 32 bitin tamamını kullanır" koşulu artık arayüz sözle�
 parçasıdır ve her yeni uyarlama katmanı bunu sağlamak zorundadır.
 
 Yeni platforma taşımada `platform_zaman.c` gibi uyarlama dosyaları yeniden yazılır ve
-kendi gereksinimlerine göre doğrulanır. Çekirdeğin gereksinimleri, tasarımı, test case'ler ve beklenen sonuçları büyük ölçüde olduğu gibi kalır; **test sonuçları ise
+kendi gereksinimlerine göre doğrulanır. Çekirdeğin gereksinimleri, tasarımı, test case'leri ve beklenen sonuçları büyük ölçüde olduğu gibi kalır; **test sonuçları ise
 kalmaz**. İşlemci ya da derleyici değiştiğinde çekirdeğin çalıştırılabilir nesne kodu da
 değişir: gereksinim tabanlı testler yeni hedefte yeniden koşulur, stack kullanımı ve en
 kötü durum yürütme süresi gibi derleyiciye ve işlemciye bağlı analizler yenilenir.
@@ -229,7 +229,7 @@ güncel baseline'ın önceki baseline'a ve onaylı değişikliklere izlenebildi�
 Pratikte PDS değerlendirmesi bir gap analizi olarak yürütülür:
 
 1. **Yeni bağlamdaki yazılım seviyesi belirlenir.** Sistem emniyet değerlendirme süreci (system
-   safety assessment process), yazılımın yeni sistemdeki yazılım seviyesini belirler; bu
+   safety assessment process), yazılımın yeni sistemdeki seviyesini belirler; bu
    seviye eski projedekinden yüksek olabilir.
 2. **Eldeki kanıt envanteri çıkarılır.** Planlar, gereksinimler, tasarım, testler,
    kapsam sonuçları, konfigürasyon kayıtları ve problem raporları toplanır.
@@ -270,7 +270,7 @@ Pratikte PDS değerlendirmesi bir gap analizi olarak yürütülür:
 | Daha yüksek seviyeye taşıma | Eksik hedefler (ör. MC/DC, bağımsızlık) | Gap analizi + eksik doğrulamanın tamamlanması |
 | Önceki DO-178 sürümüyle (ör. DO-178B) onaylanmış yazılım | İlk onayın yeni kurulum için yeterliliği | Servis kaydının ve açık problem raporlarının değerlendirilmesi; seviye yeterliyse ilk onaya dayanma, değilse baseline'ın yükseltilmesi |
 | DO-178 ailesi dışında geliştirilmiş yazılım | Yaşam döngüsü verisi hiç yok ya da farklı biçimde | Tersine mühendislik, yeniden belgeleme, kapsamlı yeniden doğrulama |
-| COTS yazılım | Kaynak koda ve geliştirme sürecine sınırlı erişim | Tedarikçi verisi + ek doğrulama + koruyucu mimari (sarmalayıcı, izleme, bölümleme) |
+| COTS yazılım | Kaynak koda ve geliştirme sürecine sınırlı erişim | Tedarikçi verisi + ek doğrulama + koruyucu mimari (wrapper, izleme, bölümleme) |
 
 ### Önceki DO-178 sürümleriyle onaylanmış yazılım
 
@@ -321,7 +321,7 @@ problem geçmişi tedarikçinin elindedir. Bu durumda yaygın çözümler şunla
   [Ek C: Gerçek Zamanlı İşletim Sistemi Seçiminde Sorulacak Sorular](../06-ekler/03-ek-c-rtos-secim-sorulari.mdx)
   içindedir),
 - COTS bileşeni emniyet etkisi düşük işlevlerle sınırlamak, yani daha düşük bir yazılım
-  seviyesinde tutmak ve kritik işlevleri kendi geliştirilen kodda bırakmak,
+  seviyesinde tutmak ve kritik işlevleri kendi geliştirdiğiniz kodda bırakmak,
 - [21. Yazılım Bölümlemesi](21-yazilim-bolumlemesi.mdx) bölümünde anlatılan bölümleme ve
   izleme (monitoring) gibi mimari önlemlerle COTS bileşenin arıza etkisini sınırlamak.
 
@@ -347,7 +347,7 @@ DO-178C servis geçmişini alternatif yöntemler arasında (12.3.4) ele alır: g
 kullanımla ilgisi, birikmiş sürenin yeterliliği, servis sırasında bulunan problemlerin
 toplanıp analiz edilmesi ve PSAC'ta bildirilecek bilgiler ayrı ayrı değerlendirilir.
 Değerlendirme yalnızca yazılım ekibinin işi de değildir: servis geçmişinin nasıl
-kullanıldığı ve ne gösterdiği, sistem emniyet değerlendirme süreci dahil sistem
+kullanıldığı ve ne gösterdiği, sistem emniyet değerlendirme süreci dâhil sistem
 süreçlerinin önünden geçer ve otoriteye sunulur. Konunun kamuya açık ayrıntılı bir
 kaynağı, FAA'nın DO-178B döneminde yayımladığı Software Service History Handbook'tur
 (DOT/FAA/AR-01/116).
@@ -362,7 +362,7 @@ ilk üçü ön koşul gibi işler: biri eksikse geçmişin neyi kanıtladığı 
 sağlanmaz. Dördüncüsü kredinin ölçüsünü belirler: yetersizse kredi kısmi kalır ve boşluk
 ek doğrulamayla kapatılır.
 
-- **Benzer kullanım bağlamı.** Geçmişteki kullanım ile yeni kullanım; işlev,
+- **Benzer kullanım bağlamı.** Geçmişteki kullanım ile yeni kullanım işlev,
   arayüzler, çalışma modları ve ortam açısından karşılaştırılabilir olmalıdır.
   Yer sisteminde çalışmış bir yazılımın geçmişi, uçuş bağlamı için doğrudan
   kredi sağlamaz. Ortamlar yalnızca kısmen farklıysa standart, farkın hedef ortamda ek

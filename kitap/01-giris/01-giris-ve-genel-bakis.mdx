@@ -9,10 +9,10 @@ import {say} from '@site/src/components/HedefGezgini/veri';
 
 Bu kitap, aviyonik yazılımın yalnızca koddan ibaret olmadığını; gereksinim, tasarım,
 doğrulama ve sertifikasyon kanıtlarından oluşan bütüncül bir çalışma olduğunu anlatır.
-Bu giriş bölümü, emniyet-kritik yazılımın ne olduğunu, DO-178C'nin sertifikasyondaki
-yerini ve kitapta kullanılan dilin ve yaklaşımın kısa bir haritasını verir.
+Bu giriş bölümü, emniyet-kritik yazılımın ne olduğunu ve DO-178C'nin sertifikasyondaki
+yerini açıklar; kitapta kullanılan dilin ve yaklaşımın da kısa bir haritasını verir.
 
-Aviyonik ortamda yazılım geliştirmek, sıradan bir ürün yazılımından farklı olarak,
+Aviyonik ortamda yazılım geliştirmek, sıradan bir yazılım ürünü geliştirmekten farklı olarak,
 emniyet hedefleriyle, donanım sınırlarıyla ve sertifikasyon (certification)
 beklentileriyle iç içe çalışmayı gerektirir. Dolayısıyla bir proje yalnızca işlev
 üreten bir uygulama değil; gereksinimleri (requirement) açık, doğrulaması
@@ -28,7 +28,7 @@ etkileyebiliyorsa, o yazılım emniyet-kritiktir. Uçuş kontrol yazılımı bun
 örneğidir; ancak motor kontrolü, frenleme, gösterge sistemleri, uyarı üretimi ve
 seyrüsefer gibi pek çok işlev de aynı sınıfa girer.
 
-Burada kritik olan iki gözlem vardır:
+Burada önemli iki gözlem vardır:
 
 - **Kritiklik dereceli bir kavramdır.** Her aviyonik yazılım aynı ölçüde kritik
   değildir. Bir kabin eğlence uygulamasının hatası ile bir uçuş kontrol kanununun
@@ -68,7 +68,7 @@ gelir.
 
 ## Emniyet odağı neden önemlidir?
 
-Yazılım, mekanik veya elektronik bileşenlerden farklı bir hata karakterine sahiptir.
+Yazılımın hata karakteri, mekanik veya elektronik bileşenlerinkinden farklıdır.
 Bir yapısal parça yorulur, aşınır ve istatistiksel olarak öngörülebilir biçimde
 bozulur. Yazılım ise **aşınmaz**; kusurları üretim sırasında değil, geliştirme
 sırasında içine yerleşir ve belirli bir girdi/durum bileşimi oluşana kadar sessizce
@@ -117,8 +117,8 @@ gürbüzlük (robustness) testinde uzun kesintiyi denemek. Örnekten üç sonuç
 
 Yazılımın sistemlerdeki payı her yıl artmaktadır; daha fazla işlev donanımdan
 yazılıma taşınmakta, yazılım boyutları büyümektedir. Aynı dönemde takvim ve bütçe
-baskısı da artar. Emniyet odağı, tam da bu baskı altında ilk feda edilen şey olma
-eğilimindedir — bu kitabın ısrarla süreç ve kanıt vurgusu yapmasının nedeni budur.
+baskısı da artar. Emniyet odağı, tam da bu baskı altında çoğu zaman ilk feda edilen şey olur;
+bu kitabın ısrarla süreç ve kanıt vurgusu yapmasının nedeni budur.
 
 ## DO-178C nedir ve sertifikasyonda nerede durur?
 
@@ -183,12 +183,12 @@ Kitabı okurken şu sınırlar akılda tutulmalıdır:
 
 ## Kitabın yapısı
 
-Kitap beş kısımdan oluşur ve kısımlar birbirinin üzerine inşa edilir:
+Kitap beş kısımdan oluşur ve kısımlar birbirinin üzerine kurulur:
 
 ```mermaid
 flowchart TD
     K1["Kısım I — Giriş<br/>(Bölüm 1)"] --> K2["Kısım II — Bağlam<br/>Sistem ve emniyet değerlendirmesi<br/>(Bölüm 2–3)"]
-    K2 --> K3["Kısım III — DO-178C ile Geliştirme<br/>Planlama'dan sertifikasyona yaşam döngüsü<br/>(Bölüm 4–12)"]
+    K2 --> K3["Kısım III — DO-178C ile Geliştirme<br/>Planlamadan sertifikasyona yaşam döngüsü<br/>(Bölüm 4–12)"]
     K3 --> K4["Kısım IV — Araç Kalifikasyonu ve DO-178C Ekleri<br/>DO-330 ile DO-331/332/333<br/>(Bölüm 13–16)"]
     K4 --> K5["Kısım V — Özel Konular<br/>RTOS, bölümleme, güvenlik vb.<br/>(Bölüm 17–27)"]
     K5 --> K6["Ekler<br/>Ek A–F: geçiş kriterleri, şablonlar,<br/>kontrol listeleri"]

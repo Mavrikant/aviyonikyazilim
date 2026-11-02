@@ -64,7 +64,7 @@ bölümler [genel bakış](index.mdx) sayfasında anlatılır ve burada tekrarla
 3 Yazılım tanıtımı
 3.1 Yazılım bileşenleri ve işlevleri
 3.2 Bölümleme ve kaynak paylaşımı
-3.3 Yedeklilik, hata toleransı ve tekil olay bozulmasına karşı önlemler
+3.3 Yedeklilik, hata toleransı ve single event upset'e karşı önlemler
 3.4 Zamanlama ve çizelgeleme yaklaşımı
 4 Sertifikasyon hususları
 4.1 Sertifikasyon temeli ve uyum yöntemi
@@ -123,13 +123,13 @@ hususları ve otoritenin daha önce görmediği araçları ayrıntının bulundu
 
 **Verilecek kararlar:**
 
-- PSAC tek parçayı mı, birimdeki bütün parçaları (uygulama, yükleyici, PDI) mı kapsayacak?
+- PSAC tek parçayı mı, birimdeki bütün parçaları (uygulama, loader, PDI) mı kapsayacak?
 - Onay çerçevesi ne: tip sertifikası (type certificate), ek tip sertifikası, teknik standart
   emri (Technical Standard Order, TSO) ya da Avrupa'daki karşılığı ETSO, onaylı ürünün
   değişikliği?
 - Değişiklikse önceki sürüm, SAS'ı ve yazılım konfigürasyon indeksi (Software Configuration
   Index, SCI) hangi kimlikle anılacak?
-- Otoritenin ilk okumada görmesi gereken üç beş konu hangisi?
+- Otoritenin ilk okumada görmesi gereken üç beş konu hangileri?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
@@ -166,22 +166,22 @@ bileşenler yalıtılıyor, yalıtımı ne sağlıyor ve iddia hangi seviye atam
 ([21. Yazılım Bölümlemesi](../../05-ozel-konular/21-yazilim-bolumlemesi.mdx)); bütünlüğün
 nasıl doğrulanacağı SVP'ye bırakılır. 3.2–3.4 için birer paragraf yazılır: işlemci, bellek
 ve veri yolu gibi paylaşılan kaynakların nasıl korunduğu; kanal ve izleyici düzeni gibi
-yedeklilik (redundancy) ve hata toleransı (fault tolerance) önlemleri; sistemin tekil olay
-bozulmasına (single event upset, SEU) karşı yazılıma verdiği görevler; çizelgeleme
+yedeklilik (redundancy) ve hata toleransı (fault tolerance) önlemleri; sistemin single event
+upset'e (SEU) karşı yazılıma verdiği görevler; çizelgeleme
 (scheduling) biçimi ve zamanlama payı. Her paragraf tasarımı değil, iddianın dayanağını ve
 ayrıntının bulunduğu belgeyi söyler.
 
 **Verilecek kararlar:**
 
 - Yazılım kaç bileşenden oluşuyor ve hepsi aynı seviyede mi?
-- Bölümlemede koruma yalnız donanımla mı, donanım ve yazılımla birlikte mi sağlanıyor?
-- Çizelgeleme cyclic executive ile (cyclic executive) mi, kesintili (preemptive) bir gerçek
+- Bölümlemede koruma yalnızca donanımla mı, donanım ve yazılımla birlikte mi sağlanıyor?
+- Çizelgeleme cyclic executive ile mi, preemptive bir gerçek
   zamanlı işletim sistemiyle (real-time operating system, RTOS) mi yapılacak?
 - Sistem SEU'ya karşı yazılıma bir görev (ör. bellek tarama) tahsis ediyor mu?
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Yazılım bölümlenmiştir ve bölümler birbirini etkilemez. | Uygulama iki bölümde çalışır: Seviye B gösterge bölümü ve Seviye D bakım bölümü. Alan bölümlemesi (spatial partitioning) bellek yönetim birimiyle, zaman bölümlemesi (temporal partitioning) 50 ms'lik sabit pencere çizelgesiyle sağlanır; bütünlüğün doğrulanması SVP'dedir. |
+| Yazılım bölümlenmiştir ve partition'lar birbirini etkilemez. | Uygulama iki partition'da çalışır: Seviye B gösterge partition'ı ve Seviye D bakım partition'ı. Alan bölümlemesi (spatial partitioning) bellek yönetim birimiyle, zaman bölümlemesi (temporal partitioning) 50 ms'lik sabit pencere çizelgesiyle sağlanır; bütünlüğün doğrulanması SVP'dedir. |
 
 ### 4. Sertifikasyon hususları
 
@@ -259,7 +259,7 @@ ulaşacağını verir. Liste DO-178C'nin Ek A tablolarındaki çıktılarla kar�
 Ek A'da sayılmayan ama kanıt olarak üretilen veri en az CC2 ile yönetilir. Biçim de burada
 belirtilir: hangi veri belge, hangisi araçtaki kayıt; otorite ona nasıl erişecek ve veri
 servis ömrü boyunca nasıl okunabilir kalacak. Asgari sunulan veri ile tip tasarımı verisinin
-saklanması 6.3'te anılır. PSAC içeriği başka bir belgeye gömülürse o belge de CC1 yönetilir.
+saklanması 6.3'te anılır. PSAC içeriği başka bir belgeye gömülürse o belge de CC1 olarak yönetilir.
 
 Örnek bir Seviye C projesinde veri listesinin birkaç satırı:
 
@@ -296,7 +296,7 @@ Dönem kayarsa otorite ara bilgilendirmeyle haberdar edilir. Katılım düzeyi (
 involvement) projeye göre değiştiği için hangi denetimin yerinde, hangisinin masa başı
 yapılacağı otoriteye sorulup yazılır ([SW SOI-1](../../07-soi-denetimleri/soi-1.mdx) … [SW SOI-4](../../07-soi-denetimleri/soi-4.mdx)).
 Takvim, yazılım uygunluk gözden geçirmesinin (software conformity review) yerini de gösterir:
-son baseline'dan sonra, SCI ve SAS sunulmadan önce kalite güvencesi tarafından yapılır;
+son baseline'dan sonra, SCI ve SAS sunulmadan önce kalite güvencesi yapar;
 ayrıntısı [SQAP](05-sqap.mdx)'tadır.
 
 **Verilecek kararlar:**
@@ -341,7 +341,7 @@ dönüşmeye başlarsa PSAC güncellenir ve otoriteye bildirilir.
 
 **Verilecek kararlar:**
 
-- Araç envanteri tam mı: derleyiciden test sonucu toplayan script'e kadar her araç bakıldı mı?
+- Araç envanteri tam mı: derleyiciden test sonucu toplayan script'e kadar her araca bakıldı mı?
 - Yeniden kullanılan ya da satın alınan her bileşen için hangi kanıt var, hangisi eksik?
 - Kalibrasyon ve uçak tipine özgü tablolar PDI mı olacak, kodun parçası mı? Navigasyon ya da
   arazi veri tabanı gibi havacılık verisi varsa DO-200B rejiminde mi ele alınacak
@@ -389,7 +389,7 @@ ve düzeltilecek hataları verir. Önce
 ile ön eleme yapmak, reddedilecek bir argümana yatırım yapmaktan ucuzdur.
 
 **8.5 Alternatif yöntemler.** Önerilen her yöntem için kısa bir özet yeter, ayrıntı
-otoriteyle yapılan yazılı mutabakattadır. Özet; yöntemle hangi hedefin karşılandığını, olağan
+otoriteyle yapılan yazılı mutabakattadır. Özet, yöntemle hangi hedefin karşılandığını, olağan
 yolun hangi faaliyetinin ve hangi verisinin değiştiğini ve kredinin emniyet açısından neden
 yeterli olduğunun hangi belgede savunulduğunu söyler. Bu savunma çoğu zaman ayrı bir belgede,
 bir güvence argümanı (assurance case) olarak tutulur; PSAC onun kimliğini ve mutabakat
@@ -452,7 +452,7 @@ belirlenir
 
 ## Seviyeye göre farklar
 
-PSAC her seviyede yazılır, sunulur ve CC1 yönetilir; değişen, başlıkların altında taahhüt
+PSAC her seviyede yazılır, sunulur ve CC1 olarak yönetilir; değişen, başlıkların altında taahhüt
 edilen işin miktarıdır. İki değerli hücrelerde ilk değer Seviye A, ikincisi Seviye B içindir.
 
 | Konu | Seviye A ve B | Seviye C | Seviye D |
@@ -467,7 +467,7 @@ edilen işin miktarıdır. İki değerli hücrelerde ilk değer Seviye A, ikinci
 | Ölçüt 2 aracın TQL'i | TQL-4 | TQL-5 | TQL-5 |
 
 - **Seviye A ve B.** 5.2'deki doğrulama özeti yapısal kapsam ölçütünü (Seviye A'da
-  değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC) dahil) ve
+  değiştirilmiş koşul/karar kapsama (modified condition/decision coverage, MC/DC) dâhil) ve
   bağımsızlığın kimle sağlanacağını açıkça söyler. Seviye A'da kaynak koddan nesne koduna
   izlenebilirlik analizinin (source to object code traceability analysis) yöntemi (temsilî
   örnek ya da tam analiz) ve dayandığı derleyici seçenekleri de özetlenir; ayrıntı SVP'dedir.
@@ -557,7 +557,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendi metninin yeri
 | PSAC mutabakattan sonra sessizce değişmiş | Revizyonun iç belge değişikliği sayılması | 5.6'da özü etkileyen değişiklik listesi; otoriteye bildirim kaydı |
 | Takvim bölümünde yalnızca tarihler var ve kısa sürede eskiyor | Proje planının kopyalanması | Olay tabanlı SOI tetikleyicileri ve yaklaşık dönem; kesin tarihler proje planında |
 | PSAC'ta söz verilen faaliyet hiç yapılmamış | Planı iyi göstermek için iddialı yazmak | Yalnızca kanıtlanabilecek taahhüt; her cümle için "SAS'ta nasıl kapanır?" sorusu |
-| PSAC içeriği SDP'ye gömülmüş, SDP CC2 yönetiliyor (Seviye C/D) | Paketlemenin kontrol kategorisine etkisinin düşünülmemesi | PSAC içeriği taşıyan belgeyi CC1 yönetmek, gerekirse otoriteye sunmak |
+| PSAC içeriği SDP'ye gömülmüş, SDP CC2 olarak yönetiliyor (Seviye C/D) | Paketlemenin kontrol kategorisine etkisinin düşünülmemesi | PSAC içeriği taşıyan belgeyi CC1 olarak yönetmek, gerekirse otoriteye sunmak |
 | Tedarikçinin belgesi başvuru sahibinin PSAC'ının yerine konmuş | Sorumluluğun tedarikçiye geçtiği varsayımı | PSAC başvuru sahibinindir; tedarikçi belgesine yalnızca atıf yapılır |
 
 ## Yayımlamadan önce
@@ -570,7 +570,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin kendi metninin yeri
       kalifikasyon gerekmeyen araçların gerekçesi yazılmış mı?
 - [ ] 5.2'deki her özet ilgili planda karşılık buluyor ve hiçbiri planla çelişmiyor mu?
 - [ ] Her verinin kategorisi DO-178C Ek A ve SCMP ile tutarlı, sunulan veri (kalifiye araç
-      varsa SECI ile TQP, TCI ve TAS dahil) denetimde gösterilenden ayrılmış mı?
+      varsa SECI ile TQP, TCI ve TAS dâhil) denetimde gösterilenden ayrılmış mı?
 - [ ] Her taahhüt için "SAS'ta bunu hangi kayıtla kapatacağım?" sorusunun cevabı var mı?
 
 Otoritenin planlama denetiminde PSAC'ta baktığı noktalar: [SW SOI-1](../../07-soi-denetimleri/soi-1.mdx).

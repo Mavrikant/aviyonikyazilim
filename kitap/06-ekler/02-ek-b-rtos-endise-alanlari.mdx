@@ -1,6 +1,6 @@
 ---
 title: "Ek B: Gerçek Zamanlı İşletim Sistemlerinde Endişe Alanları"
-description: "RTOS kullanan aviyonik yazılımda zamanlama, senkronizasyon, kesme, bellek, saat, bölümleme ve çok çekirdek risklerinin ele alınış yolları."
+description: "RTOS kullanan aviyonik yazılımda çizelgeleme, senkronizasyon, kesme, bellek, saat, bölümleme ve çok çekirdek risklerini ele alma yolları."
 sidebar_position: 2
 ---
 
@@ -23,13 +23,13 @@ denetime hazırlanırken kontrol listesi olarak kullanılabilir.
 | Alan | Tipik risk | Ele alma yolu |
 |---|---|---|
 | Çizelgeleme | Deadline'ın yük altında kaçırılması | Çizelgelenebilirlik analizi, en kötü durum ölçümleri |
-| Senkronizasyon | Priority inversion, kilitlenme | Priority inheritance/tavanı, kilit sıralama kuralı, analiz |
+| Senkronizasyon | Priority inversion, deadlock | Priority inheritance/ceiling, kilit sıralama kuralı, analiz |
 | Kesmeler | Sınırsız kesme gecikmesi, kesme fırtınası | Kısa kesme rutinleri, kesme kapalı süresinin ölçümü, hız sınırlama |
 | Bellek | Stack taşması, parçalanma | Statik ayırma, stack analizi, bellek koruma birimi |
 | Görevler arası iletişim | Kuyruk taşması, bayat ya da yarım veri | Boyut analizi, tazelik kontrolü, atomik erişim |
 | Saat ve zaman | Sayaç taşması, saat kayması | Taşma süresi hesabı, taşmaya dayanıklı kod, uzun süreli test |
 | Başlatma ve hata yönetimi | Belirsiz başlangıç durumu, sessiz hata | Tanımlı başlatma sırası, sağlık izleme, watchdog |
-| Bölümleme | Bir bölümün diğerini etkilemesi | Alan ve zaman bölümlemesi kanıtı |
+| Bölümleme | Bir partition'ın diğerini etkilemesi | Alan ve zaman bölümlemesi kanıtı |
 | Çok çekirdek | Çekirdekler arası girişim | Girişim kanallarının analizi ve ölçümü |
 | Yapılandırma | Paket dışı özellik, kullanılmayan kod | Yapılandırma kontrolü, kapsam analizi |
 
@@ -37,9 +37,9 @@ denetime hazırlanırken kontrol listesi olarak kullanılabilir.
 
 Çizelgeleme (scheduling), görevlerin işlemciyi hangi sırayla ve ne kadar süreyle
 kullanacağını belirler. Her görevin en kötü durum yürütme süresi (worst-case execution
-time, WCET), periyodu ve deadline bilinmeden sistemin zamanında çalışacağı
+time, WCET), periyodu ve deadline'ı bilinmeden sistemin zamanında çalışacağı
 gösterilemez. Ortalama ölçümlerle kurulan bir zaman bütçesi, nadir bir yük
-kombinasyonunda çöker. Görevlerin toplam işlemci kullanımı, RTOS çekirdek hizmetlerinin
+kombinasyonunda çöker. Görevlerin toplam işlemci kullanımı, RTOS kernel hizmetlerinin
 süresi ve kesmelerin araya girmesi birlikte hesaba katılmalıdır. WCET ve stack kullanımı
 analizlerinin nasıl yapıldığı
 [9. Yazılım Doğrulama](../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx) bölümünde
@@ -50,12 +50,12 @@ anlatılır.
 - Görev öncelikleri hangi kurala göre atanmış (örneğin periyoda ya da deadline'a
   göre) ve gerekçesi tasarım verisinde yazılı mı?
 - Aşırı yük durumunda hangi görevin deadline'ı kaçıracağı tasarımda belirlenmiş mi?
-- Timer tık (tick) çözünürlüğü en kısa periyotlu görev için yeterli mi?
+- Timer tick çözünürlüğü en kısa periyotlu görev için yeterli mi?
 
 ## Paylaşılan kaynaklar ve senkronizasyon
 
 Paylaşılan kaynakların iki klasik tuzağı priority inversion ve
-kilitlenmedir (deadlock): ilkinde yüksek öncelikli görev, düşük öncelikli bir görevin
+deadlock'tur: ilkinde yüksek öncelikli görev, düşük öncelikli bir görevin
 tuttuğu kaynak yüzünden öngörülemez süre bekler; ikincisinde görevler birbirinin tuttuğu
 kaynağı bekleyerek hiç ilerleyemez. İkisi de nadir tetiklenir; testte görülmeyip sahada
 ortaya çıkabilir.
@@ -64,7 +64,7 @@ ortaya çıkabilir.
 - İç içe kilit (lock) alınıyorsa, tüm görevlerin uyduğu tek bir kilit alma sırası var mı?
 - Bir kilit için en uzun bekleme süresi sınırlı ve zaman bütçesine eklenmiş mi?
 - Birden çok görevden ya da kesme bağlamından çağrılan kütüphane ve sürücü işlevlerinin
-  yeniden girilebilir (reentrant) olduğu gösterilmiş mi; olmayanlar bir kilitle
+  reentrant olduğu gösterilmiş mi; olmayanlar bir kilitle
   korunuyor mu?
 
 ## Kesmeler
@@ -98,8 +98,8 @@ bozar.
 
 ## Görevler arası iletişim
 
-Kuyruklar ve paylaşılan değişkenler veri kaybı ve tutarsızlık için doğal noktalardır.
-Birden çok kelimeden oluşan bir veri bir görev tarafından yazılırken diğer görev
+Kuyruklar ve paylaşılan değişkenler, veri kaybının ve tutarsızlığın doğal kaynaklarıdır.
+Bir görev birden çok kelimeden oluşan bir veriyi yazarken diğer görev onu
 okursa, yarısı eski yarısı yeni bir değer elde edilir.
 
 - Her kuyruğun boyutu en kötü üretim–tüketim oranına göre seçilmiş mi; taşmada ne olur?
@@ -115,7 +115,7 @@ taşma anındaki davranış tasarlanmış ve test edilmiş olmalıdır.
 Sorun kuramsal değildir. FAA'nın 2015 tarihli AD 2015-09-07 sayılı uçuşa elverişlilik
 direktifi (airworthiness directive, AD), Boeing 787'nin jeneratör kontrol birimlerindeki
 bir yazılım sayacının 248 gün kesintisiz enerjili kalındığında taştığını ve birlikte
-enerjilenmiş birimlerin aynı anda arıza emniyetli moda (failsafe mode) geçerek tüm
+enerjilenmiş birimlerin aynı anda fail-safe moda geçerek tüm
 alternatif akım gücünün kaybına yol açabileceğini bildirmiştir. Direktif, geçici önlem
 olarak uçağın elektrik gücünün belirli aralıklarla kesilip yeniden verilmesini zorunlu
 kılmış; kalıcı çözüm, sonraki bir direktifle zorunlu tutulan yazılım güncellemesi
@@ -157,15 +157,15 @@ tepkiye bağlanmalıdır.
 - Başlatma sırası belgelenmiş ve her adımın başarısızlığında ne olacağı belli mi?
 - Sağlık izleme (health monitoring) hangi olayları yakalıyor ve her birine hangi
   tepkiyi veriyor?
-- Çekirdek çağrılarının hata dönüş değerleri (kuyruk dolu, zaman aşımı, geçersiz
+- Kernel çağrılarının hata dönüş değerleri (kuyruk dolu, zaman aşımı, geçersiz
   parametre) her çağrıda denetleniyor ve tanımlı bir tepkiye bağlanıyor mu?
-- Watchdog timer'ı (watchdog) ile yeniden başlatma sonrası hangi durumun
+- Watchdog timer ile yeniden başlatma sonrası hangi durumun
   korunacağı tanımlı mı?
 
 ## Bölümleme
 
-Farklı yazılım seviyelerinden bileşenler aynı işlemciyi paylaşıyorsa, bir bölümdeki
-(partition) hatanın diğerinin belleğini ya da zaman bütçesini etkileyemeyeceği
+Farklı yazılım seviyelerinden bileşenler aynı işlemciyi paylaşıyorsa, bir partition'daki
+hatanın diğerinin belleğini ya da zaman bütçesini etkileyemeyeceği
 gösterilmelidir. İlki alan bölümlemesinin (spatial partitioning), ikincisi zaman
 bölümlemesinin (temporal partitioning) konusudur ve biri diğerinin yerini tutmaz:
 bellek koruma birimi yalnızca alan korumasını sağlar. Ayrıntı için
@@ -174,9 +174,9 @@ bakınız.
 
 - Bölümleme yapılandırması (bellek bölgeleri, zaman pencereleri, erişim hakları)
   konfigürasyon kontrolünde mi ve tasarımla karşılaştırılarak gözden geçirilmiş mi?
-- Bir bölüm zaman penceresini aştığında ya da izinsiz belleğe eriştiğinde ne olduğu
+- Bir partition zaman penceresini aştığında ya da izinsiz belleğe eriştiğinde ne olduğu
   gürbüzlük testleriyle gösterilmiş mi?
-- Bölümlerin ortak kullandığı kaynaklar (giriş/çıkış aygıtları, kesmeler, haberleşme
+- Partition'ların ortak kullandığı kaynaklar (giriş/çıkış aygıtları, kesmeler, haberleşme
   kanalları) listelenmiş ve her biri için hatanın yayılma yolu analiz edilmiş mi?
 
 ## Çok çekirdekli işlemciler
@@ -185,8 +185,8 @@ bakınız.
 gibi kaynakları paylaşır. Bir çekirdekteki yazılım, diğer çekirdekteki yazılımın
 yürütme süresini bu paylaşılan kaynaklar üzerinden uzatabilir; bu yollara girişim
 kanalları (interference channels) denir. Çok çekirdekli işlemci kullanımına ilişkin
-otorite rehberliği (FAA AC 20-193, 2024 ve EASA AMC 20-193, 2022; ikisi daha önce
-kullanılan CAST-32A görüş belgesinin yerini almıştır), bu kanalların belirlenmesini,
+otorite rehberliği (FAA AC 20-193, 2024 ve EASA AMC 20-193, 2022; ikisi de daha önce
+kullanılan CAST-32A position paper'ının yerini almıştır), bu kanalların belirlenmesini,
 etkilerinin ölçülmesini ya da sınırlandırılmasını bekler. Tek çekirdekte yapılan WCET
 ölçümleri çok çekirdekli bir hedefe doğrudan taşınamaz.
 
@@ -202,12 +202,12 @@ etkilerinin ölçülmesini ya da sınırlandırılmasını bekler. Tek çekirdek
 RTOS'un sertifikasyon paketi belirli bir yapılandırmayı, işlemciyi ve derleyici
 sürümünü kapsar. Proje bu yapılandırmanın dışına çıkarsa (başka bir özellik
 etkinleştirir, derleyici sürümünü değiştirir) paketin kanıtı o kısım için geçersiz
-kalır. Bağlanan ama kullanılmayan çekirdek özellikleri, kapsam analizinde devre dışı
+kalır. Bağlanan ama kullanılmayan kernel özellikleri, kapsam analizinde devre dışı
 bırakılmış kod (deactivated code) ya da gereksiz kod (extraneous code) olarak karşınıza
 çıkar. Hangisi olduğunu özelliğin kullanılmaması değil, ardındaki veri belirler: özellik
 bir gereksinime izlenebiliyor ve tasarım gereği çalıştırılmıyorsa devre dışı bırakılmış
 koddur; o zaman planlarda beyan edilmesi, etkin kod gibi standardın hedeflerine uygun
-geliştirilmiş olması ve istem dışı çalışmasının önlendiğinin analiz ile testle
+geliştirilmiş olması ve istem dışı çalışmasının önlendiğinin analiz ve testle
 gösterilmesi gerekir. Hiçbir gereksinime izlenemiyorsa gereksiz koddur; DO-178C'nin
 öngördüğü çözüm kodun kaldırılması ve bunun etkisinin analiz edilmesidir. Kodu imajda
 tutmak isteyen proje, eksik gereksinimini ve doğrulama verisini tamamlayarak onu devre
@@ -216,7 +216,7 @@ dışı bırakılmış kod olarak savunmak zorundadır
 
 - Projede kullanılan yapılandırma (etkin özellikler, işlemci, derleyici sürümü ve
   seçenekleri) paketin kapsamıyla madde madde karşılaştırılmış mı?
-- Bağlanan ama kullanılmayan her çekirdek özelliği için sınıflandırma ve
+- Bağlanan ama kullanılmayan her kernel özelliği için sınıflandırma ve
   etkinleşemeyeceğinin gerekçesi kayıtlı mı?
 - RTOS yapılandırma dosyaları konfigürasyon kontrolünde mi ve her değişiklik, değişiklik
   etki analizinden (change impact analysis) geçiyor mu?
@@ -233,6 +233,6 @@ dışı bırakılmış kod olarak savunmak zorundadır
   etkisini önlemez.
 - Çok çekirdekli bir hedef, tek çekirdekte kurulan zamanlama varsayımlarını geçersiz
   kılabilir; girişim kanalları belirlenip sınırlandırılmalıdır.
-- Bağlanan ama kullanılmayan çekirdek özelliğinin devre dışı bırakılmış kod mu, gereksiz
+- Bağlanan ama kullanılmayan kernel özelliğinin devre dışı bırakılmış kod mu, gereksiz
   kod mu olduğunu gereksinime izlenebilirliği belirler; devre dışı bırakılmış kod için
   istem dışı çalışmanın önlendiği ayrıca gösterilir.

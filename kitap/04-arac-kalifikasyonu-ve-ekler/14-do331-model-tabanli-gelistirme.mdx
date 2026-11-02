@@ -32,9 +32,9 @@ model de metin kadar yanlış olabilir ve çalıştırılabildiği için "doğru
 metinden fazladır. DO-331'in bütün düzeni, bu yanıltıcı güveni disipline bağlamak
 üzerine kuruludur.
 
-Ek, model yazılım gereksinimlerinin ya da tasarımının yerini aldığında uygulanır; yani
+Ek, model yazılım gereksinimlerinin ya da tasarımının yerini aldığında, yani
 kod o modelden geliştiriliyorsa (elle ya da otomatik) ya da doğrulama o modele
-dayanıyorsa. Modeli kimin ürettiği bu sonucu değiştirmez: sistem mühendislerinin
+dayanıyorsa uygulanır. Modeli kimin ürettiği bu sonucu değiştirmez: sistem mühendislerinin
 hazırladığı bir model yazılımın geliştirilmesine temel oluyorsa eke tabidir. Yalnızca
 kavram çalışması için kullanılan ve yaşam döngüsü verisi olarak sunulmayan bir model
 kapsam dışında kalır; ancak "açıklama amaçlı" denen bir modelden kod yazılıyorsa bu
@@ -68,17 +68,17 @@ netleştirmesidir. Bir model, yaşam döngüsünde hangi iş ürününün yerini
 - **Tasarım modeli (design model):** Düşük seviyeli gereksinimin (low-level
   requirement) ve/veya yazılım mimarisinin yerine geçer. Yazılımın *nasıl*
   gerçekleştirileceğini tanımlar; veri akışları, durum makineleri, blok şemaları gibi
-  gerçekleştirmeye yakın detay içerir. Kodun doğrudan kendisinden yazıldığı ya da
+  gerçekleştirmeye yakın ayrıntı içerir. Kodun doğrudan kendisinden yazıldığı ya da
   üretildiği model tasarım modelidir; otomatik kod üretimi
   ([8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx))
-  bu modeli girdi alır.
+  bu modeli girdi olarak alır.
 
 Bu ayrımın pratikte kritik bir sonucu vardır: **bir model kendi kendisinin doğrulama
 referansı olamaz.** Model hangi seviyeyi temsil ediyorsa, ona uygunluk bir üst
 seviyedeki gereksinime göre gösterilir. Örneğin tasarım modeli kullanılıyorsa, onun
 üstünde modelden bağımsız gereksinimler bulunmalı ve model bu gereksinimlere karşı
 doğrulanmalıdır. Aynı modeli hem gereksinim hem tasarım ilan edip "model modele
-uygundur" demek, doğrulama zincirini kısa devre yapar; DO-331 bu tuzağı açıkça kapatır:
+uygundur" demek, doğrulama zincirine kısa devre yaptırır; DO-331 bu tuzağı açıkça kapatır:
 bir model aynı anda hem spesifikasyon hem tasarım modeli sayılamaz.
 
 | Model türü | Karşılık geldiği DO-178C iş ürünü | Neye karşı doğrulanır | Tipik içerik |
@@ -166,7 +166,7 @@ araçları, emniyet-kritik kullanım için uygun olmayan pek çok özellik barı
 bunların hangilerine izin verildiğini söyler. Tipik içerik:
 
 - izin verilen ve yasaklanan model öğeleri ile araç ayarları (örneğin örtük veri tipi
-  dönüşümü, yürütme sırasını araca bırakan yapılar, değişken adımlı çözücü (solver));
+  dönüşümü, yürütme sırasını araca bırakan yapılar, değişken adımlı solver);
 - adlandırma, yerleşim ve karmaşıklık sınırları (iç içe düzey sayısı, bir diyagramdaki
   öğe sayısı, bir durum makinesindeki geçiş sayısı);
 - gereksinim ya da tasarım ifade eden öğelerin, açıklama notu gibi bilgi amaçlı
@@ -183,7 +183,7 @@ kurallar gözden geçirmeyle kapatılır.
 kütüphane bloğu modele konduğunda davranışı modelin, üretilen kodu da uçuş yazılımının
 parçası olur. Bu yüzden kullanılan her kütüphane öğesi, modelin yazılım seviyesine uygun
 biçimde geliştirilmiş ve doğrulanmış olmalıdır: ne yaptığını tanımlayan bir gereksinimi,
-doğrulama kanıtı ve konfigürasyon kontrolü vardır. Bu güvenceye sahip olmayan ya da
+doğrulama kanıtı ve konfigürasyon kontrolü vardır. Bu güvenceyi taşımayan ya da
 projede kullanılmayan öğeler ya kütüphaneden çıkarılır ya da modelleme standardıyla
 yasaklanır. Araçla birlikte gelen hazır blokları "aracın parçası" sayıp doğrulama
 dışında bırakmak, derleyici kütüphanelerini hesaba katmamakla aynı hatadır.
@@ -251,7 +251,7 @@ kapsamının yerini simülasyon tutamaz. Hedef bilgisayarla uyumluluğu ve donan
 entegrasyonunu gösteren testler de her durumda hedefte yapılır.
 
 Hedefe ilişkin sınırın nedeni **temsil yeteneğidir**: simülasyon ortamı, hedef ortamın
-yalnızca bir yaklaşıklamasıdır. Masaüstü işlemcinin kayan nokta davranışı, çözücünün zaman
+yalnızca bir yaklaşıklamasıdır. Masaüstü işlemcinin kayan nokta davranışı, solver'ın zaman
 adımı, sıralama ve zamanlama varsayımları, donanım giriş/çıkışlarının idealize
 edilmesi gibi farklar, modelde doğru görünen davranışın hedefte farklılaşmasına yol
 açabilir. Bu yüzden krediye başvururken simülasyon ortamı ile hedef ortam arasındaki
@@ -263,7 +263,7 @@ Deneyimden bir uyarı: simülasyon geri beslemesi hızlı olduğu için ekipler 
 olarak ona güvenmeye başlar ve hedef testlerini "formalite" gibi görme eğilimi
 oluşur. Zamanlama, kesme etkileşimi ve donanım arayüzü kaynaklı hatalar ise çoğunlukla
 ancak hedefte ortaya çıkar. Simülasyon, hedef testinin *ikamesi* değil, ona gelmeden
-önce hata sayısını düşüren bir *ön filtresi* olarak konumlandırılmalıdır.
+önce hata sayısını düşüren *ön filtresi* olarak konumlandırılmalıdır.
 
 ## Model kapsam analizi
 
@@ -408,7 +408,7 @@ kapsam analizi iki boşluk gösterir:
   hiçbir gereksinime izlenmez. Tasarımcı bunu bakım kolaylığı için eklemiştir. Geçiş
   yalnızca izlenemeyen bir öğe değildir; G-3'ün tanımladığı davranışı da değiştirir. Bu
   yüzden tasarım içinde çözülemez: ya gereksinim sahiplerine götürülür ve emniyet etkisi
-  değerlendirilerek gereksinim değiştirilir, ya da geçiş modelden kaldırılır.
+  değerlendirilerek gereksinim değiştirilir ya da geçiş modelden kaldırılır.
 
 İkinci boşluk, model kapsam analizinin varlık nedenini gösterir: bütün gereksinim tabanlı
 senaryolar geçtiği hâlde modelde kimsenin istemediği bir işlev durmaktadır ve hiçbir
@@ -450,7 +450,7 @@ olabilir. G-2'nin bu koşullarda da sağlandığı ancak hedefte gösterilebilir
   kendi kendisinin doğrulama referansı olamaz ve her zaman, geliştirildiği gereksinimlere
   karşı doğrulanır.
 - Modelleme standartları, model öğe kütüphanelerinin doğrulanması ve model öğesi
-  düzeyinde izlenebilirlik planlama verisidir; izlenemeyen ama gerekli öğe türetilmiş
+  düzeyinde izlenebilirlik planlamanın konusudur; izlenemeyen ama gerekli öğe türetilmiş
   gereksinimdir.
 - Simülasyon, disiplinli yürütülürse modelin doğrulanmasında kredi sağlar;
   çalıştırılabilir nesne kodunun test hedeflerine ise en çok kısmi kredi sağlar ve hedef

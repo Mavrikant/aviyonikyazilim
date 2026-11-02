@@ -84,8 +84,8 @@ kapattıramayan bir kalite güvencesi, tanım gereği bağımsız sayılmaz.
 
 | | Doğrulama bağımsızlığı | Kalite güvencesi bağımsızlığı |
 |---|---|---|
-| Anlamı | Ürünü doğrulayan, onu geliştiren kişi değildir; insan faaliyetine denk güvence veren bir araç da kullanılabilir | Geliştirme faaliyetlerinden ayrı durmanın yanında düzeltici faaliyeti sağlatacak yetkiye sahip olmak |
-| Nerede aranır | Hedef tablolarında bağımsızlıkla işaretli doğrulama hedeflerinde; fiilen Seviye A ve B'de | Seviyeye uygulanan bütün kalite güvencesi hedeflerinde; Seviye A'dan D'ye |
+| Anlamı | Ürünü doğrulayan, onu geliştiren kişi değildir; insan faaliyetine denk güvence veren bir araç da kullanılabilir | Geliştirme faaliyetlerinden ayrı durmanın yanında düzeltici faaliyeti sağlatacak yetkiyi taşımak |
+| Nerede aranır | Hedef tablolarında bağımsızlıkla işaretli doğrulama hedeflerinde; fiilen Seviye A ve B'de | Seviyede geçerli bütün kalite güvencesi hedeflerinde; Seviye A'dan D'ye |
 | Nasıl sağlanır | Aynı ekipten başka bir mühendis yeterlidir; ayrı organizasyon birimi şart değildir | Yaygın yol, proje yönetiminden ayrı bir raporlama hattıdır |
 | Tipik zaafı | Yazarın kendi işini gözden geçirmesi | Takvimden sorumlu yöneticiye bağlı olmak; bulguyu kapattıracak yetkinin bulunmaması |
 
@@ -147,7 +147,7 @@ aracı denetimdir (audit), ama tek aracı değildir:
 | Süreç denetimi | Bir sürecin planda tarif edildiği gibi işletildiğine | "Plan her değişiklik için etki analizi istiyor; son beş değişikliğin analizini görebilir miyim?" |
 | Veri denetimi | Bir çıktının standarda uyduğuna ve kontrol kategorisine göre yönetildiğine | "Bu tasarım verisi tasarım standardının zorunlu tuttuğu kısımları içeriyor mu, hangi baseline'da?" |
 | Gözden geçirmelere katılım | Gözden geçirmenin tanımlı yöntemle ve doğru sürüm üzerinde yapıldığına | "Kontrol listesi kullanıldı mı; bulgular kapanmadan kayıt kapatılmış mı?" |
-| Tanıklık (witnessing) | Kredi amaçlı test koşusunun, derlemenin ya da yüklemenin prosedüre göre ve kayıtlı ortamda yapıldığına | "Test edilen imajın (image) kimliği baseline'daki imajla aynı mı?" |
+| Tanıklık (witnessing) | Kredi amaçlı test koşusunun, build'in ya da yüklemenin prosedüre göre ve kayıtlı ortamda yapıldığına | "Test edilen imajın (image) kimliği baseline'daki imajla aynı mı?" |
 | Tedarikçi denetimi | Tedarikçinin süreç ve çıktılarının onaylı plan ve standartlara uyduğuna | "Tedarikçideki gözden geçirme kayıtları bizim planımızın istediği içeriği taşıyor mu?" |
 
 Kalite güvencesinin güvence altına alacağı, projeden projeye değişmeyen konuları
@@ -255,7 +255,7 @@ flowchart TD
 
 DO-178C'de problem raporu yalnızca yazılım hatasının kaydı değildir. Problem raporlama
 üç tür sorunu kapsar: yazılımın anormal davranışı, yaşam döngüsü verisindeki kusur ve
-plan ya da standartlara süreç uyumsuzluğu. Kalite güvencesinin bulduğu uygunsuzluk
+sürecin plan ya da standartlara uymaması. Kalite güvencesinin bulduğu uygunsuzluk
 üçüncü türe girer; kayıt hangi sistemde tutulursa tutulsun, problem raporlamanın süreç
 tarafıdır.
 
@@ -285,10 +285,10 @@ işlendiğini gösterir.
 | Kaynak | Kod gözden geçirme sürecinin denetimi; son baseline'a giren dosyalardan 12 gözden geçirme kaydı örneklenmiştir |
 | Gözlem | 3 kayıtta gözden geçirilen dosya sürümü, baseline'a alınan sürümden eskidir; dosyalar gözden geçirmeden sonra değişmiş, yeniden gözden geçirilmemiştir |
 | Dayanak | Yazılım doğrulama planı: gözden geçirme kaydı gözden geçirilen sürümü tanımlar; onaydan sonra yapılan değişiklik yeniden gözden geçirilir |
-| Etki | Üç dosyada kod gözden geçirmesi kanıtı baseline'daki kodu kapsamıyor; aynı dönemde birleştirilen diğer dosyalar da şüphelidir |
+| Etki | Üç dosyada kod gözden geçirmesi kanıtı baseline'daki kodu kapsamıyor; aynı dönemde merge edilen diğer dosyalar da şüphelidir |
 | Sınıf | Büyük: kredi alınan doğrulama kanıtını etkiliyor |
 | Sorumlu ve hedef | Yazılım geliştirme lideri; bir sonraki baseline'dan önce |
-| Düzeltici faaliyet | Üç dosya güncel sürüm üzerinde yeniden gözden geçirilir; aynı dönemde birleştirilen bütün dosyalar için kayıttaki sürüm ile baseline'daki sürüm karşılaştırılır; kök neden olarak depo, onaydan sonraki değişiklikte onayı düşürecek biçimde ayarlanır |
+| Düzeltici faaliyet | Üç dosya güncel sürüm üzerinde yeniden gözden geçirilir; aynı dönemde merge edilen bütün dosyalar için kayıttaki sürüm ile baseline'daki sürüm karşılaştırılır; kök nedeni gidermek için depo, onaydan sonraki değişiklikte onayı düşürecek biçimde ayarlanır |
 | Kapanış kanıtı | Yeniden gözden geçirme kayıtları, sürüm karşılaştırma listesi, depo ayarının kaydı; bir sonraki denetimde yeni örneklemde tekrar görülmemesi |
 
 Kayıtta dikkat edilecek üç nokta var: gözlem ölçülebilir biçimde yazılmıştır ("bazı
@@ -346,13 +346,13 @@ veride nelere baktığı [SW SOI-4](../07-soi-denetimleri/soi-4.mdx) kontrol lis
 
 Aynı standardı, aynı planları uygulayan iki projede kalite güvencesinin katkısı çok
 farklı olabilir. Fark çoğu zaman ekibin büyüklüğünde değil; teknik yetkinliğinde,
-bağımsızlığında ve projeye ne zaman dahil olduğundadır.
+bağımsızlığında ve projeye ne zaman dâhil olduğundadır.
 
 ### Etkili kalite güvencesinin özellikleri
 
 Etkili bir kalite güvencesi ekibini sahada üç özelliğiyle tanırsınız:
 
-- **Teknik yetkinlik.** Denetlediği işi anlayacak kadar mühendislik bilgisine sahiptir.
+- **Teknik yetkinlik.** Denetlediği işi anlayacak kadar mühendislik bilir.
   Bir gözden geçirme kaydına baktığında yalnızca imzaların tam olup olmadığını değil,
   gözden geçirmenin gerçekten yapılıp yapılmadığını da sorgulayabilir. Yazılım ekibi,
   teknik konuşabildiği bir kalite güvencesi mühendisini ciddiye alır.
@@ -372,13 +372,13 @@ kanıtın yeniden üretilmesi gerekir.
 
 ### Etkisiz kalite güvencesinin belirtileri
 
-Etkisiz kalite güvencesi de kendini belli eden desenler üretir:
+Etkisiz kalite güvencesi de kendini belli eden kalıplar üretir:
 
 - **Salt evrak kontrolü.** Denetim, "belge var mı, imza var mı" sorusuna indirgenir.
   İçerik hiç sorgulanmadığı için süreç kâğıt üstünde kusursuz, sahada bozuk olabilir.
-- **Geç katılım.** Kalite güvencesi projeye teslimat yaklaşırken dahil olur; artık
+- **Geç katılım.** Kalite güvencesi projeye teslimat yaklaşırken dâhil olur; artık
   sapmaları önleme değil, yalnızca belgeleme şansı vardır.
-- **Yaptırım gücü eksikliği.** Uygunsuzluk kayıtları açılır ama kimse kapatmak zorunda
+- **Yaptırım gücü eksikliği.** Uygunsuzluk kayıtları açılır ama kimse kendini kapatmak zorunda
   hissetmez; kayıtlar aylarca açık kalır ve mekanizma inandırıcılığını yitirir.
 - **Damgacılık (rubber-stamping).** Ekip, kalite güvencesini bir onay damgası gibi
   görür; kalite güvencesi de bu role razı olursa bağımsız gözetim fiilen ortadan kalkar.
@@ -414,10 +414,10 @@ kayıtlarıyla yakalamış ve kapatmış olur. Bu denetimlerin işleyişi
   tanıklık, geçiş kriterlerinin denetimi ve tedarikçi gözetimi SQAP'ta planlanır,
   sonuçları kalite güvencesi kayıtlarına geçer.
 - Uygunsuzluk, plan ya da standarda aykırılıktır; problem raporlamanın süreç tarafıdır.
-  Kaydı, etkisinin değerlendirilmesi, kök nedenin giderilmesi ve kanıtla kapatılması
+  Kayda geçirilmesi, etkisinin değerlendirilmesi, kök nedenin giderilmesi ve kanıtla kapatılması
   bu disiplinin merkezindedir.
 - Yazılım uygunluk gözden geçirmesi teslimden önceki son kapıdır: süreçlerin
-  tamamlandığını, verinin eksiksiz olduğunu ve nesne kodun yeniden üretilip
+  tamamlandığını, verinin eksiksiz olduğunu ve nesne kodunun yeniden üretilip
   yüklenebildiğini son baseline üzerinde gösterir.
 - Etkili kalite güvencesi teknik yetkinlik, bağımsızlık ve erken katılımla tanınır;
   salt evrak kontrolü, geç katılım ve yaptırım gücü eksikliği etkisizliğin

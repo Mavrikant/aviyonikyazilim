@@ -76,7 +76,7 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
       yazıldığı gibi mi gerçeklenmiş? Örneğin "eşiği aşarsa" ifadesi `>=` ile değil `>` ile mi
       yazılmış? *(A–C · §6.3.4.a)*
 - [ ] **KOD-03** Kod, hiçbir gereksinimde tanımlı olmayan bir davranış içermiyor mu? Örneğin
-      belgelenmemiş bir bakım kipi, hata ayıklama çıktısı ya da test için bırakılmış bir kısayol
+      belgelenmemiş bir bakım modu, hata ayıklama çıktısı ya da test için bırakılmış bir kısayol
       bulunmuyor mu? *(A–C · §6.3.4.a)*
 - [ ] **KOD-04** Kod, gereksinimin yanıtlamadığı bir konuda kendi başına karar vermiyor mu?
       Örneğin gereksinimde yazmayan bir yuvarlama yönü ya da eşitlik durumu kodda sessizce
@@ -92,8 +92,8 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
       Örneğin başka bir bileşenin değişkenine `extern` bildirimiyle doğrudan erişilmiyor mu?
       *(A–C · §6.3.4.b)*
 - [ ] **KOD-07** Fonksiyon, mimaride atandığı yürütme bağlamında mı çalışıyor: görev, kesme
-      servis rutini (interrupt service routine, ISR) ya da bölüm (partition)? Örneğin yalnız
-      görev bağlamı için tasarlanmış bir işlev ISR'den çağrılmıyor mu? *(A–C · §6.3.4.b)*
+      servis rutini (interrupt service routine, ISR) ya da partition? Örneğin yalnız
+      görev bağlamı için tasarlanmış bir fonksiyon ISR'den çağrılmıyor mu? *(A–C · §6.3.4.b)*
 
 ### Doğrulanabilirlik
 
@@ -101,8 +101,8 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
       durumda gözlenebiliyor mu? Örneğin bir hata dalı, dışarıdan okunamayan bir yerel bayrağı
       değiştirmekle kalmıyor mu? *(A–B · §6.3.4.c)*
 - [ ] **KOD-09** Testler, uçuş imajıyla aynı kaynaktan ve aynı koşullu derleme ayarlarıyla
-      üretilen kod üzerinde koşulabiliyor mu? Örneğin yalnızca test derlemesinde açılan bir
-      `#ifdef` dalı bulunmuyor mu; uçuş kodunda kalan bir test kancası bir gereksinime
+      üretilen kod üzerinde koşulabiliyor mu? Örneğin yalnızca test build'inde açılan bir
+      `#ifdef` dalı bulunmuyor mu; uçuş kodunda kalan bir test hook'u bir gereksinime
       izleniyor mu? *(A–B · §6.3.4.c)*
 - [ ] **KOD-10** Kod, yapısal kapsamın (structural coverage) ölçülmesini ya da yorumlanmasını
       zorlaştıran yapılardan arınmış mı? Örneğin karar içinde yan etkili ifade, short-circuit evaluation'a bağlı çağrı ya da hesaplanmış atlama
@@ -113,7 +113,7 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
 - [ ] **KOD-11** Kodlama standardı denetim aracı ve metrik aracı bu kod sürümü üzerinde
       koşulmuş mu; raporlardaki her uyarı ya düzeltilmiş, ya yanlış alarm (false positive)
       olarak analiz kaydında gerekçesiyle kapatılmış ya da gerçek ihlalse (aşılan karmaşıklık
-      sınırı dahil) onaylı bir sapma (deviation) kaydına bağlanmış mı? *(A–C · §6.3.4.d)*
+      sınırı dâhil) onaylı bir sapma (deviation) kaydına bağlanmış mı? *(A–C · §6.3.4.d)*
 - [ ] **KOD-12** Standardın araçla değil gözden geçirmede denetlenir dediği kurallar bu kodda
       tek tek sınanmış mı? Örneğin donanım bekleyen döngülerin deneme sınırına ve kesmeyle
       paylaşılan değişkenin `volatile` nitelenmesine bakılmış mı? *(A–C · §6.3.4.d)*
@@ -137,10 +137,10 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
 
 ### Aritmetik ve veri
 
-- [ ] **KOD-17** Tamsayı işlemlerinde taşmanın, sıfıra bölmenin ve işaretli-işaretsiz
+- [ ] **KOD-17** Tam sayı işlemlerinde taşmanın, sıfıra bölmenin ve işaretli-işaretsiz
       karışımından doğan hatalı dönüşümün girdi aralığı içinde oluşmadığı gösterilmiş mi?
       Örneğin bölen sıfır olabiliyorsa bu durum kodda denetleniyor ya da gereksinimde
-      çağıranın ön koşulu olarak yazılı mı? *(A–C · §6.3.4.f)*
+      çağıranın precondition'ı olarak yazılı mı? *(A–C · §6.3.4.f)*
 - [ ] **KOD-18** Sabit noktalı (fixed-point) hesaplarda ölçek ve çözünürlük gereksinimdeki
       birimle tutarlı mı; ara sonuçların tipi taşmayı ve gereksinimde verilen doğruluğu aşan
       yuvarlama hatasını önleyecek genişlikte mi? *(A–C · §6.3.4.f)*
@@ -175,7 +175,7 @@ parantez maddenin geçerli olduğu seviyeleri ve dayanağını gösterir.
 - [ ] **KOD-25** Kesmeyle ya da başka görevle paylaşılan veriye erişim, tasarımda seçilen
       yöntemle (kesme maskeleme, kilit, çift buffer) korunuyor mu? Örneğin çok kelimelik bir
       değer, yarısı güncellenmişken okunamıyor mu? *(A–C · §6.3.4.f)*
-- [ ] **KOD-26** Critical section'lar erken dönüş ve hata dalı dahil her çıkış
+- [ ] **KOD-26** Critical section'lar erken dönüş ve hata dalı dâhil her çıkış
       yolunda kapanıyor mu ve içlerinde engelleyici çağrı ya da üst sınırı olmayan bir döngü
       veya donanım beklemesi bulunmuyor mu; kilit alma sırası ve sınırlı kaynakların (kuyruk,
       buffer, semafor) tükenme davranışı tasarımla tutarlı mı? *(A–C · §6.3.4.f)*
@@ -207,12 +207,12 @@ aracın neyi üstlendiğini ve gözden geçirene neyin kaldığını gösterir.
 
 | Madde | Araç türü | Gözden geçirene kalan |
 |---|---|---|
-| KOD-11 | Kodlama standardı denetçisi; cyclomatic complexity'si, iç içe derinliği ve karardaki koşul sayısını ölçen metrik aracı | Yanlış alarmların gerekçeyle ayıklanması, aracın kesin karar veremediği kurallar, sapma gerekçesinin yeterliliği |
-| KOD-14, KOD-15 | İz etiketlerini gereksinim veritabanıyla karşılaştıran script ya da gereksinim yönetim aracı sorgusu | Etiketlenen gereksinimin kodda gerçekten ve eksiksiz gerçeklenmesi (KOD-01) |
-| KOD-17, KOD-21, KOD-22 | Değer aralığı analizi yapan statik analiz aracı; ör. abstract interpretation tabanlı | Aracın kanıtlayamadığı noktaların gerekçesi; dayanılan ön koşulun gereksinimde yazılı olması |
-| KOD-20 | Veri akışı analizi, derleyici uyarıları | Kasıtla kullanılmayan parametre ya da atamanın gerekçesi |
-| KOD-23, KOD-24 | Çağrı grafiğinden stack analizi; WCET analiz aracı ya da hedefte ölçüm | İşlev pointer'ı ve kesme yükü varsayımları; analizin hangi kod sürümüne ait olduğu |
-| KOD-25, KOD-26 | Veri yarışı ve kilit analizi yapan statik analiz | Korumanın tasarımda seçilen yöntemle aynı olması; aracın görmediği donanım paylaşımı |
+| KOD-11 | Kodlama standardı denetçisi; cyclomatic complexity'yi, iç içe derinliği ve karardaki koşul sayısını ölçen metrik aracı | Yanlış alarmların gerekçeyle ayıklanması, aracın kesin karar veremediği kurallar, sapma gerekçesinin yeterliliği |
+| KOD-14, KOD-15 | İz etiketlerini gereksinim veri tabanıyla karşılaştıran script ya da gereksinim yönetim aracı sorgusu | Etiketlenen gereksinimin kodda gerçekten ve eksiksiz gerçeklenmesi (KOD-01) |
+| KOD-17, KOD-21, KOD-22 | Değer aralığı analizi yapan statik analiz aracı; ör. abstract interpretation tabanlı | Aracın kanıtlayamadığı noktaların gerekçesi; dayanılan precondition'ın gereksinimde yazılı olması |
+| KOD-20 | Veri akışı analizi, derleyici uyarıları | Bilerek kullanılmayan parametre ya da atamanın gerekçesi |
+| KOD-23, KOD-24 | Çağrı grafiğinden stack analizi; WCET analiz aracı ya da hedefte ölçüm | Fonksiyon pointer'ı ve kesme yükü varsayımları; analizin hangi kod sürümüne ait olduğu |
+| KOD-25, KOD-26 | Data race ve kilit analizi yapan statik analiz | Korumanın tasarımda seçilen yöntemle aynı olması; aracın görmediği donanım paylaşımı |
 
 Araç raporunu gözden geçirmek yanlış alarmı ayıklar, ama aracın atladığı ihlali göstermez. Bir
 maddeyi yalnızca aracın "ihlal yok" sonucuna dayanarak işaretliyor ve kodu o konuda ayrıca
@@ -229,7 +229,7 @@ KOD-12, o eşlemede gözden geçirmeye bırakılan kuralları karşılar.
 |---|---|---|
 | Gereksinimdeki hata ya da sınır durumu kodda yok | Kodun olağan yol düşünülerek yazılması; gereksinimin gürbüzlük (robustness) cümlesinin atlanması | KOD-01 |
 | Sınır karşılaştırmasında bir birimlik kayma (`>` yerine `>=`) | Gereksinimdeki "aşarsa" ile "ulaşırsa" ayrımının gözden kaçması | KOD-02 |
-| Gereksinimde olmayan bakım kipi ya da hata ayıklama çıktısı | Geliştirme sırasında eklenen yardımcı kodun temizlenmemesi | KOD-03 |
+| Gereksinimde olmayan bakım modu ya da hata ayıklama çıktısı | Geliştirme sırasında eklenen yardımcı kodun temizlenmemesi | KOD-03 |
 | Bastırma yorumu sapma kaydına bağlı değil ya da kayıt başka bir yer için onaylı | Uyarının takvim baskısıyla susturulması | KOD-13 |
 | İz etiketi silinmiş ya da taşınmış bir gereksinimi anıyor | Gereksinim değişince koddaki etiketin güncellenmemesi | KOD-14 |
 | Ara sonuçta taşma ya da örtük işaretli-işaretsiz dönüşüm | Tipin girdi aralığına göre değil alışkanlıkla seçilmesi | KOD-17 |
@@ -241,7 +241,7 @@ KOD-12, o eşlemede gözden geçirmeye bırakılan kuralları karşılar.
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
 | "Sıfıra bölme olabilir." | KOD-01, KOD-17: `sicaklik.c` içindeki `ortalama_sicaklik()`, `ornek_sayisi` sıfırken bölme yapıyor (C'de tanımsız davranış); LLR-73-2 bu durumda son geçerli değerin korunmasını ve sonucun geçersiz işaretlenmesini istiyor. Sıfır durumu ayrı dalda ele alınmalı. |
-| "Standart ihlali var." | KOD-13: `nav_filtre.c` satır 212'deki tamsayıdan pointer'a dönüşüm (MISRA C:2012 K 11.4) için bastırma yorumu SAP-011'i anıyor; SAP-011'in kapsamı yalnızca `donanim_yazmac.h` içindeki register makroları. Dönüşüm o dosyadaki bir makroya taşınmalı ya da bu yer için ayrı bir sapma kaydı açılıp onaylanmalı. |
+| "Standart ihlali var." | KOD-13: `nav_filtre.c` satır 212'deki tam sayıdan pointer'a dönüşüm (MISRA C:2012 K 11.4) için bastırma yorumu SAP-011'i anıyor; SAP-011'in kapsamı yalnızca `donanim_yazmac.h` içindeki register makroları. Dönüşüm o dosyadaki bir makroya taşınmalı ya da bu yer için ayrı bir sapma kaydı açılıp onaylanmalı. |
 | "İz eksik." | KOD-15: LLR-41-3 gereksinim aracında "kodlandı" durumunda, ama `yakit_` önekli bileşende bu kimliği anan iz etiketi yok. Gerçekleyen fonksiyon etiketlenmeli ya da gereksinimin durumu düzeltilmeli. |
 
 İyi bulgu madde numarasını, yeri (dosya, fonksiyon, satır), gözlemi ve dayanağı (gereksinim

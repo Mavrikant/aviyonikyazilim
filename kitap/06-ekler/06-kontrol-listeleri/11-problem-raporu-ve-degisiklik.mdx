@@ -19,7 +19,7 @@ faaliyetleridir (§7.2.3–§7.2.5) ve Tablo A-8'in üçüncü hedefine kanıt �
 
 Kurulun üyelerini SCMP belirler; çoğu projede yazılım lideri, doğrulama lideri ve
 konfigürasyon yönetimi sorumlusu bulunur, emniyet etkisi olabilecek raporda sistem emniyet
-temsilcisi, süreç uygunsuzluğunda kalite güvencesi (quality assurance) katılır. Üç an,
+temsilcisi, süreç uygunsuzluğunda kalite güvencesi (quality assurance) katılır. Bu üç an,
 [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#problem-raporlama)
 bölümündeki durum akışının geçişlerine denk gelir: Açık → Analizde, Analizde → Düzeltmede
 (ya da Reddedildi) ve Doğrulamada → Kapalı. Etki analizinin eksenleri
@@ -45,7 +45,7 @@ Kurul toplantısından ya da tek başına verilecek karardan önce şunlar sağl
 
 - [ ] Gündemdeki raporlar numaralarıyla listelenmiş ve kurul üyelerine toplantıdan önce
       dağıtılmış.
-- [ ] Etkilenen öğe, SCMP'nin problem raporunu zorunlu kıldığı ana (genellikle ilk baseline) ulaşmış; baseline öncesindeki bulgu bu listeyle değil gözden geçirme kaydıyla
+- [ ] Etkilenen öğe, SCMP'nin problem raporunu zorunlu kıldığı noktaya (genellikle ilk baseline) ulaşmış; baseline öncesindeki bulgu bu listeyle değil gözden geçirme kaydıyla
       kapanır.
 - [ ] Oy hakkı olan üyeler toplanmış; emniyet etkisi işaretli rapor için sistem emniyet
       temsilcisi çağrılmış.
@@ -57,7 +57,7 @@ Kurul toplantısından ya da tek başına verilecek karardan önce şunlar sağl
 
 ## Kontrol listesi
 
-Her madde "Evet" yanıtı istenen durum olan bir sorudur; "Hayır" yanıtı rapora işlenen bir
+Her madde bir sorudur ve istenen yanıt "Evet"tir; "Hayır" yanıtı rapora işlenen bir
 bulgudur.
 
 <ListeIndir dosya="problem-raporu-ve-degisiklik" baslik="Problem Raporu Kontrol Listesi" />
@@ -65,11 +65,11 @@ bulgudur.
 ### Açılış: raporun içeriği
 
 - [ ] **PRD-01** Rapor, sorunun görüldüğü konfigürasyon öğesini sürümüyle ya da süreç
-      faaliyetini adıyla tanımlıyor mu? Örneğin "son derleme" yerine derleme kimliği ve test
+      faaliyetini adıyla tanımlıyor mu? Örneğin "son build" yerine build kimliği ve test
       düzeneği yazılmış. *(A–D · §11.17.a)*
 - [ ] **PRD-02** Tanım, gözlenen ve beklenen davranışı ayrı ayrı veriyor ve sorunu yeniden
       üretmeye yetecek adımları ya da koşulları içeriyor mu? *(A–D · §11.17.c)*
-- [ ] **PRD-03** Tanım, sorunun görüldüğü uçuş evresini ya da işletim kipini, onu tetikleyen
+- [ ] **PRD-03** Tanım, sorunun görüldüğü uçuş evresini ya da işletim modunu, onu tetikleyen
       girdiyi ve etkilenen çıktıyı ya da göstergeyi yazıyor mu? Örneğin emniyet sorumlusu
       etkiyi, raporu açana sormadan sınıflandırabiliyor. *(A–D · §11.17.c)*
 - [ ] **PRD-04** Raporun türü (yazılımın anormal davranışı, yaşam döngüsü verisinde kusur,
@@ -149,7 +149,7 @@ bulgudur.
       onayından sonra yapılmış ve fark onaylanan sınırın dışına taşmıyor mu? Örneğin dosya
       açılmışken yapılan küçük bir iyileştirme farkta görünmüyor. *(A–D · §7.2.3.c, §7.2.4.a)*
 - [ ] **PRD-25** Sorunu ortaya çıkaran test ya da gözden geçirme ile kararda belirlenen
-      regresyon testleri, değişikliği içeren derlemeye karşı yinelenmiş ve sonuçlar o derlemenin
+      regresyon testleri, değişikliği içeren build üzerinde yinelenmiş ve sonuçlar o build'in
       kimliğiyle kaydedilmiş mi? *(A–D · §6.2.d)*
 - [ ] **PRD-26** Değişen her veri (gereksinim, tasarım, kod, test case), seviyenin o veri için
       istediği gözden geçirme ve analizlerden yeniden geçirilmiş ve kayıtları rapora bağlanmış
@@ -188,7 +188,7 @@ biçimde gözden geçirilmeden kabul ediliyorsa, o aracın kalifikasyonu sorusu 
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| Rapor yalnızca "test başarısız" diyor; derleme kimliği ve beklenen davranış yok | Rapor koşu sırasında aceleyle açılmış; araçta zorunlu alan yok | PRD-01, PRD-02 |
+| Rapor yalnızca "test başarısız" diyor; build kimliği ve beklenen davranış yok | Rapor koşu sırasında aceleyle açılmış; araçta zorunlu alan yok | PRD-01, PRD-02 |
 | Gereksinim hatası kod yamasıyla kapatılmış; gereksinim eski hâlinde | Kök neden sorulmadan en kısa düzeltme seçilmiş | PRD-06, PRD-19 |
 | Etki analizi yalnızca değişen dosyayı listeliyor; geçersiz kalan test sonuçları ve analizler yok | Analiz "ne değişecek" sorusuyla yapılmış, "hangi kanıt geçersiz kalacak" sorusuyla değil | PRD-13, PRD-15 |
 | Emniyet etkisi olabilecek rapor sistem ekibine danışılmadan karara bağlanmış | Sistem süreçlerine geri bildirim yolu SCMP'de tanımsız | PRD-07, PRD-10 |

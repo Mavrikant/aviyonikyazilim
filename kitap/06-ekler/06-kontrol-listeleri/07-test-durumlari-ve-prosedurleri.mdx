@@ -1,14 +1,14 @@
 ---
 title: "Test Case ve Prosedürü Kontrol Listesi"
-sidebar_label: "Test durumları ve prosedürleri"
+sidebar_label: "Test case'ler ve prosedürleri"
 sidebar_position: 7
-description: "Test case'ler ve prosedürlerinin peer review için kontrol listesi: gereksinim izi, normal aralık, gürbüzlük, beklenen sonuç ve test ortamı."
+description: "Test case'lerin ve prosedürlerinin peer review'su için kontrol listesi: gereksinim izi, normal aralık, gürbüzlük, beklenen sonuç ve test ortamı."
 ---
 
 import ListeIndir from '@site/src/components/KontrolListesi';
 
 Bu liste, test case'lerin ve test prosedürlerinin (test procedure) kredi amaçlı
-(for-credit) koşudan önce yapılan peer review içindir. Gözden geçiren,
+(for-credit) koşudan önce yapılan peer review'su içindir. Gözden geçiren,
 testleri yazmamış bir doğrulama mühendisidir ve üç şeye bakar: testler gereksinimden mi
 türetilmiş, normal aralığı ve gürbüzlüğü kapsıyor mu, prosedür başka biri tarafından aynı
 sonuçla koşulabilir mi? Gözden geçirilen veri, yazılım doğrulama durumları ve prosedürleridir
@@ -81,7 +81,7 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
 - [ ] **TDP-05** Geçerli aralığın her sınır değeri (boundary value), kendisi ve hemen içindeki
       değerle sınanıyor mu? Örneğin 0–350 knot için 0, 1, 349 ve 350; kayan noktalı girdide
       "hemen içi" gereksinimdeki çözünürlükle belirlenmiş. *(A–D · §6.4.2.1.a)*
-- [ ] **TDP-06** Filtre, integratör ve oran sınırlayıcı gibi zamana bağlı işlevler tek çağrıyla
+- [ ] **TDP-06** Filtre, integratör ve rate limiter gibi zamana bağlı işlevler tek çağrıyla
       değil, davranışın oturduğunu gösterecek sayıda çevrimle sınanıyor mu? Örneğin bir
       filtrenin zaman sabiti çıkışın yerleşme eğrisi üzerinden gözleniyor. *(A–D · §6.4.2.1.b)*
 - [ ] **TDP-07** Gereksinimde tanımlı her geçerli durum geçişi en az bir test case'te
@@ -93,7 +93,7 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
 - [ ] **TDP-09** Davranışı birden çok girdinin birlikte aldığı değerlere bağlı gereksinimlerde,
       gereksinimin ayrı sonuç tanımladığı her geçerli girdi birleşimi en az bir test case'te
       deneniyor mu? Örneğin hıza ve weight-on-wheels bilgisine bağlı
-      bir kip seçiminde yerde düşük hız, yerde yüksek hız ve havada durumlarının her biri için
+      bir mod seçiminde yerde düşük hız, yerde yüksek hız ve havada durumlarının her biri için
       test case var. *(A–D · §6.4.2.1)*
 
 ### Gürbüzlük
@@ -111,15 +111,15 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
 - [ ] **TDP-13** Döngü sayısı çalışma anında hesaplanan döngülerde, hesaplanan değeri sıfıra,
       negatife ya da dizi boyunu aşan bir değere zorlayan test case var mı?
       *(A–D · §6.4.2.2.d)*
-- [ ] **TDP-14** Çerçeve süresi (frame time) aşıldığında devreye giren koruma bir test case'te
+- [ ] **TDP-14** Frame süresi aşıldığında devreye giren koruma bir test case'te
       bilerek tetikleniyor ve gereksinimdeki tepki gözleniyor mu? Örneğin watchdog timer'ı ya da çerçeve taşma sayacı. *(A–D · §6.4.2.2.e)*
 - [ ] **TDP-15** Zamana bağlı işlevlerin aritmetik taşma koruması (doyum, sınırlama, sayaç
       sarması), girdi uzun süre uç değerde tutularak sınanıyor mu? *(A–D · §6.4.2.2.f)*
 - [ ] **TDP-16** Gereksinimin yasakladığı her durum geçişi için o geçişi zorlayan bir uyarım
       verilip yazılımın gereksinimdeki tepkiyi verdiği gösteriliyor mu? Örneğin havadayken
-      bakım kipine geçme komutu gönderiliyor; kipin değişmediği ve gereksinimdeki uyarının
+      bakım moduna geçme komutu gönderiliyor; modun değişmediği ve gereksinimdeki uyarının
       üretildiği gözleniyor. *(A–D · §6.4.2.2.g)*
-- [ ] **TDP-17** Her gürbüzlük test case'in beklenen tepkisi bir gereksinimde yazılı mı;
+- [ ] **TDP-17** Her gürbüzlük test case'inin beklenen tepkisi bir gereksinimde yazılı mı;
       yazılı olmayan tepki, test yazarınca seçilmek yerine gereksinim eksikliği olarak
       bildirilmiş mi? *(A–D · §6.4.2)*
 
@@ -158,19 +158,19 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
       oluşturan ya da hata enjeksiyonuyla (fault injection) üreten bir test case var mı?
       Örneğin "sensör kopukluğunu BIT iki çevrimde bildirir" gereksinimi, yazılımdaki arıza
       bayrağı elle kurularak değil, sensör hattı ayrılarak sınanıyor. *(A–D · §6.4.3.a)*
-- [ ] **TDP-25** Yürütme süresi, iş çıkarma (throughput) ve stack payı gibi zamanlama ve kaynak
+- [ ] **TDP-25** Yürütme süresi, throughput ve stack payı gibi zamanlama ve kaynak
       kullanımı gereksinimleri hedefte ölçüm yapan test case'lerle sınanıyor mu ve ölçüm
       yöntemi prosedürde yazılı mı? Örneğin zaman damgasının kaynağı ve çözünürlüğü ile
       ölçümün yapıldığı en kötü yük senaryosu belirtilmiş. *(A–D · §6.4.3.a)*
 - [ ] **TDP-26** Hedef bilgisayarla uyumu göstermek için seçilen testlerin prosedürleri,
-      tümleşik hedef donanımda koşacak biçimde mi yazılmış? *(A–D · §6.4.1.a)*
-- [ ] **TDP-27** Test emülatörde ya da ana bilgisayar simülasyonunda koşacaksa, ortamın hedeften
+      entegre hedef donanımda koşacak biçimde mi yazılmış? *(A–D · §6.4.1.a)*
+- [ ] **TDP-27** Test emülatörde ya da host simülasyonunda koşacaksa, ortamın hedeften
       farkları ve bu farkların hata yakalamaya etkisi SVP'deki fark analizinde ele alınmış ve
       emülatörün ya da simülatörün kalifikasyon gereği değerlendirilmiş mi?
       *(A–D · §4.4.3)*
 - [ ] **TDP-28** Sınanan kod uçacak koddan farklıysa farklar prosedürde belirtilmiş ve
-      gerekçelendirilmiş mi? Örneğin donatılmış (instrumented) derleme, yer tutucu kod (stub)
-      ya da test kancası. *(A–D · §6.2.a)*
+      gerekçelendirilmiş mi? Örneğin instrumented build, stub
+      ya da test hook'u. *(A–D · §6.2.a)*
 
 ### Kredi koşusuna hazırlık
 
@@ -187,7 +187,7 @@ etiket maddenin geçerli olduğu seviyeleri ve dayanağını verir.
 |---|---|---|
 | TDP-01 | Gereksinim yönetim ya da iz aracı sorgusu: gereksinim bağlantısı olmayan test case, silinmiş gereksinime giden bağlantı | Bağlantının doğru gereksinime gittiği ve testin o gereksinimin hangi koşulunu sınadığı |
 | TDP-02 | Test yönetim aracı raporu: prosedüre bağlanmamış test case, hiçbir test case'e bağlanmamış prosedür | Prosedürün test case'i doğru uyguladığı (TDP-20) |
-| TDP-05, TDP-10 | Gereksinim veritabanındaki aralık özniteliklerinden sınır ve geçersiz değer listesi üreten script | Aralığın ve çözünürlüğün gereksinimde doğru yazıldığı; türün uç değerleri |
+| TDP-05, TDP-10 | Gereksinim veri tabanındaki aralık özniteliklerinden sınır ve geçersiz değer listesi üreten script | Aralığın ve çözünürlüğün gereksinimde doğru yazıldığı; türün uç değerleri |
 | TDP-08 | [MC/DC Test Seti Üretici](/araclar/dogrulama/mcdc-test-seti) gibi bağımsızlık çifti hesaplayan araç | Araca girilen ifadenin gereksinimdeki denklemle aynı olduğu |
 | TDP-19 | Test çerçevesinin beklenen ile gözlenen değeri karşılaştıran modülü | Toleransın gereksinimden geldiği; karşılaştırıcının kendisinin doğrulanmış olduğu |
 | TDP-22 | Sürüm kontrol sistemi ve checksum listesi | Prosedür metninin, script'in gerçekte yaptığını anlattığı |
@@ -202,7 +202,7 @@ bölümüne göre değerlendirilir. Sonuç karşılaştıran script'ler bu açı
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
 | Beklenen sonuç kodun ya da önceki koşunun çıktısından kopyalanmış | Test, kod yazıldıktan sonra koda bakılarak yazılmış | TDP-18 |
-| Gürbüzlük yalnızca aralık dışı değerden ibaret; başlatma, bozuk veri ve izinsiz geçiş sınanmamış | Gürbüzlük kategorileri SVP'de listelenmemiş; testler "mutlu yol"dan başlanarak yazılmış | TDP-11, TDP-12, TDP-16 |
+| Gürbüzlük yalnızca aralık dışı değerden ibaret; başlatma, bozuk veri ve izinsiz geçiş sınanmamış | Gürbüzlük kategorileri SVP'de listelenmemiş; testler "happy path"dan başlanarak yazılmış | TDP-11, TDP-12, TDP-16 |
 | Gürbüzlük testinin beklenen tepkisini test yazarı seçmiş | Gereksinim anormal girdide ne olacağını söylemiyor | TDP-17 |
 | Kayan noktalı girdide sınırın "hemen içi" gelişigüzel bir değerle sınanmış | Çözünürlük gereksinimde ya da SVP'de tanımlı değil | TDP-05 |
 | Prosedürdeki beklenen değer test case'tekinden farklı | Elle aktarım; mühendislik birimi ile ham verinin karışması | TDP-20 |
@@ -219,7 +219,7 @@ toplantıya dönmeden işe başlayabilmesi için yeterlidir.
 |---|---|
 | "Gürbüzlük testleri eksik." | "TDP-12: TD-ADC-031 … 035, SRD-210'un (statik basınç girişi) yalnızca aralık dışı değerlerini sınıyor; SSM'si 'arıza uyarısı' olan ve eşliği hatalı kelime için test case yok. SRD-210'un bu iki durum için tanımladığı 'son geçerli değeri üç çevrim tut' davranışı sınanmalı." |
 | "Beklenen sonuç yanlış." | "TDP-20: TP-NAV-12 adım 7'de beklenen değer 3200 LSB; TD-NAV-12'deki 100 knot, gereksinimdeki 0,0625 knot/LSB ölçeğiyle 1600 LSB olmalı. Prosedürde 0,03125 knot/LSB kullanılmış." |
-| "Prosedür anlaşılmıyor." | "TDP-21: TP-FCS-04 adım 3 'düzeneği uygun kipe alın' diyor; kip adı ve yapılandırma dosyası verilmemiş. Adım, SECI'deki düzenek kimliğini ve yapılandırma dosyasının sürümünü anmalı." |
+| "Prosedür anlaşılmıyor." | "TDP-21: TP-FCS-04 adım 3 'düzeneği uygun moda alın' diyor; mod adı ve yapılandırma dosyası verilmemiş. Adım, SECI'deki düzenek kimliğini ve yapılandırma dosyasının sürümünü anmalı." |
 
 ## Seviyeye göre uyarlama
 

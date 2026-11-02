@@ -45,16 +45,16 @@ kategorisi (control category) sütunu Seviye A, B, C ve D için sırayla okunur.
 | [Kodlama standardı](08-kodlama-standardi.mdx) | §11.8 | CC1 · CC1 · CC2 · – | Denetimde gösterilir |
 
 Seviye D'de beş plan yine beklenir, üç standart beklenmez: DO-178C Tablo A-1'deki yedi
-planlama hedefinden (objective) bu seviyede yalnızca #1 ve #4 aranır: yaşam döngüsü
-faaliyetlerinin tanımlanması ve ek hususların (additional considerations) ele alınması.
-Standartları çıktı olarak isteyen hedef #5 bunların arasında değildir. CC1, baseline
-(baseline), problem raporlama ve değişiklik onayı dahil tam konfigürasyon kontrolüdür; CC2
+planlama hedefinden (objective) bu seviyede yalnızca yaşam döngüsü faaliyetlerinin
+tanımlanması (#1) ve ek hususların (additional considerations) ele alınması (#4) aranır.
+Standartları çıktı olarak isteyen hedef #5 bunların arasında değildir. CC1, baseline,
+problem raporlama ve değişiklik onayı dâhil tam konfigürasyon kontrolüdür; CC2
 ise tanımlama, izlenebilirlik, değişiklikte kimliğin ve bütünlüğün korunması, yetkisiz
 değişikliğe karşı koruma, geri getirme ve saklamayla sınırlı daha hafif bir rejimdir
 (ayrıntısı
 [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx#kontrol-kategorileri-cc1-ve-cc2)
 bölümünde). Tablodaki kategoriler asgaridir; proje bir belgeyi daha sıkı kontrol etmeyi
-seçebilir, daha gevşek edemez.
+seçebilir, daha gevşek kontrol edemez.
 
 DO-331 uygulanan projede model standardı (software model standards, MB.11.23) dördüncü
 geliştirme standardıdır ve Tablo MB.A-1 #5'in çıktıları arasına girer. Bu sitede ayrı
@@ -104,7 +104,7 @@ izleyerek söz verilenin ne ölçüde yapıldığını ve nerede sapıldığın�
 setinin parçası değildir ama PSAC'ın karşılığı olarak baştan düşünülür. SDP gereksinim,
 tasarım ve kod kurallarını kendisi yazmaz, üç standarda atıf yapar. Doğrulama sırasında
 bulunan hatalar SVP'de tanımlı yoldan SCMP'nin problem raporlama akışına girer. SQAP ise
-PSAC dahil planların ve standartların gözden geçirildiğini ve süreçlerin onlara uyduğunu
+PSAC dâhil planların ve standartların gözden geçirildiğini ve süreçlerin onlara uyduğunu
 güvenceye alan faaliyetleri tanımlar (Tablo A-9 #1–#3); şekilde ayrı durması bu yüzdendir.
 
 Her ok bir tutarlılık yükümlülüğüdür: bir belgenin söylediği şeyin ötekinde karşılığı
@@ -118,7 +118,7 @@ bunları tekrarlamaz; aşağıdaki açıklamalar hepsi için geçerlidir.
 
 - **Belge kimliği ve kapak.** Belge adı, numarası, sürümü, yayım tarihi ve ait olduğu proje
   ya da yazılım parçası. Numara ve sürüm SCMP'deki adlandırma ve sürümleme kuralına uyar
-  (SCMP'nin kendisi dahil). Kapaktan belgenin konfigürasyon yönetimi altında olduğu ve hangi
+  (SCMP'nin kendisi dâhil). Kapaktan belgenin konfigürasyon yönetimi altında olduğu ve hangi
   durumda bulunduğu (taslak, gözden geçirmede, yayımlanmış) anlaşılmalıdır.
 - **Onay sayfası.** Yazar, gözden geçiren, onaylayan ve kalite güvencesi; her biri için ad,
   rol ve tarih. Islak imza şart değildir: belge yönetim aracındaki elektronik onay kaydı da
@@ -192,7 +192,7 @@ farklı bir dağılım seçebilir, ama seçim plan setinde bir kez yapılmalıd�
 | Kalite güvencesinin yetkisi ve bağımsızlığı | SQAP | PSAC (organizasyon) |
 | Araç envanteri | SDP (geliştirme), SVP (doğrulama), SCMP (konfigürasyon yönetimi) | PSAC (kalifikasyon kararı ve TQL), SECI (sürümler) |
 | Yaşam döngüsü ortamının kontrolü | SCMP | SDP, SVP (ortam tanımı) |
-| Derleyici, linker ve yükleyici: seçenekler / varsayımlar | SDP (seçenekler) / SVP (varsayımlar) | Kodlama standardı (dil ve derleyici kuralları) |
+| Derleyici, linker ve loader: seçenekler / varsayımlar | SDP (seçenekler) / SVP (varsayımlar) | Kodlama standardı (dil ve derleyici kuralları) |
 | Problem raporlama (bulgu–problem raporu sınırı, alanlar, durum akışı) ve değişiklik kontrolü | SCMP | SVP (test hatası → problem raporu), SQAP (izleme), PSAC (açık problem raporu yaklaşımı) |
 | Baseline'lar | SCMP | SDP ve SVP geçiş kriterleri |
 | Standartlardan sapma (deviation) | İlgili standart (ayrıntısı kodlama standardında) | SQAP (sapma kayıtlarının denetimi) |
@@ -211,8 +211,8 @@ Tablodaki kısaltma ve terimler: SECI yazılım yaşam döngüsü ortam konfigü
 (Software Life Cycle Environment Configuration Index), PDS önceden geliştirilmiş yazılım
 (previously developed software), COTS ticari hazır yazılım (commercial off-the-shelf), PDI
 parametre verisi öğesi (parameter data item) demektir; "devre dışı kod", devre dışı
-bırakılmış kodun (deactivated code) kısa yazımıdır. Linker ve yükleyici
-(loader) derleme zincirinin parçalarıdır. Sahada yüklenebilir yazılım (field-loadable
+bırakılmış kodun (deactivated code) kısa yazımıdır. Linker ve loader
+build zincirinin parçalarıdır. Sahada yüklenebilir yazılım (field-loadable
 software), donanım uçaktan sökülmeden yüklenebilen yazılımdır. Geçiş kriteri (transition
 criteria), bir sürece girmenin kayıtla denetlenebilen koşuludur
 ([Ek A: Örnek Geçiş Kriterleri](../01-ek-a-ornek-gecis-kriterleri.mdx)); yazılım
@@ -283,7 +283,7 @@ hangisi olursa olsun, proje sonunda SAS'ta özetlenir.
 - **Tek terim listesi, her araç tek yerde.** Terim listesi plan setinde tek yerde tutulur,
   öteki belgeler ona atıf yapar. Her araç rolüne göre tek planda tanımlanır (geliştirme
   aracı SDP'de, doğrulama aracı SVP'de, konfigürasyon yönetimi aracı SCMP'de); PSAC
-  kalifikasyon kararını ve TQL'yi verir. Sürümün esas kaydı SECI'dir: bir plan sürüm
+  kalifikasyon kararını ve TQL'i verir. Sürümün esas kaydı SECI'dir: bir plan sürüm
   anıyorsa SECI'deki sürümle aynı olmalıdır. Aynı aracın iki planda farklı sürümle anılması
   SOI-1'in bilinen tutarsızlık bulgularındandır.
 - **Kurum süreçlerine atıf varsa fark yazılır.** İnce proje planı, kurum sürecinin hangi

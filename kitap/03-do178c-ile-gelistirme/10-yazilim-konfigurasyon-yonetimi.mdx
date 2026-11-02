@@ -17,7 +17,7 @@ Aviyonik projelerde yazılım yaşam döngüsü verisi (software life cycle data
 kısaca iş ürünü — birbirine bağlıdır. Bir gereksinim değiştiğinde bunun tasarıma, koda,
 testlere, gözden geçirme (review) kayıtlarına ve bazen sertifikasyon otoritesine
 (certification authority) sunulan veriye yansıması gerekir. Doğrulama kanıtı da belirli
-bir içeriğe aittir: bir test sonucu, koşulduğu derlemenin ve sınadığı gereksinim
+bir içeriğe aittir: bir test sonucu, koşulduğu build'in ve sınadığı gereksinim
 sürümünün kimliği bilinmiyorsa hiçbir şey kanıtlamaz. Konfigürasyon yönetiminin koruduğu
 şey bu yüzden dosya sürümleri değil, sertifikasyon kanıtının geçerliliğidir.
 
@@ -80,7 +80,7 @@ faaliyetler bütünüdür. Pratikte en çok karşılaşılan faaliyetler şunlar
   etkilenen verinin tamamı güncellenir. Değişiklik gözden geçirmesi bu kararın
   dayanağını üretir ve sonucunu izler: problemin ya da önerilen değişikliğin sistem
   gereksinimlerine ve yaşam döngüsü verisine etkisi değerlendirilir, sistem süreçlerine
-  (sistem emniyet değerlendirmesi dahil) geri bildirim verilir, değişiklik onaylanır ya
+  (sistem emniyet değerlendirmesi dâhil) geri bildirim verilir, değişiklik onaylanır ya
   da reddedilir, onaylananın uygulandığı görülür ve karar etkilenen süreçlere iletilir.
   Çoğu projede bu değerlendirmeyi bir değişiklik kontrol kurulu (change control board)
   yapar; kurul standardın değil uygulamanın terimidir. İyi işleyen bir akış beş soruyu
@@ -93,7 +93,7 @@ faaliyetler bütünüdür. Pratikte en çok karşılaşılan faaliyetler şunlar
   sürümler bozulmaya ve yetkisiz değişikliğe karşı korunan bir ortamda saklanır; yıllar
   sonra bile aynı içerik geri getirilebilmelidir. Saklama süresini projenin tercihi
   değil uçuşa elverişlilik (airworthiness) gerekleri belirler; pratikte veri, ürün
-  serviste kaldığı sürece erişilebilir olmalıdır. Bu ufukta arşiv ortamı eskimeden
+  serviste kaldığı sürece erişilebilir olmalıdır. Bu sürede arşiv ortamı eskimeden
   yenilenir, kopyalar fiziksel olarak ayrı yerlerde tutulur ve geri getirme ara ara
   denenerek doğrulanır. Sürüm teslimi, bir öğenin kullanıma yetkili biçimde açılmasıdır:
   yazılım üretiminde yalnızca yayımlanmış öğeler kullanılır, yayımlama yetkisinin kimde
@@ -122,7 +122,7 @@ faaliyetler bütünüdür. Pratikte en çok karşılaşılan faaliyetler şunlar
 Baseline, gözden geçirilip onaylanmış ve o andan sonra yalnızca değişiklik
 kontrolüyle değiştirilebilen bir konfigürasyon öğeleri kümesidir. İşlevi, sonraki işe
 sabit bir zemin vermektir: "tasarım hangi gereksinim sürümüne göre yapıldı", "bu test
-hangi derlemeye karşı koşuldu" soruları ancak bir baseline kimliğiyle cevaplanır.
+hangi build'e karşı koşuldu" soruları ancak bir baseline kimliğiyle cevaplanır.
 
 DO-178C iki şeyi şart koşar: sertifikasyon kredisi alınacak konfigürasyon öğeleri baseline'a alınır ve yazılım ürünü için, yazılım konfigürasyon indeksinde tanımlanan bir
 ürün baseline'ı kurulur. Ara baseline'ların sayısını ve adını ise belirlemez; bunlar
@@ -134,7 +134,7 @@ SCMP'de, yaşam döngüsünün geçiş kriterleriyle birlikte tanımlanır. Yayg
 | Planlama | Planlar ve standartlar | Geliştirme faaliyetlerinin başlaması |
 | Gereksinim | Yüksek seviyeli gereksinimler ve iz verisi (trace data) | Tasarım, test case'lerin geliştirilmesi |
 | Tasarım | Yazılım mimarisi ve düşük seviyeli gereksinimler | Kodlama |
-| Kod ve derleme | Kaynak kod, build script'leri, çalıştırılabilir nesne kodu | Kredi alınacak test koşuları |
+| Kod ve build | Kaynak kod, build script'leri, çalıştırılabilir nesne kodu | Kredi alınacak test koşuları |
 | Doğrulama | Test case'ler ve test prosedürleri | Test koşuları ve kapsam analizi |
 | Ürün | Yazılım konfigürasyon indeksinde tanımlanan sürümün tamamı | Otoriteye sunum, üretim ve yükleme |
 
@@ -161,7 +161,7 @@ gözden geçirme kaydında izlenip kapatılır; sınırın tam yeri SCMP'de yaz�
 DO-178C yukarıdaki faaliyetlerin tümünü her veri öğesine aynı sıkılıkta uygulamaz. İki
 kontrol kategorisi (control category) tanımlanır; ikincisinin faaliyetleri birincinin alt
 kümesidir. Birinci kategori (CC1) tam kontroldür: baseline, problem raporlama,
-değişikliğin kaydı ve onayı, değişiklik gözden geçirmesi ve durum muhasebesi dahil tüm
+değişikliğin kaydı ve onayı, değişiklik gözden geçirmesi ve durum muhasebesi dâhil tüm
 faaliyetler uygulanır. İkinci kategori (CC2) daha hafif bir rejimdir: öğenin
 tanımlanması, türetildiği öğeye izlenebilmesi, değişirken bütünlüğünün ve kimliğinin
 korunması, yetkisiz değişikliğe karşı korunması, geri getirilebilmesi ve saklanması
@@ -200,7 +200,7 @@ Standardın Ek A tablolarındaki dağılım şöyledir:
 Kaynak kod ile üç standart Seviye D'nin tablolarında çıktı olarak yer almaz; "uygulandığı
 her seviye" ifadesi bu yüzden kullanılmıştır. Tablodaki kategoriler asgaridir: proje bir
 veriyi standardın istediğinden daha sıkı kontrol etmeyi seçip bunu SCMP'ye yazabilir,
-daha gevşek edemez. İlk bakışta şaşırtan bir ayrıntı: problem raporlama CC1 veriye
+daha gevşek kontrol edemez. İlk bakışta şaşırtan bir ayrıntı: problem raporlama CC1 veriye
 uygulanan bir faaliyettir, problem raporunun kendisi ise CC2 veridir — bir raporu
 düzeltmek için ikinci bir rapor açılmaz.
 
@@ -213,7 +213,7 @@ parçasını oluşturan somut iş ürünleridir. Denetimlerde en sık masaya gel
 - **Yazılım konfigürasyon indeksi (SCI):** Teslim edilen yazılım sürümünün "malzeme
   listesi"dir. Çalıştırılabilir nesne kodunu ve varsa PDI dosyalarını, bunları üreten
   kaynak kod sürümlerini, ilgili yaşam döngüsü verisini, arşiv ve teslim ortamını,
-  derleme (build) ve yükleme talimatlarını ve çalıştırılabilir nesne kodunun bütünlük
+  build ve yükleme talimatlarını ve çalıştırılabilir nesne kodunun bütünlük
   denetim değerlerini tanımlar. Bir SCI okunduğunda o sürümün tam olarak nelerden
   oluştuğu ve nasıl yeniden üretileceği anlaşılabilmelidir. SCI, PSAC ve SAS ile
   birlikte otoriteye asgari olarak sunulan üç veriden biridir; diğer veriler talep
@@ -231,8 +231,8 @@ parçasını oluşturan somut iş ürünleridir. Denetimlerde en sık masaya gel
   alanları proje ekler. Raporun yaşam döngüsü ve sınıflandırma eksenleri
   [9. Yazılım Doğrulama](09-yazilim-dogrulama.mdx) bölümünde anlatılır; bu bölüm ayrı
   bir şema kurmaz. Sürüm tesliminde açık kalan raporlar FAA AC 20-189 ve EASA
-  AMC 20-189'un beklediği sınıflarla (önemli, işlevsel, süreç, yaşam döngüsü verisi)
-  sınıflandırılır; özetleri, işlevsel kısıtlar ve açık bırakma gerekçesi SAS'ta sunulur
+  AMC 20-189'un beklediği sınıflara (önemli, işlevsel, süreç, yaşam döngüsü verisi)
+  ayrılır; özetleri, işlevsel kısıtlar ve açık bırakma gerekçesi SAS'ta sunulur
   (bkz. [12. Sertifikasyon İrtibatı](12-sertifikasyon-irtibati.mdx)). Birçok kuruluş
   aynı listeyi SCI'ye ya da sürüm notuna da koyar; bu durumda listeler elle değil, aynı
   tarihte tek kaynaktan üretilmelidir.
@@ -262,7 +262,7 @@ Aşağıdaki tablo, bu ürünlerin cevapladığı temel soruları ve otoriteye n
 | Konfigürasyon yönetimi kayıtları | Süreç gerçekten işletildi mi? | Talep üzerine, çoğunlukla denetimde gösterilir |
 
 Deneyimin gösterdiği önemli bir nokta: SCI ve SECI, teslim gününe bırakılırsa eksik ve
-hatalı çıkar. En sağlıklı yaklaşım, bu indeksleri mümkün olduğunca derleme ve sürüm
+hatalı çıkar. En sağlıklı yaklaşım, bu indeksleri mümkün olduğunca build ve sürüm
 altyapısından otomatik üretmek, elle tutulan kısmı en aza indirmektir.
 
 ## Değişiklik etki analizi
@@ -281,7 +281,7 @@ en azından şu eksenleri tarar:
 - **Gereksinim ekseni:** Değişiklik hangi yüksek ve düşük seviyeli gereksinimleri
   etkiliyor? İz verisi bu taramanın ana aracıdır.
 - **Tasarım ve mimari ekseni:** Yazılım mimarisi, arayüzler, zamanlama bütçeleri veya
-  bellek kullanımı etkileniyor mu? Yazılım bölümlemesi varsa bölümler arası izolasyon
+  bellek kullanımı etkileniyor mu? Yazılım bölümlemesi varsa partition'lar arası izolasyon
   varsayımları bozuluyor mu?
 - **Kod ekseni:** Değişen fonksiyonlar, bunları çağıran ve bunlardan etkilenen kod
   bölgeleri, paylaşılan veri yapıları ve derleme seçenekleri.
@@ -340,7 +340,7 @@ gönderir. Zincir şöyle işler:
    doğrulama kapsamını karara bağlar: değişen gereksinimin testleri ile aynı görevdeki
    diğer izleme işlevlerinin regresyon testleri.
 4. **Uygulama ve yeniden doğrulama.** Her öğe değiştirilir, gözden geçirilir ve yeni
-   sürümüyle kaydedilir; testler 2.2.0 derlemesine karşı koşulur.
+   sürümüyle kaydedilir; testler 2.2.0 build'ine karşı koşulur.
 5. **Kapanış.** Etki analizindeki her kalemin kapandığı, yani onaylanan değişikliğin
    eksiksiz uygulandığı teyit edilir; yeni baseline kurulur, talep kapanış
    kanıtlarıyla birlikte kapatılır.
@@ -379,7 +379,7 @@ yaklaşımından doğar. Sahada en sık karşılaşılan tuzaklar şunlardır:
   gelir. Sürüm kontrolü ilk günden işlemeli, resmî değişiklik kontrolü ise gözden
   geçirilmiş ilk iş ürününün baseline'ıyla devreye girmelidir.
 - **Kontrolsüz geliştirme ve doğrulama ortamları.** Derleyici sürümü geliştiricinin
-  makinesine göre değişiyorsa aynı kaynak koddan farklı nesne kodlar üretiliyor demektir.
+  makinesine göre değişiyorsa aynı kaynak koddan farklı nesne kodu üretiliyor demektir.
   Test bilgisayarındaki araç güncellemesi kayıt altına alınmamışsa geçmiş test sonuçları
   savunulamaz hâle gelir. Ortam da bir konfigürasyon öğesidir; SECI bu yüzden vardır.
 - **Eksik veya gayriresmî problem raporu.** "Küçük hataları e-postayla hallettik" cümlesi

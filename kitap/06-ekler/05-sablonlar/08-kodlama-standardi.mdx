@@ -117,24 +117,24 @@ kılavuzundaki karşılığıyla bir tabloda listelenir.
 
 **Verilecek kararlar:**
 
-- Hangi dil sürümü ve baskısı esas alınıyor; derleyici hangi kipte çağrılıyor?
+- Hangi dil sürümü ve baskısı esas alınıyor; derleyici hangi modda çağrılıyor?
 - Gerçeklemeye bağlı hangi davranışlara dayanılıyor; tablo nerede tutuluyor?
 - Hangi derleyici eklentileri (kesme anahtar sözcüğü, bölüm özniteliği) serbest?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| KS-01 | Kod C99 (ISO/IEC 9899:1999) ile yazılır; derleyici eklentili lehçe kipinde değil, standart kipte çağrılır | Dilin anlamı tek başvuruya bağlanır | Build script'i, derleme kaydı |
+| KS-01 | Kod C99 (ISO/IEC 9899:1999) ile yazılır; derleyici eklentili lehçe modunda değil, standart modda çağrılır | Dilin anlamı tek başvuruya bağlanır | Build script'i, build kaydı |
 | KS-02 | Tanımsız davranışa dayanılmaz; dayanılan gerçeklemeye bağlı davranış tabloya yazılır (K 1.3, Y 1.1) | Davranış derleyici ya da seçenekle değişmemeli | Statik analiz, değer aralığı analizi; tablo gözden geçirmede |
 | KS-03 | Derleyici eklentileri yalnızca `platform.h` içindeki makrolarla kullanılır (K 1.2) | Eklentiler tek yerde görünür | Statik analiz, metin araması |
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Kod ANSI C ile yazılır." | "Kod ISO/IEC 9899:1999 (C99) ile yazılır; `<derleyici ve sürümü>` SDP'deki seçeneklerle standart kipte çağrılır. Dayanılan gerçeklemeye bağlı davranışlar, derleyici kılavuzundaki bölümüyle 2.2'deki tabloda listelenir." |
+| "Kod ANSI C ile yazılır." | "Kod ISO/IEC 9899:1999 (C99) ile yazılır; `<derleyici ve sürümü>` SDP'deki seçeneklerle standart modda çağrılır. Dayanılan gerçeklemeye bağlı davranışlar, derleyici kılavuzundaki bölümüyle 2.2'deki tabloda listelenir." |
 
 ### 3. Temel kural kümesi
 
 C projelerinin çoğu kuralların gövdesini [MISRA C](/kutuphane/standartlar-kilavuzlar/misra-c)'den
-alır. Standart, esas alınan sürümü ekleri ve teknik düzeltmeleriyle adıyla yazar; kural
+alır. Standart, esas alınan sürümü ekleri ve teknik düzeltmeleriyle birlikte adıyla yazar; kural
 numaraları sürüme bağlı olduğundan araç yapılandırması ve sapma kayıtları aynı
 numaralandırmayı kullanır, aracın o sürümü desteklediği planlamada kontrol edilir. MISRA
 kuralları üç sınıftır: zorunlu (mandatory) kurala sapma yapılmaz, gerekli (required) kurala
@@ -165,19 +165,19 @@ karşılık gelir; uygulanmaz sayılan her tavsiye kuralı da gerekçesiyle bura
 ### 4. Sunum kuralları
 
 Satır uzunluğu, girinti, süslü parantez, boş satır ve dosya içi sıra gözden geçirme hızını
-belirler. En iyi yol, sunumu depodaki yapılandırmasıyla bir biçimlendiriciye (formatter)
-üretip uyumu "fark yok" diye denetlemektir. DO-248C'ye göre (FAQ #75) standarda uyum bütün
+belirler. En iyi yol, sunumu depodaki yapılandırmasıyla bir formatter'a
+ürettirip uyumu "fark yok" diye denetlemektir. DO-248C'ye göre (FAQ #75) standarda uyum bütün
 kodda gösterilir; otoritenin daha dar denetimi kabul edebileceği tek alan sunum kurallarıdır.
 Süslü parantez zorunluluğu (K 15.6) gibi davranışa dokunan kurallar 7. bölüme yazılır.
 
 **Verilecek kararlar:**
 
 - Satır uzunluğu, girinti, süslü parantez ve dosya içi sıra kuralları nedir?
-- Biçimlendiricinin adı, sürümü ve yapılandırma dosyası nerede; ne zaman koşuluyor?
+- Formatter'ın adı, sürümü ve yapılandırma dosyası nerede; ne zaman koşuluyor?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| KS-04 | Biçim, depodaki `<biçimlendirici>` yapılandırmasıyla üretilir: 4 boşluk girinti, satır en çok 100 karakter, sekme yok | Sunumun elle denetimi kalkar | Birleştirmede biçimlendirici farkı sıfır |
+| KS-04 | Biçim, depodaki `<formatter>` yapılandırmasıyla üretilir: 4 boşluk girinti, satır en çok 100 karakter, sekme yok | Sunumun elle denetimi kalkar | Birleştirmede formatter farkı sıfır |
 
 ### 5. Belgeleme kuralları
 
@@ -226,8 +226,8 @@ kapsamadığı bir konuda yazılır ve varsa karşılığı parantezde verilir.
 | KS-08 | Sayısal amaçlı temel tipler yerine `<stdint.h>` tipleri kullanılır (Y 4.6) | Genişlik ve işaret hedeften bağımsız olur | Statik analiz |
 | KS-09 | İşaretli ve işaretsiz işlenen aynı işlemde karıştırılmaz; dönüşüm açık ve aralığı denetlenmiş yapılır (K 10.4) | Örtük dönüşüm sessizce yanlış sonuç verir | Statik analiz, derleyici uyarısı |
 | KS-10 | Bileşenler arası veri arayüz fonksiyonlarıyla aktarılır; `extern` değişken yalnızca tasarımdaki global veri tablosundakiler için | Data coupling tasarımla sınırlı kalır | Linker sembol listesi ile tablonun karşılaştırılması |
-| KS-11 | Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4, bir karardaki koşul sayısı en çok 6 | Gözden geçirilebilirlik; MC/DC test sayısı | Metrik aracı, her derlemede |
-| KS-12 | Hata bilgisi döndüren her çağrının sonucu denetlenir; kasıtla kullanılmayan dönüş `(void)` ile işaretlenir (K 17.7, Y 4.7) | Hata sessizce yutulmaz | Statik analiz |
+| KS-11 | Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4, bir karardaki koşul sayısı en çok 6 | Gözden geçirilebilirlik; MC/DC test sayısı | Metrik aracı, her build'de |
+| KS-12 | Hata bilgisi döndüren her çağrının sonucu denetlenir; bilerek kullanılmayan dönüş `(void)` ile işaretlenir (K 17.7, Y 4.7) | Hata sessizce yutulmaz | Statik analiz |
 | KS-13 | Her `switch` `default`, her `if … else if` zinciri `else` ile biter; beklenmeyen dal hata işleyicisini çağırır (K 16.4, K 15.7) | Beklenmeyen değerde öngörülebilir davranış | Statik analiz; dalın kapsamı SVP'deki analizle |
 | KS-14 | Donanım bekleyen her döngü bir deneme sınırıyla biter; zaman aşımı çağırana bildirilir | Gürbüzlük; yürütme süresi sınırlı kalır | Gözden geçirme kontrol listesi |
 | KS-15 | Kesmeyle ya da başka görevle paylaşılan değişken ve bellek eşlemeli register `volatile` nitelenir | Derleyici register okumasını kaldıramaz | Gözden geçirme; global veri tablosu |
@@ -266,11 +266,11 @@ condition/decision coverage, MC/DC) için gereken test sayısını da sınırlar
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Fonksiyonlar gereksiz karmaşık olmamalıdır." | "Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4'tür; `<metrik aracı ve sürümü>` her derlemede ölçer, aşım sapma kaydı olmadan birleştirilmez." |
+| "Fonksiyonlar gereksiz karmaşık olmamalıdır." | "Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4'tür; `<metrik aracı ve sürümü>` her build'de ölçer, aşım sapma kaydı olmadan birleştirilmez." |
 
 **7.4 Savunmacı programlama ve hata işleme.** Savunmacı programlama (defensive
 programming), beklenmeyen girdi ya da durumda kodun öngörülebilir davranmasını sağlayan
-yapılardır ve gürbüzlükle (robustness) ilgilidir. DO-248C'nin açıklaması (FAQ #32) bunların
+yapıların kullanılmasıdır ve gürbüzlükle (robustness) ilgilidir. DO-248C'nin açıklaması (FAQ #32) bunların
 tasarım ve kodlama standartlarında ele alınabileceğini, anormal girdiye doğru tepkinin ise
 gereksinimlerde tanımlanacağını belirtir. Standart hangi savunmacı yapının zorunlu olduğunu
 söyler (KS-13, KS-14); tetiklendiğindeki davranış bir gereksinimde yazılıdır, hatalar tek
@@ -282,7 +282,7 @@ bir etiketle değil belgeli bir dayanakla açıklanmasını sağlar
 
 **7.5 Donanım erişimi ve paylaşılan veri.** Bellek eşlemeli register'lar ve kesme servis
 rutini (interrupt service routine, ISR) ile paylaşılan veri, derleyicinin optimizasyon
-(optimization) sırasında kodu "gereksiz" sayıp değiştirebildiği yerlerdir. Çok kelimelik
+sırasında kodu "gereksiz" sayıp değiştirebildiği yerlerdir. Çok kelimelik
 paylaşılan verinin tutarlı okunma yöntemi tasarım standardında seçilir. ARINC 429 kelimesini
 bit alanıyla eşleyen yapı da derlenir, ama alanların kelimedeki sırası derleyiciye bağlıdır.
 
@@ -333,9 +333,9 @@ aşırı yükleme, tip dönüşümü, istisna yönetimi, dinamik bellek yönetim
 ### 8. Derleyici ve araç kullanım kısıtları
 
 Derleme seçeneklerinin listesi SDP'de durur; derleyici ve sürümü SECI'de, seçeneklerin
-kullanıldığı derleme talimatları SCI'de kayıtlıdır. Standart o listenin kodun içinden
+kullanıldığı build talimatları SCI'de kayıtlıdır. Standart o listenin kodun içinden
 delinmemesini sağlar. Seviye A'da kaynak koda izlenemeyen nesne kodu ek doğrulama
-istediğinden, stack koruyucu gibi ek kod üreten seçenekler ve optimizasyon düzeyinin yerel
+istediğinden, stack protector gibi ek kod üreten seçenekler ve optimizasyon düzeyinin yerel
 olarak değiştirilmesi doğrudan iş yüküne dönüşür
 ([9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx#kaynak-koda-izlenemeyen-nesne-kodu)).
 Derleyicinin bilinen hata listesinde projeyi etkileyen yapılar burada yasaklanır. Kapsam
@@ -344,13 +344,13 @@ olmaması) da buraya eklenir (DO-248C, FAQ #42).
 
 **Verilecek kararlar:**
 
-- Uyarılar hata sayılıyor mu; tek bir uyarı hangi sözdizimiyle ve hangi kayıtla bastırılır?
+- Uyarılar hata sayılıyor mu; tek bir uyarı hangi söz dizimiyle ve hangi kayıtla bastırılır?
 - Ek kod üreten seçenekler açık mı; açıksa Seviye A'daki ek doğrulama nasıl planlandı?
 - Derleyici hata listesini kim izliyor; inline assembly nerede serbest?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| KS-18 | Derleme bütün uyarılar açık ve uyarılar hata sayılarak yapılır; bastırma yalnızca sapma kaydıyla | Uyarı, statik analizden önceki en ucuz denetimdir | Build script'i; derleme kaydında sıfır uyarı |
+| KS-18 | Derleme bütün uyarılar açık ve uyarılar hata sayılarak yapılır; bastırma yalnızca sapma kaydıyla | Uyarı, statik analizden önceki en ucuz denetimdir | Build script'i; build kaydında sıfır uyarı |
 | KS-19 | Optimizasyon düzeyini yerel olarak değiştiren pragma ve öznitelik kullanılmaz | Nesne kodu analizi tek seçenek kümesine dayanır | Statik analiz, metin araması |
 | KS-20 | Inline assembly yalnızca `cpu_` önekli modüllerde, tek amaçlı küçük fonksiyonlarda kullanılır (Y 4.3) | Assembly kod yalıtılır, gözden geçirilebilir kalır | Statik analiz, gözden geçirme |
 
@@ -373,7 +373,7 @@ da "yalnızca gözden geçirme" kararı bir eşleme tablosunda tutulur (MISRA'n�
 rehberindeki denetim planı, guideline enforcement plan); elle denetlenenler kontrol
 listesinde madde numarasıyla yer alır. Proje sonunda kural bazında uyum özeti çıkarılır.
 
-Bir kuralın uyumu yalnızca aracın "ihlal yok" sonucuna dayanıyor ve kod o kural için
+Bir kurala uyum yalnızca aracın "ihlal yok" sonucuna dayanıyor ve kod o kural için
 gözden geçirmede ayrıca denetlenmiyorsa araç, ihlali gözden kaçırabilecek bir doğrulama
 aracıdır: Ölçüt 3'e girer, TQL-5 kalifikasyonu gündeme gelir ve karar PSAC'ta yazılır
 ([13. bölüm](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)). Raporu
@@ -382,7 +382,7 @@ gözden geçirmek yalnızca yanlış alarmı ayıklar; aracın atladığı ihlal
 **Verilecek kararlar:**
 
 - Hangi araç, hangi sürüm; yapılandırma dosyası hangi konfigürasyon öğesi?
-- Araç ne zaman koşuluyor; yeni ihlal ya da kaydı olmayan bastırma birleştirmeyi durduruyor mu?
+- Araç ne zaman koşuluyor; yeni ihlal ya da kaydı olmayan bastırma merge'i durduruyor mu?
 - Araçla denetlenen her kuralda uyum kanıtı nedir: kalifiye aracın sonucu mu, kontrol
   listesiyle ek gözden geçirme mi; bu seçimi kural kural kim yapıyor?
 - Araçla tam denetlenemeyen kuralları kontrol listesinin hangi maddesi karşılıyor? Araçta
@@ -404,7 +404,7 @@ içeriğinin çoğunu hazır verir. Zorunlu kurallara sapma yapılmaz.
 |---|---|
 | Kural | MISRA C:2012 K 11.4 (3.2 ile gerekli sayıldı) |
 | Yer | `donanim_yazmac.h` içindeki register makroları ve açıldıkları yerler; makro dışındaki dönüşüm ayrı kayıt ister |
-| Gerekçe | Bellek eşlemeli register'a erişim, tamsayı adresten pointer üretmeyi gerektirir |
+| Gerekçe | Bellek eşlemeli register'a erişim, tam sayı adresten pointer üretmeyi gerektirir |
 | Emniyet etkisi değerlendirmesi | Yanlış adres yanlış donanım okuması doğurur; her adres donanım arayüz belgesine izlenir |
 | Alternatif önlem | Adresler tek dosyada; gözden geçirmede donanım belgesiyle karşılaştırılır; bellek haritası analizi |
 | Onaylayan | Yazılım teknik lideri |
@@ -422,7 +422,7 @@ denetler. Liste, kodun standarda uyum kanıtının (A-5 #4) parçasıdır; yazı
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Gerekli durumlarda kurallardan sapılabilir." | "Gerekli kurala sapma, SAP kaydı açılıp `<onaylayan rolü>` onaylamadan birleştirilmez; zorunlu kurallara sapma yapılmaz. Bastırma yorumu kaydın kimliğini taşır." |
+| "Gerekli durumlarda kurallardan sapılabilir." | "Gerekli kurala sapma, SAP kaydı açılıp `<onaylayan rolü>` onaylamadan merge edilmez; zorunlu kurallara sapma yapılmaz. Bastırma yorumu kaydın kimliğini taşır." |
 
 ### 11. Otomatik üretilen kod ve assembly
 
@@ -460,7 +460,7 @@ listesinde ayrıca yer alır
 | Standartlara uyum güvencesi (A-9 #3) | Kalite güvencesi, bağımsız | Kalite güvencesi, bağımsız | Hedef yok |
 | Kuralların desteklediği kapsam ölçütü | A: MC/DC; B: karar | Satır | Yapısal kapsam hedefi yok |
 
-**Seviye A, B ve C.** Kural seti çoğunlukla aynıdır. Seviye A'da kaynak koda izlenemeyen
+**Seviye A, B ve C.** Kural kümesi çoğunlukla aynıdır. Seviye A'da kaynak koda izlenemeyen
 nesne kodu temsilî örnekle analiz ediliyorsa, analiz proje kodunun standardın izin verdiği
 yapılarla sınırlı kaldığı iddiasına dayanır; bu iddianın kanıtı standart ve statik analizdir.
 Standarda yeni bir dil yapısı eklemek analizi yineletebilir. Seviye C'de standart CC2 ile
@@ -535,7 +535,7 @@ Bu eşleme bir başvuru aracıdır; DO-178C'nin ve eklerinin metninin yerine ge�
 | Yanlış alarm sapma diye açılmış ya da tersi | Ayrımın tanımlanmaması | 10.1'deki ayrım; yanlış alarm için kısa analiz kaydı |
 | Toplu, gerekçesiz sapmalar | Takvim baskısı, "eski kod" bahanesi | Emniyet etkisi ve alternatif önlemi zorunlu alan yapmak |
 | Kurallar "kaçınılmalıdır" diye yazılmış | Kılavuz dilinin kopyalanması | Her kuralı "uyar / uymaz" diye yanıtlanabilir yazmak |
-| Çevirici ve üretilen kod unutulmuş | Kapsamın yalnızca `.c` dosyalarıyla tanımlanması | 1.1 ve 11'de kapsamı açıkça yazmak |
+| Assembly ve üretilen kod unutulmuş | Kapsamın yalnızca `.c` dosyalarıyla tanımlanması | 1.1 ve 11'de kapsamı açıkça yazmak |
 
 ## Yayımlamadan önce
 

@@ -74,7 +74,7 @@ kitapta sürecin bütünü **sistem emniyet değerlendirme süreci (system safet
 process)** diye anılır. İkincisi, kılavuzun 1996 tarihli ilk sürümünde (ARP4761) uçak
 seviyesindeki PASA ve ASA ayrı adımlar olarak tanımlı değildi ve FHA tek başlık altında
 anılıyordu; o sürüme göre yürüyen programlarda bu adlar görünmeyebilir. Güncel sürüm
-ayrıca, bir arızanın tümleşik sistemler boyunca yayılan etkilerini izleyen zincirleme
+ayrıca, bir arızanın entegre sistemler boyunca yayılan etkilerini izleyen zincirleme
 etki analizini (cascading effects analysis, CEA) ve model tabanlı emniyet analizini
 (model-based safety analysis, MBSA) yöntemler arasına almıştır.
 
@@ -254,7 +254,7 @@ flowchart TD
     COM -- "komut" --> SW["Çıkış anahtarı"]
     COM -- "komut kopyası" --> MON
     MON -- "uyuşmazlıkta çıkışı keser" --> SW
-    SW --> ACT["Eyleyici"]
+    SW --> ACT["Aktüatör"]
 ```
 
 İzlemeden kredi alınabilmesi üç soruya bağlıdır:
@@ -309,7 +309,7 @@ fazlasını söylemek zorundadır:
 
 Yazılım, bazı durumlarda arıza durumunun etkisini doğrudan azaltan tek bileşen olabilir.
 Özellikle birden fazla sensörün tutarlılığını değerlendiren, hatalı veriyi sınırlayan
-veya güvenli duruma geçişi yöneten işlevler yazılım tarafından taşınır. Bağlantının
+veya güvenli duruma geçişi yöneten işlevler yazılımda bulunur. Bağlantının
 sağlıklı işlemesi için iki yönlü akış kurulmalıdır:
 
 - **Emniyetten yazılıma:** emniyet gereksinimleri, yazılım gereksinimleri içinde
@@ -346,9 +346,9 @@ mümkündür.
 İkincisi, emniyet gereksinimleri test ve analiz içeriğinde bazı konuları öne çıkarır:
 
 - **Gürbüzlük testleri (robustness tests):** geçersiz değerler, bozuk ya da
-  tazelenmeyen veri, aşılan çerçeve süresi, izin verilmeyen durum geçişi. İzleme ve
+  tazelenmeyen veri, aşılan frame süresi, izin verilmeyen durum geçişi. İzleme ve
   koruma işlevlerinin asıl işi bu koşullarda görünür.
-- **Arıza enjeksiyonu (fault injection):** izleyicinin algıladığı varsayılan arıza
+- **Hata enjeksiyonu (fault injection):** izleyicinin algıladığı varsayılan arıza
   gerçekten üretilir ve tepkinin gereksinimdeki gibi olduğu gösterilir.
 - **Zamanlama:** algılama gecikmesi ile tepki süresinin toplamı, emniyet analizinde
   varsayılan süreyi aşmamalıdır. Bu, en kötü durum yürütme süresi (worst-case execution

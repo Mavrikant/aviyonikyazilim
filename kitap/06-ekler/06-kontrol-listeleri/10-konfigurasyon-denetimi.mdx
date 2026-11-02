@@ -2,12 +2,12 @@
 title: "Konfigürasyon Denetimi Kontrol Listesi"
 sidebar_label: "Konfigürasyon denetimi"
 sidebar_position: 10
-description: "DO-178C konfigürasyon yönetimi denetimi için kontrol listesi: baseline, SCI, SECI, arşiv, yükleme kontrolü ve yeniden üretilebilir derleme."
+description: "DO-178C konfigürasyon yönetimi denetimi için kontrol listesi: baseline, SCI, SECI, arşiv, yükleme kontrolü ve yeniden üretilebilir build."
 ---
 
 import ListeIndir from '@site/src/components/KontrolListesi';
 
-Bu kontrol listesi (checklist), bir baseline kurulmadan ve bir yazılım sürümü
+Bu kontrol listesi (checklist), bir baseline alınmadan ve bir yazılım sürümü
 teslim (release) edilmeden önce yapılan konfigürasyon yönetimi denetiminde (configuration
 audit) kullanılır. Denetim, kontrollü kütüphanedeki (controlled library) gerçek durumu
 kayıtlarla karşılaştırır: öğeler
@@ -23,8 +23,8 @@ assurance) katılabilir ya da listeyi kendi süreç denetiminde örnekleme için
 DO-178C'de bu iş, §7'deki konfigürasyon yönetimi faaliyetlerinin fiilen işletildiğini ve
 §11.15, §11.16, §11.18'deki verinin doğru olduğunu göstermektir; Tablo A-8'in hedeflerine
 kanıt üretir. Problem raporlarının (problem report) ve değişiklik kararlarının içeriği
-[problem raporu ve değişiklik](11-problem-raporu-ve-degisiklik.mdx) listesinde, derleme
-(build) çıktılarının teknik içeriği (bellek haritası, derleyici uyarıları)
+[problem raporu ve değişiklik](11-problem-raporu-ve-degisiklik.mdx) listesinde, build
+çıktılarının teknik içeriği (bellek haritası, derleyici uyarıları)
 [entegrasyon çıktıları](06-entegrasyon-ciktilari.mdx) listesinde sorulur. Süreç
 [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
 bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasında anlatılır.
@@ -35,7 +35,7 @@ bölümünde, listelerin ortak kullanımı [genel bakış](index.mdx) sayfasınd
 |---|---|
 | DO-178C maddesi | §7.2 (tedarikçi), §7.2.1, §7.2.2, §7.2.4.a–b (kimlik ve bütünlük), §7.2.6, §7.2.7, §7.3, §7.4, §7.5; veri: §11.0.c, §11.15 (SECI), §11.16 (SCI), §11.18 (SCM kayıtları) |
 | Ek A hedefleri | A-8 #1, #2, #4, #5, #6: A, B, C ve D'de gerekli, bağımsızlık aranmaz. A-8 #3 (A–D'de gerekli): burada yalnızca konfigürasyon durum muhasebesi (configuration status accounting) ve baseline farkının kayda bağlanması; problem raporu ve değişiklik gözden geçirmesi [PRD listesindedir](11-problem-raporu-ve-degisiklik.mdx) |
-| Gözden geçirilen veri | Baseline kaydı ve içerik listesi, SCI, SECI, durum muhasebesi raporları, derleme kaydı, sürüm teslim ve arşiv kayıtları, yükleme talimatı ve uyumluluk kayıtları |
+| Gözden geçirilen veri | Baseline kaydı ve içerik listesi, SCI, SECI, durum muhasebesi raporları, build kaydı, sürüm teslim ve arşiv kayıtları, yükleme talimatı ve uyumluluk kayıtları |
 | Başvuru verisi | Yazılım konfigürasyon yönetimi planı (Software Configuration Management Plan, SCMP): kimlik kuralları, baseline listesi, kontrol kategorisi (control category) tablosu; yazılım sertifikasyon planındaki (Plan for Software Aspects of Certification, PSAC) veri listesi; türetildiği baseline; aradaki problem raporları ve değişiklik talepleri (change request) |
 | Kaydın gideceği yer | Denetim kaydı → SCM kayıtları (§11.18); kalite güvencesi yürütüyorsa kalite güvencesi kayıtları (§11.19). Bulgular → kayıt içinde; baseline'daki bir veriyi değiştirmeyi gerektiren ya da süreç sapması olan bulgu problem raporuna dönüşür (sınır SCMP'de) |
 | İlgili şablon | [SCMP Şablonu ve Yazım Rehberi](../05-sablonlar/04-scmp.mdx) |
@@ -65,7 +65,7 @@ geçer.
       var mı? Örneğin kimlik SCMP'deki biçimde ve taslak, yayımlanmış sürümden ayırt
       edilebiliyor. *(A–D · §7.2.1.b)*
 - [ ] **KYD-02** Başka bir verinin atıf yaptığı, bir gözden geçirmede (review) ya da testte
-      kullanılan veya derlemeye giren her öğe kullanılmadan önce kimlik almış mı? Örneğin bir
+      kullanılan veya build'e giren her öğe kullanılmadan önce kimlik almış mı? Örneğin bir
       gözden geçirme kaydı "son taslak" gibi sürümsüz bir belgeye dayanmıyor.
       *(A–D · §7.2.1.d)*
 - [ ] **KYD-03** Yüklü yazılım cihazın etiketine bakılarak tanınamıyorsa, çalıştırılabilir nesne
@@ -80,7 +80,7 @@ geçer.
       data) ve build script'leri eksik değil. *(A–D · §7.2.2.a)*
 - [ ] **KYD-05** Baseline kontrollü kütüphanede, onaylı değişiklik yolu dışında
       değiştirilemeyecek biçimde mi duruyor? Örneğin etiket taşınamıyor; gereksinim aracındaki
-      veri için kayıt durumuna değil, araçta alınmış bir anlık görüntüye dayanılıyor.
+      veri için kayıt durumuna değil, araçta alınmış bir snapshot'a dayanılıyor.
       *(A–D · §7.2.2.c)*
 - [ ] **KYD-06** Tedarikçiden gelen veri teslimat notu ve kabul kaydıyla mı kontrollü
       kütüphaneye girmiş ve tedarikçinin baseline kimliği projenin kimliğiyle eşlenmiş mi?
@@ -91,9 +91,9 @@ geçer.
 - [ ] **KYD-07** Bu baseline ile türetildiği baseline arasındaki her fark onaylı bir
       problem raporuna ya da değişiklik talebine bağlanabiliyor mu? Örneğin sürüm aracının
       iki etiket arasındaki fark listesinde açıklanamayan dosya kalmıyor. *(A–D · §7.2.2.d)*
-- [ ] **KYD-08** Önceki baseline ile karşılaştırıldığında içerik özeti (hash) değişen her
+- [ ] **KYD-08** Önceki baseline ile karşılaştırıldığında hash'i değişen her
       öğenin sürüm numarası da değişmiş mi? Örneğin iki baseline'ın içerik listeleri script ile
-      karşılaştırılmış; özeti değiştiği hâlde sürümü aynı kalan belge yok. *(A–D · §7.2.4.b)*
+      karşılaştırılmış; hash'i değiştiği hâlde sürümü aynı kalan belge yok. *(A–D · §7.2.4.b)*
 - [ ] **KYD-09** Durum muhasebesi raporları (baseline içeriği, öğe sürümleri, açık ve kapalı
       raporlar, sürüm teslim durumu) SCMP'de tanımlı yolla üretiliyor ve denetim günü kontrollü
       kütüphanedeki durumla aynı sonucu veriyor mu? Örneğin rapordaki açık problem raporu
@@ -105,37 +105,37 @@ geçer.
       sürüm ve bütünlük denetim değeriyle tanımlıyor mu? Örneğin her imaj (image) için checksum ya da döngüsel artıklık denetimi (cyclic redundancy check, CRC)
       değeri yazılı. *(A–D · §11.16.b, i)*
 - [ ] **KYD-11** SCI'deki kaynak dosya listesi ve sürümleri, ürün baseline'ının etiketindeki
-      içerikle bire bir aynı mı? Örneğin hiçbir dosya "en son sürüm" gibi sürümsüz
+      içerikle birebir aynı mı? Örneğin hiçbir dosya "en son sürüm" gibi sürümsüz
       anılmıyor. *(A–D · §11.16.c)*
 - [ ] **KYD-12** SCI yaşam döngüsü verisini, varsa önceden geliştirilmiş yazılımı (previously
       developed software) ve kullanıcı tarafından değiştirilebilir yazılımın (user-modifiable
       software) değiştirilme yöntemini kimlik ve sürümleriyle anıyor mu?
       *(A–D · §11.16.d, e, j)*
-- [ ] **KYD-13** SCI'deki derleme talimatı komutları, seçenek dosyalarını, ortam değişkenlerini,
+- [ ] **KYD-13** SCI'deki build talimatı komutları, seçenek dosyalarını, ortam değişkenlerini,
       adım sırasını ve kaynağın arşivden nasıl alınacağını yazıyor mu ve SECI ayrı bir belgeyse
       SCI onu kimlik ve sürümüyle anıyor mu? *(A–D · §11.16.g, h)*
 
 ### SECI
 
-- [ ] **KYD-14** SECI resmî derleme ortamını (donanımı, işletim sistemi ya da sanal makine
-      imajının kimliği dahil) ve derleyiciyi, linker'ı, kod üretecini (code generator),
+- [ ] **KYD-14** SECI resmî build ortamını (donanımı, işletim sistemi ya da sanal makine
+      imajının kimliği dâhil) ve derleyiciyi, linker'ı, kod üretecini (code generator),
       imaja checksum ya da CRC gömen araçları tam sürümleri ve seçenek dosyalarıyla
       listeliyor mu? *(A–D · §11.15.a, b)*
 - [ ] **KYD-15** SECI'deki test ve analiz araçları, test donanımı ve işletim ortamı, kredi
       koşularının kayıtlarında yazan ortam kimlikleriyle aynı mı? *(A–D · §11.15)*
 - [ ] **KYD-16** Kalifiye araçlar kalifikasyon verilerinin kimliğiyle birlikte anılıyor ve
       DO-330'un gerektirdiği kategoride mi kontrol ediliyor? Örneğin yükleme bütünlüğü yer
-      tarafındaki yükleyiciye dayanıyorsa PSAC'ta yükleyici için verilen karar (kalifikasyon
+      tarafındaki loader'a dayanıyorsa PSAC'ta loader için verilen karar (kalifikasyon
       ya da DO-178C'ye göre geliştirme) SECI'de de aynı biçimde görünüyor. *(A–D · §7.5.b)*
-- [ ] **KYD-17** Derleme ve yükleme araçlarının çalıştırılabilir sürümleri en az CC2 düzeyinde
-      kontrol altında mı? Örneğin derleme makinesindeki derleyici kurulumu yetkisiz
-      güncellemeye kapalı ve sürümü her resmî derlemede SECI ile karşılaştırılıyor.
+- [ ] **KYD-17** Build ve yükleme araçlarının çalıştırılabilir sürümleri en az CC2 düzeyinde
+      kontrol altında mı? Örneğin build makinesindeki derleyici kurulumu yetkisiz
+      güncellemeye kapalı ve sürümü her resmî build'de SECI ile karşılaştırılıyor.
       *(A–D · §7.5.c)*
 
-### Derlemenin yeniden üretilebilirliği
+### Build'in yeniden üretilebilirliği
 
 - [ ] **KYD-18** Sürüm adayı yalnızca kontrollü kütüphaneden alınan kaynaklarla ve SECI'de
-      tanımlı resmî derleme ortamında mı derlenmiş ve derleme kaydı kullanılan sürümleri ve
+      tanımlı resmî build ortamında mı derlenmiş ve build kaydı kullanılan sürümleri ve
       seçenekleri gösteriyor mu? *(A–D · A-8 #6)*
 - [ ] **KYD-19** Arşivden geri getirilen kaynakla, SCI'deki talimat izlenerek temiz bir ortamda
       yapılan yeniden derleme SCI'deki bütünlük denetim değerini veriyor mu? Örneğin değer
@@ -152,7 +152,7 @@ geçer.
       ve arşiv ortamı SCMP'de yazılı aralıkla okunup sınanmış ya da yenilenmiş mi? Örneğin son
       yenileme tarihi ve okuma denemesinin sonucu arşiv kaydında. *(A–D · §7.2.7.b.2–b.4)*
 - [ ] **KYD-22** Arşive kopyalamanın doğru yapıldığı gösterilmiş mi? Örneğin nesne kodu ve PDI
-      dosyalarının arşivdeki kopyalarının checksum asıllarınkiyle karşılaştırılmış.
+      dosyalarının arşivdeki kopyalarının checksum'ı asıllarınkiyle karşılaştırılmış.
       *(A–D · §7.2.7.c)*
 - [ ] **KYD-23** Arşivden geri getirme denenmiş ve sonucu kayıtlı mı? Örneğin gereksinim aracında
       ya da model deposunda tutulan veri, araç olmadan da okunabilecek açık bir biçimde geri
@@ -179,9 +179,9 @@ geçer.
       seviyesi için Ek A'nın asgarisiyle uyumlu mu? Örneğin Seviye B'de test prosedürlerindeki
       düzeltmeler problem raporu olmadan yapılmıyor. *(A–D · §7.3)*
 - [ ] **KYD-29** CC2 veride düzeltme yeni bir sürümle mi yapılıyor ve her sürümün hangi öğeden
-      türediği, hangi koşuya ya da derlemeye ait olduğu kayıttan okunabiliyor mu? Örneğin test
+      türediği, hangi koşuya ya da build'e ait olduğu kayıttan okunabiliyor mu? Örneğin test
       sonuç dosyasının üzerine yazılmamış; yeni koşu ayrı kimlik almış ve prosedür sürümüyle
-      derleme kimliğini taşıyor. *(A–D · §7.2.2.f–g, §7.2.4.b)*
+      build kimliğini taşıyor. *(A–D · §7.2.2.f–g, §7.2.4.b)*
 - [ ] **KYD-30** Ek A'da adı geçmeyen ama kanıt olarak kullanılan veri (analiz script'leri, test
       günlükleri, araç yapılandırma dosyaları) en az CC2 düzeyinde kimlikli ve saklanıyor mu?
       *(A–D · §11.0.c)*
@@ -194,11 +194,11 @@ açıklamanın yeterli olup olmadığına karar vermektir.
 
 | Madde | Araç türü | Gözden geçirene kalan |
 |---|---|---|
-| KYD-07, KYD-08 | Sürüm aracının iki etiket arasındaki fark raporunu içerik özetleri, sürüm numaraları ve problem raporu aracının sorgusuyla eşleştiren script | Değişikliğin içeriğinin, bağlandığı raporun onayladığı kapsamla örtüştüğünü örnekleyerek görmek |
+| KYD-07, KYD-08 | Sürüm aracının iki etiket arasındaki fark raporunu hash'ler, sürüm numaraları ve problem raporu aracının sorgusuyla eşleştiren script | Değişikliğin içeriğinin, bağlandığı raporun onayladığı kapsamla örtüştüğünü örnekleyerek görmek |
 | KYD-09 | Durum muhasebesi raporunu üreten araç sorgusu | Sorgunun doğru tanımlandığını bir kez elle sayımla doğrulamak; sorgu değişince yinelemek |
-| KYD-10, KYD-11 | SCI'nin içerik bölümünü ve bütünlük değerlerini derleme altyapısından üreten script | Elle yazılan bölümleri okumak: yaşam döngüsü verisi listesi, talimatların anlaşılırlığı |
-| KYD-14, KYD-17 | Derleme makinesindeki araç sürümlerini ve kurulu paketleri döküp SECI ile karşılaştıran script | SECI'de hiç yer almayan aracı fark etmek, örneğin imaja CRC gömen yardımcı script |
-| KYD-19 | Sürekli entegrasyonda temiz ortamda yeniden derleme ve ikili karşılaştırma | Fark çıktığında açıklamanın yeterli olduğuna karar vermek |
+| KYD-10, KYD-11 | SCI'nin içerik bölümünü ve bütünlük değerlerini build altyapısından üreten script | Elle yazılan bölümleri okumak: yaşam döngüsü verisi listesi, talimatların anlaşılırlığı |
+| KYD-14, KYD-17 | Build makinesindeki araç sürümlerini ve kurulu paketleri döküp SECI ile karşılaştıran script | SECI'de hiç yer almayan aracı fark etmek, örneğin imaja CRC gömen yardımcı script |
+| KYD-19 | Sürekli entegrasyonda temiz ortamda yeniden derleme ve binary karşılaştırma | Fark çıktığında açıklamanın yeterli olduğuna karar vermek |
 | KYD-21, KYD-22 | Arşiv kopyalarının checksum'ı asıllarınkiyle karşılaştıran script | İkinci kopyanın fiziksel ayrılığını ve arşiv ortamının yenilenme takvimini görmek |
 
 Bir maddeyi yalnızca aracın çıktısına bakarak "Evet" sayıyor ve bu çıktıyı ayrıca
@@ -210,9 +210,9 @@ bölümündedir.
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| İki baseline arasında hiçbir rapora bağlanmayan dosya değişikliği | Küçük düzeltmenin onaysız birleştirmeyle doğrudan kontrollü dala işlenmesi | KYD-07 |
+| İki baseline arasında hiçbir rapora bağlanmayan dosya değişikliği | Küçük düzeltmenin onaysız birleştirmeyle doğrudan kontrollü branch'e işlenmesi | KYD-07 |
 | İçeriği değişmiş ama sürümü aynı kalmış belge | Sürüm alanının belgenin içinde elle tutulması | KYD-08 |
-| Gereksinim aracındaki "Onaylı" kayıt sonradan değişmiş, baseline bunu göstermiyor | Baseline'ın araçta etiket ya da anlık görüntü yerine kayıt durumuna bırakılması | KYD-05 |
+| Gereksinim aracındaki "Onaylı" kayıt sonradan değişmiş, baseline bunu göstermiyor | Baseline'ın araçta etiket ya da snapshot yerine kayıt durumuna bırakılması | KYD-05 |
 | SCI'deki kaynak listesi ürün baseline'ının etiketiyle uyuşmuyor | SCI'nin elle tutulması, son değişikliklerin eklenmemesi | KYD-11 |
 | SECI'de derleyici var; kod üreteci ayarları ya da imaja CRC gömen script yok | SECI'nin satın alınan araçların listesi sanılması | KYD-14 |
 | Kredi koşusu, SECI'de yazandan farklı bir test düzeneği yazılımıyla yapılmış | Laboratuvardaki güncellemenin kayda geçmemesi | KYD-15 |
@@ -223,7 +223,7 @@ bölümündedir.
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "SCI eksik." | "KYD-10: SCI-ADC rev. C, imaj tablosunda `adc_app.bin` için bütünlük değeri yok; SCMP'nin SCI içerik kuralı her yüklenebilir imaj için CRC değeri bekler; değer derleme kaydından alınıp tabloya eklenmeli." |
+| "SCI eksik." | "KYD-10: SCI-ADC rev. C, imaj tablosunda `adc_app.bin` için bütünlük değeri yok; SCMP'nin SCI içerik kuralı her yüklenebilir imaj için CRC değeri bekler; değer build kaydından alınıp tabloya eklenmeli." |
 | "Baseline'a izinsiz değişiklik yapılmış." | "KYD-07: BL-TSR-04 ile BL-TSR-05 arasında `ivme_filtre.c` 1.4'ten 1.5'e geçmiş; fark hiçbir problem raporuna ya da değişiklik talebine bağlı değil; değişikliği onaylayan kayıt gösterilmeli, yoksa problem raporu açılıp değişiklik kontrolünden geçirilmeli." |
 | "Arşiv yetersiz." | "KYD-23: 2.2.0 sürümünün arşiv kaydında geri getirme denemesi yok; SCMP her sürüm tesliminde deneme yapılmasını bekler; geri getirme denenip sonucu sürüm teslim kaydına eklenmeli." |
 
@@ -238,7 +238,7 @@ olarak yapıyorsa A-9'un bağımsızlık beklentisi geçerlidir; o durumda
 
 Seviyeyle değişen, verinin kontrol kategorisidir. Standardın Tablo 7-1'ine göre CC2 veride
 baseline, baseline'lar arası izlenebilirlik, durum muhasebesi, arşiv ortamının seçimi,
-yenilenmesi ve ayrı kopyası, kopyalamanın doğrulanması ve sürüm teslimi asgari değildir.
+yenilenmesi ve ayrı kopyası, kopyalamanın doğrulanması ve sürüm teslimi asgari kapsamda değildir.
 Tanımlama (KYD-01–03), değişen öğenin yeni kimlik alması ve türetildiği öğeye izlenebilmesi
 (KYD-08, KYD-29), arşivde yetkisiz değişikliğe karşı koruma ve saklama (KYD-20) ile geri
 getirme (KYD-23) ise CC2 veride de sorulur.
@@ -264,7 +264,7 @@ ayrıntılıdır; denetimde en sık sorulanlar şunlardır:
 
 Seviye D'de iki noktaya dikkat edilir. Kaynak kod bu seviyede Ek A çıktısı değildir, ama
 SCI onu tanımlar ve nesne kodu ondan üretilir; KYD-11 bu yüzden yine sorulur. SECI CC2'ye
-iner, ama yaşam döngüsü ortamının kontrolü (A-8 #6) hedef olarak kalır ve derleme ile
+iner, ama yaşam döngüsü ortamının kontrolü (A-8 #6) hedef olarak kalır ve build ile
 yükleme araçları her seviyede en az CC2'dir (§7.5.c); KYD-14–18 sorulmaya devam eder. Seviye
 D projede liste kısalmaz. Tasarım tanımı ve SECI de CC2'ye indiği için (planlar ve doğrulama
 durumları C'den beri CC2'dir) CC1'e özgü maddelerin örneklemi daralır; dışarıda bırakılan her
@@ -274,7 +274,7 @@ veri, kategori tablosuna atıfla nota yazılır.
 
 - [10. Yazılım Konfigürasyon Yönetimi](../../03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx)
 - [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](../../03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx):
-  derleme sürecinin tekrarlanabilirliği, yamalar ve hedefe yükleme
+  build sürecinin tekrarlanabilirliği, yamalar ve hedefe yükleme
 - [9. Yazılım Doğrulama](../../03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx): gözden
   geçirme kaydı ve bulgu sınıfları
 - [11. Yazılım Kalite Güvencesi](../../03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx)

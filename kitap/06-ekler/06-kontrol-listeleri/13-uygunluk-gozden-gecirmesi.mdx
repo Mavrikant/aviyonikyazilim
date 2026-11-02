@@ -115,20 +115,20 @@ Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtü
 ### Nesne kodunun kontrolü ve yeniden üretilebilirliği
 
 - [ ] **UGG-09** Teslim edilecek nesne kodunu ve PDI dosyalarını kontrollü kütüphaneden
-      yayımlayan sürüm teslim (release) kaydı son baseline'daki derlemeye mi ait ve kayıttaki
+      yayımlayan sürüm teslim (release) kaydı son baseline'daki build'e mi ait ve kayıttaki
       checksum ya da döngüsel artıklık denetimi (cyclic redundancy check, CRC)
       değerleri SCI'dekilerle aynı mı? Örneğin konfigürasyon denetiminden sonra yapılan bir
-      derleme, yeni bir teslim kaydı ve SCI güncellemesi olmadan teslim paketine girmemiş.
+      build, yeni bir teslim kaydı ve SCI güncellemesi olmadan teslim paketine girmemiş.
       *(A–D · A-9 #5)*
 - [ ] **UGG-10** Son baseline'ın kaynak kodu arşivden temiz bir çalışma alanına geri getirilip
       SCI'deki talimat ve SECI'deki ortamla yeniden derlendiğinde, nesne kodunun ve PDI
       dosyalarının bütünlük değerleri SCI'dekilerle aynı çıkıyor mu, ya da her farkın SQAP'ta
-      önceden kabul edilmiş bir türden (ör. gömülü derleme zamanı) olduğu ikili karşılaştırmayla
+      önceden kabul edilmiş bir türden (ör. gömülü derleme zamanı) olduğu binary karşılaştırmayla
       (binary comparison) gösterilmiş mi? Örneğin konfigürasyon denetiminde yapılmış bir yeniden
       derlemenin kaydı kanıt olarak anılıyorsa o derleme de son baseline'ın kaynağıyla
       yapılmış. *(A–D · §8.3.f)*
 - [ ] **UGG-11** Yeniden derleme, talimatta yazmayan bir adıma gerek kalmadan tamamlanmış mı?
-      Örneğin elle kopyalanan bir dosya, kayıt dışı bir ortam değişkeni ya da derleme
+      Örneğin elle kopyalanan bir dosya, kayıt dışı bir ortam değişkeni ya da build
       makinesinde önceden kurulu kalmış bir kütüphane gerekmemiş. *(A–D · §11.16.g)*
 
 ### Problem raporları
@@ -137,7 +137,7 @@ Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtü
       sınıfı, değerlendirmesi ve güncel durumu (açık, ertelenmiş, reddedildi, kapalı) kayıtlı
       mı? *(A–D · §8.3.d)*
 - [ ] **UGG-13** Kapalı sayılan her raporun düzeltmesini içeren öğe sürümü son baseline'da mı?
-      Örneğin "kapalı" görünen bir raporun düzeltmesi birleştirilmemiş bir dalda ya da sonraki
+      Örneğin "kapalı" görünen bir raporun düzeltmesi birleştirilmemiş bir branch'te ya da sonraki
       sürüme ayrılmış bir değişiklikte kalmamış. *(A–D · §8.3.d)*
 - [ ] **UGG-14** Açık taşınan her raporun emniyet etkisi değerlendirmesinde sistem ve emniyet
       ekibinin görüşü kayıtlı mı; işletme sınırlaması gerektiren rapor sistem tarafına
@@ -169,8 +169,8 @@ Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtü
       yüklenmiş yazılımdan okunan kimlik yan yana konduğunda üçü aynı mı? Örneğin SAS'ın andığı
       SCI ve SECI sürümleri de bu gözden geçirmede kullanılanlardır. *(A–D · §11.20.h)*
 - [ ] **UGG-21** SAS'taki yazılım karakteristikleri, yani nesne kodu boyutu, en kötü durum
-      yürütme süresi (worst-case execution time, WCET) dahil zamanlama payları, bellek ve stack
-      payları, son baseline'daki derlemeye ait bir analiz ya da ölçüm kaydına kimliğiyle
+      yürütme süresi (worst-case execution time, WCET) dâhil zamanlama payları, bellek ve stack
+      payları, son baseline'daki build'e ait bir analiz ya da ölçüm kaydına kimliğiyle
       bağlanabiliyor mu? *(A–D · §11.20.i)*
 - [ ] **UGG-22** SAS'ın yazılım durumu bölümündeki her açık rapor, dondurulmuş listedeki
       numarası, sınıfı ve değerlendirmesiyle aynı mı? Örneğin SAS'taki gerekçe rapordakinden
@@ -185,15 +185,15 @@ Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtü
 - [ ] **UGG-24** Önceden geliştirilmiş yazılımdan (previously developed software, PDS) kredi
       alınıyorsa, kredinin dayandığı önceki baseline ile güncel ürün baseline'ı
       karşılaştırıldığında çıkan her fark onaylı bir değişikliğe bağlanabiliyor mu? Örneğin
-      karşılaştırma aradaki ara baseline'lardan değil, önceki sertifikasyonun SCI'sinde ya da
+      karşılaştırma ara baseline'lardan değil, önceki sertifikasyonun SCI'sinde ya da
       PSAC'ta kimliğiyle anılan sürümden yapılmış. *(A–D · §8.3.i)*
 - [ ] **UGG-25** PSAC'taki PDS değerlendirmesinde yeni uygulama ya da seviye için belirlenen
       eksikler (ek doğrulama, kapsam analizi, eksik veri) kapatılmış ve kaydı var mı?
       *(A–D · §12.1.6.a)*
 - [ ] **UGG-26** Değişmeyen kısımlar için önceki sürümün doğrulama kanıtına dayanılıyorsa,
       etkilenen alan analizle belirlenmiş ve o alan yeniden doğrulanmış mı? Örneğin etkilenen
-      alan yalnızca değişen dosyaları değil, onlarla data ve control coupling (data and
-      control coupling) olan bileşenleri de kapsıyor. *(A–D · §12.1.1)*
+      alan yalnızca değişen dosyaları değil, onlarla data ve control coupling
+      ilişkisi olan bileşenleri de kapsıyor. *(A–D · §12.1.1)*
 - [ ] **UGG-27** PDS'nin önceki kullanımından devralınan her çözülmemiş problem raporunun yeni
       uygulamaya etkisi değerlendirilmiş ve rapor, dondurulmuş listede bu sürümün raporları gibi
       sınıfı ve durumuyla yer alıyor mu? Örneğin önceki projenin ya da tedarikçinin aracında
@@ -210,7 +210,7 @@ Her madde evet/hayır sorusudur: "Evet" kaydın teslim edilecek sürümle örtü
       yazılımın eksiksiz yüklendiği talimattaki yöntemle (CRC karşılaştırması, parça
       numarasının okunması) teyit edilmiş mi? *(A–D · §8.3.g)*
 - [ ] **UGG-30** Yükleme denemesinde teslim edilecek yayımlanmış medya ya da paket ve sahada ya
-      da üretimde kullanılacak yükleyici mi kullanılmış? Örneğin geliştirme ekibinin hata
+      da üretimde kullanılacak loader mı kullanılmış? Örneğin geliştirme ekibinin hata
       ayıklama aracıyla yapılan yükleme, talimatın işlediğini göstermiyor. *(A–D · §8.3.g)*
 
 ## Araçla denetlenebilecek maddeler
@@ -223,13 +223,13 @@ yapıldığını görmek ve farkın açıklamasının yeterli olup olmadığına
 |---|---|---|
 | UGG-06 | SCI'deki öğe, sürüm ve bütünlük değerlerini kontrollü kütüphanedeki etiketle karşılaştıran script | SCI'de hiç anılmayan ama teslim paketinde bulunan öğeyi fark etmek |
 | UGG-07 | İz aracının son baseline etiketinden ürettiği izsiz öğe ve sürüm uyuşmazlığı raporu | İzlerin anlamca doğru olduğunu birkaç gereksinimi uçtan uca izleyerek görmek |
-| UGG-10 | Sürekli entegrasyonda temiz ortamda yeniden derleme ve ikili karşılaştırma | Derlemenin son baseline'ın arşivden geri getirilen kaynağıyla yapıldığını görmek; fark çıktığında her farkın SQAP'ta önceden kabul edilmiş türden olduğuna karar vermek |
+| UGG-10 | Sürekli entegrasyonda temiz ortamda yeniden derleme ve binary karşılaştırma | Yeniden derlemenin son baseline'ın arşivden geri getirilen kaynağıyla yapıldığını görmek; fark çıktığında her farkın SQAP'ta önceden kabul edilmiş türden olduğuna karar vermek |
 | UGG-12, UGG-13 | Problem raporu aracında son baseline tarihli durum sorgusu; kapalı raporların düzeltme sürümünü SCI ile karşılaştıran script | Değerlendirmenin ve ret gerekçelerinin içerikçe yeterli olduğu |
 | UGG-18 | Sonuç kayıtlarındaki sürüm alanlarını SCI ile karşılaştıran sorgu | Farklı sürüme ait sonucun yeni sürümde de geçerli olduğunu savunan etki analizinin yeterliliği |
-| UGG-20, UGG-22 | SAS'taki kimlik ve açık rapor tablosunu derleme kaydından ve problem raporu aracından üreten script | Kimliği hedefe yüklenmiş birimden okumak; SAS'taki gerekçe metnini rapordakiyle karşılaştırmak |
+| UGG-20, UGG-22 | SAS'taki kimlik ve açık rapor tablosunu build kaydından ve problem raporu aracından üreten script | Kimliği hedefe yüklenmiş birimden okumak; SAS'taki gerekçe metnini rapordakiyle karşılaştırmak |
 
-Yeniden derlemeyi, resmî derlemeyi yapan kişiden başkasının yapması ya da kalite güvencesinin
-derlemeye tanıklık etmesi, script'in sonucuna duyulan güveni artırır. Bir maddeyi yalnızca bir
+Yeniden derlemeyi, resmî build'i yapan kişiden başkasının yapması ya da kalite güvencesinin
+buna tanıklık etmesi, script'in sonucuna duyulan güveni artırır. Bir maddeyi yalnızca bir
 aracın çıktısına bakarak "Evet" diye işaretlemek ve çıktıyı ayrıca doğrulamamak, o aracın
 kalifikasyonu (tool qualification) sorusunu doğurur; ölçütler
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)
@@ -239,12 +239,12 @@ bölümündedir.
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| PSAC'ta kredi alınan bir faaliyetin (ör. bağlantı ve yükleme analizi) bu sürüme ait kaydı yok | Faaliyet listesinin PSAC'tan değil ekibin alışkanlığından çıkarılması | UGG-01 |
+| PSAC'ta kredi alınan bir faaliyetin (ör. bağlama ve yükleme analizi) bu sürüme ait kaydı yok | Faaliyet listesinin PSAC'tan değil ekibin alışkanlığından çıkarılması | UGG-01 |
 | İz raporu bir önceki baseline'dan üretilmiş; son değişiklikle gelen gereksinimler izsiz | Raporun her baseline'da yeniden üretilmemesi | UGG-07 |
-| Temiz ortamda yeniden derleme, talimatta olmayan bir adım gerektiriyor | Talimatın, derleme makinesini kuran kişinin bilgisine dayanması | UGG-11 |
-| Problem raporu "kapalı", düzeltmesi son baseline'da değil | Raporun düzeltme ana dala birleştirildiğinde değil, dalda yapıldığında kapatılması | UGG-13 |
+| Temiz ortamda yeniden derleme, talimatta olmayan bir adım gerektiriyor | Talimatın, build makinesini kuran kişinin bilgisine dayanması | UGG-11 |
+| Problem raporu "kapalı", düzeltmesi son baseline'da değil | Raporun, düzeltme ana branch'e merge edildiğinde değil, branch'te yapıldığında kapatılması | UGG-13 |
 | Karşılanmayan bir gereksinim yalnızca test sonucunda "kabul edildi" notuyla duruyor | Gereksinim sapması için onay yolunun bilinmemesi | UGG-16 |
-| Bazı test sonuçları son baseline'dan önceki bir derlemeye ait, etki analizi yok | Son düzeltmelerin "küçük" ya da "yalnızca belge" sayılması | UGG-18 |
+| Bazı test sonuçları son baseline'dan önceki bir build'e ait, etki analizi yok | Son düzeltmelerin "küçük" ya da "yalnızca belge" sayılması | UGG-18 |
 | SAS'taki açık rapor gerekçesi rapordaki değerlendirmeden daha iyimser | SAS metninin rapordan aktarılmayıp yeniden yazılması | UGG-22 |
 | Yükleme denemesi laboratuvarın hata ayıklama aracıyla yapılmış | Hedef donanımın laboratuvarda geliştirme düzeninde durması | UGG-30 |
 
@@ -252,9 +252,9 @@ bölümündedir.
 
 | Zayıf bulgu | İyi yazılmış bulgu |
 |---|---|
-| "Yeniden derleme başarısız." | "UGG-10: Arşivden geri getirilen YB-3.0 kaynağıyla, SCI-FCU rev. D'deki talimat izlenerek SECI'deki ortamda yapılan derlemede `fcu_app.bin` CRC değeri 0x91B04D3E çıkıyor, SCI 0x5C21E7A0 diyor. İkili karşılaştırma farkın linker'a verilen mutlak derleme dizininden geldiğini gösteriyor; talimatta dizin yazılı değil. Dizin SCI'deki talimata eklenmeli ve yeniden derleme değeri tutana kadar tekrarlanmalı." |
+| "Yeniden derleme başarısız." | "UGG-10: Arşivden geri getirilen YB-3.0 kaynağıyla, SCI-FCU rev. D'deki talimat izlenerek SECI'deki ortamda yapılan build'de `fcu_app.bin` CRC değeri 0x91B04D3E çıkıyor, SCI 0x5C21E7A0 diyor. Binary karşılaştırma farkın linker'a verilen mutlak build dizininden geldiğini gösteriyor; talimatta dizin yazılı değil. Dizin SCI'deki talimata eklenmeli ve yeniden derleme değeri tutana kadar tekrarlanmalı." |
 | "Açık raporlar SAS'ta eksik." | "UGG-22: Son baseline tarihinde araçta 14 açık rapor var, SAS taslağı rev. B'nin yazılım durumu bölümü 12 rapor sayıyor; PR-0412 (işlevsel) ve PR-0419 (yaşam döngüsü verisi) yok. İki rapor sınıfı, kısıtı ve gerekçesiyle SAS'a eklenmeli; kapanmışlarsa kapanış kaydı gösterilip liste düzeltilmeli." |
-| "Yükleme talimatı yetersiz." | "UGG-29: YT-FCU-02 rev. A izlenerek yapılan yüklemede yükleyici 6. adımdan sonra talimatta geçmeyen bir yapılandırma dosyası istedi; deneme ancak geliştirme ekibinin yerel kopyasıyla tamamlandı. Dosya kimliğiyle SCI'ye ve talimata eklenmeli, yükleme talimatın yeni sürümüyle tekrarlanmalı." |
+| "Yükleme talimatı yetersiz." | "UGG-29: YT-FCU-02 rev. A izlenerek yapılan yüklemede loader 6. adımdan sonra talimatta geçmeyen bir yapılandırma dosyası istedi; deneme ancak geliştirme ekibinin yerel kopyasıyla tamamlandı. Dosya kimliğiyle SCI'ye ve talimata eklenmeli, yükleme talimatın yeni sürümüyle tekrarlanmalı." |
 
 İyi bulgu iki kaydı ve aradaki farkı adıyla söyler: hangi belge hangi sürümde ne diyor, öteki
 kayıt ne gösteriyor, teslimden önce ne yapılmalı.

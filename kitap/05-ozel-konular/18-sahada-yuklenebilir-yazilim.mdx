@@ -78,8 +78,8 @@ Filo ölçeğinde bakıldığında fayda daha da belirginleşir:
   izlenebilir ve güncelleme kampanyaları planlı biçimde yürütülebilir.
 
 Bu esnekliğin bedeli, konfigürasyon yönetimi (configuration management) yükünün belirgin biçimde artmasıdır.
-Yazılım artık donanımın içine gömülü tek bir bütün değil, kendi parça numarasına
-sahip ayrı bir konfigürasyon öğesidir. Üstelik bu yük tek bir tarafın omzunda da
+Yazılım artık donanımın içine gömülü tek bir bütün değil, kendi parça numarası
+olan ayrı bir konfigürasyon öğesidir. Üstelik bu yük tek bir tarafın omzunda da
 değildir: yazılım ve ekipman geliştiricisi, uçak veya motor üreticisi,
 havayolu ve sertifikasyon otoritesi (certification authority) aynı sürecin paydaşlarıdır ve zincirin her halkası
 kendi payına düşeni yönetmek zorundadır. Başlıca zorluklar şunlardır:
@@ -138,7 +138,7 @@ her biri aşağıdaki alt bölümlerde anlatılan somut tasarım şartlarına d�
 | Soru | Emniyet değerlendirmesinin ele aldığı husus | Tipik tasarım karşılığı |
 |---|---|---|
 | Yüklenen şey sağlam mı? | Bozuk ya da yarım kalmış yüklemenin tespiti | Yükleme sırasında ve her açılışta bütünlük kontrolü |
-| Yüklenen şey doğru şey mi? | Uygunsuz yazılımın yüklenmesinin etkileri; donanım/yazılım, yazılım/yazılım ve uçak/yazılım uyumluluğu | Paket üst verisiyle (metadata) hedef doğrulama, uyumluluk matrisi, uyumsuz yüklemenin reddi |
+| Yüklenen şey doğru şey mi? | Uygunsuz yazılımın yüklenmesinin etkileri; donanım/yazılım, yazılım/yazılım ve uçak/yazılım uyumluluğu | Paket metadata'sıyla hedef doğrulama, uyumluluk matrisi, uyumsuz yüklemenin reddi |
 | Yükleme yanlış zamanda başlayabilir mi? | Yükleme işlevinin istem dışı etkinleşmesi (inadvertent enabling) | Weight-on-wheels + bakım modu kilitleri |
 | Yüklü olan biliniyor mu? | Konfigürasyon kimliği gösteriminin kaybı ya da bozulması | Tekil parça numarası ve elektronik parça işaretleme |
 
@@ -161,7 +161,7 @@ birimde açılıştaki bütünlük kontrolü — çoğu tasarımda bir döngüse
 birkaç satırlık bir CRC hesabı" diyerek seviyeyi düşürmek, ancak emniyet
 değerlendirmesiyle savunulabiliyorsa mümkündür.
 
-Pratik görünümü: imaj, hem yükleme sırasında hem de **her açılışta** doğrulanır.
+Pratikte imaj, hem yükleme sırasında hem de **her açılışta** doğrulanır.
 Doğrulama başarısızsa uygulama hiç başlatılmaz; birim başlatma (boot) veya bakım
 modunda kalır ve durumunu raporlar. Yaklaşım "kabul et, sonra düzelt" değil,
 "doğrulanamayanı hiç çalıştırma"dır.
@@ -170,15 +170,15 @@ Bir bütünlük kontrolünün var olması, **yeterli** olduğu anlamına gelmez.
 kontrol değeri, rastgele bozulmuş bir imajı kabaca 2 üzeri −n olasılıkla kaçırır (32 bit
 için yaklaşık dört milyarda bir); ayrıca bir CRC polinomunun belirli sayıda bit hatasını
 kesin yakalama garantisi yalnızca sınırlı bir veri uzunluğuna kadar geçerlidir.
-Megabaytlarca imajı tek bir kısa kontrol değeriyle korumak bu yüzden savunulamaz: ya
+Megabaytlarca büyüklükte bir imajı tek bir kısa kontrol değeriyle korumak bu yüzden savunulamaz: ya
 kontrol değeri uzatılır ya da imaj ayrı ayrı korunan bloklara bölünür. Hangi yol
 seçilirse seçilsin kaçırma olasılığının yüklenen yazılımın seviyesiyle bağdaştığı
 gösterilir; bu gerekçe, ileride görüleceği gibi planlarda yer alır.
 
 ### Uyumluluk üç eksende doğrulanır
 
-- **Donanım/yazılım:** Hedef birimin donanım parça numarası ve revizyonu, paketin üst
-  verisindeki hedef tanımıyla eşleşmelidir; yanlış hedefe yükleme reddedilir.
+- **Donanım/yazılım:** Hedef birimin donanım parça numarası ve revizyonu, paketin
+  metadata'sındaki hedef tanımıyla eşleşmelidir; yanlış hedefe yükleme reddedilir.
 - **Yazılım/yazılım:** Birbiriyle konuşan veya yedekli çalışan birimlerin sürümleri,
   birlikte onaylanmış bir kombinasyon oluşturmalıdır. En sinsi senaryo filo geçişidir:
   güncelleme kampanyası sırasında aynı uçakta sol birim yeni, sağ birim eski sürümde
@@ -193,7 +193,7 @@ gösterilir; bu gerekçe, ileride görüleceği gibi planlarda yer alır.
   farklı yazılım sürümleri gerektirebilir; paketin o uçak konfigürasyonuna uygunluğu
   doğrulanır.
 
-Bu kontroller, yükleme kabul edilmeden önce paket üst verisi üzerinden otomatik
+Bu kontroller, yükleme kabul edilmeden önce paket metadata'sı üzerinden otomatik
 yapılır. DO-178C yükleme işlevini destek sistemleri ve prosedürleriyle bir bütün olarak
 görür: yanlış yazılım, donanım ve uçak birleşimleri yakalanabilmeli, koruma da ilgili
 işlevin arıza durumuyla orantılı olmalıdır. Prosedür korumanın parçasıdır, ama arıza
@@ -261,10 +261,10 @@ yolu üzerinden, ARINC 615A ise Ethernet tabanlı ağlar üzerinden tanımlar; y
 tarafında havayollarının kullandığı taşınabilir çok amaçlı erişim terminali için de
 ARINC 644A rehberlik sağlar. Özel arayüzler de mümkündür, ama her özel çözüm yer
 ekipmanı tarafında ek geliştirme ve bakım yükü demektir. Arayüz tasarımında yalnızca
-"mutlu yol" değil; bağlantı kopması, zaman aşımı ve yarıda kesilen aktarım gibi
+"happy path" değil; bağlantı kopması, zaman aşımı ve yarıda kesilen aktarım gibi
 durumların davranışı da gereksinim olarak yazılmalıdır.
 
-**Paket biçimi.** Yüklenen şey tek bir ikili dosya değil, üst veri ile birlikte
+**Paket biçimi.** Yüklenen şey tek bir binary dosya değil, metadata ile birlikte
 paketlenmiş bir yazılım parçasıdır. İyi bir paket biçimi en azından şunları
 içerir:
 
@@ -273,12 +273,12 @@ içerir:
 - dosya listesi ve her dosyanın bütünlük değeri,
 - paketin tamamını kapsayan bir bütünlük değeri.
 
-Bu alanlar sayesinde yükleyici, aktarıma başlamadan önce "bu paket bu birime uygun mu"
+Bu alanlar sayesinde data loader, aktarıma başlamadan önce "bu paket bu birime uygun mu"
 sorusunu yanıtlayabilir; yanlış paketin yanlış birime yüklenmesi mekanizma düzeyinde
 engellenir. Bu alanların endüstrideki standart karşılığı ARINC 665'tir: yüklenebilir
 yazılım parçasının (loadable software part, LSP) başlık yapısını, dosya ve yük
 CRC'lerini, parça numarası biçimini ve medya setlerini tanımlar. ARINC 665'e uyum,
-farklı üreticilerin yükleyicileri ile hedef birimleri arasında birlikte çalışabilirlik
+farklı üreticilerin data loader'ları ile hedef birimleri arasında birlikte çalışabilirlik
 sağlar.
 
 **Bütünlük mekanizmaları.** Aktarım ve saklama sırasındaki bozulmayı yakalamak için
@@ -310,7 +310,7 @@ birleşir:
 
 ```mermaid
 flowchart TD
-    A[Paket data loader'a alınır] --> K{"Yükleme koşulları sağlanıyor mu?<br/>(uçak yerde, bakım modu seçili)"}
+    A["Paket data loader'a alınır"] --> K{"Yükleme koşulları sağlanıyor mu?<br/>(uçak yerde, bakım modu seçili)"}
     K -- Hayır --> N[Yükleme işlevi etkinleşmez]
     K -- Evet --> B{"Paket hedef donanıma, komşu sürümlere<br/>ve uçak konfigürasyonuna uygun mu?"}
     B -- Hayır --> R[Yükleme reddedilir]
@@ -343,7 +343,7 @@ vardır:
 
 İki mimaride de ilke aynıdır: birim hiçbir zaman kimliği belirsiz bir yazılımla uçuşa
 verilmez — ya bilinen onaylı sürüm çalışır ya da birim bakım modunda bekler. Eski
-sürüme bilinçli geri dönüş (rollback) de sıradan bir yükleme işlemidir: aynı uyumluluk
+sürüme bilinçli rollback de sıradan bir yükleme işlemidir: aynı uyumluluk
 ve bütünlük kontrollerinden geçer ve dönülen sürümün o uçak konfigürasyonu için hâlâ
 onaylı olması gerekir.
 
@@ -386,13 +386,13 @@ yaslandığına bağlıdır:
   açılış kontrolü) garanti ediliyorsa, her yüklemenin ayrıca doğrulanması gerekmez:
   mekanizma bir kez geliştirilip doğrulanır, sahadaki her yükleme onun güvencesinden
   yararlanır.
-- Güvence **yer tarafındaki yükleyiciye** dayanıyorsa — örneğin hedef birim gelen
-  veriyi sorgusuz kabul ediyorsa — bu kez yükleyicinin kendisinin doğrulanmış ve
+- Güvence **yer tarafındaki data loader'a** dayanıyorsa — örneğin hedef birim gelen
+  veriyi sorgusuz kabul ediyorsa — bu kez data loader'ın kendisinin doğrulanmış ve
   konfigürasyon kontrolü altında olması gerekir: araç kalifikasyonu (tool
   qualification) sorusu gündeme gelir (bkz.
   [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)),
-  yükleyici yazılımının DO-178C veya DO-330'a göre geliştirilmesi ve yüklemenin
-  yalnızca bu onaylı yükleyiciyle yapılması şart koşulabilir. Hedef taraflı kontroller
+  data loader yazılımının DO-178C veya DO-330'a göre geliştirilmesi ve yüklemenin
+  yalnızca bu onaylı data loader ile yapılması şart koşulabilir. Hedef taraflı kontroller
   olgunlaştığı için bu yaklaşım günümüzde nadiren tercih edilir.
 
 Konfigürasyon yönetimi tarafında sahada yükleme, DO-178C'nin yazılım yükleme kontrolü
@@ -420,7 +420,7 @@ rehberlerinden bu yana endüstride yerleşmiş iyi uygulamayı özetler. Her yü
 2. Onaylı yükleme prosedürü izlenmiştir.
 3. Donanım/yazılım kombinasyonu onaylıdır: yazılım, üzerine yüklendiği donanım için
    onaylanmış sürümdür.
-4. Uçak veya motor konfigürasyonu onaylıdır — yedekli birimler dahil; karışık
+4. Uçak veya motor konfigürasyonu onaylıdır — yedekli birimler dâhil; karışık
    eski–yeni sürüm kombinasyonu ancak açıkça onaylıysa bırakılabilir.
 5. Yükleme eksiksiz ve hatasız tamamlanmıştır: hesaplanan bütünlük değeri, yükleme
    talimatında verilen beklenen değerle karşılaştırılır.
@@ -487,7 +487,7 @@ standartları.
 | DO-178C §2.5.5 (ayrıca §6.4.3, §7.2.1, §7.4, §11.16) | Sistem tasarımı hususları: emniyet değerlendirmesinin ele alacağı yükleme riskleri; yazılım süreçlerinde test, kimlik, yükleme kontrolü ve SCI karşılıkları |
 | AC 20-115D / AMC 20-115D (8. bölüm) | Geliştiriciye düşen şartlar (FAA ve EASA metinleri teknik olarak aynıdır) |
 | AC 43-216A | Uçak bakımı sırasında yazılım yönetimi (operatör ve bakım kuruluşu tarafı) |
-| ARINC 615 / 615A | Yükleyici–hedef birim protokolü (ARINC 429 / Ethernet üzerinden) |
+| ARINC 615 / 615A | Data loader–hedef birim protokolü (ARINC 429 / Ethernet üzerinden) |
 | ARINC 644A | Taşınabilir çok amaçlı erişim (bakım) terminali rehberi |
 | ARINC 665 | Yüklenebilir parça ve medya biçimi, parça numarası şeması, CRC'ler |
 | ARINC 667 | Filo çapında yüklenebilir yazılım yönetimi |
@@ -525,8 +525,8 @@ hedef bilgisayara yüklenen imajdır.
   gerekçelendirmedikçe, yüklenen yazılımı kullanan işlevin en ağır arıza durumu sınıfı
   ya da en yüksek yazılım seviyesi atanır; kontrolün yeterliliği imaj boyutuna göre
   gösterilir; doğrulanamayan imaj hiç çalıştırılmaz.
-- Sahada yüklenebilirlik baştan tasarlanır: yükleme arayüzü (ARINC 615/615A), üst
-  verili paket biçimi (ARINC 665), her açılışta bütünlük kontrolü ve kimlik raporlama
+- Sahada yüklenebilirlik baştan tasarlanır: yükleme arayüzü (ARINC 615/615A),
+  metadata'lı paket biçimi (ARINC 665), her açılışta bütünlük kontrolü ve kimlik raporlama
   sistemin parçasıdır. Yarıda kalan yüklemede birim ya bilinen onaylı sürümle çalışır
   ya da bakım modunda bekler; kimliği belirsiz birim uçuşa verilmez.
 - FLS de DO-178C'ye göre geliştirilir; planlar yükleme stratejisini, bütünlük

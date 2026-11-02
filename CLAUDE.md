@@ -121,9 +121,12 @@ CONTRIBUTING.md           Katkı rehberi (GitHub, issue ve PR ekranlarında gös
 - İngilizce terim düz yazılır (tırnak, italik yok) ve eki kesme işaretiyle, **okunuşuna göre**
   alır: baseline'ı, baseline'da, baseline'lar; test case'i, test case'te, test case'ler;
   script'i, script'te; stack'i, stack'te; linker'ı, linker'da; build'i, build'de; peer review'yu,
-  peer review'nun, peer review'da; assembly'yi, assembly'nin; mutex'i, mutex'te. Ayrı yazılan
+  peer review'nun, peer review'su, peer review'da; assembly'yi, assembly'nin; mutex'i, mutex'te;
+  kernel'i, kernel'de; binary'nin. Ayrı yazılan
   "de/da" ve "mi" de okunuşa uyar: baseline da, test case de. Birleşik addaki iyelik eki de
   böyle yazılır: konfigürasyon baseline'ı, test script'i, linker script'i.
+- Yazım TDK'ya uyar; kitapta sık geçenler: dâhil, söz dizimi, tam sayı, hava hızı, kâğıt, hâlâ.
+  "Bire bir" değil birebir yazılır.
 - Dosya ve klasör adları **ASCII** olmalıdır (`giris`, `dogrulama`); Türkçe karakterler
   yalnızca frontmatter `title` ve `_category_.json` `label` alanlarında kullanılır. Terim
   değişince dosya adı ve sayfa adresi değiştirilmez (`07-test-durumlari-ve-prosedurleri.mdx`).
@@ -143,14 +146,18 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | gap analizi | boşluk analizi |
 | dry run | kuru koşu |
 | branch (konfigürasyon yönetiminde) | dal (koddaki dal, "if'in iki dalı" kalır) |
+| merge (konfigürasyon yönetiminde) | birleştirme ("imaj birleştirme" gibi genel anlam kalır) |
 | snapshot, rollback | anlık görüntü, geri dönüş |
-| position paper, suspect link | tutum belgesi, şüpheli bağ |
+| position paper, issue paper, suspect link | tutum belgesi, görüş belgesi, şüpheli bağ |
 | build (derleme ve bağlamanın bütünü ya da çıktısı: build ortamı, build kaydı, build script'i, full build, instrumented build) | derleme (derleyicinin kendi adımı için "derleme" kalır: derleme seçeneği, derleme zamanı, koşullu derleme, yeniden derleme) |
 | linker, linker script, linker map, map dosyası | bağlayıcı, bağlayıcı betiği, bağlama haritası ("bağlama" adımı ve zorunluluk anlamında "bağlayıcı kural" kalır) |
 | loader, data loader, bootloader | yükleyici, veri yükleyici, önyükleyici |
 | assembly, assembler, assembly listesi, inline assembly, disassembly | çevirici dili, çevirici, çevirici listesi, ters çevirme |
 | instrumentation, instrumented | donatma, donatılmış |
-| hardware trace, basic block | donanım izleme, temel blok |
+| hardware trace, trace birimi, trace buffer'ı, trace portu, trace verisi | donanım izleme, izleme birimi, izleme verisi (DO-178C'nin "iz verisi" kalır) |
+| basic block | temel blok |
+| binary | ikili (ARINC 429 BNR için "ikili" ve "ikili yapı" gibi genel anlam kalır) |
+| stub, test hook, breakpoint, happy path | yer tutucu kod, test kancası, kesme noktası, mutlu yol |
 | pseudo-instruction, literal pool, calling convention | sözde komut, sabit havuzu, çağrı kuralı |
 | script | betik |
 | debugger | hata ayıklayıcı ("hata ayıklama" kalır) |
@@ -158,8 +165,10 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | checksum, hash, metadata | sağlama toplamı, içerik özeti, üst veri |
 | optimizer, inlining, loop unrolling, padding, weak symbol | eniyileyici, satır içine alma, döngü açma, dolgu, zayıf sembol |
 | formatter, wrapper, solver, host | biçimlendirici, sarmalayıcı, çözücü, ana bilgisayar |
-| stack, heap, buffer, pointer, register, string | yığın, öbek, tampon, işaretçi, yazmaç, dizge |
-| reentrant, polling | yeniden girilebilir, yoklama |
+| stack, stack protector, heap, buffer, pointer, register, string | yığın, yığın koruyucu, öbek, tampon, işaretçi, yazmaç, dizge |
+| constructor, destructor, allocator, container | kurucu, yıkıcı, ayırıcı, kap |
+| latch | mandal |
+| reentrant, reentrancy, polling | yeniden girilebilir, yeniden girilebilirlik, yoklama |
 | cyclomatic complexity | çevrimsel karmaşıklık |
 | short-circuit evaluation | kısa devre değerlendirmesi |
 | unique-cause MC/DC, masking MC/DC, coupled condition | benzersiz neden MC/DC, maskeleme MC/DC, bağlı koşul |
@@ -168,15 +177,15 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | deadline | zaman sınırı, son tarih, termin |
 | jitter | titreşim |
 | context switch, critical section | bağlam değiştirme, kritik kesit |
-| mutex, deadlock, race condition | muteks, kilitlenme, yarış durumu |
+| mutex, deadlock, race condition, data race | muteks, kilitlenme, yarış durumu, veri yarışı |
 | priority inversion, priority inheritance, priority ceiling | öncelik terslenmesi, öncelik kalıtımı, öncelik tavanı |
 | preemptive, non-preemptive | kesintili, kesintisiz |
 | rate-monotonic (RM), deadline-monotonic (DM) | hız-monoton, zaman sınırı-monoton |
 | blocking time | engellenme süresi |
-| cyclic executive, major frame, minor frame | döngüsel yürütücü, ana çerçeve, küçük çerçeve |
+| cyclic executive, major frame, minor frame, frame süresi, frame tablosu | döngüsel yürütücü, ana çerçeve, küçük çerçeve, çerçeve süresi, çerçeve tablosu |
 | timer, watchdog, watchdog timer, tick, tickless | zamanlayıcı, bekçi köpeği, tık, tıksız |
 | partition, sampling port, queuing port | bölüm ("kitap bölümü" ile karışır), bölme, örnekleme portu, kuyruk portu ("bölümleme" kalır) |
-| kernel, kernel mode, user mode | çekirdek, çekirdek kipi, kullanıcı kipi (işlemci çekirdeği "çekirdek" kalır) |
+| kernel, kernel mode, user mode, IP core | çekirdek, çekirdek kipi, kullanıcı kipi, IP çekirdeği (işlemci çekirdeği "çekirdek" kalır) |
 | BSP (board support package) | kart destek paketi |
 | throughput, pipeline (işlemci) | iş çıkarma, boru hattı |
 | theorem proving, model checking, abstract interpretation | teorem ispatı, model kontrolü, soyut yorumlama |
@@ -366,6 +375,41 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | araç kurulum raporu | Tool Installation Report |
 | operasyonel doğrulama ve geçerleme | tool operational verification and validation |
 | araç geliştiricisi / araç kullanıcısı | tool developer / tool user |
+| derleyici | compiler |
+| kesme | interrupt |
+| görev | task |
+| önbellek | cache |
+| bellek haritası | memory map |
+| hata ayıklama | debugging |
+| özyineleme | recursion |
+| kilit | lock |
+| çalışma zamanı kütüphanesi | runtime library |
+| kalıtım / çok biçimlilik | inheritance / polymorphism |
+| aşırı yükleme | overloading |
+| çöp toplama | garbage collection |
+| sözde kod | pseudocode |
+| ayrıştırıcı | parser |
+| çağrı grafiği / kontrol akış grafiği | call graph / control flow graph |
+| savunmacı programlama | defensive programming |
+| yanlış alarm | false alarm, false positive |
+| karşı örnek | counterexample |
+| kök neden | root cause |
+| yazılım doğrulama durumları ve prosedürleri | Software Verification Cases and Procedures (SVCP; belge adı, kapsamı test case'ten geniştir) |
+| biçimsel analiz durumu | formal analysis case |
+| hedef dışı ortam | off-target (emülatör ve simülatörü de kapsar, host değildir) |
+| sürüm teslimi | release |
+| uygunsuzluk | nonconformance |
+| tanıklık | witnessing |
+| kredi amaçlı | for-credit |
+| iç ön denetim | mock audit |
+| yeniden çalışma | rework |
+| kısıtlı çalışma modu | degraded mode |
+| girişim kanalı | interference channel |
+| sağlık izleme | health monitoring |
+| gürbüz bölümleme | robust partitioning |
+| sürekli uçuşa elverişlilik | continuing airworthiness |
+| derinlemesine savunma | defense in depth |
+| özel anahtar | private key |
 
 Aynı kavram için şu varyantlar da **kullanılmaz**: objective anlamında "amaç" (hedef); review
 anlamında "inceleme" (gözden geçirme); DO-178C yazılım seviyesi anlamında "güvence
@@ -417,6 +461,7 @@ Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik ç
   cümlelerinizle anlatılır.
 - Diyagramlar **Mermaid** ile metin olarak yazılır (`mermaid` kod bloğu). Harici görsel
   yerine mümkün olduğunca Mermaid tercih edilir.
+- Akış şemasında kesme işareti içeren etiket çift tırnak içinde yazılır: `A["Baseline'a alınır"]`.
 - **Diyagram içerik sütununa okunur boyutta sığmalıdır.** Sütun masaüstünde ~700 px'tir;
   diyagram daha genişse orantılı küçülür ve Mermaid'in 16 px'lik yazısı ufalır. Doğal
   genişlik ~930 px'i (yazı ~12 px) aşmamalıdır. Beş-altı adımlık zincir `flowchart LR` yerine
@@ -816,6 +861,8 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
   (`src/pages/index.tsx`). Tüm sayfalara ortak bir `keywords`/`description` eklenmez,
   yoksa aramalar ilgisiz sayfalarla dolar. Yeni docs eklentisi eklenirse
   `docsRouteBasePath` ve `docsDir` listelerine de eklenir.
+  Türkçe kök ayırıcı nadir ek zincirlerinde ("araçlarınınkiyle") `faulty slice operation` hatası
+  verip derlemeyi durdurur; hata `lunr-languages`'ten gelir, çözüm o sözcüğü başka türlü yazmaktır.
 - **Adresler ASCII:** üretilen dizin sayfalarının adresi etiketten türetilir; Türkçe
   karakterli bir `label` için `_category_.json` içinde `link.slug` (ör.
   `/category/emniyet-muhendisligi`) verilir. Adres değişirse `redirects` listesine eklenir.

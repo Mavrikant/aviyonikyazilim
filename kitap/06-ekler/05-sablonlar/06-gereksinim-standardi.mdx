@@ -101,7 +101,7 @@ beklentilerini nasıl karşıladığını da belirtir.
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Bu standart projedeki tüm gereksinimler için geçerlidir. | Bu standart `<yazılım adı>` yazılımının, türetilmiş olanlar dahil, yüksek seviyeli gereksinimlerine uygulanır; 4.2'deki yasaklı ifade listesi (GS-07) düşük seviyeli gereksinimlere de uygulanır, onların cümle biçimi tasarım standardındadır. |
+| Bu standart projedeki tüm gereksinimler için geçerlidir. | Bu standart `<yazılım adı>` yazılımının, türetilmiş olanlar dâhil, yüksek seviyeli gereksinimlerine uygulanır; 4.2'deki yasaklı ifade listesi (GS-07) düşük seviyeli gereksinimlere de uygulanır, onların cümle biçimi tasarım standardındadır. |
 
 ### 2. Gereksinim geliştirme yöntemi
 
@@ -112,18 +112,18 @@ analiz edildiğini, gereksinimlerin hangi yapı içinde düzenlendiğini ve anal
 eksikliğin sisteme hangi kanalla bildirildiğini anlatır. Süreç adımları yazılım geliştirme
 planında (Software Development Plan, SDP) durur; standart, o adımlarda üretilen gereksinimin
 biçimini belirler. Gösterim kararında her gösterimin hangi içerik için kullanılacağı yazılır:
-örneğin bileşik koşullar için karar tablosu, çalışma kipleri için durum geçiş tablosu, geri
+örneğin bileşik koşullar için karar tablosu, çalışma modları için durum geçiş tablosu, geri
 kalan her şey için düz metin.
 
 **Verilecek kararlar:**
 
-- Gereksinimler hangi eksende gruplanır: işlev, çalışma kipi, arayüz?
+- Gereksinimler hangi eksende gruplanır: işlev, çalışma modu, arayüz?
 - Hangi gösterimlere izin verilir ve her biri hangi içerik türü için kullanılır?
 - Sistem girdisindeki belirsizlik ya da çelişki hangi kayıtla, kime bildirilir?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| GS-01 | Tablo biçimindeki gereksinimde her satır, durum geçiş tablosunda her geçiş ayrı kimlik taşır. | Satır satır iz ve test case kurulabilir | Tablolu gereksinimlerde kimliksiz satır aranır |
+| GS-01 | Tablo biçimindeki gereksinimde her satır, durum geçiş tablosunda her geçiş ayrı kimlik taşır. | Satır satır iz kurulabilir ve test case yazılabilir | Tablolu gereksinimlerde kimliksiz satır aranır |
 | GS-02 | Açıklayıcı şekil, tablo ve notlar "Bilgi" türüyle işaretlenir; izlenmez, test edilmez. | Bağlayıcı içerik açıklamayla karışmaz | Araçta türü boş nesne sorgulanır; "Bilgi" türündeki nesnelerde bağlayıcı kip taranır |
 
 ### 3. Yazım kalıpları
@@ -140,12 +140,12 @@ Cümle kalıpları aynı türden davranışın her yazarda aynı biçimde okunma
 | Kalıp | Kullanıldığı yer | Örnek |
 |---|---|---|
 | `Yazılım, <olay> olduğunda, <süre> içinde <tepki>-malıdır.` | Olayla tetiklenen davranış | Yazılım, ön ısıtma başlat komutu alındığında, en geç 100 ms içinde ısıtıcı rölesi çıkışını etkinleştirmelidir. |
-| `Yazılım, <kip> kipindeyken, <tepki>-malıdır.` | Kipe bağlı sürekli davranış | Yazılım, UÇUŞ kipindeyken, bakım verisi indirme isteklerini reddetmelidir. |
+| `Yazılım, <mod> modundayken, <tepki>-malıdır.` | Moda bağlı sürekli davranış | Yazılım, UÇUŞ modundayken, bakım verisi indirme isteklerini reddetmelidir. |
 | `Yazılım, <koşul> ise, <tepki>-malıdır.` | Koşula bağlı davranış | Yazılım, iki yakıt miktarı kanalı arasındaki fark 150 kg'ı aşıyorsa, yakıt uyumsuzluk bayrağını etkinleştirmelidir. |
-| `Yazılım, <koşul> durumunda, <tepki>-mamalıdır.` | İstenmeyen davranışın yasaklanması | Yazılım, weight-on-wheels sinyalinin YERDE olmadığı durumda, yazılım yükleme kipine geçmemelidir. |
+| `Yazılım, <koşul> durumunda, <tepki>-mamalıdır.` | İstenmeyen davranışın yasaklanması | Yazılım, weight-on-wheels sinyalinin YERDE olmadığı durumda, yazılım yükleme moduna geçmemelidir. |
 
-Terim sözlüğü de bu bölümdedir: kip adları, "geçersiz", "bayat" gibi sık geçen sözcükler
-bir kez tanımlanır ve yazımları (ör. kip adlarının büyük harfle yazılması) sabitlenir.
+Terim sözlüğü de bu bölümdedir: mod adları, "geçersiz", "bayat" gibi sık geçen sözcükler
+bir kez tanımlanır ve yazımları (ör. mod adlarının büyük harfle yazılması) sabitlenir.
 
 **Verilecek kararlar:**
 
@@ -158,7 +158,7 @@ bir kez tanımlanır ve yazımları (ör. kip adlarının büyük harfle yazılm
 | GS-03 | Metin biçimindeki her gereksinim tek cümledir; öznesi "yazılım" ya da adı tanımlı bir yazılım işlevidir. Tablo satırları GS-01'e uyar. | Davranışın kimden beklendiği bellidir | Öznesi "sistem", "kullanıcı" olan ya da edilgen cümle aranır |
 | GS-04 | Bağlayıcı cümle yalnızca "-malıdır / -melidir" kipiyle (olumsuzu "-mamalıdır / -memelidir") kurulur. | Bağlayıcı ile bilgi ayrışır | Araçta kip taraması; sonuç gözden geçirme kaydına eklenir |
 | GS-05 | Bir gereksinim tek tepki tanımlar; tepkiler "ve", "ayrıca" ya da virgülle sıralanmaz. | Her tepki ayrı test edilir, izlenir ve değişir | Ana cümlede birden çok yüklem aranır |
-| GS-06 | Tanımlı terimler yalnızca sözlükteki anlam ve yazımla kullanılır. | Aynı kavrama iki ad verilmez | Sözlük dışı kip adı ve eş anlamlı aranır |
+| GS-06 | Tanımlı terimler yalnızca sözlükteki anlam ve yazımla kullanılır. | Aynı kavrama iki ad verilmez | Sözlük dışı mod adı ve eş anlamlı aranır |
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
@@ -196,7 +196,7 @@ geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test case
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | GS-07 | Yasaklı ifade listesindeki sözcükler gereksinim metninde geçmez. | Ölçüsüz sözcük kararı kodlayıcıya ve test mühendisine bırakır | Araç taraması; sonuç gözden geçirme kaydına eklenir |
-| GS-08 | Mutlak ifade ("her zaman", "hiçbir zaman", "asla", "her koşulda") yalnızca doğrulama yöntemi özniteliğinde Analiz bulunan gereksinimde kullanılır; gereksinimin test case yine yazılır. | Mutlak ifade yalnızca testle gösterilemez; her gereksinimin testi de beklenir | Mutlak ifade taraması; bulunan gereksinimde Analiz değeri ve test izi aranır |
+| GS-08 | Mutlak ifade ("her zaman", "hiçbir zaman", "asla", "her koşulda") yalnızca doğrulama yöntemi özniteliğinde Analiz bulunan gereksinimde kullanılır; gereksinimin test case'i yine yazılır. | Mutlak ifade yalnızca testle gösterilemez; her gereksinimin testi de beklenir | Mutlak ifade taraması; bulunan gereksinimde Analiz değeri ve test izi aranır |
 | GS-09 | Gereksinim metninde fonksiyon, değişken, görev ya da dosya adı, test adımı ya da test ortamı geçmez; zorunlu tasarım kısıtı "Tasarım kısıtı" türüyle ve gerekçesiyle yazılır. | Gereksinim tasarımdan ve testten bağımsız kalır | ICD sinyal kimlikleri dışındaki alt çizgili ya da büyük-küçük harf karışık sözcük taraması; test ayrıntısı gözden geçirmede |
 
 ### 5. Sayısal değerler
@@ -204,7 +204,7 @@ geçmez; test adımı, test ortamı ve test girdisi gereksinime değil test case
 Gereksinimin test edilebilirliği çoğunlukla sayılarında saklıdır. DO-178C, uygulanabildiği
 yerde yüksek seviyeli gereksinimlerin toleransıyla birlikte nicel olarak ifade edilmesini
 bekler; standart bunun biçimini belirler. Hangi birimler kullanılır, ondalık ayırıcı virgül mü
-noktadır, aralık uçları dahil midir, tolerans simetrik mi yoksa alt ve üst sınır olarak mı
+nokta mı, aralık uçları dâhil midir, tolerans simetrik mi yoksa alt ve üst sınır olarak mı
 yazılır, zamanlama değeri hangi olaydan hangi çıktıya ölçülür? Türkçe metinde ondalık virgül,
 İngilizce arayüz belgelerinde nokta kullanılması gibi ayrıntılar ancak standartta yazılırsa tek
 biçimde uygulanır. Doğruluk (accuracy), çözünürlük ve kesinlik (precision) ayrımı da burada
@@ -222,7 +222,7 @@ tanımlanır; üçü ayrı test edilir.
 |---|---|---|---|
 | GS-10 | Fiziksel büyüklük ve süre bildiren her sayısal değer birimiyle yazılır; birim projenin birim tablosundan seçilir. Kimlik, etiket numarası ve sayım birimsizdir. | Birimsiz büyüklük iki biçimde okunabilir | Birimsiz sayı taraması; kimlik, etiket ve sayımlar elenir |
 | GS-11 | Gecikme gereksiniminde başlangıç olayı ve sınır ("komut alındığında, en geç 100 ms içinde"), periyodik gereksinimde periyot ve toleransı ("1000 ms ± 50 ms periyotla") yazılır. | Testin geçme ölçütü gereksinimden okunur | Zamanlama gereksiniminde türe göre başlangıç olayı ve sınır ya da periyot ve tolerans aranır |
-| GS-12 | Aralık uçlarının dahil olup olmadığı yazılır. | Sınır değer testinin beklenen sonucu belirsiz kalmaz | Aralık içeren gereksinimde uç ifadesi aranır |
+| GS-12 | Aralık uçlarının dâhil olup olmadığı yazılır. | Sınır değer testinin beklenen sonucu belirsiz kalmaz | Aralık içeren gereksinimde uç ifadesi aranır |
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
@@ -234,8 +234,8 @@ tanımlanır; üçü ayrı test edilir.
 Öznitelikler, gereksinim cümlesinin söylemediği ama gözden geçirmenin, doğrulamanın ve emniyet
 sürecinin ihtiyaç duyduğu bilgiyi taşır. Liste, yazılım gereksinim verisinden beklenen
 içerikle hizalanır: emniyetle ilgili gereksinimler ve ilişkili arıza durumları (failure
-condition), çalışma kipleri ve bölümleme kullanılıyorsa gereksinimin ait olduğu bölüm
-(partition) ile o bölümün yazılım seviyesi birer öznitelikle görünür kılınır. Değerler kapalı
+condition), çalışma modları ve bölümleme kullanılıyorsa gereksinimin ait olduğu partition
+ile o partition'ın yazılım seviyesi birer öznitelikle görünür kılınır. Değerler kapalı
 listedir; serbest metin yalnızca gerekçe gibi açıklama gerektiren alanlarda kullanılır.
 
 | Öznitelik | Alabileceği değerler | Zorunlu mu? |
@@ -249,7 +249,7 @@ listedir; serbest metin yalnızca gerekçe gibi açıklama gerektiren alanlarda 
 | Emniyet etkisi | İlgili (arıza durumu kimliğiyle), İlgisiz | Evet |
 | Emniyet değerlendirmesi | İletim kaydı kimliği; gelince değerlendirme sonucu | Türetilmişse evet (kayıt kimliği) |
 | Doğrulama yöntemi | Test, Analiz, Gözden geçirme (birden çok seçilebilir) | Evet |
-| Kip ve bölüm | Kip listesi; bölüm adı ve yazılım seviyesi | Uygulanıyorsa evet |
+| Mod ve partition | Mod listesi; partition adı ve yazılım seviyesi | Uygulanıyorsa evet |
 | Sapma | GS numarası ve sapma kaydı kimliği | Sapma varsa evet |
 
 **Verilecek kararlar:**
@@ -277,8 +277,8 @@ Verification Plan, SVP) durur; burada yalnızca ortak kimlik biçimi söylenir.
 
 - İz araçta bağ olarak mı, öznitelik metni olarak mı tutulur?
 - Yazılıma tahsis edilen sistem gereksinimlerinin listesi hangi sürümle, nereden alınır?
-- Sistem gereksinimi ya da ICD yeni sürüme geçince bağlı gereksinimler araçta şüpheli bağ
-  (suspect link) olarak işaretlenir mi; işareti kim, hangi baseline'dan önce kapatır?
+- Sistem gereksinimi ya da ICD yeni sürüme geçince bağlı gereksinimler araçta suspect link
+  olarak işaretlenir mi; işareti kim, hangi baseline'dan önce kapatır?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
@@ -359,26 +359,26 @@ standardı açısından anlamı şudur: savunmacı kod yazmak kodlama standardı
 koşulda doğru tepkinin ne olduğu gereksinimde yazılır. Yazılmazsa gürbüzlük testlerinin
 beklenen sonucu koddan okunur ve test kodun aynasına dönüşür. Standart, her gereksinim
 kümesinde ele alınacak anormal durum sınıflarını listeler: aralık dışı ve bozuk girdi, bayat
-veri, izin verilmeyen kip geçişi, açılış ve yeniden başlatma, çerçeve süresinin aşılması,
+veri, izin verilmeyen mod geçişi, açılış ve yeniden başlatma, frame süresinin aşılması,
 donanımın bildirdiği arıza. Bir sınıf projeye uygulanmıyorsa bu da açıkça yazılır.
 
 **Verilecek kararlar:**
 
 - Açılışta ve yeniden başlatmada çıktıların başlangıç değerleri nerede tanımlanır?
-- Koruyucu davranışlar hangi kipte devre dışı kalabilir (ör. bakım kipi) ve bu nasıl yazılır?
+- Koruyucu davranışlar hangi modda devre dışı kalabilir (ör. bakım modu) ve bu nasıl yazılır?
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
 | GS-22 | Aralığı tanımlı her sayısal girdi için aralık dışı değerdeki tepki bir gereksinimde tanımlanır. | Gürbüzlük testi beklenen sonucu gereksinimden okur | Girdi listesi aralık dışı gereksinimlerle karşılaştırılır |
-| GS-23 | Her çalışma kipi için kabul edilmeyen geçiş isteğine verilecek tepki tanımlanır. | Tanımsız geçiş, test edilmemiş davranıştır | Kip geçiş tablosunda boş hücre aranır |
+| GS-23 | Her çalışma modu için kabul edilmeyen geçiş isteğine verilecek tepki tanımlanır. | Tanımsız geçiş, test edilmemiş davranıştır | Mod geçiş tablosunda boş hücre aranır |
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| Yazılım geçersiz girdilere karşı gürbüz olmalıdır. | Yazılım, −1000 ft ile 50 000 ft (uçlar dahil) aralığının dışındaki basınç irtifası değerini geçersiz saymalıdır. |
+| Yazılım geçersiz girdilere karşı gürbüz olmalıdır. | Yazılım, −1000 ft ile 50 000 ft (uçlar dâhil) aralığının dışındaki basınç irtifası değerini geçersiz saymalıdır. |
 
 ### 11. Gereksinim yönetim aracı kısıtları
 
-Standart, gereksinim geliştirmede kullanılan araçların kullanımına da sınır koyar. Aracın adı
+Standart, gereksinim geliştirme araçlarının kullanımına da sınır koyar. Aracın adı
 ve sürümü SDP'de ve yazılım yaşam döngüsü ortam konfigürasyon indeksinde (Software Life Cycle
 Environment Configuration Index, SECI) durur; bu bölüm aracın proje içindeki kullanım
 kurallarını verir: belge yapısı, öznitelik alanları ve değer listeleri, bağ türleri, kullanıcı
@@ -411,7 +411,7 @@ bölümün akışını kullanmak iki standardı tutarlı tutar
 
 Gereksinimler biçimsel bir gösterimle (formal notation) yazılıyor ya da doğrulama için
 biçimselleştiriliyorsa DO-333 gösterim maddesine koşul ekler. Standart, kullanılan gösterimin
-sözdizimini ve anlamını kesin olarak tanımlayan başvuru belgesini adlandırır
+söz dizimini ve anlamını kesin olarak tanımlayan başvuru belgesini adlandırır
 (`<dil adı ve sürümü, tanım belgesi>`); analiz aracının desteklemediği ya da analizi geçersiz
 kılan dil öğeleri yasaklı listeye alınır. Doğal dil metni ile biçimsel karşılığı
 birlikte tutuluyorsa hangisinin bağlayıcı olduğu yazılır ve biçimselleştirmenin aslına sadık

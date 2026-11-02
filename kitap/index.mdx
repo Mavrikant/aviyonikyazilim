@@ -10,7 +10,7 @@ import KitapIcindekiler from '@site/src/components/KitapIcindekiler';
 
 Bu kitap, DO-178C ekseninde emniyet-kritik aviyonik yazılım geliştirmeyi, doğrulamayı
 ve sertifikasyon kanıtı üretmeyi Türkçe ve özgün bir dille anlatır. Amaç, standardı
-yalnızca maddeler hâlinde özetlemek değil; neden bu beklentilerin bulunduğunu, pratikte
+yalnızca maddeler hâlinde özetlemek değil; bu beklentilerin neden var olduğunu, pratikte
 nasıl uygulandığını ve tipik proje kararlarını nasıl etkilediğini göstermektir.
 
 Kitap, yazılımın sistem ve emniyet değerlendirmesi içindeki yerinden başlar; ardından
@@ -19,7 +19,7 @@ entegrasyon, doğrulama, konfigürasyon yönetimi, kalite güvencesi, sertifikas
 irtibatı), araç kalifikasyonunu ve teknoloji eklerini (supplement), son olarak da gerçek
 zamanlı işletim sistemleri, yazılım bölümlemesi, sahada yüklenebilir yazılım ve yeniden
 kullanım gibi özel konuları aynı çerçevede ele alır. Böylece okuyucu yalnızca belge
-isimlerini değil, o belgelerin proje akışındaki yerini, birbirleriyle olan bağıntısını
+isimlerini değil, o belgelerin proje akışındaki yerini, birbirleriyle bağını
 ve emniyet hedefleriyle ilişkisini de görür.
 
 Bu içerik, yeni başlayan bir mühendisin konuyu sistemli biçimde öğrenmesine yardımcı
@@ -30,7 +30,7 @@ daha net kurmasını sağlayacak kadar ayrıntılı olacak şekilde yazılmışt
 
 Kitabı baştan sona sıralı okumak en iyi yaklaşımdır: kısımlar girişten bağlama, DO-178C
 süreçlerinden araç kalifikasyonu ve teknoloji eklerine, oradan özel konulara ilerler ve
-ilk kez okuyan biri için en az sürtünmeli rotayı verir. Bu sıra zorunlu bir okuma emri
+ilk kez okuyan biri için en rahat rotayı verir. Bu sıra bir zorunluluk
 değildir; belirli bir iş üzerindeyseniz aşağıdaki rotalardan birini izleyebilirsiniz.
 
 | Durumunuz | Önerilen rota |
@@ -42,7 +42,7 @@ değildir; belirli bir iş üzerindeyseniz aşağıdaki rotalardan birini izleye
 | Kod yazıyor ya da entegrasyon yapıyorsunuz | [8. Yazılım Gerçekleştirme: Kodlama ve Entegrasyon](./03-do178c-ile-gelistirme/08-yazilim-gerceklestirme-kodlama-entegrasyon.mdx) |
 | Test aşamasındasınız | [9. Yazılım Doğrulama](./03-do178c-ile-gelistirme/09-yazilim-dogrulama.mdx), [17. Kapsanmayan Kodlar: Ölü, Gereksiz ve Devre Dışı Bırakılmış Kodlar](./05-ozel-konular/17-kapsanmayan-kodlar.mdx) ve [Ek A: Örnek Geçiş Kriterleri](./06-ekler/01-ek-a-ornek-gecis-kriterleri.mdx) |
 | Değişiklik, sürüm ya da süreç denetimiyle uğraşıyorsunuz | [10. Yazılım Konfigürasyon Yönetimi](./03-do178c-ile-gelistirme/10-yazilim-konfigurasyon-yonetimi.mdx) ve [11. Yazılım Kalite Güvencesi](./03-do178c-ile-gelistirme/11-yazilim-kalite-guvencesi.mdx) |
-| Araç kullanımı ya da model tabanlı geliştirme tartışıyorsunuz | [13. DO-330 ve Yazılım Aracı Kalifikasyonu](./04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx) ve [14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](./04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.mdx) |
+| Araç kullanımını ya da model tabanlı geliştirmeyi tartışıyorsunuz | [13. DO-330 ve Yazılım Aracı Kalifikasyonu](./04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx) ve [14. DO-331 ve Model Tabanlı Geliştirme ve Doğrulama](./04-arac-kalifikasyonu-ve-ekler/14-do331-model-tabanli-gelistirme.mdx) |
 
 Bunların dışında:
 
@@ -115,8 +115,8 @@ flowchart TD
 Diyagramın üst yarısı işin ana hattını, alt yarısı bu hatta baştan sona eşlik eden
 faaliyetleri gösterir. Doğrulama, konfigürasyon yönetimi, kalite güvencesi ve
 sertifikasyon irtibatı geliştirmenin ardından gelen adımlar değildir; DO-178C bunları
-bütünleyici süreçler (integral processes) olarak tanımlar ve planlamadan teslimata kadar
-geliştirmeyle eşzamanlı yürürler. Ana hat da düz bir üretim hattı değildir, geri
+bütünleyici süreçler (integral processes) olarak tanımlar; bu süreçler planlamadan teslimata
+kadar geliştirmeyle eşzamanlı yürür. Ana hat da düz bir üretim hattı değildir, geri
 beslemelidir: doğrulama bulguları gereksinim dilini düzeltebilir; tasarım eksikleri test
 kapsamını etkileyebilir; konfigürasyon yönetimi ise tüm çıktılar arasındaki tutarlılığı
 korur. Sertifikasyon kanıtı sonda derlenen bir paket değil, bu süreçlerin yol boyunca
@@ -140,4 +140,4 @@ Kitaptan yararlanıyorsanız kaynağı aşağıdaki biçimde gösterebilirsiniz;
 
 Bir web sayfasından ya da dokümandan bağlantı vermek için şu satırı kullanabilirsiniz: `<a href="https://aviyonikyazilim.com/kitap">DO-178C ile Emniyet-Kritik Aviyonik Yazılım</a>`
 
-Yeni blog yazılarını RSS ile takip etmek için akış adresi `https://aviyonikyazilim.com/blog/rss.xml` şeklindedir. Düzeltme ve katkı önerileri için [GitHub deposunu](https://github.com/Mavrikant/aviyonikyazilim) ya da GitHub kullanmayanlar için e-posta yolunu da gösteren [ana sayfadaki katkı bölümünü](/#katki) kullanabilirsiniz.
+Yeni blog yazılarını RSS ile şu adresten takip edebilirsiniz: `https://aviyonikyazilim.com/blog/rss.xml`. Düzeltme ve katkı önerileri için [GitHub deposunu](https://github.com/Mavrikant/aviyonikyazilim) ya da GitHub kullanmayanlar için e-posta yolunu da gösteren [ana sayfadaki katkı bölümünü](/#katki) kullanabilirsiniz.

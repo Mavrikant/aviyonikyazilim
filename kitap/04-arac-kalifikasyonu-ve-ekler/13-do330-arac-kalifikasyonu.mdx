@@ -102,7 +102,7 @@ belirlenir:
 sonrakine bakılır. Okurun en çok zorlandığı ayrım Ölçüt 2 ile Ölçüt 3 arasındadır ve
 aracın türüne değil, sonucundan ne kadar kredi alındığına bağlıdır. Sıfıra bölme gibi
 çalışma zamanı hatalarının bulunmadığını gösteren bir statik analiz aracını düşünün.
-Sonuç yalnızca kaynak kodun doğruluğu ve tutarlılığına ilişkin kanıt olarak
+Sonuç yalnızca kaynak kodun doğruluğuna ve tutarlılığına ilişkin kanıt olarak
 kullanılıyorsa araç Ölçüt 3'tedir. Aynı sonuç, ilgili gürbüzlük testlerinin bir kısmını
 yapmamanın gerekçesi de yapılıyorsa araç artık kendi otomatikleştirmediği bir faaliyeti
 azaltmaktadır ve Ölçüt 2'ye geçer. Biçimsel analiz araçlarında bu durum sık görülür
@@ -131,7 +131,7 @@ flowchart TD
 ```
 
 Pratikte en sık yapılan hata, aracı olduğundan ağır sınıflandırmaktır. Örneğin bir
-test otomasyon aracı, sonuçları bir mühendis tarafından ayrıca gözden geçiriliyorsa hiç
+test otomasyon aracı, sonuçlarını bir mühendis ayrıca gözden geçiriyorsa hiç
 kalifikasyon gerektirmeyebilir. Tersi hata da görülür: bir script "küçük" diye
 göz ardı edilir; oysa doğrulama kanıtı üreten ve çıktısı kontrol edilmeyen üç
 satırlık bir script bile kalifikasyon değerlendirmesine girmelidir.
@@ -152,7 +152,7 @@ requirements, TOR)** durur. TOR, aracın projede *nasıl kullanılacağını* ta
 - aracın hangi girdilerle, hangi ortamda ve hangi ayarlarla çalıştırılacağı,
 - her kullanım senaryosunda aracın üretmesi beklenen çıktı ve davranış,
 - kullanım kısıtları (desteklenmeyen dil yapıları, yasaklı seçenekler),
-- aracın algılaması gereken anormal çalıştırma kipleri ve tutarsız girdiler ile bunlara
+- aracın algılaması gereken anormal çalıştırma modları ve tutarsız girdiler ile bunlara
   vereceği tepki (bu kalem TQL-5'te aranmaz).
 
 TOR bilinçli olarak kullanım odaklıdır: bir aracın yüzlerce özelliği olabilir, ama
@@ -253,7 +253,7 @@ Tablodan üç gözlem çıkar:
   itibaren bağımsızlık yalnızca kalite güvencesinde kalır; kalite güvencesi hedefleri
   ise TQL-5'te bile bağımsızlıkla karşılanır.
 
-Ek A bir kontrol listesi olarak kullanılmamalıdır; DO-330 de bunu açıkça belirtir. Bir
+Ek A bir kontrol listesi olarak kullanılmamalıdır; DO-330 da bunu açıkça belirtir. Bir
 hedefin nasıl karşılanacağı, tablonun atıf yaptığı bölümün metninden okunur.
 
 ### Kalifikasyon verisi ve kontrol kategorileri
@@ -265,7 +265,7 @@ kategorisini (control category)** TQL'e göre belirtir. Kategoriler DO-178C'deki
 aynıdır:
 
 - **CC1** tam kontroldür; baseline, problem raporlama, değişiklik gözden geçirmesi ve
-  konfigürasyon durum muhasebesi dahil bütün faaliyetleri kapsar.
+  konfigürasyon durum muhasebesi dâhil bütün faaliyetleri kapsar.
 - **CC2** daha hafif bir rejimdir; tanımlama, izlenebilirlik, bütünlüğün korunması, geri
   getirme ve saklamayla sınırlıdır.
 
@@ -352,7 +352,7 @@ Tablodan dört kural çıkar:
 
 TQL-5'te tablo ikiye ayrılır. CC1 olan yalnızca uçuş yazılımının kendi belgelerindeki
 araç bilgisidir; aracın kendi kalifikasyon verisinin tamamı, TOR ve kurulan
-çalıştırılabilir kod dahil, CC2'dir. DO-330'un sonundaki açıklayıcı soru-yanıtlar bunu
+çalıştırılabilir kod dâhil, CC2'dir. DO-330'un sonundaki açıklayıcı soru-yanıtlar bunu
 açıkça yazar ve sonucunu da çıkarır: TQL-5'te konfigürasyon yönetiminden aranan,
 konfigürasyon öğelerinin tanımlanması ile arşivleme, geri getirme ve sürüm teslimidir.
 Baseline ve problem raporlama hedefleri bu seviyede yoktur. TQL-4'ten itibaren ise
@@ -438,7 +438,7 @@ kullanım biçimini kapsayan kanıtı her durumda kendisi tamamlamalıdır.
 **Araç determinizmi (tool determinism)**, aynı girdi ve aynı yapılandırmayla
 çalıştırılan aracın her seferinde aynı çıktıyı üretmesi beklentisidir. Bu önemlidir,
 çünkü kalifikasyon kanıtı belirli bir çıktı üzerinden kurulur; araç bir dahaki
-çalıştırmada farklı çıktı üretiyorsa o kanıt neyi temsil ettiğini yitirir.
+çalıştırmada farklı çıktı üretiyorsa o kanıtın neyi temsil ettiği belirsizleşir.
 
 DO-178B bu beklentiyi katı biçimde koyuyor, yalnızca aynı ortamda aynı girdiyle hep aynı
 çıktıyı veren araçların kalifiye edilebileceğini söylüyordu. Modern araçlarda bit
@@ -447,9 +447,9 @@ gömebilir, bir analiz aracı bulgularını her çalıştırmada farklı sırada
 DO-330 bu yüzden bir ayrım yapar. Çıktısı uçuş yazılımının parçası olan ve hata
 ekleyebilen araçta (Ölçüt 1; örneğin kod üreteci) beklenti katı kalır: kalifiye edilen
 işlevlerin aynı ortamda aynı girdiyle aynı çıktıyı ürettiği gösterilir. Çıktısı beklenen
-sınırlar içinde değişebilen diğer araçlarda ise gösterilmesi gereken iki şeydir:
-farklılık çıktının kullanım amacını olumsuz etkilememektedir ve çıktının doğruluğu
-belirlenebilmektedir. FAA'nın DO-178B dönemindeki uygulama talimatı (Order 8110.49)
+sınırlar içinde değişebilen diğer araçlarda ise gösterilmesi gereken iki şey vardır:
+farklılık çıktının kullanım amacını olumsuz etkilemez ve çıktının doğruluğu
+belirlenebilir. FAA'nın DO-178B dönemindeki uygulama talimatı (Order 8110.49)
 aynı yorumu daha önce yapmıştı: aynı girdi için ortaya çıkabilecek çıktı çeşitlerinin
 hepsinin doğru olduğu gösterilebiliyorsa araç, kalifikasyon açısından deterministik
 kabul edilir. Pratikteki karşılığı **işlevsel eşdeğerlik** düzeyinde determinizmdir:
@@ -483,7 +483,7 @@ değerlendirmesinde üç soru sorulur:
    kalıyor mu? Yeni bir dil özelliği, yeni bir hedef işlemci ya da yeni bir seçenek
    kullanılıyorsa, kalifikasyon kanıtının o kısmı yeniden üretilmelidir.
 3. **Gereken TQL aynı ya da daha hafif mi?** Önceki proje TQL-5 için kanıt
-   üretmişse, yeni projede TQL-4 gerekiyorsa aradaki fark kapatılmalıdır.
+   üretmiş, yeni projede TQL-4 gerekiyorsa aradaki fark kapatılmalıdır.
 
 Üç yanıt da olumluysa ve onaylı kalifikasyon verisine erişilebiliyorsa bu veri, yeni
 projenin planlarında gerekçesiyle birlikte referans gösterilir; önceki kalifikasyondan
@@ -512,7 +512,7 @@ hâlâ yaşar; bugünkü karşılığı Ölçüt 1'dir.
 ### Ticari araçların kalifikasyon paketleri
 
 Birçok ticari araç üreticisi, DO-330 kanıtının geliştirici tarafını hazır sunan
-**kalifikasyon paketi (qualification kit)** satar. Tipik bir paket; araç
+**kalifikasyon paketi (qualification kit)** satar. Tipik bir paket araç
 gereksinimlerini, test case'leri, test çalıştırma altyapısını ve şablon plan
 belgelerini içerir. Bu paketler değerlidir, ancak iki sınırı iyi anlamak gerekir:
 
@@ -550,7 +550,7 @@ bölümünde, model tabanlı geliştirmedeki karşılığı
 bölümünde tartışılır. Kalifiye bir kod üreteci de kod düzeyindeki yapısal kapsam
 yükümlülüğünü kendiliğinden kaldırmaz.
 
-İkincisi, statik analiz aracı test azaltma iddiasından vazgeçilirse Ölçüt 3'e ve Seviye
+İkincisi, statik analiz aracı, test azaltma iddiasından vazgeçilirse Ölçüt 3'e ve Seviye
 A'da bile TQL-5'e iner. Üreticiden geliştirme verisi alınamayan araçlarda bu, çoğu zaman
 tek uygulanabilir yoldur; bedeli, azaltılmak istenen testlerin yine yapılmasıdır.
 
@@ -584,12 +584,13 @@ de en az diğerleri kadar sorgulanır (bkz.
 - DO-330'un Ek A'sı her veri öğesine TQL'e göre bir kontrol kategorisi atar. Uyum
   iddiasını taşıyan veri (PSAC, SECI ve SAS'taki araç bilgisi, TQP, TCI, TAS) her TQL'de
   CC1, kayıtlar her TQL'de CC2'dir. TQL-5'te aracın kendi verisinin tamamı, TOR ve
-  çalıştırılabilir kod dahil, CC2'dir. Aracın kaynak kodu yalnızca TQL-1 – TQL-3'te
+  çalıştırılabilir kod dâhil, CC2'dir. Aracın kaynak kodu yalnızca TQL-1 – TQL-3'te
   kalifikasyon verisidir.
 - Araç üreticisinden hazır veri alınsa bile kalifikasyon sorumluluğu başvuru
   sahibinde kalır; operasyonel doğrulama kullanıcının kendi ortamında yapılır.
 - Determinizm bir tasarruf yolu değil, kalifikasyon kanıtının geçerlilik koşuludur:
   çıktısı ürüne giren araç aynı girdiyle aynı çıktıyı üretmeli, diğer araçlarda
-  farklılığın kullanım amacını etkilemediği ve çıktının doğruluğu gösterilebilmelidir.
+  farklılığın kullanım amacını etkilemediği gösterilebilmeli, çıktının doğruluğu da
+  belirlenebilmelidir.
 - Yeniden kullanım ve ticari kalifikasyon paketleri emek tasarrufu sağlar; ancak araç,
   kullanım biçimi ve TQL farkları için projeye özgü analiz ister.

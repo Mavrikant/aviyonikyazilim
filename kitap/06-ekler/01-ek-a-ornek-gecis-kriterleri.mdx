@@ -24,7 +24,7 @@ olarak ele alır; "çıkış kriteri" standardın terimi değil, yaygın bir uyg
 aynı kapının iki yüzüdür: bir süreçten çıkış için yazılan koşul, uygulamada bir
 sonrakine giriş koşulunun parçası olur. Standart hazır bir kriter listesi de vermez;
 planlardan her süreç için üç şeyi belirtmesini bekler: sürece ne girecek (başka
-süreçlerin geri bildirimi dahil), o girdi üzerinde hangi doğrulama, konfigürasyon
+süreçlerin geri bildirimi dâhil), o girdi üzerinde hangi doğrulama, konfigürasyon
 yönetimi ya da kalite güvencesi faaliyeti yapılmış olacak ve hangi araç, yöntem ve
 prosedür hazır bulunacak.
 
@@ -37,9 +37,9 @@ bir bileşen, bir işlev ya da bir sürüm için uygulanır. Aynı esneklik plan
 geçerlidir: ilgili faaliyetin kriteri sağlanıyorsa başka süreçler planlama süreci
 tamamlanmadan başlayabilir.
 
-Kısmi girdiyle ilerlemenin bir karşılığı vardır: girdilerinin bir kısmı eksikken
+Kısmi girdiyle ilerlemenin bir bedeli vardır: girdilerinin bir kısmı eksikken
 başlatılan süreç, sonradan gelen ya da değişen girdiler karşısında önceki çıktılarının
-hâlâ geçerli olduğunu yeniden incelemek zorundadır. On gereksinimle başlanan tasarıma
+hâlâ geçerli olup olmadığını yeniden incelemek zorundadır. On gereksinimle başlanan tasarıma
 on birincisi eklendiğinde soru "yeni gereksinim tasarlandı mı?" ile bitmez; "önceki
 tasarım kararları hâlâ doğru mu?" diye de sorulur. Geri dönüşler de aynı mantıkla
 kritere bağlanır. Baseline'a alınmış bir veri değişecekse sürece yeniden
@@ -105,7 +105,7 @@ projeyi denetlediği aşamalardan her biridir. Diğer kısaltmalar için
 |---|---|---|
 | Çıkış | Bileşenin yüksek seviyeli gereksinimleri (high-level requirements) gözden geçirilmiş; açık büyük bulgu yok | Gözden geçirme kaydı |
 | Çıkış | Her gereksinim bir sistem gereksinimine izlenebilir ya da türetilmiş gereksinim (derived requirement) olarak işaretli | İzlenebilirlik raporu |
-| Çıkış | Türetilmiş gereksinimler gerekçeleriyle sistem süreçlerine (sistem emniyet değerlendirmesi dahil) iletilmiş | İletim kaydı |
+| Çıkış | Türetilmiş gereksinimler gerekçeleriyle sistem süreçlerine (sistem emniyet değerlendirmesi dâhil) iletilmiş | İletim kaydı |
 | Giriş | Tasarımı yapılacak bileşenin yüksek seviyeli gereksinimleri baseline'da | Konfigürasyon kaydı |
 
 ### G3 — Tasarımdan kodlamaya
@@ -123,7 +123,7 @@ projeyi denetlediği aşamalardan her biridir. Diğer kısaltmalar için
 | Tür | Örnek kriter | Kanıt |
 |---|---|---|
 | Çıkış | Kaynak kod gözden geçirilmiş; kodlama standardı denetim aracında ihlal yok ya da sapmalar gerekçeli | Gözden geçirme kaydı, araç raporu |
-| Çıkış | Kod derleniyor ve hedefe yüklenebiliyor; derleme yeniden üretilebilir | Derleme kaydı |
+| Çıkış | Kod derleniyor ve hedefe yüklenebiliyor; build yeniden üretilebilir | Build kaydı |
 | Giriş | Test case'ler ve prosedürleri gözden geçirilmiş | Gözden geçirme kaydı |
 | Giriş | Test ortamı tanımlanmış, yapılandırılmış ve kayıtlı | SECI, ortam kaydı |
 | Giriş | Koşulacak kod, test case'ler ve prosedürleri baseline'da | Konfigürasyon kaydı |
@@ -182,8 +182,8 @@ sürecinin hedeflerinden biridir; bu hedef Seviye A, B ve C'de, bağımsızlıkl
 Kalite güvencesinin bunu yapabilmesi için her kriterin arkasında gösterilebilir bir
 kayıt bulunmalı, kredi amaçlı koşu gibi tanıklık etmek isteyebileceği geçişler de
 kendisine önceden bildirilmelidir. Bir kriter pratikte işlemiyorsa sessizce
-aşılmamalı; plan güncellenmeli ve değişiklik kayda alınmalıdır. Geçiş kriterleri aynı
-zamanda katılım aşaması denetimlerine hazırlığın da omurgasıdır
+aşılmamalı; plan güncellenmeli ve değişiklik kayda alınmalıdır. Geçiş kriterleri
+katılım aşaması denetimlerine hazırlığın da omurgasıdır
 ([SW SOI-1](../07-soi-denetimleri/soi-1.mdx)).
 
 ## Bu ekten akılda kalması gerekenler
