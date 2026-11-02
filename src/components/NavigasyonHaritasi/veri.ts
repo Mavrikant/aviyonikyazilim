@@ -13,7 +13,7 @@ export type Runway = {
   closed?: 1;
   hdg?: number; // gerçek yön (°)
   ends?: [[number, number], [number, number]];
-  /** Uç başına yaklaşma ışığı ve görsel süzülüş göstergesi (AIP AD 2.14) */
+  /** Uç başına yaklaşma ışığı ve visual glide slope indicator, ör. PAPI (AIP AD 2.14) */
   lgt?: Record<string, {apch?: string; gsi?: string}>;
 };
 
@@ -72,7 +72,7 @@ export type Ils = {
   gp?: [number, number];
   gpFreq?: number; // kHz
   gpFreqIcao?: number; // AIP'deki GP frekansı LOC'un ICAO eşine uymuyorsa eşin değeri, kHz
-  angle?: number; // süzülüş açısı (°)
+  angle?: number; // glide path açısı (°)
   rdh?: number; // ft
 };
 
@@ -386,7 +386,7 @@ export function searchText(f: Feature): string {
  *   alanındaki en yüksek noktanın 1.000 ft üstüdür (hangisi yüksekse); üst sınır
  *   antenden yatayla 7° açı yapan yüzeydir.
  * - GP (anten çevresinde, pist ekseninin iki yanında): ±8° içinde 10 NM; dikeyde
- *   süzülüş açısının (θ) 0,45 katından 1,75 katına kadar.
+ *   glide path açısının (θ) 0,45 katından 1,75 katına kadar.
  */
 export const LOC_KAPSAMA = {dar: {aci: 10, nm: 25}, genis: {aci: 35, nm: 17}, ustAci: 7, altFt: 2000} as const;
 export const GP_KAPSAMA = {aci: 8, nm: 10, alt: 0.45, ust: 1.75} as const;

@@ -196,6 +196,7 @@ geçirilmiştir, blog, araçlar ve kütüphanedeki eski kullanımlar sayfa düze
 | reset (donanım ve işlemci için) | sıfırlama (değişkeni sıfırlama kalır) |
 | single event upset (SEU) | tek olay bozulması |
 | fail-safe, interlock, rate limiter, thrust reverser | arıza emniyetli, emniyet kilitlemesi, oran sınırlayıcı, itki ters çevirici |
+| localizer (LOC), glide path / glide slope (GP/GS), glide path açısı (GP açısı) | yön verici, süzülüş yolu, süzülüş açısı |
 | fuzzing, root of trust, jamming, spoofing | bulanık test, güven kökü, karıştırma, aldatma |
 
 ### Türkçeleşmiş yazımla kullanılan terimler
@@ -291,8 +292,6 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | kontak boyutu | contact size |
 | ön (geçme) yüz / arka yüz | mating face / rear face |
 | ana kama | master key |
-| yön verici | localizer (LOC) |
-| süzülüş yolu | glide path / glide slope (GP/GS) |
 | kanal eşleme | channel pairing (VHF ⇄ DME, LOC ⇄ GS) |
 | sorgu / cevap frekansı | interrogation / reply frequency (DME) |
 | darbe çifti aralığı | pulse pair spacing |

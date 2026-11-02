@@ -13,9 +13,9 @@ import KanalTablosu from '@site/src/components/KanalTablosu';
 
 # VOR, ILS ve DME Kanal Tablosu
 
-VHF seyrüsefer bandındaki her VOR ve yön verici (localizer, LOC) frekansının
-hangi DME kanalıyla, LOC frekanslarının da hangi süzülüş yolu (glide slope,
-GS) frekansıyla eşlendiğini tek tabloda gösterir. 252 DME kanalının (1X–126Y)
+VHF seyrüsefer bandındaki her VOR ve localizer (LOC) frekansının
+hangi DME kanalıyla, LOC frekanslarının da hangi glide slope (GS)
+frekansıyla eşlendiğini tek tabloda gösterir. 252 DME kanalının (1X–126Y)
 sorgu ve cevap frekansları, darbe çifti aralıkları ve Türkiye'de o kanalı
 kullanan istasyonlar da aynı satırdadır.
 
@@ -24,7 +24,7 @@ kullanan istasyonlar da aynı satırdadır.
 ## Kanal eşleme nasıl kurulur?
 
 Bir aviyonik sistemde pilot yalnızca VHF frekansını seçer; DME sorgulayıcı ve
-(ILS'de) süzülüş yolu alıcısı bu seçimden kendiliğinden ayarlanır. Bu, ICAO'nun
+(ILS'de) glide slope alıcısı bu seçimden kendiliğinden ayarlanır. Bu, ICAO'nun
 Ek 10 Cilt I'de tanımladığı sabit bir kanal eşlemesi (channel pairing) ile
 mümkündür: her VHF frekansının tek bir DME kanalı, her LOC frekansının tek bir
 GS frekansı vardır. Tablo bu kuraldan hesaplanır:

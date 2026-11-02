@@ -396,7 +396,7 @@ export default function KanalTablosu(): ReactNode {
           </dl>
           <p className={styles.not}>
             {ayrinti.tur === 'ILS'
-              ? `Alıcıda ${mhz(ayrinti.vhf!)} MHz seçildiğinde süzülüş yolu alıcısı ${mhz(ayrinti.gs!)} MHz'e, DME ${ayrinti.ad} kanalına kendiliğinden ayarlanır.`
+              ? `Alıcıda ${mhz(ayrinti.vhf!)} MHz seçildiğinde glide slope alıcısı ${mhz(ayrinti.gs!)} MHz'e, DME ${ayrinti.ad} kanalına kendiliğinden ayarlanır.`
               : ayrinti.tur === 'VOR'
                 ? `Alıcıda ${mhz(ayrinti.vhf!)} MHz seçildiğinde DME ${ayrinti.ad} kanalına kendiliğinden ayarlanır; VOR/DME ve VORTAC istasyonları bu eşi kullanır.`
                 : `Bu kanalın VHF eşi yoktur: TACAN ya da tek başına DME için ayrılmıştır. Sivil alıcıda yalnızca kanal numarasıyla (ya da DME'yi bağımsız ayarlayarak) seçilir.`}{' '}

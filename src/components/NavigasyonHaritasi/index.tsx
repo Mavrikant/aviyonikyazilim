@@ -1329,7 +1329,7 @@ function IlsRows({x, onFitCoverage}: {x: IlsItem; onFitCoverage: () => void}): R
       />
       <Satir k="DME kanalı" v={x.ch} />
       <Satir k="Yaklaşma rotası" v={x.crs !== undefined ? `${pad3(x.crs)}° gerçek (hesaplanan)` : undefined} />
-      <Satir k="Süzülüş açısı" v={x.angle ? `${String(x.angle).replace('.', ',')}°` : undefined} />
+      <Satir k="GP açısı" v={x.angle ? `${String(x.angle).replace('.', ',')}°` : undefined} />
       <Satir k="RDH" v={x.rdh ? `${x.rdh} ft` : undefined} />
       <Satir k="GP anteni" v={x.gp ? formatDms(x.gp[0], x.gp[1]) : undefined} />
       <Satir

@@ -173,7 +173,7 @@ function aipRunways(section, lightingSection, oaRunways) {
       wid: Math.round(r.widM * M2FT),
       surf: r.surf,
       lit: lgt.length ? (lgt.some((l) => l.lit) ? 1 : undefined) : oa?.lit,
-      // Uç başına yaklaşma ışığı ve görsel süzülüş göstergesi: {"03C": {apch, gsi}}
+      // Uç başına yaklaşma ışığı ve visual glide slope indicator (ör. PAPI): {"03C": {apch, gsi}}
       lgt: Object.fromEntries(
         ids.filter((id) => lighting[id]?.apch || lighting[id]?.gsi).map((id) => [id, compact({apch: lighting[id].apch, gsi: lighting[id].gsi})]),
       ),
