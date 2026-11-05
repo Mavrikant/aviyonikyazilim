@@ -100,7 +100,7 @@ const TabloSatiri = memo(function TabloSatiri({
       </td>
       <td className={styles.no}>
         {v + 1}
-        {secili && <span className={styles.testEtiketi}>T{testNo}</span>}
+        {secili && <span className={styles.testEtiketi}>{`T${testNo}`}</span>}
       </td>
       {an.bit.map((b, i) => {
         const okunmaz = kisaDevre && !(an.degerlendirilen[v] & b);
@@ -392,7 +392,7 @@ export default function McdcAraci(): ReactNode {
     const parcalar: ReactNode[] = [];
     let i = 0;
     gecerli.a.kosullar.forEach((k, no) => {
-      if (k.bas > i) parcalar.push(metin.slice(i, k.bas));
+      if (k.bas > i) parcalar.push(<span key={`a${no}`}>{metin.slice(i, k.bas)}</span>);
       parcalar.push(
         <span key={no} className={clsx(styles.kosulMetni, styles[`renk${k.degisken % RENK_SAYISI}`])}>
           {metin.slice(k.bas, k.son)}
@@ -401,7 +401,7 @@ export default function McdcAraci(): ReactNode {
       );
       i = k.son;
     });
-    if (i < metin.length) parcalar.push(metin.slice(i));
+    if (i < metin.length) parcalar.push(<span key="son">{metin.slice(i)}</span>);
     return parcalar;
   };
 
@@ -421,7 +421,7 @@ export default function McdcAraci(): ReactNode {
           <svg viewBox="0 0 16 16" aria-hidden="true">
             {tamEkranda ? <path d="M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4" /> : <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" />}
           </svg>
-          {tamEkranda ? 'Küçült' : 'Tam ekran'}
+          <span>{tamEkranda ? 'Küçült' : 'Tam ekran'}</span>
         </button>
       </div>
 
@@ -470,15 +470,17 @@ export default function McdcAraci(): ReactNode {
           {hata ? (
             <p className={styles.hata}>
               <b>{hata.message}</b>
-              <code className={styles.hataYeri}>
-                {metin.slice(0, hata.konum)}
+              <code className={styles.hataYeri} translate="no">
+                <span>{metin.slice(0, hata.konum)}</span>
                 <mark>{metin.slice(hata.konum, hata.konum + 1) || ' '}</mark>
-                {metin.slice(hata.konum + 1)}
+                <span>{metin.slice(hata.konum + 1)}</span>
               </code>
               {gecerli && <span className={styles.ipucu}>Aşağıda son geçerli ifadenin sonucu gösteriliyor.</span>}
             </p>
           ) : (
-            <p className={styles.gosterim}>{ifadeGosterimi()}</p>
+            <p className={styles.gosterim} translate="no">
+              {ifadeGosterimi()}
+            </p>
           )}
           {ornek !== null && ORNEKLER[ornek].aciklama && <p className={styles.ornekNot}>{ORNEKLER[ornek].aciklama}</p>}
         </div>
@@ -528,24 +530,22 @@ export default function McdcAraci(): ReactNode {
             <div className={styles.kart}>
               <span className={styles.kartEtiket}>Koşul</span>
               <span className={styles.buyukSayi}>{an.m}</span>
-              <span className={styles.ipucu}>
-                {an.n} değişken · {an.satirSayisi} kombinasyon
-              </span>
+              <span className={styles.ipucu}>{`${an.n} değişken · ${an.satirSayisi} kombinasyon`}</span>
             </div>
             <div className={styles.kart}>
               <span className={styles.kartEtiket}>En küçük set</span>
-              <span className={styles.buyukSayi}>{enKucuk.satirlar.length} test</span>
+              <span className={styles.buyukSayi}>{`${enKucuk.satirlar.length} test`}</span>
               <span className={styles.ipucu}>
-                {olcut === 'benzersiz' ? `alt sınır n+1 = ${an.m + 1}` : `benzersiz neden alt sınırı n+1 = ${an.m + 1}`}
-                {!enKucuk.kanitlandi && ' · arama sınırına ulaşıldı, daha küçüğü olabilir'}
+                {(olcut === 'benzersiz' ? `alt sınır n+1 = ${an.m + 1}` : `benzersiz neden alt sınırı n+1 = ${an.m + 1}`) +
+                  (enKucuk.kanitlandi ? '' : ' · arama sınırına ulaşıldı, daha küçüğü olabilir')}
               </span>
             </div>
             <div className={clsx(styles.kart, kapsam.mcdc ? styles.iyi : styles.kotu)}>
-              <span className={styles.kartEtiket}>Seçili set ({etkinSecim.length} test)</span>
+              <span className={styles.kartEtiket}>{`Seçili set (${etkinSecim.length} test)`}</span>
               <span className={styles.buyukSayi}>{kapsam.mcdc ? 'MC/DC ✓' : 'MC/DC ✗'}</span>
               <span className={styles.ipucu}>
-                {tamamSayisi}/{an.m} koşulun bağımsız etkisi gösterildi
-                {imkansizSayisi > 0 && ` · ${imkansizSayisi} koşulda gösterilemez`}
+                {`${tamamSayisi}/${an.m} koşulun bağımsız etkisi gösterildi` +
+                  (imkansizSayisi > 0 ? ` · ${imkansizSayisi} koşulda gösterilemez` : '')}
               </span>
             </div>
           </section>
@@ -562,30 +562,31 @@ export default function McdcAraci(): ReactNode {
                       <code className={styles.kosulAdi}>{gecerli.a.degiskenler[an.degisken[k]]}</code>
                       {d.durum === 'tamam' && d.cift && (
                         <p>
-                          ✓ T{testNo.get(d.cift[0])} ↔ T{testNo.get(d.cift[1])} (satır {d.cift[0] + 1} ↔ {d.cift[1] + 1}){' '}
+                          <span>{`✓ T${testNo.get(d.cift[0])} ↔ T${testNo.get(d.cift[1])} (satır ${d.cift[0] + 1} ↔ ${d.cift[1] + 1}) `}</span>
                           <button type="button" className={styles.metinDugme} onClick={() => vurgula(d.cift!)}>
                             tabloda göster
                           </button>
                         </p>
                       )}
-                      {d.durum === 'eksik' && (
-                        <p>
-                          ✗ Eksik. {d.oneri && d.oneri.length > 0 && <>Satır {d.oneri.map((v) => v + 1).join(' ve ')} eklenirse gösterilir. </>}
-                          {d.oneri && d.oneri.length > 0 && (
+                      {d.durum === 'eksik' &&
+                        (d.oneri && d.oneri.length > 0 ? (
+                          <p>
+                            <span>{`✗ Eksik. Satır ${d.oneri.map((v) => v + 1).join(' ve ')} eklenirse gösterilir. `}</span>
                             <button type="button" className={styles.metinDugme} onClick={() => satirlarEkle(d.oneri!)}>
                               ekle
                             </button>
-                          )}
-                        </p>
-                      )}
-                      {d.durum === 'imkansiz' && <p>⊘ {d.neden}</p>}
+                          </p>
+                        ) : (
+                          <p>✗ Eksik.</p>
+                        ))}
+                      {d.durum === 'imkansiz' && <p>{`⊘ ${d.neden}`}</p>}
                     </div>
                   </li>
                 ))}
               </ul>
               <p className={styles.ipucu}>
-                Karar kapsama: {kapsam.kararDogru && kapsam.kararYanlis ? '✓ doğru ve yanlış sonuç alındı' : '✗ iki sonuç da alınmadı'} · Koşul
-                kapsama: {kapsam.kosulKapsama.every(Boolean) ? '✓ her koşul iki değeri de aldı' : '✗ iki değeri almayan koşul var'}
+                {`Karar kapsama: ${kapsam.kararDogru && kapsam.kararYanlis ? '✓ doğru ve yanlış sonuç alındı' : '✗ iki sonuç da alınmadı'}` +
+                  ` · Koşul kapsama: ${kapsam.kosulKapsama.every(Boolean) ? '✓ her koşul iki değeri de aldı' : '✗ iki değeri almayan koşul var'}`}
               </p>
             </section>
 
@@ -632,7 +633,7 @@ export default function McdcAraci(): ReactNode {
                     <tbody>
                       {etkinSecim.map((v, i) => (
                         <tr key={v} className={clsx(vurguKume.has(v) && styles.vurguSatir)}>
-                          <td className={styles.no}>T{i + 1}</td>
+                          <td className={styles.no}>{`T${i + 1}`}</td>
                           <td className={styles.no}>{v + 1}</td>
                           {an.bit.map((b, j) => {
                             const okunmaz = kisaDevre && !(an.degerlendirilen[v] & b);
@@ -674,16 +675,16 @@ export default function McdcAraci(): ReactNode {
             </div>
             {an.n > TABLO_SINIRI ? (
               <p className={styles.ipucu}>
-                Doğruluk tablosu en çok {TABLO_SINIRI} değişkene kadar gösterilir ({an.satirSayisi} satır çok uzun). Test seti ve
-                kapsam yine tüm kombinasyonlar üzerinden hesaplanır.
+                {`Doğruluk tablosu en çok ${TABLO_SINIRI} değişkene kadar gösterilir (${an.satirSayisi} satır çok uzun). ` +
+                  'Test seti ve kapsam yine tüm kombinasyonlar üzerinden hesaplanır.'}
               </p>
             ) : (
               <>
                 <p className={styles.ipucu}>
-                  Satıra tıklayarak test setine ekleyin ya da çıkarın.{' '}
-                  {olcut === 'benzersiz'
-                    ? 'Sağdaki sütunlar, satırla yalnızca o koşulda ayrılıp kararı değiştiren eş satırı gösterir; numaraya tıklayınca çift vurgulanır.'
-                    : 'Sağdaki sütunlarda ● ve ○, koşulun o satırda kararı tek başına belirlediğini gösterir (● değer 1, ○ değer 0); her koşul için birer ● ve ○ satırı yeter.'}
+                  {'Satıra tıklayarak test setine ekleyin ya da çıkarın. ' +
+                    (olcut === 'benzersiz'
+                      ? 'Sağdaki sütunlar, satırla yalnızca o koşulda ayrılıp kararı değiştiren eş satırı gösterir; numaraya tıklayınca çift vurgulanır.'
+                      : 'Sağdaki sütunlarda ● ve ○, koşulun o satırda kararı tek başına belirlediğini gösterir (● değer 1, ○ değer 0); her koşul için birer ● ve ○ satırı yeter.')}
                 </p>
                 <div className={clsx(styles.tabloKutu, styles.uzunTablo)}>
                   <table className={clsx(styles.tablo, styles.dogrulukTablosu)}>
