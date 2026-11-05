@@ -205,8 +205,8 @@ export default function Cizelge({parcalar, kacanlar, pencere, seritler, cerceve,
           Tümü
         </button>
         <span className={styles.ipucu} aria-live="polite">
-          {sureYaz(Math.round(v.bas))} – {sureYaz(Math.round(v.bit))}
-          {!tamGorunum && ` · ×${new Intl.NumberFormat('tr-TR', {maximumFractionDigits: yakinlik < 10 ? 1 : 0}).format(yakinlik)}`}
+          {`${sureYaz(Math.round(v.bas))} – ${sureYaz(Math.round(v.bit))}` +
+            (tamGorunum ? '' : ` · ×${new Intl.NumberFormat('tr-TR', {maximumFractionDigits: yakinlik < 10 ? 1 : 0}).format(yakinlik)}`)}
         </span>
       </div>
 

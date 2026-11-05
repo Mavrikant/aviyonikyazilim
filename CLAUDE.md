@@ -658,7 +658,8 @@ Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik ç
   `insertBefore` NotFoundError); yalnızca güncellenen düğümdeki sayı ise ekranda bayat kalır. Bu
   yüzden araç bileşenlerinde değişen metin, bir öğenin tek çocuğu olan tek dizgedir
   (`` {`${n} test`} ``); koşullu metin parçası eklenmez, dizge birleştirilir. Kod ve ifade
-  gösterimi `translate="no"` taşır. Örnek: `src/components/McdcAraci`.
+  gösterimi `translate="no"` taşır; SVG çizimde (React'in `svg` türünde bu öznitelik yok)
+  `notranslate` sınıfı verilir. Örnek: `src/components/McdcAraci`.
 - **Konnektör yerleşim verisi** (`static/data/konnektor/mil-dtl-38999.json`) elle
   düzenlenmez: `python3 scripts/konnektor/veri_uret.py std1560.txt` MIL-STD-1560C'nin
   `pdftotext -layout` çıktısını `yerlesim_ayristir.py` ile ayrıştırır. Ayrıştırıcının

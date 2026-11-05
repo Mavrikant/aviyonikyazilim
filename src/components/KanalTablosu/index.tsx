@@ -360,7 +360,7 @@ export default function KanalTablosu(): ReactNode {
         <section className={styles.ayrinti} aria-label={`Kanal ${ayrinti.ad} ayrıntısı`}>
           <header className={styles.ayrintiUst}>
             <p className={styles.ayrintiBaslik}>
-              Kanal {ayrinti.ad} <TurEtiketi tur={ayrinti.tur} />
+              <span>{`Kanal ${ayrinti.ad}`}</span> <TurEtiketi tur={ayrinti.tur} />
             </p>
             {secili && (
               <button type="button" className={styles.dugme} onClick={() => setSecili(null)}>
@@ -371,50 +371,47 @@ export default function KanalTablosu(): ReactNode {
           <dl className={styles.kartlar}>
             <div className={styles.kart}>
               <dt className={styles.etiket}>{ayrinti.tur === 'ILS' ? 'LOC' : 'VOR'}</dt>
-              <dd>{ayrinti.vhf ? <b>{mhz(ayrinti.vhf)} MHz</b> : <span className={styles.yok}>VHF eşi yok</span>}</dd>
+              <dd>{ayrinti.vhf ? <b>{`${mhz(ayrinti.vhf)} MHz`}</b> : <span className={styles.yok}>VHF eşi yok</span>}</dd>
             </div>
             <div className={styles.kart}>
               <dt className={styles.etiket}>GS</dt>
-              <dd>{ayrinti.gs ? <b>{mhz(ayrinti.gs)} MHz</b> : <span className={styles.yok}>—</span>}</dd>
+              <dd>{ayrinti.gs ? <b>{`${mhz(ayrinti.gs)} MHz`}</b> : <span className={styles.yok}>—</span>}</dd>
             </div>
             <div className={styles.kart}>
               <dt className={styles.etiket}>DME sorgu → cevap</dt>
               <dd>
-                <b>
-                  {ayrinti.sorgu} → {ayrinti.cevap} MHz
-                </b>
+                <b>{`${ayrinti.sorgu} → ${ayrinti.cevap} MHz`}</b>
               </dd>
             </div>
             <div className={styles.kart}>
               <dt className={styles.etiket}>Darbe aralığı</dt>
               <dd>
-                <b>
-                  {ayrinti.sorguKod} / {ayrinti.cevapKod} µs
-                </b>
+                <b>{`${ayrinti.sorguKod} / ${ayrinti.cevapKod} µs`}</b>
               </dd>
             </div>
           </dl>
           <p className={styles.not}>
-            {ayrinti.tur === 'ILS'
+            {(ayrinti.tur === 'ILS'
               ? `Alıcıda ${mhz(ayrinti.vhf!)} MHz seçildiğinde glide slope alıcısı ${mhz(ayrinti.gs!)} MHz'e, DME ${ayrinti.ad} kanalına kendiliğinden ayarlanır.`
               : ayrinti.tur === 'VOR'
                 ? `Alıcıda ${mhz(ayrinti.vhf!)} MHz seçildiğinde DME ${ayrinti.ad} kanalına kendiliğinden ayarlanır; VOR/DME ve VORTAC istasyonları bu eşi kullanır.`
-                : `Bu kanalın VHF eşi yoktur: TACAN ya da tek başına DME için ayrılmıştır. Sivil alıcıda yalnızca kanal numarasıyla (ya da DME'yi bağımsız ayarlayarak) seçilir.`}{' '}
-            Uçak {ayrinti.sorgu} MHz'te {ayrinti.sorguKod} µs aralıklı darbe çiftleriyle sorgular, yer istasyonu{' '}
-            {ayrinti.sorgu > ayrinti.cevap ? '63 MHz aşağıda' : '63 MHz yukarıda'} ({ayrinti.cevap} MHz) {ayrinti.cevapKod} µs
-            aralıkla cevaplar.
+                : `Bu kanalın VHF eşi yoktur: TACAN ya da tek başına DME için ayrılmıştır. Sivil alıcıda yalnızca kanal numarasıyla (ya da DME'yi bağımsız ayarlayarak) seçilir.`) +
+              ` Uçak ${ayrinti.sorgu} MHz'te ${ayrinti.sorguKod} µs aralıklı darbe çiftleriyle sorgular, yer istasyonu ` +
+              `${ayrinti.sorgu > ayrinti.cevap ? '63 MHz aşağıda' : '63 MHz yukarıda'} (${ayrinti.cevap} MHz) ${ayrinti.cevapKod} µs aralıkla cevaplar.`}
           </p>
           {harita && (
             <p className={styles.ayrintiTr}>
               <span className={styles.etiket}>Türkiye'de</span>{' '}
-              {kullanicilarOf(ayrinti).length === 0
-                ? 'bu kanalı kullanan istasyon yok.'
-                : kullanicilarOf(ayrinti).map((u, i) => (
-                    <span key={`${u.ident}-${u.tur}`}>
-                      {i > 0 && ', '}
-                      <IstasyonBaglantisi u={u} /> <span className={styles.istasyonAdi}>{u.tur}, {u.ad}</span>
-                    </span>
-                  ))}
+              {kullanicilarOf(ayrinti).length === 0 ? (
+                <span>bu kanalı kullanan istasyon yok.</span>
+              ) : (
+                kullanicilarOf(ayrinti).map((u, i) => (
+                  <span key={`${u.ident}-${u.tur}`}>
+                    {i > 0 && <span>, </span>}
+                    <IstasyonBaglantisi u={u} /> <span className={styles.istasyonAdi}>{`${u.tur}, ${u.ad}`}</span>
+                  </span>
+                ))
+              )}
             </p>
           )}
         </section>
@@ -489,13 +486,13 @@ export default function KanalTablosu(): ReactNode {
                     <td className={styles.trHucre}>
                       {u.slice(0, 3).map((x, i) => (
                         <span key={`${x.ident}-${x.tur}`}>
-                          {i > 0 && ' '}
+                          {i > 0 && <span> </span>}
                           <IstasyonBaglantisi u={x} />
                         </span>
                       ))}
                       {u.length > 3 && (
                         <button type="button" className={styles.dahaFazla} onClick={() => setSecili(k.ad)}>
-                          +{u.length - 3}
+                          {`+${u.length - 3}`}
                         </button>
                       )}
                     </td>
@@ -508,15 +505,16 @@ export default function KanalTablosu(): ReactNode {
       )}
       <p className={styles.ipucu}>
         Frekanslar MHz'tir. Sütun başlığına tıklayarak sıralayın; kanal adına tıklayınca ayrıntısı açılır.{' '}
-        {veri === 'hata'
-          ? 'Türkiye verisi yüklenemedi.'
-          : typeof veri === 'object' && (
-              <>
-                Türkiye sütunu:{' '}
-                <a href="https://dhmi.gov.tr/Sayfalar/aipturkey.aspx">AIP Türkiye</a> © DHMİ
-                {veri.amdt ? ` (AMDT ${veri.amdt})` : ''}; seyrüsefer amaçlı kullanılmaz.
-              </>
-            )}
+        {veri === 'hata' ? (
+          <span>Türkiye verisi yüklenemedi.</span>
+        ) : (
+          typeof veri === 'object' && (
+            <span>
+              Türkiye sütunu: <a href="https://dhmi.gov.tr/Sayfalar/aipturkey.aspx">AIP Türkiye</a>
+              {` © DHMİ${veri.amdt ? ` (AMDT ${veri.amdt})` : ''}; seyrüsefer amaçlı kullanılmaz.`}
+            </span>
+          )
+        )}
       </p>
     </div>
   );

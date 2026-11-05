@@ -166,7 +166,8 @@ export default function Yuz({cizim, atamalar, aynala, secili, onSec, etiket}: Pr
     <div className={styles.yuzKutu}>
       <svg
         ref={svgRef}
-        className={clsx(styles.yuzSvg, olcek > 1 && styles.yakin)}
+        // Pin numaraları ve sinyal adları çevrilmez (svg öğesinin türünde translate özniteliği yok)
+        className={clsx(styles.yuzSvg, olcek > 1 && styles.yakin, 'notranslate')}
         viewBox={`${x} ${y} ${w} ${h}`}
         role="group"
         aria-label={etiket}

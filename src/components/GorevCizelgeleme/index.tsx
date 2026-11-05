@@ -309,7 +309,7 @@ export default function GorevCizelgeleme(): ReactNode {
               <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" />
             )}
           </svg>
-          {tamEkranda ? 'Küçült' : 'Tam ekran'}
+          <span>{tamEkranda ? 'Küçült' : 'Tam ekran'}</span>
         </button>
       </div>
 
@@ -359,9 +359,7 @@ export default function GorevCizelgeleme(): ReactNode {
               value={a.cerceve > 0 && uygunCerceveler.some((x) => x.f === a.cerceve * 1000) ? a.cerceve : 0}
               onChange={(e) => ayarla({cerceve: Number(e.target.value)})}
               disabled={uygunCerceveler.length === 0}>
-              <option value={0}>
-                Otomatik{cerceve?.secili ? ` (${sureYaz(cerceve.secili)})` : ''}
-              </option>
+              <option value={0}>{`Otomatik${cerceve?.secili ? ` (${sureYaz(cerceve.secili)})` : ''}`}</option>
               {uygunCerceveler.map((x) => (
                 <option key={x.f} value={msOf(x.f)}>
                   {sureYaz(x.f)}
@@ -373,8 +371,11 @@ export default function GorevCizelgeleme(): ReactNode {
       </section>
 
       <p className={styles.ozet}>
-        {politika.ipucu} · <b>{sonuc.gorevler.length} görev</b> · U = {yuzdeYaz(sonuc.kullanim)} · hiperperiyot{' '}
-        {sonuc.tamHiperperiyot ? sureYaz(sonuc.hiperperiyot) : `${sureYaz(sonuc.hiperperiyot)}’den uzun`}
+        <span>{politika.ipucu}</span> · <b>{`${sonuc.gorevler.length} görev`}</b>{' '}
+        <span>
+          {`· U = ${yuzdeYaz(sonuc.kullanim)} · hiperperiyot ` +
+            (sonuc.tamHiperperiyot ? sureYaz(sonuc.hiperperiyot) : `${sureYaz(sonuc.hiperperiyot)}’den uzun`)}
+        </span>
       </p>
 
       {/* ---------- Sonuçlar ---------- */}
@@ -395,9 +396,7 @@ export default function GorevCizelgeleme(): ReactNode {
             {enDar && (
               <>
                 <dt>En dar pay</dt>
-                <dd className={clsx(enDar.pay < 0 && styles.kirmizi)}>
-                  {sureYaz(enDar.pay)} — {adOf(enDar.id)}
-                </dd>
+                <dd className={clsx(enDar.pay < 0 && styles.kirmizi)}>{`${sureYaz(enDar.pay)} — ${adOf(enDar.id)}`}</dd>
               </>
             )}
             {cizelgeVar && (
@@ -409,17 +408,13 @@ export default function GorevCizelgeleme(): ReactNode {
             {!dongusel && cizelgeVar && (
               <>
                 <dt>Kesinti</dt>
-                <dd>
-                  {kesilme} ({sureYaz(sonuc.pencere)} içinde)
-                </dd>
+                <dd>{`${kesilme} (${sureYaz(sonuc.pencere)} içinde)`}</dd>
               </>
             )}
             {cerceve && cerceve.secili > 0 && (
               <>
                 <dt>Çerçeve</dt>
-                <dd>
-                  {sureYaz(cerceve.secili)} × {cerceve.cerceveler.length} = {sureYaz(cerceve.anaCerceve)}
-                </dd>
+                <dd>{`${sureYaz(cerceve.secili)} × ${cerceve.cerceveler.length} = ${sureYaz(cerceve.anaCerceve)}`}</dd>
               </>
             )}
           </dl>
@@ -443,7 +438,7 @@ export default function GorevCizelgeleme(): ReactNode {
                 </span>
                 <span>
                   <b>{t.ad}</b>
-                  <span className={styles.gizli}> ({TEST_ADI[t.durum]})</span>
+                  <span className={styles.gizli}>{` (${TEST_ADI[t.durum]})`}</span>
                   <span className={styles.testAciklama}>{t.aciklama}</span>
                 </span>
               </li>
@@ -566,7 +561,7 @@ export default function GorevCizelgeleme(): ReactNode {
                       <td data-baslik="Tepki (benzetim)" className={styles.sayi}>
                         {r?.tepkiBenzetim !== undefined ? (
                           <span title={r.kacan > 0 ? `${r.isSayisi} işten ${r.kacan} tanesi zaman sınırını kaçırdı` : `${r.isSayisi} iş; en kısa tepki ${sureYaz(r.enKisaTepki ?? 0)}`}>
-                            {sureYaz(r.tepkiBenzetim)}
+                            <span>{sureYaz(r.tepkiBenzetim)}</span>
                             {r.kacan > 0 && <b className={styles.kirmizi}> ⚠</b>}
                           </span>
                         ) : (
@@ -602,7 +597,7 @@ export default function GorevCizelgeleme(): ReactNode {
         <section className={styles.cerceveler} aria-label="Çerçeve tasarımı">
           <div className={styles.bolumBaslik}>
             <h3>Çerçeve tasarımı</h3>
-            <span className={styles.ipucu}>Ana çerçeve {sureYaz(cerceve.anaCerceve)} · adaylar ana çerçeveyi tam böler</span>
+            <span className={styles.ipucu}>{`Ana çerçeve ${sureYaz(cerceve.anaCerceve)} · adaylar ana çerçeveyi tam böler`}</span>
           </div>
           <ul className={styles.adaylar} aria-label="Küçük çerçeve adayları">
             {cerceve.adaylar.map((x) => (
@@ -640,7 +635,7 @@ export default function GorevCizelgeleme(): ReactNode {
                         {c.isler.map((x) => (
                           <span key={`${x.id}-${x.is}`} className={styles.isEtiketi}>
                             <span className={clsx(styles.renkNokta, renkOf(x.id))} aria-hidden="true" />
-                            {adOf(x.id)} <span className={styles.ipucu}>{sureYaz(x.sure)}</span>
+                            <span>{adOf(x.id)}</span> <span className={styles.ipucu}>{sureYaz(x.sure)}</span>
                           </span>
                         ))}
                       </td>
@@ -653,13 +648,15 @@ export default function GorevCizelgeleme(): ReactNode {
           )}
           {cerceve.cerceveler.length > MAKS_CERCEVE_SATIRI && (
             <p className={styles.ipucu}>
-              İlk {MAKS_CERCEVE_SATIRI} çerçeve gösteriliyor; {cerceve.cerceveler.length} çerçevenin tamamı CSV dosyasındadır.
+              {`İlk ${MAKS_CERCEVE_SATIRI} çerçeve gösteriliyor; ${cerceve.cerceveler.length} çerçevenin tamamı CSV dosyasındadır.`}
             </p>
           )}
           {cerceve.yerlesmeyen.length > 0 && (
             <p className={clsx(styles.ipucu, styles.kirmizi)}>
-              Yerleşmeyen işler: {cerceve.yerlesmeyen.slice(0, 8).map((x) => `${adOf(x.id)} #${x.is + 1}`).join(', ')}
-              {cerceve.yerlesmeyen.length > 8 && ' …'}
+              {`Yerleşmeyen işler: ${cerceve.yerlesmeyen
+                .slice(0, 8)
+                .map((x) => `${adOf(x.id)} #${x.is + 1}`)
+                .join(', ')}${cerceve.yerlesmeyen.length > 8 ? ' …' : ''}`}
             </p>
           )}
         </section>
@@ -671,8 +668,8 @@ export default function GorevCizelgeleme(): ReactNode {
           <div className={styles.bolumBaslik}>
             <h3>Zaman çizelgesi</h3>
             <span className={styles.ipucu}>
-              İlk {sureYaz(sonuc.cizelgePencere)}
-              {dongusel ? ' · bir ana çerçeve' : sonuc.cizelgePencere >= sonuc.pencere && sonuc.tamPencere ? ' · çizelge bundan sonra tekrarlar' : ''}
+              {`İlk ${sureYaz(sonuc.cizelgePencere)}` +
+                (dongusel ? ' · bir ana çerçeve' : sonuc.cizelgePencere >= sonuc.pencere && sonuc.tamPencere ? ' · çizelge bundan sonra tekrarlar' : '')}
             </span>
           </div>
           <Cizelge
@@ -692,8 +689,8 @@ export default function GorevCizelgeleme(): ReactNode {
           />
           {!sonuc.tamPencere && (
             <p className={styles.ipucu}>
-              Periyotların ortak katı çok uzun olduğundan benzetim {sureYaz(sonuc.pencere)} ile sınırlandı; benzetim
-              sütunu bu pencerede gözlenen değerleri gösterir.
+              {`Periyotların ortak katı çok uzun olduğundan benzetim ${sureYaz(sonuc.pencere)} ile sınırlandı; ` +
+                'benzetim sütunu bu pencerede gözlenen değerleri gösterir.'}
             </p>
           )}
         </section>

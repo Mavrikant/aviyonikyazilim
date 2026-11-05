@@ -635,7 +635,7 @@ export default function KonnektorTasarim(): ReactNode {
           <svg viewBox="0 0 16 16" aria-hidden="true">
             {tamEkranda ? <path d="M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4" /> : <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" />}
           </svg>
-          {tamEkranda ? 'Küçült' : 'Tam ekran'}
+          <span>{tamEkranda ? 'Küçült' : 'Tam ekran'}</span>
         </button>
       </div>
 
@@ -696,7 +696,7 @@ export default function KonnektorTasarim(): ReactNode {
               <select value={secim.pin} onChange={(e) => secimDegistir({pin: Number(e.target.value)})}>
                 {Array.from({length: 39}, (_, i) => (secim.sira === 2 ? 4 + i * 2 : 2 + i)).map((n) => (
                   <option key={n} value={n}>
-                    {n} pin{secim.sira === 2 ? ` (2×${n / 2})` : ''}
+                    {`${n} pin${secim.sira === 2 ? ` (2×${n / 2})` : ''}`}
                   </option>
                 ))}
               </select>
@@ -808,7 +808,7 @@ export default function KonnektorTasarim(): ReactNode {
         <div className={styles.yukleniyor}>
           {veriHatasi ? (
             <>
-              MIL-DTL-38999 yerleşim verisi yüklenemedi.{' '}
+              <span>MIL-DTL-38999 yerleşim verisi yüklenemedi. </span>
               <button type="button" className={styles.dugme} onClick={() => setVeriHatasi(false)}>
                 Yeniden dene
               </button>
@@ -822,9 +822,7 @@ export default function KonnektorTasarim(): ReactNode {
         <div className={styles.aracCubugu}>
           <div>
             <h3>{k.ad}</h3>
-            <p className={styles.ipucu}>
-              {k.ozet} · {gorunumAdi}
-            </p>
+            <p className={styles.ipucu}>{`${k.ozet} · ${gorunumAdi}`}</p>
           </div>
           <div className={styles.disaAktar}>
             <button type="button" className={styles.dugme} onClick={paylas}>
@@ -856,9 +854,9 @@ export default function KonnektorTasarim(): ReactNode {
               />
             )}
             <p className={styles.yuzNotu}>
-              {aynala ? 'Standart çizimin (pin ön yüzü) yatay aynası. ' : 'Standart çizimle aynı yön (pin ön yüzü). '}
-              {k.govde === 'daire' ? 'Üçgen ana kamayı (+Y) gösterir. ' : k.ilkPin ? 'Üçgen ve kare pad 1 numaralı pini gösterir. ' : ''}
-              {k.kaynak && <>Kaynak: {k.kaynak}.</>}
+              {(aynala ? 'Standart çizimin (pin ön yüzü) yatay aynası. ' : 'Standart çizimle aynı yön (pin ön yüzü). ') +
+                (k.govde === 'daire' ? 'Üçgen ana kamayı (+Y) gösterir. ' : k.ilkPin ? 'Üçgen ve kare pad 1 numaralı pini gösterir. ' : '') +
+                (k.kaynak ? `Kaynak: ${k.kaynak}.` : '')}
             </p>
             {k.notlar && (
               <ul className={styles.notlar}>
@@ -878,7 +876,7 @@ export default function KonnektorTasarim(): ReactNode {
                     </button>
                     <span>
                       Pin <b>{seciliKontak.id}</b>
-                      {seciliKontak.boyut && <> · boyut {seciliKontak.boyut}</>}
+                      {seciliKontak.boyut && <span>{` · boyut ${seciliKontak.boyut}`}</span>}
                     </span>
                     <button type="button" className={styles.kucukDugme} onClick={() => komsuSec(1)} aria-label="Sonraki pin">
                       ›
@@ -950,12 +948,12 @@ export default function KonnektorTasarim(): ReactNode {
                 <ul className={styles.denetim} aria-label="Denetim">
                   {ozet.yinelenen.map(([ad, ids]) => (
                     <li key={`y-${ad}`} className={styles.uyari}>
-                      Yinelenen sinyal: <b>{ad}</b> (pin {ids.join(', ')})
+                      Yinelenen sinyal: <b>{ad}</b> <span>{`(pin ${ids.join(', ')})`}</span>
                     </li>
                   ))}
                   {ozet.eksikCift.map((x) => (
                     <li key={`c-${x.id}`} className={styles.uyari}>
-                      Diferansiyel eşi yok: <b>{x.ad}</b> (pin {x.id}) — {x.es} bulunamadı
+                      Diferansiyel eşi yok: <b>{x.ad}</b> <span>{`(pin ${x.id}) — ${x.es} bulunamadı`}</span>
                     </li>
                   ))}
                   {ozet.yinelenen.length === 0 && ozet.eksikCift.length === 0 && (
@@ -972,9 +970,7 @@ export default function KonnektorTasarim(): ReactNode {
               <h3>
                 Pin tablosu{' '}
                 {ozet && (
-                  <span className={styles.sayi}>
-                    {ozet.atanmis}/{ozet.toplam} atanmış
-                  </span>
+                  <span className={styles.sayi}>{`${ozet.atanmis}/${ozet.toplam} atanmış`}</span>
                 )}
               </h3>
               <div className={styles.araclar}>
