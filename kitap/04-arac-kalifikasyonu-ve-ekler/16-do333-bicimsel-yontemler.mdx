@@ -374,7 +374,7 @@ hakkında hiçbir bilgi verilmeden çalıştırılan sound bir abstract interpre
 
 | Uyarı | İfade | Hangi koşulda |
 |---|---|---|
-| İşaretli tamsayı taşması olabilir | `yakit_kg * SAATTEKI_DAKIKA` | `yakit_kg` mutlak değerce yaklaşık 35,8 milyonu aşarsa |
+| İşaretli tam sayı taşması olabilir | `yakit_kg * SAATTEKI_DAKIKA` | `yakit_kg` mutlak değerce yaklaşık 35,8 milyonu aşarsa |
 | Sıfıra bölme olabilir | `/ akis_kg_saat` | `akis_kg_saat` sıfırsa |
 
 İlki, gerçek yakıt miktarları düşünüldüğünde bir yanlış alarmdır; ama araç bu aralığı
@@ -404,7 +404,7 @@ int32_t kalan_sure_dk(int32_t yakit_kg, int32_t akis_kg_saat)
 ```
 
 `requires` satırları precondition, `ensures` satırları postcondition'dır. Sözleşmedeki aritmetik
-matematiksel tamsayılar üzerindedir; dolayısıyla ilk postcondition "sonuç, taşma olmadan
+matematiksel tam sayılar üzerindedir; dolayısıyla ilk postcondition "sonuç, taşma olmadan
 hesaplanan değere eşittir" demektir. Bu precondition'lar altında her iki uyarı da kapanır ve
 postcondition'lar ispatlanabilir.
 
@@ -426,7 +426,7 @@ G (ac_komutu -> yerde)
 ```
 
 Tasarımcı, iniş sırasındaki sekmelerde weight-on-wheels sinyali
-anlık kesildiğinde komut düşmesin diye bir mandal eklemiştir: izin, uçak yerdeyken ters
+anlık kesildiğinde komut düşmesin diye bir latch eklemiştir: izin, uçak yerdeyken ters
 itki kolu (`kol`) çekildiğinde kurulur ve kol çekili kaldıkça korunur. Her çevrimde şu iki
 atama işletilir:
 

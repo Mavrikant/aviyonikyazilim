@@ -91,13 +91,13 @@ içinde verilir (K: kural, Y: yönerge); kural metni MISRA'nın yayınındadır,
 Standardın hangi koda uygulandığı açıkça yazılır: elle yazılan C ve başlık dosyaları,
 assembly modülleri, kod üretecinin (code generator) çıktısı,
 tedarikçi kodu ve önceden geliştirilmiş yazılım (previously developed software, PDS) ayrı
-ayrı ele alınır. Ticari hazır yazılım (commercial off-the-shelf, COTS) dahil PDS başka bir
+ayrı ele alınır. Ticari hazır yazılım (commercial off-the-shelf, COTS) dâhil PDS başka bir
 standarda göre yazılmışsa SDP o standardı ayrıca anar. Standart değişince mevcut kodun
 durumu da burada karara bağlanır; yoksa uyum kanıtının hangi sürüme dayandığı belirsizleşir.
 
 **Verilecek kararlar:**
 
-- Hangi dosya türleri kapsamda; test sürücüleri, yer tutucu kod (stub) kapsam dışı mı?
+- Hangi dosya türleri kapsamda; test sürücüleri ve stub'lar kapsam dışı mı?
 - Tedarikçi kodu ve PDS bu standarda mı, kendi standardına mı göre değerlendirilir?
 - Standart değişince mevcut kod tümüyle mi yeniden denetlenir, yalnızca değişen dosyalar mı?
 
@@ -150,7 +150,7 @@ karşılık gelir; uygulanmaz sayılan her tavsiye kuralı da gerekçesiyle bura
 | Kural | Değişiklik | Gerekçe |
 |---|---|---|
 | K 15.5 | Tavsiyeden gerekliye | Tek çıkış gözden geçirmeyi ve kapsamı sadeleştirir |
-| K 11.4 | Tavsiyeden gerekliye | Tamsayıdan pointer üretimi yalnızca sapma kaydıyla (10.2) |
+| K 11.4 | Tavsiyeden gerekliye | Tam sayıdan pointer üretimi yalnızca sapma kaydıyla (10.2) |
 | KS-14, KS-15, KS-16 | Proje eki | MISRA'nın kapsamadığı donanım erişimi kararları |
 
 **Verilecek kararlar:**

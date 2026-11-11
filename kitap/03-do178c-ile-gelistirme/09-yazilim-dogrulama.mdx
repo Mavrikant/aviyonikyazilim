@@ -594,7 +594,7 @@ testte işletilmemiş olur. Kaynak düzeyindeki kapsam raporu bu boşluğu, savu
    geçerlidir.
 2. **Temsilî örnek mi, tam analiz mi?** İki yol vardır. Temsilî örnekte, kodlama
    standardının izin verdiği her dil yapısı (karar biçimleri, döngüler, `switch`, dizi
-   ve pointer erişimleri, yapı ataması, tamsayı ve kayan nokta işlemleri, çağrılar)
+   ve pointer erişimleri, yapı ataması, tam sayı ve kayan nokta işlemleri, çağrılar)
    için küçük örnekler yazılır ve projenin seçenekleriyle derlenir. Tam analizde ise
    projenin bütün nesne kodu incelenir. Temsilî örnek daha ucuzdur ama iki ek iddia
    gerektirir: proje kodunun örnekte bulunmayan bir yapı kullanmadığı (kodlama standardı
@@ -665,7 +665,7 @@ karşılar. "Kapsam aracımız assembly kodunu desteklemiyor" bir gerekçe deği
 aşamasında cevaplanması gereken bir sorudur.
 
 Assembly kodunu C kodundan ayıran iki şey vardır. Birincisi, kaynak ile nesne kodu
-neredeyse bire bir örtüşür, çünkü assembler derleyici gibi karar vermez; bu
+neredeyse birebir örtüşür, çünkü assembler derleyici gibi karar vermez; bu
 yüzden kaynak–nesne izlenebilirliği çok daha kolaydır. "Neredeyse" sözcüğü önemlidir:
 makrolar, pseudo-instruction'lar (örneğin ARM'da bir sabiti literal pool'dan okuyan
 `ldr r0, =sabit`) ve linker'ın uzak çağrılar için eklediği ara
@@ -677,7 +677,7 @@ assembly'ye nasıl uygulanacağı da projede tanımlanmalıdır.
 
 | Ölçüt | Assembly'deki karşılığı | Dikkat edilecek nokta |
 |---|---|---|
-| Satır kapsama | Her komut, makro açılımları dahil, en az bir kez çalışmış | Kod içine gömülü literal pool ve tablolar komut değildir; içerikleri gözden geçirmeyle doğrulanır |
+| Satır kapsama | Her komut, makro açılımları dâhil, en az bir kez çalışmış | Kod içine gömülü literal pool ve tablolar komut değildir; içerikleri gözden geçirmeyle doğrulanır |
 | Karar kapsama | Her koşullu dal komutu hem alınmış hem alınmamış; her giriş noktası (rutin etiketi, istisna vektörü) ve her çıkış işletilmiş; dolaylı atlamalarda (atlama tablosu, register üzerinden atlama) olası her hedefe gidilmiş | Koşullu yürütülen komutlar (ARM'da `IT` bloğu, koşullu atama) dal olmadan karar verir; koşulun iki sonucu da ayrıca kaydedilir |
 | MC/DC | Tek bir mantıksal kararı birlikte gerçekleyen koşullu dallar bir karar olarak gruplanır ve her koşul için bağımsızlık çifti gösterilir | Hangi dalların aynı karara ait olduğu koddan okunmaz; tasarımda ya da açıklama satırında belirtilir |
 
@@ -715,9 +715,9 @@ olmadan çalıştığı için sayacı yazacak bir yer bile bulamaz. Bu yüzden a
   kapsam kanıtı olarak kullanılmaz; aracın kaybı bildirdiği ve kaybın raporu nasıl
   etkilediği bilinmelidir. Her işlemcide ve kartta izleme portu bulunmaz; bu yüzden karar
   donanım tasarımı sırasında verilmelidir.
-- **Debugger script'i.** Her basic block'un başına kesme noktası konur
+- **Debugger script'i.** Her basic block'un başına breakpoint konur
   ve test koşulur; hangi blokların çalıştığı ve dalların hangi yöne gittiği ardışık
-  durmalardan çıkarılır. Yavaştır ve donanım kesme noktalarının sayısı sınırlıdır; buna
+  durmalardan çıkarılır. Yavaştır ve donanım breakpoint'lerinin sayısı sınırlıdır; buna
   karşılık başlatma kodu gibi küçük modüllerde uygulanabilir.
 - **Komut seti simülatörü (instruction set simulator).** Ayrıntılı kapsam verir ama
   simülatör hedef bilgisayar değildir. Simülatörün ilgili komutları doğru modellediği
