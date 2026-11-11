@@ -121,7 +121,7 @@
   <text x="534.0" y="126" font-size="12.5" font-weight="600" fill="#222" text-anchor="middle">SDI</text>
   <text x="534.0" y="143" font-size="11.5" fill="#444" text-anchor="middle">00</text>
   <path d="M558,102 v6 H730 v-6" fill="none" stroke="#555"/>
-  <text x="644.0" y="126" font-size="12.5" font-weight="600" fill="#222" text-anchor="middle">Label 206 (oktal)</text>
+  <text x="644.0" y="126" font-size="12.5" font-weight="600" fill="#222" text-anchor="middle">Etiket 206 (sekizli)</text>
   <text x="644.0" y="143" font-size="11.5" fill="#444" text-anchor="middle">10 000 110 · ters sırada</text>
   <text x="28" y="194" font-size="11.5" fill="#444">P = 0: 1'lerin sayısı zaten tek (11) · SSM 11: Normal Operation · ± (bit 29) = 0: Plus · SDI 00: hedef ayrımı yok</text>
 </svg>

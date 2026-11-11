@@ -194,7 +194,7 @@ Gösterilmesi beklenen özellikler yedi başlıkta toplanır:
 
 | Gösterilecek özellik | Kapatılan risk | Tipik kanıt |
 |---|---|---|
-| Ayırıcı her seferinde geçerli ve başka kullanımda olmayan bir alan döndürür | Aynı alanın iki nesneye verilmesi (belirsiz referans) | Ayırıcının gereksinim tabanlı testi ve gözden geçirmesi |
+| Allocator her seferinde geçerli ve başka kullanımda olmayan bir alan döndürür | Aynı alanın iki nesneye verilmesi (belirsiz referans) | Allocator'ın gereksinim tabanlı testi ve gözden geçirmesi |
 | Yeterli boş alan varken ayırma, parçalanma yüzünden başarısız olmaz | Parçalanmadan doğan açlık | Sabit boyutlu bloklar ya da parçalanma analizi |
 | Erişilemez hâle gelen bellek, ihtiyaç doğmadan geri kazanılır | Geri kazanımın gecikmesinden doğan açlık | Serbest bırakma disiplini ya da çöp toplayıcının hız analizi |
 | Uygulamanın ihtiyaç duyduğu toplam bellek her an mevcuttur | Heap'in tükenmesi | En kötü durum bellek ihtiyacı analizi |
@@ -204,7 +204,7 @@ Gösterilmesi beklenen özellikler yedi başlıkta toplanır:
 
 Bu özellikleri kimin sağlayacağı seçilen tekniğe bağlıdır. Ek, uygulama
 kodu ile bellek yönetimi altyapısını (çalışma zamanı kütüphanesi, işletim sisteminin
-ayırıcısı, çöp toplayıcı) ayırır ve her teknik için sorumluluğun hangisine düştüğünü
+allocator'ı, çöp toplayıcı) ayırır ve her teknik için sorumluluğun hangisine düştüğünü
 tartışır. Çöp toplayıcı kullanıldığında yükün çoğu altyapıya geçer; ama o altyapı da
 uçuş yazılımıdır ve aynı seviyede doğrulanır. Uygulamanın kendi yazdığı nesne havuzunda
 ise yükün çoğu uygulama kodundadır. Toplam bellek ihtiyacının karşılandığını göstermek,

@@ -92,7 +92,7 @@ ARINC 429'da veri 32 bitlik kelimeler (word) hâlinde gönderilir. Her kelime be
 
 | Bitler | Alan | Ne işe yarar? |
 |---|---|---|
-| 1–8 | Etiket (label) | Kelimenin hangi parametreyi taşıdığını söyler; sekizlik tabanda (octal) yazılır |
+| 1–8 | Etiket (label) | Kelimenin hangi parametreyi taşıdığını söyler; sekizli tabanda (octal) yazılır |
 | 9–10 | SDI | Kelimenin hangi alıcıya yönelik olduğunu ya da hangi kaynaktan geldiğini belirtir |
 | 11–29 | Data | Asıl değer; BNR, BCD ya da Discrete olarak kodlanır |
 | 30–31 | SSM | Verinin durumunu (ve BCD'de işaretini) söyler; anlamı veri türüne göre değişir |
@@ -128,7 +128,7 @@ BNR'de değer ikiye tümleyen (two's complement) ikili sayıdır:
 
 ![Etiket 206, 250 knot örnek kelimesi: P 0, SSM 11, işaret 0, Data alanında 4000 sayısı, pad bitleri, SDI 00 ve ters sırada yazılmış etiket 206](/img/blog/arinc-429/ornek-kelime.svg)
 
-Şekilde etiket alanı 0110 0001 olarak görünür: sekizlik 206'nın ikili karşılığı olan 10 000 110'un ters çevrilmiş hâli. 1'lerin sayısı zaten tek (11) olduğu için parity biti 0'dır.
+Şekilde etiket alanı 0110 0001 olarak görünür: sekizli 206'nın ikili karşılığı olan 10 000 110'un ters çevrilmiş hâli. 1'lerin sayısı zaten tek (11) olduğu için parity biti 0'dır.
 
 BNR kelimelerde SSM şöyle okunur:
 
@@ -180,5 +180,5 @@ ARINC 429 yavaştır ve her verici için ayrı kablo ister; yeni nesil uçaklard
 ## Daha fazla okumak için
 
 - [Aviyonik Nedir?](2023-08-21-aviyonik-nedir.mdx): ARINC 429'un bağladığı sistemlere genel bir bakış.
-- [AFDX Nedir?](2023-08-23-afdx-nedir.mdx): ARINC 429'un yerini alan Ethernet tabanlı aviyonik ağ.
+- [AFDX Nedir?](2023-08-23-afdx-nedir.mdx): yeni nesil uçaklarda büyük veri trafiğini devralan Ethernet tabanlı aviyonik ağ.
 - Cary R. Spitzer, Uma Ferrell, Thomas Ferrell (ed.) — [Digital Avionics Handbook](/kutuphane/aviyonik-sistemler/spitzer-digital-avionics-handbook): ARINC 429'u ve öteki veri yollarını ayrı bölümlerde anlatan başvuru kitabı.

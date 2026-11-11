@@ -13,7 +13,7 @@ a429:
 afdx:
   label: AFDX
   permalink: /afdx
-  description: AFDX (ARINC 664 Bölüm 7) yazıları; aviyonik tam çift yönlü anahtarlamalı Ethernet, deterministik iletişim, yedeklilik, hizmet kalitesi ve uçak ağ topolojileri.
+  description: AFDX (ARINC 664 Part 7) yazıları; switch'li aviyonik Ethernet, virtual link ve BAG ile deterministik iletişim, A ve B ağlarıyla yedeklilik.
 sca:
   label: SCA
   permalink: /sca
@@ -45,8 +45,8 @@ devre-disi-birakilmis-kod:
 gercek-zamanli-sistemler:
   label: gerçek zamanlı sistemler
   permalink: /gercek-zamanli-sistemler
-  description: Gerçek zamanlı sistemler (real-time systems) yazıları; zaman sınırı, determinizm, mutlak, katı ve esnek sınıflar, WCET ve zamanlama algoritmaları.
+  description: Gerçek zamanlı sistemler (real-time systems) yazıları; deadline, determinizm, mutlak, katı ve esnek sınıflar, WCET ve çizelgeleme algoritmaları.
 rtos:
   label: RTOS
   permalink: /rtos
-  description: RTOS (gerçek zamanlı işletim sistemi) yazıları; öngörülebilir zamanlama, öncelik tersinmesi ve RTOS'un emniyet-kritik aviyonik projelerdeki yeri.
+  description: RTOS (gerçek zamanlı işletim sistemi) yazıları; öngörülebilir çizelgeleme, priority inversion ve RTOS'un emniyet-kritik aviyonik projelerdeki yeri.
