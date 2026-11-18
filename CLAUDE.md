@@ -324,6 +324,10 @@ Türkçesi yerleşik olduğu için İngilizcesi yazılmaz; ilk geçtiği yerde p
 | alıcı hassasiyeti | receiver sensitivity |
 | eşdeğer izotropik yayılan güç | equivalent isotropically radiated power (EIRP) |
 | bağımsızlık çifti | independence pair |
+| hücum açısı | angle of attack (AOA) |
+| ivmeölçer | accelerometer |
+| ataletsel referans sistemi | inertial reference system |
+| lövye sarsıcısı | stick shaker |
 | yazılım seviyesi | software level (Seviye A–E) |
 | geliştirme güvence seviyesi | development assurance level (DAL; fonksiyon için FDAL, öğe için IDAL) |
 | hedef | objective (DO-178C) |
