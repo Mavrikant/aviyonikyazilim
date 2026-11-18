@@ -676,6 +676,11 @@
   line-height: 1.5;
 }
 
+/* Öğrenilmiş dersler: açıklama satırının altında başlar */
+.lessons {
+  margin-top: 0.75rem;
+}
+
 .sideText {
   margin: 0;
   color: var(--muted);

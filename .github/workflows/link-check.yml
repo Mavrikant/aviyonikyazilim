@@ -36,6 +36,7 @@ jobs:
             'blog/**/*.mdx'
             'kutuphane/**/*.mdx'
             'araclar/**/*.mdx'
+            'dersler/**/*.mdx'
             'src/**/*.mdx'
             'src/**/*.tsx'
           output: lychee/out.md

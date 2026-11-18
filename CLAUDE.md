@@ -7,13 +7,15 @@ Gelecekteki tüm AI oturumları bu rehbere uymalıdır.
 
 ## Proje tanımı
 
-Türkçe bir aviyonik yazılım / test / sertifikasyon sitesi. İki ana içerik türü:
+Türkçe bir aviyonik yazılım / test / sertifikasyon sitesi. Ana içerik türleri:
 
 1. **Blog** (`blog/`) — teknik yazılar (aviyonik protokoller, DO-178C konuları vb.).
 2. **Kitap** (`kitap/`) — DO-178C ekseninde emniyet-kritik aviyonik yazılım üzerine,
    bölümleri hâlen yazılmakta olan özgün bir kitap.
 3. **Kütüphane** (`kutuphane/`) — alandaki kitaplara/dokümanlara küratörlü öneri
    sayfaları (ikinci docs plugin örneği, routeBasePath: /kutuphane).
+4. **Öğrenilmiş dersler** (`dersler/`) — yazılımın payı olan kaza ve olayların incelemeleri
+   (docs plugin örneği, routeBasePath: /dersler).
 
 ## Klasör yapısı
 
@@ -35,10 +37,16 @@ kutuphane/                Kütüphane docs içeriği (routeBasePath: /kutuphane)
   index.mdx               Giriş + seçim ölçütleri + kitap öneri CTA'sı (Eposta bileşeni)
   01-sertifikasyon/ …     Kategoriler; kitap başına NN-slug.mdx sayfası (künye: <Kunye>)
 sidebarsKutuphane.ts      kutuphaneSidebar (otomatik üretilir)
+dersler/                  Öğrenilmiş dersler docs içeriği (routeBasePath: /dersler)
+  index.mdx               Giriş + olay listesi (<DersKatalogu />) + okuma biçimi ve sınırlar
+  <olay-slug>.mdx         Olay başına bir sayfa; künye frontmatter'dadır (<OlayKunyesi />)
+sidebarsDersler.ts        derslerSidebar (otomatik üretilir; sıra olayın yılı)
 araclar/                  Tarayıcıda çalışan araçlar (routeBasePath: /araclar); giriş sayfası katalogdur
 src/components/AracKatalogu/  Araçlar giriş sayfasındaki katalog (araclarSidebar'dan üretilir)
 src/components/KontrolListesi/  "CSV olarak indir" düğmeleri: Ek F maddeleri (ListeIndir) ve soru
                           tabloları (TabloIndir, Ek C); veriyi sayfanın HTML'inden okur
+src/components/OlayKunyesi/  Öğrenilmiş dersler sayfasının künyesi (veriyi sayfanın frontmatter'ından okur)
+src/components/DersKatalogu/  /dersler giriş sayfasındaki olay listesi (derslerSidebar'dan üretilir)
 src/components/Kunye/     Kütüphane sayfalarının künyesi (kapak, yazar, yayınevi, seviye ölçeği)
 src/components/KitapIcindekiler/  /kitap sayfasındaki içindekiler (kitapSidebar'dan, okuma süreli)
 src/components/AracKarti/ Kitap ve blogdan araca giden kart (başlık/açıklama araç listesinden)
@@ -62,13 +70,13 @@ src/components/GorevCizelgeleme/  Görev çizelgeleme analiz aracı (tepki süre
                           benzetim, döngüsel yürütücü çerçeve tasarımı)
 scripts/konnektor/        MIL-STD-1560C metninden static/data/konnektor/mil-dtl-38999.json üretir
 src/pages/index.tsx       Özel ana sayfa: canlı gösterge paneli, katkı daveti, içindekiler,
-                          son yazılar, kütüphane ve araçlar
+                          son yazılar, kütüphane, öğrenilmiş dersler ve araçlar
 plugins/homepage-data.ts  Ana sayfa verisini build sırasında içerikten üreten yerel eklenti
 plugins/meta-description.ts  description yoksa ilk paragraftan meta açıklaması üretir
 plugins/remark-lcp-image.ts  Sayfa başındaki ilk görseli eager + fetchpriority=high yapar
 plugins/font-preload.ts   Build sonrası HTML geçişi: IBM Plex Sans preload + gizli SVG deposu sınıfı;
                           meta açıklaması olmayan sayfada derlemeyi durdurur
-plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar)
+plugins/llms-txt.ts       Build sonrası llms.txt üretir (kitap, blog, kütüphane, araçlar, öğrenilmiş dersler)
 plugins/kitap-pdf.ts      Kitap PDF'inin sayfa listesini (manifest) üretir; PDF adresi buradadır
 plugins/sentry-kaynak-haritasi.ts  Yalnızca deploy.yml'de: istemci paketlerinin gizli kaynak haritaları
                           (Sentry'ye yüklenir, yayına girmez)
@@ -590,13 +598,50 @@ Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik ç
   E-posta adresi sayfaya **düz metin ya da `mailto:` olarak yazılmaz**; `<Eposta>`
   bileşeni kullanılır (bkz. "Performans ve arama motoru").
 
+## Öğrenilmiş dersler sayfası kuralları
+
+- Her olay `dersler/<olay-slug>.mdx` dosyasıdır. Künye sayfaya yazılmaz, frontmatter'dadır;
+  `<OlayKunyesi />`, giriş sayfasındaki `<DersKatalogu />` ve ana sayfa aynı veriyi okur
+  (`plugins/homepage-data.ts`; eksik alan derlemeyi durdurur):
+  ```yaml
+  title: "A400M, Sevilla (2015): …"
+  description: "…"                # elle yazılır, en çok 160 karakter
+  sidebar_label: "A400M, Sevilla (2015)"
+  sidebar_position: 2015          # olayın yılı; kenar çubuğu tarih sırasına dizilir
+  sidebar_custom_props:
+    tarih: "2015-05-09"           # sıralama ve <time>; birden çok olayda ilkinin tarihi
+    tarihMetni: "…"               # isteğe bağlı: tarihin gösterilecek hâli (iki kaza gibi)
+    arac: "Airbus A400M (MSN23)"
+    yer: "Sevilla, İspanya"
+    sonuc: "4 ölü, 2 ağır yaralı; uçak kullanılamaz hâle geldi"
+    konular: [Konfigürasyon verisi, Yazılım yükleme]
+  ```
+- Sayfalar aynı iskeleti izler: giriş paragrafı → `<OlayKunyesi />` → Ne oldu? → Yazılımın
+  rolü → Neden yakalanmadı? → Nasıl önlenebilirdi? (tablo: zayıf halka, önlem, ilgili kitap
+  bölümü) → Çıkarılacak dersler → Sonrasında ne değişti? → Kendi projenize sorun → Kaynaklar.
+  İskelet değişirse `dersler/index.mdx`'teki tablo da güncellenir.
+- **Olgular birincil kaynaktan gelir** (soruşturma raporu, üretici ya da otorite açıklaması)
+  ve "Kaynaklar" bölümünde bağlantısı verilir. Raporda olmayan ayrıntı (kişi adı, saat,
+  sayı) yazılmaz; raporu yayımlanmamış olayda resmî açıklama ile basına yansıyan bilgi
+  metinde ayrılır ("üreticinin açıklamasına göre", "basına yansıyan bilgiye göre").
+  Kaynakların çeliştiği yerde çelişki söylenir, biri seçilip kesin gibi yazılmaz.
+- Raporlardan **çeviri ya da alıntı yapılmaz** (kitaptaki telif kuralı); olgular özgün
+  cümlelerle özetlenir. Soruşturma raporunun kendi şekli ya da fotoğrafı kopyalanmaz;
+  mekanizma Mermaid ile yeniden çizilir.
+- Kişiler değil süreçler incelenir: mürettebat, mühendis ya da teknisyen adı verilmez,
+  "nasıl önlenebilirdi" bölümü hüküm diliyle değil önlem diliyle yazılır. Sonradan bakış
+  uyarısı giriş sayfasındadır, her sayfada tekrarlanmaz.
+- Her ders sitedeki kitabın ilgili bölümüne bağlanır (`/kitap/...`); kitapta aynı olaydan
+  söz eden bölüm de ders sayfasına bağlantı verir (22. ve 24. bölüm).
+- Bu sayfalar kitabın PDF'ine girmez ve `Book`/`TechArticle` olarak işaretlenmez.
+
 ## Ana sayfa
 
 - Ana sayfadaki listeler (kitap içindekiler ve okuma süreleri, son 5 blog yazısı,
-  kütüphane rafları ve kapakları, araçlar, sayılar) **elle yazılmaz**;
+  kütüphane rafları ve kapakları, araçlar, öğrenilmiş dersler, sayılar) **elle yazılmaz**;
   `plugins/homepage-data.ts` bunları build sırasında `kitapSidebar`,
-  `kutuphaneSidebar`, `araclarSidebar` ve blog içeriğinden üretir. Yeni bölüm, yazı,
-  kitap veya araç eklemek için ana sayfayı düzenlemek gerekmez.
+  `kutuphaneSidebar`, `araclarSidebar`, `derslerSidebar` ve blog içeriğinden üretir. Yeni
+  bölüm, yazı, kitap, araç veya olay incelemesi eklemek için ana sayfayı düzenlemek gerekmez.
 - Bölüm başlıkları `"N. Başlık"`, ekler `"Ek X: Başlık"`, kısım etiketleri
   `"Kısım N — Başlık"` biçimini korumalıdır; eklenti numarayı bu kalıplardan ayırır.
 - Araç sayfalarının frontmatter'ında kısa bir `description` bulunur; ana sayfa onu gösterir.
@@ -774,7 +819,7 @@ Uçuşa elverişlilik güvenliğinde security perimeter anlamında "güvenlik ç
 
 ## MDX kuralları
 
-Tüm içerik sayfaları (blog, kitap, kütüphane, araçlar, `src/pages/*.mdx`) MDX'tir ve
+Tüm içerik sayfaları (blog, kitap, kütüphane, araçlar, öğrenilmiş dersler, `src/pages/*.mdx`) MDX'tir ve
 `markdown.format: 'mdx'` ile derlenir; `.md` uzantılı yeni bir sayfa da MDX olarak ayrıştırılır,
 yine de yeni sayfalar `.mdx` uzantısıyla açılır.
 
@@ -898,7 +943,7 @@ yine de yeni sayfalar `.mdx` uzantısıyla açılır.
   Kitap/blog/kütüphane/araç eklendikçe kendiliğinden güncellenir.
 - **Site içi arama** `@easyops-cn/docusaurus-search-local` ile yapılır: dizin build
   sırasında üretilir (`build/search-index.json`), harici servis yoktur; dil `tr`
-  (Türkçe kök ayırıcı). Kitap, kütüphane, araçlar ve blog dizinlenir; ana sayfa
+  (Türkçe kök ayırıcı). Kitap, kütüphane, araçlar, öğrenilmiş dersler ve blog dizinlenir; ana sayfa
   dizinlenmez. Arayüz metinleri `i18n/tr/code.json` içindedir. Eklenti her sayfanın
   başlığını, başlıklarını, `description` ve `keywords` meta etiketlerini ayrı sonuç
   olarak dizinler; bu yüzden **site geneli `keywords` etiketi yalnızca ana sayfadadır**

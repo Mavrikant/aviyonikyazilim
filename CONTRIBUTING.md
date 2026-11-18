@@ -1,8 +1,9 @@
 # Katkı rehberi
 
 [aviyonikyazilim.com](https://aviyonikyazilim.com); DO-178C ekseninde emniyet-kritik aviyonik
-yazılım üzerine Türkçe bir kitap, teknik yazılar, küratörlü bir kütüphane ve tarayıcıda
-çalışan araçlardan oluşur. Hepsi bu depodan üretilir ve hepsi katkıya açıktır: bir yazım
+yazılım üzerine Türkçe bir kitap, teknik yazılar, küratörlü bir kütüphane, tarayıcıda
+çalışan araçlar ve yazılımla ilişkili kazaların incelendiği öğrenilmiş dersler bölümünden
+oluşur. Hepsi bu depodan üretilir ve hepsi katkıya açıktır: bir yazım
 hatasını düzeltmek de, yeni bir bölüm yazmak da katkıdır.
 
 ## Tarayıcıdan düzeltme (en kısa yol)

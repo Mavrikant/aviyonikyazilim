@@ -161,8 +161,8 @@ const config: Config = {
         // lunr-languages Türkçe kök ayırıcısı: "gereksinimlerin" araması "gereksinim"i bulur.
         language: 'tr',
         hashed: true,
-        docsRouteBasePath: ['kitap', 'kutuphane', 'araclar'],
-        docsDir: ['kitap', 'kutuphane', 'araclar'],
+        docsRouteBasePath: ['kitap', 'kutuphane', 'araclar', 'dersler'],
+        docsDir: ['kitap', 'kutuphane', 'araclar', 'dersler'],
         blogRouteBasePath: 'blog',
         blogDir: 'blog',
         explicitSearchResultPath: true,
@@ -176,7 +176,7 @@ const config: Config = {
   ],
 
   plugins: [
-    // Ana sayfa listelerini (kitap, son yazılar, kütüphane, araçlar) build sırasında üretir.
+    // Ana sayfa listelerini (kitap, son yazılar, kütüphane, araçlar, öğrenilmiş dersler) build sırasında üretir.
     homepageData,
     // Build sonrası her sayfaya IBM Plex Sans preload ekler ve gizli SVG ikon deposunun
     // satır içi stilini CSS sınıfına çevirir (aynı HTML geçişi).
@@ -208,6 +208,19 @@ const config: Config = {
         routeBasePath: 'araclar',
         breadcrumbs: true,
         sidebarPath: './sidebarsAraclar.ts',
+        editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
+        showLastUpdateTime: true,
+        remarkPlugins: [remarkLcpImage],
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'dersler',
+        path: 'dersler',
+        routeBasePath: 'dersler',
+        breadcrumbs: true,
+        sidebarPath: './sidebarsDersler.ts',
         editUrl: 'https://github.com/Mavrikant/aviyonikyazilim/edit/main/',
         showLastUpdateTime: true,
         remarkPlugins: [remarkLcpImage],
@@ -357,6 +370,13 @@ const config: Config = {
           position: 'left',
           label: 'Araçlar',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'derslerSidebar',
+          docsPluginId: 'dersler',
+          position: 'left',
+          label: 'Öğrenilmiş Dersler',
+        },
         {to: '/kitap/kisaltmalar', label: 'Kısaltmalar', position: 'left'},
         {to: '/iletisim', label: 'İletişim', position: 'right'},
         {
@@ -384,6 +404,7 @@ const config: Config = {
             {label: 'Blog', to: '/blog'},
             {label: 'Kütüphane', to: '/kutuphane'},
             {label: 'Araçlar', to: '/araclar'},
+            {label: 'Öğrenilmiş dersler', to: '/dersler'},
             {label: 'Ekler', to: '/kitap/ekler/ek-a-ornek-gecis-kriterleri'},
           ],
         },

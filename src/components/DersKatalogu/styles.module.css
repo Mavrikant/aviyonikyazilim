@@ -1,0 +1,67 @@
+/* Olay listesi: kart yerine çizgilerle ayrılmış satırlar, solda olayın yılı. */
+
+.liste {
+  margin: 2rem 0 2.5rem;
+  padding: 0;
+  border-top: 2px solid var(--ifm-color-emphasis-800);
+  list-style: none;
+}
+
+.olay {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1rem;
+  margin: 0 !important;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.yil {
+  padding-top: 0.2rem;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.baslik {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.arac {
+  margin: 0.15rem 0 0;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.78rem;
+}
+
+.aciklama {
+  margin: 0.45rem 0 0.6rem;
+}
+
+.konular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.konular li {
+  margin: 0;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 4px;
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 480px) {
+  .olay {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}
