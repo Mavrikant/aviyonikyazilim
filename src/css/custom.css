@@ -151,6 +151,23 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
 }
 
+/* Masaüstü menünün dar aralığı: altı bağlantı tek satırda kalsın ("Öğrenilmiş Dersler"
+   iki satıra bölünmesin). Site adı sığmadığında "A…" diye kırpılmak yerine gizlenir; logo
+   ana sayfaya bağlantı olarak kalır ve adı alt metninde taşır. */
+@media (min-width: 997px) and (max-width: 1199px) {
+  .navbar__item {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 997px) and (max-width: 1119px) {
+  .navbar__title {
+    display: none;
+  }
+}
+
 .navbar__logo {
   height: 2.1rem;
   margin-right: 0.65rem;

@@ -172,7 +172,7 @@ function TocColumn({parts}: {parts: Part[]}): ReactNode {
 }
 
 export default function Home(): ReactNode {
-  const {buildDate, book, posts, postCount, library, tools} = useHomepageData();
+  const {buildDate, book, posts, postCount, library, tools, lessons} = useHomepageData();
   const {withBaseUrl} = useBaseUrlUtils();
   const [left, right] = splitParts(book.parts);
 
@@ -228,6 +228,11 @@ export default function Home(): ReactNode {
                 <li>
                   <Link to="/araclar">
                     <b>{tools.length}</b> araç
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dersler">
+                    <b>{lessons.length}</b> kaza incelemesi
                   </Link>
                 </li>
               </ul>
@@ -410,6 +415,36 @@ export default function Home(): ReactNode {
               </ul>
             </section>
           </div>
+
+          {/* ---------- Öğrenilmiş dersler: tam genişlikte, olay tarihiyle ---------- */}
+          <section className={styles.section}>
+            <div className={styles.sectionHead}>
+              <Heading as="h2" id="dersler" className={styles.sectionTitle}>
+                Öğrenilmiş dersler
+              </Heading>
+              <Link className={styles.headLink} to="/dersler">
+                Tüm incelemeler <Arrow />
+              </Link>
+            </div>
+            <p className={styles.sideText}>
+              Yazılımın payı olan kaza ve olaylar: ne oldu, neden yakalanmadı, nasıl önlenebilirdi.
+            </p>
+            <ol className={clsx(styles.log, styles.lessons)}>
+              {lessons.map((lesson) => (
+                <li key={lesson.permalink}>
+                  <time className={styles.logDate} dateTime={lesson.date}>
+                    {lesson.date}
+                  </time>
+                  <div>
+                    <Link className={styles.logTitle} to={lesson.permalink}>
+                      {lesson.title}
+                    </Link>
+                    <p className={styles.logMeta}>{lesson.topics.join(' · ')}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
 
           {/* ---------- Araçlar: tam genişlikte, şema solda ---------- */}
           <section className={clsx(styles.section, styles.toolsSection)}>

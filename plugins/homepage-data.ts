@@ -1,5 +1,5 @@
 /**
- * Ana sayfa verisi — build sırasında kitap, blog, kütüphane ve araçlar
+ * Ana sayfa verisi — build sırasında kitap, blog, kütüphane, araçlar ve öğrenilmiş dersler
  * içeriğinden ana sayfanın ihtiyaç duyduğu yalın listeleri üretir.
  *
  * Ana sayfa hiçbir listeyi elle tutmaz: yeni bölüm, yazı, kitap veya araç
@@ -56,6 +56,22 @@ export type Tool = PageLink & {
   features: string[];
 };
 
+export type Lesson = PageLink & {
+  description: string;
+  /** Olayın tarihi, YYYY-MM-DD (`sidebar_custom_props.tarih`) */
+  date: string;
+  /** Tarihin gösterilecek hâli; birden çok olayı kapsayan sayfada elle verilir (`tarihMetni`) */
+  dateText: string;
+  /** Hava aracı (`sidebar_custom_props.arac`) */
+  aircraft: string;
+  /** Olayın yeri (`sidebar_custom_props.yer`) */
+  place: string;
+  /** Sonuç: can kaybı, hasar (`sidebar_custom_props.sonuc`) */
+  outcome: string;
+  /** Dersin konuları (`sidebar_custom_props.konular`): katalogda etiket olarak gösterilir */
+  topics: string[];
+};
+
 export type HomepageData = {
   /** Build tarihi (Europe/Istanbul), YYYY-MM-DD */
   buildDate: string;
@@ -77,6 +93,8 @@ export type HomepageData = {
     covers: Cover[];
   };
   tools: Tool[];
+  /** Öğrenilmiş dersler: olay tarihine göre eskiden yeniye */
+  lessons: Lesson[];
 };
 
 type LoadedVersion = DocsContent['loadedVersions'][number];
@@ -128,6 +146,16 @@ function splitChapterTitle(title: string): {no: string; title: string} {
 function splitPartLabel(label: string): {no: string; title: string} {
   const match = /^Kısım\s+([IVXLC]+)\s+—\s+(.+)$/.exec(label);
   return match ? {no: match[1], title: match[2]} : {no: '', title: label};
+}
+
+/** "2026-10-02" → "2 Ekim 2026" (sunucu ve istemcide aynı çıktı için UTC). */
+export function formatLongDate(isoDate: string): string {
+  return new Intl.DateTimeFormat('tr-TR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${isoDate}T00:00:00Z`));
 }
 
 /** İlk cümleyi (ya da en fazla ~180 karakteri) döndürür. */
@@ -300,6 +328,48 @@ function loadTools(version: LoadedVersion): Tool[] {
   });
 }
 
+/**
+ * Öğrenilmiş dersler: giriş sayfası dışındaki her sayfa bir olaydır. Künye alanları sayfanın
+ * `sidebar_custom_props` alanından gelir; eksik ya da biçimsiz alan derlemeyi durdurur
+ * (katalog, ana sayfa ve sayfadaki künye aynı veriyi gösterir).
+ */
+function loadLessons(version: LoadedVersion): Lesson[] {
+  const byId = docsById(version);
+  const lessons = docItemIds(getSidebar(version, 'derslerSidebar'))
+    .map((id) => byId.get(id))
+    .filter((doc): doc is DocMetadata => doc !== undefined && doc.slug !== '/')
+    .map((doc): Lesson => {
+      const props = (doc.frontMatter.sidebar_custom_props ?? {}) as Record<string, unknown>;
+      const text = (key: string): string => {
+        const value = props[key];
+        if (typeof value !== 'string' || value.trim() === '') {
+          throw new Error(`[homepage-data] ${doc.source}: sidebar_custom_props.${key} eksik.`);
+        }
+        return value;
+      };
+      const date = text('tarih');
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        throw new Error(`[homepage-data] ${doc.source}: tarih YYYY-AA-GG biçiminde olmalı ("${date}").`);
+      }
+      const topics = props.konular;
+      if (!Array.isArray(topics) || topics.length === 0 || topics.some((t) => typeof t !== 'string')) {
+        throw new Error(`[homepage-data] ${doc.source}: sidebar_custom_props.konular eksik.`);
+      }
+      return {
+        title: doc.title,
+        permalink: doc.permalink,
+        description: doc.description,
+        date,
+        dateText: typeof props.tarihMetni === 'string' ? props.tarihMetni : formatLongDate(date),
+        aircraft: text('arac'),
+        place: text('yer'),
+        outcome: text('sonuc'),
+        topics: topics as string[],
+      };
+    });
+  return lessons.sort((a, b) => a.date.localeCompare(b.date));
+}
+
 function loadPosts(blog: BlogContent): Pick<HomepageData, 'posts' | 'postCount'> {
   // Blog eklentisi yazıları zaten yeniden eskiye sıralar.
   const listed = blog.blogPosts.filter((post) => !post.metadata.unlisted);
@@ -332,6 +402,7 @@ export default function homepageData(context: LoadContext): Plugin {
         ...loadPosts(blog),
         library: await loadLibrary(context.siteDir, getVersion(docs, 'kutuphane')),
         tools: loadTools(getVersion(docs, 'araclar')),
+        lessons: loadLessons(getVersion(docs, 'dersler')),
       };
       actions.setGlobalData(data);
     },

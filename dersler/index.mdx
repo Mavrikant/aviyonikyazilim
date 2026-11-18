@@ -1,0 +1,71 @@
+---
+title: Öğrenilmiş Dersler
+description: "Yazılımın payı olan uçak kazaları ve olayları: ne oldu, hata neden yakalanmadı, nasıl önlenebilirdi ve bugünkü aviyonik yazılım projesine hangi ders kalıyor?"
+sidebar_position: 0
+slug: /
+---
+
+import Eposta from '@site/src/components/Eposta';
+import DersKatalogu from '@site/src/components/DersKatalogu';
+
+# Öğrenilmiş Dersler
+
+Bu bölüm, yazılımın payı olan kaza ve olayları aviyonik yazılım mühendisinin gözüyle
+inceler. Her sayfa aynı üç soruyu sorar: ne oldu, hata neden uçuştan önce yakalanmadı ve
+nasıl önlenebilirdi? Amaç suçlu aramak değil, bir sonraki projede aynı zincirin hangi
+halkasında durulabileceğini görmektir.
+
+<DersKatalogu />
+
+## Bu incelemeler nasıl okunmalı?
+
+Kazaların ortak özelliği, çoğunda yazılımın **yazıldığı gibi çalışmış** olmasıdır. Kod
+gereksinimini karşılar, testler geçer, yine de uçak kaybedilir; çünkü yanlış olan kod
+değil gereksinim, varsayım, veri ya da sistemin geri kalanıyla kurulan ilişkidir. Bu yüzden
+sayfalar kod hatası avına çıkmaz, zincirin tamamına bakar: sistem gereksinimleri, emniyet
+değerlendirmesi, konfigürasyon verisi, doğrulama ortamı, üretim ve bakım süreçleri.
+
+Her sayfa aynı iskeleti izler:
+
+| Başlık | Cevapladığı soru |
+|----|----|
+| Ne oldu? | Uçuşun ve olayın kısa, doğrulanabilir özeti |
+| Yazılımın rolü | Hatayı üreten mekanizma: hangi veri, hangi mantık, hangi varsayım |
+| Neden yakalanmadı? | Gereksinim, tasarım, doğrulama ve süreç katmanlarından hangileri hatayı geçirdi |
+| Nasıl önlenebilirdi? | Zincirin her halkası için somut önlem ve sitedeki [kitapta](/kitap) ilgili bölüm |
+| Çıkarılacak dersler | Olaydan bağımsız, başka projeye taşınabilir sonuçlar |
+| Kendi projenize sorun | Aynı zayıflığın sizde olup olmadığını anlamaya yarayan sorular |
+| Kaynaklar | Soruşturma raporu ve diğer birincil kaynaklar |
+
+## Sınırlar
+
+- **Kaynak soruşturma raporudur.** Olgular resmî soruşturma raporlarından ve üretici ya da
+  otorite açıklamalarından alınır; kaynağı her sayfanın sonundadır. Raporu yayımlanmamış
+  olaylarda (askerî soruşturmalar gibi) neyin resmî açıklama, neyin basına yansıyan bilgi
+  olduğu sayfada ayrıca belirtilir.
+- **"Nasıl önlenebilirdi" bölümü sonradan bakışın ürünüdür.** Kazadan sonra zincirin zayıf
+  halkasını göstermek kolaydır; o gün masadaki mühendis aynı bilgiye sahip değildi. Bu
+  bölümler bir hüküm değil, bugünkü projeler için bir kontrol sorusu listesi olarak
+  okunmalıdır.
+- **Kişiler değil süreçler incelenir.** Kazaların hiçbiri tek bir kişinin tek bir hatasıyla
+  açıklanamaz; her birinde birden çok savunma katmanı aynı anda delinmiştir.
+- **Metinler özgündür.** Raporlardan çeviri ya da alıntı yapılmaz; olgular kendi
+  cümlelerimizle özetlenir ve rapora bağlantı verilir.
+
+## Olay nasıl seçilir?
+
+Bir olayın burada yer alması için üç ölçüt aranır: yazılımın ya da yazılımın kullandığı
+verinin olay zincirinde belirgin bir payı olmalı, olgular kamuya açık birincil kaynaklarla
+doğrulanabilmeli ve olaydan bugünkü bir aviyonik yazılım projesine taşınabilecek bir ders
+çıkmalıdır. Havacılık dışından bir olay (bir roket fırlatması gibi) ancak dersi aviyonik
+yazılım için doğrudan geçerliyse alınır.
+
+:::tip[Bir olay önerin]
+
+İncelenmesini istediğiniz bir kaza ya da olay mı var, ya da bir sayfada düzeltilmesi
+gereken bir bilgi mi gördünüz?
+<Eposta noscriptHint subject="Öğrenilmiş dersler önerisi">E-posta ile yazabilir</Eposta> ya da
+[GitHub'da konu açabilirsiniz](https://github.com/Mavrikant/aviyonikyazilim/issues/new/choose).
+Olayın soruşturma raporuna bağlantı eklemeniz incelemeyi hızlandırır.
+
+:::

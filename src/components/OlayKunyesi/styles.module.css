@@ -1,0 +1,60 @@
+/* Olay künyesi: kütüphane künyesiyle aynı dil (üstte kalın, satır aralarında ince çizgi). */
+
+.kunye {
+  margin: 1.25rem 0 2.25rem;
+  padding: 1rem 0 0.25rem;
+  border-top: 2px solid var(--ifm-color-emphasis-800);
+}
+
+.liste {
+  margin: 0;
+}
+
+.satir {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 0.25rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.satir:first-child {
+  padding-top: 0;
+}
+
+.satir dt {
+  padding-top: 0.2rem;
+  color: var(--ifm-color-emphasis-700);
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.satir dd {
+  margin: 0;
+}
+
+.konular {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.konular li {
+  margin: 0;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 420px) {
+  .satir {
+    grid-template-columns: 1fr;
+  }
+}

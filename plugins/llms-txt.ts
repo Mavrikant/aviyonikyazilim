@@ -2,13 +2,13 @@
  * llms.txt — build sırasında, dil modelleri ve yapay zekâ tarayıcıları için
  * sitenin düz metin içindekiler dosyasını (`/llms.txt`, llmstxt.org önerisi) üretir.
  *
- * Dosya elle tutulmaz: kitap, blog, kütüphane ve araçlar içeriğinden her
+ * Dosya elle tutulmaz: kitap, blog, kütüphane, araçlar ve öğrenilmiş dersler içeriğinden her
  * build'de baştan yazılır; yeni bölüm, yazı, kitap veya araç eklendiğinde bir
  * sonraki build'de kendiliğinden yansır, hiçbir zaman elle güncelleme gerektirmez.
  *
  * Yapı: başlık + tek cümlelik özet + kısa tanıtım, ardından her biri
  * `- [Başlık](mutlak adres): açıklama` satırlarından oluşan H2 bölümleri
- * (kitap kısımları, kaynaklar, blog, kütüphane kategorileri, araçlar) ve
+ * (kitap kısımları, kaynaklar, blog, kütüphane kategorileri, araçlar, öğrenilmiş dersler) ve
  * atlanabilir bağlantılar için `Optional` bölümü. Sıra kenar çubuklarındaki
  * (blogda yeniden eskiye) sıradır; açıklamalar meta açıklamasıyla aynı alandan
  * (plugins/meta-description.ts) gelir. Gizli (unlisted) ve taslak sayfalar listelenmez.
@@ -211,15 +211,21 @@ export default function llmsTxt(context: LoadContext): Plugin {
       flat: true,
     });
 
+    const lessons = docsSections(getVersion(docs, 'dersler'), 'derslerSidebar', {
+      title: 'Öğrenilmiş dersler',
+      flat: true,
+    });
+
     const lines = [
       `# ${siteConfig.title}`,
       '',
       `> ${SUMMARY}`,
       '',
       'Site Türkçedir; bir teknik terim ilk kullanıldığı yerde İngilizcesi parantez içinde verilir. ' +
-        'Dört içerik türü vardır: DO-178C ekseninde emniyet-kritik aviyonik yazılım kitabı, ' +
-        'teknik blog yazıları, alandaki kitap ve dokümanlara küratörlü öneriler (kütüphane) ve ' +
-        'tarayıcıda çalışan simülatörler (araçlar). İçerik özgün olarak yazılır; kaynak ' +
+        'Beş içerik türü vardır: DO-178C ekseninde emniyet-kritik aviyonik yazılım kitabı, ' +
+        'teknik blog yazıları, alandaki kitap ve dokümanlara küratörlü öneriler (kütüphane), ' +
+        'tarayıcıda çalışan simülatörler (araçlar) ve yazılımla ilişkili kaza ve olayların ' +
+        'incelemeleri (öğrenilmiş dersler). İçerik özgün olarak yazılır; kaynak ' +
         `metinler ve değişiklik geçmişi ${REPO_URL} adresindedir.`,
       '',
       'Katkılar açıktır: düzeltme, yeni bölüm, kitap veya araç önerisi GitHub üzerinden ' +
@@ -228,7 +234,7 @@ export default function llmsTxt(context: LoadContext): Plugin {
         'paylaşım) geçerlidir.',
     ];
 
-    const sections: Section[] = [...book, blogSection(blog), ...library, ...tools];
+    const sections: Section[] = [...book, blogSection(blog), ...library, ...tools, ...lessons];
     for (const {heading, entries} of sections) {
       lines.push('', `## ${heading}`, '', ...entries.map(renderEntry));
     }
