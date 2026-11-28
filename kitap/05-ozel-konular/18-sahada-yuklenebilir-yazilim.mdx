@@ -122,9 +122,10 @@ geri kalanının ana teması olan "baştan tasarım" yaklaşımıdır.
 
 DO-178C sahada yüklemeyi öncelikle standardın sistem yönlerini anlatan 2. bölümünde
 (§2.5.5), yani bir **sistem tasarımı konusu** olarak ele alır; yazılım süreçlerinde
-konuya yalnızca birkaç noktada döner (entegrasyon testleri, konfigürasyon kimliği,
-yükleme kontrolü ve yazılım konfigürasyon indeksi (Software Configuration Index, SCI) —
-sırası geldikçe anılacak).
+konuya yalnızca birkaç noktada döner (planlar ve tasarım tanımı, entegrasyon testleri,
+konfigürasyon kimliği, yükleme kontrolü, yazılım konfigürasyon indeksi (Software
+Configuration Index, SCI) ve yazılım uygunluk gözden geçirmesi (software conformity
+review) — sırası geldikçe anılacak).
 Yaklaşımın özü şudur: yükleme işlevine ilişkin emniyet gereksinimleri sistem
 gereksinimlerinin parçasıdır ve hangi gereksinimlerin gerektiği sistem emniyet
 değerlendirme sürecinde (system safety assessment process) belirlenir (bkz.
@@ -405,7 +406,7 @@ donanımıyla uyumluluğunu teyit eden kayıtlar (§7.4). SCI de buna göre kuru
 çalıştırılabilir nesne kodunu ve varsa PDI dosyalarını kimlikleriyle, arşiv ve sürüm
 medyasını, kullanılıyorsa nesne kodunun bütünlük kontrol değerlerini ve yazılımı hedef
 donanıma yükleme prosedürlerini tanımlar (§11.16); yazılım uygunluk gözden geçirmesi
-(software conformity review) de onaylı yazılımın yayımlanmış talimatlarla yüklenebildiğini
+de onaylı yazılımın yayımlanmış talimatlarla yüklenebildiğini
 teyit eder (§8.3).
 Yükleme prosedürleri yazılım ekibinin değil de sistem veya uçak seviyesindeki
 dokümantasyonun sorumluluğundaysa, SCI en azından bunların nerede olduğunu açıkça
@@ -484,7 +485,7 @@ standartları.
 
 | Doküman | Katkısı |
 |---|---|
-| DO-178C §2.5.5 (ayrıca §6.4.3, §7.2.1, §7.4, §11.16) | Sistem tasarımı hususları: emniyet değerlendirmesinin ele alacağı yükleme riskleri; yazılım süreçlerinde test, kimlik, yükleme kontrolü ve SCI karşılıkları |
+| DO-178C §2.5.5 (ayrıca §6.4.3, §7.2.1, §7.4, §8.3, §11.1, §11.10, §11.16) | Sistem tasarımı hususları: emniyet değerlendirmesinin ele alacağı yükleme riskleri; yazılım süreçlerinde PSAC, tasarım tanımı, test, kimlik, yükleme kontrolü, uygunluk gözden geçirmesi ve SCI karşılıkları |
 | AC 20-115D / AMC 20-115D (8. bölüm) | Geliştiriciye düşen şartlar (FAA ve EASA metinleri teknik olarak aynıdır) |
 | AC 43-216A | Uçak bakımı sırasında yazılım yönetimi (operatör ve bakım kuruluşu tarafı) |
 | ARINC 615 / 615A | Data loader–hedef birim protokolü (ARINC 429 / Ethernet üzerinden) |

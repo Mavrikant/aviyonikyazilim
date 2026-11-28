@@ -84,7 +84,7 @@ geçer.
       *(A–D · §7.2.2.c)*
 - [ ] **KYD-06** Tedarikçiden gelen veri teslimat notu ve kabul kaydıyla mı kontrollü
       kütüphaneye girmiş ve tedarikçinin baseline kimliği projenin kimliğiyle eşlenmiş mi?
-      *(A–D · §7.2)*
+      *(A–D · §7.2, §11.4.e)*
 
 ### Değişiklikler ve durum muhasebesi
 
@@ -108,9 +108,9 @@ geçer.
       içerikle birebir aynı mı? Örneğin hiçbir dosya "en son sürüm" gibi sürümsüz
       anılmıyor. *(A–D · §11.16.c)*
 - [ ] **KYD-12** SCI yaşam döngüsü verisini, varsa önceden geliştirilmiş yazılımı (previously
-      developed software) ve kullanıcı tarafından değiştirilebilir yazılımın (user-modifiable
-      software) değiştirilme yöntemini kimlik ve sürümleriyle anıyor mu?
-      *(A–D · §11.16.d, e, j)*
+      developed software), arşiv ve sürüm teslim medyasını ve kullanıcı tarafından
+      değiştirilebilir yazılımın (user-modifiable software) değiştirilme yöntemini kimlik ve
+      sürümleriyle anıyor mu? *(A–D · §11.16.d–f, j)*
 - [ ] **KYD-13** SCI'deki build talimatı komutları, seçenek dosyalarını, ortam değişkenlerini,
       adım sırasını ve kaynağın arşivden nasıl alınacağını yazıyor mu ve SECI ayrı bir belgeyse
       SCI onu kimlik ve sürümüyle anıyor mu? *(A–D · §11.16.g, h)*
@@ -210,7 +210,7 @@ bölümündedir.
 
 | Bulgu | Tipik nedeni | İlgili madde |
 |---|---|---|
-| İki baseline arasında hiçbir rapora bağlanmayan dosya değişikliği | Küçük düzeltmenin onaysız birleştirmeyle doğrudan kontrollü branch'e işlenmesi | KYD-07 |
+| İki baseline arasında hiçbir rapora bağlanmayan dosya değişikliği | Küçük düzeltmenin onaysız bir merge ile doğrudan kontrollü branch'e işlenmesi | KYD-07 |
 | İçeriği değişmiş ama sürümü aynı kalmış belge | Sürüm alanının belgenin içinde elle tutulması | KYD-08 |
 | Gereksinim aracındaki "Onaylı" kayıt sonradan değişmiş, baseline bunu göstermiyor | Baseline'ın araçta etiket ya da snapshot yerine kayıt durumuna bırakılması | KYD-05 |
 | SCI'deki kaynak listesi ürün baseline'ının etiketiyle uyuşmuyor | SCI'nin elle tutulması, son değişikliklerin eklenmemesi | KYD-11 |
@@ -238,10 +238,11 @@ olarak yapıyorsa A-9'un bağımsızlık beklentisi geçerlidir; o durumda
 
 Seviyeyle değişen, verinin kontrol kategorisidir. Standardın Tablo 7-1'ine göre CC2 veride
 baseline, baseline'lar arası izlenebilirlik, durum muhasebesi, arşiv ortamının seçimi,
-yenilenmesi ve ayrı kopyası, kopyalamanın doğrulanması ve sürüm teslimi asgari kapsamda değildir.
-Tanımlama (KYD-01–03), değişen öğenin yeni kimlik alması ve türetildiği öğeye izlenebilmesi
-(KYD-08, KYD-29), arşivde yetkisiz değişikliğe karşı koruma ve saklama (KYD-20) ile geri
-getirme (KYD-23) ise CC2 veride de sorulur.
+yenilenmesi ve ayrı kopyası, kopyalamanın doğrulanması ve sürüm teslimi asgari kapsamda değildir;
+problem raporlama, değişikliğin kaydı ve onayı ile değişiklik gözden geçirmesi de CC2'de
+aranmaz (bunlar PRD listesinin konusudur). Tanımlama (KYD-01–03), değişen öğenin yeni kimlik
+alması ve türetildiği öğeye izlenebilmesi (KYD-08, KYD-29), arşivde yetkisiz değişikliğe
+karşı koruma ve saklama (KYD-20) ile geri getirme (KYD-23) ise CC2 veride de sorulur.
 
 Liste veri başına değil, denetim başına bir kez yanıtlanır ve her baseline'da CC1 veri
 bulunur: nesne kodu, PDI dosyası ve SCI her seviyede CC1'dir. Bu yüzden CC1'e özgü maddeler

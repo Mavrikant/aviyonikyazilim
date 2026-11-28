@@ -177,7 +177,7 @@ Süslü parantez zorunluluğu (K 15.6) gibi davranışa dokunan kurallar 7. böl
 
 | No | Kural | Gerekçe | Nasıl denetlenir |
 |---|---|---|---|
-| KS-04 | Biçim, depodaki `<formatter>` yapılandırmasıyla üretilir: 4 boşluk girinti, satır en çok 100 karakter, sekme yok | Sunumun elle denetimi kalkar | Birleştirmede formatter farkı sıfır |
+| KS-04 | Biçim, depodaki `<formatter>` yapılandırmasıyla üretilir: 4 boşluk girinti, satır en çok 100 karakter, sekme yok | Sunumun elle denetimi kalkar | Merge'de formatter farkı sıfır |
 
 ### 5. Belgeleme kuralları
 
@@ -266,16 +266,16 @@ condition/decision coverage, MC/DC) için gereken test sayısını da sınırlar
 
 | Zayıf ifade | Güçlü ifade |
 |---|---|
-| "Fonksiyonlar gereksiz karmaşık olmamalıdır." | "Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4'tür; `<metrik aracı ve sürümü>` her build'de ölçer, aşım sapma kaydı olmadan birleştirilmez." |
+| "Fonksiyonlar gereksiz karmaşık olmamalıdır." | "Cyclomatic complexity en çok 10, iç içe kontrol derinliği en çok 4'tür; `<metrik aracı ve sürümü>` her build'de ölçer, aşım sapma kaydı olmadan merge edilmez." |
 
 **7.4 Savunmacı programlama ve hata işleme.** Savunmacı programlama (defensive
 programming), beklenmeyen girdi ya da durumda kodun öngörülebilir davranmasını sağlayan
 yapıların kullanılmasıdır ve gürbüzlükle (robustness) ilgilidir. DO-248C'nin açıklaması (FAQ #32) bunların
 tasarım ve kodlama standartlarında ele alınabileceğini, anormal girdiye doğru tepkinin ise
 gereksinimlerde tanımlanacağını belirtir. Standart hangi savunmacı yapının zorunlu olduğunu
-söyler (KS-13, KS-14); tetiklendiğindeki davranış bir gereksinimde yazılıdır, hatalar tek
-bir raporlama arayüzüne bildirilir (KS-12). Bu dallara çoğu zaman gereksinim tabanlı testle
-(requirements-based testing) ulaşılamaz ve yapısal kapsam analizinde (structural coverage
+söyler (KS-13, KS-14); tetiklendiğindeki davranış bir gereksinimde yazılıdır, hata döndüren
+çağrının sonucu denetlenir (KS-12) ve hatalar tek bir raporlama arayüzüne bildirilir. Bu
+dallara çoğu zaman gereksinim tabanlı testle (requirements-based testing) ulaşılamaz ve yapısal kapsam analizinde (structural coverage
 analysis) gerekçe istenir; kuralın standartta yazılı olması, boşluğun sonradan uydurulmuş
 bir etiketle değil belgeli bir dayanakla açıklanmasını sağlar
 ([17. Kapsanmayan Kodlar](../../05-ozel-konular/17-kapsanmayan-kodlar.mdx)).

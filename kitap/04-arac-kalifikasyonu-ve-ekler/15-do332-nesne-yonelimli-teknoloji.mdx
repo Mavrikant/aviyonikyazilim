@@ -15,7 +15,7 @@ kodlama kurallarına nasıl yansıdığını anlatır.
 DO-332, "Object-Oriented Technology and Related Techniques Supplement to DO-178C and
 DO-278A" adıyla 2011'de DO-178C ile birlikte yayımlanmıştır; EUROCAE karşılığı
 ED-217'dir. Adından anlaşıldığı gibi yalnızca uçuş yazılımına değil, DO-278A
-kapsamındaki yer tabanlı haberleşme, seyrüsefer, gözetim ve hava trafik yönetimi
+kapsamındaki uçak dışı (yer ve uzay tabanlı) haberleşme, seyrüsefer, gözetim ve hava trafik yönetimi
 (CNS/ATM) yazılımına da ek olarak uygulanır. Ek, nesne yönelimli tasarımı ne yasaklar ne
 de özendirir; bu tekniklerin hangi kanıtlarla emniyetli biçimde kullanılabileceğini
 tanımlar.
@@ -182,14 +182,16 @@ tanır ve seçimi başvuru sahibine bırakır:
 Bu hedef yapısal kapsam analizini tamamlar, onun bir türü değildir: kapsam analizi
 hangi kodun çalıştırıldığını ölçer, yerel tip tutarlılığı ise dinamik çağrının olası
 hedef kümesindeki her metodun çağıranın güvendiği sözleşmeyi karşıladığını gösterir.
-Hedef, Seviye A, B ve C yazılım için aranır.
+Hedef Seviye A, B ve C yazılım için aranır; Seviye A ve B'de bağımsızlıkla karşılanır,
+Seviye D'de aranmaz (Tablo OO.A-7).
 
 ### Dinamik bellek yönetiminin doğrulanması
 
 DO-332'nin eklediği ikinci hedef, dinamik bellek yönetiminin gürbüz (robust) olduğunun
 doğrulanmasıdır. Kapsamı ilk bakışta sanıldığından geniştir: yalnızca açık ayırma ve
-serbest bırakma çağrılarını değil, çöp toplamayı (garbage collection) ve kap
-(container) sınıfları gibi üst düzey yapıların örtük bellek kullanımını da içerir.
+serbest bırakma çağrılarını değil, çöp toplamayı (garbage collection) ve container
+sınıfları gibi üst düzey yapıların örtük bellek kullanımını da içerir. Seviye dağılımı
+yerel tip tutarlılığıyla aynıdır: Seviye A, B ve C'de aranır, A ve B'de bağımsızlık ister.
 Gösterilmesi beklenen özellikler yedi başlıkta toplanır:
 
 | Gösterilecek özellik | Kapatılan risk | Tipik kanıt |

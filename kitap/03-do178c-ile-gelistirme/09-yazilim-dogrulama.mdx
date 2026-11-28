@@ -5,6 +5,7 @@ sidebar_position: 6
 
 import AracKarti from '@site/src/components/AracKarti';
 import {mcdcIfadesi} from '@site/src/components/McdcAraci/paylasim';
+import {say} from '@site/src/components/HedefGezgini/veri';
 
 # 9. Yazılım Doğrulama
 
@@ -41,9 +42,9 @@ düşüncesidir. DO-178C bağlamında bağımsızlık **kişi düzeyindedir**: d
 kişinin ayrı bir bölümde, ayrı bir şirkette veya ayrı bir binada olması gerekmez. Aynı
 takımdaki iki mühendis, birbirinin ürünlerini çapraz doğrulayarak bağımsızlığı
 sağlayabilir. Önemli olan, doğrulayanın doğruladığı ürünün üreticisi olmamasıdır.
-Standart bunun bir sonucunu ayrıca vurgular: düşük seviyeli gereksinimlere (low-level
-requirements) dayalı test case'leri yazan kişi, aynı gereksinimlerden kaynak kodu
-geliştiren kişi olmamalıdır.
+Standart bunun bir sonucunu ayrıca vurgular: bağımsızlığın arandığı yerde, düşük seviyeli
+gereksinimlere (low-level requirements) dayalı test case'leri yazan kişi, aynı
+gereksinimlerden kaynak kodu geliştiren kişi olmamalıdır.
 Kalite güvencesinde (quality assurance) bağımsızlık buna ek olarak düzeltici faaliyetin
 (corrective action) yapılmasını sağlama yetkisini de kapsar; uygulamada bu çoğunlukla
 ayrı bir raporlama hattıyla sağlanır. Ayrıntısı
@@ -62,10 +63,10 @@ işaretlidir. Kaba çizgileriyle:
 
 | Yazılım seviyesi | Doğrulama hedeflerinde bağımsızlık |
 |---|---|
-| Seviye A | En geniş kapsam: 71 hedefin 30'u bağımsızlıkla karşılanır. Kaynak kodun gereksinimlere ve mimariye uygunluğu, test sonuçlarının değerlendirilmesi ve kapsam analizleri dâhil pek çok doğrulama hedefi bu gruptadır |
-| Seviye B | Daha dar: 69 hedefin 18'i. Gereksinimlerin bir üst seviyeye uygunluğu ve doğruluğu, kaynak kodun düşük seviyeli gereksinimlere uygunluğu ve yapısal kapsam gibi hedefler bağımsız kalır; mimari, test prosedürleri ve sonuçları ile gereksinim test kapsamı gibi hedeflerde bağımsızlık yalnızca Seviye A'da aranır |
-| Seviye C | Doğrulama hedeflerinde bağımsızlık aranmaz; 62 hedeften bağımsızlıkla işaretli 5'i kalite güvencesi hedefleridir |
-| Seviye D | Doğrulama hedeflerinde bağımsızlık aranmaz; 26 hedeften bağımsızlıkla işaretli 2'si kalite güvencesi hedefleridir |
+| Seviye A | En geniş kapsam: {say('A').hedef} hedefin {say('A').bagimsiz}'u bağımsızlıkla karşılanır. Kaynak kodun gereksinimlere ve mimariye uygunluğu, test sonuçlarının değerlendirilmesi ve kapsam analizleri dâhil pek çok doğrulama hedefi bu gruptadır |
+| Seviye B | Daha dar: {say('B').hedef} hedefin {say('B').bagimsiz}'i. Gereksinimlerin bir üst seviyeye uygunluğu ve doğruluğu, kaynak kodun düşük seviyeli gereksinimlere uygunluğu ve yapısal kapsam gibi hedefler bağımsız kalır; mimari, test prosedürleri ve sonuçları ile gereksinim test kapsamı gibi hedeflerde bağımsızlık yalnızca Seviye A'da aranır |
+| Seviye C | Doğrulama hedeflerinde bağımsızlık aranmaz; {say('C').hedef} hedeften bağımsızlıkla işaretli {say('C').bagimsiz}'i kalite güvencesi hedefleridir |
+| Seviye D | Doğrulama hedeflerinde bağımsızlık aranmaz; {say('D').hedef} hedeften bağımsızlıkla işaretli {say('D').bagimsiz}'si kalite güvencesi hedefleridir |
 
 Seviye A ve B'deki sayılara kalite güvencesi hedefleri de dâhildir. Bağımsızlık
 aranmayan hedeflerde de gözden geçirme ya da analiz yapılır; yalnızca bunu yazarın
@@ -136,14 +137,17 @@ Her geliştirme çıktısının kendine özgü bir gözden geçirme odağı vard
 - **Gereksinim gözden geçirmesi:** Her gereksinim tekil, doğrulanabilir ve
   belirsizlikten arınmış mı? "Hızlı", "uygun", "yeterli" gibi ölçülemeyen ifadeler
   var mı? Sistem gereksinimlerine izlenebilirlik (traceability) kurulmuş mu? Hata ve
-  sınır durumları tanımlanmış mı?
+  sınır durumları tanımlanmış mı? Gereksinimler gereksinim standardına uyuyor ve hedef
+  bilgisayarla çatışmıyor mu; önerilen algoritmalar, özellikle süreksizlik noktalarında,
+  doğru mu?
 - **Tasarım gözden geçirmesi:** Yazılım mimarisi gereksinimleri karşılıyor mu?
   Düşük seviyeli gereksinimler yüksek seviyeli gereksinimlerle (high-level
   requirements) tutarlı mı? Arayüzler, veri akışı ve kontrol akışı tanımlı mı? Tasarım
-  kararlarının gerekçeleri kayıtlı mı?
+  kararlarının gerekçeleri kayıtlı mı? Mimari hedef bilgisayarla uyumlu ve doğrulanabilir
+  mi; bölümleme kullanılıyorsa bütünlüğü korunuyor mu?
 - **Kod gözden geçirmesi:** Kaynak kod düşük seviyeli gereksinimleri eksiksiz ve
-  doğru gerçekliyor mu? Kodlama standardına uyuluyor mu? Gereksinime izlenmeyen
-  kod parçası (potansiyel gereksiz kod) var mı? Sınır koşulları, taşma ve hata
+  doğru gerçekliyor, mimariye uyuyor mu? Kodlama standardına uyuluyor mu? Gereksinime
+  izlenmeyen kod parçası (potansiyel gereksiz kod) var mı? Sınır koşulları, taşma ve hata
   yolları ele alınmış mı?
 - **Test gözden geçirmesi:** Test case'ler gereksinimdeki her koşulu — normal ve
   gürbüzlük (robustness) — kapsıyor mu? Beklenen sonuçlar gereksinimden mi türetilmiş,
@@ -237,9 +241,9 @@ partitioning) kullanan sistemlerde bu analiz, partition'lar arası izolasyon idd
 dayanaklarındandır (bkz.
 [21. Yazılım Bölümlemesi](../05-ozel-konular/21-yazilim-bolumlemesi.mdx)).
 
-### Bağlantı ve yükleme analizi
+### Bağlama ve yükleme analizi
 
-Bağlantı (link) analizi, çalıştırılabilir nesne kodunun doğru bileşen sürümlerinden,
+Bağlama (link) analizi, çalıştırılabilir nesne kodunun doğru bileşen sürümlerinden,
 çözülmemiş sembol kalmadan ve beklenmeyen kütüphane kodu çekilmeden oluştuğunu
 gösterir. Yükleme (load) analizi ise imajın (image) hedef donanıma bütünlüğü bozulmadan
 yüklendiğini doğrular: bellek aralığı uygunluğu ile checksum ya da
@@ -440,8 +444,8 @@ Hangi kapsam ölçütünün arandığı yazılım seviyesine bağlıdır ve öl�
 | Data ve control coupling analizi | Bileşenler arası veri ve kontrol ilişkileri testlerde işletilmiş olsun | C, B, A |
 
 Seviye D'de yapısal kapsam hedefi yoktur. Standardın sözlüğünde karar (decision) yalnızca
-dallanma noktası değildir: koşullardan ve Boole işleçlerinden kurulu her Boole ifadesi
-karardır. MC/DC'nin mantığı bir örnekle netleşir:
+dallanma noktası değildir: bir ya da birkaç koşuldan kurulu her Boole ifadesi, Boole işleci
+içersin içermesin, karardır. MC/DC'nin mantığı bir örnekle netleşir:
 
 ```c
 if ((basinc_dusuk && motor_calisiyor) || bakim_kipi) {
@@ -510,7 +514,7 @@ bu ek kodu tesadüfen çalıştırmış olabilir; ama bunu gösteren bir kayıt 
 kodun içindeki bir dal hiç işletilmemiş de olabilir. DO-178C bu yüzden Seviye A'da,
 kapsam hangi kod biçiminde ölçülmüş olursa olsun, derleyicinin, linker'ın ya da
 başka bir yolun ürettiği ve kaynak deyimlerine doğrudan izlenemeyen kodun doğruluğunun
-ek doğrulamayla gösterilmesini ister (§6.4.4.2). Uygulamada bu işe kaynak koddan nesne
+ek doğrulamayla gösterilmesini ister (§6.4.4.2.b). Uygulamada bu işe kaynak koddan nesne
 koduna izlenebilirlik analizi (source to object code traceability analysis) denir.
 Hedef yalnızca Seviye A'dadır.
 
@@ -540,6 +544,8 @@ nesne kodunda ölçülüyorsa bu karar ölçümde görünmez olur (aşağıya ba
 koduna çevirir:
 
 ```c
+#include <stdint.h>
+
 typedef enum { KIP_YER, KIP_KALKIS, KIP_SEYIR, KIP_INIS } ucus_kipi_t;
 
 uint8_t kip_kodu(ucus_kipi_t kip)
@@ -741,6 +747,7 @@ script'inin çıktısı ayrıca doğrulanmıyorsa araç kalifikasyonu değerlend
         .syntax unified
         .thumb
         .global bss_sifirla
+        .thumb_func
 bss_sifirla:
         ldr     r0, =__bss_baslangic
         ldr     r1, =__bss_bitis
@@ -760,7 +767,7 @@ iki yönünü işletir; satır ve karar kapsama tamamdır. Yine de kapsamın tam
 rutinin doğru olduğunu göstermez: sınırlardan biri 4 bayta hizalı değilse döngü son
 kelimeyi bölgenin dışına taşarak yazar. Bu yüzden hizalama ön koşulu gereksinimde
 yazılıdır ve linker script'i ile linker map'in gözden geçirilmesiyle doğrulanır
-(bkz. yukarıdaki bağlantı ve yükleme analizi). `.bss` bölgesi boş olan bir
+(bkz. yukarıdaki bağlama ve yükleme analizi). `.bss` bölgesi boş olan bir
 konfigürasyon varsa döngü gövdesi hiç çalışmaz; kapsam o konfigürasyon için ayrıca
 değerlendirilir.
 

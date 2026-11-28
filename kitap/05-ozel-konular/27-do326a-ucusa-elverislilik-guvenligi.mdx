@@ -93,7 +93,7 @@ yapılabileceğini anlatan yöntem kitabıdır.
 **Sürüm notu.** DO-326B ve ED-202B 2024 sonbaharında yayımlandı; yenilikleri ağırlıkla
 değişikliklerle ilgilidir ve aşağıda [Değişiklikler](#değişiklikler-ve-do-326b)
 başlığında özetlenir. Bu satırların yazıldığı Ekim 2026'da EASA'nın kabul edilebilir uyum
-yöntemi (acceptable means of compliance) hâlâ A sürümlerine atıf yapmaktadır. Bölüm bu
+yöntemi (acceptable means of compliance) hâlâ ED-202A ve ED-203A ile ED-204'ün ilk sürümüne atıf yapmaktadır. Bölüm bu
 yüzden DO-326A'yı esas alır; bir projede hangi sürümün kullanılacağı, diğer standartlarda
 olduğu gibi, sertifikasyon otoritesiyle varılan mutabakata bağlıdır.
 
@@ -135,10 +135,12 @@ güvenliğinin. Sınır keskin değildir: DO-326A, havacılık bilgi sistemi tan
 yazılımının ve verisinin geliştirilmesini destekleyen tedarikçi sistemlerini de katar.
 
 **Türkiye.** SHGM'nin 2023'te yürürlüğe giren siber güvenlik talimatı (SHT-SİBER)
-kuruluş odaklıdır: işletmelerden bilgi güvenliği yönetim sistemi ve olay müdahale
-yapılanması ister; hava aracı tasarımına ve DO-326A'ya değinmez. Tasarım kuruluşlarına
-ilişkin talimat (SHT-21) ise Part-IS hükümlerinin ulusal düzenleme tamamlandıktan sonra
-ekleneceğini belirtir ve EASA'nın kabul edilebilir uyum yöntemlerini tanır. Uluslararası
+kuruluş odaklıdır: işletmelerden siber güvenlik risk yönetimi, varlık envanteri ve olay
+müdahale yapılanması ister; hava aracı tasarımına ve DO-326A'ya değinmez. Part-21'in ulusal
+karşılığı olan, uçuşa elverişlilik sertifikasyonunu ve tasarım ile üretim kuruluşlarını
+düzenleyen talimat (SHT-21) ise Part-IS hükümlerinin ulusal düzenleme tamamlandıktan sonra
+ekleneceğini belirtir ve EASA'nın Part-21 için yayımladığı kabul edilebilir uyum yöntemlerini
+uygun kabul eder. Uluslararası
 pazara ürün veren bir Türk tasarım kuruluşu için pratik yol bu yüzden AMC 20-42 ve DO-326
 ailesidir.
 
@@ -155,7 +157,8 @@ değildir:
 - **emniyete dokunmayan bilgi güvenliği**, örneğin yolcu kayıtlarının gizliliği,
 - **fiziksel saldırı**: kutuyu sökmek, kabloyu kesmek,
 - **elektromanyetik jamming**,
-- **havayolu ve havalimanı işletmesinin kendi güvenliği**, örneğin tesislere erişim,
+- **havalimanı, havayolu ve hava trafik hizmeti sağlayıcısının kendi güvenliği**, örneğin
+  uçağa ve tesislere erişim,
 - **ulusal kurumların işlettiği haberleşme, seyrüsefer ve gözetim hizmetleri**, örneğin
   GNSS ve ADS-B.
 
@@ -288,7 +291,7 @@ kullanılır.
 flowchart TD
     YER["Yer istasyonları<br/>(VOR ve ILS yayınları)"]
     BKM["Bakım bilgisayarı ve<br/>data loader"]
-    UCK["Uçaktaki diğer sistemler<br/>(ekran, uçuş yönetimi, otopilot)"]
+    UCK["Uçaktaki diğer sistemler<br/>(kontrol paneli, ekran,<br/>uçuş yönetimi, otopilot)"]
     subgraph SNR["Güvenlik sınırı: navigasyon alıcısı"]
         VAR["Varlıklar: uygulama yazılımı,<br/>konfigürasyon verisi, arıza kayıtları,<br/>sapma ve kerteriz hesabı"]
     end
@@ -315,7 +318,7 @@ görünür:
 |---|---|---|---|
 | RF girişi | İçeri | Yer istasyonları | Yayın kimlik doğrulamasızdır; hizmetin kendisi kapsam dışıdır, ama alıcının bütünlük izlemesi emniyet sürecinde ele alınır |
 | ARINC 429 frekans girişi | İçeri | Kontrol paneli, uçuş yönetimi | Uçak içi kaynak; güvenilirliği o sistemlerin güvenlik kapsamına bağlıdır |
-| ARINC 429 veri çıkışı | Dışarı | Ekranlar, otopilot | Birim bu hatta yalnızca vericidir, bu yoldan içeri girilemez; ama buradan çıkan verinin bütünlüğü korunan varlıktır |
+| ARINC 429 veri çıkışı | Dışarı | Ekranlar, uçuş yönetimi, otopilot | Birim bu hatta yalnızca vericidir, bu yoldan içeri girilemez; ama buradan çıkan verinin bütünlüğü korunan varlıktır |
 | Ethernet yükleme ve bakım portu | İki yönlü | Bakım teknisyeni, havayolu yazılım dağıtım zinciri | En kritik giriş noktası: yazılımı ve veriyi değiştirebilen tek yol |
 
 **Sınırın ötesindekiler** **güvenlik ortamı (security environment)** başlığı altında
@@ -418,7 +421,7 @@ güvenlik önlemidir. Önlemler etkilerine göre beş türe ayrılır:
 Önlemler yalnızca teknik değildir. Bakım bilgisayarının yönetimi, imzalama anahtarlarının
 korunması ve yazılım dağıtım zincirinin denetimi prosedürel önlemlerdir; uçak tasarımcısı
 bunları kendisi uygulayamaz, **güvenlik rehberi (security guidance)** yoluyla operatörden
-ister. Her önlem türü, yetenekleri, sınırları ve kendi zafiyetleriyle birlikte tanımlanır.
+ister. Her önlem; türü, yetenekleri, sınırları ve kendi zafiyetleriyle birlikte tanımlanır.
 
 ### Tehdit seviyesi ve kabul edilebilirlik
 

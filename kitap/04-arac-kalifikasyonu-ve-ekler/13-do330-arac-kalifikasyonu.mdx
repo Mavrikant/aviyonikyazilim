@@ -42,7 +42,7 @@ DO-330, "Software Tool Qualification Considerations" adıyla 2011'de DO-178C ile
 yayımlanmıştır; EUROCAE karşılığı ED-215'tir. DO-331, DO-332 ve DO-333'ün aksine bir
 teknoloji eki (supplement) değildir: DO-178C'nin hedeflerine (objective) ekleme yapmaz,
 kendi hedef tabloları olan bağımsız bir araç kalifikasyonu belgesidir. Bu yapı onu
-alandan bağımsız kılar; örneğin yer tabanlı haberleşme, seyrüsefer, gözetim ve hava
+alandan bağımsız kılar; örneğin uçak dışındaki (yer ve uzay tabanlı) haberleşme, seyrüsefer, gözetim ve hava
 trafik yönetimi (CNS/ATM) yazılımını konu alan DO-278A da araç kalifikasyonu için ona
 başvurur ve aynı mantık havacılık verisi işleyen araçlara da taşınır (bkz.
 [23. Havacılık Verileri](../05-ozel-konular/23-havacilik-verileri.mdx)).
@@ -158,7 +158,9 @@ requirements, TOR)** durur. TOR, aracın projede *nasıl kullanılacağını* ta
 TOR bilinçli olarak kullanım odaklıdır: bir aracın yüzlerce özelliği olabilir, ama
 yalnızca projede fiilen kredi alınan işlevler kalifiye edilir. DO-178C bunun koşulunu
 da koyar: bu işlevlerin aracın öteki işlevlerinden olumsuz etkilenmediği, yani
-aralarında koruma (protection) bulunduğu gösterilmelidir. Bu, hem işi sınırlar hem de
+aralarında koruma (protection) bulunduğu gösterilmelidir (DO-178C §12.2.1). DO-330 §11.1
+bunun nasıl gösterileceğini anlatır; koruma gösterilemezse aracın tamamı işlevlerinin en
+yüksek TQL'inde kalifiye edilir. Bu, hem işi sınırlar hem de
 "araç her şeyi yapar" gibi savunulamaz iddialardan korur.
 
 TOR, **araç gereksinimleri (tool requirements)** ile karıştırılmamalıdır. TOR kullanıcının
@@ -338,22 +340,24 @@ Tablodan dört kural çıkar:
 - **Uyum iddiasını taşıyan veri her TQL'de CC1'dir.** Bu grupta PSAC, SECI ve SAS'taki
   araca özgü bilgi ile TQP, TCI ve TAS bulunur. DO-178C'de PSAC, SCI ve SAS'ın her
   seviyede CC1 olmasının karşılığıdır.
-- **Kayıt niteliğindeki veri her TQL'de CC2'dir.** Doğrulama sonuçları, problem
+- **Kayıt niteliğindeki veri, istendiği her TQL'de CC2'dir.** Doğrulama sonuçları, problem
   raporları, konfigürasyon yönetimi ve kalite güvencesi kayıtları, kurulum raporu ve
   operasyonel doğrulama ve geçerleme verisi bu gruptadır.
 - **Planlar, standartlar ve araç doğrulama durumları TQL-1 ve TQL-2'de CC1, TQL-3 ve
-  TQL-4'te CC2'dir.** Bu, DO-178C'deki Seviye A-B ile Seviye C-D ayrımına karşılık gelir.
-  TQP bu kuralın dışındadır; otoriteye sunulduğu için her seviyede CC1'dir.
-- **Aracın kendisini tanımlayan veri TQL-1 – TQL-4'te CC1'dir.** Araç gereksinimleri,
-  kaynak kod, çalıştırılabilir kod ve geliştirme izleri bu gruptadır. Tasarım tanımı ve
-  araç yaşam döngüsü ortam konfigürasyon indeksi TQL-4'te CC2'ye iner.
+  TQL-4'te CC2'dir** (standartlar TQL-4'te istenmez). Bu, DO-178C'deki Seviye A-B ile
+  Seviye C-D ayrımına karşılık gelir. TQP bu kuralın dışındadır; otoriteye sunulduğu için
+  her seviyede CC1'dir.
+- **Aracın kendisini tanımlayan veri, istendiği her TQL'de (TQL-1 – TQL-4) CC1'dir.** Araç
+  gereksinimleri, kaynak kod (yalnızca TQL-1 – TQL-3), çalıştırılabilir kod ve geliştirme
+  izleri bu gruptadır. Tasarım tanımı ve araç yaşam döngüsü ortam konfigürasyon indeksi
+  TQL-4'te CC2'ye iner.
 
 #### TQL-5: kara kutu kalifikasyonunun verisi
 
 TQL-5'te tablo ikiye ayrılır. CC1 olan yalnızca uçuş yazılımının kendi belgelerindeki
-araç bilgisidir; aracın kendi kalifikasyon verisinin tamamı, TOR ve kurulan
-çalıştırılabilir kod dâhil, CC2'dir. DO-330'un sonundaki açıklayıcı soru-yanıtlar bunu
-açıkça yazar ve sonucunu da çıkarır: TQL-5'te konfigürasyon yönetiminden aranan,
+araç bilgisidir (TQP, TCI ve TAS ayrıca hazırlanırsa onlar da); aracın kendi
+kalifikasyon verisinin geri kalanı, TOR ve kurulan çalıştırılabilir kod dâhil, CC2'dir.
+DO-330'un sonundaki açıklayıcı soru-yanıtlar bunu açıkça yazar ve sonucunu da çıkarır: TQL-5'te konfigürasyon yönetiminden aranan,
 konfigürasyon öğelerinin tanımlanması ile arşivleme, geri getirme ve sürüm teslimidir.
 Baseline ve problem raporlama hedefleri bu seviyede yoktur. TQL-4'ten itibaren ise
 TOR CC1'dir: bu seviyelerde araç gereksinimleri TOR'a karşı doğrulanır ve ona izlenir,
@@ -374,8 +378,8 @@ TQL-5'te ayrı bir TQP, TCI ve TAS beklenmez; karşılıkları projenin kendi ve
   geçerleme verisine atıf. Kurulum raporunun içeriği de buraya konabilir.
 - **Yazılım başarım özeti (Software Accomplishment Summary, SAS):** aracın kimliği,
   alınan kredi, kalifikasyon verisine atıf ve bilinen problemler ile işlevsel
-  sınırlamaların TOR'a etkisinin analizi. Bu son kalem, T-10'un TQL-5'te de aranan
-  hedefidir.
+  sınırlamaların TOR'a etkisinin analizi. Bu son kalem, T-10'un TQL-5'te de aranan dört
+  hedefinden biridir.
 
 Bu, "TQL-5'te yazacak bir şey yok" demek değildir; isteyen proje bu bilgileri TQL-5'te
 de ayrı belgeler olarak düzenleyebilir. Kalite güvencesinde iki hedef TQL-5'te de
@@ -583,8 +587,8 @@ de en az diğerleri kadar sorgulanır (bkz.
   TQL-4'te 38, TQL-1'de 76'dır.
 - DO-330'un Ek A'sı her veri öğesine TQL'e göre bir kontrol kategorisi atar. Uyum
   iddiasını taşıyan veri (PSAC, SECI ve SAS'taki araç bilgisi, TQP, TCI, TAS) her TQL'de
-  CC1, kayıtlar her TQL'de CC2'dir. TQL-5'te aracın kendi verisinin tamamı, TOR ve
-  çalıştırılabilir kod dâhil, CC2'dir. Aracın kaynak kodu yalnızca TQL-1 – TQL-3'te
+  CC1, kayıtlar istendikleri her TQL'de CC2'dir. TQL-5'te ayrıca hazırlanan TQP, TCI ve
+  TAS dışında aracın kendi verisinin tamamı, TOR ve çalıştırılabilir kod dâhil, CC2'dir. Aracın kaynak kodu yalnızca TQL-1 – TQL-3'te
   kalifikasyon verisidir.
 - Araç üreticisinden hazır veri alınsa bile kalifikasyon sorumluluğu başvuru
   sahibinde kalır; operasyonel doğrulama kullanıcının kendi ortamında yapılır.
