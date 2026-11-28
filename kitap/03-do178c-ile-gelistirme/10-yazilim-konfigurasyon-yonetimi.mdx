@@ -216,11 +216,15 @@ parçasını oluşturan somut iş ürünleridir. Denetimlerde en sık masaya gel
   build ve yükleme talimatlarını ve çalıştırılabilir nesne kodunun bütünlük
   denetim değerlerini tanımlar. Bir SCI okunduğunda o sürümün tam olarak nelerden
   oluştuğu ve nasıl yeniden üretileceği anlaşılabilmelidir. SCI, PSAC ve SAS ile
-  birlikte otoriteye asgari olarak sunulan üç veriden biridir; diğer veriler talep
-  edildiğinde erişime açılır.
+  birlikte otoriteye asgari olarak sunulan üç veriden biridir; kalifiye araç
+  kullanılıyorsa DO-330 bu listeye SECI'yi ve araç kalifikasyon verisinin bir kısmını
+  ekler (bkz. [12. Sertifikasyon İrtibatı](12-sertifikasyon-irtibati.mdx)). Diğer veriler
+  talep edildiğinde erişime açılır.
 - **Yazılım yaşam döngüsü ortam konfigürasyon indeksi (SECI):** Yazılımı üretmek ve
-  doğrulamak için kullanılan ortamı tanımlar: derleyici ve linker sürümleri, derleme
-  seçenekleri, test araçları, kalifiye edilmiş araçlar ve donanım ortamı. SECI olmadan
+  doğrulamak için kullanılan ortamı tanımlar: donanım ve işletim sistemi; derleyici, linker,
+  loader, checksum ya da CRC hesaplayan araçlar ve varsa seçenekleriyle kod üreteci gibi
+  geliştirme araçları; test ve analiz araçları; kalifiye araçlar ve kalifikasyon verileri.
+  Derleme ve bağlama seçenekleri ise SCI'deki build talimatının parçasıdır. SECI olmadan
   "aynı kodu beş yıl sonra yeniden derleyin" talebi karşılanamaz. SECI ayrı bir doküman
   olabileceği gibi SCI'nin bir bölümü olarak da verilebilir.
 - **Problem raporları:** Her raporun tekil bir numarası, açık bir problem tanımı,
@@ -257,7 +261,7 @@ Aşağıdaki tablo, bu ürünlerin cevapladığı temel soruları ve otoriteye n
 | İş ürünü | Cevapladığı soru | Otoriteye sunum |
 |---|---|---|
 | SCI | Bu sürümde tam olarak ne var, nasıl yeniden üretilir? | Sunulur |
-| SECI | Bu sürüm hangi araçlarla ve hangi ortamda üretildi? | SCI'nin parçasıysa onunla sunulur; ayrıysa talep üzerine gösterilir |
+| SECI | Bu sürüm hangi araçlarla ve hangi ortamda üretildi? | Kalifiye araç varsa sunulur (DO-330); yoksa SCI'nin parçasıysa onunla sunulur, ayrıysa talep üzerine gösterilir |
 | Problem raporları | Bilinen sorunlar neler, hangileri açık? | Talep üzerine gösterilir; açık raporların özeti SAS'tadır |
 | Konfigürasyon yönetimi kayıtları | Süreç gerçekten işletildi mi? | Talep üzerine, çoğunlukla denetimde gösterilir |
 

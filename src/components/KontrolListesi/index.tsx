@@ -6,7 +6,7 @@
  * listeden okunur. Böylece liste tek yerde yazılır, sitede, aramada ve PDF'te aynı kalır.
  * Dışa aktarılan madde biçimi:
  *
- *   - [ ] **YGR-04** Soru metni? *(A–C · §6.3.1.d)*
+ *   - [ ] **YGR-13** Soru metni? *(A–C · §6.3.1.d)*
  *
  * Kalın kısım madde numarasıdır; sondaki italik parantez seviye ve dayanaktır. Numarası
  * olmayan onay kutuları (giriş koşulları gibi) dışa aktarılmaz. Grup sütunu maddenin

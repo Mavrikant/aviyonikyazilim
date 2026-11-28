@@ -198,6 +198,12 @@ kaldığını. Bozulmayı yakalamanın tipik yolu döngüsel artıklık denetimi
 redundancy check, CRC). Basit bir örnek:
 
 ```c
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+/* crc32_hesapla() ile UMS_SEMA_SURUMU ve RAPOR_ESIGI_* sabitleri çekirdekte tanımlıdır. */
+
 typedef struct {
     uint32_t sema_surumu;       /* çekirdeğin beklediği tablo biçimi      */
     uint16_t rapor_esigi_degc;  /* bakım raporu tetikleme eşiği, °C       */

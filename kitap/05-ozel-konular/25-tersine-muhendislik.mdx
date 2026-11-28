@@ -242,6 +242,9 @@ Aşağıdaki kurgusal işlev, radyo irtifası bir eşiğe indiğinde alçak irti
 etkinleştiriyor:
 
 ```c
+#include <stdbool.h>
+#include <stdint.h>
+
 #define UYARI_ESIGI_FT  (100)
 
 bool irtifa_uyarisi_etkin(int32_t radyo_irtifa_ft, bool irtifa_gecerli)

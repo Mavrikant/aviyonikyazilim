@@ -45,9 +45,10 @@ bir iddiaya dönüşmesidir.
 
 Partition'lardan biri nasıl davranırsa davransın — tasarım hatası içersin ya da kendisine
 özgü donanım arızalansın — diğerlerinin etkilenmediği gösterilebilen bölümlemeye
-gürbüz bölümleme (robust partitioning) denir. Terim DO-178C'de geçmez; aşağıda anılan
-ARINC 653 ve DO-297 çevresinde yerleşmiştir. Sertifikasyonda dayanak yapılabilen
-budur: "normal çalışmada birbirlerine karışmıyorlar" gözlemi bölümleme kanıtı sayılmaz.
+gürbüz bölümleme (robust partitioning) denir. Terim DO-178C'de geçmez; DO-248C'nin bölümleme
+tartışma yazısı (DP #14) kullanır ve aşağıda anılan ARINC 653 ile DO-297 çevresinde
+yerleşmiştir. Sertifikasyonda dayanak yapılabilen budur: "normal çalışmada birbirlerine
+karışmıyorlar" gözlemi bölümleme kanıtı sayılmaz.
 
 Bölümleme yalnızca seviyeleri ayırmak için kullanılmaz; değiştirilemeyen bileşeni
 kullanıcının değiştirebildiği yazılımdan korumanın da yaygın yollarından biridir (bkz.
@@ -133,7 +134,7 @@ yazılmıştır.
 | Uçuş kontrol kodu ve sabit verisi | oku, çalıştır | erişim yok | erişim yok |
 | Uçuş kontrol verisi ve stack'i | oku, yaz | erişim yok | erişim yok |
 | İzleme kodu ve sabit verisi | erişim yok | oku, çalıştır | erişim yok |
-| Trace verisi ve stack'i | erişim yok | oku, yaz | erişim yok |
+| İzleme verisi ve stack'i | erişim yok | oku, yaz | erişim yok |
 | Bakım kodu ve sabit verisi | erişim yok | erişim yok | oku, çalıştır |
 | Bakım verisi ve stack'i | erişim yok | erişim yok | oku, yaz |
 | Durum buffer'ı (uçuş kontrolden izlemeye) | oku, yaz | oku | erişim yok |
@@ -476,7 +477,7 @@ Bölümleme kernel'i kusursuz olsa bile yanlış bir tablo, yanlış sınırı k
 uygular. Tablolar bu yüzden bölümleme mekanizmasının parçası sayılır ve platformun
 yazılım seviyesinde doğrulanır. Tipik denetimler: bellek bölgeleri örtüşmüyor mu,
 her bölge yalnızca amaçlanan partition'lara ve amaçlanan haklarla mı eşlenmiş, pencerelerin
-toplamı major frame'e eşit mi, her pencere ilgili partition'ın WCET değerini ve geçiş
+toplamı (rezerv pencereler dâhil) major frame'e eşit mi, her pencere ilgili partition'ın WCET değerini ve geçiş
 maliyetini karşılıyor mu, her kanalın tek bir kaynağı var mı, her sağlık izleme
 olayına bir tepki atanmış mı? Tabloları bir araç üretiyor ya da denetliyorsa ve çıktısı
 ayrıca doğrulanmıyorsa araç kalifikasyonu gündeme gelir (bkz.

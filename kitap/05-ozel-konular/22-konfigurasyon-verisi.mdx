@@ -222,9 +222,9 @@ verisine dayandığının gösterilmesi — otomatik biçim kontrolünün yapama
 gözden geçirme gerektiren bir iştir. Denetimde sorulan soru da genellikle budur: "Bu
 dosyadaki şu değer nereden geldi, kim neye karşı doğruladı?"
 
-PDI dosyaları çoğunlukla elle yazılmaz; bir tablodan ya da veri tabanından ikili dosya
+PDI dosyaları çoğunlukla elle yazılmaz; bir tablodan ya da veri tabanından binary dosya
 üreten bir araçla oluşturulur. Bu aracın çıktısı uçağa yüklenen yazılımın parçasıdır.
-Çıktı ayrıca doğrulanıyorsa — örneğin ikili dosya bağımsız bir yolla geri okunup kaynak
+Çıktı ayrıca doğrulanıyorsa — örneğin binary dosya bağımsız bir yolla geri okunup kaynak
 değerlerle karşılaştırılıyorsa — araca güvenmek gerekmez; doğrulanmıyorsa araç
 kalifikasyonu gündeme gelir (bkz.
 [13. DO-330 ve Yazılım Aracı Kalifikasyonu](../04-arac-kalifikasyonu-ve-ekler/13-do330-arac-kalifikasyonu.mdx)).
@@ -236,6 +236,9 @@ okuduğunu düşünelim. Yapı tanımı gereksinimlerde yazılıdır; koddaki ka
 yazılımın dosyayı kullanmadan önce yaptığı denetim şöyle olabilir:
 
 ```c
+#include <stddef.h>
+#include <stdint.h>
+
 #define PDI_SEMA_SURUMU      (3u)           /* kodun beklediği yapı sürümü      */
 #define PDI_UYUMLU_YAZILIM   (0x00A71503u)  /* çekirdek yazılımın parça kimliği */
 #define EGT_MIN_C            (600)          /* gereksinimlerdeki alt sınır      */

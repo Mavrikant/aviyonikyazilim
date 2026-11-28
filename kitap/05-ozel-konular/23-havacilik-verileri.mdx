@@ -152,7 +152,7 @@ Zincirde dört rol ayırt edilir:
 |---|---|---|---|
 | Veri kaynağı (data originator) | Devletlerin havacılık bilgi hizmetleri, ölçüm ve harita kurumları | Veriyi üretir ve resmî yayınlarla duyurur | Devletin havacılık bilgi hizmeti kuralları (ICAO Ek 15 çerçevesi); DO-200B zinciri bu yayından sonra başlar |
 | Veri tedarikçisi (data supplier) | Resmî yayınları toplayıp standart biçimde veri tabanı üreten kuruluş | Toplar, derler, ARINC 424 gibi bir değişim biçiminde yayımlar | Tip 1 kabul |
-| Uygulama entegratörü (application integrator) | Çoğunlukla ekipman üreticisi | Veri kalite gereksinimlerini tanımlar, veriyi ekipmanın ikili biçimine paketler, ekipmanla uyumluluğunu gösterir | Tip 2 kabul |
+| Uygulama entegratörü (application integrator) | Çoğunlukla ekipman üreticisi | Veri kalite gereksinimlerini tanımlar, veriyi ekipmanın binary biçimine paketler, ekipmanla uyumluluğunu gösterir | Tip 2 kabul |
 | Son kullanıcı (end user) | Operatör | Veri tabanını edinir, uçağa yükler ve güncel tutar | İşletme kuralları: verinin kabul görmüş bir tedarikçiden geldiğini ve geçerli döneme ait olduğunu güvence altına almak |
 
 İki büyük otorite aynı standarda dayanır ama farklı hukuki araç kullanır:
@@ -175,10 +175,10 @@ beklenir.
 
 Aviyonik üreticisi çoğu zaman Tip 2 rolündedir ve DO-178C projesiyle veri süreci tam
 burada buluşur. Veri kalite gereksinimlerini üretici yazar; bunların kaynağı, yazılım
-seviyesini de belirleyen sistem emniyet değerlendirme sürecidir. Veri tabanının ikili biçimi
+seviyesini de belirleyen sistem emniyet değerlendirme sürecidir. Veri tabanının binary biçimi
 üreticinin tasarım kararıdır ve onu okuyan yazılımın gereksinimlerinde tanımlanır. Tip 2
 kabul tipik olarak, hangi veri tabanının hangi ekipman parça numarasıyla uyumlu olduğunu
-gösteren bir listeye bağlanır; ikili biçimi değiştiren bir yazılım sürümü bu listeyi,
+gösteren bir listeye bağlanır; binary biçimi değiştiren bir yazılım sürümü bu listeyi,
 paketleme aracını ve veri kalite gereksinimlerini de etkiler. Değişiklik etki analizinde
 (change impact analysis) en kolay unutulan kalem budur.
 
@@ -187,7 +187,7 @@ paketleme aracını ve veri kalite gereksinimlerini de etkiler. Değişiklik etk
 İki standardın sınırı, verinin içeriği ile veriyi kullanan kod arasından geçer.
 Veri tabanının içeriğinin üretimi DO-200B'ye tabidir ve her dönemde, yazılım onayına
 dokunmadan yenilenir. Veri tabanını okuyan, ayrıştıran ve kullanan yazılım ise
-DO-178C'ye tabidir: ikili biçimin tanımı yazılım gereksinimlerinin parçasıdır ve yazılım
+DO-178C'ye tabidir: binary biçimin tanımı yazılım gereksinimlerinin parçasıdır ve yazılım
 belirli bir dönemin içeriğiyle değil, biçimin izin verdiği bütün içerikle doğru
 çalışacak biçimde doğrulanır. Veri tabanı bozuk, eksik ya da süresi geçmiş olduğunda
 yazılımın ne yapacağı da DO-178C tarafında kalır; bunlar gereksinim olarak yazılır ve
